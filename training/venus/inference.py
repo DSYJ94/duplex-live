@@ -26,6 +26,7 @@ def load_candidate(llm, checkpoint):
     llm.requires_grad_(False)
     parent_steps=metadata.get('parent_training_steps',0)
     parents={190:'10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63',244:'c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270',298:'e7340edd15537523db78120a97902399faa0af9caa46e875ec92e56889d6edef'}
+    parents[406]='a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6'
     if parent_steps and (parent_steps not in parents or metadata.get('parent_checkpoint_sha256')!=parents[parent_steps]):
         raise ValueError('Unknown parent lineage')
     return dict(checkpoint_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),

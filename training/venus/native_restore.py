@@ -20,9 +20,14 @@ def main(a):
     from portable.venus.native_app import ensure_guard
     ensure_guard()
     assert_deadline(a.lease, 300)
-    authority = json.loads(AUTH.read_text())
-    if authority['status'] != 'APPROVED' or authority['maximum_candidate_new_updates'] != 108:
-        raise ValueError('Exact approved action-fidelity phase required')
+    context = bool(getattr(a,'context_phase_admission',None))
+    if context:
+        from .context_objective import authority as context_authority
+        authority=context_authority(a.context_phase_admission)
+    else:
+        authority = json.loads(AUTH.read_text())
+        if authority['status'] != 'APPROVED' or authority['maximum_candidate_new_updates'] != 108:
+            raise ValueError('Exact approved action-fidelity phase required')
     path = Path(a.checkpoint)
     if hashlib.sha256(path.read_bytes()).hexdigest() != a.sha256:
         raise ValueError('Exact saved checkpoint hash required')
@@ -30,7 +35,7 @@ def main(a):
     if a.kind == 'parent':
         if a.sha256 != authority['parent_checkpoint_sha256']:
             raise ValueError('Original298 parent required')
-    elif (state['metadata']['parent_training_steps'] != 298 or state['step'] not in (54,108)
+    elif (state['metadata']['parent_training_steps'] != (406 if context else 298) or state['step'] not in ((60,) if context else (54,108))
           or state['metadata']['parent_checkpoint_sha256'] != authority['parent_checkpoint_sha256']):
         raise ValueError('Complete admitted action-phase final state required')
     if state['metadata']['model_revision'] != MODEL_REVISION:
@@ -75,4 +80,5 @@ if __name__ == '__main__':
     p.add_argument('--kind', choices=('parent','final'), required=True)
     for key in ('checkpoint','sha256','cache','model','output','opal-source','lease','source'):
         p.add_argument('--'+key, required=True)
+    p.add_argument('--context-phase-admission')
     main(p.parse_args())

@@ -98,7 +98,7 @@ def assert_optimizer_equal(expected,actual):
         raise ValueError('Fresh-process Adam state differs')
 
 
-def verified_parent(state,sha256,*,allow244=False,allow298=False):
+def verified_parent(state,sha256,*,allow244=False,allow298=False,allow406=False):
     """Pin the two actual states; continuation244 must not replay190→244."""
     meta=state['metadata']
     if sha256=='10354f93ec2b5e224ae7298b2f3b8687f9dc74d2fbf87c1db62bd79763155b63':
@@ -113,4 +113,9 @@ def verified_parent(state,sha256,*,allow244=False,allow298=False):
         assert meta['source']=='dd767d65ac663e701142f2c882aeb5e1c2a2c6e5'
         assert state['optimizer']['opal']==1 and state['optimizer']['update']==54 and state['optimizer']['version']==1
         return 298
+    if allow406 and sha256=='a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6':
+        assert state['step']==108 and meta['parent_training_steps']==298
+        assert meta['source']=='90dc9ecf98e464f1754c0fda7763024663f82844'
+        assert state['optimizer']['opal']==1 and state['optimizer']['update']==108
+        return 406
     raise ValueError('Unknown or unapproved native continuation parent')

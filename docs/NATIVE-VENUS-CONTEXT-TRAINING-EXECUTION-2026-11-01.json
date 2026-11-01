@@ -1,0 +1,18 @@
+{
+  "admission_sha256": "dfa9e4b79cd2d229c0de2274523dfd3c936799b89e2b196f70cfae1e39c516d9",
+  "resource_key": "venus-context-train-v48",
+  "vm_name": "duplex-venus-source-20261101-v46",
+  "reuse_stopped_vm_id": "3873014408897233554",
+  "maximum_gpu_seconds": 4100,
+  "focused_gpu_seconds_upper_before_launch": 28700,
+  "new_optimizer_updates_authorized_by_this_execution": 60,
+  "maximum_complete_epochs": 1,
+  "previous_provider_stop": "2026-11-01T15:14:07.520-08:00",
+  "source_timelines": "runs/venus-training-20261101/context-timelines-v2",
+  "new_data_transfer": "Only approved synthetic sources/timelines/alignment/semantic/receipts; no credentials/owner/conversations/core.",
+  "post_training_native_evaluation_and_backup_reserve_seconds": 2000,
+  "no_retry_on_observation_timeout": true,
+  "no_overlapping_gpu_jobs": true,
+  "provider_stop_seconds": 4000,
+  "shutdown_and_100s_rounding_reserve_seconds": 100
+}

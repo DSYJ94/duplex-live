@@ -30,16 +30,21 @@ async def main(a):
     if not resume:assert stop-time.time()>2*sum(c['frames'] for c in cases)*1.15+450
     terminal=json.loads((Path(a.candidate)/'training-terminal.json').read_text());restore=json.loads((Path(a.candidate)/'fresh-process-restore.json').read_text());recipe=json.loads((Path(a.candidate)/'recipe.json').read_text())
     base_steps=terminal['parent_training_steps']
-    assert terminal['completed'] and restore['passed'] and base_steps in (190,244,298) and 0<terminal['actual_updates']<=(108 if base_steps==298 else 54 if base_steps==244 else 512)
+    context=bool(getattr(a,'context_phase_admission',None))
+    if context:
+        from .context_objective import authority
+        authority(a.context_phase_admission)
+        assert base_steps==406 and terminal['actual_updates']==60
+    assert terminal['completed'] and restore['passed'] and base_steps in ((406,) if context else (190,244,298)) and 0<terminal['actual_updates']<=(60 if context else 108 if base_steps==298 else 54 if base_steps==244 else 512)
     checkpoint=Path(a.candidate)/('step-%04d.pt'%terminal['actual_updates']);assert sha(a.parent_checkpoint)==a.parent_sha256
     parent=torch.load(a.parent_checkpoint,map_location='cpu',weights_only=False)
     from .native_optimizer import verified_parent
-    if base_steps==298:
-        assert json.loads(Path(a.lease).read_text())['resource_key'] in ('venus-action-fidelity-v41','venus-action-fidelity-v42')
+    if base_steps in (298,406):
+        assert json.loads(Path(a.lease).read_text())['resource_key'] in (('venus-context-train-v48',) if context else ('venus-action-fidelity-v41','venus-action-fidelity-v42'))
         assert reuse and json.loads((Path(a.candidate)/'final-native-restore.json').read_text())['total_training_steps']==terminal['total_optimizer_updates']
-    assert verified_parent(parent,a.parent_sha256,allow244=True,allow298=base_steps==298)==base_steps
+    assert verified_parent(parent,a.parent_sha256,allow244=True,allow298=base_steps==298,allow406=context)==base_steps
     state=torch.load(checkpoint,map_location='cpu',weights_only=False)
-    assert state['metadata']==recipe and state['step']==terminal['actual_updates'] and recipe['approval_sha256']==sha(a.approval)
+    assert state['metadata']==recipe and state['step']==terminal['actual_updates'] and recipe['approval_sha256']==sha(a.training_approval if context else a.approval)
     out=Path(a.output);parent_label='parent'+str(base_steps)
     conditions=((parent_label,parent['adapter']),('paced-continuation',state['adapter']))
     from .collection_resume import clone_original_collection,completed_cases,preserve_partial
@@ -49,7 +54,7 @@ async def main(a):
     else:out.mkdir(exist_ok=False)
     if reuse:
         from .collection_resume import reuse_parent
-        reuse_parent(reuse,out,cases,a.parent_sha256,parent_label)
+        reuse_parent(reuse,out,cases,a.parent_sha256,parent_label,total_steps=base_steps)
     done=completed_cases(out,cases,[x[0] for x in conditions]) if resume or reuse else {}
     remaining=sum(case['frames'] for label,_ in conditions for case in cases if (label,case['id']) not in done)
     assert stop-time.time()>remaining*1.5+600
@@ -113,4 +118,4 @@ async def main(a):
     (out/'paired-native-report.json').write_text(json.dumps(report,indent=2)+'\n');assert report['complete']
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];p.add_argument('--tts-attention',choices=['released','sdpa'],default='released');p.add_argument('--reuse-parent-collection');p.add_argument('--resume-collection');p.add_argument('--resume-from-source');p.add_argument('--voice-reference');p.add_argument('--voice-reference-sha256');asyncio.run(main(p.parse_args()))
+    p=argparse.ArgumentParser();[p.add_argument('--'+x,required=True) for x in ('model','candidate','parent-checkpoint','parent-sha256','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','output','source','lease')];p.add_argument('--tts-attention',choices=['released','sdpa'],default='released');p.add_argument('--reuse-parent-collection');p.add_argument('--resume-collection');p.add_argument('--resume-from-source');p.add_argument('--voice-reference');p.add_argument('--voice-reference-sha256');p.add_argument('--context-phase-admission');p.add_argument('--training-approval');asyncio.run(main(p.parse_args()))

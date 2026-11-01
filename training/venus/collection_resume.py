@@ -62,15 +62,17 @@ def clone_original_collection(source,destination):
     shutil.copytree(source,destination,copy_function=copy)
 
 
-def reuse_parent(source, destination, cases, checkpoint_sha256, label):
+def reuse_parent(source, destination, cases, checkpoint_sha256, label, total_steps=298):
     """Reuse all32 validated298 baselines, retaining every failed case/audit."""
     source, destination = Path(source), Path(destination)
-    valid = completed_cases(source, cases, ('parent244','paced-continuation'))
+    if total_steps not in (298,406):raise ValueError('Only exact preserved native baselines can be reused')
+    if total_steps==406 and checkpoint_sha256!='a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6':raise ValueError('Exact406 checkpoint required')
+    valid = completed_cases(source, cases, ('parent298' if total_steps==406 else 'parent244','paced-continuation'))
     if len(valid) != 64:
         raise ValueError('Complete original64 collection required before baseline reuse')
     condition = 'paced-continuation'
     profile = json.loads((source/condition/'profile.json').read_text())
-    if profile['checkpoint_sha256'] != checkpoint_sha256 or profile['optimizer_updates'] != 298:
+    if profile['checkpoint_sha256'] != checkpoint_sha256 or profile['optimizer_updates'] != total_steps:
         raise ValueError('Exact preserved298 baseline required')
     report = json.loads((source/'paired-native-report.json').read_text())
     old_audits = {(r['condition'],r['id']):r for r in report['cases']}

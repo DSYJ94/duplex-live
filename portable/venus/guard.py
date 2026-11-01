@@ -22,6 +22,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-context-train-v48':
+        from training.venus.context_guard import resource as context_resource
+        return context_resource(lease)
     if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         from training.venus.source_guard import resource as source_resource
         return source_resource(lease)
@@ -142,6 +145,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-context-train-v48':
+        from training.venus.context_guard import validate as context_validate
+        return context_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         from training.venus.source_guard import validate as source_validate
         return source_validate(vm,instances,runpods,lease,now)

@@ -1,0 +1,69 @@
+{
+  "status": "ADMITTED_UNDER_EXPLICIT_GCP_TRAINING_REQUEST",
+  "human_request": "proceed with GCP for training",
+  "maximum_new_updates": 60,
+  "parent_total_updates": 406,
+  "maximum_total_updates": 466,
+  "maximum_complete_epochs": 1,
+  "maximum_gpu_seconds": 4100,
+  "focused_prior_gpu_seconds_upper": 28700,
+  "original_gpu_seconds_upper": 54451,
+  "maximum_phase_usd": 70,
+  "maximum_project_usd": 175,
+  "prior_project_usd": 91.98448055555555,
+  "noncompute_reservation_usd": 33.0,
+  "conservative_hourly_usd": 4,
+  "phase_upper_usd": 69.44444444444444,
+  "parent_checkpoint_sha256": "a934ce7e05f4728a0973408eafedaed219f89dacfbf5dc6fcb2bbf536f4378b6",
+  "old_prefix_manifest_sha256": "e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b",
+  "new_timeline_manifest_sha256": "b433569a68830daa402292d5bd49e708b3fdf059d5714919888e88bc0143fcd8",
+  "independent_semantic_sha256": "a557343c4fc13786a012cd600e6d9cb6a5f4259c37d38af4135ab4f6567f07e4",
+  "source_progress_sha256": "081bd17d7624926449a212c2f8af08dfbdfed3c0eb3f5c86ebd3774cb6b21585",
+  "recipe": {
+    "train": 240,
+    "dev": 64,
+    "rank": 64,
+    "alpha": 64,
+    "last_layers": 1,
+    "projections": [
+      "q_proj",
+      "v_proj"
+    ],
+    "accumulation": 4,
+    "microbatch": 1,
+    "base_learning_rate": 5e-05,
+    "warmup_updates": 16,
+    "adam_betas": [
+      0.9,
+      0.999
+    ],
+    "adam_eps": 1e-08,
+    "weight_decay": 0.01,
+    "ordinary_kl_weight": 0.1,
+    "ordinary_hidden_weight": 0.01,
+    "action_aux_weight": 0.25,
+    "inherited_updater": "Exact saved406 OPAL program including current LR multiplier; do not reset Adam moments/counters or RNG.",
+    "tts_frozen": true,
+    "audio_encoder_frozen": true,
+    "base_llm_frozen": true
+  },
+  "resource": {
+    "name": "duplex-venus-source-20261101-v46",
+    "vm_id": "3873014408897233554",
+    "disk_id": "4375908109499109167",
+    "disk_size_gib": 100,
+    "machine": "a2-highgpu-1g",
+    "zone": "us-central1-a",
+    "maximum_concurrent_gpu_jobs": 1
+  },
+  "requirements": [
+    "Complete36 native replay and all new exact frozen-prefix parity before merge.",
+    "Retain all old268 source/cache hashes, histories and losses.",
+    "Independent process restore of parent406 and exact same ordinary loss before the phase boundary.",
+    "Measure worst4 TRAIN backward workload and full64 DEV; admit only a whole60-update epoch plus2000s native evaluation/copyback reserve. No partial subset.",
+    "Fresh-process savedstep1 Adam/RNG/OPAL restore and exact step2 equivalence before continuation.",
+    "No adoption before full native behavioral/speech gates and general-context backend qualification.",
+    "Do not run live microphone/model or other GPU workflows concurrently.",
+    "No external API calls, purchase, new storage, network changes or retries in this GPU phase."
+  ]
+}

@@ -48,7 +48,7 @@ def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def order(rows):
     train=sorted([r for r in rows if r['fold']=='TRAIN'],key=lambda r:r['id'])
-    count=RECIPE.get('train_count',152);assert count in (152,216) and len(train)==count
+    count=RECIPE.get('train_count',152);assert count in (152,216,240) and len(train)==count
     batches=[]
     for epoch in range(RECIPE['epochs']):
         shuffled=list(train);random.Random(RECIPE['seed']+epoch).shuffle(shuffled)
@@ -153,6 +153,8 @@ def main(a):
     opal_source=getattr(a,'opal_source',None)
     action_index=getattr(a,'action_target_index',None)
     action_phase=bool(action_index)
+    context_phase=bool(getattr(a,'context_phase_admission',None))
+    if context_phase and not action_phase:raise ValueError('Context phase requires complete combined action index')
     if action_phase and (not parent_checkpoint or not opal_source or reactive):
         raise ValueError('Action phase requires exact wrapped298 parent and native OPAL')
     if action_phase and not getattr(a,'parent_native_restore',None):
@@ -172,23 +174,30 @@ def main(a):
         from .native_optimizer import verified_parent
         assert digest(parent_checkpoint)==a.parent_sha256
         parent_state=torch.load(parent_checkpoint,map_location='cpu',weights_only=False)
-        parent_steps=verified_parent(parent_state,a.parent_sha256,allow244=bool(opal_source),allow298=action_phase)
-        if action_phase and parent_steps!=298:raise ValueError('Action phase cannot replay an earlier parent')
+        parent_steps=verified_parent(parent_state,a.parent_sha256,allow244=bool(opal_source),allow298=action_phase and not context_phase,allow406=context_phase)
+        if action_phase and parent_steps!=(406 if context_phase else 298):raise ValueError('Action phase cannot replay an earlier parent')
         if reactive and parent_steps!=190:raise ValueError('The older bounded control is scoped to190 only')
         RECIPE.update(train_count=216,dev_count=52,epochs=8,updates=432,learning_rate=.00005,seed=20261027,post_training_reserve_seconds=3600)
         MAXIMUM_RECIPE.update(RECIPE)
     if action_phase:
-        from .action_objective import ActionObjective
-        ACTION_OBJECTIVE=ActionObjective(action_index,Path(a.cache)/'manifest.json')
-        if lease.get('resource_key') not in ('venus-action-fidelity-v41','venus-action-fidelity-v42') or execution['new_optimizer_updates_authorized_by_this_execution']!=108:
-            raise ValueError('Exact approved action-phase execution required')
-        RECIPE.update(epochs=2,updates=108,maximum_complete_epochs=2,post_training_reserve_seconds=2500,
+        if context_phase:
+            from .context_objective import ContextObjective
+            ACTION_OBJECTIVE=ContextObjective(action_index,Path(a.cache)/'manifest.json',a.context_phase_admission)
+            if lease.get('resource_key')!='venus-context-train-v48' or execution['new_optimizer_updates_authorized_by_this_execution']!=60:
+                raise ValueError('Exact context60 execution required')
+        else:
+            from .action_objective import ActionObjective
+            ACTION_OBJECTIVE=ActionObjective(action_index,Path(a.cache)/'manifest.json')
+            if lease.get('resource_key') not in ('venus-action-fidelity-v41','venus-action-fidelity-v42') or execution['new_optimizer_updates_authorized_by_this_execution']!=108:
+                raise ValueError('Exact approved action-phase execution required')
+        RECIPE.update(epochs=1 if context_phase else 2,updates=60 if context_phase else 108,maximum_complete_epochs=1 if context_phase else 2,post_training_reserve_seconds=2000 if context_phase else 2500,
                       action_aux_weight=.25,action_target_index_sha256=ACTION_OBJECTIVE.sha256)
+        if context_phase:RECIPE.update(train_count=240,dev_count=64)
         MAXIMUM_RECIPE.update(RECIPE)
     if opal_source:
         from .opal_adapter import UPSTREAM_COMMIT
         maximum_epochs=getattr(a,'maximum_epochs',8)
-        if action_phase and maximum_epochs!=2:raise ValueError('Action phase is capped at two complete epochs')
+        if action_phase and maximum_epochs!=(1 if context_phase else 2):raise ValueError('Exact complete-epoch cap required')
         if type(maximum_epochs) is not int or not 1<=maximum_epochs<=8:raise ValueError('Explicit complete-epoch limit must be between one and eight')
         RECIPE['maximum_complete_epochs']=maximum_epochs
         RECIPE['opal']=dict(upstream_commit=UPSTREAM_COMMIT,backend=getattr(a,'opal_backend','keep'),agent_budget_usd=getattr(a,'opal_agent_budget',0.),nonblocking=True,goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance')
@@ -198,7 +207,7 @@ def main(a):
         MAXIMUM_RECIPE.update(RECIPE)
     cache=Path(a.cache);manifest=json.loads((cache/'manifest.json').read_text());assert not manifest['proof_only']
     approval=json.loads(Path(a.approval).read_text());assert approval['approved'] and approval['manifest_sha256']==manifest['source_manifest_sha256']
-    train_count=216 if parent_checkpoint else 152;dev_count=52 if parent_checkpoint else 36;per_epoch=train_count//4
+    train_count=240 if context_phase else 216 if parent_checkpoint else 152;dev_count=64 if context_phase else 52 if parent_checkpoint else 36;per_epoch=train_count//4
     assert len(manifest['scenes'])==train_count+dev_count and sum(r['fold']=='TRAIN' for r in manifest['scenes'])==train_count and sum(r['fold']=='DEV' for r in manifest['scenes'])==dev_count
     assert approval['train']==train_count and approval['dev']==dev_count
     if parent_checkpoint:assert manifest['native_speech_timing_schema']=='word-aligned-native-v1'
@@ -256,7 +265,7 @@ def main(a):
         assert parent_parts==previous['original_loss_parts'] and float(parent_loss)==previous['original_loss']
         proof.update(independent_process_established_by_caller=True,
                      reference_native_pid=previous['native_process_pid'],training_native_pid=os.getpid())
-        (out/'parent-restore.json').write_text(json.dumps(dict(parent_step=298,independent_native_parent_loss_equal=True,**proof),indent=2)+'\n')
+        (out/'parent-restore.json').write_text(json.dumps(dict(parent_step=parent_steps,independent_native_parent_loss_equal=True,**proof),indent=2)+'\n')
     elif parent_checkpoint and a.stage=='start':
         from .state import restore_parent
         proof=restore_parent(parent_state,llm,opt)
@@ -324,7 +333,7 @@ def main(a):
         benchmark['selection']='four largest TRAIN feed workloads; no loss or answer selection'
         (out/'no-update-gradient-benchmark.json').write_text(json.dumps(benchmark,indent=2)+'\n')
         admission=admit_epochs(benchmark['seconds'],dev_seconds,json.loads(Path(a.lease).read_text())['stop_unix']-time.time()-180)
-        if action_phase:assert admission['updates']<=108 and admission['epochs']<=2
+        if action_phase:assert admission['updates']<=(60 if context_phase else 108) and admission['epochs']<=(1 if context_phase else 2)
         RECIPE.update(epochs=admission['epochs'],updates=admission['updates']);batches=order(manifest['scenes'])
         metadata=dict(**identity,recipe=dict(RECIPE),maximum_recipe=MAXIMUM_RECIPE,admission=admission)
         (out/'recipe.json').write_text(json.dumps(metadata,indent=2)+'\n');print(json.dumps(dict(event='complete_epoch_schedule_admitted',**admission)),flush=True)
@@ -385,7 +394,7 @@ def main(a):
                 if control:
                     control.observe(step+1,recent,result['full_dev_teacher_forced'])
                     checkpoint(out/f'step-{step+1:04d}.pt',step+1)
-        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],parent_training_steps=parent_steps,total_optimizer_updates=RECIPE['updates']+parent_steps,actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=108 if action_phase else 512 if parent_checkpoint else 304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
+        (out/'training-terminal.json').write_text(json.dumps(dict(actual_updates=RECIPE['updates'],parent_training_steps=parent_steps,total_optimizer_updates=RECIPE['updates']+parent_steps,actual_complete_epochs=RECIPE['epochs'],maximum_authorized_updates=60 if context_phase else 108 if action_phase else 512 if parent_checkpoint else 304,completed=True,adopted=False,behavioral_evaluation_required=True),indent=2)+'\n')
     except BaseException:
         completed=locals().get('step',1)
         # Save actual current state on a budget/readiness stop, with honest completed count.
@@ -397,4 +406,4 @@ def main(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');p.add_argument('--opal-source',help='Exact clean pinned OPAL checkout; optional native optimizer owner');p.add_argument('--opal-backend',default='keep',help='keep by default; explicit bounded mailbox only');p.add_argument('--opal-agent-budget',type=float,default=0.);p.add_argument('--maximum-epochs',type=int,choices=range(1,9),default=8,help='Complete-epoch admission cap for OPAL; never truncate a corpus');p.add_argument('--coverage-manifest',help='Exact approved source manifest for TRAIN/DEV aggregate coverage only');p.add_argument('--action-target-index',help='Exact approved complete derived action target index');p.add_argument('--parent-native-restore',help='Actual independent native298 zero-update restore proof');main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--stage',choices=['start','restore-continue'],required=True);p.add_argument('--model',required=True);p.add_argument('--cache',required=True);p.add_argument('--approval',required=True);p.add_argument('--output',required=True);p.add_argument('--source',required=True);p.add_argument('--cache-producer',required=True);p.add_argument('--lease',required=True);p.add_argument('--baseline-reference');p.add_argument('--parent-checkpoint');p.add_argument('--parent-sha256');p.add_argument('--reactive',action='store_true',help='Nonblocking bounded agent decisions; no external API or executable patches');p.add_argument('--opal-source',help='Exact clean pinned OPAL checkout; optional native optimizer owner');p.add_argument('--opal-backend',default='keep',help='keep by default; explicit bounded mailbox only');p.add_argument('--opal-agent-budget',type=float,default=0.);p.add_argument('--maximum-epochs',type=int,choices=range(1,9),default=8,help='Complete-epoch admission cap for OPAL; never truncate a corpus');p.add_argument('--coverage-manifest',help='Exact approved source manifest for TRAIN/DEV aggregate coverage only');p.add_argument('--action-target-index',help='Exact approved complete derived action target index');p.add_argument('--parent-native-restore',help='Actual independent native parent zero-update restore proof');p.add_argument('--context-phase-admission',help='Exact new complete240TRAIN/64DEV context phase only');main(p.parse_args())
