@@ -1,0 +1,83 @@
+{
+  "status": "SOURCES_SEMANTICS_TIMINGS_COMPLETE_NATIVE_REPLAY_PENDING",
+  "at_utc": "2026-11-01T23:29:50.606361+00:00",
+  "assistant_source": {
+    "count": 34,
+    "spoken_uses": 66,
+    "characters": 4449,
+    "seconds": 296.32,
+    "conservative_cost_upper_usd": 2.2245,
+    "producer": "e258753",
+    "ledger_sha256": "46d0736b7b765ea8c85c071dabd042c2a82e3da1ee1423d33837c444f9c05e28"
+  },
+  "semantic": {
+    "scenes": 36,
+    "all36_pass": true,
+    "independent_model": "gpt-6-astra",
+    "calls": 1,
+    "conservative_usage_upper_usd": 0.666625,
+    "producer": "9edff58",
+    "report_sha256": "a557343c4fc13786a012cd600e6d9cb6a5f4259c37d38af4135ab4f6567f07e4",
+    "audio_or_native_timing_reviewed": false
+  },
+  "gcp_audit": {
+    "vm_id": "3873014408897233554",
+    "disk_id": "4375908109499109167",
+    "producer": "55920da29b33b6fbe5af21b35c05a9001a182680",
+    "controller_terminal": 0,
+    "model_terminal": 0,
+    "start_utc": "2026-11-01T23:10:19.545Z",
+    "stop_utc": "2026-11-01T23:14:07.520Z",
+    "actual_seconds": 227.975,
+    "conservative_seconds": 300,
+    "all34_words_and_peaks_pass": true,
+    "maximum_wer": 0.05,
+    "copyback_files": 147,
+    "copyback_bytes": 29198897,
+    "copyback_sha256": "5a97c08287868bbab95ccc1205e9bcc7e2101b5c336b45afc3aa700383dd00ba"
+  },
+  "alignment": {
+    "all34_exact_script_word_timings": true,
+    "provider": "ElevenLabs forced-alignment",
+    "calls": 34,
+    "independent_recognition": false,
+    "independent_numeric_diagnostic_calls": 1,
+    "numeric_diagnostic_model": "scribe_v2",
+    "numeric_source_id": "d43fe31199669e0f875cb17babe99c85f796c1a63fad758576dbf5f317a7f9d7",
+    "original_whisper_hypothesis": "\u00a33,814.041",
+    "independent_scribe_hypothesis": "\u00a33,814.41",
+    "intended_amount": "\u00a33,814.41",
+    "interpretation": "Independent recognition supports intended amount; original Whisper output remains unchanged. No homophone/numeric normalization added.",
+    "actual_terminal": 0,
+    "no_retries": true,
+    "cost_upper_usd": 0.5833333333333335,
+    "ledger_sha256": "3ec4ca6e9b22293d616b1935e05ea0d2d5ef52c65caa669cbbc50a83902e6265"
+  },
+  "timeline": {
+    "scenes": 36,
+    "train": 24,
+    "dev": 12,
+    "frames": 1813,
+    "path": "runs/venus-training-20261101/context-timelines-v2",
+    "manifest_sha256": "b433569a68830daa402292d5bd49e708b3fdf059d5714919888e88bc0143fcd8",
+    "native_replay_pending": true,
+    "authored_dialogue_clock_not_provider_latency": true,
+    "all_original_audio_preserved": true,
+    "all_old216TRAIN52DEV_preserved": true
+  },
+  "budget": {
+    "focused_gpu_seconds_upper": 28700,
+    "prior_gpu_seconds": 54451,
+    "cumulative_gpu_seconds_upper": 83151,
+    "broad_gpu_seconds_remaining": 4100,
+    "phase_cap_usd": 70,
+    "project_cap_usd": 175,
+    "noncompute_reserve_usd": 32.99995833333334,
+    "phase_upper_if_full32800_seconds_used": 69.44440277777777
+  },
+  "optimizer_updates": 0,
+  "latest_total_updates": 406,
+  "candidate_status": "REJECTED_NOT_ADOPTED",
+  "training_approved": false,
+  "backups": "Original sources, teacher work and semantic review verified on existing durable GCP disk; current alignment/timeline outputs currently local until next approved scoped sync; broad Mac source backup PARTIAL."
+}
