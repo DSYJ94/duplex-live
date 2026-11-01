@@ -43,13 +43,13 @@ def wer(reference,hypothesis):
     return row[-1]/max(1,len(a))
 
 
-def inventory(root,payload):
+def inventory(root,payload,required=72):
     ledger=json.loads((root/'ledger.json').read_text())
-    if not ledger['complete'] or len(ledger['attempts'])!=72:raise ValueError('Actual complete72 generation required')
+    if required not in (34,72) or not ledger['complete'] or len(ledger['attempts'])!=required:raise ValueError('Actual complete admitted cohort required')
     raw=payload.read_bytes();plan=json.loads(raw)
     if hashlib.sha256(raw).hexdigest()!=ledger['payload_sha256']:raise ValueError('Original payload changed')
     attempts={x['id']:x for x in ledger['attempts']}
-    if len(attempts)!=72 or set(attempts)!={x['id'] for x in plan['requests']}:raise ValueError('Exact full cohort required')
+    if len(attempts)!=required or len(plan['requests'])!=required or set(attempts)!={x['id'] for x in plan['requests']}:raise ValueError('Exact full cohort required')
     rows=[]
     for request in plan['requests']:
         row=attempts[request['id']];wav=root/request['id']/'original.wav';pcm=root/request['id']/'original.pcm'
@@ -66,9 +66,9 @@ def inventory(root,payload):
 
 
 def main(a):
-    rows=inventory(a.root,a.payload)
+    rows=inventory(a.root,a.payload,a.required)
     if a.output.exists():raise ValueError('Do not overwrite audit evidence')
-    report=dict(schema='dl-context-source-quality-v1',required=72,source_inventory_complete=True,all_peaks_pass=all(x['peak_pass'] for x in rows),rows=rows,training_approved=False,word_audit_complete=False,wer_threshold=.05,peak_threshold=.995,subset_acceptance=False)
+    report=dict(schema='dl-context-source-quality-v1',required=a.required,source_inventory_complete=True,all_peaks_pass=all(x['peak_pass'] for x in rows),rows=rows,training_approved=False,word_audit_complete=False,wer_threshold=.05,peak_threshold=.995,subset_acceptance=False)
     if not a.inventory_only:
         import numpy as np
         import torch
@@ -91,12 +91,13 @@ def main(a):
             row.update(recognized=result['text'],word_error_rate=wer(row['text'],result['text']),words=result.get('chunks'))
             row['passed']=row['peak_pass'] and row['word_error_rate']<=.05
             (a.output/(row['id']+'.json')).write_text(json.dumps(row,indent=2)+'\n')
-        report.update(word_audit_complete=True,recognizer=name,revision=revision,all72_pass=all(x['passed'] for x in rows))
+        report.update(word_audit_complete=True,recognizer=name,revision=revision,all_sources_pass=all(x['passed'] for x in rows))
+        report['all'+str(a.required)+'_pass']=report['all_sources_pass']
     else:a.output.mkdir(parents=True,exist_ok=False)
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k!='rows'}))
-    if not a.inventory_only and not report['all72_pass']:raise RuntimeError('Complete source cohort failed; preserve originals and no subset acceptance')
+    if not a.inventory_only and not report['all_sources_pass']:raise RuntimeError('Complete source cohort failed; preserve originals and no subset acceptance')
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--payload',type=Path,default=Path('docs/NATIVE-VENUS-CONTEXT-REPAIR-SPEECH-PAYLOAD-2026-11-01.json'));p.add_argument('--output',type=Path,required=True);p.add_argument('--inventory-only',action='store_true');main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--payload',type=Path,default=Path('docs/NATIVE-VENUS-CONTEXT-REPAIR-SPEECH-PAYLOAD-2026-11-01.json'));p.add_argument('--output',type=Path,required=True);p.add_argument('--inventory-only',action='store_true');p.add_argument('--required',type=int,choices=[34,72],default=72);main(p.parse_args())

@@ -1,0 +1,23 @@
+{
+  "status": "ADMITTED_WITHIN_EXISTING_TEACHER_QUALIFICATION_INSTRUCTION",
+  "recorded_utc": "2026-11-01T23:00:08.853992+00:00",
+  "authority": "Follow the existing teacher, independent quality, semantic, conversion and native numerical approval chain.",
+  "latest_training_request": "proceed with GCP for training",
+  "payload_sha256": "815fb3678270d02a94da64879d2051a18888d68fb986f57440d8ce06cf08ed88",
+  "maximum_paid_calls": 1,
+  "maximum_usd": 3,
+  "conservative_reservation_usd": 2.87915,
+  "phase_upper_with_completed_and_reserved_work_usd": 68.29581666666667,
+  "phase_cap_usd": 70,
+  "project_cap_usd": 175,
+  "official_model_source": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+  "official_price_source": "https://developers.openai.com/api/docs/pricing?latest-pricing-expanded=true",
+  "price_verified_utc": "2026-11-01T23:00:08.854435+00:00",
+  "input_rate_ceiling_usd_per_million": 25,
+  "output_rate_usd_per_million": 50,
+  "owner_conversations": false,
+  "credentials_or_audio_sent": false,
+  "purchases": 0,
+  "new_gpu_seconds": 0,
+  "new_optimizer_updates": 0
+}
