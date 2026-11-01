@@ -15,7 +15,7 @@
   "whole72_source_hashes_verified": true,
   "all72_original_peaks_pass": true,
   "total_seconds": 683.1199999999999,
-  "word_audit_complete": false,
+  "word_audit_complete": true,
   "training_approved": false,
   "model_adopted": false,
   "new_gpu_seconds": 0,
@@ -758,7 +758,7 @@
     "numeric_spelling_fixed_before_asr": true
   },
   "local_tests_passed": 8,
-  "off_machine_backup_new_batch_verified": false,
+  "off_machine_backup_new_batch_verified": true,
   "rows": [
     {
       "id": "1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train",
@@ -1488,5 +1488,11 @@
     "all_individual_utterances_fit": true,
     "not_a_native_clock_proof": true,
     "limitation": "Prompt dispatch after one utterance fits. Delayed requests and later turns can evict earlier premises; active task identity/context retention remains required."
-  }
+  },
+  "original_word_all_pass": false,
+  "original_word_passed": 70,
+  "derived_orthography_all72_word_pass": true,
+  "derived_does_not_rewrite_original_pass": true,
+  "backup_durable_disk_id": "4375908109499109167",
+  "gcp_review": "docs/NATIVE-VENUS-GCP-SOURCE-REVIEW-2026-11-01.json"
 }
