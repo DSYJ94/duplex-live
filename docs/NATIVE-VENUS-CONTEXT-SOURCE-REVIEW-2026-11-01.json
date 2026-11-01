@@ -1481,5 +1481,12 @@
       "peak_pass": true
     }
   ],
-  "next": "Independent full72 word audit on guarded GPU after access/scope admission; no passing subset or threshold/gain weakening."
+  "next": "Independent full72 word audit on guarded GPU after access/scope admission; no passing subset or threshold/gain weakening.",
+  "context_window_preflight": {
+    "maximum_source_seconds": 23.84,
+    "native_capture_seconds": 30,
+    "all_individual_utterances_fit": true,
+    "not_a_native_clock_proof": true,
+    "limitation": "Prompt dispatch after one utterance fits. Delayed requests and later turns can evict earlier premises; active task identity/context retention remains required."
+  }
 }
