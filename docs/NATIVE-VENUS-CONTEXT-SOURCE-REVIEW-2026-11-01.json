@@ -1,0 +1,1485 @@
+{
+  "schema": "dl-context-source-generation-review-v1",
+  "recorded_utc": "2026-11-01T18:35:59.757873+00:00",
+  "producer_source": "37b9086",
+  "actual_tool_session": 68672,
+  "actual_exit": 0,
+  "requested": 72,
+  "completed": 72,
+  "attempted": 72,
+  "retries": 0,
+  "conservative_cost_upper_usd": 4.7365,
+  "cap_usd": 5,
+  "unchanged_phase_cap_usd": 70,
+  "invoice_verified": false,
+  "whole72_source_hashes_verified": true,
+  "all72_original_peaks_pass": true,
+  "total_seconds": 683.1199999999999,
+  "word_audit_complete": false,
+  "training_approved": false,
+  "model_adopted": false,
+  "new_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "source_inventory": [
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/01329dd16e54e654dd654d6764957b060f7be41f068ef8e3face4d4913997141-train/original.pcm",
+      "bytes": 69120,
+      "sha256": "da07fb44e9387066114191251edde06f1bc69f8b940231ce1579980d24cc6e40"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/01329dd16e54e654dd654d6764957b060f7be41f068ef8e3face4d4913997141-train/original.wav",
+      "bytes": 69164,
+      "sha256": "880d718770dc52a59f88cee78194fed5f266be24280c0b0e55d9fb0e92846182"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0409b75ab635fbe4580a1bafe8b6c503a3851f689b4bb08fad10c96a2e613cc4-dev/original.pcm",
+      "bytes": 253440,
+      "sha256": "32758b94ee01816067c45c04ae8ac3ffd6a179f8141d5f558ca2bef9a13274bd"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0409b75ab635fbe4580a1bafe8b6c503a3851f689b4bb08fad10c96a2e613cc4-dev/original.wav",
+      "bytes": 253484,
+      "sha256": "ebea0b79f4576597aa97fccec4bedfb1e6d1a509d00eea89d7a893f4ef062422"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/08c493145104690ce2b230128c15544db2597cf446af2c17f8f1096eaa567ac7-dev/original.pcm",
+      "bytes": 326400,
+      "sha256": "c1c29e668070dee794142295aeba4862c9bb23324e091941c74152d7e08d5724"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/08c493145104690ce2b230128c15544db2597cf446af2c17f8f1096eaa567ac7-dev/original.wav",
+      "bytes": 326444,
+      "sha256": "135c6f1feb452913d7dc7f30c2537939afbd4a1fcc2dbe5abfad90f795d9ef36"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0a9c8b9713c216aa517782a838dad1db7fd6e6067531ea27f0d0b7da2595268b-train/original.pcm",
+      "bytes": 330240,
+      "sha256": "40d09b19f2e25697aee9e9ac29253207d496fc26bcfb97b6e38de0382851bc60"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0a9c8b9713c216aa517782a838dad1db7fd6e6067531ea27f0d0b7da2595268b-train/original.wav",
+      "bytes": 330284,
+      "sha256": "c2cf38e02f67217e604e7765af58904de2bc3e24051b16feba9a8dd14c9c9127"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0c15f2f051d7294faa363fc781e3f74dc2326c6ffefdc8e880a840f77d660086-train/original.pcm",
+      "bytes": 341760,
+      "sha256": "2ce132ca666fccf8660b755cdf019a1aad0559fc17c99a4596e033aa632c83b9"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0c15f2f051d7294faa363fc781e3f74dc2326c6ffefdc8e880a840f77d660086-train/original.wav",
+      "bytes": 341804,
+      "sha256": "808c0c4f07d1112a449e9d2347d799cc5f4b4571e9884fb454d2389617330043"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d24b56f96c07fd9a2a2b4c649904ba96e6b04ded6b062524d6226a1c7a420b8-dev/original.pcm",
+      "bytes": 890880,
+      "sha256": "50bd359bf203fd41b39afa52259a0dcdea09cc69c359c8ec58bee83cb5f21ee6"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d24b56f96c07fd9a2a2b4c649904ba96e6b04ded6b062524d6226a1c7a420b8-dev/original.wav",
+      "bytes": 890924,
+      "sha256": "05ad14424fe1b84efbef610e3403c20f588e96b3c31020a8620302aa2be0e4c3"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-dev/original.pcm",
+      "bytes": 84480,
+      "sha256": "22ac7f9000a446a6f61f0b18f322cb55c5a79c144bebc342a38705177a54f757"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-dev/original.wav",
+      "bytes": 84524,
+      "sha256": "0b650895102b1917e1ea0757e08ce0edbd1871cafb70c5513cc1533d965990ec"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-train/original.pcm",
+      "bytes": 80640,
+      "sha256": "3c35a446798f0eeffe4af5d5e1b3f1fbabe6e0d5b9c257ccd9685e980cb04785"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-train/original.wav",
+      "bytes": 80684,
+      "sha256": "a9627a4751ace6a44edba4ca070572866c8c7ae5c4d0d902d9d887715408212a"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-dev/original.pcm",
+      "bytes": 138240,
+      "sha256": "8858e995056710b1d29d172429ef338f49bfd4324fe934e31efc7886fcc6f70e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-dev/original.wav",
+      "bytes": 138284,
+      "sha256": "312f54ec3266a05f5efc4936a08f461f637e8bc28451a2c3bfcb56e844d5d62e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-train/original.pcm",
+      "bytes": 130560,
+      "sha256": "6bc129015c143dfcbdc1e78c38ff558fbd995891015a44de45b4ba4267b3be9b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-train/original.wav",
+      "bytes": 130604,
+      "sha256": "5cb0376185a1cd8870dc97aa081c6de9e330b7868bda0aa485bba3c705547947"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/151fcb925687865dbad9886c8d2029cfd80b089df8a93b7cc189f84c8c92c33b-train/original.pcm",
+      "bytes": 241920,
+      "sha256": "b8007255c853720c1915a7e3806d411a636402081386f9460b0d96226fd4fd8c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/151fcb925687865dbad9886c8d2029cfd80b089df8a93b7cc189f84c8c92c33b-train/original.wav",
+      "bytes": 241964,
+      "sha256": "bd133fc5f98bdb2873b5f849216d57d9062223827498c4f6ef422f79057bcdc9"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train/original.pcm",
+      "bytes": 326400,
+      "sha256": "af25a9d8881ce40c4300f36086668367462f24fd4f00462c93e0dff13c6bc4ef"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train/original.wav",
+      "bytes": 326444,
+      "sha256": "44b161c8ef64e52bf7d6295179c624787349c13ebc9b0d8c2cbe93d622e7a711"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-dev/original.pcm",
+      "bytes": 230400,
+      "sha256": "95edc204d39fb5cce5c61c2a71f884fecbc88beb47ae4d8c81a10173582608dc"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-dev/original.wav",
+      "bytes": 230444,
+      "sha256": "301dee2a178be9291fb545b05d92a91a1db8ca0b0e0e2812a067224da358dec1"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-train/original.pcm",
+      "bytes": 238080,
+      "sha256": "45633ee5dc0f875a6ed6e87d8be16ebe38282c393b658819b09667e6b84e99ae"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-train/original.wav",
+      "bytes": 238124,
+      "sha256": "e830249f638e71dc72735227efee967aba36b2999ab18de3e24664692c4dbb6c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1dcf4755e7e92a72f2aeda1525f5d4593b4e001324c3f690db7c56c368c387c2-train/original.pcm",
+      "bytes": 172800,
+      "sha256": "5c0880d7e329c425d13d3529a32ed0c55e61b33487c3d4b492b9c788e50cbb10"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1dcf4755e7e92a72f2aeda1525f5d4593b4e001324c3f690db7c56c368c387c2-train/original.wav",
+      "bytes": 172844,
+      "sha256": "58b53963024760d8b37ea05effd91953cf70f9396034ca43b86926c30fcefff2"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1e2c176c23d99e1dcb8ff4af9d490b79f0be1d2aa9b706a9ff5a73c45a445f6b-train/original.pcm",
+      "bytes": 157440,
+      "sha256": "bd0b0162bef52ef26aa725a74187a244069eb9cec122a96bd1c556cde85577d0"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/1e2c176c23d99e1dcb8ff4af9d490b79f0be1d2aa9b706a9ff5a73c45a445f6b-train/original.wav",
+      "bytes": 157484,
+      "sha256": "95d690a20d8786b70f0602df71dffd7799121e54d943bcfbb49355bdf8871561"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/2a3dddcaec9f9e8fb062291f7153a958bf83cab228da6dd63df130e607678e20-dev/original.pcm",
+      "bytes": 1029120,
+      "sha256": "f4feb875dd3ad8a7fa0988ed64cd8389ddda3955235942a65a7fda2fb79a9642"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/2a3dddcaec9f9e8fb062291f7153a958bf83cab228da6dd63df130e607678e20-dev/original.wav",
+      "bytes": 1029164,
+      "sha256": "6679be8991d31af9d81ee17b258c16733398a811aa1829dec0d156bea64adaf4"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/2c525775b3f9be65178ee38fa607f6a04724a0284411fd4ab77c20ef7b016198-train/original.pcm",
+      "bytes": 1105920,
+      "sha256": "58776d7d2ad2341eccf0ba6ec6800de7405b3ded343e3a5785fa6011f30a66c4"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/2c525775b3f9be65178ee38fa607f6a04724a0284411fd4ab77c20ef7b016198-train/original.wav",
+      "bytes": 1105964,
+      "sha256": "0dd473cba5114a7198fc32e5dfb7ec2f89e33ae689b1245ed60b6217b946773c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/309eb2c857cf51e6001f36067a694938db2256053ebfe2a366bbfb14e001bf51-dev/original.pcm",
+      "bytes": 176640,
+      "sha256": "8718820c2381f24e4ad684c54283f2de8c17283638b49d333fc0d8a1582e266f"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/309eb2c857cf51e6001f36067a694938db2256053ebfe2a366bbfb14e001bf51-dev/original.wav",
+      "bytes": 176684,
+      "sha256": "eed3432224557966fcffc0aaa0864f18a3503492fcfa57b5e142a26d8e5d6d78"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/35ddfc5d9acbebeb3daeab6a4f065ffa1f7b5981d4d313efbc7a2326c09d398a-train/original.pcm",
+      "bytes": 153600,
+      "sha256": "7ef3511233af0a6e3cfdad178d2b3fca7208c2ac48d93db656c371ee5b816375"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/35ddfc5d9acbebeb3daeab6a4f065ffa1f7b5981d4d313efbc7a2326c09d398a-train/original.wav",
+      "bytes": 153644,
+      "sha256": "e9c7f0a8641bc137a2d3d623634469b72996272f4df092aa03d20aee83151292"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-dev/original.pcm",
+      "bytes": 130560,
+      "sha256": "8d7dfffcc91ac6f2c8a1ba39e01e4062d1342eca3e84ca1da3f2a99fde7cb950"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-dev/original.wav",
+      "bytes": 130604,
+      "sha256": "a2407c189fba085948d6881dc7334dfd6bfff2e34a832c91dc7988ff9430d447"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-train/original.pcm",
+      "bytes": 126720,
+      "sha256": "92118ed86e2b7e8731de67fe0dff9791c2006ea88abc2ea5e857c5873ec68fdd"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-train/original.wav",
+      "bytes": 126764,
+      "sha256": "04f5c8b3b36a69ac5527e47f6932d9ef0a0be2a54e4eff2181844d641d55a193"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/4ff367858fcac3a6f59906c2eef9996bc8906af2d8d2d69c7fe386c2faec8873-dev/original.pcm",
+      "bytes": 1109760,
+      "sha256": "509410c5b22e6d33c1e0402312290c00f07ea4bd29933427e3b3ec1a4ef47e2d"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/4ff367858fcac3a6f59906c2eef9996bc8906af2d8d2d69c7fe386c2faec8873-dev/original.wav",
+      "bytes": 1109804,
+      "sha256": "06a460e67ffac2d0d882b85b9a73be679f0452c3cded07b91217c689d6b2536d"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/512a17ca3d2ff27468fc43c46cfea8531561c86786cd6f3d90962d65e146c802-dev/original.pcm",
+      "bytes": 153600,
+      "sha256": "2ec851485c0872db403b96fe3281aebae136e232ebfca642f1c66ae64cf41898"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/512a17ca3d2ff27468fc43c46cfea8531561c86786cd6f3d90962d65e146c802-dev/original.wav",
+      "bytes": 153644,
+      "sha256": "735cbd1a2f927325614e2fc45774f25eaac8f57779e89769c2f0c0136a096d16"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5a4cb5c4f40c52f398d8b70509cd9b3a9cfb8b679b8d2d379b93a9324e263955-dev/original.pcm",
+      "bytes": 142080,
+      "sha256": "e0c203149bd37fe150d3f7893814df1a5e7832b9e15b2d497c12e1a2dd4bedca"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5a4cb5c4f40c52f398d8b70509cd9b3a9cfb8b679b8d2d379b93a9324e263955-dev/original.wav",
+      "bytes": 142124,
+      "sha256": "54022ae8ed2cde11e0ff6957364443ab51fdb673bd4d665f30699292fee24f3a"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5b20a5547c25ffeea2785ceed2db3d0e69083b8cfecf3f678f1250cb75fe802a-dev/original.pcm",
+      "bytes": 1128960,
+      "sha256": "2b8e16dd7fc6ec3b951ac2bb969d4813cde296543d68e461ee90be613d580c84"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5b20a5547c25ffeea2785ceed2db3d0e69083b8cfecf3f678f1250cb75fe802a-dev/original.wav",
+      "bytes": 1129004,
+      "sha256": "b1f18f3bcc31a84dd1b3053105a029cb96f6829bc979e84c198248a076d54d79"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5d3c64bbbf6a8329bdb79766483d2e390cdb75b5b9a4703a93ae76c8b0dff686-train/original.pcm",
+      "bytes": 157440,
+      "sha256": "f7aacca537494b9cada83a21d0e50a9a530ebe56836c662ea02c9d8273032d19"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5d3c64bbbf6a8329bdb79766483d2e390cdb75b5b9a4703a93ae76c8b0dff686-train/original.wav",
+      "bytes": 157484,
+      "sha256": "7abc01edfa84ea9752f6355ffd19533926fbe16ab40f181c61356098235f0914"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5f014bac39c99658b9ec77d741ca99aedae00ee7576588c951fd63561ed87a4d-dev/original.pcm",
+      "bytes": 142080,
+      "sha256": "8173df1d784e0102a1cbacdede9716f63937ca573f63241a675f2d92001170f0"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/5f014bac39c99658b9ec77d741ca99aedae00ee7576588c951fd63561ed87a4d-dev/original.wav",
+      "bytes": 142124,
+      "sha256": "541efec5e792fc494a1644f4448b89e83e2f41feefd7fad3168dc9694e5013d3"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/681c5e37730c03820d7b2eb32f0f97046d4a54ae89365c8e1ef8f83bfc25c79f-train/original.pcm",
+      "bytes": 145920,
+      "sha256": "cc357ea0c364f744d2fcde6acd84cb28f98dce2b987a6155d3757b166fb37b45"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/681c5e37730c03820d7b2eb32f0f97046d4a54ae89365c8e1ef8f83bfc25c79f-train/original.wav",
+      "bytes": 145964,
+      "sha256": "4896fefad5478bf9539e5a9c59955b51d3676cec7bdc2df001bbdba0f6532a49"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-dev/original.pcm",
+      "bytes": 92160,
+      "sha256": "f3bbe068162739077b790d23488575fd43e4eefe9acd340870f7a2acfbb2ae9f"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-dev/original.wav",
+      "bytes": 92204,
+      "sha256": "190e35dfaf974eee4234bc80db30d82af276a2a3a9d3b2b17b13c724fba41980"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-train/original.pcm",
+      "bytes": 92160,
+      "sha256": "be726bc0c964ea5e11227b5a447492b7ca315f1a144abe2b390531e1207ba826"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-train/original.wav",
+      "bytes": 92204,
+      "sha256": "27f2df5dcaa597d30538504573a85923036179ee7f2154fa1f8b4a8bbde8d7fc"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-dev/original.pcm",
+      "bytes": 180480,
+      "sha256": "ef09443dc6aa99ab7f7c2d21b8b511e6a295b732547eb3ef8e016e2087fd65b5"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-dev/original.wav",
+      "bytes": 180524,
+      "sha256": "295e5325d7bf8aa640eeca20090a3937fc6d06a021606235f35c62e016fc2c39"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-train/original.pcm",
+      "bytes": 180480,
+      "sha256": "46b244d42ae21f91757b6dbe84f07f8b941ff5d05a41e4423d13c73358e5d264"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-train/original.wav",
+      "bytes": 180524,
+      "sha256": "d51089d7e09cff6e2ee90957b6099200d79983a2ee1eebfabc02a19f2c2b2d5b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/7bbb2d9c4f259db0bffc27c33c57a5b7b0de0e00f330c0bda4a35adcf399cd32-dev/original.pcm",
+      "bytes": 1144320,
+      "sha256": "f11965bfae2f93a8423659985da18dce14de788d3c74173556d4e5f451a761e4"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/7bbb2d9c4f259db0bffc27c33c57a5b7b0de0e00f330c0bda4a35adcf399cd32-dev/original.wav",
+      "bytes": 1144364,
+      "sha256": "603048d61f1a191737d91b66c067c9617c2638511ba6ef2077818076fb09c154"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/7ccea4903cf57444be4bdf01097decdf9b841abb86ed3edea8362be4d2ad64b4-train/original.pcm",
+      "bytes": 871680,
+      "sha256": "7084f3f69c7aaf309f61daf50cfe9a1a69c687fb0d81ace37aa08247bffd1dd6"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/7ccea4903cf57444be4bdf01097decdf9b841abb86ed3edea8362be4d2ad64b4-train/original.wav",
+      "bytes": 871724,
+      "sha256": "4dfade56392aae670a124708369d0ccfe2131195ca5003d99f7935ca5902dd3f"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/87789ca036c0e473a8ba3d358aa7cf43625ca5cf71719da27e198031e49bb0ff-train/original.pcm",
+      "bytes": 76800,
+      "sha256": "f9a658d35677edc8d64feccc4103533af498fb21c92a39c244b22440e13a91eb"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/87789ca036c0e473a8ba3d358aa7cf43625ca5cf71719da27e198031e49bb0ff-train/original.wav",
+      "bytes": 76844,
+      "sha256": "70d8c486ce91dcfd03e8634aff0ac14a953ce35babbfaa0d84d529f53fbf3f3f"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/949c3ea0319071500817399281ebc48e96e58893b9704e80161b486c41492f7c-train/original.pcm",
+      "bytes": 161280,
+      "sha256": "024e85efd88b17ac65330b4f0819cdcaa4b571e01b56554a01563677bd1e3c9b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/949c3ea0319071500817399281ebc48e96e58893b9704e80161b486c41492f7c-train/original.wav",
+      "bytes": 161324,
+      "sha256": "35b057d446a604e911e1a20c757a50e6eb9b878c65a8ed7ca231065a34eb5542"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/955280dedea698075640f9f30598bd6a3cc191fed8caae68c30d19008b8f0204-dev/original.pcm",
+      "bytes": 80640,
+      "sha256": "3724243e7d8f24c237c2d61297bb4943f880d58622e819d3fb3759980332c460"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/955280dedea698075640f9f30598bd6a3cc191fed8caae68c30d19008b8f0204-dev/original.wav",
+      "bytes": 80684,
+      "sha256": "b840c60dbd92b5fb074582fe06c09817a97bed2fe1e661540150dd22b725b534"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/968693af9097166600179536b70b8d669fa54942c795bfd91d1e08591498caf8-dev/original.pcm",
+      "bytes": 322560,
+      "sha256": "2f8a9431094f71a037cb32e0eb14295782455a1bb901051c972ef341ca5cc127"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/968693af9097166600179536b70b8d669fa54942c795bfd91d1e08591498caf8-dev/original.wav",
+      "bytes": 322604,
+      "sha256": "e0a917e51f76d6aa1479946df9204da76f675dc4f33d2fb4a090260e123f33a5"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/9957c9f3e336cc943a3261aed45ad1a41ece7f018c87558d8e9c9b4f2cdf7e96-train/original.pcm",
+      "bytes": 1017600,
+      "sha256": "f31dda191dcee9b72786c1c6201a61f607f97435bfebf680ef9b9c6cedf6c128"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/9957c9f3e336cc943a3261aed45ad1a41ece7f018c87558d8e9c9b4f2cdf7e96-train/original.wav",
+      "bytes": 1017644,
+      "sha256": "c65172647fc8548d3945ddcdbd3cf0214fdfdb16b7002cbce08b55a4781ca313"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/9e476aa226aaa94c47cdfa9f50c7f2e0c37579a39ece82d822bc79918005a67d-train/original.pcm",
+      "bytes": 314880,
+      "sha256": "5bf9c68389851230576ccaf51cc4978fa2735ac32232ec1c956884521f60d17a"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/9e476aa226aaa94c47cdfa9f50c7f2e0c37579a39ece82d822bc79918005a67d-train/original.wav",
+      "bytes": 314924,
+      "sha256": "f584706874bd7fa8cf127fa458ee4e314cc7239a64c8b41dd72ba12d1303dc4c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a349a47f4bf8e9480bd71dfe4699f6174b38e435d09b05aaa1367dccb70c6cea-train/original.pcm",
+      "bytes": 1140480,
+      "sha256": "2c777002074caede103cca5ad2af8f8e40abea268200994829042fc8f71b2e6d"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a349a47f4bf8e9480bd71dfe4699f6174b38e435d09b05aaa1367dccb70c6cea-train/original.wav",
+      "bytes": 1140524,
+      "sha256": "fc1d9312e26df677f0ab32ac1f77b32bc334e97fcbfb8e20ffe86a63bd36b91b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a65679448aa6191eddf7b28f5749ab6827a2a434351789494944cc91d232931a-dev/original.pcm",
+      "bytes": 1113600,
+      "sha256": "4a1b2706983639f77de7901b778cfa54e1a5f68c43ee3000050a50d61704f44e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a65679448aa6191eddf7b28f5749ab6827a2a434351789494944cc91d232931a-dev/original.wav",
+      "bytes": 1113644,
+      "sha256": "0b5dcdeae8d0c77d29ed4f2eefccddf7e85c3435cd5150c68de4a61e1aeecd9a"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a6ecbde961f56842ed99d0b727b06e98a6addc68f1208efdf1778d8ff0e9c423-train/original.pcm",
+      "bytes": 1098240,
+      "sha256": "cc0d2e8465a236bd605ebf7c2abc8edbfed616e2c98dd0c65f71fbeca8df9690"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/a6ecbde961f56842ed99d0b727b06e98a6addc68f1208efdf1778d8ff0e9c423-train/original.wav",
+      "bytes": 1098284,
+      "sha256": "c7d83164c418318ec312bf8d0d590a670bf86a5c4a5ca6e5eadddceab7542089"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ad34e78f5d587b0dd37c6d0d588864e4b8a9a4ccff61a43ef2c357af3aa35187-train/original.pcm",
+      "bytes": 168960,
+      "sha256": "695d9bc4e23532b03ab06c417df566a37fb1f388a2a5c19dc6fea40c71f17c0c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ad34e78f5d587b0dd37c6d0d588864e4b8a9a4ccff61a43ef2c357af3aa35187-train/original.wav",
+      "bytes": 169004,
+      "sha256": "a8211661dc33ca1ab6072153ec328180f3b459e2ddcc062821420da59c9f7f1b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ada6a526c6b319950da6298093ac517a507968b44c1bca607b6c7857b5ee09e5-train/original.pcm",
+      "bytes": 998400,
+      "sha256": "67199878fa9c07d2d14b6b008bf46e14996ab0a1e7a8c58e63800f6faeddb9cd"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ada6a526c6b319950da6298093ac517a507968b44c1bca607b6c7857b5ee09e5-train/original.wav",
+      "bytes": 998444,
+      "sha256": "38f7bcc3ed14f156ca0dbae84620c07c7672e1e0f3bc08ef241ba4bf9236807f"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/adf4ec9724e9bf5d56b1ee0f366d51777ee24c43602d5dadd38a829588cc561f-dev/original.pcm",
+      "bytes": 241920,
+      "sha256": "bc958c9265df6163c590fc5210dc512091276354b2076abe3b0db6a0602fb73c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/adf4ec9724e9bf5d56b1ee0f366d51777ee24c43602d5dadd38a829588cc561f-dev/original.wav",
+      "bytes": 241964,
+      "sha256": "b17ec375c408348a6c53460143d01317da2f844b3feea682797c2f86b16a5e3c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ae88e52b34086b1fc9a71d6c08e8c4fd7ba977659d1889266dba56e03260d092-train/original.pcm",
+      "bytes": 1002240,
+      "sha256": "3321ad24180c36e17b8bcfb49feb877c329bf74cc3f45868151c8ff1aa2211a0"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ae88e52b34086b1fc9a71d6c08e8c4fd7ba977659d1889266dba56e03260d092-train/original.wav",
+      "bytes": 1002284,
+      "sha256": "edb6fa48d2c8a03561c5a901d7f2b60921909c6810f24a0d500538cc6995a845"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/b41fadbdec7b069ec28c9efb75425fac9b58c7391e03a4b6d43e1802effc3c3c-train/original.pcm",
+      "bytes": 230400,
+      "sha256": "82382c002b4024980a4b19c2a1994197b7d1594813946dc3495fb5568854f884"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/b41fadbdec7b069ec28c9efb75425fac9b58c7391e03a4b6d43e1802effc3c3c-train/original.wav",
+      "bytes": 230444,
+      "sha256": "d27d48e62efdf4197144569f82933a1473103d2869b77e0319a92ca80d249d28"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/b752a2c0c88e2544d2eae7bb6492905da36afa79274afcafdfa68e48adc98e87-train/original.pcm",
+      "bytes": 69120,
+      "sha256": "19d844403bb7b243841aa707ef311a46e76af422d84dc34faaa3a80fa790f6cf"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/b752a2c0c88e2544d2eae7bb6492905da36afa79274afcafdfa68e48adc98e87-train/original.wav",
+      "bytes": 69164,
+      "sha256": "c1d5b821a9bd3c350e3085c110d8250145ab2c41764c83b1944098b8e78151dc"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bcf8e33224646067a12bce8faabd92f1591f8c83d90131405be8f04b740a91c2-train/original.pcm",
+      "bytes": 161280,
+      "sha256": "fc0be7a9c7887a58e1b20baefc53e478f504c41a5f2aebfaab6cdff46e602d3e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bcf8e33224646067a12bce8faabd92f1591f8c83d90131405be8f04b740a91c2-train/original.wav",
+      "bytes": 161324,
+      "sha256": "0fff3df83fc6c7327b486e8a739a5f4d177daaadad2bbb5428f7b183b1f73145"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bee6580e775dfd0dc624dd6d17d29b9dc858547000796aae4635978be733fa30-train/original.pcm",
+      "bytes": 1125120,
+      "sha256": "0dfa1b63efdc0af39ca1c849e2998bf68beab32131d12dbd28cac8d94dd29033"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bee6580e775dfd0dc624dd6d17d29b9dc858547000796aae4635978be733fa30-train/original.wav",
+      "bytes": 1125164,
+      "sha256": "37bfc3c44efc1e2b6b871ee85c9c2f85e59054b605b8d7a31c89d010a28aff46"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bffc7984e5a6bdfce9918ac066177d995dd19c206722d73f2ed4af6875442757-train/original.pcm",
+      "bytes": 894720,
+      "sha256": "54c06b5309202c1287824796719f0e97dc5af6044753cc1353a9089cb8d11297"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/bffc7984e5a6bdfce9918ac066177d995dd19c206722d73f2ed4af6875442757-train/original.wav",
+      "bytes": 894764,
+      "sha256": "cf13c1617d4d58df23099e2c48b1470b77ce2b98f4dfdd2057bd423675ccce03"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/c7f7d76660206116255036ad805510f39bfbf3f095af81c652316c1ab5d10a48-dev/original.pcm",
+      "bytes": 76800,
+      "sha256": "c16d2aa1acd6434740b8d0eb61f56283be523d8021823598467d312d6edb75d8"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/c7f7d76660206116255036ad805510f39bfbf3f095af81c652316c1ab5d10a48-dev/original.wav",
+      "bytes": 76844,
+      "sha256": "d16c48a0255fe9966f56b584d7cbdf68b848841835984e9b7274c5a8c7577609"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ca18f6b9e87f6fa71e30af3eead6e7617e2b4d451c44ebb9e0dae5d957c6f691-train/original.pcm",
+      "bytes": 1109760,
+      "sha256": "c12da46298a96b6e4a69080f35c7063dcfb01126be4dcc8b4d2cbfae2ed7c0f3"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ca18f6b9e87f6fa71e30af3eead6e7617e2b4d451c44ebb9e0dae5d957c6f691-train/original.wav",
+      "bytes": 1109804,
+      "sha256": "945a18d2fd6f80eb5b991ca7da1f5eaafc55d48ee3e0e0fb181619f709dc6adb"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d4768eaf3f56e38a2e713b172ed2938a90ad94a03b29daa99a577744359adf53-train/original.pcm",
+      "bytes": 894720,
+      "sha256": "6838e6a42fc57019ba78b48100abb78ac635b329bc27676fc664ef4b700854f0"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d4768eaf3f56e38a2e713b172ed2938a90ad94a03b29daa99a577744359adf53-train/original.wav",
+      "bytes": 894764,
+      "sha256": "179a58025b2a588982ad20b32c7a5ae52e4f2d0467c63e63235c460c05aad980"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d4ff9304a2ce446aae643fd99e38076ed6bed5fa79885ae8f24495b2fd651156-train/original.pcm",
+      "bytes": 1009920,
+      "sha256": "161e5d4794ae1756b2336461020b89e7afb6cee3af29d59fb6b7b06b460dc4da"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d4ff9304a2ce446aae643fd99e38076ed6bed5fa79885ae8f24495b2fd651156-train/original.wav",
+      "bytes": 1009964,
+      "sha256": "3e4fc32d6198b541bf43c0a8e663e80b875a4d192266aab6dfb2899d88aa213c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d774d2cbd65bedc2694b664ce8438268b56eeedb2529929f4de666f1fd999427-train/original.pcm",
+      "bytes": 1067520,
+      "sha256": "43934654ba629d58a1eb3f96074d8b78609533e31f44bf11a2ebc1e5eea019cb"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d774d2cbd65bedc2694b664ce8438268b56eeedb2529929f4de666f1fd999427-train/original.wav",
+      "bytes": 1067564,
+      "sha256": "0f807f5a5eb6cf5766190e10c09e42d455ec0175301812200b157d2ff562dd76"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d85db8bd6deffef2179211e2f49f5ddb9593b544f0afd18a5d6ccd85a7d997ca-dev/original.pcm",
+      "bytes": 1013760,
+      "sha256": "7fc8d868e52bb222111470905f876c887090c9d433a20c6062a8dbd8cc3678c7"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/d85db8bd6deffef2179211e2f49f5ddb9593b544f0afd18a5d6ccd85a7d997ca-dev/original.wav",
+      "bytes": 1013804,
+      "sha256": "55ad9d896e984921ce7430d069c57b8c36b769232c1e6eab4364fe9c4100af3b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/db1958297cdc8e7e145d385e600a6dd3342bbb992378b2034f125f961d183ffe-train/original.pcm",
+      "bytes": 238080,
+      "sha256": "e9245a194ac3c2d2f2a01f9c6093ef3c6f6e5cd1f496655843dcaf7aa8665bca"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/db1958297cdc8e7e145d385e600a6dd3342bbb992378b2034f125f961d183ffe-train/original.wav",
+      "bytes": 238124,
+      "sha256": "1236c174d7198a82ca01a7f1db4309f45943d30fe6c55f37b47b67b3d3ee65d2"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/db59d10b11bb9b0c713745652a18f91a8f4f5b9b8bb1718a0929b88bbab1964f-train/original.pcm",
+      "bytes": 1117440,
+      "sha256": "e540684b91dc8947e3ecef2c56fc49e1aa3ee9740f537dbbce1f837cf869e05e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/db59d10b11bb9b0c713745652a18f91a8f4f5b9b8bb1718a0929b88bbab1964f-train/original.wav",
+      "bytes": 1117484,
+      "sha256": "4a6f93709eae6b7f7c95a44d9c8a3ed52639b00d108aafad577b985a032ca40d"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-dev/original.pcm",
+      "bytes": 80640,
+      "sha256": "cf6e877d96d651694931c025c768e4132635be9f8bb43cfe42305e44498b1816"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-dev/original.wav",
+      "bytes": 80684,
+      "sha256": "ec0c08529a6389a6d3355f3c202bcc1542e7f1f69986a5d46171e6742d672a09"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-train/original.pcm",
+      "bytes": 76800,
+      "sha256": "572f8611b8b9bb9166f069dabe5a2d7867c4ca722ebd24a2872a8a5d5b2cab5c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-train/original.wav",
+      "bytes": 76844,
+      "sha256": "766f328329684a44cd4d6ef0ca7125efe08f627fbd5ae4eba017d3553a912792"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-dev/original.pcm",
+      "bytes": 96000,
+      "sha256": "6cf9d43e228df09a71a6b79d4e1221d8da7b8352d9f6ecf9c2dd65b312f3ed7b"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-dev/original.wav",
+      "bytes": 96044,
+      "sha256": "814c91b9a8a9e51d18ab4969d40ea1682401bd22545267c05bfd30ac4179179c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-train/original.pcm",
+      "bytes": 96000,
+      "sha256": "ce01c0f27140a39a691f2cd1401cc6b0c1a9300aa136e1c8f6d810072145927e"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-train/original.wav",
+      "bytes": 96044,
+      "sha256": "65375b54b0279337483566c7608c3a87052e059866cb4cbb808d0b31bfae58a5"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e016915ac0be72002c28b3e6f10f78b059d35ff069eebc5af913aa02c48e434d-train/original.pcm",
+      "bytes": 875520,
+      "sha256": "cbbc78ab70e09c529380658ac36092b982bff934888e72d937d3570ccdd43a55"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e016915ac0be72002c28b3e6f10f78b059d35ff069eebc5af913aa02c48e434d-train/original.wav",
+      "bytes": 875564,
+      "sha256": "2291ee403e439f1f4b6b2bb54c2b1c967801cfdd8d2e1a505d57179348557f85"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e3580877b17fc2c46654324bab85372a4a3d728e15159261bb458611e60dd45a-train/original.pcm",
+      "bytes": 249600,
+      "sha256": "18a8c4b4a0d3d6c045f495caf1160e902f128b8b81e87beeb2bb60940202ac75"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e3580877b17fc2c46654324bab85372a4a3d728e15159261bb458611e60dd45a-train/original.wav",
+      "bytes": 249644,
+      "sha256": "10ffaf1e62d163e2ced40e1a379ea2bcce210a1e52d0f35ecf4d3c7cda7cbcb2"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-dev/original.pcm",
+      "bytes": 107520,
+      "sha256": "4606215778e621670f0aca65184241a06eaf66a2fc98e8c09d4ebb445a96f33c"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-dev/original.wav",
+      "bytes": 107564,
+      "sha256": "0c6c2123280ea8c11f154cb57447658a94db3bd917865924a8ae13f32e7aba77"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-train/original.pcm",
+      "bytes": 111360,
+      "sha256": "5ef466ab4f1cb290f3af32d7ec32919f670603761438f20e15450d5115791bd5"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-train/original.wav",
+      "bytes": 111404,
+      "sha256": "b70ceddb43533699f5d3fbccc524da1d4d51e8e208d27ae68ddfb2016a82d1e9"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/edc718c8c0ebf0cf34188eaf6c5e342ef69cf2dc5b4d3cbaae85d404066c526d-train/original.pcm",
+      "bytes": 1098240,
+      "sha256": "601007c868f822010e68a431d9bfcc179edc4f37b8378d1fc641a95169061190"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/edc718c8c0ebf0cf34188eaf6c5e342ef69cf2dc5b4d3cbaae85d404066c526d-train/original.wav",
+      "bytes": 1098284,
+      "sha256": "ab66cad3e1ba5368a893c302d8b72ba78e83f97db247ca34e8e9f0c2b7b2ab36"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/f4ebe9f93f271ee3a3ce9770ba2c8bdc1d9137fbdc48a3e3f5fc148fa7ba9b54-train/original.pcm",
+      "bytes": 69120,
+      "sha256": "0019299262cf777dc0ca774e106463a4b595555ed7b5304defd019819adcfcae"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/f4ebe9f93f271ee3a3ce9770ba2c8bdc1d9137fbdc48a3e3f5fc148fa7ba9b54-train/original.wav",
+      "bytes": 69164,
+      "sha256": "e8932e2a7d696a8f50f5cb42397b06733239d21caf223226d83145b8ddb99f26"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/f7b43b1b728f3935f6c431675c6f68413fb76abd12d47bf4047aa229b0e7c16b-dev/original.pcm",
+      "bytes": 906240,
+      "sha256": "e635410ef153b9bf782708bc024ab524a4948ef4f5bda505dbac8eac94ae44c0"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/f7b43b1b728f3935f6c431675c6f68413fb76abd12d47bf4047aa229b0e7c16b-dev/original.wav",
+      "bytes": 906284,
+      "sha256": "b7b2a10db57f6c9c0d9f2f3e42a21a6f17df09028a41d9fbb9352f71a1ff5f00"
+    },
+    {
+      "path": "runs/venus-training-20261101/context-source-v1/ledger.json",
+      "bytes": 56527,
+      "sha256": "3f4756d1791550dc5796663af1a29887268148241d7fd78738498c0c01e334b1"
+    }
+  ],
+  "inventory_report_sha256": "0ade3803b7c7e8b81d8f31178ae4d0bf71c9ffb0d64bb08426502c04eccb088d",
+  "normalizer_source_sha256": "935ff2c8a8a3c65063a7b942990907ad6a93031fb313060eb27e7705315ffae5",
+  "recognition_policy": {
+    "wer_threshold": 0.05,
+    "peak_threshold": 0.995,
+    "source_wavs_unmodified": true,
+    "recognizer": "openai/whisper-large-v3-turbo",
+    "revision": "41f01f3fe87f28c78e2fbf8b568835947dd65ed9",
+    "numeric_spelling_fixed_before_asr": true
+  },
+  "local_tests_passed": 8,
+  "off_machine_backup_new_batch_verified": false,
+  "rows": [
+    {
+      "id": "1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train",
+      "fold": "TRAIN",
+      "text": "Keep completely silent until I say cobalt sunrise. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/1708a9f74224e3d876eae1a760bed48068261c02c05baac6315edceb41499002-train/original.wav",
+      "sha256": "44b161c8ef64e52bf7d6295179c624787349c13ebc9b0d8c2cbe93d622e7a711",
+      "seconds": 6.8,
+      "peak": 0.693145751953125,
+      "peak_pass": true
+    },
+    {
+      "id": "44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-dev",
+      "fold": "DEV",
+      "text": "I am still deciding. Please keep waiting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-dev/original.wav",
+      "sha256": "a2407c189fba085948d6881dc7334dfd6bfff2e34a832c91dc7988ff9430d447",
+      "seconds": 2.72,
+      "peak": 0.826568603515625,
+      "peak_pass": true
+    },
+    {
+      "id": "44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-train",
+      "fold": "TRAIN",
+      "text": "I am still deciding. Please keep waiting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/44a6fb4b4456f9dcaf83e604f0fa317586695eff31b76db550df30593af91931-train/original.wav",
+      "sha256": "04f5c8b3b36a69ac5527e47f6932d9ef0a0be2a54e4eff2181844d641d55a193",
+      "seconds": 2.64,
+      "peak": 0.780792236328125,
+      "peak_pass": true
+    },
+    {
+      "id": "1dcf4755e7e92a72f2aeda1525f5d4593b4e001324c3f690db7c56c368c387c2-train",
+      "fold": "TRAIN",
+      "text": "cobalt sunrise. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/1dcf4755e7e92a72f2aeda1525f5d4593b4e001324c3f690db7c56c368c387c2-train/original.wav",
+      "sha256": "58b53963024760d8b37ea05effd91953cf70f9396034ca43b86926c30fcefff2",
+      "seconds": 3.6,
+      "peak": 0.838897705078125,
+      "peak_pass": true
+    },
+    {
+      "id": "f4ebe9f93f271ee3a3ce9770ba2c8bdc1d9137fbdc48a3e3f5fc148fa7ba9b54-train",
+      "fold": "TRAIN",
+      "text": "What is 3 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/f4ebe9f93f271ee3a3ce9770ba2c8bdc1d9137fbdc48a3e3f5fc148fa7ba9b54-train/original.wav",
+      "sha256": "e8932e2a7d696a8f50f5cb42397b06733239d21caf223226d83145b8ddb99f26",
+      "seconds": 1.44,
+      "peak": 0.635772705078125,
+      "peak_pass": true
+    },
+    {
+      "id": "d774d2cbd65bedc2694b664ce8438268b56eeedb2529929f4de666f1fd999427-train",
+      "fold": "TRAIN",
+      "text": "Ask the background reasoner to compare a synthetic loan of 17000 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/d774d2cbd65bedc2694b664ce8438268b56eeedb2529929f4de666f1fd999427-train/original.wav",
+      "sha256": "0f807f5a5eb6cf5766190e10c09e42d455ec0175301812200b157d2ff562dd76",
+      "seconds": 22.24,
+      "peak": 0.875518798828125,
+      "peak_pass": true
+    },
+    {
+      "id": "a6ecbde961f56842ed99d0b727b06e98a6addc68f1208efdf1778d8ff0e9c423-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two synthetic routes to venue 1: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/a6ecbde961f56842ed99d0b727b06e98a6addc68f1208efdf1778d8ff0e9c423-train/original.wav",
+      "sha256": "c7d83164c418318ec312bf8d0d590a670bf86a5c4a5ca6e5eadddceab7542089",
+      "seconds": 22.88,
+      "peak": 0.774139404296875,
+      "peak_pass": true
+    },
+    {
+      "id": "18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-dev",
+      "fold": "DEV",
+      "text": "Cancel only the travel comparison. Keep the meal-plan work going.",
+      "wav": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-dev/original.wav",
+      "sha256": "301dee2a178be9291fb545b05d92a91a1db8ca0b0e0e2812a067224da358dec1",
+      "seconds": 4.8,
+      "peak": 0.96881103515625,
+      "peak_pass": true
+    },
+    {
+      "id": "18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-train",
+      "fold": "TRAIN",
+      "text": "Cancel only the travel comparison. Keep the meal-plan work going.",
+      "wav": "runs/venus-training-20261101/context-source-v1/18083e09afd279cbb87a77ef6ca7ccf901f9765ed80ec3217bc45dc81911a07d-train/original.wav",
+      "sha256": "e830249f638e71dc72735227efee967aba36b2999ab18de3e24664692c4dbb6c",
+      "seconds": 4.96,
+      "peak": 0.952911376953125,
+      "peak_pass": true
+    },
+    {
+      "id": "dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-dev",
+      "fold": "DEV",
+      "text": "What can we discuss while that finishes?",
+      "wav": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-dev/original.wav",
+      "sha256": "814c91b9a8a9e51d18ab4969d40ea1682401bd22545267c05bfd30ac4179179c",
+      "seconds": 2.0,
+      "peak": 0.611724853515625,
+      "peak_pass": true
+    },
+    {
+      "id": "dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-train",
+      "fold": "TRAIN",
+      "text": "What can we discuss while that finishes?",
+      "wav": "runs/venus-training-20261101/context-source-v1/dcbdbe18b38abedc9b434bf368180d7fcd4637de27aa382e86758a758c3e368b-train/original.wav",
+      "sha256": "65375b54b0279337483566c7608c3a87052e059866cb4cbb808d0b31bfae58a5",
+      "seconds": 2.0,
+      "peak": 0.55572509765625,
+      "peak_pass": true
+    },
+    {
+      "id": "7ccea4903cf57444be4bdf01097decdf9b841abb86ed3edea8362be4d2ad64b4-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to calculate paint for four walls in a room 4 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/7ccea4903cf57444be4bdf01097decdf9b841abb86ed3edea8362be4d2ad64b4-train/original.wav",
+      "sha256": "4dfade56392aae670a124708369d0ccfe2131195ca5003d99f7935ca5902dd3f",
+      "seconds": 18.16,
+      "peak": 0.70184326171875,
+      "peak_pass": true
+    },
+    {
+      "id": "db1958297cdc8e7e145d385e600a6dd3342bbb992378b2034f125f961d183ffe-train",
+      "fold": "TRAIN",
+      "text": "Correction: the room is 6 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/db1958297cdc8e7e145d385e600a6dd3342bbb992378b2034f125f961d183ffe-train/original.wav",
+      "sha256": "1236c174d7198a82ca01a7f1db4309f45943d30fe6c55f37b47b67b3d3ee65d2",
+      "seconds": 4.96,
+      "peak": 0.539764404296875,
+      "peak_pass": true
+    },
+    {
+      "id": "75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-dev",
+      "fold": "DEV",
+      "text": "Have you got the corrected estimate yet?",
+      "wav": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-dev/original.wav",
+      "sha256": "190e35dfaf974eee4234bc80db30d82af276a2a3a9d3b2b17b13c724fba41980",
+      "seconds": 1.92,
+      "peak": 0.783050537109375,
+      "peak_pass": true
+    },
+    {
+      "id": "75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-train",
+      "fold": "TRAIN",
+      "text": "Have you got the corrected estimate yet?",
+      "wav": "runs/venus-training-20261101/context-source-v1/75c213124f069107d2b24f39b9a114960969bc8a1d268e34b52cf532bec121af-train/original.wav",
+      "sha256": "27f2df5dcaa597d30538504573a85923036179ee7f2154fa1f8b4a8bbde8d7fc",
+      "seconds": 1.92,
+      "peak": 0.94537353515625,
+      "peak_pass": true
+    },
+    {
+      "id": "949c3ea0319071500817399281ebc48e96e58893b9704e80161b486c41492f7c-train",
+      "fold": "TRAIN",
+      "text": "Explain three steps for preparing the studio for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/949c3ea0319071500817399281ebc48e96e58893b9704e80161b486c41492f7c-train/original.wav",
+      "sha256": "35b057d446a604e911e1a20c757a50e6eb9b878c65a8ed7ca231065a34eb5542",
+      "seconds": 3.36,
+      "peak": 0.610748291015625,
+      "peak_pass": true
+    },
+    {
+      "id": "e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-dev",
+      "fold": "DEV",
+      "text": "Pause speaking now. Continue listening.",
+      "wav": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-dev/original.wav",
+      "sha256": "0c6c2123280ea8c11f154cb57447658a94db3bd917865924a8ae13f32e7aba77",
+      "seconds": 2.24,
+      "peak": 0.549652099609375,
+      "peak_pass": true
+    },
+    {
+      "id": "e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-train",
+      "fold": "TRAIN",
+      "text": "Pause speaking now. Continue listening.",
+      "wav": "runs/venus-training-20261101/context-source-v1/e45410fc37a6a345edda915ebbac13618aec2adbf80a2f63befc8dd829e9e7c5-train/original.wav",
+      "sha256": "b70ceddb43533699f5d3fbccc524da1d4d51e8e208d27ae68ddfb2016a82d1e9",
+      "seconds": 2.32,
+      "peak": 0.595001220703125,
+      "peak_pass": true
+    },
+    {
+      "id": "0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-dev",
+      "fold": "DEV",
+      "text": "I need to move something first.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-dev/original.wav",
+      "sha256": "0b650895102b1917e1ea0757e08ce0edbd1871cafb70c5513cc1533d965990ec",
+      "seconds": 1.76,
+      "peak": 0.7000732421875,
+      "peak_pass": true
+    },
+    {
+      "id": "0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-train",
+      "fold": "TRAIN",
+      "text": "I need to move something first.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0d49a64227bb5a965da082fa279a864b2658f31c7b7277e68bbe95c86e3c66c4-train/original.wav",
+      "sha256": "a9627a4751ace6a44edba4ca070572866c8c7ae5c4d0d902d9d887715408212a",
+      "seconds": 1.68,
+      "peak": 0.686248779296875,
+      "peak_pass": true
+    },
+    {
+      "id": "dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-dev",
+      "fold": "DEV",
+      "text": "Continue from where you stopped.",
+      "wav": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-dev/original.wav",
+      "sha256": "ec0c08529a6389a6d3355f3c202bcc1542e7f1f69986a5d46171e6742d672a09",
+      "seconds": 1.68,
+      "peak": 0.525390625,
+      "peak_pass": true
+    },
+    {
+      "id": "dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-train",
+      "fold": "TRAIN",
+      "text": "Continue from where you stopped.",
+      "wav": "runs/venus-training-20261101/context-source-v1/dc9c751e7db9b078934a3a979caa4a18c84794e7c3381b3551e0d2d2f068fba3-train/original.wav",
+      "sha256": "766f328329684a44cd4d6ef0ca7125efe08f627fbd5ae4eba017d3553a912792",
+      "seconds": 1.6,
+      "peak": 0.712432861328125,
+      "peak_pass": true
+    },
+    {
+      "id": "d4ff9304a2ce446aae643fd99e38076ed6bed5fa79885ae8f24495b2fd651156-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 210 pounds and must stay dry; panel B costs 270 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/d4ff9304a2ce446aae643fd99e38076ed6bed5fa79885ae8f24495b2fd651156-train/original.wav",
+      "sha256": "3e4fc32d6198b541bf43c0a8e663e80b875a4d192266aab6dfb2899d88aa213c",
+      "seconds": 21.04,
+      "peak": 0.871795654296875,
+      "peak_pass": true
+    },
+    {
+      "id": "0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-dev",
+      "fold": "DEV",
+      "text": "While that runs, what is insulation for?",
+      "wav": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-dev/original.wav",
+      "sha256": "312f54ec3266a05f5efc4936a08f461f637e8bc28451a2c3bfcb56e844d5d62e",
+      "seconds": 2.88,
+      "peak": 0.777099609375,
+      "peak_pass": true
+    },
+    {
+      "id": "0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-train",
+      "fold": "TRAIN",
+      "text": "While that runs, what is insulation for?",
+      "wav": "runs/venus-training-20261101/context-source-v1/0e21d3f58239af8504ed73db7598a95d68d6c37750a382783b35a677bdad48bd-train/original.wav",
+      "sha256": "5cb0376185a1cd8870dc97aa081c6de9e330b7868bda0aa485bba3c705547947",
+      "seconds": 2.72,
+      "peak": 0.712554931640625,
+      "peak_pass": true
+    },
+    {
+      "id": "771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-dev",
+      "fold": "DEV",
+      "text": "When the comparison is ready, explain its main tradeoff briefly.",
+      "wav": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-dev/original.wav",
+      "sha256": "295e5325d7bf8aa640eeca20090a3937fc6d06a021606235f35c62e016fc2c39",
+      "seconds": 3.76,
+      "peak": 0.716522216796875,
+      "peak_pass": true
+    },
+    {
+      "id": "771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-train",
+      "fold": "TRAIN",
+      "text": "When the comparison is ready, explain its main tradeoff briefly.",
+      "wav": "runs/venus-training-20261101/context-source-v1/771069a71aa34abc7df2cf00b29c2c2a956b3102db13863e6506fb9def133c6d-train/original.wav",
+      "sha256": "d51089d7e09cff6e2ee90957b6099200d79983a2ee1eebfabc02a19f2c2b2d5b",
+      "seconds": 3.76,
+      "peak": 0.8089599609375,
+      "peak_pass": true
+    },
+    {
+      "id": "0a9c8b9713c216aa517782a838dad1db7fd6e6067531ea27f0d0b7da2595268b-train",
+      "fold": "TRAIN",
+      "text": "Keep completely silent until I say amber river. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0a9c8b9713c216aa517782a838dad1db7fd6e6067531ea27f0d0b7da2595268b-train/original.wav",
+      "sha256": "c2cf38e02f67217e604e7765af58904de2bc3e24051b16feba9a8dd14c9c9127",
+      "seconds": 6.88,
+      "peak": 0.85369873046875,
+      "peak_pass": true
+    },
+    {
+      "id": "ad34e78f5d587b0dd37c6d0d588864e4b8a9a4ccff61a43ef2c357af3aa35187-train",
+      "fold": "TRAIN",
+      "text": "amber river. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/ad34e78f5d587b0dd37c6d0d588864e4b8a9a4ccff61a43ef2c357af3aa35187-train/original.wav",
+      "sha256": "a8211661dc33ca1ab6072153ec328180f3b459e2ddcc062821420da59c9f7f1b",
+      "seconds": 3.52,
+      "peak": 0.706878662109375,
+      "peak_pass": true
+    },
+    {
+      "id": "01329dd16e54e654dd654d6764957b060f7be41f068ef8e3face4d4913997141-train",
+      "fold": "TRAIN",
+      "text": "What is 4 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/01329dd16e54e654dd654d6764957b060f7be41f068ef8e3face4d4913997141-train/original.wav",
+      "sha256": "880d718770dc52a59f88cee78194fed5f266be24280c0b0e55d9fb0e92846182",
+      "seconds": 1.44,
+      "peak": 0.76702880859375,
+      "peak_pass": true
+    },
+    {
+      "id": "ca18f6b9e87f6fa71e30af3eead6e7617e2b4d451c44ebb9e0dae5d957c6f691-train",
+      "fold": "TRAIN",
+      "text": "Ask the background reasoner to compare a synthetic loan of 18300 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/ca18f6b9e87f6fa71e30af3eead6e7617e2b4d451c44ebb9e0dae5d957c6f691-train/original.wav",
+      "sha256": "945a18d2fd6f80eb5b991ca7da1f5eaafc55d48ee3e0e0fb181619f709dc6adb",
+      "seconds": 23.12,
+      "peak": 0.79815673828125,
+      "peak_pass": true
+    },
+    {
+      "id": "bee6580e775dfd0dc624dd6d17d29b9dc858547000796aae4635978be733fa30-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two synthetic routes to venue 2: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/bee6580e775dfd0dc624dd6d17d29b9dc858547000796aae4635978be733fa30-train/original.wav",
+      "sha256": "37bfc3c44efc1e2b6b871ee85c9c2f85e59054b605b8d7a31c89d010a28aff46",
+      "seconds": 23.44,
+      "peak": 0.85693359375,
+      "peak_pass": true
+    },
+    {
+      "id": "d4768eaf3f56e38a2e713b172ed2938a90ad94a03b29daa99a577744359adf53-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to calculate paint for four walls in a room 5 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/d4768eaf3f56e38a2e713b172ed2938a90ad94a03b29daa99a577744359adf53-train/original.wav",
+      "sha256": "179a58025b2a588982ad20b32c7a5ae52e4f2d0467c63e63235c460c05aad980",
+      "seconds": 18.64,
+      "peak": 0.850860595703125,
+      "peak_pass": true
+    },
+    {
+      "id": "e3580877b17fc2c46654324bab85372a4a3d728e15159261bb458611e60dd45a-train",
+      "fold": "TRAIN",
+      "text": "Correction: the room is 7 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/e3580877b17fc2c46654324bab85372a4a3d728e15159261bb458611e60dd45a-train/original.wav",
+      "sha256": "10ffaf1e62d163e2ced40e1a379ea2bcce210a1e52d0f35ecf4d3c7cda7cbcb2",
+      "seconds": 5.2,
+      "peak": 0.586578369140625,
+      "peak_pass": true
+    },
+    {
+      "id": "bcf8e33224646067a12bce8faabd92f1591f8c83d90131405be8f04b740a91c2-train",
+      "fold": "TRAIN",
+      "text": "Explain three steps for preparing the attic for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/bcf8e33224646067a12bce8faabd92f1591f8c83d90131405be8f04b740a91c2-train/original.wav",
+      "sha256": "0fff3df83fc6c7327b486e8a739a5f4d177daaadad2bbb5428f7b183b1f73145",
+      "seconds": 3.36,
+      "peak": 0.60870361328125,
+      "peak_pass": true
+    },
+    {
+      "id": "9957c9f3e336cc943a3261aed45ad1a41ece7f018c87558d8e9c9b4f2cdf7e96-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 220 pounds and must stay dry; panel B costs 280 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/9957c9f3e336cc943a3261aed45ad1a41ece7f018c87558d8e9c9b4f2cdf7e96-train/original.wav",
+      "sha256": "c65172647fc8548d3945ddcdbd3cf0214fdfdb16b7002cbce08b55a4781ca313",
+      "seconds": 21.2,
+      "peak": 0.76177978515625,
+      "peak_pass": true
+    },
+    {
+      "id": "9e476aa226aaa94c47cdfa9f50c7f2e0c37579a39ece82d822bc79918005a67d-train",
+      "fold": "TRAIN",
+      "text": "Keep completely silent until I say silver orchard. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/9e476aa226aaa94c47cdfa9f50c7f2e0c37579a39ece82d822bc79918005a67d-train/original.wav",
+      "sha256": "f584706874bd7fa8cf127fa458ee4e314cc7239a64c8b41dd72ba12d1303dc4c",
+      "seconds": 6.56,
+      "peak": 0.873291015625,
+      "peak_pass": true
+    },
+    {
+      "id": "681c5e37730c03820d7b2eb32f0f97046d4a54ae89365c8e1ef8f83bfc25c79f-train",
+      "fold": "TRAIN",
+      "text": "silver orchard. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/681c5e37730c03820d7b2eb32f0f97046d4a54ae89365c8e1ef8f83bfc25c79f-train/original.wav",
+      "sha256": "4896fefad5478bf9539e5a9c59955b51d3676cec7bdc2df001bbdba0f6532a49",
+      "seconds": 3.04,
+      "peak": 0.629119873046875,
+      "peak_pass": true
+    },
+    {
+      "id": "87789ca036c0e473a8ba3d358aa7cf43625ca5cf71719da27e198031e49bb0ff-train",
+      "fold": "TRAIN",
+      "text": "What is 5 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/87789ca036c0e473a8ba3d358aa7cf43625ca5cf71719da27e198031e49bb0ff-train/original.wav",
+      "sha256": "70d8c486ce91dcfd03e8634aff0ac14a953ce35babbfaa0d84d529f53fbf3f3f",
+      "seconds": 1.6,
+      "peak": 0.655303955078125,
+      "peak_pass": true
+    },
+    {
+      "id": "edc718c8c0ebf0cf34188eaf6c5e342ef69cf2dc5b4d3cbaae85d404066c526d-train",
+      "fold": "TRAIN",
+      "text": "Ask the background reasoner to compare a synthetic loan of 19600 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/edc718c8c0ebf0cf34188eaf6c5e342ef69cf2dc5b4d3cbaae85d404066c526d-train/original.wav",
+      "sha256": "ab66cad3e1ba5368a893c302d8b72ba78e83f97db247ca34e8e9f0c2b7b2ab36",
+      "seconds": 22.88,
+      "peak": 0.799591064453125,
+      "peak_pass": true
+    },
+    {
+      "id": "db59d10b11bb9b0c713745652a18f91a8f4f5b9b8bb1718a0929b88bbab1964f-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two synthetic routes to venue 3: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/db59d10b11bb9b0c713745652a18f91a8f4f5b9b8bb1718a0929b88bbab1964f-train/original.wav",
+      "sha256": "4a6f93709eae6b7f7c95a44d9c8a3ed52639b00d108aafad577b985a032ca40d",
+      "seconds": 23.28,
+      "peak": 0.789703369140625,
+      "peak_pass": true
+    },
+    {
+      "id": "e016915ac0be72002c28b3e6f10f78b059d35ff069eebc5af913aa02c48e434d-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to calculate paint for four walls in a room 6 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/e016915ac0be72002c28b3e6f10f78b059d35ff069eebc5af913aa02c48e434d-train/original.wav",
+      "sha256": "2291ee403e439f1f4b6b2bb54c2b1c967801cfdd8d2e1a505d57179348557f85",
+      "seconds": 18.24,
+      "peak": 0.765045166015625,
+      "peak_pass": true
+    },
+    {
+      "id": "151fcb925687865dbad9886c8d2029cfd80b089df8a93b7cc189f84c8c92c33b-train",
+      "fold": "TRAIN",
+      "text": "Correction: the room is 8 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/151fcb925687865dbad9886c8d2029cfd80b089df8a93b7cc189f84c8c92c33b-train/original.wav",
+      "sha256": "bd133fc5f98bdb2873b5f849216d57d9062223827498c4f6ef422f79057bcdc9",
+      "seconds": 5.04,
+      "peak": 0.698638916015625,
+      "peak_pass": true
+    },
+    {
+      "id": "1e2c176c23d99e1dcb8ff4af9d490b79f0be1d2aa9b706a9ff5a73c45a445f6b-train",
+      "fold": "TRAIN",
+      "text": "Explain three steps for preparing the pantry for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/1e2c176c23d99e1dcb8ff4af9d490b79f0be1d2aa9b706a9ff5a73c45a445f6b-train/original.wav",
+      "sha256": "95d690a20d8786b70f0602df71dffd7799121e54d943bcfbb49355bdf8871561",
+      "seconds": 3.28,
+      "peak": 0.46978759765625,
+      "peak_pass": true
+    },
+    {
+      "id": "ae88e52b34086b1fc9a71d6c08e8c4fd7ba977659d1889266dba56e03260d092-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 230 pounds and must stay dry; panel B costs 290 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/ae88e52b34086b1fc9a71d6c08e8c4fd7ba977659d1889266dba56e03260d092-train/original.wav",
+      "sha256": "edb6fa48d2c8a03561c5a901d7f2b60921909c6810f24a0d500538cc6995a845",
+      "seconds": 20.88,
+      "peak": 0.829742431640625,
+      "peak_pass": true
+    },
+    {
+      "id": "0c15f2f051d7294faa363fc781e3f74dc2326c6ffefdc8e880a840f77d660086-train",
+      "fold": "TRAIN",
+      "text": "Keep completely silent until I say violet harbour. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0c15f2f051d7294faa363fc781e3f74dc2326c6ffefdc8e880a840f77d660086-train/original.wav",
+      "sha256": "808c0c4f07d1112a449e9d2347d799cc5f4b4571e9884fb454d2389617330043",
+      "seconds": 7.12,
+      "peak": 0.859710693359375,
+      "peak_pass": true
+    },
+    {
+      "id": "5d3c64bbbf6a8329bdb79766483d2e390cdb75b5b9a4703a93ae76c8b0dff686-train",
+      "fold": "TRAIN",
+      "text": "violet harbour. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/5d3c64bbbf6a8329bdb79766483d2e390cdb75b5b9a4703a93ae76c8b0dff686-train/original.wav",
+      "sha256": "7abc01edfa84ea9752f6355ffd19533926fbe16ab40f181c61356098235f0914",
+      "seconds": 3.28,
+      "peak": 0.6602783203125,
+      "peak_pass": true
+    },
+    {
+      "id": "b752a2c0c88e2544d2eae7bb6492905da36afa79274afcafdfa68e48adc98e87-train",
+      "fold": "TRAIN",
+      "text": "What is 6 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/b752a2c0c88e2544d2eae7bb6492905da36afa79274afcafdfa68e48adc98e87-train/original.wav",
+      "sha256": "c1d5b821a9bd3c350e3085c110d8250145ab2c41764c83b1944098b8e78151dc",
+      "seconds": 1.44,
+      "peak": 0.699462890625,
+      "peak_pass": true
+    },
+    {
+      "id": "a349a47f4bf8e9480bd71dfe4699f6174b38e435d09b05aaa1367dccb70c6cea-train",
+      "fold": "TRAIN",
+      "text": "Ask the background reasoner to compare a synthetic loan of 20900 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/a349a47f4bf8e9480bd71dfe4699f6174b38e435d09b05aaa1367dccb70c6cea-train/original.wav",
+      "sha256": "fc1d9312e26df677f0ab32ac1f77b32bc334e97fcbfb8e20ffe86a63bd36b91b",
+      "seconds": 23.76,
+      "peak": 0.7633056640625,
+      "peak_pass": true
+    },
+    {
+      "id": "2c525775b3f9be65178ee38fa607f6a04724a0284411fd4ab77c20ef7b016198-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two synthetic routes to venue 4: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/2c525775b3f9be65178ee38fa607f6a04724a0284411fd4ab77c20ef7b016198-train/original.wav",
+      "sha256": "0dd473cba5114a7198fc32e5dfb7ec2f89e33ae689b1245ed60b6217b946773c",
+      "seconds": 23.04,
+      "peak": 0.7266845703125,
+      "peak_pass": true
+    },
+    {
+      "id": "bffc7984e5a6bdfce9918ac066177d995dd19c206722d73f2ed4af6875442757-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to calculate paint for four walls in a room 7 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/bffc7984e5a6bdfce9918ac066177d995dd19c206722d73f2ed4af6875442757-train/original.wav",
+      "sha256": "cf13c1617d4d58df23099e2c48b1470b77ce2b98f4dfdd2057bd423675ccce03",
+      "seconds": 18.64,
+      "peak": 0.710693359375,
+      "peak_pass": true
+    },
+    {
+      "id": "b41fadbdec7b069ec28c9efb75425fac9b58c7391e03a4b6d43e1802effc3c3c-train",
+      "fold": "TRAIN",
+      "text": "Correction: the room is 9 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/b41fadbdec7b069ec28c9efb75425fac9b58c7391e03a4b6d43e1802effc3c3c-train/original.wav",
+      "sha256": "d27d48e62efdf4197144569f82933a1473103d2869b77e0319a92ca80d249d28",
+      "seconds": 4.8,
+      "peak": 0.569580078125,
+      "peak_pass": true
+    },
+    {
+      "id": "35ddfc5d9acbebeb3daeab6a4f065ffa1f7b5981d4d313efbc7a2326c09d398a-train",
+      "fold": "TRAIN",
+      "text": "Explain three steps for preparing the garage for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/35ddfc5d9acbebeb3daeab6a4f065ffa1f7b5981d4d313efbc7a2326c09d398a-train/original.wav",
+      "sha256": "e9c7f0a8641bc137a2d3d623634469b72996272f4df092aa03d20aee83151292",
+      "seconds": 3.2,
+      "peak": 0.5887451171875,
+      "peak_pass": true
+    },
+    {
+      "id": "ada6a526c6b319950da6298093ac517a507968b44c1bca607b6c7857b5ee09e5-train",
+      "fold": "TRAIN",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 240 pounds and must stay dry; panel B costs 300 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/ada6a526c6b319950da6298093ac517a507968b44c1bca607b6c7857b5ee09e5-train/original.wav",
+      "sha256": "38f7bcc3ed14f156ca0dbae84620c07c7672e1e0f3bc08ef241ba4bf9236807f",
+      "seconds": 20.8,
+      "peak": 0.842987060546875,
+      "peak_pass": true
+    },
+    {
+      "id": "968693af9097166600179536b70b8d669fa54942c795bfd91d1e08591498caf8-dev",
+      "fold": "DEV",
+      "text": "Keep completely silent until I say copper meadow. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/968693af9097166600179536b70b8d669fa54942c795bfd91d1e08591498caf8-dev/original.wav",
+      "sha256": "e0a917e51f76d6aa1479946df9204da76f675dc4f33d2fb4a090260e123f33a5",
+      "seconds": 6.72,
+      "peak": 0.700775146484375,
+      "peak_pass": true
+    },
+    {
+      "id": "5f014bac39c99658b9ec77d741ca99aedae00ee7576588c951fd63561ed87a4d-dev",
+      "fold": "DEV",
+      "text": "copper meadow. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/5f014bac39c99658b9ec77d741ca99aedae00ee7576588c951fd63561ed87a4d-dev/original.wav",
+      "sha256": "541efec5e792fc494a1644f4448b89e83e2f41feefd7fad3168dc9694e5013d3",
+      "seconds": 2.96,
+      "peak": 0.92181396484375,
+      "peak_pass": true
+    },
+    {
+      "id": "c7f7d76660206116255036ad805510f39bfbf3f095af81c652316c1ab5d10a48-dev",
+      "fold": "DEV",
+      "text": "What is 7 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/c7f7d76660206116255036ad805510f39bfbf3f095af81c652316c1ab5d10a48-dev/original.wav",
+      "sha256": "d16c48a0255fe9966f56b584d7cbdf68b848841835984e9b7274c5a8c7577609",
+      "seconds": 1.6,
+      "peak": 0.67138671875,
+      "peak_pass": true
+    },
+    {
+      "id": "a65679448aa6191eddf7b28f5749ab6827a2a434351789494944cc91d232931a-dev",
+      "fold": "DEV",
+      "text": "Ask the background reasoner to compare a synthetic loan of 22200 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/a65679448aa6191eddf7b28f5749ab6827a2a434351789494944cc91d232931a-dev/original.wav",
+      "sha256": "0b5dcdeae8d0c77d29ed4f2eefccddf7e85c3435cd5150c68de4a61e1aeecd9a",
+      "seconds": 23.2,
+      "peak": 0.78546142578125,
+      "peak_pass": true
+    },
+    {
+      "id": "7bbb2d9c4f259db0bffc27c33c57a5b7b0de0e00f330c0bda4a35adcf399cd32-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to compare two synthetic routes to venue 5: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/7bbb2d9c4f259db0bffc27c33c57a5b7b0de0e00f330c0bda4a35adcf399cd32-dev/original.wav",
+      "sha256": "603048d61f1a191737d91b66c067c9617c2638511ba6ef2077818076fb09c154",
+      "seconds": 23.84,
+      "peak": 0.806304931640625,
+      "peak_pass": true
+    },
+    {
+      "id": "f7b43b1b728f3935f6c431675c6f68413fb76abd12d47bf4047aa229b0e7c16b-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to calculate paint for four walls in a room 8 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/f7b43b1b728f3935f6c431675c6f68413fb76abd12d47bf4047aa229b0e7c16b-dev/original.wav",
+      "sha256": "b7b2a10db57f6c9c0d9f2f3e42a21a6f17df09028a41d9fbb9352f71a1ff5f00",
+      "seconds": 18.88,
+      "peak": 0.77874755859375,
+      "peak_pass": true
+    },
+    {
+      "id": "adf4ec9724e9bf5d56b1ee0f366d51777ee24c43602d5dadd38a829588cc561f-dev",
+      "fold": "DEV",
+      "text": "Correction: the room is 10 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/adf4ec9724e9bf5d56b1ee0f366d51777ee24c43602d5dadd38a829588cc561f-dev/original.wav",
+      "sha256": "b17ec375c408348a6c53460143d01317da2f844b3feea682797c2f86b16a5e3c",
+      "seconds": 5.04,
+      "peak": 0.906219482421875,
+      "peak_pass": true
+    },
+    {
+      "id": "512a17ca3d2ff27468fc43c46cfea8531561c86786cd6f3d90962d65e146c802-dev",
+      "fold": "DEV",
+      "text": "Explain three steps for preparing the workshop for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/512a17ca3d2ff27468fc43c46cfea8531561c86786cd6f3d90962d65e146c802-dev/original.wav",
+      "sha256": "735cbd1a2f927325614e2fc45774f25eaac8f57779e89769c2f0c0136a096d16",
+      "seconds": 3.2,
+      "peak": 0.500335693359375,
+      "peak_pass": true
+    },
+    {
+      "id": "d85db8bd6deffef2179211e2f49f5ddb9593b544f0afd18a5d6ccd85a7d997ca-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 250 pounds and must stay dry; panel B costs 310 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/d85db8bd6deffef2179211e2f49f5ddb9593b544f0afd18a5d6ccd85a7d997ca-dev/original.wav",
+      "sha256": "55ad9d896e984921ce7430d069c57b8c36b769232c1e6eab4364fe9c4100af3b",
+      "seconds": 21.12,
+      "peak": 0.786651611328125,
+      "peak_pass": true
+    },
+    {
+      "id": "08c493145104690ce2b230128c15544db2597cf446af2c17f8f1096eaa567ac7-dev",
+      "fold": "DEV",
+      "text": "Keep completely silent until I say indigo lantern. This instruction itself does not release you.",
+      "wav": "runs/venus-training-20261101/context-source-v1/08c493145104690ce2b230128c15544db2597cf446af2c17f8f1096eaa567ac7-dev/original.wav",
+      "sha256": "135c6f1feb452913d7dc7f30c2537939afbd4a1fcc2dbe5abfad90f795d9ef36",
+      "seconds": 6.8,
+      "peak": 0.782745361328125,
+      "peak_pass": true
+    },
+    {
+      "id": "309eb2c857cf51e6001f36067a694938db2256053ebfe2a366bbfb14e001bf51-dev",
+      "fold": "DEV",
+      "text": "indigo lantern. What does a lid do?",
+      "wav": "runs/venus-training-20261101/context-source-v1/309eb2c857cf51e6001f36067a694938db2256053ebfe2a366bbfb14e001bf51-dev/original.wav",
+      "sha256": "eed3432224557966fcffc0aaa0864f18a3503492fcfa57b5e142a26d8e5d6d78",
+      "seconds": 3.68,
+      "peak": 0.496826171875,
+      "peak_pass": true
+    },
+    {
+      "id": "955280dedea698075640f9f30598bd6a3cc191fed8caae68c30d19008b8f0204-dev",
+      "fold": "DEV",
+      "text": "What is 8 plus two?",
+      "wav": "runs/venus-training-20261101/context-source-v1/955280dedea698075640f9f30598bd6a3cc191fed8caae68c30d19008b8f0204-dev/original.wav",
+      "sha256": "b840c60dbd92b5fb074582fe06c09817a97bed2fe1e661540150dd22b725b534",
+      "seconds": 1.68,
+      "peak": 0.69219970703125,
+      "peak_pass": true
+    },
+    {
+      "id": "4ff367858fcac3a6f59906c2eef9996bc8906af2d8d2d69c7fe386c2faec8873-dev",
+      "fold": "DEV",
+      "text": "Ask the background reasoner to compare a synthetic loan of 23500 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+      "wav": "runs/venus-training-20261101/context-source-v1/4ff367858fcac3a6f59906c2eef9996bc8906af2d8d2d69c7fe386c2faec8873-dev/original.wav",
+      "sha256": "06a460e67ffac2d0d882b85b9a73be679f0452c3cded07b91217c689d6b2536d",
+      "seconds": 23.12,
+      "peak": 0.832061767578125,
+      "peak_pass": true
+    },
+    {
+      "id": "5b20a5547c25ffeea2785ceed2db3d0e69083b8cfecf3f678f1250cb75fe802a-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to compare two synthetic routes to venue 6: rail takes ninety minutes and costs twenty-eight pounds; coach takes one hundred and forty minutes and costs sixteen pounds. Separately compare a vegetarian pasta meal at three pounds per person with soup at two pounds per person for six guests, under a thirty-six pound budget.",
+      "wav": "runs/venus-training-20261101/context-source-v1/5b20a5547c25ffeea2785ceed2db3d0e69083b8cfecf3f678f1250cb75fe802a-dev/original.wav",
+      "sha256": "b1f18f3bcc31a84dd1b3053105a029cb96f6829bc979e84c198248a076d54d79",
+      "seconds": 23.52,
+      "peak": 0.853607177734375,
+      "peak_pass": true
+    },
+    {
+      "id": "0d24b56f96c07fd9a2a2b4c649904ba96e6b04ded6b062524d6226a1c7a420b8-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to calculate paint for four walls in a room 9 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0d24b56f96c07fd9a2a2b4c649904ba96e6b04ded6b062524d6226a1c7a420b8-dev/original.wav",
+      "sha256": "05ad14424fe1b84efbef610e3403c20f588e96b3c31020a8620302aa2be0e4c3",
+      "seconds": 18.56,
+      "peak": 0.81536865234375,
+      "peak_pass": true
+    },
+    {
+      "id": "0409b75ab635fbe4580a1bafe8b6c503a3851f689b4bb08fad10c96a2e613cc4-dev",
+      "fold": "DEV",
+      "text": "Correction: the room is 11 metres long. Replace the earlier request.",
+      "wav": "runs/venus-training-20261101/context-source-v1/0409b75ab635fbe4580a1bafe8b6c503a3851f689b4bb08fad10c96a2e613cc4-dev/original.wav",
+      "sha256": "ebea0b79f4576597aa97fccec4bedfb1e6d1a509d00eea89d7a893f4ef062422",
+      "seconds": 5.28,
+      "peak": 0.637298583984375,
+      "peak_pass": true
+    },
+    {
+      "id": "5a4cb5c4f40c52f398d8b70509cd9b3a9cfb8b679b8d2d379b93a9324e263955-dev",
+      "fold": "DEV",
+      "text": "Explain three steps for preparing the cellar for painting.",
+      "wav": "runs/venus-training-20261101/context-source-v1/5a4cb5c4f40c52f398d8b70509cd9b3a9cfb8b679b8d2d379b93a9324e263955-dev/original.wav",
+      "sha256": "54022ae8ed2cde11e0ff6957364443ab51fdb673bd4d665f30699292fee24f3a",
+      "seconds": 2.96,
+      "peak": 0.560760498046875,
+      "peak_pass": true
+    },
+    {
+      "id": "2a3dddcaec9f9e8fb062291f7153a958bf83cab228da6dd63df130e607678e20-dev",
+      "fold": "DEV",
+      "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 260 pounds and must stay dry; panel B costs 320 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+      "wav": "runs/venus-training-20261101/context-source-v1/2a3dddcaec9f9e8fb062291f7153a958bf83cab228da6dd63df130e607678e20-dev/original.wav",
+      "sha256": "6679be8991d31af9d81ee17b258c16733398a811aa1829dec0d156bea64adaf4",
+      "seconds": 21.44,
+      "peak": 0.941162109375,
+      "peak_pass": true
+    }
+  ],
+  "next": "Independent full72 word audit on guarded GPU after access/scope admission; no passing subset or threshold/gain weakening."
+}
