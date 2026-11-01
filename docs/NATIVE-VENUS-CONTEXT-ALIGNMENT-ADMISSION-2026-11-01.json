@@ -1,0 +1,169 @@
+{
+  "status": "ADMITTED_UNDER_EXISTING_SYNTHETIC_TRAINING_DATA_INSTRUCTION",
+  "user_instructions": [
+    "For training, feel free to use eleven labs to get the training data/improve it.",
+    "Use the existing ElevenLabs key",
+    "proceed with GCP for training"
+  ],
+  "payload_sha256": "7366f317d034015ce11f8a3ed7491d39827d2e61f4c8193383e423f46e624b1d",
+  "sources": [
+    {
+      "id": "768e1801bc37ca81468aa4b913c71d16445e4570c817dec16d7fd278a10019b1",
+      "sha256": "33e8ce2ee853fb928e5cb3625b28ea1e1b7dddacbf8e667468a2d8fd27413317"
+    },
+    {
+      "id": "cecf232a4182087b8d70c7fda21f9fd3c8310d00f9ee2298dc99104bb5317304",
+      "sha256": "a01c4c75e548c0f5a97a6acbb67bb0e630cb644c22799fe563c880630fd856d6"
+    },
+    {
+      "id": "dd59cf6a9760d117246c1229c92944648cd2750d0f0f78b8d298a12cae79cc04",
+      "sha256": "2927d309191d98ec24b65195676527c4ee146d0820ea39f61067965af990a076"
+    },
+    {
+      "id": "357419725964cabdb5234be39d3e2787a48b4dec72fbf3582429bf4ceaa576ed",
+      "sha256": "e9da043a131e35c62434cd048dfe2f46e97afc85e4ae17a96ccecffe2fd0a11d"
+    },
+    {
+      "id": "341bace0f7f9e9084aa89b2b67a0a3b00a3ac112760f12b5c33d8b8b272fb62b",
+      "sha256": "57a21e9dd7addbeb9b2e8ce5b57782511e13023de1976dd5710c7f360675aa44"
+    },
+    {
+      "id": "ea7727da3352b411184f32ade6fe83f83069991de4197b3646a79d67742e857e",
+      "sha256": "77911e75d3210fd4f5f7d296710ff25a20a7405ab87df0af4a8eaf9b0aebdc44"
+    },
+    {
+      "id": "191ee713117957cf0fee8d4f0aeee60fb14fd5b058fe16fee0016c1c6f97537b",
+      "sha256": "e933005b98736fa5eb320164438550799a498bf855bf534838d4353c35404848"
+    },
+    {
+      "id": "e80ffd682ec0cf2f5c0c642fa519a7466968a81c4e81ceeba8296af0861341e5",
+      "sha256": "c9094e74bd1c82e3447ee37d1488c67bc33356517b7834ea804f1f1d5c64d938"
+    },
+    {
+      "id": "be5d628817dc75c8bfda910c5d22eee2e1ddcbe45035eedc2bb82eb57d6c818f",
+      "sha256": "72755c2f1de4083e24e1f8a3b2b6f5edf958952d9c9233f5c1fd04600063cbd1"
+    },
+    {
+      "id": "6167b87f85417cb6991278d112506efbcf8469b81371b60ecefa31dc7d32440b",
+      "sha256": "a7adf128de53d4639b90425452370b6988e3cbd11bafeba04b2b66fadd0d6622"
+    },
+    {
+      "id": "640d57902c2462f89eaa615ccd03331852b2ca04aa41ce659444817747340e4b",
+      "sha256": "346a01b82fbc08e96006542e804674eecae7274d5a8bb45858d6f14b7e6dabc3"
+    },
+    {
+      "id": "eea8521fb779e01bd9cf75256e261ca5bec01b5f8993055bcb77cdc24d9ea5fb",
+      "sha256": "ea59b223e0ef441624fb7e2e17aa7ac3d3dfee07267a5492567bb98dbb1f92cc"
+    },
+    {
+      "id": "13c8909c736fa4115ac829d5ff4dee2d71b07d0cd62f9cf5c991623e7ad3daae",
+      "sha256": "749dadebdcefc4dc67aec8993028eedb25fecc3fe5fc3f99131d9011d313c675"
+    },
+    {
+      "id": "8a49895df0d692730193cd664579876913f47b85a8550f6572ea136629a3ff3a",
+      "sha256": "ca97676a8856f70b9a372cd319063663f90614ce17b7b1a33124bc547bd75b3f"
+    },
+    {
+      "id": "21c50fe96977e90fe356aaf1dda33cd06e68fecf68f232300bdd1f254537b37c",
+      "sha256": "b5af79cbe69ce34617566e1d57697c36daa88e79e83bd7c456da1936f6692dfa"
+    },
+    {
+      "id": "0634f876c480270e93845a533707cfbac477ca4954bcb9d01e8f3ab1bd11b241",
+      "sha256": "5ce3207d2f243b04de8197a9f5e386586b67c7546be2dbecd180e0b84272a8c6"
+    },
+    {
+      "id": "005ac3af06a916b31eaddfd52e00001c31d22776311e3321d3e624e93f17ca4a",
+      "sha256": "639d907d9fbff12e1f38cec275c8ded5dbd06e3ab8deebef9228fb9e13ae11a4"
+    },
+    {
+      "id": "c3145d88482e6ebf8a87c502be0500e3e7207df4960d0ed857b6116b5b13d31e",
+      "sha256": "e723c439c60111ba7ca910c06e10cbf710803ab50720edfb44f4c498c7723b44"
+    },
+    {
+      "id": "b6aeec1e88ee0b68f8b9551634ff609cf6254d011bd85a48bce5747f34ae193c",
+      "sha256": "d62c9612688de6d4615e458dda81824ea16f75d02f70235a273bf34466e9d073"
+    },
+    {
+      "id": "535a09807b3bf4150dea537c4c14063476f8c8c7692b24213c3b2b3267bc36fa",
+      "sha256": "329ab9a925b3a87258fd2b6cba277d5fb2909f41b9ec869684a4c124275c03c9"
+    },
+    {
+      "id": "ddc56ba5862eaf6faa8eb0b7108207b96783bebe4bfa4b20a9ce458f7ad260fc",
+      "sha256": "298d807f069e3bad175eb0f355bef6ac7b308fa6dafd845f792780fba49aeb00"
+    },
+    {
+      "id": "d32f121ed7de5dbe069e19fca018a5558c62a03ac263c20a6daa1146ffa79dd6",
+      "sha256": "9f271cb87eff03c4287c3d36dbc51c46bc51a9e997552861ebb939750552b37e"
+    },
+    {
+      "id": "d43fe31199669e0f875cb17babe99c85f796c1a63fad758576dbf5f317a7f9d7",
+      "sha256": "68bcbda70d86a76a0d941bd6494292339cd6888fdcf1958bc3b0ac891ec5d802"
+    },
+    {
+      "id": "40bc12559c35d217fa214ea27b148969042ecfffad1a61a83ff4d38fcf3b430e",
+      "sha256": "ffc444ce93ebb50a03483fe565cd2dc631e06310b64bb480ae62c524d7f7c016"
+    },
+    {
+      "id": "cbce87354b1c32e793da3a8e819ed7f1508aed0b1818bb8e8727c4a9e31c42bc",
+      "sha256": "b24a28f16b6fcd9586608c99b90d8b8b1e3ae884ec6bdce5788531387b184b6f"
+    },
+    {
+      "id": "862dc546726540aca1eedf73d9d94c58e0ef000bfb816752807971c2fbda9a42",
+      "sha256": "64c696ae5e05889b19466b518fed1252bd07f83f146cafa56925010f86def74e"
+    },
+    {
+      "id": "c5869fa46ea6c69406876ad369e895ed3f8ecf8b2498ed288677ce319890d8ed",
+      "sha256": "260fc95e973e3a772c7470412145914d4a84129ddadb593391c63fcff3f25217"
+    },
+    {
+      "id": "6b1319065202d0f80589b3bcb0fb6f499766b98ccefab9a29e629461b5d40e18",
+      "sha256": "a2a4c9dbe0d674e29a282336f86715b218395245dc881ef062013541cb523087"
+    },
+    {
+      "id": "6ae14d508631631f1f8734d4bd211ad588b42ac7d492d826be8912862e53aebf",
+      "sha256": "573ca152694119a7a7f0ee72be668cb49132bd4dc0c2460ec012199d386f712f"
+    },
+    {
+      "id": "fac0793bf33045acf751bb94e313f93d4b17b963123b30f2f0820951be266f3d",
+      "sha256": "5aae16c6e53ce03fba215ec53b455060919eff8f1d073f6b2716c7d115ff60df"
+    },
+    {
+      "id": "415aaa20c6158e684a5c9bbccdcd17dc4b78b1dd61381dcbedaf08b8183c1c3c",
+      "sha256": "b73606aa64f079e1e1d76c0958f71e7b74b3d285c8ceac9c5ad65238ca958b6a"
+    },
+    {
+      "id": "db17ced3d31a94ace8a90eac92f09af2c932015e8f05dcd78da2d8528f01833a",
+      "sha256": "5751b4157cc6acecc8d0725cb13d2e39516c05b411040f7245b16dae6c6549d7"
+    },
+    {
+      "id": "4ab96f60e0f30c5d381da7540a403a6ce0ec55b97dfb4b2ce075f01fb26a6dbc",
+      "sha256": "666c9d901111f7879c4281816f76ad0b39252f156928d78da274048f3a92ec70"
+    },
+    {
+      "id": "90c44fb13f16df6de1a4980b6a6e92a920b73879e826aa960dad4840977924bc",
+      "sha256": "1c15f73ef2d2819fc014c911dbd32e41e4aa42663c4ed4692e6e486f32ffc308"
+    }
+  ],
+  "maximum_calls": 35,
+  "maximum_usd": 0.6,
+  "alignment_calls": 34,
+  "independent_numeric_diagnostic_calls": 1,
+  "automatic_retries": 0,
+  "maximum_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "rate_reservation_usd_per_hour": 1,
+  "minimum_reservation_seconds_per_call": 60,
+  "official_rate_usd_per_hour": 0.22,
+  "official_docs": [
+    "https://elevenlabs.io/docs/api-reference/forced-alignment/create/",
+    "https://elevenlabs.io/docs/overview/capabilities/forced-alignment",
+    "https://elevenlabs.io/docs/api-reference/speech-to-text/convert",
+    "https://elevenlabs.io/pricing/api"
+  ],
+  "phase_cap_usd": 70,
+  "project_cap_usd": 175,
+  "prior_noncompute_reservation_usd": 32.416625,
+  "focused_gpu_seconds_reserve": 32800,
+  "phase_upper_usd": 69.46106944444443,
+  "scope": "Only the unchanged 34 synthetic assistant recordings and their exact authored words go to alignment. One unchanged synthetic numeric recording goes to independent Scribe v2 without script, hints or scoring fields. No owner audio, credentials, conversations or new voice generation. No model updates. Alignment does not prove words correct. All original audits stay unchanged; numerical acoustic semantics and full teacher approval remain pending."
+}
