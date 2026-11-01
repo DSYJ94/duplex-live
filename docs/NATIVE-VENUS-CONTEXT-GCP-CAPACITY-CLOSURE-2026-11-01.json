@@ -1,0 +1,29 @@
+{
+  "status": "BOTH_TERMINAL_STOCKOUT_NO_NEW_TRAINING",
+  "attempts": [
+    {
+      "controller_session": 75363,
+      "operation": "operation-1793576206436-65f3f80a98765-20bd64ca-6a8c9d89",
+      "source": "3366ac401bdbdb67b39c3d540de601f4957b3537",
+      "actual_terminal": 1
+    },
+    {
+      "controller_session": 86357,
+      "operation": "operation-1793576539563-65f3f9484a5d1-c0fafc84-d0556e3d",
+      "source": "a22ab35375295b941fdaa82e0b522ad8e718bd1f",
+      "actual_terminal": 1
+    }
+  ],
+  "error_code": "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS",
+  "vm_id": "3873014408897233554",
+  "vm_status": "TERMINATED",
+  "last_start_unchanged": "2026-11-01T15:10:19.545-08:00",
+  "latest_failed_start_stop_marker": "2026-11-01T15:42:28.195-08:00",
+  "new_gpu_intervals": 0,
+  "new_model_processes": 0,
+  "new_optimizer_updates": 0,
+  "focused_gpu_seconds_upper": 28700,
+  "cumulative_gpu_seconds_upper": 83151,
+  "all_training_artifacts_preserved": true,
+  "placement_decision_pending": true
+}
