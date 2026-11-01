@@ -1,0 +1,33 @@
+{
+  "schema": "dl-local-isambard-renewal-v1",
+  "checked_utc": "2026-11-01T22:17:32.372782+00:00",
+  "old_auth_session": 99024,
+  "old_auth_exit": 1,
+  "old_auth_error": "expired_token",
+  "new_auth_session": 37321,
+  "new_auth_exit": 0,
+  "config_overwritten": false,
+  "certificate_valid_from_utc": "2026-11-01T22:15:28Z",
+  "certificate_valid_until_utc": "2026-11-02T10:15:28Z",
+  "certificate_projects": [
+    "u6si"
+  ],
+  "ssh_alias": "u6si.aip2.isambard",
+  "actual_ssh_exit": 0,
+  "host": "login44",
+  "user": "dsyj94.u6si",
+  "slurm_jobs": [],
+  "slurm_associations": [
+    "brics.u6si"
+  ],
+  "qos": [
+    "normal"
+  ],
+  "new_award_mapping": "UNVERIFIED; only prior project exposed, account balances not returned by assoc read",
+  "award_portal": "https://portal-airr.isambard.ac.uk/login/",
+  "award_portal_current_status": "Separate login required; no award status obtained",
+  "new_gpu_jobs": 0,
+  "new_optimizer_updates": 0,
+  "credentials_copied": false,
+  "official_accounting_docs": "https://docs.isambard.ac.uk/user-documentation/guides/accounting/"
+}
