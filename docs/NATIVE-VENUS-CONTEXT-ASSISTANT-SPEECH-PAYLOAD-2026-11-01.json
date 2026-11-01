@@ -1,0 +1,898 @@
+{
+  "schema": "dl-context-assistant-speech-payload-v1",
+  "status": "PREPARED_NOT_SENT",
+  "teacher_draft_sha256": "5b91222595a959a8087e4d6769f18cbd0474f6fa4437ac079ae78ab5baa1343f",
+  "requests": [
+    {
+      "id": "768e1801bc37ca81468aa4b913c71d16445e4570c817dec16d7fd278a10019b1",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A lid covers an opening and helps keep its contents inside.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-00",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-01",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-02",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-quiet_scope-03",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "c6c7e50ea464b0338fa82d3afa856384769ed772b6c4c21d38443988def73efe"
+    },
+    {
+      "id": "cecf232a4182087b8d70c7fda21f9fd3c8310d00f9ee2298dc99104bb5317304",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Five.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-00",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "2dae97895887a4b1dcac2069d7f6e25e7bf8d1c541e1759d65422642cc12ddcb"
+    },
+    {
+      "id": "dd59cf6a9760d117246c1229c92944648cd2750d0f0f78b8d298a12cae79cc04",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: five hundred and thirty two pounds and seventy two pence per month, with two thousand one hundred and seventy seven pounds and eighty six pence total interest. Forty eight months: four hundred and fifteen pounds and two pence per month, with two thousand nine hundred and twenty pounds and ninety four pence total interest. Sixty months: three hundred and forty four pounds and seventy pence per month, with three thousand six hundred and eighty one pounds and ninety two pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-00",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "88191386b1637554984febf5feba942a219fdbfcb73b8c1fdf00851a45ffef77"
+    },
+    {
+      "id": "357419725964cabdb5234be39d3e2787a48b4dec72fbf3582429bf4ceaa576ed",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Travel results are cancelled. The meal comparison is still pending.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "action": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "action": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "action": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "action": 3
+        }
+      ],
+      "payload_sha256": "416732c460f181e3697fbc33e4e38ae71b1b73a874987656848f82bd99fbc715"
+    },
+    {
+      "id": "341bace0f7f9e9084aa89b2b67a0a3b00a3ac112760f12b5c33d8b8b272fb62b",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "We can talk about the meal while that comparison finishes.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "action": 4
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "action": 4
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "action": 4
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "action": 4
+        }
+      ],
+      "payload_sha256": "2e24d150563c3fc1c9c1785777ce87441e800ef954c0fe58fccd4a9057dbce9a"
+    },
+    {
+      "id": "ea7727da3352b411184f32ade6fe83f83069991de4197b3646a79d67742e857e",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+          "action": 5
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+          "action": 5
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+          "action": 5
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+          "action": 5
+        }
+      ],
+      "payload_sha256": "e682eee53d5cf33fef1b0bb9a3e1ce8df78c26c6f996ecb3ec1ce67441b458b9"
+    },
+    {
+      "id": "191ee713117957cf0fee8d4f0aeee60fb14fd5b058fe16fee0016c1c6f97537b",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need eleven litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-00",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "50da918abe1fa32f18e275914c96c6d3d2a2351ec4ab56d91d01ffcd6423a228"
+    },
+    {
+      "id": "e80ffd682ec0cf2f5c0c642fa519a7466968a81c4e81ceeba8296af0861341e5",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "First, clear loose items from the floor.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "31e57d31d2a949bd752a91001dc73ce7ead0e827f3ba0cdc250ca5c4908ac09d"
+    },
+    {
+      "id": "be5d628817dc75c8bfda910c5d22eee2e1ddcbe45035eedc2bb82eb57d6c818f",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Next, cover the furniture. Finally, mask the edges.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "99ba4b79ddb46a0806bd3178d0c30ba2cd7092fdd692b282e50cdc1a21f684bd"
+    },
+    {
+      "id": "6167b87f85417cb6991278d112506efbcf8469b81371b60ecefa31dc7d32440b",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Insulation slows heat moving between places.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+          "action": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+          "action": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+          "action": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+          "action": 1
+        }
+      ],
+      "payload_sha256": "47ebfc95c1a724fd05e6ff43e6a718d0c3d663dbca36de42f4ec75c5748e3b4d"
+    },
+    {
+      "id": "640d57902c2462f89eaa615ccd03331852b2ca04aa41ce659444817747340e4b",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "9cbfa7262a2a2fa1cc8a8dc04454aaed0bf5bf20f7963857d78e111303f026dd"
+    },
+    {
+      "id": "eea8521fb779e01bd9cf75256e261ca5bec01b5f8993055bcb77cdc24d9ea5fb",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Six.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-01",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "4bc4b25bac61fd63535af453ec5c607158c24e73f910c4c1ce6aaaefbb4a56e4"
+    },
+    {
+      "id": "13c8909c736fa4115ac829d5ff4dee2d71b07d0cd62f9cf5c991623e7ad3daae",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: five hundred and seventy three pounds and forty six pence per month, with two thousand three hundred and forty four pounds and forty pence total interest. Forty eight months: four hundred and forty six pounds and seventy six pence per month, with three thousand one hundred and forty four pounds and thirty one pence total interest. Sixty months: three hundred and seventy one pounds and six pence per month, with three thousand nine hundred and sixty three pounds and forty eight pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-01",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "16d5bf4b8e225732fbe411ffa8d24cd843db4df1f85ba8499e76be48e53dbcb9"
+    },
+    {
+      "id": "8a49895df0d692730193cd664579876913f47b85a8550f6572ea136629a3ff3a",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need twelve litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-01",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "53b599b43eb39877737d7778c3182bf9136d181143eb3f1e868dfba4e352ac26"
+    },
+    {
+      "id": "21c50fe96977e90fe356aaf1dda33cd06e68fecf68f232300bdd1f254537b37c",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Seven.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-02",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "3a2a9b016db5631536b58791e90d637656b577e221698283818d5c4bb2ae8ec3"
+    },
+    {
+      "id": "0634f876c480270e93845a533707cfbac477ca4954bcb9d01e8f3ab1bd11b241",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: six hundred and fourteen pounds and nineteen pence per month, with two thousand five hundred and ten pounds and ninety four pence total interest. Forty eight months: four hundred and seventy eight pounds and forty nine pence per month, with three thousand three hundred and sixty seven pounds and sixty eight pence total interest. Sixty months: three hundred and ninety seven pounds and forty two pence per month, with four thousand two hundred and forty five pounds and four pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-02",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "28796446bdf8d48ac29db7e48ba51fcc2e3e65c9692c0364eea47adbc497a1a1"
+    },
+    {
+      "id": "005ac3af06a916b31eaddfd52e00001c31d22776311e3321d3e624e93f17ca4a",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need thirteen litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-02",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "29a3202d15791e20d8ee954249ae97cffb52f3552952f9a03439ae3f088cd256"
+    },
+    {
+      "id": "c3145d88482e6ebf8a87c502be0500e3e7207df4960d0ed857b6116b5b13d31e",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Eight.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-03",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "64872f614ab945673627071fb230ed5c11e6610e75e13bc34fb67cb081cf0b43"
+    },
+    {
+      "id": "b6aeec1e88ee0b68f8b9551634ff609cf6254d011bd85a48bce5747f34ae193c",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: six hundred and fifty four pounds and ninety three pence per month, with two thousand six hundred and seventy seven pounds and forty eight pence total interest. Forty eight months: five hundred and ten pounds and twenty three pence per month, with three thousand five hundred and ninety one pounds and four pence total interest. Sixty months: four hundred and twenty three pounds and seventy eight pence per month, with four thousand five hundred and twenty six pounds and sixty pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-simple_or_delegate-03",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "bdf8502ca82966bd48151180854a822a8d4c47901e2e7344dc6e1a6c09a7115c"
+    },
+    {
+      "id": "535a09807b3bf4150dea537c4c14063476f8c8c7692b24213c3b2b3267bc36fa",
+      "fold": "TRAIN",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need fourteen litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261101,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-train-correction-03",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "8b3479cb98c3cfc3165de15f826622e9bd29d9653710aadb49ffff70d6a88a34"
+    },
+    {
+      "id": "ddc56ba5862eaf6faa8eb0b7108207b96783bebe4bfa4b20a9ce458f7ad260fc",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A lid covers an opening and helps keep its contents inside.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-04",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-quiet_scope-05",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "3475d21863c8473e37b5c56a9a56978a541521977b802232d6e2c98246aaa073"
+    },
+    {
+      "id": "d32f121ed7de5dbe069e19fca018a5558c62a03ac263c20a6daa1146ffa79dd6",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Nine.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "2e0d665610b7f50c9ed874dac7b1ff90bb3ffa743dbf8c3f36ddc774c84531b3"
+    },
+    {
+      "id": "d43fe31199669e0f875cb17babe99c85f796c1a63fad758576dbf5f317a7f9d7",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: six hundred and ninety five pounds and sixty seven pence per month, with two thousand eight hundred and forty four pounds and two pence total interest. Forty eight months: five hundred and forty one pounds and ninety seven pence per month, with three thousand eight hundred and fourteen pounds and forty one pence total interest. Sixty months: four hundred and fifty pounds and fourteen pence per month, with four thousand eight hundred and eight pounds and sixteen pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "cb9bdd658001f507ffb57903364a6df5a8ddec4d77aff6f17ca9be8d9d36458b"
+    },
+    {
+      "id": "40bc12559c35d217fa214ea27b148969042ecfffad1a61a83ff4d38fcf3b430e",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Travel results are cancelled. The meal comparison is still pending.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "action": 3
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "action": 3
+        }
+      ],
+      "payload_sha256": "82651931303701b0af805a7dfe3723373dbc529097723c436b82d473a4e2a5d7"
+    },
+    {
+      "id": "cbce87354b1c32e793da3a8e819ed7f1508aed0b1818bb8e8727c4a9e31c42bc",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "We can talk about the meal while that comparison finishes.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "action": 4
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "action": 4
+        }
+      ],
+      "payload_sha256": "675eeddd1a2ccb2a475c6ba862a0d59c6646b82485ffb443bf18e3a5b36ed9b7"
+    },
+    {
+      "id": "862dc546726540aca1eedf73d9d94c58e0ef000bfb816752807971c2fbda9a42",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+          "action": 5
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+          "action": 5
+        }
+      ],
+      "payload_sha256": "b004849355075b27aa41b7ed2c9664726a0f9ae679c9c6604cd228483f79a8fa"
+    },
+    {
+      "id": "c5869fa46ea6c69406876ad369e895ed3f8ecf8b2498ed288677ce319890d8ed",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need fifteen litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-04",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "eedbc68504a2fdc7978bcf377654f99b4a42bfd91868e475219c8443b9ef3a41"
+    },
+    {
+      "id": "6b1319065202d0f80589b3bcb0fb6f499766b98ccefab9a29e629461b5d40e18",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "First, clear loose items from the floor.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "action": 0
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "51fef2a5a5efefbb63cfd12fe77e03a099610e7f36efffc9b44094906251b948"
+    },
+    {
+      "id": "6ae14d508631631f1f8734d4bd211ad588b42ac7d492d826be8912862e53aebf",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Next, cover the furniture. Finally, mask the edges.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "38a9b3050404835adf1c409f9a0e7c1ce086642a0a9da62d81d23d84ec4c2e6e"
+    },
+    {
+      "id": "fac0793bf33045acf751bb94e313f93d4b17b963123b30f2f0820951be266f3d",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Insulation slows heat moving between places.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+          "action": 1
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+          "action": 1
+        }
+      ],
+      "payload_sha256": "af4bfe4a353f1c2888e0650fef928ce38febca796061ce981fa80fbad2f0ec2b"
+    },
+    {
+      "id": "415aaa20c6158e684a5c9bbccdcd17dc4b78b1dd61381dcbedaf08b8183c1c3c",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+          "action": 2
+        },
+        {
+          "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "3ac322dc54ecab56af31c2b6d1f985bee6339690e24b803865a04d77887e40f5"
+    },
+    {
+      "id": "db17ced3d31a94ace8a90eac92f09af2c932015e8f05dcd78da2d8528f01833a",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Ten.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+          "action": 0
+        }
+      ],
+      "payload_sha256": "12a0f6cfcc61c70b78546fd17b3c77dc43089c2cb87458d3b0dede8fbed4fe00"
+    },
+    {
+      "id": "4ab96f60e0f30c5d381da7540a403a6ce0ec55b97dfb4b2ce075f01fb26a6dbc",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Thirty six months: seven hundred and thirty six pounds and forty pence per month, with three thousand ten pounds and fifty seven pence total interest. Forty eight months: five hundred and seventy three pounds and seventy pence per month, with four thousand thirty seven pounds and seventy eight pence total interest. Sixty months: four hundred and seventy six pounds and fifty pence per month, with five thousand eighty nine pounds and seventy two pence total interest.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "03c2dc1831c52afb6f675ba17f2075e91b3e4554f916c3b804fb5ad92ef2d035"
+    },
+    {
+      "id": "90c44fb13f16df6de1a4980b6a6e92a920b73879e826aa960dad4840977924bc",
+      "fold": "DEV",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Using the corrected length, you need sixteen litres.",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "seed": 20261102,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "uses": [
+        {
+          "scene_id": "venus-context-repair-draft-dev-correction-05",
+          "action": 2
+        }
+      ],
+      "payload_sha256": "3b4718b982372d58fc49e0f39d64b9194cb3bd09dd7e3fc380b7a9739625591f"
+    }
+  ],
+  "request_count": 34,
+  "characters": 4449,
+  "conservative_cost_upper_usd": 2.2245,
+  "conservative_usd_per_1000_characters": 0.5,
+  "phase_cap_usd": 70,
+  "voice": "owner-preferred British George",
+  "provenance_class": "closed-content",
+  "provenance_authority": "ADR0003 Amendment A",
+  "generated": false,
+  "training_approved": false,
+  "silence_has_no_tts_request": true,
+  "private_actions_have_no_tts_request": true,
+  "owner_conversations": false,
+  "external_calls": 0,
+  "optimizer_updates": 0
+}

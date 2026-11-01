@@ -1,0 +1,42 @@
+{
+  "schema": "dl-context-teacher-preparation-review-v1",
+  "recorded_utc": "2026-11-01T22:52:44.877177+00:00",
+  "parent_source": "37579ab",
+  "teacher_draft_sha256": "5b91222595a959a8087e4d6769f18cbd0474f6fa4437ac079ae78ab5baa1343f",
+  "source_scene_count": 36,
+  "folds": {
+    "TRAIN": 24,
+    "DEV": 12
+  },
+  "actual_local_task_receipts": 36,
+  "actual_delivered_receipts": 24,
+  "actual_retired_result_suppressions": 12,
+  "receipt_report_sha256": "5a82ccdcb93006dff9ca3bd95b4f04c625fcaafdf57e6c9a33bce1d7a4649d6d",
+  "receipt_report_path": "runs/venus-training-20261101/context-teacher-work-v1/report.json",
+  "actual_provider_calls": 0,
+  "actual_native_inference": false,
+  "native_teacher_histories_available": false,
+  "training_approved": false,
+  "assistant_speech_payload_sha256": "7366f317d034015ce11f8a3ed7491d39827d2e61f4c8193383e423f46e624b1d",
+  "assistant_requests_prepared": 34,
+  "assistant_characters": 4449,
+  "assistant_cost_upper_prepared_usd": 2.2245,
+  "assistant_speech_generated": false,
+  "affected_tests_passed": 43,
+  "regression_fixed": "Unsorted active task IDs in tool enums disagreed with sorted JSON input after validation roundtrip; fixed by deterministic sorted IDs.",
+  "new_context_profile": "venus-context-reasoning",
+  "explicit_context_word_limit": 120,
+  "legacy_word_limit": 60,
+  "context_proof": [
+    "Exact causal audio receipt bound to ASR hypothesis; no scoring fields accepted.",
+    "Real loopback HTTP test with fixture provider; receipt hashes the actual context payload, separately preserving native task hash.",
+    "Actual async ReasoningWorker fixture test retires only selected task and suppresses its late result while delivering unrelated work.",
+    "Closing during ASR prevents later provider dispatch.",
+    "Legacy WebSocket and HTTP profiles still pass; no default activation of new profile."
+  ],
+  "limitations": [
+    "Synthetic local solver receipts are teacher construction, not native student success or independent semantic approval.",
+    "Context ASR/provider callbacks are injected; no live GPU-ASR/native/model-provider qualification occurred this turn.",
+    "Assistant speech, measured scheduling, semantic approval and native caches remain necessary before optimizer work."
+  ]
+}

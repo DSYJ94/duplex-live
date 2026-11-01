@@ -1,0 +1,1332 @@
+{
+  "schema": "dl-native-context-teacher-plan-v1",
+  "status": "DRAFT_REQUIRES_ACTUAL_CAUSAL_RECEIPTS_SPEECH_TIMING_AND_INDEPENDENT_APPROVAL",
+  "scenes": [
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-00",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-00",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Five."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 17000 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: five hundred and thirty two pounds and seventy two pence per month, with two thousand one hundred and seventy seven pounds and eighty six pence total interest. Forty eight months: four hundred and fifteen pounds and two pence per month, with two thousand nine hundred and twenty pounds and ninety four pence total interest. Sixty months: three hundred and forty four pounds and seventy pence per month, with three thousand six hundred and eighty one pounds and ninety two pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 532.72,
+            "total_interest_GBP": 2177.86
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 415.02,
+            "total_interest_GBP": 2920.94
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 344.7,
+            "total_interest_GBP": 3681.92
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-00",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-00",
+      "fold": "TRAIN",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 4 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 6 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need eleven litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 9,
+        "revised_litres": 11,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-00",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-00",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 210 pounds and must stay dry; panel B costs 270 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-01",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-01",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Six."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 18300 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: five hundred and seventy three pounds and forty six pence per month, with two thousand three hundred and forty four pounds and forty pence total interest. Forty eight months: four hundred and forty six pounds and seventy six pence per month, with three thousand one hundred and forty four pounds and thirty one pence total interest. Sixty months: three hundred and seventy one pounds and six pence per month, with three thousand nine hundred and sixty three pounds and forty eight pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 573.46,
+            "total_interest_GBP": 2344.4
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 446.76,
+            "total_interest_GBP": 3144.31
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 371.06,
+            "total_interest_GBP": 3963.48
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-01",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-01",
+      "fold": "TRAIN",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 5 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 7 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need twelve litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 10,
+        "revised_litres": 12,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-01",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-01",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 220 pounds and must stay dry; panel B costs 280 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-02",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-02",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Seven."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 19600 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: six hundred and fourteen pounds and nineteen pence per month, with two thousand five hundred and ten pounds and ninety four pence total interest. Forty eight months: four hundred and seventy eight pounds and forty nine pence per month, with three thousand three hundred and sixty seven pounds and sixty eight pence total interest. Sixty months: three hundred and ninety seven pounds and forty two pence per month, with four thousand two hundred and forty five pounds and four pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 614.19,
+            "total_interest_GBP": 2510.94
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 478.49,
+            "total_interest_GBP": 3367.68
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 397.42,
+            "total_interest_GBP": 4245.04
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-02",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-02",
+      "fold": "TRAIN",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 6 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 8 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need thirteen litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 11,
+        "revised_litres": 13,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-02",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-02",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 230 pounds and must stay dry; panel B costs 290 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-03",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-03",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Eight."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 20900 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: six hundred and fifty four pounds and ninety three pence per month, with two thousand six hundred and seventy seven pounds and forty eight pence total interest. Forty eight months: five hundred and ten pounds and twenty three pence per month, with three thousand five hundred and ninety one pounds and four pence total interest. Sixty months: four hundred and twenty three pounds and seventy eight pence per month, with four thousand five hundred and twenty six pounds and sixty pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 654.93,
+            "total_interest_GBP": 2677.48
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 510.23,
+            "total_interest_GBP": 3591.04
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 423.78,
+            "total_interest_GBP": 4526.6
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-03",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-03",
+      "fold": "TRAIN",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 7 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 9 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need fourteen litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 12,
+        "revised_litres": 14,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-03",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-03",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 240 pounds and must stay dry; panel B costs 300 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-quiet_scope-04",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Nine."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 22200 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: six hundred and ninety five pounds and sixty seven pence per month, with two thousand eight hundred and forty four pounds and two pence total interest. Forty eight months: five hundred and forty one pounds and ninety seven pence per month, with three thousand eight hundred and fourteen pounds and forty one pence total interest. Sixty months: four hundred and fifty pounds and fourteen pence per month, with four thousand eight hundred and eight pounds and sixteen pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 695.67,
+            "total_interest_GBP": 2844.02
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 541.97,
+            "total_interest_GBP": 3814.41
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 450.14,
+            "total_interest_GBP": 4808.16
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-selective_cancel-04",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-correction-04",
+      "fold": "DEV",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 8 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 10 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need fifteen litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 13,
+        "revised_litres": 15,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-pause_resume-04",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-result_delivery-04",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 250 pounds and must stay dry; panel B costs 310 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-quiet_scope-05",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "actions": [
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "A lid covers an opening and helps keep its contents inside."
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "Ten."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "delegate",
+          "text": "Ask the background reasoner to compare a synthetic loan of 23500 pounds at eight percent nominal annual interest, compounded monthly, over thirty-six, forty-eight and sixty months. Assume fixed rates, equal monthly payments and no fees or early repayment penalties. Compare monthly payments and total interest.",
+          "task_label": "loan"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Thirty six months: seven hundred and thirty six pounds and forty pence per month, with three thousand ten pounds and fifty seven pence total interest. Forty eight months: five hundred and seventy three pounds and seventy pence per month, with four thousand thirty seven pounds and seventy eight pence total interest. Sixty months: four hundred and seventy six pounds and fifty pence per month, with five thousand eighty nine pounds and seventy two pence total interest.",
+          "requires_result_for": "loan"
+        }
+      ],
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 736.4,
+            "total_interest_GBP": 3010.57
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 573.7,
+            "total_interest_GBP": 4037.78
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 476.5,
+            "total_interest_GBP": 5089.72
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-selective_cancel-05",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare the synthetic travel options: rail takes ninety minutes at twenty-eight pounds; coach takes one hundred and forty minutes at sixteen pounds.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Compare vegetarian pasta at three pounds per person and soup at two pounds per person for six guests, under a thirty-six pound budget.",
+          "task_label": "meal"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "cancel",
+          "text": "Retire only the travel task delivery; preserve the meal task.",
+          "task_label": "travel"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Travel results are cancelled. The meal comparison is still pending.",
+          "requires_cancel_receipt_for": "travel",
+          "requires_pending": "meal"
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "We can talk about the meal while that comparison finishes."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Pasta costs eighteen pounds and soup costs twelve pounds for six people. Both are within the thirty-six pound budget.",
+          "requires_result_for": "meal"
+        }
+      ],
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-correction-05",
+      "fold": "DEV",
+      "family": "correction",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to calculate paint for four walls in a room 9 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 1
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "replace",
+          "text": "Ask the worker to calculate paint for four walls in a room 11 metres long, five metres wide and two point four metres high. Apply two coats at ten square metres per litre. Ignore doors and windows, exclude the ceiling, and round litres up to the next whole litre.",
+          "task_label": "paint",
+          "revision": 2,
+          "retire_revision": 1
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Using the corrected length, you need sixteen litres.",
+          "requires_result_for": "paint",
+          "revision": 2
+        }
+      ],
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 14,
+        "revised_litres": 16,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-pause_resume-05",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "speak",
+          "text": "First, clear loose items from the floor."
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "pause",
+          "text": "",
+          "speech_forbidden": true
+        },
+        {
+          "after_user_turn": 3,
+          "kind": "speak",
+          "text": "Next, cover the furniture. Finally, mask the edges.",
+          "resume_without_restart": true
+        }
+      ],
+      "fact_targets": null,
+      "training_approved": false
+    },
+    {
+      "id": "venus-context-repair-draft-dev-result_delivery-05",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "actions": [
+        {
+          "after_user_turn": 0,
+          "kind": "delegate",
+          "text": "Ask the worker to compare two fictional insulation panels for the room: panel A costs 260 pounds and must stay dry; panel B costs 320 pounds and tolerates damp conditions. The room is occasionally damp. Explain the cost and moisture tradeoff using only those facts.",
+          "task_label": "panels"
+        },
+        {
+          "after_user_turn": 1,
+          "kind": "speak",
+          "text": "Insulation slows heat moving between places."
+        },
+        {
+          "after_user_turn": 2,
+          "kind": "speak",
+          "text": "Panel B costs sixty pounds more and tolerates the stated damp conditions. Panel A must stay dry.",
+          "requires_result_for": "panels"
+        }
+      ],
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "training_approved": false
+    }
+  ],
+  "counts": {
+    "TRAIN": 24,
+    "DEV": 12
+  },
+  "actual_worker_receipts": false,
+  "native_student_dispatch_claimed": false,
+  "speech_audio_generated": false,
+  "training_approved": false,
+  "external_calls": 0,
+  "optimizer_updates": 0,
+  "admission_requirements": [
+    "Bind all72 unchanged source recordings and their complete derived word review.",
+    "Execute task/cancel/replace work with actual task identities; enforce result-before-speech and selective retirement.",
+    "Generate and independently audit the complete assistant speech target collection; silence gets no speech request.",
+    "Use measured word timings for native scheduling; real pause must resume the unsaid tail.",
+    "Keep full original216TRAIN/52DEV and retention objectives; only admit new native caches after complete semantic/causal checks."
+  ],
+  "source_plan_sha256": "c19f3dfd2760a9e6679f46fadf0440dae38c716dcc21eed3990a64a4afcfeba8"
+}

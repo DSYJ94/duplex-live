@@ -25,7 +25,7 @@ def payload(query, active):
         fields = dict(content=content)
         if name != 'respond_to_user':
             fields['task_ids'] = dict(type='array', minItems=1, uniqueItems=True,
-                                     items=dict(type='string', enum=list(active)))
+                                     items=dict(type='string', enum=sorted(active)))
         tools.append(dict(type='function', name=name, strict=True,
             description=('Return a concise solved answer or necessary clarification.' if name == 'respond_to_user'
                          else 'Retire delivery of the selected pending work. Remote computation is not aborted.'),
@@ -108,6 +108,8 @@ class ReasoningWorker:
             raise ValueError('Explicit contextual transport required')
         self.evidence_request = evidence_request
         self.accepts_audio_evidence = evidence_request is not None
+        self.maximum_result_words=getattr(evidence_request,'maximum_result_words',60)
+        if self.maximum_result_words not in (60,120):raise ValueError('Explicit bounded result profile required')
         self.tasks, self.states, self.events = {}, {}, []
         self.closed = False
 
@@ -153,8 +155,12 @@ class ReasoningWorker:
                 audio=state['audio_evidence_receipt']),sort_keys=True).encode()).hexdigest()
         self.event('worker_started', work_id=ident)
         try:
-            call = (self.evidence_request(value,state['audio_evidence']) if self.accepts_audio_evidence
-                    else self.request(value))
+            if self.accepts_audio_evidence:
+                options={}
+                if getattr(self.evidence_request,'honors_dispatch_guard',False):
+                    options['can_dispatch']=lambda:not self.closed and not state['cancelled']
+                call=self.evidence_request(value,state['audio_evidence'],**options)
+            else:call=self.request(value)
             reply = await asyncio.wait_for(call, timeout=100)
             response = reply['response']
             calls = [v for v in response.get('output', []) if v.get('type') == 'function_call']
@@ -169,7 +175,7 @@ class ReasoningWorker:
             keys = {'content'} if operation == 'respond_to_user' else {'content', 'task_ids'}
             if (operation not in OPERATIONS or not isinstance(args, dict) or set(args) != keys
                     or not isinstance(args.get('content'), str) or not args['content'].strip()
-                    or len(args['content'].split()) > 60):
+                    or len(args['content'].split()) > self.maximum_result_words):
                 raise ValueError('Invalid bounded reasoning action')
             state.update(response_id=response['id'], actual_transport=reply['actual_transport'])
             if self.closed or state['cancelled']:
@@ -193,6 +199,12 @@ class ReasoningWorker:
                 request_payload_sha256=state['payload_sha256'], remote_execution_aborted=False)
             if self.accepts_audio_evidence:
                 receipt['task_input_sha256']=state['task_input_sha256']
+                if 'context_payload_sha256' in reply:
+                    actual_hash=reply['context_payload_sha256']
+                    if not isinstance(actual_hash,str) or not __import__('re').fullmatch('[0-9a-f]{64}',actual_hash):
+                        raise ValueError('Exact contextual provider payload hash required')
+                    receipt['native_task_payload_sha256']=state['payload_sha256']
+                    receipt['request_payload_sha256']=actual_hash
             receipt['sha256'] = hashlib.sha256(json.dumps(receipt, sort_keys=True).encode()).hexdigest()
             state.update(phase='result_ready', receipt=receipt)
             self.event('worker_completed', work_id=ident, operation=operation,

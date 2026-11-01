@@ -25,6 +25,9 @@ MAX_BODY = 128 * 1024
 
 
 def validate(payload, profile='context-lookup'):
+    if profile == 'venus-context-reasoning':
+        from portable.venus.context_reasoning import validate_contextual_payload
+        return validate_contextual_payload(payload)
     if profile == 'venus-reasoning':
         from portable.venus.reasoning import validate_payload
         return validate_payload(payload)
@@ -51,7 +54,7 @@ class ProxyServer(ThreadingHTTPServer):
             raise ValueError('Explicit bounded synthetic execution identifier required')
         if type(maximum_requests) is not int or not 1 <= maximum_requests <= 128:
             raise ValueError('At most128 actual provider calls per proxy execution')
-        if profile not in ('context-lookup', 'venus-reasoning'):
+        if profile not in ('context-lookup', 'venus-reasoning', 'venus-context-reasoning'):
             raise ValueError('Explicit supported proxy profile required')
         self.profile = profile
         self.key, self.run, self.out = key, run, out
@@ -151,7 +154,7 @@ def main():
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--port', type=int, default=0)
     parser.add_argument('--maximum-requests', type=int, default=128)
-    parser.add_argument('--profile', choices=['context-lookup', 'venus-reasoning'], default='context-lookup')
+    parser.add_argument('--profile', choices=['context-lookup', 'venus-reasoning', 'venus-context-reasoning'], default='context-lookup')
     parser.add_argument('--deadline-utc', required=True)
     parser.add_argument('--lock', type=Path, default=Path('runs/local-migration-20261023/.private/native-responses-proxy.lock'))
     args = parser.parse_args()

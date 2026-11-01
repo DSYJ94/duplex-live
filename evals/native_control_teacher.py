@@ -19,7 +19,12 @@ import time
 
 from data.synthetic.native_control_repair import QA
 from data.synthetic.native_control_render import sha256, validate_raw
-from evals.native_control_source_quality import verify as verify_source
+def verify_source(*args, **kwargs):
+    # Credential/lock helpers are also used by the lightweight Mac proxy.
+    # Load source-audit dependencies only when collection actually verifies data.
+    from evals.native_control_source_quality import verify
+    return verify(*args, **kwargs)
+
 
 MODEL = 'gpt-live-1'
 PROTOCOL = 'native-control3-teacher-v1'

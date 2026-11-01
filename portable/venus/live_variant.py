@@ -1,10 +1,10 @@
 """Choose original or adapted Venus for one isolated microphone conversation."""
 from contextlib import nullcontext
-from training.venus.lora import disabled
 
 
 def variant_context(model, variant):
     if variant == 'released':
+        from training.venus.lora import disabled
         return disabled(model)
     if variant == 'candidate':
         return nullcontext()
