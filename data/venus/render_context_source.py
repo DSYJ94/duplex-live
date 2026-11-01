@@ -43,18 +43,28 @@ def execute(output):
     models=json.loads(request('/v1/models')[0])
     if not any(m['model_id']=='eleven_v3' for m in models):raise ValueError('Exact model unavailable')
     request('/v1/voices/JBFqnCBsd6RMkjVDRZzb')
+    claim_root=Path('runs/venus-training-20261101/context-source-claims')
+    claim_root.mkdir(parents=True,exist_ok=True)
+    payload_hash=hashlib.sha256(PAYLOAD.read_bytes()).hexdigest()
+    # Independent of output directory: changing --output cannot repeat paid calls.
+    with (claim_root/(payload_hash+'.json')).open('x') as claim:
+        json.dump(dict(payload_sha256=payload_hash,output=str(output.resolve())),claim)
     output.mkdir(parents=True,exist_ok=False)
-    ledger=dict(payload_sha256=hashlib.sha256(PAYLOAD.read_bytes()).hexdigest(),attempts=[],complete=False,qualified=False,automatic_retries=0)
+    ledger=dict(payload_sha256=payload_hash,attempts=[],complete=False,qualified=False,automatic_retries=0,
+                conservative_attempted_cost_upper_usd=0.)
     def save():
         temp=output/'ledger.tmp';temp.write_text(json.dumps(ledger,indent=2)+'\n');temp.replace(output/'ledger.json')
     save()
     for row in plan['requests']:
-        entry=dict(id=row['id'],status='attempt_reserved',payload_sha256=row['payload_sha256'])
+        cost=len(row['body']['text'])*.0005
+        entry=dict(id=row['id'],status='attempt_reserved',payload_sha256=row['payload_sha256'],
+                   conservative_attempt_cost_upper_usd=cost)
+        ledger['conservative_attempted_cost_upper_usd']+=cost
         ledger['attempts'].append(entry);save()
         try:
             raw,request_id=request('/v1/text-to-speech/'+row['voice_id']+'?output_format=pcm_24000',row['body'])
-            if not raw or len(raw)%2:raise ValueError('Invalid PCM output')
             folder=output/row['id'];folder.mkdir();(folder/'original.pcm').write_bytes(raw)
+            if not raw or len(raw)%2:raise ValueError('Invalid PCM output; original bytes preserved')
             wav=folder/'original.wav'
             with wave.open(str(wav),'wb') as w:w.setnchannels(1);w.setsampwidth(2);w.setframerate(24000);w.writeframes(raw)
             values=array.array('h',raw);peak=max(abs(v) for v in values)/32768

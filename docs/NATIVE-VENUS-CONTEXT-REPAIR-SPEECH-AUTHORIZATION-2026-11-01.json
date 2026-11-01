@@ -1,0 +1,16 @@
+{
+  "schema": "dl-context-repair-source-speech-authorization-v1",
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-01T18:30:20.049502+00:00",
+  "human_approval": "Proceed with next steps",
+  "approval_context": "User continued after the exact72request/5USD proposal and pending approval summary at623bc3c. This records contextual approval, not a fabricated multiple-choice reply.",
+  "proposal_source": "623bc3ce40154d5a6acc4b2e7e85bda9f6eb21dc",
+  "proposal_sha256": "621c2cfa70a8923ea824b960f2033e10eb7d1f50360f6106358047d34177f464",
+  "payload_sha256": "83e857f14a04fc18501ad048d2706c5e8655ddbb5143cdeed9c3e080ec4a15a4",
+  "maximum_paid_calls": 72,
+  "maximum_additional_api_usd": 5,
+  "unchanged_phase_cap_usd": 70,
+  "new_gpu_seconds": 0,
+  "new_optimizer_updates": 0,
+  "purchase": false
+}

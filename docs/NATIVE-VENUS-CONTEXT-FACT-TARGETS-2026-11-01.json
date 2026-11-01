@@ -1,0 +1,829 @@
+{
+  "schema": "dl-native-context-fact-targets-v1",
+  "rows": [
+    {
+      "scene_id": "venus-context-repair-draft-train-quiet_scope-00",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-simple_or_delegate-00",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 532.72,
+            "total_interest_GBP": 2177.86
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 415.02,
+            "total_interest_GBP": 2920.94
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 344.7,
+            "total_interest_GBP": 3681.92
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "e5be7dadf784f1e007dd515c34f32ad09c22251b52ff39c6b1c42ef0521a4f93"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-selective_cancel-00",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-correction-00",
+      "fold": "TRAIN",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 9,
+        "revised_litres": 11,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "30b8b048de83eb44f3b79059b5f4b4e62790240206b07e7faca5c78b8a6a5c41"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-pause_resume-00",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-result_delivery-00",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "950a518f40ca662dea6ed4f8e9f50bb9d6957c128d891a38cab65510abaefd22"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-quiet_scope-01",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-simple_or_delegate-01",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 573.46,
+            "total_interest_GBP": 2344.4
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 446.76,
+            "total_interest_GBP": 3144.31
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 371.06,
+            "total_interest_GBP": 3963.48
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "8b6e399013fd5e7feb9e51de96e221af2c87810d046fd48956caa7885385732d"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-selective_cancel-01",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-correction-01",
+      "fold": "TRAIN",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 10,
+        "revised_litres": 12,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "a261c29da29d37c510c8c014e40f3be586b64ac50580ebfb6b0d310db4e99b41"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-pause_resume-01",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-result_delivery-01",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "5854645f0069f061633846502e382d1634e96bb8b6d47afe789239f84018c156"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-quiet_scope-02",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-simple_or_delegate-02",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 614.19,
+            "total_interest_GBP": 2510.94
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 478.49,
+            "total_interest_GBP": 3367.68
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 397.42,
+            "total_interest_GBP": 4245.04
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "cabc54458ed5cf3cbada863e96e3bb3302de25bf0dd076793099fb11f7f98679"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-selective_cancel-02",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-correction-02",
+      "fold": "TRAIN",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 11,
+        "revised_litres": 13,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "cd2c55e4a30d4822cdffcedd1305cb03302667a1f80bfd1a276e010b1b307b88"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-pause_resume-02",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-result_delivery-02",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "dff879f68a2f3ad2d5e49509271bda230ae28b5015282eb98025349e8dc7f145"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-quiet_scope-03",
+      "fold": "TRAIN",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-simple_or_delegate-03",
+      "fold": "TRAIN",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 654.93,
+            "total_interest_GBP": 2677.48
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 510.23,
+            "total_interest_GBP": 3591.04
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 423.78,
+            "total_interest_GBP": 4526.6
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "ce0ec1596108a0b95ac0cd891df284a13eb889ad0f4dc737c22836a473654555"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-selective_cancel-03",
+      "fold": "TRAIN",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-correction-03",
+      "fold": "TRAIN",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 12,
+        "revised_litres": 14,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "36d5dc80804acef9ca06a0d93574c4cd2eb625f0e7079cc48a452c59eca54340"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-pause_resume-03",
+      "fold": "TRAIN",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-train-result_delivery-03",
+      "fold": "TRAIN",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "e8635cc935dda0f6a220df1d3b22bf29ff54a0c677a3fbf590a8797ea430c097"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-quiet_scope-04",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-04",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 695.67,
+            "total_interest_GBP": 2844.02
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 541.97,
+            "total_interest_GBP": 3814.41
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 450.14,
+            "total_interest_GBP": 4808.16
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "a88f018b1787fc1a9a34c7d3e5736005267a8f4cbdbb016ff2ec1a3d431d4a85"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-selective_cancel-04",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-correction-04",
+      "fold": "DEV",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 13,
+        "revised_litres": 15,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "cea99bb498d3d450a674d01615ecdce3c0eab4bc014fa49751ae3508267ff9b7"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-pause_resume-04",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-result_delivery-04",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "7c21ab069234c4c920c29c1682f6d38460bfd6e4fc67702ce410e824f9cc9da8"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-quiet_scope-05",
+      "fold": "DEV",
+      "family": "quiet_scope",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "No acknowledgement, filler or request for the cue before release.",
+        "After release answer the simple question directly."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-simple_or_delegate-05",
+      "fold": "DEV",
+      "family": "simple_or_delegate",
+      "fact_targets": {
+        "kind": "amortization_comparison",
+        "comparisons": [
+          {
+            "months": 36,
+            "monthly_payment_GBP": 736.4,
+            "total_interest_GBP": 3010.57
+          },
+          {
+            "months": 48,
+            "monthly_payment_GBP": 573.7,
+            "total_interest_GBP": 4037.78
+          },
+          {
+            "months": 60,
+            "monthly_payment_GBP": 476.5,
+            "total_interest_GBP": 5089.72
+          }
+        ],
+        "rounding": "unrounded payments used for total interest; displayed amounts rounded to pennies",
+        "early_repayment_penalty_GBP": 0
+      },
+      "behavioral_requirements": [
+        "Answer simple addition directly.",
+        "Delegate the full harder task with numbers, assumptions and requested comparison; do not fabricate a result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "3a86b2a936a5d49890db05e867955bfbcc0e0cce6e2e599c6c8dc679c02dd068"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-selective_cancel-05",
+      "fold": "DEV",
+      "family": "selective_cancel",
+      "fact_targets": {
+        "kind": "selective_cancel",
+        "travel": {
+          "rail_minutes_saved": 50,
+          "rail_extra_GBP": 12
+        },
+        "meal_total_GBP": {
+          "pasta": 18,
+          "soup": 12
+        },
+        "meal_within_budget": {
+          "pasta": true,
+          "soup": true
+        },
+        "cancel_only": "travel",
+        "keep_pending": "meal",
+        "cancelled_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Two distinct task identities.",
+        "Cancel only travel, confirm after actual cancellation receipt.",
+        "Keep listening and converse while meal planning remains pending. Never deliver cancelled travel results."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "13b1f0486250faf61222d22e0a995c28505a0667bece87c733c1072c54d092f1"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-correction-05",
+      "fold": "DEV",
+      "family": "correction",
+      "fact_targets": {
+        "kind": "paint_litres",
+        "original_litres": 14,
+        "revised_litres": 16,
+        "deliverable_revision": "revised_only",
+        "old_result_delivery_allowed": false
+      },
+      "behavioral_requirements": [
+        "Delegate complete original request.",
+        "Supersede old revision and preserve all unchanged constraints.",
+        "Only the current revision may be spoken; admit still pending if no result."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "506be7f9a955346ea997208cb7c612b15ff8552e2646ded2788f7ea7ef756f35"
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-pause_resume-05",
+      "fold": "DEV",
+      "family": "pause_resume",
+      "fact_targets": null,
+      "behavioral_requirements": [
+        "Pause immediately without another spoken acknowledgement.",
+        "Retain progress through an unrelated user turn.",
+        "Resume remaining explanation without restarting."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false
+    },
+    {
+      "scene_id": "venus-context-repair-draft-dev-result_delivery-05",
+      "fold": "DEV",
+      "family": "result_delivery",
+      "fact_targets": {
+        "kind": "given_fact_comparison",
+        "extra_cost_B_GBP": 60,
+        "supplied_fact_conclusion": "B tolerates the stated damp conditions; A must stay dry.",
+        "fictional_materials": true,
+        "real_building_advice": false
+      },
+      "behavioral_requirements": [
+        "Direct basic answer while a distinct harder task remains pending.",
+        "Use an actual matching backend result, not a guessed comparison.",
+        "Summarize faithfully in natural speech; never read task markup or receipts aloud."
+      ],
+      "teacher_history_available": false,
+      "audio_available": false,
+      "training_approved": false,
+      "task_contract_sha256": "a13a9ad7e2246754e51a187ffeee2cf4d3a5618c45f0d5241c2e13d0b3013169"
+    }
+  ],
+  "complete_fact_targets": true,
+  "optimizer_updates": 0,
+  "provider_calls": 0,
+  "native_dispatch_tested": false,
+  "causal_worker_receipts_available": false,
+  "teacher_speech_targets_available": false,
+  "qualification": "OFFLINE_FACT_TARGETS_ONLY_NOT_NATIVE_TEACHERS",
+  "plan_sha256": "c19f3dfd2760a9e6679f46fadf0440dae38c716dcc21eed3990a64a4afcfeba8"
+}
