@@ -1,6 +1,6 @@
 # Native duplex product execution plan
 
-Updated 31 October 2026. The goal remains a useful native full-duplex voice model: ordinary conversation, deliberate silence, interruptions, natural chosen speech and asynchronous delegation of harder work. Candidate406 remains rejected; no accepted production model or current training run is claimed.
+Updated 1 November 2026. The goal remains a useful native full-duplex voice model: ordinary conversation, deliberate silence, interruptions, natural chosen speech and asynchronous delegation of harder work. Candidate406 remains rejected; no accepted production model or current training run is claimed.
 
 ## Completed evidence that changes the next step
 
@@ -23,3 +23,5 @@ The one context-backed backend experiment is complete. No further API trial is p
 GCP phase$70/project$175 and all elapsed-time accounting remain unchanged. Current action-phase remaining time was2300 seconds, broader4800; neither implies more optimizer updates. All five VMs were last verified stopped; a fresh read now fails because Google reauthentication is required. Stop paid compute while access/scope is blocked. New AIRR Homunculus20000GPUh is still last verified pending/on hold; local SSH exposed only the old brics.u6si account, not the new award. Never charge old grace-period access as new allocation.
 
 Preserve all rejected models,190/244/298/406 checkpoints, old PersonaPlex/Moshi histories and objectives, optimizer/RNG, Runpod volume and verified archives. The broad Mac source backup remains partial. No foundation-pretraining or parameter-growth project is scheduled. Further diagnostics must identify a specific failure that changes the repair; avoid another open-ended comparison loop.
+
+1 November preparation: all268 current TRAIN/DEV timeline hashes match the approved action index. TRAIN has56 quiet/40 cancel/48 delegate examples, with zero scheduled actions before quiet release start; absence of supervision is not established. See NATIVE-VENUS-TRAINING-COVERAGE-2026-11-01.json. New authored coverage draft evals/fixtures/venus-context-repair-authoring-v1-20261101.json contains24TRAIN/12DEV text scenarios for silence scope, basic versus hard-task routing, selective cancellation, correction, pause/resume and result delivery. No audio/teacher targets or new optimizer scope is approved by this draft. Google renewal completed; fresh all5VMs TERMINATED. Bounded Isambard SSH failed publickey, so new award availability remains unverified.

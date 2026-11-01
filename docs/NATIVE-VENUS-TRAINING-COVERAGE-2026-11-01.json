@@ -1,0 +1,2552 @@
+{
+  "schema": "dl-native-training-coverage-review-v1",
+  "source": "8542e14",
+  "timelines_manifest_sha256": "4a5bdf4d9b79b788388baf71a93d7cf540eb27ec80a3f5902def61fe584fe701",
+  "all268_timeline_hashes_match_approved_index": true,
+  "counts": {
+    "TRAIN": {
+      "pause": 24,
+      "cancel": 40,
+      "ordinary": 32,
+      "quiet": 56,
+      "pending": 16,
+      "delegate": 48
+    },
+    "DEV": {
+      "ordinary": 12,
+      "delegate": 12,
+      "quiet": 12,
+      "cancel": 8,
+      "pause": 4,
+      "pending": 4
+    }
+  },
+  "quiet_early_teacher_actions": 0,
+  "rows": [
+    {
+      "id": "venus-control-v1-train-pause-0049",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "0dac5b021e45f47f591ee1eb6ed2b60372a10d3bb15c67074fcf19484a5dfe7f",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0105",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "53dfb23e0301c13c5ad6d7ce9408b0706907f657ccbf25bc61ee4dd2bb528084",
+      "delegated_targets": [
+        "lookup pencil",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0145",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "d1d117a69fb3af590b6d9a7239b37abdd4b95332d8177dc1ecc8cae56ca7d60f",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-ordinary-0078",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "453c25088abfeb5ef1597d1b6db8523e882a3d6797deccd0868a5cff6305df35",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0026",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "a41108ca5fc765ea05b0e9dee3598957078ee3bf6ebf8d7e9c2e0eb449f342b0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0035",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "f2c265ce00c63233f23605f616b025c8618eb3533efb20bfbd9b8456eecacdd4",
+      "delegated_targets": [
+        "lookup backpack",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0035",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "7de265141a939d1b947f7b9d18e557dd3362e20b79b52e8d2ac2be1e254bf94c",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0021",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "e4b79ba640ec6ef5b8f201b21e9ba5f0876ac29bccbcdc9ac448e0015c43fcd2",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0048",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "c422448761263cb059a7244fe1a8d12e40de4b1ffb0c0cacc7f5a41c8a770fab",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0010",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "60138c6e8aaaeae1bf36f2535a2088af49a7dde165565a3051d42e583a23df4e",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0166",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "209fbedbb56ab9943b84bac20daf58e6968f672e2b40295f3ac35f2d597c980b",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0103",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "8a70492ebbf23c1a8b7cb76078d19665f84cdd72d49c6032fc690518963a18a9",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0053",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "35b7161df0238244a56d50625563e4231a89183c9073a383caa23f376e64f956",
+      "delegated_targets": [
+        "lookup toolbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0016",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "199830873ef3a1f970a00390d63f5b71835706f5f0a8067b24b10c5b41354ee6",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0056",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "2e19d9bc810a3716570dc08f3f1035303da2b3abe3c5d1818db39e3097b93903",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0157",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "a60ff0ddc444e8d1c60e289484a45d8761882f959267c7e8a6ec19ba7cfe4b36",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0097",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "3cdbaee9ac0bd3c11551006ef5ba5158301018754ce4881e70cfb67e22393f43",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0070",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "b9540400718199cda2361f25b3c73e90fd54691216a0a8ac6da59cd68402cd65",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0001",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "056496cc75f0bca6f238e26212ff58dfb7dc67a6cf77a12b16f4161d9f288dd0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0039",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "70087703387761a6585a8e24ba3659ff71afc582bca57fd692ba36ef7a1431ce",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0063",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "0517797f48a35fb3d23acbb5c85dcf4dbf6c8b06758b03d25aca6833e5d95d71",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0130",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "80a3eeffc08a07d131817506f827929bc4aad4cfc3033bec992c9c05016d6c37",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0102",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "5ed4df6848aed54fbed3c8025d390f65d243397b3c4da07c133abdccc84e0f3a",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0127",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "52f081e1403677a70ecb4301967939bdd28177016c12d553165765346dd6b376",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-delegate-0073",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "0c59cf56b89899c99315c1267109e0db8c280b1be1e7d0e176d1cb540a4965ab",
+      "delegated_targets": [
+        "lookup saucepan"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0023",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "a8f2189dad59afab31399c35d2c3a7167732a771e34bc9ca1b9aab32d582d467",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0128",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "ac058d9eaf80c48ffef477c62d91555d9253d8e50fa4fe5a095cb62ce4ccbbd7",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0080",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "34c282fe29d90b8a2602a23e7573b5edd2e8981b2e31e829549ef68935143b25",
+      "delegated_targets": [
+        "lookup window"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0186",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "89398e76080108048eed2cac9a1d0cf8511ddfdeb66967b4338923c6460ce5fe",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0063",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "a138f47c399f0c88219bf6a8c7c25ec7c0a0d6c604a7550faf58f65e4cd17f95",
+      "delegated_targets": [
+        "lookup backpack"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-quiet-0066",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "5e38976e61e66cf4d82be91482650e86d3b4f3758add17135b4bd14f7ecc0d4c",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0129",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "896cea4c31bb48c38dbda792d3029edd4a89bd440797ed0f2d5523cf4068ceef",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0176",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "e65f4372f20e3efc56653a556627d15080d6321f5ce1b3ea947ebdd456dee902",
+      "delegated_targets": [
+        "lookup pillow",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0007",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "3d4cc1b2ba27ed670b4ed549883e4947db3b600c124a1e7f7c61f7e5c53b62e9",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0089",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "9951b09ffe3c2396f7e321a4a902565a05fdeea4c58ead4058ecb6b243d854d4",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0038",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "d8941ceed06b4dd0ca853a04d051a90d18327704c22bbdca8ffe87dbf7f611ce",
+      "delegated_targets": [
+        "lookup notepad",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0115",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "b38ef194372f4617a25f031f4d3a69429c4365a847adc25ce06c221bb44e025f",
+      "delegated_targets": [
+        "lookup blanket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0024",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "2363640facf492b400073c0a25b9b79c884a23f32b2e7079fec9d8c59605a8b1",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0112",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "9f68f221ba4fb01757a4c0bf5b3e09b7900a5b8fd38fa08c3d3025fc829e5bc9",
+      "delegated_targets": [
+        "lookup blanket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0134",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "4f525c5cbf180b0e90ceb08416180aa9da1a2c99ddfbbe098981505c0ec909d2",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0057",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "2ac0936d7db0d13f4af588740b28bc0d651e8d5737e1f26e66fed6bec7475914",
+      "delegated_targets": [
+        "lookup mailbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0014",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "71d996759fdc24fa8f05e49332ca5c8c176ba03189d1baa5e97c3e0422a76eb1",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0050",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "bb81ee99b55440dd6168eb18b52725b191f8afb44854881a65e1421ca855798f",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0007",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "3c2e3c83ba9a5bf57d8efb650171b100e2be385aab78315416f15007c328ca04",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0087",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "ba1e599f536c403f7d2dd40d4c914c9cdd5516c9c9e4716545534149bccaf510",
+      "delegated_targets": [
+        "lookup folder"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-delegate-0072",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "d41f97bf7743923ed2fd6692ae6272ac16dce97dd59b4460365ebe582810c8e8",
+      "delegated_targets": [
+        "lookup saucepan"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0146",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "2d540417f6a87fe3f1097b8bbb014796d8f947bd9f914d5617c6421c221741c9",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0095",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "fff2fa96375559110a6ee2170894528136ff0b53921ef3ab79047fb213f27d94",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0055",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "4c79e3381a547e7106b4122d6e80e95e198b8eceb8e11736ca0eb260938ef1e7",
+      "delegated_targets": [
+        "lookup toolbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0048",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "caaf6fba9cd0f568dc275a4e4bfb644d5f6023f870034e9ead03bfe4e13b2069",
+      "delegated_targets": [
+        "lookup suitcase"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0045",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "a9517d5c43eec5f456d41553299972d9a63f443ab8e768bb529ca83b54ac8041",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0116",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "2df397a53508cb92eecd3f4c515f63c2caa60a0a1fd40831b0eebb0f0f3c371a",
+      "delegated_targets": [
+        "lookup basket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0085",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "68c0f6b09bacfbcb38f4136fd8ec9886a6d3f63e3487a5f9acdb659261bf08d2",
+      "delegated_targets": [
+        "lookup folder"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0031",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "8bf0a0105e649a9dfef1ce0643cf007f18e94ae11cd703041fe3c0ffabcee5c8",
+      "delegated_targets": [
+        "lookup mailbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0029",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "6931dfdd5223162d5d1e3621ee4884cdc4f22722525f22f197096821284db524",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0075",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "576c89e64362cf15e989358342dc22f000ceb10b06634f35ecbd20c8285a30a5",
+      "delegated_targets": [
+        "lookup button"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0133",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "f040ed4ebf2588f861951b2f73b69726915fb20cf12c1a1ebedeb85d29dae8e1",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0051",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "1a1792aca310a95200d9ab2f7ce7583eadf720a7448f9c77a40fd8a3566a10a6",
+      "delegated_targets": [
+        "lookup suitcase"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0162",
+      "fold": "DEV",
+      "family": "pause",
+      "sha256": "5156c700a330356e4deaaccb8f852028badc4875f3ed00b353653fa040e39f55",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0042",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "0a907e4d2c73291e641ef96eb9c9ff95f866f1b62a5394a1e3a976500fb3c64b",
+      "delegated_targets": [
+        "lookup shelf",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0037",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "d0a0c53e17cf959820191cdd99cd476fef6e107e340e1dad0877d0819db2e0d0",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0040",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "29035f3ecca77d44e89445f22c0b96c02ce93f3581d48cd1dc6dea35413b1f6d",
+      "delegated_targets": [
+        "lookup wallet",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0119",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "407dcfcc4dc9739b2e3f7c53fbf05f75482daaae4491ee3d67396531d9e67f0d",
+      "delegated_targets": [
+        "lookup basket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0032",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "452ee37cbc6a1d13de6a1727cf82d034d83a6bc4f011b4ae5cb9136ba19b4103",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0137",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "b7171f9194b37bbfde5474084c31ff737a49a527b8e2c5a5818e48212214448c",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0110",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "33ef05d73932629755a490fd9646fab6820aaa16f78ece95e4cb10b73acb158f",
+      "delegated_targets": [
+        "lookup teapot",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0058",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "08bd2a8bd831f07f53f5ad9fe333ce49b405696724c3d0d45bd7029e3bd74018",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0120",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "955df05320f4dfd4dc055bc0d9eb20c5a9f5d311f3253ca313cf3ccb4e080c37",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0178",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "9f4f443675621b7225e2723d54b3a9a0e7a5065f20ad63718dcfe361062768f0",
+      "delegated_targets": [
+        "lookup pillow",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0055",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "c941488233f2a3c6a78613449dd46f62ab75d2350f9047c407f67f9e9cdd0d04",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0173",
+      "fold": "DEV",
+      "family": "pending",
+      "sha256": "5f4d724a112a192d296a00ea0361558194cdeeff273a6870de1ef86a4a759b56",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0031",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "c611092db47414a0e7c41d34d1c9af206e7604f6980ad929757e16c99d5462f3",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0125",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "2d7e1fc16ae48134db2e56765c51e27b46fc24f90f8266b84382ad9637e47c00",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-cancel-0070",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "4a8191c36b19bf01adf4942c824c8ca5e4c3ec807ba1cb39d41b6189cb2bf31c",
+      "delegated_targets": [
+        "lookup drawer",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0086",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "30a556531dece133ec31fbb0c79195afb994577eb2e89aaf7020a219f5fbe8cd",
+      "delegated_targets": [
+        "lookup folder"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0041",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "53a013b62e23a0563c69b7f9922f6d76045240d83cb97a6986c7e0bbb84c3c87",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0064",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "4626f0112a740472bc8beca251beac7cffb1f9205ae7e98e2150188baea2272e",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0014",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "6bee0b44955f321f5b52c90ed1eff4761a366f39156bc0ce525f3e0acf19d818",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0168",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "fdd4796a4e8ee2a45ff777c34b587dc97f0b67668f63052bc9b697682739d020",
+      "delegated_targets": [
+        "lookup bucket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0041",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "7972491ca415ce37d1422e6426d92e13a06216a42b43b9685b9e32b3345418da",
+      "delegated_targets": [
+        "lookup wallet",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0011",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "e764228fbcf3e11262470fc704cdd707d83a6ad55eeb803b88c5463e0c16ec6a",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0005",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "3cc8815410100ddb8221532b6685b652e3ae507b98ea70ed56d9e2f437f5923c",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0118",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "b89cd80bb3cc1e207825cfc91cb4cccda6b9cc60e18398eecfd95f17326af692",
+      "delegated_targets": [
+        "lookup basket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0038",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "a56a7f960bb320611bdd287c08c90da593927e8f3a61945ccf1c5972e8afc25b",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0036",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "26c4ddb43426ff1eb18393de4b9583bc92dcaa4c1a47c5616ffadd1d6f8859a4",
+      "delegated_targets": [
+        "lookup notepad",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0122",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "e772f676610deb67dce12c4d7ffc6548b9b018793abfcd056821af04fbe1655a",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0141",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "bf9feddfe666bbca732c1b28dc9e9b723403721ae695c9b437872964d90b8c51",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0093",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "f79860ec5550d4f3a541fae34f8dd56f952e99f70ebd6f99a679f6fa1f8af6bb",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0002",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "4a8bfb13c0def6c800bdb92470879a91bdc489d22a71c1e62776babb52fcf989",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0032",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "ef29c2b375744abcc8522f03bbf39492687f97851246a23871e8cb5f891b89a7",
+      "delegated_targets": [
+        "lookup mailbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0136",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "1de70b6e87f07803e1330e3efdf65d69fa0cd46eea00583126e3c2733b6ab0a8",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0011",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "57c88ad97bd74282ceb8148e853e9cde3c166c14f0fbf0e197a868ff1589af03",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0065",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "ca17a0aa6d75b76dc25ff2d7d6a932654b1091e3ff46ef90f2732e9750715d78",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-delegate-0075",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "f7a1a3029c93f3ca6273d07cea5835976b9f64706be62d37a7bab05c71d59c73",
+      "delegated_targets": [
+        "lookup drawer"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0180",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "6d041abbacd13dbe70e0d1ef447098187542f8c5b8c8943af8ea8705eb7e4968",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0039",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "6f5daa27dbfd8a3c8e10bcdf7f19efcc77abd4db493fa8ed07b893c0aa3b40c2",
+      "delegated_targets": [
+        "lookup wallet",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0132",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "b49c57d7e0eb2bfba71f517683684a55bbb5744cc17b3889856c9fb24414d492",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-delegate-0074",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "91b694a13d3bf7f2482f5d84d4defe58f02f43f26cd4fca39c177c90775884e3",
+      "delegated_targets": [
+        "lookup drawer"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0177",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "16a6c10c141e117afe9bb036ea4adfaa86ab61fd1b34cb4ecf8fb7e089131962",
+      "delegated_targets": [
+        "lookup pillow",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0175",
+      "fold": "DEV",
+      "family": "pending",
+      "sha256": "e9ffdbe1cf80da591883d8e3345f7d6a058a21f0a49d3082f61814e131204afc",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0037",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "2474375d02af8c7b70b016d2c92491282df6d3b3322688271c5b1182a807fe7a",
+      "delegated_targets": [
+        "lookup notepad",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0172",
+      "fold": "DEV",
+      "family": "pending",
+      "sha256": "a0bad81f33a29c94a4277605790fff4f7a2bfd89fb5797a8de52594707f53d52",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0036",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "6fcde18343eb8c62d3b8ff6f46561827ec456e1ad5b0a4daacc953a58da919f4",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0010",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "b59d276f224e1a2a77ad86538614d519d0325eb72cd99f5bb72ddbe2cebe3d9e",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0148",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "b2ba106ab23ab93f1cc72fe1f4f10bdf2254e9ed49d6bc2dca631470f83f8c15",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0131",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "828d0ad897b05d7eb43f2b17081c360dac7c58b8dda556cc487229ff22916e3a",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0026",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "07b6ac51ce95d7af57e8db66278633f22bb9c03e09b3d7c040dc0e21ec43a201",
+      "delegated_targets": [
+        "lookup suitcase",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0025",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "1d83df31ba8380f260b5d5a504991275b9237d5e0c79946df4571af5054f5f0a",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-dev-ordinary-0077",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "8124414ad5c04a3e15489a8913543dc97dc14a839ab2696e1d342340ae935d21",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-cancel-0071",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "57b8e0ce133fb423c266ccc230bc5234dafe700780ba51eaa459dfa34b9aed32",
+      "delegated_targets": [
+        "lookup drawer",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0049",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "bd0cc7f1e45ba6673d47036cbdbf0a64ab3e2c0a9238073d98dc3ecf651ff922",
+      "delegated_targets": [
+        "lookup suitcase"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0107",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "eef7f6c03319bc0c52f7dd55c265c512b455e5798e57ea96e6b5708d8f7d4d21",
+      "delegated_targets": [
+        "lookup pencil",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0151",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "c3dd7ae4ed9fd18aa977da4db8af50e9f9e9b77d07c19747aab7a17468343a44",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0008",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "a9dc3fa369f3eecfeb2407618ce5d4b89cc1292e5a958bd449b39bb399e3688b",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0164",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "2b33aeff22d5d355bc25621660eafbd1f2cf9e7effbd63de5bd23f42de394e1f",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0043",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "f3ea43dab642e63190e6c1013f59fd04e082ce0bd2ce8987a283180cab26d1b4",
+      "delegated_targets": [
+        "lookup shelf",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0006",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "7f8715c02244eb3b279147e15c29f9505daff071c0d790ae939be4335b5d849e",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0161",
+      "fold": "DEV",
+      "family": "pause",
+      "sha256": "842fa9eb791161c3d4eca75e50503e1db40896eb936e451119cd6268c182c360",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pending-0092",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "1f771be91f2908dbc4e8065c4110402ece3722599f4f2ff8722e5f9a16a6894f",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0005",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "26bb59a0852c308e9c65bf5c935b46d01b29f40f590993335a65bc0f9469c679",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0152",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "819ccbb5edff4f9832a6a4f376096c93f10a59dd1ea6cf0f42ba21b5f9466984",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0169",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "0dd317e592125deae0a600d317b0567766054d770a79bb0a9c477ae2adb09d3e",
+      "delegated_targets": [
+        "lookup bucket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0028",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "a35a126d5a7c9b10f35d3d747bae7601135cd99c2029188dab6ee2a6fe1c0948",
+      "delegated_targets": [
+        "lookup toolbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0009",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "7b0b00aeec8067addc62de8fa612e6b5207c3dde5c12001dbc6ccb86b5f9aec0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0155",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "324c735c3f92bac3210b9ff55e1ef141c7bb29341960b21aa120db95bea1b268",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0104",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "8699f97814676cf6f42147b1f693368fe667447eaacc48302eb48792e0961152",
+      "delegated_targets": [
+        "lookup pencil",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0033",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "2f7a10de27e258cf37ec002123320f0089973c90e33c1ca5c0f98794c7c0532e",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0144",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "892cacb4b3e64473a7b13faf6b10443ef0ed73123458c9a16493cd0d62f0a6de",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0072",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "cd02d7b1ea4f5a0cbf29ed6b3acb90a36a06e39541675488d1cae87d46d3dadd",
+      "delegated_targets": [
+        "lookup button"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0187",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "e68c9362815ccca92ee403b62e5a123ed913abab13d4933d1fe502a078323ccb",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0047",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "7daedbedfad12aaa892547078e87ef15afac4569ebe9f689d71bce57cab4da9e",
+      "delegated_targets": [
+        "lookup desk",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0043",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "e9364b87925decf6a5b58e8fa10649d098a8bc03162f379c96db4805539cf34f",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0163",
+      "fold": "DEV",
+      "family": "pause",
+      "sha256": "6aef0a1baac4c42e1f26b583ead8688efe9b4043a1a76ca0a4de45fd0b7627b4",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0047",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "44fc828b9e4525392c8d2c4e1b69f00c54ce525087ba884bb72bb9b1b3860c38",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0079",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "246554b98623c2e57916df1ab91892dffd831c0684f99153080245d6c4fcb792",
+      "delegated_targets": [
+        "lookup bottle"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0159",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "20e28edd7091b58fba9e37b7a41d84abd20a0de202ae3027b075cda7a2db54b7",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0018",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "d0e68ded4777e267ca4e9f3b68fda0e341e96ac0965a12b3522b68d9bacd0658",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0156",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "20859b94cf37ff50a7f821eb0d1570d548d5ba09e7905caac3e0861c877b9622",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0030",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "ed52bbc12ac38c29e6d16c9a9f4c5656a37351673fda6f9a1a9c682605a81028",
+      "delegated_targets": [
+        "lookup mailbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0019",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "79132a6bfad65e5a4e066ecd619ad9d2a2fe6b35ffa2be2e7e323299093c7315",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0062",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "1006e982304b2aa4f681d5dde4d449558e778ed0fd4ee38703fa1a51f8bb9b1f",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0019",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "1a2e23a75e68f63e22e02434f8bb8edab5d9913ac9346914bb11ce25f361a8cb",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0009",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "ee1d89a213099ac7acf498ff4d01dc8b9cd722f023bb0cd57a1717a8b6dbd8f5",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0030",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "9c6b750144988a98ce8cf677e8a56ad2d9bde5a6f4f4d691749e3da63ec54559",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0016",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "b68cc3c87e1c2a674b263b8a5541ec380b6f9bb931d228756245d66a58ce8463",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0098",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "91e7e31970531588509b053deb9bb40eb9cb66451f0c88fddf5c261573b598b2",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0003",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "5cea4ae030f095359995b2a5bdf318bd491e8fc40eac684a9301933de9df5db0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-dev-ordinary-0076",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "9bcd6d52038d4d036b0ed4d751723b0aeff854037731c37e3fce415aa7aa1046",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0044",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "a20e61d4124f6e871b25c71df08b26a3f3ad45eb39a487150e11f0a4e7a93c12",
+      "delegated_targets": [
+        "lookup shelf",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0069",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "d4b7b3f1797cd8c1e0e9e599c1296fc795c35b73694442460e0aeff3219f5d23",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0002",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "5dd124a485a37f90065ccb2acd5e174dc2d56ffb938f2e78b9553caea2348e03",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0096",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "5f10233eff210846fcb586663abd69f6729c3bb6b511580ce6e993a5c5972339",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0117",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "eb35b38496a2ad7c9a75958d5c5b9cbfed752d8894398d08328bb601e35afeda",
+      "delegated_targets": [
+        "lookup basket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0121",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "e6b25c0b212b19c960594ec7efb163e0053d03cf5488351a3fb339c53430f0c7",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0181",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "4480eac567fdf6d57cf29448ffb7ab37fca97b81252cbc8a5ef048e4700fa318",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0088",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "6e020ebd85e6a53df6243c501befcef8439422f4613f81bba21ccdd2073f8168",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0109",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "28b89bb444337eba906280236332858f6c994ffece7f1390e393087aba0bae5a",
+      "delegated_targets": [
+        "lookup teapot",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0051",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "75a94f8c4e0abe3ffa5275690351c89e6fb66b4be7f049d8d36f5f2ded26b84a",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-dev-ordinary-0079",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "2a148b71d523b53d12f49204609236e42e798646ebd83e05dbe625d6c6b84f51",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0013",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "c5e5614709c75db2046df8ed2f99dc9da4382e6ae4628705e122e1e68b4f9512",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0090",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "a63b10d138db4b506a61b428d8d44c0ae53ab7e1547a1c04547776547bb81c22",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0056",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "2b8ba45492f8e673d461aa64a617f3779b379cc6f6a5f77878f742a6c9760c16",
+      "delegated_targets": [
+        "lookup mailbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0068",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "8269039c0f11d66725b10a4f806d569ff1a609a9906d52d5673d8cefd7c84934",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0046",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "92dde70d9c5e589b5aee800876915d4de1dadeaae565da19ef267055c0040e49",
+      "delegated_targets": [
+        "lookup desk",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0150",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "e2c58c22eede7aa6a396ebc1dd9c4bb11647732d51ceaec2c69c97b8c2ec64c7",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-cancel-0069",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "69951d7f7dd6a19078eb28d69405ad43e1964d492cb9c36b21fbc80801abb706",
+      "delegated_targets": [
+        "lookup saucepan",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0059",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "171a5198eb0dc67604343e86d1a22749d759f3c1709e5abe035b3d29a939d7fd",
+      "delegated_targets": [
+        "lookup mailbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0167",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "d193a1663728d1f297573b3c4e7a5289db69136cb5e7b1ec0bc83bfdfd3139ff",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0054",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "9f8eb89590f25f3df42a9852ae5d9ce2478c95dcdf1f35a20901a92bbe20cf2e",
+      "delegated_targets": [
+        "lookup toolbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0022",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "8d674eac769451a773c8a0625f635edfd5c44172ce391cde0b243353c9819229",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0084",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "ac31181345c16ec5f604baa7cb3f4787f385f55de24b06f8203484ae8d2b38cd",
+      "delegated_targets": [
+        "lookup folder"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0143",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "d7bda39946c47aa102c34d50e7384f6b1e5431e930381090c3c29a69d51b8338",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0165",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "8c11faeea2f511dd2850a4409b72877b91b1aaa381ac429b68bd5c21e3f937ce",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0149",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "a612385870b6db35cc8d234db0010ac2a1014ebcd570a1eaa40475f68396b075",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0054",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "35b5cdfbf1af2f5e976a386f3de32e0f5813c22f623e3075f40635a2c6813ea8",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0184",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "7f4d3d42fe4f7d528819180f444d5728d86b077494bb8f9aad9cff858facf862",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "1ce5ec14a6c49298c0058480acb1b1b682bfd9aea1570ff59936be6990a8f19b",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0029",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "776bbff9789fdeddb7a1f7a99019fc113dd0121f384ae714df113060ad5fbc24",
+      "delegated_targets": [
+        "lookup toolbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0034",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "a9ab169c2087806052e244bf35dfedf52ff8d57da10059f3d927daf5f9237f2a",
+      "delegated_targets": [
+        "lookup backpack",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0012",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "3e142d61f3657f9605bd6ae46e1b43f9675ed093de1349632ec1c5973541234f",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0124",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "2c5c89a63809b2646458d36cc407f72069592213c66f23110b8c0c2f58bf68a7",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0140",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "59d9e7d213d6d0ea600825dae618ec3e878524bab5e054425a4f31ce3ad9e14c",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0060",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "6a5b0e39eaf8f5789d65b5666a14dcd4547cd4193984cbd722db4cb88dc12d24",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0042",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "2c4f8b3a71f97d46a47680e5c404d343ed906a03dc276f777d818dcd88bbad73",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0000",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "f7e45c2603b87712f0bf807252238d61999f784f2d9c7be8a3c076cf595dae60",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0074",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "6feed8da1b00193c33c0accb1adb1d0b2715400874584c1ce96b2f4767fd7822",
+      "delegated_targets": [
+        "lookup button"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0024",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "9205daa48b7719c41f0429801f318e333a2104bb3697384fecf2967926a8e403",
+      "delegated_targets": [
+        "lookup suitcase",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0078",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "8dd13dbad24877d269e991a2d777b7d0fbfb066b15a79f608e0f1f4b11f4684f",
+      "delegated_targets": [
+        "lookup bottle"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0015",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "c20b5fc021899a648d7a94df2a7aef7eb0b3a988743fb16216dcc1e7cf0ce802",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0045",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "037abfb3e94058abc8337306b963d15656e2efb7e226aa111d631e9685b50f25",
+      "delegated_targets": [
+        "lookup desk",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0062",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "1ef99f36e8133720f2f09a110e909f389fabd4b01425c7ac5bd55cca33c85d7f",
+      "delegated_targets": [
+        "lookup backpack"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0126",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "3347d7dcd0bd24ccb2dba0ab177c31b5896853784d1f2d716512b5744482e3c2",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0025",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "b61bc5f4bfca573c7f1e0bd1ed28ef638dca9a0a93d2268feec5b256a9f4f4d1",
+      "delegated_targets": [
+        "lookup suitcase",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-dev-cancel-0068",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "a0978d149880e1d3805afc63dd1cd58aee94d1861d7652821ae3aff8343649c2",
+      "delegated_targets": [
+        "lookup saucepan",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0170",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "c5dbd577ad2c904848bbed05b4d6b1b9239eaa92a5174e9c09dfe7f0623b007e",
+      "delegated_targets": [
+        "lookup bucket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0015",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "fff982859aab035a96c4ef7a703ae1b87c32865bc857f2e0739f06cffdf23ee5",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0081",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "de52d0bec92e0cd2ac82b742ab9f978db6124731e87516dc9b9e3177022f576a",
+      "delegated_targets": [
+        "lookup window"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0114",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "dfac87a93f56aea5a8f273aa5a177106a094f4cbbff0cb145aeaa78c2eb3b27e",
+      "delegated_targets": [
+        "lookup blanket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0017",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "304ab98fdf83de8a1be1f8fc6e041c52bd6a50dfa281f98f18e300b195d18c5c",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0028",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "53880530862856d3b6067fa53ddbda494feb80d528b98691640215bb32a49cd5",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-dev-quiet-0067",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "b1880bbe4b74fce0afdce1ca934d85714deb53edc5561216a1c7e843cab39782",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-pause-0160",
+      "fold": "DEV",
+      "family": "pause",
+      "sha256": "864fee8c9225b96772ae94d193ee917e3659b8321066c5d66a69523149c8d1f1",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0154",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "d56244cdb98fca243bb826c42fb0dc70d0412d22e9aded1e6ebe4413c89b2078",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0053",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "3fbb6f1ff1fc07557df698989bdcb65c352aa2bff2537b5b87f4a39211f42a3d",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0082",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "db8d313efeb339f14a2c217bd819c5c29ff15fe3cc6e5bcd0fe78d87622ff5c6",
+      "delegated_targets": [
+        "lookup window"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0046",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "2d28a0c3e0eb5cbc66418381733109beb2f6ffd642ff57341d01e99dd6ffebaa",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pending-0099",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "f9a2e50af0ef44377d5f6aa920104298aa4f94ba7f6984eeb5a2624bf36d4b70",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0020",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "af4df8d6f6c5bf055518185d0ad9097a0dae35000aee7699080284a4e3739113",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0083",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "68cf8b29c8916c74d183e8f5316c13ee1bf1966436d7764ce719cb3262e51af0",
+      "delegated_targets": [
+        "lookup window"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0012",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "6bf9f592e9c95c2a31b8adc392414ff360c242f0776f89fd93e72d1065d31505",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0004",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "04acff07988bfbc471b92dd039e607f66ff739ee87cf97bf2ad13d8e9eb8f1f4",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0061",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "96cae185cf240b32337bd9fba880f7ba5416ae8e9553418412ad47875a5a6e46",
+      "delegated_targets": [
+        "lookup backpack"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pause-0052",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "c9279a12a2af99253d004bdb83f5a6e9922013a68a9cd892a9cba5869b1b4f24",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0052",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "86fa99c88acaa234751fb7249eb0c8a08cfe251cd0cb16f808363ec31e8ba098",
+      "delegated_targets": [
+        "lookup toolbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0013",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "580306b320d171f7d363d2d5f0a56a87cb7ce35bfee2bfc9e8af4b791c24cff8",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0034",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "842e8f3c5dda2498f729935c3f2288aea6aba561ad71f80f702dfd5021a9e6c4",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0022",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "ca8b17e88504d484b9d851aaf7b8a34005d6fd90bc78b95423bd7d395dc3b464",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0017",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "e2d594b7b2d62b5162aadb300395cea98558a36c721584f623e03cabb03b1a5c",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0094",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "f7fea709f42d6b9e4d3bfb0815273200475410ac04f609f2225160e3b4fbc38b",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0006",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "a37b3958cc95e43ac97bc92f79d9fed3128813770bfb98036a6d76ad2f0446d5",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pause-0044",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "d8e9aa73354d69fa59ad738e24f04753f0f324defdc1175d2b4ad51ad2206a55",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0050",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "c0308f9d062956f294c0fe73cb541344b71552aba04153717c24c2698a74eac0",
+      "delegated_targets": [
+        "lookup suitcase"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0058",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "deb713d4763c09cd119c627d2cb4baac291ac310f37507425bef505916b58bc4",
+      "delegated_targets": [
+        "lookup mailbox"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0138",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "dc4a5c18f657074006c59f71c3b174aba4a6c68646129674e5253dc7ddb9f08a",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0123",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "606cf10d0e1397d3403f43a9296bdb5d930ad6c5b8a32aea3f900b42554504c0",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0108",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "feb565767b96d2108d07a5aaffcd25acdfaa0373472a8554c968cc2f8c175863",
+      "delegated_targets": [
+        "lookup teapot",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0027",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "7b73ebf107cf2f2c6e39a4ce6525e7319286d9433c883ce343faf411397329d2",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0182",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "1dea199323fb3ea16f3fa39e752a713a877ddac3e915cd43eb6b9aa92ef95763",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0004",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "7223b4599f3d50ea9a79de4a9db287aa2cb969640938434e71c277b54c1f4a5f",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0061",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "6597f66f4b1a8a879709cc3d0f0154c62ec5fc7222ff4f27643100a142bf1c26",
+      "delegated_targets": [
+        "lookup teapot"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-cancel-0179",
+      "fold": "DEV",
+      "family": "cancel",
+      "sha256": "fc708f6f37d194290af73a21885dc0aaf1f993109f66d517a818cd76fea82100",
+      "delegated_targets": [
+        "lookup pillow",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pause-0040",
+      "fold": "TRAIN",
+      "family": "pause",
+      "sha256": "d46d93bab106de20834e234743441c156a72db2a7756e15a9ef0f4ebda610644",
+      "delegated_targets": [],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0059",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "6b396eceb22ca08230e9dbd40f7846ba7a1ce463f186ef63c385105a63dac5f5",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0111",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "8117ebe1e85e14b7a1a96eb0a07bd8cde923a210f19c8e1edd2dae7f23002abc",
+      "delegated_targets": [
+        "lookup teapot",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-pending-0100",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "07445fe712d1a816e55ac339fb536e4daad38a4f7e127273cf1397bbf5324dbf",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0057",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "3c8fed477d294d8f89e31b7dfcf5cd2782a3173a0451fc2dc5a1c908fa764136",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0135",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "2719848b975da125959c432508055853f2c7b67103bb741b43192a2ec13440b0",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0139",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "5bc39c5b2954c704bea1990f7bc760304823c767fc6d8a083390a72811b289c7",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0003",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "9410dfaad2200846363284f987d46190fe181184c0542cb3ba552a5ca35d770a",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0113",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "dce61e1984bb46946b0045360af69cb52e9ef8edb51f521ba5367aa5c8075590",
+      "delegated_targets": [
+        "lookup blanket",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0158",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "4ec7cbdcecf068843e88e07d3cb0385f6e2f529fe2af34fcd7840a0e7fda31d5",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0000",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "6e630a0a01019098e1b64c3b2dded7e8aecce0b03628b2cea51e5897561ecc6a",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0185",
+      "fold": "DEV",
+      "family": "ordinary",
+      "sha256": "faede3b18c3958cee5c5187ba77b9b2b3b1a8cb6c567b36e872903b3ef39a802",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0020",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "019ea57b260621655b5d18eb5131d9103c2ff591926deef378a3fcc7f0c8d7f7",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-dev-pending-0174",
+      "fold": "DEV",
+      "family": "pending",
+      "sha256": "03005c1b0e979f619466ce8e61026d66f0688e26952a9eca46668391f2dccf46",
+      "delegated_targets": [
+        "lookup pillow"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-train-delegate-0060",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "9ab849b8d114e536e4f777425df547728e0891254eccceb3adb5e3481eb9335c",
+      "delegated_targets": [
+        "lookup backpack"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0073",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "41a038d5ee7ff8dd1503d12b3e7929e2a86e125d4ef4d531094714ec2dfc43f6",
+      "delegated_targets": [
+        "lookup button"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0023",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "5f4d1dde2e3aa0d19add825eef547fe170528c3294d611f8199b6631a4828a42",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0008",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "a6dc65973522cbefbf4dec94960d4c17fbd094c8f80b9c2598c6db89d8289aa0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-pending-0101",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "aacaa7d5e87040aa3f1b811649612505d03717248cb870dff9c471bc2897ea65",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0077",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "7fa9657febcd48232938c294b838a100ecbd32ff52c391017244a33fb4719e82",
+      "delegated_targets": [
+        "lookup bottle"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-dev-quiet-0065",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "a9701672d2663558379a8b4caf3e7d91d3f84d30550e93b9a9f8513013da56a6",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0071",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "36c54d8f6cea97d4054d7f73e803688fdf5f8579f7b52fbbb8ab212365348dc1",
+      "delegated_targets": [
+        "lookup basket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0033",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "67db440c53651e75526ccfe81a9114e57f297dafc38c739c71afcc669b442b38",
+      "delegated_targets": [
+        "lookup backpack",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-dev-quiet-0153",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "372943d5fb83bc19fdd6d7ade025fbf2428619ab6284f715c665a34c94a9f56b",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0147",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "a4ad0e9db4d37d15be1c561e4601601ce1fbce462a39a378f083f2cfb670a61a",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-cancel-0027",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "8baa9f81feb3e9259c3be88ba7cdece22723a8ba0ad336ffb7113dba28f6c1c3",
+      "delegated_targets": [
+        "lookup toolbox",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-repair-v2-dev-quiet-0064",
+      "fold": "DEV",
+      "family": "quiet",
+      "sha256": "5e84e2ccd0032d4ef52d1169cb30eb3bf1f4d7e0d809cf4e9e8af12c1921cae0",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0018",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "74ee681ff81f13bb05b81befe46fe17ac84d791c26a38d6ed257083765557848",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0067",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "e40f9136bdc84791b737c7fd83eec96ded96f3e662f0af1b1c7f0863ad2213f3",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-pending-0091",
+      "fold": "TRAIN",
+      "family": "pending",
+      "sha256": "e67cbd3e1b7f32d008618b43781e6fea7abc35a8a663553bf1e7498e4d2ce2c3",
+      "delegated_targets": [
+        "lookup pencil"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0076",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "44bba051a39eb2f20147ccebbe46687d64fee3ae1f9a1f5512103422785b2be2",
+      "delegated_targets": [
+        "lookup bottle"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-repair-v2-train-quiet-0021",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "5a568013d0eefa301273f559cb6f0ffa14249aeeba5e181b0741469458e52f72",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-cancel-0106",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "sha256": "daed79daf312fb8f21ad285c4c7a553625fa68b884758f75923eae4a5e203588",
+      "delegated_targets": [
+        "lookup pencil",
+        "cancel pending"
+      ],
+      "spoken_actions": 2
+    },
+    {
+      "id": "venus-control-v1-train-quiet-0001",
+      "fold": "TRAIN",
+      "family": "quiet",
+      "sha256": "81fa8910bd6d102a268aa7c8ff8abfcfd6818f81b7d9e6d561430fde05e89736",
+      "delegated_targets": [],
+      "spoken_actions": 1,
+      "actions_before_release_start": 0
+    },
+    {
+      "id": "venus-control-v1-train-delegate-0066",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "sha256": "2a543aa94a0da7e71aac0687905753817b32fa9d470da2936308c1eabe817b58",
+      "delegated_targets": [
+        "lookup blanket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-dev-delegate-0171",
+      "fold": "DEV",
+      "family": "delegate",
+      "sha256": "48dafb4efffe09ca93044555e98ca2ad8ed2cc29ba722940d39ef4ebaf7fd0ea",
+      "delegated_targets": [
+        "lookup bucket"
+      ],
+      "spoken_actions": 1
+    },
+    {
+      "id": "venus-control-v1-train-ordinary-0142",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "sha256": "8d39ce212360a2639ae2923912e401822ca38d703d6fd8f8f3a961e9299be74f",
+      "delegated_targets": [],
+      "spoken_actions": 1
+    }
+  ],
+  "heldout_timelines_read": false,
+  "optimizer_updates": 0,
+  "external_calls": 0,
+  "limitations": [
+    "Structural source audit, not a new word/audio or semantic approval.",
+    "Absence of early teacher actions does not prove correct cue recognition or generalization.",
+    "Existing six-family lookup curriculum does not establish broad difficult-task routing, corrections, multiple pending tasks, interruption or natural backchannel coverage.",
+    "Training failure cannot be assigned to batch size, model size or dataset alone by this audit."
+  ]
+}
