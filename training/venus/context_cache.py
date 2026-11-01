@@ -21,12 +21,16 @@ def main(a):
     from .prefix_cache import capture_prefix
     from .action_targets import masks, token_ids
     from .inference import MODEL_REVISION
+    from .context_objective import OLD_INDEX_SHA
     ensure_guard()
     root, old, output = map(Path, (a.timelines, a.old_cache, a.output))
     source = json.loads((root/'manifest.json').read_text())
     old_manifest = json.loads((old/'manifest.json').read_text())
     old_source = json.loads((Path(a.old_timelines)/'manifest.json').read_text())
     authority = json.loads(Path(a.admission).read_text())
+    original_index = json.loads(Path(a.old_index).read_text())
+    if sha(a.old_index)!=OLD_INDEX_SHA or original_index['prefix_manifest_sha256']!=sha(old/'manifest.json') or len(original_index['rows'])!=268:
+        raise ValueError('Exact preserved all268 action index required before GPU loading')
     if sha(root/'manifest.json') != authority['new_timeline_manifest_sha256'] or sha(old/'manifest.json') != authority['old_prefix_manifest_sha256']:
         raise ValueError('Exact admitted old and new complete corpora required')
     if len(source['scenes']) != 36 or len(old_manifest['scenes']) != 268 or old_manifest['proof_only']:
@@ -67,9 +71,6 @@ def main(a):
         rows.append(item)
         index.append(dict(id=row['id'],fold=row['fold'],family=row['family'],prefix_sha256=item['sha256'],target_sha256=hashlib.sha256(json.dumps(ex['targets'].tolist(),separators=(',',':')).encode()).hexdigest(),action_spans=spans,indices={k:v.nonzero().flatten().tolist() for k,v in masks_.items()}))
         print(json.dumps(dict(event='complete_new_native_teacher',completed=i+1,required=36,elapsed=time.monotonic()-start,id=row['id'],prefix_proof=prefix_proof)),flush=True)
-    original_index = json.loads(Path(a.old_index).read_text())
-    if original_index['prefix_manifest_sha256'] != sha(old/'manifest.json') or len(original_index['rows']) != 268:
-        raise ValueError('Original exact all268 action index required')
     (output/'old').mkdir()
     for r in old_manifest['scenes']:
         src=old/r['file']

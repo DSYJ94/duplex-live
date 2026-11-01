@@ -1,0 +1,26 @@
+{
+  "status": "DIAGNOSED_NATIVE_BOUNDARY_FIX_PRE_GPU",
+  "all36_actual_native_token_schedules_pass": true,
+  "old_v2_native_pause_rejection_reproduced": true,
+  "changed_scenes": [
+    "venus-context-repair-draft-train-pause_resume-00",
+    "venus-context-repair-draft-train-pause_resume-01",
+    "venus-context-repair-draft-train-pause_resume-02",
+    "venus-context-repair-draft-train-pause_resume-03",
+    "venus-context-repair-draft-dev-pause_resume-04",
+    "venus-context-repair-draft-dev-pause_resume-05"
+  ],
+  "only_change": "last native_speech_unit.final False to True on the interrupted first phrase; action.final remains False until distinct end_turn",
+  "words_audio_receipts_folds_frames_unchanged": true,
+  "source_timelines_v2_preserved": true,
+  "new_timelines": "runs/venus-training-20261101/context-timelines-v3",
+  "new_manifest_sha256": "722d2b254a66229b11ff3a5d99dbc55203bdabbdd285b51afb367d51cb9f3aa5",
+  "native_cache_gpu_replay_performed": false,
+  "optimizer_updates": 0,
+  "old_action_index_sha256_pinned": true,
+  "critical_candidate_full_hash_backup_before_evaluation": true,
+  "all5_gcp_machines_freshly_terminated": true,
+  "placement_decision_still_pending": true,
+  "next": "When placement decision arrives, create NEW v50 execution/admission bindings for corrected v3 manifest. Preserve original v48/v49 admission/operations and do not rerun them.",
+  "training_approved": false
+}

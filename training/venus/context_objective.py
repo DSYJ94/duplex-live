@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 ADMISSION=Path('docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-2026-11-01.json')
+OLD_INDEX_SHA='e1ded570cb385b49bcd2e9560f9e4a8cf6c6286e66754f264f7282a6fd7ef541'
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -25,7 +26,7 @@ class ContextObjective:
         index=json.loads(Path(path).read_text())
         manifest=json.loads(Path(cache_manifest).read_text())
         self.rows={r['id']:r for r in index['rows']}
-        if not index['complete'] or index['prefix_manifest_sha256']!=sha(cache_manifest) or len(self.rows)!=304 or len(manifest['scenes'])!=304:
+        if not index['complete'] or index['prefix_manifest_sha256']!=sha(cache_manifest) or len(self.rows)!=304 or len(manifest['scenes'])!=304 or index['old_index_sha256']!=OLD_INDEX_SHA:
             raise ValueError('Full304 original plus new labels required')
         if manifest['old_prefix_manifest_sha256']!=a['old_prefix_manifest_sha256'] or manifest['context_source_manifest_sha256']!=a['new_timeline_manifest_sha256']:
             raise ValueError('Exact old/new corpus lineage required')

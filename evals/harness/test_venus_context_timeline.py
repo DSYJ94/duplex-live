@@ -1,9 +1,11 @@
 import json
 from pathlib import Path
 import unittest
+from types import SimpleNamespace
 
 from tokenizers import Tokenizer
 from data.venus.context_timeline import BASE, DRAFT, PLAN, TOKENIZER, compile_scene, prerequisites
+from training.venus.native_schedule import schedule
 
 
 class ContextTimelineTests(unittest.TestCase):
@@ -30,6 +32,7 @@ class ContextTimelineTests(unittest.TestCase):
         self.assertLess(stop['frame'], t['user_turns'][1]['start_seconds']+t['user_turns'][1]['seconds'])
         self.assertEqual(first['frame']+len(first['native_speech_units']), stop['frame'])
         self.assertFalse(first['final'])
+        self.assertEqual([u['final'] for u in first['native_speech_units']], [False,True])
         self.assertTrue(resumed['resumes_unsaid_tail'])
         original = first['original_teacher_text'] + ' Next, cover the furniture. Finally, mask the edges.'
         self.assertEqual((first['text']+' '+resumed['text']).split(), original.split())
@@ -49,9 +52,16 @@ class ContextTimelineTests(unittest.TestCase):
         self.assertGreater(t['actions'][-1]['frame'],results[0]['frame'])
 
     def test_all36_token_capacity_and_complete_words(self):
+        config=json.loads(TOKENIZER.with_name('tokenizer_config.json').read_text())
+        ids={v['content']:int(k) for k,v in config['added_tokens_decoder'].items()}
+        encoder=SimpleNamespace(encode=lambda text,**kw:self.tokenizer.encode(text,add_special_tokens=False).ids)
+        duplex=SimpleNamespace(tokenizer=encoder,listen_token_id=ids['<|listen|>'],speak_token_id=ids['<|speak|>'],turn_eos_token_id=ids['<|turn_eos|>'],chunk_eos_token_id=ids['<|chunk_eos|>'])
         for s in self.plan:
             r=json.loads((BASE/'context-teacher-work-v1'/(s['id']+'.json')).read_text())
             t=compile_scene(s,self.drafts[s['id']],r,self.users,self.assistant,self.tokenizer)
+            scheduled=schedule(duplex,t)
+            self.assertTrue(scheduled)
+            self.assertTrue(all(len(tokens)<=19 for tokens in scheduled.values()))
             occupied=set()
             for a in t['actions']:
                 if a['kind']=='speak':
@@ -63,3 +73,12 @@ class ContextTimelineTests(unittest.TestCase):
                 self.assertFalse(occupied & interval)
                 occupied |= interval
             self.assertLess(max(occupied),t['frames'])
+
+    def test_preserved_v2_pause_reproduces_native_boundary_rejection(self):
+        config=json.loads(TOKENIZER.with_name('tokenizer_config.json').read_text())
+        ids={v['content']:int(k) for k,v in config['added_tokens_decoder'].items()}
+        encoder=SimpleNamespace(encode=lambda text,**kw:self.tokenizer.encode(text,add_special_tokens=False).ids)
+        duplex=SimpleNamespace(tokenizer=encoder,listen_token_id=ids['<|listen|>'],speak_token_id=ids['<|speak|>'],turn_eos_token_id=ids['<|turn_eos|>'],chunk_eos_token_id=ids['<|chunk_eos|>'])
+        path=BASE/'context-timelines-v2/venus-context-repair-draft-train-pause_resume-00/timeline.json'
+        original=json.loads(path.read_text())
+        with self.assertRaises(AssertionError):schedule(duplex,original)

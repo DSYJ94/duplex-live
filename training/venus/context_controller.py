@@ -9,6 +9,23 @@ from .context_objective import ADMISSION,authority,sha
 from portable.venus.guard import bounded_runpod_read
 
 
+def preserve_candidate(candidate):
+    """Copy complete new training state before any subsequent evaluation."""
+    backup=c.R/'critical-candidate'
+    backup.mkdir(parents=True,exist_ok=False)
+    code="import pathlib,json,hashlib;r=pathlib.Path("+repr(candidate)+");print(json.dumps([dict(path=str(p.relative_to(r)),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in sorted(r.rglob('*')) if p.is_file() and not p.is_symlink()]))"
+    rows=json.loads(c.ssh('/usr/bin/python3 -c '+shlex.quote(code),60))
+    if not rows or 'training-terminal.json' not in {r['path'] for r in rows}:
+        raise ValueError('Actual complete new candidate required')
+    c.run(['rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=credentials','--exclude=owner-conversations','--exclude=API keys.md','--exclude=core','--exclude=core.*','-e',shlex.join(c.ssh_argv[:-1]),c.ssh_argv[-1]+':'+candidate+'/',str(backup)+'/'],120)
+    for row in rows:
+        path=backup/row['path']
+        if path.stat().st_size!=row['bytes'] or sha(path)!=row['sha256']:
+            raise ValueError('Candidate backup hash mismatch; never declare preservation')
+    (c.R/'critical-candidate-verified.json').write_text(json.dumps(dict(all_hashes_verified=True,source=c.source,files=rows),indent=2)+'\n')
+    c.record('critical_candidate_backed_up_before_evaluation',files=len(rows),bytes=sum(r['bytes'] for r in rows))
+
+
 def retry_ready(prior,vm,now):
     rows=json.loads((prior/'events.json').read_text())
     failed=[r for r in rows if r['event']=='context_phase_failed']
@@ -101,6 +118,7 @@ def main(capacity_retry=False):
         stage('train-continue','training.venus.train --stage restore-continue'+args,1900,800)
         terminal=json.loads(c.ssh('cat '+candidate+'/training-terminal.json'));assert terminal['completed'] and terminal['actual_updates']==60 and terminal['total_optimizer_updates']==466
         c.record('actual_new_training_complete',terminal=terminal)
+        preserve_candidate(candidate)
         final=candidate+'/step-0060.pt';finalsha=c.ssh('sha256sum '+final).split()[0]
         stage('final-restore','training.venus.native_restore --kind final --checkpoint '+final+' --sha256 '+finalsha+' --output '+remote_out+'/final-restore'+common,1600,240)
         c.ssh('cp '+remote_out+'/final-restore/restore.json '+candidate+'/final-native-restore.json')

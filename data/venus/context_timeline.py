@@ -109,6 +109,11 @@ def compile_scene(scene, draft, receipt, users, assistant, tokenizer):
                     raise ValueError('A real partial spoken prefix and unsaid tail required')
                 first['original_teacher_text'] = first['text']
                 first['native_speech_units'] = [dict(u, final=False) for u in full[:cut]]
+                # Unit-final closes this source phrase; action-final controls
+                # turn EOS. The paused phrase must remain an unfinished turn
+                # until the separate measured end_turn action, as native
+                # schedule() already requires for all original teachers.
+                first['native_speech_units'][-1]['final'] = True
                 first['text'] = ' '.join(u['text'] for u in full[:cut])
                 first['final'] = False
                 first['paused_tail'] = full[cut:]
