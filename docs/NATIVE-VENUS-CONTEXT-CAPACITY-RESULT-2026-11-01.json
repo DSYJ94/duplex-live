@@ -1,0 +1,221 @@
+{
+  "status": "GCP_CAPACITY_BLOCKED_BEFORE_MODEL_ONE_DELAYED_RETRY_PREPARED",
+  "producer": "3366ac401bdbdb67b39c3d540de601f4957b3537",
+  "controller_session": 75363,
+  "actual_terminal": 1,
+  "operation": "operation-1793576206436-65f3f80a98765-20bd64ca-6a8c9d89",
+  "error_code": "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS",
+  "new_optimizer_updates": 0,
+  "model_units_launched": 0,
+  "gpu_starts": 0,
+  "unchanged_last_start": "2026-11-01T15:10:19.545-08:00",
+  "new_provider_stop_marker": "2026-11-01T15:36:56.259-08:00",
+  "failed_start_not_a_new_running_interval": true,
+  "vm_id": "3873014408897233554",
+  "vm_status": "TERMINATED",
+  "budget_unchanged": true,
+  "full_loan_money_diagnostic": {
+    "complete_all6_loan_recordings": true,
+    "required_independent_money_values": 36,
+    "all36_money_values_exact": true,
+    "rows": [
+      {
+        "id": "dd59cf6a9760d117246c1229c92944648cd2750d0f0f78b8d298a12cae79cc04",
+        "expected_money": [
+          "532.72",
+          "2177.86",
+          "415.02",
+          "2920.94",
+          "344.7",
+          "3681.92"
+        ],
+        "original_whisper_money": [
+          "532.72",
+          "2177.86",
+          "415.02",
+          "2920.94",
+          "344.70",
+          "3681.92"
+        ],
+        "original_money_exact": true,
+        "independent_diagnostic_used": false,
+        "final_independently_recognized_money": [
+          "532.72",
+          "2177.86",
+          "415.02",
+          "2920.94",
+          "344.70",
+          "3681.92"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "original independent Whisper large-v3-turbo"
+      },
+      {
+        "id": "13c8909c736fa4115ac829d5ff4dee2d71b07d0cd62f9cf5c991623e7ad3daae",
+        "expected_money": [
+          "573.46",
+          "2344.4",
+          "446.76",
+          "3144.31",
+          "371.06",
+          "3963.48"
+        ],
+        "original_whisper_money": [
+          "573.46",
+          "2344.40",
+          "446.76",
+          "3144.31",
+          "371.06",
+          "3963.48"
+        ],
+        "original_money_exact": true,
+        "independent_diagnostic_used": false,
+        "final_independently_recognized_money": [
+          "573.46",
+          "2344.40",
+          "446.76",
+          "3144.31",
+          "371.06",
+          "3963.48"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "original independent Whisper large-v3-turbo"
+      },
+      {
+        "id": "0634f876c480270e93845a533707cfbac477ca4954bcb9d01e8f3ab1bd11b241",
+        "expected_money": [
+          "614.19",
+          "2510.94",
+          "478.49",
+          "3367.68",
+          "397.42",
+          "4245.04"
+        ],
+        "original_whisper_money": [
+          "614.19",
+          "2510.94",
+          "478.49",
+          "3367.68",
+          "397.42",
+          "4245.04"
+        ],
+        "original_money_exact": true,
+        "independent_diagnostic_used": false,
+        "final_independently_recognized_money": [
+          "614.19",
+          "2510.94",
+          "478.49",
+          "3367.68",
+          "397.42",
+          "4245.04"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "original independent Whisper large-v3-turbo"
+      },
+      {
+        "id": "b6aeec1e88ee0b68f8b9551634ff609cf6254d011bd85a48bce5747f34ae193c",
+        "expected_money": [
+          "654.93",
+          "2677.48",
+          "510.23",
+          "3591.04",
+          "423.78",
+          "4526.6"
+        ],
+        "original_whisper_money": [
+          "654.93",
+          "2677.48",
+          "510.23",
+          "3591.04",
+          "423.78",
+          "4526.60"
+        ],
+        "original_money_exact": true,
+        "independent_diagnostic_used": false,
+        "final_independently_recognized_money": [
+          "654.93",
+          "2677.48",
+          "510.23",
+          "3591.04",
+          "423.78",
+          "4526.60"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "original independent Whisper large-v3-turbo"
+      },
+      {
+        "id": "d43fe31199669e0f875cb17babe99c85f796c1a63fad758576dbf5f317a7f9d7",
+        "expected_money": [
+          "695.67",
+          "2844.02",
+          "541.97",
+          "3814.41",
+          "450.14",
+          "4808.16"
+        ],
+        "original_whisper_money": [
+          "695.67",
+          "2844.02",
+          "541.97",
+          "3814.041",
+          "450.14",
+          "4808.16"
+        ],
+        "original_money_exact": false,
+        "independent_diagnostic_used": true,
+        "final_independently_recognized_money": [
+          "695.67",
+          "2844.02",
+          "541.97",
+          "3814.41",
+          "450.14",
+          "4808.16"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "independent unprompted Scribe v2 diagnostic; original Whisper retained"
+      },
+      {
+        "id": "4ab96f60e0f30c5d381da7540a403a6ce0ec55b97dfb4b2ce075f01fb26a6dbc",
+        "expected_money": [
+          "736.4",
+          "3010.57",
+          "573.7",
+          "4037.78",
+          "476.5",
+          "5089.72"
+        ],
+        "original_whisper_money": [
+          "736.40",
+          "3010.57",
+          "573.70",
+          "4037.78",
+          "476.50",
+          "5089.72"
+        ],
+        "original_money_exact": true,
+        "independent_diagnostic_used": false,
+        "final_independently_recognized_money": [
+          "736.40",
+          "3010.57",
+          "573.70",
+          "4037.78",
+          "476.50",
+          "5089.72"
+        ],
+        "all_six_amounts_exact": true,
+        "recognizer_evidence": "original independent Whisper large-v3-turbo"
+      }
+    ],
+    "original_whisper_audit_unchanged": true,
+    "script_conditioned_alignment_not_used_as_word_correctness": true,
+    "training_approved": false
+  },
+  "source_files_preserved": true,
+  "phase_and_project_caps_unchanged": [
+    70,
+    175
+  ],
+  "one_delayed_retry_not_before": "2026-11-01T23:41:59.377350Z",
+  "retry_same_vm_disk_zone": true,
+  "no_new_storage_or_purchase": true
+}

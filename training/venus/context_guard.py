@@ -6,17 +6,20 @@ from .context_objective import ADMISSION,authority,sha
 
 KEY='venus-context-train-v48'
 PLAN=Path('docs/NATIVE-VENUS-CONTEXT-TRAINING-EXECUTION-2026-11-01.json')
+RETRY_KEY='venus-context-train-v49'
+RETRY_PLAN=Path('docs/NATIVE-VENUS-CONTEXT-TRAINING-CAPACITY-RETRY-2026-11-01.json')
 
 
 def execution_plan(lease):
-    assert lease['resource_key']==KEY
-    return PLAN
+    assert lease['resource_key'] in (KEY,RETRY_KEY)
+    return RETRY_PLAN if lease['resource_key']==RETRY_KEY else PLAN
 
 
 def resource(lease):
-    a=authority();p=json.loads(PLAN.read_text());r=a['resource']
-    assert lease['resource_key']==KEY and lease['authorization_sha256']==sha(ADMISSION)
-    assert p['admission_sha256']==sha(ADMISSION) and lease['execution_plan_sha256']==sha(PLAN)
+    a=authority();plan=execution_plan(lease);p=json.loads(plan.read_text());r=a['resource']
+    assert lease['authorization_sha256']==sha(ADMISSION)
+    assert p['admission_sha256']==sha(ADMISSION) and lease['execution_plan_sha256']==sha(plan)
+    if lease['resource_key']==RETRY_KEY:assert p['prior_attempt_optimizer_updates']==0 and p['prior_attempt_model_units']==0 and p['prior_attempt_gpu_starts']==0
     assert p['new_optimizer_updates_authorized_by_this_execution']==60 and p['maximum_gpu_seconds']==4100
     assert lease['zone']==r['zone'] and str(lease['vm_id'])==r['vm_id']
     assert lease['disk_id']==r['disk_id'] and lease['disk_size_gib']==100
@@ -24,7 +27,7 @@ def resource(lease):
 
 
 def validate(vm,instances,pods,lease,now):
-    r=resource(lease);a=authority();p=json.loads(PLAN.read_text())
+    r=resource(lease);a=authority();p=json.loads(execution_plan(lease).read_text())
     start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+4000
     assert vm['name']==r['name'] and str(vm['id'])==r['ident'] and vm['status']=='RUNNING'
     assert vm['machineType'].endswith('/'+r['machine']) and vm['zone'].endswith('/'+r['zone'])

@@ -4,14 +4,28 @@ from pathlib import Path
 from datetime import datetime
 from . import controller as c
 from .source_controller import prepare_ssh
-from .context_guard import KEY,PLAN
+from .context_guard import KEY,PLAN,RETRY_KEY,RETRY_PLAN
 from .context_objective import ADMISSION,authority,sha
 from portable.venus.guard import bounded_runpod_read
 
 
-def main():
+def retry_ready(prior,vm,now):
+    rows=json.loads((prior/'events.json').read_text())
+    failed=[r for r in rows if r['event']=='context_phase_failed']
+    if len(failed)!=1 or 'ZONE_RESOURCE_POOL_EXHAUSTED' not in failed[0]['error'] or (prior/'provider-start.json').exists():
+        raise ValueError('Only a terminal capacity failure before any GPU/model start admits one retry')
+    if any(r['event']=='actual_unit_started' for r in rows):raise ValueError('Never repeat actual model work')
+    old=json.loads((prior/'provider-final.json').read_text())
+    if vm['status']!='TERMINATED' or any(vm[k]!=old[k] for k in ('id','lastStartTimestamp','lastStopTimestamp')):
+        raise ValueError('Original provider identity and terminal state must still match')
+    if now<datetime.fromisoformat(failed[0]['at_utc']).timestamp()+300:raise ValueError('One delayed retry only; no capacity polling loop')
+
+
+def main(capacity_retry=False):
+    global KEY,PLAN
+    if capacity_retry:KEY,PLAN=RETRY_KEY,RETRY_PLAN
     a=authority();p=json.loads(PLAN.read_text());zone=a['resource']['zone']
-    c.R=Path('runs/venus-training-20261101/context-v48')
+    c.R=Path('runs/venus-training-20261101')/('context-v49' if capacity_retry else 'context-v48')
     if c.R.exists():raise ValueError('Observe original controller; never restart this allocation')
     c.NAME=a['resource']['name'];c.source=c.run(['git','rev-parse','HEAD']).strip();c.remote=c.ROOT+'/duplex-context-'+c.source[:12]
     if c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','data/venus','portable/venus']).strip():raise ValueError('Deploy committed code only')
@@ -19,6 +33,7 @@ def main():
     assert 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     instances=c.cloud('compute','instances','list');assert all(v['status']=='TERMINATED' for v in instances)
     vm=c.cloud('compute','instances','describe',c.NAME,'--zone='+zone)
+    if capacity_retry:retry_ready(Path('runs/venus-training-20261101/context-v48'),vm,time.time())
     assert vm['id']==a['resource']['vm_id'] and vm['lastStopTimestamp']==p['previous_provider_stop']
     disk=c.cloud('compute','disks','describe','duplex-venus-train-20261026-v1','--zone='+zone)
     assert disk['id']==a['resource']['disk_id'] and int(disk['sizeGb'])==100
@@ -124,4 +139,4 @@ def main():
         awake.terminate()
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':main(capacity_retry='--capacity-retry' in sys.argv)
