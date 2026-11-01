@@ -6,6 +6,7 @@ class SourceWordTests(unittest.TestCase):
     def test_money_and_numbers_have_fixed_equivalence(self):
         self.assertEqual(words('£17,000 at 8 percent over 36 months'),words('seventeen thousand pounds at eight percent over thirty-six months'))
         self.assertEqual(words('2.4 metres'),words('two point four meters'))
+        self.assertEqual(words('£573.44'),words('five hundred and seventy three pounds and forty four pence'))
         self.assertEqual(wer('eighteen thousand three hundred pounds','£18,300'),0)
 
     def test_semantics_not_normalized_away(self):

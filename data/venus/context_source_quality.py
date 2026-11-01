@@ -26,6 +26,7 @@ def number(n):
 
 def words(text):
     s=re.sub(r'(?<=\d),(?=\d{3}(?:\D|$))','',text.lower())
+    s=re.sub(r'£(\d+)\.(\d{2})\b',lambda m:number(int(m[1]))+' pounds'+(' and '+number(int(m[2]))+' pence' if int(m[2]) else ''),s)
     s=re.sub(r'£(\d+)\b',r'\1 pounds',s)
     s=re.sub(r'\b(\d+)\.(\d+)\b',lambda m:number(int(m[1]))+' point '+' '.join(number(int(c)) for c in m[2]),s)
     s=re.sub(r'\b\d+\b',lambda m:number(int(m[0])),s).replace('%',' percent')

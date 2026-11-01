@@ -31,6 +31,13 @@ class SourceGuardTests(unittest.TestCase):
   self.assertEqual(guard.validate(v,[v],[],l,self.now),l['stop_unix'])
   v['scheduling']['provisioningModel']='FLEX_START'
   with self.assertRaises(AssertionError):guard.validate(v,[v],[],l,self.now)
+ def test_assistant_restart_is_bound_to_actual_existing_vm_and_carried_time(self):
+  p=json.loads(s.ASSISTANT_PLAN.read_text());start=datetime.fromisoformat(p['previous_provider_stop']).timestamp()+100
+  l=dict(self.lease,resource_key=s.ASSISTANT_KEY,vm_id=p['reuse_stopped_vm_id'],prior_new_gpu_seconds_upper=28400,execution_plan_sha256=s.sha(s.ASSISTANT_PLAN),stop_unix=start+1200)
+  v=copy.deepcopy(self.vm);v.update(name=p['vm_name'],id=l['vm_id'],lastStartTimestamp=datetime.fromtimestamp(start).isoformat());v['scheduling']['provisioningModel']='STANDARD'
+  self.assertEqual(guard.validate(v,[v],[],l,start+1),start+1200)
+  l['vm_id']='replacement'
+  with self.assertRaises(AssertionError):guard.validate(v,[v],[],l,start+1)
  def test_actual_mac_entrypoint_accepts_new_authority_fields(self):
   class ReachedLiveRead(Exception):pass
   with tempfile.TemporaryDirectory() as directory:

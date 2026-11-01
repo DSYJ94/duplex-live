@@ -22,7 +22,7 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
-    if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46'):
+    if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         from training.venus.source_guard import resource as source_resource
         return source_resource(lease)
     if lease.get('resource_key') == 'venus-runtime-v44':
@@ -142,7 +142,7 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
-    if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46'):
+    if lease.get('resource_key') in ('venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         from training.venus.source_guard import validate as source_validate
         return source_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key') == 'venus-runtime-v44':
@@ -262,7 +262,7 @@ def mac(args):
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
     maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
-    if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46'):
+    if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         assert a['status']=='APPROVED' and a['unchanged_phase_cap_usd']==70 and a['unchanged_cumulative_cap_usd']==175
     else:
         assert a['status']==expected and a['maximum_additional_gcp_usage_usd']==maximum
@@ -281,7 +281,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46'):
+            if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
                 assert int(disk['sizeGb'])==100
             if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):
                 assert int(disk['sizeGb'])==100
