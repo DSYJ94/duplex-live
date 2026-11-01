@@ -29,7 +29,12 @@ def admission():
 
 
 def execute(output):
-    plan=admission()  # Must precede any credential access or network operation.
+    return _execute_admitted(output,admission(),PAYLOAD)
+
+
+def _execute_admitted(output,plan,payload_path):
+    # Callers must perform their exact batch authorization before reaching here.
+    if plan!=json.loads(payload_path.read_bytes()):raise ValueError('Admitted snapshot changed')
     if output.exists():raise ValueError('Never restart or overwrite an existing attempt directory')
     key=os.environ.get('ELEVENLABS_API_KEY')
     if not key:raise ValueError('Existing key must be configured locally; never put credentials in artifacts')
@@ -45,7 +50,7 @@ def execute(output):
     request('/v1/voices/JBFqnCBsd6RMkjVDRZzb')
     claim_root=Path('runs/venus-training-20261101/context-source-claims')
     claim_root.mkdir(parents=True,exist_ok=True)
-    payload_hash=hashlib.sha256(PAYLOAD.read_bytes()).hexdigest()
+    payload_hash=hashlib.sha256(payload_path.read_bytes()).hexdigest()
     # Independent of output directory: changing --output cannot repeat paid calls.
     with (claim_root/(payload_hash+'.json')).open('x') as claim:
         json.dump(dict(payload_sha256=payload_hash,output=str(output.resolve())),claim)
