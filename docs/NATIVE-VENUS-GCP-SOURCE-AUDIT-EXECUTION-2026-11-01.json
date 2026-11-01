@@ -1,0 +1,21 @@
+{
+  "status": "PREPARED_NOT_LAUNCHED",
+  "authorization_sha256": "7a034e00fc4e06eb29df7684c995bf86b2dcf72fc18ba0906fc5aa4140a3f06c",
+  "resource_key": "venus-source-audit-v45",
+  "vm_name": "duplex-venus-source-20261101-v45",
+  "maximum_gpu_seconds": 1200,
+  "focused_gpu_seconds_upper_before_launch": 28000,
+  "original_gpu_seconds": 54451,
+  "new_optimizer_updates": 0,
+  "previous_provider_stop": "2026-10-31T05:27:16.492-07:00",
+  "retire_only_vm_id": "374778037524784920",
+  "source_payload_sha256": "83e857f14a04fc18501ad048d2706c5e8655ddbb5143cdeed9c3e080ec4a15a4",
+  "quality_module": "data.venus.context_source_quality",
+  "required_source_count": 72,
+  "wer_threshold": 0.05,
+  "peak_threshold": 0.995,
+  "independent_mac_guard": true,
+  "independent_guest_guard": true,
+  "provider_stop": true,
+  "no_automatic_model_retry": true
+}

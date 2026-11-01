@@ -1,0 +1,12 @@
+{
+  "status": "APPROVED",
+  "human_request": "proceed with GCP for training",
+  "recorded_utc": "2026-11-01T22:20:20.618040+00:00",
+  "interpretation": "Required source qualification stage of requested GCP training, within existing remaining time/spend; no additional purchase or optimizer work in this stage.",
+  "unchanged_phase_cap_usd": 70,
+  "unchanged_cumulative_cap_usd": 175,
+  "maximum_gpu_seconds_from_existing_allowance": 1200,
+  "new_optimizer_updates": 0,
+  "new_external_api_calls": 0,
+  "same_disk_id": "4375908109499109167"
+}
