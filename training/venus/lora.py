@@ -115,6 +115,13 @@ def suffix_forward(llm,example,device):
     from transformers.cache_utils import DynamicCache
     assert not llm.training and not getattr(llm,'is_gradient_checkpointing',False)
     start_layer=example['prefix_layers'];assert start_layer==len(llm.model.layers)-1
+    # Frozen-prefix inputs were captured before these layers were adapted.
+    # Reusing them for a wider adapter would silently bypass its computation
+    # and gradients, even if the reported trainable parameter count increased.
+    for layer in llm.model.layers[:start_layer]:
+        if (torch.is_grad_enabled() and any(p.requires_grad for p in layer.parameters())) or any(
+                isinstance(m,LoRALinear) and m.enabled for m in layer.modules()):
+            raise ValueError('Frozen-prefix cache excludes trainable or adapted layers; rebuild compatible native histories')
     wanted={int(p) for p in example['positions']};logits={};hidden={};cache=DynamicCache();cursor=0
     for entry,segment in zip(example['prefix_inputs'],example['segments']):
         start,n=segment['start'],segment['length'];assert start==cursor

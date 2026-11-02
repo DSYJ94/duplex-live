@@ -1,0 +1,94 @@
+{
+  "status": "PREPARED_NOT_TRAINED_NO_NEW_SPENDING_AUTHORITY",
+  "recorded_utc": "2026-11-02T22:36:59.176815+00:00",
+  "goal": "Usable native full-duplex voice with natural English/British speech, reliable silence/interruptions and asynchronous delegated reasoning.",
+  "current_stage": "Prototype with functioning native training/restore; end-to-end quality still fails. Not production qualification.",
+  "current": {
+    "foundation_total_parameters_approx": 9000000000,
+    "latest_total_updates": 466,
+    "latest_new_updates": 60,
+    "TRAIN": 240,
+    "DEV": 64,
+    "trainable_adapter_parameters": 851968,
+    "rank": 64,
+    "last_layers": 1,
+    "base_llm_frozen": true,
+    "speech_decoder_frozen": true,
+    "candidate_adopted": false
+  },
+  "actual_checkpoint_adapter_shapes": {
+    "q_proj.a": [
+      64,
+      4096
+    ],
+    "q_proj.b": [
+      4096,
+      64
+    ],
+    "v_proj.a": [
+      64,
+      4096
+    ],
+    "v_proj.b": [
+      1024,
+      64
+    ]
+  },
+  "variants": [
+    {
+      "name": "one-layer reference",
+      "last_layers": 1,
+      "rank": 64,
+      "alpha": 64,
+      "parameters": 851968,
+      "actually_trained": true
+    },
+    {
+      "name": "first capacity comparison",
+      "last_layers": 4,
+      "rank": 64,
+      "alpha": 64,
+      "parameters": 3407872,
+      "actually_trained": false
+    },
+    {
+      "name": "conditional later option",
+      "last_layers": 8,
+      "rank": 64,
+      "alpha": 64,
+      "parameters": 6815744,
+      "actually_trained": false
+    }
+  ],
+  "count_verification": "Ran the real LoRA installer on36 metadata-only layers shaped from actual saved checkpoint; no native base weights allocated, no model inference or optimizer updates.",
+  "implementation_hazard": "Existing35-layer frozen prefix cannot train adapters in layers32..34. It bypasses their computation/gradients. New explicit fast-path guard rejects trainable or adapted layers before prefix boundary, including frozen-but-enabled adapters.",
+  "experiment_design": [
+    "First compare1vs4layers; do not launch8layer/full-weight/new-base expansion simultaneously.",
+    "Use the same chosen preserved parent, exact complete corpus/folds/word/audio targets, minibatch order, effective batch size, losses, update budget and native evaluation. Preserve all parent history/Adam/RNG/OPAL; no optimizer reset hidden inside a capacity comparison.",
+    "Initialize new lower-layer LoRA B to zero so the initial function can match the reference. Prove native logits/hidden equivalence before updates. Preserve inherited optimizer counters/moments for existing parameters; initialize new parameter states explicitly.",
+    "Do not reuse35-layer hidden inputs as trainable four-layer inputs. Reuse immutable original native embeddings/segments/targets; use full native differentiated forward or a newly versioned32-layer frozen boundary with exact numerical/gradient equivalence. No need to regenerate approved speech or teacher histories simply to add layers.",
+    "Use full64DEV and full native speech/control evaluation; loss reduction alone is insufficient. A larger adapter has succeeded only if actual behavior improves while speech/ordinary retention remain acceptable.",
+    "Native throughput/memory and spending/time need explicit admission before a paid comparison; this artifact authorizes zero new GPU intervals or optimizer updates."
+  ],
+  "parallel_priorities": [
+    {
+      "area": "Speech/runtime",
+      "next": "Resolve premature or incomplete acoustic rendering with pinned native code and actual stop/conditioning evidence. Do not rerun rejected128token experiment unchanged."
+    },
+    {
+      "area": "Grounded asynchronous delegation",
+      "next": "Qualify implemented original-audio context route with general backend, selective cancellation and stale-result suppression; current old lookup benchmark is not this stack."
+    },
+    {
+      "area": "Adaptation capacity",
+      "next": "Controlled1vs4layer comparison after compatible gradient path and same-parent initialization proof."
+    },
+    {
+      "area": "Usable product",
+      "next": "Only promote a candidate after complete behavioral/speech tests, naturalness/British listening checks, latency/interruption tests and a working live conversation."
+    }
+  ],
+  "escalation": "If the native base fails the speech/control requirements after verified runtime, compare a stronger duplex foundation. Full fine-tuning or structural growth is conditional on measured benefit and compute/data requirements, not an assumed path to commercial-system quality.",
+  "no_base_growth_experiment_run": true,
+  "no_full_weight_training_run": true
+}

@@ -195,7 +195,8 @@ def test_frozen_prefix_suffix_is_exact_and_keeps_all_trainable_gradients():
 def test_interrupted_prefix_reuse_binds_inputs_and_never_claims_recomputation(tmp_path):
     import hashlib
     from training.venus.prefix_cache import capture_prefix,reuse_prefix,PRIOR_PRODUCER
-    m=model();e=example(m);e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
+    m=model();m.requires_grad_(False)  # Same frozen-base contract as native cache collection.
+    e=example(m);e['segments']=[dict(start=i,length=1,return_logits=True) for i in range(6)]
     e['forward_path']='native-segmented-bptt-v1'
     prefix,_=capture_prefix(m,e);path=tmp_path/'partial.pt';torch.save(prefix,path)
     witness=dict(sha256=hashlib.sha256(path.read_bytes()).hexdigest())
