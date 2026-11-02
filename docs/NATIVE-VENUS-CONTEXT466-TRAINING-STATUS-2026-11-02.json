@@ -1,0 +1,84 @@
+{
+  "recorded_utc": "2026-11-02T19:26:37.422019+00:00",
+  "status": "TRAINING_COMPLETE_BEHAVIOR_REVIEW_PENDING_COPYBACK",
+  "producer_source": "8b5feeb066896ed5041db77188d07f86cead20f5",
+  "actual_new_updates": 60,
+  "parent_updates": 406,
+  "total_updates": 466,
+  "complete_epochs": 1,
+  "TRAIN": 240,
+  "DEV": 64,
+  "critical_backup": {
+    "regular_files": 75,
+    "bytes": 156266253,
+    "all75_hashes_reverified_locally": true,
+    "final_checkpoint_sha256": "e2c16cb825dc654519e922379a220b8c962e9d8a78eec652a3b195922a69720f"
+  },
+  "restore": {
+    "passed": true,
+    "adapter_error": 0,
+    "adam_error": 0,
+    "rng_equal": true,
+    "loss_equal": true,
+    "actual_new_process": true,
+    "independent_continuation": true
+  },
+  "teacher_forced_dev_loss": {
+    "quiet": {
+      "before": 0.8921827524900436,
+      "after": 0.8782868097935405,
+      "percent_change": -1.5575220051856187
+    },
+    "delegate": {
+      "before": 0.3646778268739581,
+      "after": 0.3435114901512861,
+      "percent_change": -5.804119461857937
+    },
+    "cancel": {
+      "before": 0.9316807240247726,
+      "after": 0.874286213517189,
+      "percent_change": -6.160319627484057
+    },
+    "pause": {
+      "before": 1.0200286209583282,
+      "after": 0.990069309870402,
+      "percent_change": -2.9371049470924837
+    },
+    "pending": {
+      "before": 0.6480882863203684,
+      "after": 0.6289350390434265,
+      "percent_change": -2.955345387537822
+    },
+    "ordinary": {
+      "before": 1.0363755722840626,
+      "after": 1.031377414862315,
+      "percent_change": -0.4822727933206927
+    }
+  },
+  "behavioral_evaluation": {
+    "actual_unit_terminal0": true,
+    "adoption_qualified": false,
+    "results_downloaded": false,
+    "reason": "Full rsync failed unexpected end of file; native-paired local directory has zero regular files. Unit exit0 alone does not prove behavioral pass."
+  },
+  "compute": {
+    "provider_status": "TERMINATED",
+    "actual_gpu_seconds": 3091.8519999980927,
+    "billed_seconds_upper": 3100,
+    "focused_cumulative_seconds_upper": 33100,
+    "original_plus_focused_upper": 87551,
+    "phase_cap": 75,
+    "project_cap": 175,
+    "no_restart_authorized_after_one_actual_interval": true
+  },
+  "preservation": {
+    "full_archive_backup_verified": false,
+    "partial_copyback_regular_files": 44,
+    "partial_copyback_bytes": 21242977,
+    "retained_disk": "6233528902929943250",
+    "retained_vm": "8703684888303569917",
+    "snapshot": "4724490043241393447",
+    "critical_candidate_preserved": true,
+    "root_cause_of_rsync_failure_not_established": true
+  }
+}
