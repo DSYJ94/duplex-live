@@ -1,0 +1,46 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve CPU recovery within existing caps",
+  "recorded_utc": "2026-11-02T21:40:27.782879+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-CONTEXT466-CPU-RECOVERY-PROPOSAL-2026-11-02.json",
+  "proposal_commit": "17b05a2",
+  "proposal_sha256": "febbe9443bd04060a0cae530769a0d6f9f7fccb7341542dfa3ed27a86a767aa3",
+  "proposal": {
+    "status": "PROPOSED_REQUIRES_CPU_AND_TEMPORARY_RETENTION_APPROVAL",
+    "purpose": "Recover already-completed native evaluation, remaining22 histories and final restore evidence; no repeated model work or optimizer updates.",
+    "unchanged_phase_cap_usd": 75,
+    "unchanged_project_cap_usd": 175,
+    "maximum_additional_usage_usd": 0.25,
+    "no_purchase": true,
+    "cpu": {
+      "machine": "e2-standard-2",
+      "zone": "us-central1-f",
+      "maximum_running_seconds": 1800,
+      "maximum_actual_intervals": 1,
+      "gpu_count": 0,
+      "same_disk_id": "6233528902929943250",
+      "same_disk_name": "duplex-venus-context-data-20261102-f-v52",
+      "disk_size_gib": 100,
+      "new_disks_or_snapshots": 0,
+      "replace_only_stopped_vm_id": "8703684888303569917",
+      "delete_stopped_gpu_vm_keep_disk_before_cpu_attach": true,
+      "existing_OSLogin_IAP_tag_and_restricted_ingress_only": true,
+      "no_service_account_scopes_or_API_IAM_firewall_changes": true
+    },
+    "storage": {
+      "maximum_extra_retained_hours_after_original_deadline": 2,
+      "original_snapshot_deadline_utc": "2026-11-02T19:58:31.966921Z",
+      "absolute_cleanup_deadline_utc": "2026-11-02T21:58:31.966921Z",
+      "preserve_unique_unverified_artifacts_if_recovery_fails_notify_owner": true
+    },
+    "procedure": [
+      "Read fresh provider state/current official CPU price; admit only within0.25additional total.",
+      "Use same durable boot disk with one CPU VM; native provider1800sSTOP and independent Mac/guest shutdown before transfer. No native/ASR/model API/model load.",
+      "Git-deploy recovery source if needed. Inventory/hash regular files and exact symlink targets remotely BEFORE rsync; save that inventory locally before transfer.",
+      "Rsync approved artifacts only with established excludes/no-owner/no-group; on observation timeout observe same process, never duplicate.",
+      "Verify full local inventories/hashes, independently review complete native/speech results, retain all failures.",
+      "Stop CPU early, remove only approved replacement VM/disk/snapshot after verified complete preservation. Originalsource disk4375908109499109167 remains intact."
+    ],
+    "authorization_reason": "Previous continuation allowed one A100 interval, now consumed. A different CPU machine and additional temporary retention need an explicit scope decision; unused money does not itself authorize a new machine type."
+  }
+}

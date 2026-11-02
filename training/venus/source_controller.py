@@ -7,7 +7,7 @@ from .source_guard import AUTH,PLAN,KEY,RETRY_KEY,RETRY_PLAN,ASSISTANT_KEY,ASSIS
 from portable.venus.guard import bounded_runpod_read
 
 
-def prepare_ssh(vm,zone,version='45'):
+def prepare_ssh(vm,zone,version='45',require_gpu=True):
     for _ in range(30):
         try:keys=c.cloud('compute','instances','get-guest-attributes',c.NAME,'--zone='+zone,'--query-path=hostkeys/')
         except RuntimeError:keys=[]
@@ -20,7 +20,7 @@ def prepare_ssh(vm,zone,version='45'):
     c.ssh_argv=['ssh','-i','runs/local-migration-20261024/.private/gcp-native-ssh','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes','-o','HostKeyAlias='+alias,'-o','UserKnownHostsFile='+str(known),'-o','ConnectTimeout=10','-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2','-o','ControlMaster=auto','-o','ControlPersist=180','-o','ControlPath=/private/tmp/duplex-venus-source'+version+'-mux','-o','ProxyCommand='+proxy,'daryl_aurium_labs_com@'+vm['networkInterfaces'][0]['accessConfigs'][0]['natIP']]
     (c.R/'ssh.json').write_text(json.dumps(c.ssh_argv)+'\n')
     for _ in range(20):
-        try:c.ssh('test -d '+c.ROOT+' && nvidia-smi',20);return
+        try:c.ssh('test -d '+c.ROOT+(' && nvidia-smi' if require_gpu else ''),20);return
         except RuntimeError:time.sleep(3)
     raise RuntimeError('Strict SSH/GPU not ready')
 
