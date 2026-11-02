@@ -1,0 +1,61 @@
+{
+  "status": "SEALED_DIAGNOSTIC_SELECTION_NOT_FRESH_EVALUATION",
+  "scenes": [
+    {
+      "id": "venus-control-v1-train-ordinary-0126",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "frames": 10,
+      "timeline_sha256": "3347d7dcd0bd24ccb2dba0ab177c31b5896853784d1f2d716512b5744482e3c2",
+      "user_wav_sha256": "35ddb92038439ac9e56b553f8a43af3dba52ad42a35d34dcebceb7c45e09481c"
+    },
+    {
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "fold": "DEV",
+      "family": "ordinary",
+      "frames": 10,
+      "timeline_sha256": "1ce5ec14a6c49298c0058480acb1b1b682bfd9aea1570ff59936be6990a8f19b",
+      "user_wav_sha256": "b170636e7a0efed409e0b58f61475f981ecd9c99804fc7d90f8a3507ad0b9b7b"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "frames": 11,
+      "timeline_sha256": "3f6b85c5ab5a8f65a23b6f0dfe62abbbecc3f56f826e20e376db3885eabdb99a",
+      "user_wav_sha256": "4daaa4ae1311223657fd064195455d3d996c9d7094e02f6db5a8a5e6531ed75a"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "frames": 10,
+      "timeline_sha256": "877aa8edf4c1b270dc764514bb87952c1f265299023a6400ac543de87320b54b",
+      "user_wav_sha256": "4769e30e9865f54c098dc3ef236d4eab8d4677e5e1f81350af02a3e056024e85"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "frames": 10,
+      "timeline_sha256": "f6cb00db67274c7bffae67d8d006a16747f682cc7ca4e0e54497ee8e6a29b0a9",
+      "user_wav_sha256": "a1b1ca8599a056fa56678d7cb2e6cced5456147752883e621f530508e660b400"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "fold": "HOLDOUT",
+      "family": "ordinary",
+      "frames": 10,
+      "timeline_sha256": "7bac1fc189e86c0a18366aa2f0c5dfe8d5509238b634739857116e211907f37e",
+      "user_wav_sha256": "ba9e78eb4341664fa1007819f582f0bb83260bfecb4cc90dfd9c50ccb3ae7217"
+    }
+  ],
+  "conditions": [
+    "untouched-release",
+    "candidate466"
+  ],
+  "required_native_cases": 12,
+  "sampling_seed": 42,
+  "terminal_budget_unchanged": 26,
+  "scope": "First two cases reuse prior rejected budget-probe stimuli; four ordinary core cases are previously inspected fixed regression inputs. New information is actual EOS/budget sampling and conditioning identity, not new benchmark performance."
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PROPOSED_REQUIRES_ONE_NEW_GPU_INTERVAL",
+  "purpose": "Resolve native speech-completion failure by observing actual EOS/budget termination and exact TTS conditioning; no optimizer work or repeated rejected budget intervention.",
+  "source_selection_path": "evals/fixtures/venus-tts-stop-diagnostic-20261102.json",
+  "source_selection_sha256": "52d1a5510db2fe3b7e627ab49c950ee39aa830374ee39c62da44f4f96102a976",
+  "native_conditions": [
+    "untouched-release",
+    "candidate466"
+  ],
+  "required_cases": 12,
+  "unique_authored_inputs": 6,
+  "original_model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "candidate_checkpoint_sha256": "e2c16cb825dc654519e922379a220b8c962e9d8a78eec652a3b195922a69720f",
+  "voice_reference_sha256": "40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674",
+  "native_sampling_and_budget_unchanged": true,
+  "resource": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-a",
+    "reuse_vm_name": "duplex-venus-source-20261101-v46",
+    "reuse_vm_id": "3873014408897233554",
+    "same_disk_id": "4375908109499109167",
+    "machine": "a2-highgpu-1g",
+    "maximum_new_running_intervals": 1,
+    "maximum_native_gpu_seconds": 1800,
+    "shutdown_rounding_reserve_seconds": 100,
+    "max_running_gpus": 1,
+    "new_VM_disk_snapshot_region_or_quota": false,
+    "stockout_rule": "One actual start attempt only. If capacity unavailable before start, stop; no placement replacements or retries."
+  },
+  "budget": {
+    "unchanged_phase_cap_usd": 75,
+    "unchanged_project_cap_usd": 175,
+    "prior_focused_gpu_seconds_upper": 33100,
+    "prior_original_gpu_seconds_upper": 54451,
+    "additional_gpu_seconds_upper": 1900,
+    "new_focused_gpu_seconds_upper": 35000,
+    "new_cumulative_gpu_seconds_upper": 89451,
+    "gpu_hourly_ceiling_usd": 4,
+    "noncompute_reserve_usd": 33,
+    "migration_reserve_usd": 1,
+    "CPU_recovery_reserve_usd": 0.25,
+    "phase_upper_usd": 73.13888888888889,
+    "project_upper_usd": 165.12336944444445,
+    "no_credit_purchase": true
+  },
+  "no_training_or_external_model_API_calls": true,
+  "transfer_scope": "Existing approved synthetic inputs on original disk; copy only verified466candidate and recipe, at most200MB from preserved local archive. No owner audio/conversations/credentials/cores. Source throughGit, scoped rsync exclusions; local destination outside OneDrive.",
+  "controls": [
+    "Refresh actual identity/status/price/quota and one-GPU state before the single start. Original source disk remains non-auto-deleted and is never retired.",
+    "New exact lease plus provider1800sSTOP and independentMac+guest guards before model. Never reuse consumed old leases or reset cumulative spending.",
+    "Use complete sealed12cases; original budget26 and native sampling/voice/system prompt preserved. No hostkeyword rules, forced routing or speech.",
+    "Observer verifies exactpinned sampler code. It reads actual last sampledEOS and conditioning token IDs without changing generation; preserveRNG and returnedtokens/cache. Scalar reads/profile overhead exclude realtime latency qualification.",
+    "Save fullreport/traces/WAVs and inventories before copying back in small batches outsideOneDrive. Verify all hashes/links, stop early afterwork or genuineblocker. Never restart solely on observationtimeout.",
+    "Native speech/control adoption remainsfalse; broader4layertraining is explicitly excluded. Fullcohortqualification required after anylater diagnosed repair."
+  ],
+  "authorization_reason": "Prior native training/evaluation approval allowed one GPU interval, now consumed. Remaining budget does not authorize a new interval. This requests30minutes within unchanged75/175 caps, not a spending increase."
+}
