@@ -1,0 +1,8 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve one CPU restart within same caps",
+  "recorded_utc": "2026-11-02T22:12:47.936349+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-CONTEXT466-CPU-RESUME-PROPOSAL-2026-11-02.json",
+  "proposal_sha256": "e429bb7fe906cf152744bf3fa6ba524e2dcce23c474240b251348b51fb787801",
+  "proposal_commit": "8d05c16"
+}
