@@ -1,4 +1,4 @@
-import ast,hashlib,inspect,sys,typing
+import ast,hashlib,inspect,json,sys,typing
 from pathlib import Path
 from types import SimpleNamespace,MethodType
 from contextlib import nullcontext
@@ -10,10 +10,17 @@ from portable.venus import tts_observer as observer
 FIXTURE=Path('evals/fixtures/venus_tts_sampler_4681004.py')
 
 
+def canonical(n):
+    # Python3.12+ adds FunctionDef.type_params; this sampler has none.
+    if isinstance(n,ast.AST):return [type(n).__name__,{k:canonical(v) for k,v in ast.iter_fields(n) if k!='type_params'}]
+    if isinstance(n,list):return [canonical(v) for v in n]
+    return n
+
+
 def sampler(eos_at):
     node=next(x for x in ast.walk(ast.parse(FIXTURE.read_text())) if isinstance(x,ast.FunctionDef))
     node.body[0].value.value=inspect.cleandoc(node.body[0].value.value)
-    assert hashlib.sha256(ast.dump(node,include_attributes=False).encode()).hexdigest()=='3d9aa1ce133e7079d0f8a5dc199b2562255b16e78d478ae953554f33d40a526f'
+    assert hashlib.sha256(json.dumps(canonical(node),sort_keys=True,separators=(',',':'),default=repr).encode()).hexdigest()=='71cb64b0c5d6e13d7ebb56aa743bf0b0bad886b8b4be33c3b23a96613254fa8f'
     ns=dict(torch=torch,F=F,Union=typing.Union,P=SimpleNamespace(cached=nullcontext),gen_logits=lambda **kw:([],[]))
     exec(compile(FIXTURE.read_text(),str(FIXTURE),'exec'),ns)
     state=SimpleNamespace(index=-1);cache=object()
