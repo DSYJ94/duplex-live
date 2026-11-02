@@ -1,0 +1,67 @@
+{
+  "status": "PROPOSED_REQUIRES_PLACEMENT_STORAGE_AMENDMENT",
+  "purpose": "Run the same approved12case native TTS diagnostic after original-zone stockout; no extra GPU time, training or external model API calls.",
+  "prior_diagnostic_authority_sha256": "bbdcccc78f93668119948c1d167a87368ebd4a51feb68ab21bc39b6d737e38cc",
+  "unchanged_phase_cap_usd": 75,
+  "unchanged_project_cap_usd": 175,
+  "no_purchase": true,
+  "unchanged_diagnostic": "52d1a5510db2fe3b7e627ab49c950ee39aa830374ee39c62da44f4f96102a976",
+  "unchanged_native_gpu_seconds": 1800,
+  "unchanged_shutdown_rounding_reserve_seconds": 100,
+  "prior_failed_attempt_gpu_seconds": 0,
+  "placement": {
+    "project": "aurium-duplex-live-20261024",
+    "ordered_zones": [
+      "us-central1-f",
+      "us-central1-c",
+      "us-central1-b"
+    ],
+    "max_pre_start_capacity_attempts": 3,
+    "max_actual_new_gpu_intervals": 1,
+    "max_running_gpus": 1,
+    "machine": "a2-highgpu-1g",
+    "gpu": "A10040",
+    "max_present_replacement_vms": 1,
+    "max_present_replacement_disks": 1,
+    "replacement_disk_gib": 100,
+    "active_standard_snapshots_max": 1,
+    "source_original_disk_id": "4375908109499109167",
+    "preserve_original_disk_and_VM": true,
+    "snapshot_region": "us-central1",
+    "new_API_IAM_firewall_or_service_account_changes": false
+  },
+  "storage": {
+    "maximum_total_temporary_lifetime_hours": 4,
+    "aggregate_clone_disk_GiB_hours_max": 400,
+    "active_snapshot_GiB_hours_max": 400,
+    "combined_recoverable_snapshot_bytes_max": 171798691840,
+    "effective_recycle_retention_hours_max": 72,
+    "total_migration_reserve_usd": 2,
+    "previous_total_migration_reserve_usd": 1,
+    "incremental_migration_reserve_usd": 1,
+    "read_actual_current_SKUs_combined_bytes_policy_before_mutation": true
+  },
+  "budget": {
+    "prior_focused_seconds_upper": 33100,
+    "original_seconds_upper": 54451,
+    "extra_gpu_seconds_upper": 1900,
+    "maximum_focused_seconds_upper": 35000,
+    "maximum_cumulative_gpu_seconds_upper": 89451,
+    "hourly_ceiling_usd": 4,
+    "noncompute_reserve_usd": 33,
+    "cpu_recovery_reserve_usd": 0.25,
+    "migration_total_reserve_usd": 2,
+    "phase_upper_usd": 74.13888888888889,
+    "project_upper_usd": 166.12336944444445
+  },
+  "preservation": [
+    "Snapshot only the same stopped approved original disk. It contains existing native weights, synthetic corpora, approved caches and runtime material. No owner conversations or credentials have been transferred to this disk.",
+    "Reuse an owned recorded snapshot if compatible and its actual retained copies fit; otherwise at most one new regional standard snapshot. Validate actual READY/sourceDiskID and restored-disk ancestry.",
+    "Retire only newly created unused replacement envelopes after a terminal stockout BEFOREGPU/model start. Never retry after a model/unit starts; no new optimizer or API work.",
+    "New immutable execution lease binds actual VM/disk/snapshot IDs. Native1800STOP plus independent liveMac/guest guards before any model. Carry all oldcost/time; do not resetbudget.",
+    "Use exactGit source and unchanged sealed12cases. Hash-verify466checkpoint upload<=200MB. No private/owner/core transfers, keysstayMac, strictOSLogin/IAPexistingrestrictedtag.",
+    "Save remoteinventory LOCALLY before scopedrsync ofcomplete/partialresults to durableDocuments outsideOneDrive in<=32MBbatches; verifyallhashes/links beforetemporaryresourcescleanup. Preserveoriginaldisk andallfailedattemptreceipts.",
+    "Stop paidcomputeearlyonblocker. Temporaryresourcescleanupwithin4h, retainuniqueunverifiedresultsifcopybackfailsandnotifyowner. Defaultrecyclebillreserved."
+  ],
+  "scope_reason": "Approved diagnostic fixed the original same zonal disk and explicitly forbade replacements/retries. It stockouted before consuming its GPU interval. Moving a zonal disk requires this explicit temporary snapshot/clone placement approval; caps remain75/175 and GPUtime remains30min."
+}

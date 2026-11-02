@@ -1,0 +1,56 @@
+{
+  "status": "TERMINAL_CAPACITY_FAILURE_BEFORE_GPU_OR_MODEL",
+  "recorded_utc": "2026-11-02T23:17:13.847708+00:00",
+  "producer_source": "0473f8839028ccf27d16dbde7e749e44337614df",
+  "controller_session": 92226,
+  "controller_pid": 79452,
+  "operation": "operation-1793661240894-65f534d1c63ab-48f6d737-517bb30a",
+  "provider_error": {
+    "errors": [
+      {
+        "code": "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS",
+        "errorDetails": [
+          {
+            "help": {
+              "links": [
+                {
+                  "description": "Troubleshooting documentation",
+                  "url": "https://cloud.google.com/compute/docs/resource-error"
+                }
+              ]
+            }
+          },
+          {
+            "localizedMessage": {
+              "locale": "en-US",
+              "message": "A a2-highgpu-1g VM instance with 1 nvidia-tesla-a100 accelerator(s) is currently unavailable in the us-central1-a zone. Alternatively, you can try your request again with a different VM hardware configuration or at a later time. For more information, see the troubleshooting documentation."
+            }
+          },
+          {
+            "errorInfo": {
+              "domain": "compute.googleapis.com",
+              "metadatas": {
+                "attachment": "nvidia-tesla-a100:1",
+                "vmType": "a2-highgpu-1g",
+                "zone": "us-central1-a",
+                "zonesAvailable": ""
+              },
+              "reason": "resource_availability"
+            }
+          }
+        ],
+        "message": "The zone 'projects/aurium-duplex-live-20261024/zones/us-central1-a' does not have enough resources available to fulfill the request.  'NULL:0/NULL:0/NULL:0 (state:STOCKOUT, sub-state:STOCKOUT, resource type:compute)'."
+      }
+    ]
+  },
+  "provider_status": "TERMINATED",
+  "new_gpu_seconds_upper": 0,
+  "new_model_cases": 0,
+  "new_optimizer_updates": 0,
+  "new_artifacts_retrieved": 0,
+  "prior_focused_gpu_seconds_upper": 33100,
+  "original_gpu_seconds_upper": 54451,
+  "original_vm_preserved": "3873014408897233554",
+  "original_disk_preserved": "4375908109499109167",
+  "retry_not_submitted": true
+}
