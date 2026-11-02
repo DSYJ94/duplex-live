@@ -39,8 +39,14 @@ def reuse_prefix(path,example,witness,producer,expected_layers=35):
     return result,dict(passed=True,kind='inherited_pinned_producer_pre_serialization_exact_check',
         producer_source=producer,prior_file_sha256=witness['sha256'],independently_recomputed_this_process=False)
 
-def capture_prefix(llm,example):
-    inputs=[];index=len(llm.model.layers)-1
+def capture_prefix(llm,example,*,frozen_layers=None):
+    # The existing admitted collector still defaults to its original35-layer
+    # boundary. Wider experiments must explicitly capture a different boundary
+    # into a new artifact; never relabel or overwrite existing prefix inputs.
+    index=len(llm.model.layers)-1 if frozen_layers is None else frozen_layers
+    if type(index) is not int or not 0<=index<len(llm.model.layers):
+        raise ValueError('Explicit valid frozen prefix boundary required')
+    inputs=[]
     def hook(module,args,kwargs):
         data={}
         for key in ('attention_mask','position_ids','cache_position','position_embeddings'):

@@ -1,0 +1,40 @@
+{
+  "status": "WIDER_SUFFIX_MECHANICS_VERIFIED_TINY_CPU_NOT_NATIVE_TRAINING",
+  "recorded_utc": "2026-11-02T22:51:11.322331+00:00",
+  "parent_source": "67efbde",
+  "changes": {
+    "capture_prefix": "Optional explicit frozen_layers; default last-layer boundary unchanged. Invalid bool/out-of-range/noninteger boundary fails.",
+    "suffix_forward": "Supports valid multi-layer suffix while rejecting any trainable/adapted skipped prefix."
+  },
+  "proof": {
+    "model": "Random tiny5-layerQwen3,32hidden,4heads, CPU only",
+    "base_weights_or_native9B_loaded": false,
+    "frozen_layers": 1,
+    "trainable_suffix_layers": 4,
+    "qv_rank": 2,
+    "adapter_modules": 8,
+    "adapter_tensors": 16,
+    "every_adapter_gradient_nonzero": true,
+    "full_vs_suffix_loss_exact": true,
+    "all_adapter_gradients_match": true,
+    "gradient_atol": 1e-07,
+    "gradient_rtol": 1e-05,
+    "frozen_first_layer_gradients_absent": true,
+    "original_inputs_and_targets_unchanged": true
+  },
+  "verification": {
+    "new_tests_prepatch_failed": 5,
+    "postpatch_related_passed": 30,
+    "additional_subtests": 4,
+    "seconds": 4.95,
+    "transformers": "4.51.3 isolated test overlay"
+  },
+  "limitations": [
+    "CPU toy proof, not native36-layer/GPU numerical or behavioral qualification.",
+    "Current training authority still fixes one layer; no broader run/new optimizer updates or paid resources started.",
+    "Earlier35-layer prefix artifacts remain immutable/incompatible with earlier trainable layers. A four-layer native experiment needs a new32-layer boundary or full native gradients, reusing original approved embeddings/segments/targets.",
+    "Preserving existing parent adapter parameters/Adam/OPAL/RNG while explicitly initializing new parameters remains required before training.",
+    "Speech-completion and general-context delegation still unqualified; this does not validate them."
+  ],
+  "next": "Implement/test a same-parent adapter expansion and optimizer-state mapping before any new four-layer training. Pending native speech GPU interval question remains separate and unanswered."
+}

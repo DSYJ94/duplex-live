@@ -114,7 +114,9 @@ def suffix_forward(llm,example,device):
     """Exact native suffix, with frozen lower-layer inputs and FULL suffix KV gradients."""
     from transformers.cache_utils import DynamicCache
     assert not llm.training and not getattr(llm,'is_gradient_checkpointing',False)
-    start_layer=example['prefix_layers'];assert start_layer==len(llm.model.layers)-1
+    start_layer=example['prefix_layers']
+    if type(start_layer) is not int or not 0<=start_layer<len(llm.model.layers):
+        raise ValueError('Explicit valid frozen prefix boundary required')
     # Frozen-prefix inputs were captured before these layers were adapted.
     # Reusing them for a wider adapter would silently bypass its computation
     # and gradients, even if the reported trainable parameter count increased.
