@@ -19,6 +19,9 @@ REOPEN_AUTH=Path('docs/NATIVE-VENUS-OWNER-LIVE-REOPEN-AUTHORIZATION-2026-10-28.j
 LIVE_AUTH=Path('docs/NATIVE-VENUS-LIVE-TIME-EXTENSION-AUTHORIZATION-2026-10-28.json')
 
 def execution_plan(lease):
+    if lease.get('resource_key')=='venus-tts-stop-v55':
+        from .tts_stop_guard import execution_plan as tts_plan
+        return tts_plan(lease)
     if lease.get('resource_key')=='venus-context-train-v52':
         from .context_continuation_guard import execution_plan as continuation_plan
         return continuation_plan(lease)

@@ -1,0 +1,10 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve 30 minutes within existing caps",
+  "recorded_utc": "2026-11-02T23:10:33.132238+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-STOP-DIAGNOSTIC-PROPOSAL-2026-11-02.json",
+  "proposal_commit": "67efbde",
+  "proposal_sha256": "fa24d6b17016133e1f1fb25c2cf75fc180f2cca0d8ce319b47ed9c94f6345e64",
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175
+}
