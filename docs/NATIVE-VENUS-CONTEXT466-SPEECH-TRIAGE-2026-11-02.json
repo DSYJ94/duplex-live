@@ -1,0 +1,59 @@
+{
+  "status": "OFFLINE_TRIAGE_OBSERVABILITY_REPAIRED_SPEECH_CAUSE_UNPROVEN",
+  "recorded_utc": "2026-11-02T22:29:59.885969+00:00",
+  "source_parent": "d659850",
+  "cases": [
+    {
+      "condition": "parent406",
+      "trace_sha256": "5ded16c7686523c2e5f17c87a6804f7606ba5af9c471e77d8f544fd2320ddbde",
+      "frames": 10,
+      "sequence": 2,
+      "native_text": "There are sixty minutes in an hour.",
+      "audio_samples": 30720,
+      "audio_seconds": 1.28,
+      "remaining_frames_listen_silent": true,
+      "original_token_counts_missing": true
+    },
+    {
+      "condition": "paced-continuation",
+      "trace_sha256": "3526326eea879070146e7d3a2cbffc6d0958ebd2050b2d5ac1446185a24b7384",
+      "frames": 10,
+      "sequence": 2,
+      "native_text": "There are sixty minutes in an hour.",
+      "audio_samples": 30720,
+      "audio_seconds": 1.28,
+      "remaining_frames_listen_silent": true,
+      "original_token_counts_missing": true
+    }
+  ],
+  "prior_terminal_experiment": {
+    "review": "docs/NATIVE-VENUS-TERMINAL-RENDER-REVIEW-2026-10-29.json",
+    "review_sha256": "080f850f5ea2de333cc75f395bff7a7c890b877de144186b131306c4443653f7",
+    "complete_all4": true,
+    "decoded_PCM_unchanged": true,
+    "adopted": false,
+    "interpretation": "Prior26vs128 budget experiment failed to improve its two prespecified cases. Do not repeat or enable it unchanged. It does not establish every other case has the same cause."
+  },
+  "pinned_upstream_sha256": "b7b4070cead9b88347f6e39d8333706ec007e2a832d6bcde5755063bf1453774",
+  "source_observation": "Pinned streaming_generate returns n_tokens/n_tts_tokens, but NativeEngine export discarded them. New export preserves both as nonnegative integers or null; no inferred EOS reason.",
+  "tests": {
+    "pre_patch_export_tests_failed": 2,
+    "failure": "KeyError native_generation_counts",
+    "post_patch_affected_tests_passed": 18,
+    "seconds": 1.55,
+    "real_frame_export_with_fixture_native_results": true,
+    "native_model_executed": false
+  },
+  "no_speech_fix_claimed": true,
+  "no_new_compute_or_API_calls_or_optimizer_updates": true,
+  "next_native_questions": [
+    "Does the actual failing case stop TTS on EOS or exhaust its audio budget? Returned25tokens alone is ambiguous because upstream always excludes its latest sampled token.",
+    "Does the same missing speech occur with original versus adapted hidden-state conditioning under identical native input/reference?",
+    "Does the text-to-audio input cover every actual spoken token and preserve required turn state?"
+  ],
+  "limits": [
+    "A real GPU reproducer is not available within currently consumed running-interval authorizations. CPU export fixture tests diagnose telemetry only; they do not reproduce or fix audible speech.",
+    "No default activation of rejected terminal-budget wrapper, host keyword policy, modified native sampling, gain or speech thresholds.",
+    "Candidate466 remains rejected; no new training schedule chosen from lower loss alone."
+  ]
+}

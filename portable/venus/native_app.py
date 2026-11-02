@@ -250,6 +250,10 @@ class NativeEngine:
         generated_at=time.monotonic()
         from .timing import stage_timings
         timings=stage_timings(result,prefill_seconds=prefilled_at-started,generation_seconds=generated_at-prefilled_at)
+        # Preserve released-model counts as observations. Unknown counts stay
+        # unknown; token counts alone do not prove spoken completeness or EOS.
+        native_counts={name:(result.get(key) if type(result.get(key)) is int and result[key]>=0 else None)
+                       for name,key in (('text_tokens','n_tokens'),('audio_tokens','n_tts_tokens'))}
         ids = self.duplex.total_ids[self.cursor:]
         self.cursor = len(self.duplex.total_ids)
         raw_text = self.duplex.tokenizer.decode(ids, skip_special_tokens=False)
@@ -267,6 +271,7 @@ class NativeEngine:
             token_ids=[int(x) for x in ids], is_listen=bool(result.get('is_listen')),
             end_of_turn=bool(result.get('end_of_turn')),
             elapsed=time.monotonic()-started, audio_samples=len(audio),
+            native_generation_counts=native_counts,
             peak=float(np.max(np.abs(audio))) if len(audio) else 0,
             audio=base64.b64encode(wire_audio).decode(),wire_silence_omitted=omit_silence,wire_audio_bytes=len(wire_audio),timings=timings,
             audio_sample_rate=24000)
