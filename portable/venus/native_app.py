@@ -273,9 +273,24 @@ class NativeEngine:
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released',worker_factory=None):
+               voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released',worker_factory=None,
+               reasoning_context=None):
     if compare_foundation and not adapter_checkpoint:
         raise ValueError('A comparison requires the explicit trained checkpoint')
+    if reasoning_context is not None:
+        if worker_factory is not None or not isinstance(reasoning_context,tuple) or len(reasoning_context)!=2:
+            raise ValueError('One explicit contextual reasoning endpoint/identity required')
+        from .context_reasoning import ContextProxy
+        context_proxy=ContextProxy(*reasoning_context)
+    # A contextual ASR pass and native streaming share one GPU. Serialize their
+    # execution, keeping provider waits off this lock and off the streaming loop.
+    import threading
+    gpu_lock=threading.Lock()
+    def locked_call(fn,*args):
+        with gpu_lock:return fn(*args)
+    async def engine_call(fn,*args):
+        if reasoning_context is not None:return await asyncio.to_thread(locked_call,fn,*args)
+        return await asyncio.to_thread(fn,*args)
     from contextlib import asynccontextmanager
     from fastapi import FastAPI, WebSocket
     from fastapi.responses import FileResponse
@@ -285,11 +300,20 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
     async def lifespan(app):
         app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint,
                                                   voice_reference,voice_reference_sha256,nonspoken_actions,tts_attention)
+        if reasoning_context is not None:
+            from .context_asr import GPUContextASR
+            from .context_reasoning import EvidenceTransport
+            from .reasoning import ReasoningWorker
+            recognizer=await asyncio.to_thread(GPUContextASR)
+            async def transcribe(evidence):return await engine_call(recognizer,evidence)
+            app.state.context_worker_factory=lambda:ReasoningWorker(None,
+                evidence_request=EvidenceTransport(transcribe,context_proxy))
         yield
 
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None)
     slot = asyncio.Lock()
-    worker_backend = 'mac-reasoning-proxy' if worker_factory else 'arithmetic-diagnostic'
+    worker_backend = ('mac-context-reasoning-proxy' if reasoning_context is not None else
+                      'mac-reasoning-proxy' if worker_factory else 'arithmetic-diagnostic')
 
     @app.get('/')
     async def index():
@@ -313,7 +337,8 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
             await ws.close()
             return
         async with slot:
-            worker = worker_factory() if worker_factory else ArithmeticWorker()
+            factory=getattr(app.state,'context_worker_factory',worker_factory)
+            worker = factory() if factory else ArithmeticWorker()
             from .task_context import CausalAudioBuffer
             evidence = CausalAudioBuffer() if getattr(worker,'accepts_audio_evidence',False) else None
             parser = DelegateParser(evidence.freeze_at_request_opening if evidence else None)
@@ -325,7 +350,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
                     raise ValueError('Model comparison is not enabled on this server')
                 from .live_variant import variant_context,variant_profile
                 variants.enter_context(variant_context(engine.model.llm,variant))
-                await asyncio.to_thread(engine.prepare)
+                await engine_call(engine.prepare)
                 await ws.send_json({'ready':True, 'profile':dict(variant_profile(engine.profile,variant),worker_backend=worker_backend,causal_task_audio_context=bool(evidence))})
                 sequence = 0
                 while True:
@@ -334,7 +359,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
                     feedback = worker.take_results()
                     if feedback:
                         worker.event('backend_injected', payload=feedback, sequence=sequence)
-                    result = await asyncio.to_thread(engine.step, pcm, feedback)
+                    result = await engine_call(engine.step, pcm, feedback)
                     queries=parser.feed(result['raw_text'])
                     for query,raw_query,context in zip(queries,parser.last_raw_queries,parser.last_contexts):
                         if evidence: worker.submit(query,raw_query=raw_query,audio_evidence=context)
@@ -370,15 +395,18 @@ if __name__ == '__main__':
     parser.add_argument('--tts-attention',choices=['released','sdpa'],default='released',help='Experimental TTS-only backend; native speed and audio validation required')
     parser.add_argument('--reasoning-proxy', help='Opt-in loopback Mac-only proxy URL over existing SSH; provider credentials never go on GPU')
     parser.add_argument('--reasoning-run-id', help='Explicit matching bounded proxy execution identity')
+    parser.add_argument('--reasoning-audio-context',action='store_true',help='Experimental pinned local GPU ASR for native-selected tasks; requires contextual Mac proxy and GPU latency qualification')
     args = parser.parse_args()
     import uvicorn
     # Loopback and SSH tunnel only. No microphone or conversation recording.
     prompt=Path(args.system_prompt_file).read_text().strip() if args.system_prompt_file else 'Streaming Omni Conversation.'
     if not prompt or len(prompt)>4000:raise ValueError('Bounded nonempty system prompt required')
     if bool(args.reasoning_proxy)!=bool(args.reasoning_run_id):parser.error('Both reasoning proxy and execution identity are required')
+    if args.reasoning_audio_context and not args.reasoning_proxy:parser.error('Audio context requires the explicit Mac reasoning proxy and identity')
     worker_factory=None
-    if args.reasoning_proxy:
+    reasoning_context=(args.reasoning_proxy,args.reasoning_run_id) if args.reasoning_audio_context else None
+    if args.reasoning_proxy and not args.reasoning_audio_context:
         from .reasoning import LocalProxy,ReasoningWorker
         proxy=LocalProxy(args.reasoning_proxy,args.reasoning_run_id)
         worker_factory=lambda:ReasoningWorker(proxy)
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention,worker_factory), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention,worker_factory,reasoning_context), host='127.0.0.1', port=args.port)

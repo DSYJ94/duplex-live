@@ -1,0 +1,49 @@
+{
+  "status": "IMPLEMENTED_OPT_IN_NOT_GPU_OR_PROVIDER_QUALIFIED",
+  "recorded_utc": "2026-11-02T13:46:51.693705+00:00",
+  "parent_source": "71b3d7d60ce28dcd6381baee13f04f2bcb5d80b5",
+  "purpose": "Give the reasoning backend bounded original-audio context for native-selected requests, instead of relying solely on potentially incomplete native descriptions.",
+  "entrypoint": "python -m portable.venus.native_app --model-dir <existing-local-model> --reasoning-proxy <existing-loopback-proxy> --reasoning-run-id <bounded-run-id> --reasoning-audio-context",
+  "required_mac_proxy_profile": "venus-context-reasoning",
+  "asr": {
+    "model": "openai/whisper-large-v3-turbo",
+    "revision": "41f01f3fe87f28c78e2fbf8b568835947dd65ed9",
+    "local_files_only": true,
+    "cuda_devices_required": 1,
+    "cpu_fallback": false,
+    "max_original_audio_seconds": 30,
+    "in_memory_only": true
+  },
+  "runtime": [
+    "Context mode explicitly selected; default description-only and arithmetic paths unchanged.",
+    "Original PCM snapshot frozen when native delegate opens; later user frames cannot enter it.",
+    "ASR hypothesis/receipt validated against original PCM; no expected answers or scoring fields.",
+    "Same GPU inference lock serializes ASR with native steps. Provider waits run asynchronously outside that lock.",
+    "No host keyword mute, forced delegation, canned speech, change to native listen/speak policy, automatic request retry or fallback transcript.",
+    "Provider keys remain on the Mac loopback proxy; no credentials on the GPU."
+  ],
+  "verification": {
+    "integration_suite_passed": 34,
+    "initial_restricted_run": "31 pass, 3 loopback socket permission failures; rerun with local socket access 34 pass",
+    "final_strengthened_gpu_serialization_fixture_passed": 3,
+    "native_model_executed": false,
+    "asr_model_executed": false,
+    "actual_provider_calls": 0,
+    "new_optimizer_updates": 0,
+    "gpu_allocations": 0
+  },
+  "limitations": [
+    "Fixture WebSocket/HTTP/worker tests prove plumbing, not recognition accuracy, native behavior or GPU speed.",
+    "A local ASR pass can delay native frames despite asynchronous provider waits; measure complete input/output latency under the actual GPU before activating live use.",
+    "Needs full native general-context task/cancellation/correction and speech evaluation before adoption.",
+    "Current continuation permits zero external model API calls. This option was not deployed or activated, and grants no broader payload/owner-conversation transfer authorization."
+  ],
+  "training_status": {
+    "latest_saved_total_updates": 406,
+    "candidate_adopted": false,
+    "completed_new_histories": 14,
+    "required_new_histories": 36,
+    "pending_training_updates": 60,
+    "paid_continuation": "Pending separate $75 phase / one110minute decision; overall175 unchanged."
+  }
+}
