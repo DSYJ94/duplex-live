@@ -183,7 +183,7 @@ def main(a):
         if context_phase:
             from .context_objective import ContextObjective
             ACTION_OBJECTIVE=ContextObjective(action_index,Path(a.cache)/'manifest.json',a.context_phase_admission)
-            if lease.get('resource_key') not in ('venus-context-train-v48','venus-context-train-v49','venus-context-train-v50') or execution['new_optimizer_updates_authorized_by_this_execution']!=60:
+            if lease.get('resource_key') not in ('venus-context-train-v48','venus-context-train-v49','venus-context-train-v50','venus-context-train-v52') or execution['new_optimizer_updates_authorized_by_this_execution']!=60:
                 raise ValueError('Exact context60 execution required')
         else:
             from .action_objective import ActionObjective
