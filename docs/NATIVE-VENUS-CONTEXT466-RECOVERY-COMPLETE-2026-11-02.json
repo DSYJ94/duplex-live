@@ -1,0 +1,77 @@
+{
+  "status": "FULL_INVENTORY_PRESERVED_TEMP_RESOURCES_REMOVED_MODEL_NOT_ADOPTED",
+  "recorded_utc": "2026-11-02T22:20:38.920664+00:00",
+  "restart_authority": "docs/NATIVE-VENUS-CONTEXT466-CPU-RESUME-AUTHORIZATION-2026-11-02.json",
+  "producer_source": "14b2b0e",
+  "cpu_intervals_seconds": [
+    184.92,
+    192.831
+  ],
+  "cpu_total_seconds": 377.751,
+  "cpu_hourly_price": 0.06701142,
+  "cpu_compute_cost_usd": 0.00703156414345,
+  "cpu_recovery_total_cap_usd": 0.25,
+  "phase_cap_usd": 75,
+  "project_cap_usd": 175,
+  "preserved_directory": "/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52",
+  "files_verified": 1957,
+  "bytes_verified": 1389134812,
+  "link_targets_verified": 268,
+  "all_hashes_equal_saved_remote_inventory": true,
+  "assembly_source_counts": {
+    "downloaded_copyback": 1910,
+    "prior14_backup": 11,
+    "original_timeline": 36
+  },
+  "assembly_method": "Exact remote inventory match; copied bytes from recovered files or independently hash-matching preserved local originals. No model work or manufactured remote copy success.",
+  "full_rsync_claimed_success": false,
+  "transport_failure_evidence": "cpu-resume-v54/batch-016-terminal.json: rsync receiver write failed Operation timed out60 on OneDrive destination. Root cause of earlier genericEOF is not independently proven identical.",
+  "cleanup": {
+    "temporary_vm_removed": "2060195750767541511",
+    "temporary_disk_removed": "6233528902929943250",
+    "active_snapshot_removed": "4724490043241393447",
+    "original_disk_preserved": "4375908109499109167",
+    "complete_assembly_receipt_sha256": "13a1944ee64b923d1f57340e4515ad1788b33197d7fc1ec104cb8cfa802d563b",
+    "assembly_directory": "/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52",
+    "all_inventory_hashes_verified": true
+  },
+  "model_candidate": 466,
+  "model_adopted": false,
+  "complete64_audio_hashes_verified": true,
+  "measured_behavior": {
+    "parent406": {
+      "cases": 32,
+      "word_audio_agreement": 12,
+      "peak_pass": 32,
+      "quiet_early_cases": 1,
+      "quiet_necessary_noearly_plus_resume": 2,
+      "correct_lookup_completions": {
+        "delegate": 2,
+        "pending": 2
+      },
+      "genuine_cancellations": 0,
+      "genuine_pending_cases": 2,
+      "native_delegation_requests": 21
+    },
+    "paced-continuation": {
+      "cases": 32,
+      "word_audio_agreement": 11,
+      "peak_pass": 32,
+      "quiet_early_cases": 1,
+      "quiet_necessary_noearly_plus_resume": 2,
+      "correct_lookup_completions": {
+        "delegate": 2,
+        "pending": 2
+      },
+      "genuine_cancellations": 0,
+      "genuine_pending_cases": 2,
+      "native_delegation_requests": 21
+    }
+  },
+  "next_actions": [
+    "Keep466 experimental/rejected; preserve406 and all earlier models. Do not replay60completed updates.",
+    "Diagnose native text/audio mismatch using exact recovered traces and WAVs before choosing more training: full60minutes sentence maps to1.28second voiced output, then silent listening. ASR reports six; do not assert human hearing without listening.",
+    "Qualify already-implemented causal-audio general reasoning transport on the full authorized synthetic cohort before replacing description-only lookup behavior. No host keyword policy or forced routing. New GPU/API work requires its own explicit time/payload scope.",
+    "Use full native/task/speech results alongside loss to decide data/recipe changes; frozen TTS does not receive direct acoustic training from this LoRA epoch. No evidence that model size alone caused these failures."
+  ]
+}
