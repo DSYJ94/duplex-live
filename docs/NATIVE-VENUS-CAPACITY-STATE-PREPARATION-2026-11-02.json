@@ -1,0 +1,22 @@
+{
+  "status": "CAPACITY_STATE_PREPARATION_ONLY_NOT_NATIVE_RESTORE",
+  "recorded_utc": "2026-11-02T23:00:24.836866+00:00",
+  "parent_checkpoint_sha256": "e2c16cb825dc654519e922379a220b8c962e9d8a78eec652a3b195922a69720f",
+  "parent_total_updates": 466,
+  "old_parameter_tensors": 4,
+  "new_parameter_tensors": 12,
+  "total_parameter_tensors": 16,
+  "total_adapter_parameters": 3407872,
+  "existing_Adam_moments_counters_exact": true,
+  "new_Adam_moments_counters_zero": true,
+  "all_other_OPAL_history_scheduler_program_fields_exact": true,
+  "parent_file_unchanged": true,
+  "derivative_checkpoint_written": false,
+  "native_forward_or_optimizer_updates": 0,
+  "actual_checkpoint_GPU_RNG_restored": false,
+  "limitations": [
+    "CPU tensor-shape/state-mapping audit only; no native36layer/GPU/no-op proof.",
+    "Existing native restore helper requires identical adapter set and all counters equal; do not bypass it. Wider phase needs a separate explicit admission and fresh-process native continuation proof.",
+    "New pure preparation helpers are not connected to training driver; current authority still fixes one layer."
+  ]
+}

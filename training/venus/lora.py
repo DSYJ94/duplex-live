@@ -6,13 +6,13 @@ from torch import nn
 
 
 class LoRALinear(nn.Module):
-    def __init__(self, base, rank=16, alpha=16):
+    def __init__(self, base, rank=16, alpha=16, *, generator=None):
         super().__init__()
         self.base = base
         self.rank, self.alpha, self.enabled = rank, alpha, True
         self.a = nn.Parameter(torch.empty(rank, base.in_features, device=base.weight.device, dtype=torch.float32))
         self.b = nn.Parameter(torch.zeros(base.out_features, rank, device=base.weight.device, dtype=torch.float32))
-        nn.init.kaiming_uniform_(self.a, a=math.sqrt(5))
+        nn.init.kaiming_uniform_(self.a, a=math.sqrt(5), generator=generator)
         self.base.requires_grad_(False)
 
     def forward(self, x):
