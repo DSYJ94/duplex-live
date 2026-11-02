@@ -1,0 +1,10 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve fallback within existing caps",
+  "recorded_utc": "2026-11-02T23:42:54.235737+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-STOP-PLACEMENT-PROPOSAL-2026-11-02.json",
+  "proposal_commit": "33e61f4",
+  "proposal_sha256": "8ba31c0eb33278957e0e0adb53ee103b28a3f0ea2ce13c456ce77505697f09b7",
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175
+}

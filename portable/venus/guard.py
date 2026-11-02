@@ -22,6 +22,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-tts-placement-v56':
+        from training.venus.tts_placement_guard import resource as tts_placement_resource
+        return tts_placement_resource(lease)
     if lease.get('resource_key')=='venus-tts-stop-v55':
         from training.venus.tts_stop_guard import resource as tts_resource
         return tts_resource(lease)
@@ -154,6 +157,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-tts-placement-v56':
+        from training.venus.tts_placement_guard import validate as tts_placement_validate
+        return tts_placement_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key')=='venus-tts-stop-v55':
         from training.venus.tts_stop_guard import validate as tts_validate
         return tts_validate(vm,instances,runpods,lease,now)
@@ -286,7 +292,7 @@ def mac(args):
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
     maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
-    if lease.get('resource_key') in ('venus-context-train-v52','venus-tts-stop-v55'):
+    if lease.get('resource_key') in ('venus-context-train-v52','venus-tts-stop-v55','venus-tts-placement-v56'):
         assert a['status']=='APPROVED' and a['maximum_phase_usd']==75 and a['maximum_project_usd']==175
     elif lease.get('resource_key')=='venus-context-train-v50':
         assert a['status']=='APPROVED' and a['unchanged_phase_cap_usd']==70 and a['unchanged_cumulative_cap_usd']==175
@@ -312,7 +318,7 @@ def mac(args):
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
             if lease.get('resource_key')=='venus-tts-stop-v55':assert int(disk['sizeGb'])==100
-            if lease.get('resource_key') in ('venus-context-train-v50','venus-context-train-v52'):
+            if lease.get('resource_key') in ('venus-context-train-v50','venus-context-train-v52','venus-tts-placement-v56'):
                 assert int(disk['sizeGb'])==100 and str(disk['sourceSnapshotId'])==lease['snapshot_id']
             if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47','venus-context-train-v48','venus-context-train-v49'):
                 assert int(disk['sizeGb'])==100
