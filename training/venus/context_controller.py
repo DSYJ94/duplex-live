@@ -26,6 +26,47 @@ def preserve_candidate(candidate):
     c.record('critical_candidate_backed_up_before_evaluation',files=len(rows),bytes=sum(r['bytes'] for r in rows))
 
 
+def execute_pipeline(remote_out,end,lp,a,admission,unit_prefix='duplex-venus-context48'):
+    parent=c.OUT+'/action-candidate-v42/step-0108.pt'
+    candidate=remote_out+'/candidate'
+    guard=c.guard
+    broker=None
+    try:
+        py=c.ROOT+'/venus-runtime-v1/venv/bin/python'
+        env='/usr/bin/env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lp+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py+' -u -m '
+        cache=remote_out+'/cache'
+        def stage(label,command,reserve,maximum):
+            assert not c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip(),'Prior GPU unit remains live'
+            assert guard.poll() is None and end-time.time()>reserve+30
+            unit=unit_prefix+'-'+label
+            c.start_unit(unit,env+command,min(maximum,int(end-time.time()-reserve)))
+            c.wait_unit(unit,end-reserve)
+            c.record('context_stage_terminal0',stage=label)
+        stage('cache','training.venus.context_cache --model '+c.MODEL+' --timelines '+remote_out+'/timelines --old-cache '+c.OUT+'/paced-prefix-cache-v24 --old-timelines '+c.OUT+'/paced-timelines-v22 --old-index '+remote_out+'/old-action-index.json --tokenizer-config '+c.MODEL+'/tokenizer_config.json --admission '+admission+' --output '+cache+' --source '+c.source,2800,1200)
+        common=' --model '+c.MODEL+' --cache '+cache+' --lease '+lp+' --source '+c.source+' --opal-source '+c.ROOT+'/opal-upstream-v34 --context-phase-admission '+admission
+        stage('parent-restore','training.venus.native_restore --kind parent --checkpoint '+parent+' --sha256 '+a['parent_checkpoint_sha256']+' --output '+remote_out+'/parent-restore'+common.replace(' --cache '+cache,' --cache '+c.OUT+'/paced-prefix-cache-v24'),2600,180)
+        box=remote_out+'/opal-mailbox'
+        args=common+' --approval '+cache+'/approval.json --output '+candidate+' --cache-producer '+c.source+' --parent-checkpoint '+parent+' --parent-sha256 '+a['parent_checkpoint_sha256']+' --opal-backend mailbox:'+box+' --opal-agent-budget .01 --maximum-epochs 1 --coverage-manifest '+cache+'/timelines-manifest.json --action-target-index '+cache+'/action-index.json --parent-native-restore '+remote_out+'/parent-restore/restore.json'
+        stage('train-start','training.venus.train --stage start'+args,2300,300)
+        code="import torch,json;s=torch.load('"+candidate+"/step-0001.pt',map_location='cpu',weights_only=False);print(json.dumps(s['optimizer']['backend']))"
+        run_id=json.loads(c.ssh(py+' -c '+shlex.quote(code)))['run_id']
+        command=[sys.executable,'-u','-m','training.venus.opal_supervisor','--source','/private/tmp/duplex-opal-upstream-20261028','--box',box,'--repo',str(Path.cwd()),'--decisions',str(c.R/'opal-decisions'),'--workdir',str(c.R/'opal-broker'),'--run-id',run_id,'--ssh-argv',str(c.R/'ssh.json'),'--remote-repo',c.remote]
+        broker=subprocess.Popen(command,stdout=(c.R/'opal-broker.log').open('x'),stderr=subprocess.STDOUT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
+        c.record('current_agent_opal_review_live',pid=broker.pid,run_id=run_id,external_api_calls=0)
+        stage('train-continue','training.venus.train --stage restore-continue'+args,1900,800)
+        terminal=json.loads(c.ssh('cat '+candidate+'/training-terminal.json'));assert terminal['completed'] and terminal['actual_updates']==60 and terminal['total_optimizer_updates']==466
+        c.record('actual_new_training_complete',terminal=terminal)
+        preserve_candidate(candidate)
+        final=candidate+'/step-0060.pt';finalsha=c.ssh('sha256sum '+final).split()[0]
+        stage('final-restore','training.venus.native_restore --kind final --checkpoint '+final+' --sha256 '+finalsha+' --output '+remote_out+'/final-restore'+common,1600,240)
+        c.ssh('cp '+remote_out+'/final-restore/restore.json '+candidate+'/final-native-restore.json')
+        paired='training.venus.paced_behavior --model '+c.MODEL+' --candidate '+candidate+' --parent-checkpoint '+parent+' --parent-sha256 '+a['parent_checkpoint_sha256']+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --output '+remote_out+'/native-paired --source '+c.source+' --lease '+lp+' --tts-attention released --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674 --reuse-parent-collection '+c.OUT+'/action-native-paired-v42 --context-phase-admission '+admission+' --training-approval '+cache+'/approval.json'
+        stage('paired-native',paired,240,1500)
+        c.record('complete_native_comparison',adopted=False,new_general_context_native_qualification_still_required=True)
+    finally:
+        if broker and broker.poll() is None:broker.terminate()
+
+
 def retry_ready(prior,vm,now):
     rows=json.loads((prior/'events.json').read_text())
     failed=[r for r in rows if r['event']=='context_phase_failed']
@@ -94,37 +135,7 @@ def main(capacity_retry=False):
         for local,remote in ((str(timelines)+'/',remote_out+'/timelines/'),('runs/venus-training-20261101/context-alignment-v1/',remote_out+'/alignment/'),('runs/venus-training-20261101/context-semantic-v1/',remote_out+'/semantic/')):c.sync(local,remote)
         c.sync('runs/venus-training-20261029/action-target-audit-v1/index-verified-v2.json',remote_out+'/old-action-index.json')
         assert c.ssh('sha256sum '+parent).split()[0]==a['parent_checkpoint_sha256']
-        py=c.ROOT+'/venus-runtime-v1/venv/bin/python'
-        env='/usr/bin/env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lp+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py+' -u -m '
-        admission=c.remote+'/'+str(ADMISSION);cache=remote_out+'/cache'
-        def stage(label,command,reserve,maximum):
-            assert not c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip(),'Prior GPU unit remains live'
-            assert guard.poll() is None and end-time.time()>reserve+30
-            unit='duplex-venus-context48-'+label
-            c.start_unit(unit,env+command,min(maximum,int(end-time.time()-reserve)))
-            c.wait_unit(unit,end-reserve)
-            c.record('context_stage_terminal0',stage=label)
-        stage('cache','training.venus.context_cache --model '+c.MODEL+' --timelines '+remote_out+'/timelines --old-cache '+c.OUT+'/paced-prefix-cache-v24 --old-timelines '+c.OUT+'/paced-timelines-v22 --old-index '+remote_out+'/old-action-index.json --tokenizer-config '+c.MODEL+'/tokenizer_config.json --admission '+admission+' --output '+cache+' --source '+c.source,2800,1200)
-        common=' --model '+c.MODEL+' --cache '+cache+' --lease '+lp+' --source '+c.source+' --opal-source '+c.ROOT+'/opal-upstream-v34 --context-phase-admission '+admission
-        stage('parent-restore','training.venus.native_restore --kind parent --checkpoint '+parent+' --sha256 '+a['parent_checkpoint_sha256']+' --output '+remote_out+'/parent-restore'+common.replace(' --cache '+cache,' --cache '+c.OUT+'/paced-prefix-cache-v24'),2600,180)
-        box=remote_out+'/opal-mailbox'
-        args=common+' --approval '+cache+'/approval.json --output '+candidate+' --cache-producer '+c.source+' --parent-checkpoint '+parent+' --parent-sha256 '+a['parent_checkpoint_sha256']+' --opal-backend mailbox:'+box+' --opal-agent-budget .01 --maximum-epochs 1 --coverage-manifest '+cache+'/timelines-manifest.json --action-target-index '+cache+'/action-index.json --parent-native-restore '+remote_out+'/parent-restore/restore.json'
-        stage('train-start','training.venus.train --stage start'+args,2300,300)
-        code="import torch,json;s=torch.load('"+candidate+"/step-0001.pt',map_location='cpu',weights_only=False);print(json.dumps(s['optimizer']['backend']))"
-        run_id=json.loads(c.ssh(py+' -c '+shlex.quote(code)))['run_id']
-        command=[sys.executable,'-u','-m','training.venus.opal_supervisor','--source','/private/tmp/duplex-opal-upstream-20261028','--box',box,'--repo',str(Path.cwd()),'--decisions',str(c.R/'opal-decisions'),'--workdir',str(c.R/'opal-broker'),'--run-id',run_id,'--ssh-argv',str(c.R/'ssh.json'),'--remote-repo',c.remote]
-        broker=subprocess.Popen(command,stdout=(c.R/'opal-broker.log').open('x'),stderr=subprocess.STDOUT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
-        c.record('current_agent_opal_review_live',pid=broker.pid,run_id=run_id,external_api_calls=0)
-        stage('train-continue','training.venus.train --stage restore-continue'+args,1900,800)
-        terminal=json.loads(c.ssh('cat '+candidate+'/training-terminal.json'));assert terminal['completed'] and terminal['actual_updates']==60 and terminal['total_optimizer_updates']==466
-        c.record('actual_new_training_complete',terminal=terminal)
-        preserve_candidate(candidate)
-        final=candidate+'/step-0060.pt';finalsha=c.ssh('sha256sum '+final).split()[0]
-        stage('final-restore','training.venus.native_restore --kind final --checkpoint '+final+' --sha256 '+finalsha+' --output '+remote_out+'/final-restore'+common,1600,240)
-        c.ssh('cp '+remote_out+'/final-restore/restore.json '+candidate+'/final-native-restore.json')
-        paired='training.venus.paced_behavior --model '+c.MODEL+' --candidate '+candidate+' --parent-checkpoint '+parent+' --parent-sha256 '+a['parent_checkpoint_sha256']+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --output '+remote_out+'/native-paired --source '+c.source+' --lease '+lp+' --tts-attention released --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674 --reuse-parent-collection '+c.OUT+'/action-native-paired-v42 --context-phase-admission '+admission+' --training-approval '+cache+'/approval.json'
-        stage('paired-native',paired,240,1500)
-        c.record('complete_native_comparison',adopted=False,new_general_context_native_qualification_still_required=True)
+        execute_pipeline(remote_out,end,lp,a,c.remote+'/'+str(ADMISSION))
     except BaseException as error:
         c.record('context_phase_failed',error_type=type(error).__name__,error=str(error)[-1400:]);raise
     finally:

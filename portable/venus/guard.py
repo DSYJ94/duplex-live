@@ -22,6 +22,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-context-train-v50':
+        from training.venus.context_placement_guard import resource as placement_resource
+        return placement_resource(lease)
     if lease.get('resource_key') in ('venus-context-train-v48','venus-context-train-v49'):
         from training.venus.context_guard import resource as context_resource
         return context_resource(lease)
@@ -145,6 +148,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-context-train-v50':
+        from training.venus.context_placement_guard import validate as placement_validate
+        return placement_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key') in ('venus-context-train-v48','venus-context-train-v49'):
         from training.venus.context_guard import validate as context_validate
         return context_validate(vm,instances,runpods,lease,now)
@@ -268,7 +274,9 @@ def mac(args):
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
     maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
-    if lease.get('resource_key') in ('venus-context-train-v48','venus-context-train-v49'):
+    if lease.get('resource_key')=='venus-context-train-v50':
+        assert a['status']=='APPROVED' and a['unchanged_phase_cap_usd']==70 and a['unchanged_cumulative_cap_usd']==175
+    elif lease.get('resource_key') in ('venus-context-train-v48','venus-context-train-v49'):
         assert a['status']=='ADMITTED_UNDER_EXPLICIT_GCP_TRAINING_REQUEST' and a['maximum_phase_usd']==70 and a['maximum_project_usd']==175
     elif lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47'):
         assert a['status']=='APPROVED' and a['unchanged_phase_cap_usd']==70 and a['unchanged_cumulative_cap_usd']==175
@@ -289,6 +297,8 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
+            if lease.get('resource_key')=='venus-context-train-v50':
+                assert int(disk['sizeGb'])==100 and str(disk['sourceSnapshotId'])==lease['snapshot_id']
             if lease.get('resource_key') in ('venus-action-fidelity-v41','venus-action-fidelity-v42','venus-foundation-v43','venus-runtime-v44','venus-source-audit-v45','venus-source-audit-v46','venus-assistant-audit-v47','venus-context-train-v48','venus-context-train-v49'):
                 assert int(disk['sizeGb'])==100
             if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','us-a10040','venus-training-v1','venus-native-gradient-v8','venus-memory-v11','venus-recovery-v13','venus-behavior-v14','venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33'):

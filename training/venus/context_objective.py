@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 
 ADMISSION=Path('docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-2026-11-01.json')
+ADMISSION_V2=Path('docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-V2-2026-11-02.json')
+PLACEMENT_AUTH=Path('docs/NATIVE-VENUS-CONTEXT-ZONAL-CAPACITY-AUTHORIZATION-2026-11-02.json')
 OLD_INDEX_SHA='e1ded570cb385b49bcd2e9560f9e4a8cf6c6286e66754f264f7282a6fd7ef541'
 
 
@@ -11,8 +13,16 @@ def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def authority(path=ADMISSION):
-    if Path(path).resolve()!=ADMISSION.resolve():raise ValueError('Exact context phase admission required')
-    a=json.loads(ADMISSION.read_text())
+    path=Path(path)
+    if path.resolve() not in (ADMISSION.resolve(),ADMISSION_V2.resolve()):raise ValueError('Exact context phase admission required')
+    a=json.loads(path.read_text())
+    if path.resolve()==ADMISSION_V2.resolve():
+        p=json.loads(PLACEMENT_AUTH.read_text())
+        if p['status']!='APPROVED' or p['human_approval']!='Approve placement fallback within $70' or sha(p['proposal_path'])!=p['proposal_sha256']:
+            raise ValueError('Exact approved placement required')
+        if a['placement_authorization_sha256']!=sha(PLACEMENT_AUTH) or a['prior_admission_sha256']!=sha(ADMISSION):raise ValueError('Preserve exact prior phase and new placement authority')
+        review=json.loads(Path('docs/NATIVE-VENUS-CONTEXT-PRELAUNCH-BOUNDARY-FIX-2026-11-01.json').read_text())
+        if a['new_timeline_manifest_sha256']!=review['new_manifest_sha256']:raise ValueError('Corrected v3 native boundaries required')
     if a['human_request']!='proceed with GCP for training' or a['maximum_new_updates']!=60 or a['parent_total_updates']!=406 or a['maximum_complete_epochs']!=1:
         raise ValueError('Only the new complete60 phase is admitted')
     if a['maximum_phase_usd']!=70 or a['maximum_project_usd']!=175 or a['maximum_gpu_seconds']!=4100:
