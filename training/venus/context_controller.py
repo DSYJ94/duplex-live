@@ -40,7 +40,7 @@ def preserve_candidate(candidate):
     c.record('critical_candidate_backed_up_before_evaluation',files=len(rows),bytes=sum(r['bytes'] for r in rows))
 
 
-def execute_pipeline(remote_out,end,lp,a,admission,unit_prefix='duplex-venus-context48'):
+def execute_pipeline(remote_out,end,lp,a,admission,unit_prefix='duplex-venus-context48',reuse_root=None):
     parent=c.OUT+'/action-candidate-v42/step-0108.pt'
     candidate=remote_out+'/candidate'
     guard=c.guard
@@ -56,7 +56,12 @@ def execute_pipeline(remote_out,end,lp,a,admission,unit_prefix='duplex-venus-con
             c.start_unit(unit,env+command,min(maximum,int(end-time.time()-reserve)))
             c.wait_unit(unit,end-reserve)
             c.record('context_stage_terminal0',stage=label)
-        stage('cache','training.venus.context_cache --model '+c.MODEL+' --timelines '+remote_out+'/timelines --old-cache '+c.OUT+'/paced-prefix-cache-v24 --old-timelines '+c.OUT+'/paced-timelines-v22 --old-index '+remote_out+'/old-action-index.json --tokenizer-config '+c.MODEL+'/tokenizer_config.json --admission '+admission+' --output '+cache+' --source '+c.source,2800,1200)
+        reuse_args=''
+        if reuse_root:
+            from .context_cache_reuse import WITNESS
+            assert a.get('partial14_witness_sha256')==sha(WITNESS),'Explicit witnessed continuation required'
+            reuse_args=' --reuse-root '+reuse_root+' --reuse-witness '+c.remote+'/'+str(WITNESS)
+        stage('cache','training.venus.context_cache --model '+c.MODEL+' --timelines '+remote_out+'/timelines --old-cache '+c.OUT+'/paced-prefix-cache-v24 --old-timelines '+c.OUT+'/paced-timelines-v22 --old-index '+remote_out+'/old-action-index.json --tokenizer-config '+c.MODEL+'/tokenizer_config.json --admission '+admission+' --output '+cache+' --source '+c.source+reuse_args,2800,1200 if not reuse_root else 3000)
         artifacts=[json.loads(c.ssh('cat '+cache+'/'+name)) for name in ('manifest.json','approval.json','action-index.json')]
         require_complete_context_cache(*artifacts)
         common=' --model '+c.MODEL+' --cache '+cache+' --lease '+lp+' --source '+c.source+' --opal-source '+c.ROOT+'/opal-upstream-v34 --context-phase-admission '+admission

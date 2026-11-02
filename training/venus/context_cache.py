@@ -7,7 +7,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import time
+import time,shutil
 
 
 def sha(path):
@@ -39,6 +39,12 @@ def main(a):
         raise ValueError('Original folds must remain intact')
     if output.exists():
         raise ValueError('Observe actual collection; never restart completed units')
+    reuse={}
+    if bool(getattr(a,'reuse_root',None))!=bool(getattr(a,'reuse_witness',None)):raise ValueError('Reuse needs exact source files and witness together')
+    if getattr(a,'reuse_root',None):
+        from .context_cache_reuse import admitted_rows,WITNESS
+        if authority.get('partial14_witness_sha256')!=sha(WITNESS):raise ValueError('New continuation must explicitly bind the exact14 reuse witness')
+        reuse=admitted_rows(a.reuse_root,a.reuse_witness)
     output.mkdir(parents=True)
     new = output/'new'
     new.mkdir()
@@ -50,6 +56,7 @@ def main(a):
     model, duplex = load_native(a.model)
     rows = []
     start = time.monotonic()
+    fresh_proof_done=False
     for i, row in enumerate(source['scenes']):
         ensure_guard()
         timeline_path = root/row['id']/'timeline.json'
@@ -57,20 +64,28 @@ def main(a):
         if sha(timeline_path) != row['timeline_sha256'] or sha(wav) != row['user_wav_sha256']:
             raise ValueError('New teacher inputs changed')
         timeline = json.loads(timeline_path.read_text())
-        ex = capture(duplex,timeline,wav,retain_segments=i==0)
-        proof = None
-        if i == 0:
-            proof = dict(native_segmented=replay_proof(duplex,ex),differentiable_input=training_input_proof(model,ex))
-            if not proof['differentiable_input']['passed']:
-                raise ValueError('Native input proof failed')
-        result, prefix_proof = capture_prefix(model.llm,ex)
         path = new/(row['id']+'.pt')
-        torch.save(result,path)
+        proof=None;reused=row['id'] in reuse
+        if reused:
+            from .context_cache_reuse import load_verified
+            original=Path(a.reuse_root)/(row['id']+'.pt')
+            result,prefix_proof=load_verified(original,reuse[row['id']],timeline,duplex)
+            ex=result;shutil.copyfile(original,path)
+            if sha(path)!=reuse[row['id']]['sha256']:raise ValueError('Reused history copy changed bytes')
+        else:
+            ex=capture(duplex,timeline,wav,retain_segments=not fresh_proof_done)
+            if not fresh_proof_done:
+                proof=dict(native_segmented=replay_proof(duplex,ex),differentiable_input=training_input_proof(model,ex))
+                if not proof['differentiable_input']['passed']:raise ValueError('Native input proof failed')
+                fresh_proof_done=True
+            result,prefix_proof=capture_prefix(model.llm,ex)
+            torch.save(result,path)
         masks_, spans = masks(result['targets'],result['decision_mask'],ids)
         item = dict(id=row['id'],fold=row['fold'],family=row['family'],file=str(path.relative_to(output)),sha256=sha(path),tokens=len(ex['embeddings']),labels=len(ex['targets']),native_prefix_proof=prefix_proof,native_input_proof=proof)
         rows.append(item)
         index.append(dict(id=row['id'],fold=row['fold'],family=row['family'],prefix_sha256=item['sha256'],target_sha256=hashlib.sha256(json.dumps(ex['targets'].tolist(),separators=(',',':')).encode()).hexdigest(),action_spans=spans,indices={k:v.nonzero().flatten().tolist() for k,v in masks_.items()}))
-        print(json.dumps(dict(event='complete_new_native_teacher',completed=i+1,required=36,elapsed=time.monotonic()-start,id=row['id'],prefix_proof=prefix_proof)),flush=True)
+        print(json.dumps(dict(event='reused_verified_native_teacher' if reused else 'complete_new_native_teacher',completed=i+1,required=36,elapsed=time.monotonic()-start,id=row['id'],prefix_proof=prefix_proof)),flush=True)
+    if reuse and len([r for r in source['scenes'] if r['id'] in reuse])!=14:raise ValueError('All verified original14 must be retained')
     (output/'old').mkdir()
     for r in old_manifest['scenes']:
         src=old/r['file']
@@ -89,4 +104,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser()
     for key in ('model','timelines','old-cache','old-timelines','old-index','tokenizer-config','admission','output','source'):
         p.add_argument('--'+key,required=True)
+    p.add_argument('--reuse-root');p.add_argument('--reuse-witness')
     main(p.parse_args())
