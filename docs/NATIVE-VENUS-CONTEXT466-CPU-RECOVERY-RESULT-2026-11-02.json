@@ -1,0 +1,23 @@
+{
+  "status": "CPU_STOPPED_PARTIAL_RECOVERY_NO_FULL_PASS",
+  "recorded_utc": "2026-11-02T21:48:16.043494+00:00",
+  "source": "33cd8d1",
+  "vm_id": "2060195750767541511",
+  "disk_id": "6233528902929943250",
+  "actual_cpu_seconds": 184.92,
+  "regular_files_required": 1957,
+  "total_remote_bytes": 1389134812,
+  "required_links": 268,
+  "regular_files_verified": 78,
+  "regular_bytes_verified": 623675124,
+  "new_native_cache_files_verified": 35,
+  "missing_files": 1879,
+  "hash_mismatches": 0,
+  "critical_candidate75_files_remain_verified": true,
+  "behavioral_results_not_recovered": true,
+  "rsync_client": "GNU3.5.1",
+  "initial_gpu_rsync_client": "Appleopenrsync",
+  "root_cause": "Unknown; both clients suffered unexpected transport closure. Stopped-provider serial console unavailable.",
+  "temporary_disk_preserved": true,
+  "no_restart_or_model_replay": true
+}

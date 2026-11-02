@@ -1,0 +1,27 @@
+{
+  "status": "PROPOSED_REQUIRES_ONE_ADDITIONAL_CPU_INTERVAL",
+  "purpose": "Finish recovering existing native466 outputs after a terminal transport failure; no repeated model or optimizer work.",
+  "unchanged_phase_cap_usd": 75,
+  "unchanged_project_cap_usd": 175,
+  "unchanged_total_CPU_recovery_allowance_usd": 0.25,
+  "already_used_cpu_seconds": 184.92,
+  "maximum_additional_cpu_running_seconds": 600,
+  "maximum_additional_intervals": 1,
+  "same_cpu_vm_id": "2060195750767541511",
+  "same_cpu_vm_name": "duplex-venus-context466-recovery-20261102-v53",
+  "same_disk_id": "6233528902929943250",
+  "zone": "us-central1-f",
+  "machine": "e2-standard-2",
+  "gpu_count": 0,
+  "new_vm_disk_snapshot_or_purchase": false,
+  "temporary_cleanup_deadline_utc": "2026-11-02T23:00:00Z",
+  "plan": [
+    "Recheck actual stopped identity/current price and record exclusive new restart claim.",
+    "Provider600secondSTOP plus fresh independentMac guard and guest timer, no GPU/model/API calls.",
+    "Use saved full inventory to request ONLY missing files. Fetch evaluation JSON first, then remaining files in bounded<=32MiB rsync batches with independent strict SSH connections. Preserve every failed attempt; never retry a batch on mere observation timeout.",
+    "Verify all1957regularfile hashes and268symlinktargets before claiming full recovery or removing unique data.",
+    "Stop immediately after recovery or a genuine blocker. Remove same temporaryCPUVM/disk/snapshot only after preservation verifies; original4375908109499109167 untouched."
+  ],
+  "remaining_blocker": "Prior grant explicitly allowed maximum_actual_intervals=1. That interval used184.92seconds and ended; unused dollars/time do not authorize another restart.",
+  "limits": "Transport cause remains undiagnosed. Native results and speech are not yet reviewed; no model adoption follows from recovered losses."
+}
