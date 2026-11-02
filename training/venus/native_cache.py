@@ -11,10 +11,10 @@ from pathlib import Path
 import time
 import numpy as np
 import torch
-from transformers import AutoModel, set_seed
 
 
 def load_native(path,language_only=False):
+    from transformers import AutoModel, set_seed
     from portable.venus.native_app import ensure_guard
     ensure_guard()
     os.environ.setdefault('CUBLAS_WORKSPACE_CONFIG',':4096:8')

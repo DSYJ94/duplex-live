@@ -47,11 +47,17 @@ def copyback(remote_out):
     c.record('full_context_copyback_verified',files=len(rows),bytes=sum(r['bytes'] for r in rows))
 
 
-def main():
+def main(repair_pre_gpu=False):
     global snapshot_id
     a=authority(ADMISSION_V2);c.R=R
-    claim=R/'controller-claim.json'
+    claim=R/('controller-claim-repair.json' if repair_pre_gpu else 'controller-claim.json')
     if claim.exists():raise ValueError('Observe the existing placement controller; never duplicate it')
+    if repair_pre_gpu:
+        previous=json.loads((R/'events.json').read_text())
+        failures=[r for r in previous if r['event']=='placement_or_training_failure']
+        assert len(failures)==1 and 'unrecognized arguments: --async' in failures[0]['error']
+        assert not any(r['event'] in ('one_approved_gpu_attempt','actual_unit_started') for r in previous)
+        c.events=previous
     source=c.run(['git','rev-parse','HEAD']).strip()
     if c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus','data/venus','docs/NATIVE-VENUS-CONTEXT-ZONAL-CAPACITY-AUTHORIZATION-2026-11-02.json','docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-V2-2026-11-02.json']).strip():raise ValueError('Deploy committed source only')
     price=json.loads(Path('runs/venus-training-20261101/current-a100-price.json').read_text())
@@ -68,7 +74,13 @@ def main():
     assert old['id']==ORIGINAL_DISK and int(old['sizeGb'])==100
     snapshot=cloud('compute','snapshots','describe',SNAPSHOT)
     assert snapshot['status']=='READY' and snapshot['sourceDiskId']==ORIGINAL_DISK and snapshot['storageLocations']==['us-central1'] and snapshot['snapshotType']=='STANDARD'
-    snapshot_id=snapshot['id'];storage_deadline=datetime.fromisoformat(snapshot['creationTimestamp']).timestamp()+4*3600
+    snapshot_id=snapshot['id']
+    original_claim=json.loads((R/'snapshot-create-claim.json').read_text())
+    storage_deadline=datetime.fromisoformat(original_claim['at_utc']).timestamp()+4*3600
+    if repair_pre_gpu:
+        recovered=json.loads((R/'recoverable-snapshot-read.json').read_text())
+        assert len(recovered)==1 and recovered[0]['originalResource']['id']==snapshot_id
+        assert int(recovered[0]['originalResource']['storageBytes'])+int(snapshot['storageBytes'])<=100*1024**3
     retention=json.loads((R/'snapshot-effective-retention.json').read_text())
     assert retention['retentionDurationDays'] in ('0','1','2','3')
     assert storage_deadline-time.time()>5500,'Whole GPU run and storage cleanup must fit'
@@ -76,9 +88,14 @@ def main():
     assert quota['NVIDIA_A100_GPUS']['usage']==0 and quota['NVIDIA_A100_GPUS']['limit']>=1
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods
     assert all(v['status'] in ('EXITED','STOPPED','TERMINATED') for v in pods)
+    # Broker imports the pinned source/Torch library only, never a Mac model.
+    from .opal_adapter import load_upstream
+    load_upstream('/private/tmp/duplex-opal-upstream-20261028')
+    from opal.backends import mailbox
     c.source=source;c.remote=c.ROOT+'/duplex-context50-'+source[:12]
     with claim.open('x') as f:json.dump(dict(pid=os.getpid(),source=source,snapshot_id=snapshot_id,storage_deadline_unix=storage_deadline),f,indent=2)
-    c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
+    bundle=R/('source-repair.bundle' if repair_pre_gpu else 'source.bundle')
+    c.run(['git','bundle','create',str(bundle),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())])
     guard=None;vm=None;zone=None;disk=None;model_started=False;backed=False;remote_out=c.OUT+'/context-v50'
     try:
@@ -86,10 +103,11 @@ def main():
         for zone in ZONES:
             assert all(v['status']=='TERMINATED' for v in cloud('compute','instances','list'))
             disk_name='duplex-venus-context-data-20261102-'+zone[-1]+'-v50'
-            op=cloud('compute','disks','create',disk_name,'--zone='+zone,'--source-snapshot='+SNAPSHOT,'--size=100GB','--type=pd-balanced','--labels=duplex-scope=context-v50','--async');op=op[0] if isinstance(op,list) else op
-            c.record('one_restored_disk_operation',zone=zone,operation=op['name'])
-            op=observe_operation(op,zone)
-            if op.get('error'):raise RuntimeError(json.dumps(op['error']))
+            # This stable CLI waits for disk creation and returns a DISK, not
+            # an operation. It has no --async flag. Keep the one real process
+            # alive; an observation timeout never admits another create.
+            c.record('one_restored_disk_request',zone=zone,name=disk_name)
+            c.run(['gcloud','compute','disks','create',disk_name,'--zone='+zone,'--source-snapshot='+SNAPSHOT,'--size=100GB','--type=pd-balanced','--labels=duplex-scope=context-v50','--project='+c.PROJECT,'--quiet','--format=json'],900)
             disk=cloud('compute','disks','describe',disk_name,'--zone='+zone)
             assert int(disk['sizeGb'])==100 and disk['sourceSnapshotId']==snapshot_id and not disk.get('users')
             (R/('disk-'+zone+'.json')).write_text(json.dumps(disk,indent=2)+'\n')
@@ -115,7 +133,7 @@ def main():
         start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();end=start+3900
         assert end+180<storage_deadline
         (R/'provider-start.json').write_text(json.dumps(vm,indent=2)+'\n')
-        prepare_ssh(vm,zone,'50');c.sync(R/'source.bundle',c.ROOT+'/context50.bundle')
+        prepare_ssh(vm,zone,'50');c.sync(bundle,c.ROOT+'/context50.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/context50.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source)
         plan=dict(resource_key=KEY,authorization_sha256=sha(PLACEMENT_AUTH),new_optimizer_updates_authorized_by_this_execution=60,maximum_gpu_seconds=3900,maximum_new_gpu_running_intervals=1,vm_name=c.NAME,vm_id=vm['id'],disk_name=disk['name'],disk_id=disk['id'],zone=zone,original_disk_id=ORIGINAL_DISK,snapshot_source_disk_id=snapshot['sourceDiskId'],snapshot_id=snapshot_id,snapshot_name=SNAPSHOT)
         PLAN.write_text(json.dumps(plan,indent=2)+'\n');c.ssh('mkdir -p '+c.remote+'/'+str(PLAN.parent));c.sync(PLAN,c.remote+'/'+str(PLAN))
@@ -170,4 +188,4 @@ def main():
         awake.terminate()
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':main(repair_pre_gpu='--repair-pre-gpu' in sys.argv)
