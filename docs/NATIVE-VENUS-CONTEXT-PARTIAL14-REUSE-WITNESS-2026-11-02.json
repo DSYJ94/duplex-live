@@ -1,0 +1,184 @@
+{
+  "status": "PARTIAL_NOT_WHOLE_DATA_APPROVAL",
+  "producer_source": "bd7ea9aee6b1a9ac36278c5fda9a9e2df3ed31ac",
+  "original_job_terminal_success": false,
+  "controlled_stop": true,
+  "required_new_scenes": 36,
+  "verified_completed": 14,
+  "remaining": 22,
+  "all14_prefix_proofs_exact_zero": true,
+  "copyback_inventory_sha256": "2bf7b70ec91e8b15159c55fe7a5f48dccce8f45cd49b4cf635cc4788682a1593",
+  "rows": [
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-quiet_scope-00.pt",
+      "sha256": "e9b3d5e5a57dc7db9f9f7026c78a7fe6bc437dd53e014ebd0e26c158643119b6",
+      "bytes": 16877790,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 46,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-simple_or_delegate-00.pt",
+      "sha256": "8478f275367cd431e4709bad2a3c1ae49e05f20719f61315657cc012593726f3",
+      "bytes": 27820018,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 280,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-selective_cancel-00.pt",
+      "sha256": "49e8fa06ae8e49a9da3a5cbf7250a4f2fcc2ee4762513a9ecccce1e79281706b",
+      "bytes": 22761102,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 212,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-correction-00.pt",
+      "sha256": "6339b9cf3c9c68b44a2f661f04da2dcf9985a6e04f526f46c7eb238cf32242d1",
+      "bytes": 19587028,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 193,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-pause_resume-00.pt",
+      "sha256": "f0e1dc38a9258bf43798d573f3be0b982b02c923df35fd771957a16343b24f49",
+      "bytes": 7438129,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 61,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-00",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-result_delivery-00.pt",
+      "sha256": "a21260b49680e237aca618801b237c21499f266c7c9bae24b001710efd91d630",
+      "bytes": 19988101,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 163,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-quiet_scope-01.pt",
+      "sha256": "8292e84a1720f60f42af817a2add3d6fa7a9339975e79dea002c0eb81faacfae",
+      "bytes": 7153054,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 46,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-simple_or_delegate-01.pt",
+      "sha256": "7c58aa92346b096573f2577f333c82c2757edbbd649cfb372bb045d5fc6a4212",
+      "bytes": 28640526,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 290,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-selective_cancel-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-selective_cancel-01.pt",
+      "sha256": "01fd9723c6add36eb17f1ad1ff406d21c3e388b57950b2617f9c0600941e2868",
+      "bytes": 22992810,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 213,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-correction-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-correction-01.pt",
+      "sha256": "322de170b86b3d6cd2ad6533379583cf04e6296ae43dc6173b43602952e54728",
+      "bytes": 19511126,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 192,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-pause_resume-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-pause_resume-01.pt",
+      "sha256": "bc47958a829ab03501ccde6b2b13fbadf73cb26f4e2f73efe0587f95c11c8c0c",
+      "bytes": 7438129,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 61,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-result_delivery-01",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-result_delivery-01.pt",
+      "sha256": "24a9a168f927275550696ca91ccc635577e765a0479fbf6cbf5f3ea59d72008a",
+      "bytes": 19949317,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 163,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-quiet_scope-02",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-quiet_scope-02.pt",
+      "sha256": "203fcb2d60a94d3b431f43c7c3c6618eda64de3e4d15bd069eed6966803e12a5",
+      "bytes": 7153054,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 46,
+        "passed": true
+      }
+    },
+    {
+      "id": "venus-context-repair-draft-train-simple_or_delegate-02",
+      "path": "runs/venus-training-20261102/placement-v50/copyback/cache/new/venus-context-repair-draft-train-simple_or_delegate-02.pt",
+      "sha256": "7a87cb2bc47abca5c1105c90eca182ba22eebd7eed8a23b6f85a07af567cad20",
+      "bytes": 28521666,
+      "proof": {
+        "logit_error": 0.0,
+        "hidden_error": 0.0,
+        "positions": 288,
+        "passed": true
+      }
+    }
+  ],
+  "new_optimizer_updates": 0,
+  "reuse_requirement": "Only these exact14 files may inherit their pinned producer pre-serialization parity proof after source timeline/label/fold/mask/hash verification. Do not rerun completed histories. All remaining22 and old268 still required before one complete60-update epoch.",
+  "no_subset_training_approval": true
+}

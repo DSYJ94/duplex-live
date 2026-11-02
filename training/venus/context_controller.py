@@ -9,6 +9,20 @@ from .context_objective import ADMISSION,authority,sha
 from portable.venus.guard import bounded_runpod_read
 
 
+def require_complete_context_cache(manifest,approval,index):
+    """A stopped service can report exit0; require actual whole-work artifacts."""
+    rows=manifest['scenes']
+    if not approval['approved'] or not approval['complete_new36_native_replay'] or not index['complete']:
+        raise ValueError('Whole native cache approval required before any restore/train stage')
+    if len(rows)!=304 or len({r['id'] for r in rows})!=304 or len(index['rows'])!=304:
+        raise ValueError('All old268 and new36 examples required')
+    if {f:sum(r['fold']==f for r in rows) for f in ('TRAIN','DEV')}!=dict(TRAIN=240,DEV=64):
+        raise ValueError('No omitted TRAIN/DEV data')
+    new=[r for r in rows if r['file'].startswith('new/')]
+    if len(new)!=36 or any(not r['native_prefix_proof']['passed'] or r['native_prefix_proof']['logit_error']!=0 or r['native_prefix_proof']['hidden_error']!=0 for r in new):
+        raise ValueError('Every new native history requires actual exact prefix parity')
+
+
 def preserve_candidate(candidate):
     """Copy complete new training state before any subsequent evaluation."""
     backup=c.R/'critical-candidate'
@@ -43,6 +57,8 @@ def execute_pipeline(remote_out,end,lp,a,admission,unit_prefix='duplex-venus-con
             c.wait_unit(unit,end-reserve)
             c.record('context_stage_terminal0',stage=label)
         stage('cache','training.venus.context_cache --model '+c.MODEL+' --timelines '+remote_out+'/timelines --old-cache '+c.OUT+'/paced-prefix-cache-v24 --old-timelines '+c.OUT+'/paced-timelines-v22 --old-index '+remote_out+'/old-action-index.json --tokenizer-config '+c.MODEL+'/tokenizer_config.json --admission '+admission+' --output '+cache+' --source '+c.source,2800,1200)
+        artifacts=[json.loads(c.ssh('cat '+cache+'/'+name)) for name in ('manifest.json','approval.json','action-index.json')]
+        require_complete_context_cache(*artifacts)
         common=' --model '+c.MODEL+' --cache '+cache+' --lease '+lp+' --source '+c.source+' --opal-source '+c.ROOT+'/opal-upstream-v34 --context-phase-admission '+admission
         stage('parent-restore','training.venus.native_restore --kind parent --checkpoint '+parent+' --sha256 '+a['parent_checkpoint_sha256']+' --output '+remote_out+'/parent-restore'+common.replace(' --cache '+cache,' --cache '+c.OUT+'/paced-prefix-cache-v24'),2600,180)
         box=remote_out+'/opal-mailbox'
