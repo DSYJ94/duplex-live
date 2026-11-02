@@ -50,7 +50,9 @@ def guard():
 def main():
     a=json.loads(AUTH.read_text());assert a['status']=='APPROVED' and a['human_approval']=='Approve CPU recovery within existing caps'
     assert sha(a['proposal_path'])==a['proposal_sha256']
-    assert time.time()<datetime.fromisoformat('2026-11-02T21:58:31.966921+00:00').timestamp()-2100
+    cleanup_deadline=datetime.fromisoformat('2026-11-02T21:58:31.966921+00:00').timestamp()
+    duration=min(1800,int(cleanup_deadline-time.time()-300))
+    assert duration>=180,'No approved recovery window remains; preserve disk'
     price=json.loads((R/'price.json').read_text());assert price['hourly_usd']<=.12 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     # CPU<=.064;2h100GiB PD<=.028;2h regional snapshot<=.014;
     # reserve remaining .144 for transfer/rounding, inside explicit .25.
@@ -65,13 +67,13 @@ def main():
     try:
         c.run(['gcloud','compute','instances','delete',OLD,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
         assert not c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users')
-        bootstrap=R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-cpu53-stop --on-active=1700s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
+        bootstrap=R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-cpu53-stop --on-active='+str(max(30,duration-90))+'s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=1h')
-        op=c.cloud('compute','instances','create',NAME,'--zone='+ZONE,'--machine-type=e2-standard-2','--provisioning-model=STANDARD','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+DISK+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(bootstrap),'--max-run-duration=1800s','--instance-termination-action=STOP','--async')
+        op=c.cloud('compute','instances','create',NAME,'--zone='+ZONE,'--machine-type=e2-standard-2','--provisioning-model=STANDARD','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+DISK+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(bootstrap),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async')
         op=op[0] if isinstance(op,list) else op;save('create-operation.json',op);observe(op)
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         assert vm['status']=='RUNNING' and not vm.get('guestAccelerators')
-        end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+1800
+        end=min(datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration,cleanup_deadline-120)
         save('lease.json',dict(vm_id=vm['id'],stop_unix=end,controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()))
         watch=subprocess.Popen([sys.executable,'-u','-m','training.venus.cpu_recovery','--guard'],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT)
         prepare_ssh(vm,ZONE,'53',require_gpu=False)
