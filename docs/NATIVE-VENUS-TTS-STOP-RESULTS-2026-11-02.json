@@ -1,0 +1,1681 @@
+{
+  "status": "COMPLETE_DIAGNOSTIC_NOT_ADOPTED",
+  "at_utc": "2026-11-03T00:00:53.735970+00:00",
+  "producer": "e741c713acdd731a958ea43157c17060ec5f1ef3",
+  "local_archive": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-placement-v56",
+  "report_sha256": "57fe1b2cb94e29b3b60d40417fb5c1c80f8ceec49d8d21a908c3b7c1abea5dae",
+  "remote_inventory_sha256": "12131550292ccfdb8fc7d866801bb99e361dacd63afb799be157896352e5a355",
+  "terminal": {
+    "MainPID": "0",
+    "Result": "success",
+    "ExecMainStatus": "0",
+    "ActiveState": "active",
+    "SubState": "exited",
+    "InvocationID": "b39002e544c94cb6a0520dc3009d92c4"
+  },
+  "backup": {
+    "full_hash_inventory_verified": true,
+    "files": 149,
+    "bytes": 23542500,
+    "destination": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-placement-v56",
+    "source": "e741c713acdd731a958ea43157c17060ec5f1ef3",
+    "complete_report_present": true
+  },
+  "rows": [
+    {
+      "condition": "untouched-release",
+      "id": "venus-control-v1-train-ordinary-0126",
+      "generated": "We put lids on jar s to keep food fresh and prevent it from spoiling",
+      "asr": "We put lids on jars to keep food fresh and prevent it from spoiling.",
+      "wer": 0.13333333333333333,
+      "peak": 0.660736083984375,
+      "speech_frames": [
+        {
+          "sequence": 1,
+          "text": " We put lids on jar",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 24,
+              "returned_audio_tokens": 23,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                1205,
+                2182,
+                98978,
+                389,
+                29595
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "text": " s to keep food",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                274,
+                311,
+                2506,
+                3607
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": " fresh and prevent",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                7722,
+                323,
+                5358
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": " it from spoiling",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                432,
+                504,
+                19451,
+                7979
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 5,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 19200,
+          "samplers": [
+            {
+              "sampled_steps": 14,
+              "returned_audio_tokens": 13,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "untouched-release",
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "generated": "Hinges are used to allow doors to open and close.",
+      "asr": "Hinges are used to allow doors to open and close.",
+      "wer": 0.0,
+      "peak": 0.78857421875,
+      "speech_frames": [
+        {
+          "sequence": 1,
+          "text": "Hinges are used to",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 19,
+              "returned_audio_tokens": 18,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                39,
+                40399,
+                525,
+                1483,
+                311
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "text": " allow doors to open",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                2138,
+                14038,
+                311,
+                1787
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": " and close.",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                323,
+                3265,
+                13
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 27840,
+          "samplers": [
+            {
+              "sampled_steps": 23,
+              "returned_audio_tokens": 22,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "untouched-release",
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "generated": "Birds wings help them fly",
+      "asr": "Bird's wings help them fly. Ah, look.",
+      "wer": 0.6,
+      "peak": 0.654632568359375,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "Birds wings help",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 24,
+              "returned_audio_tokens": 23,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                65270,
+                82,
+                26204,
+                1492
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "them fly",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 3,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                48718,
+                11466
+              ],
+              "native_rows": 2,
+              "condition_tokens": 3
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 1,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [],
+              "native_rows": 0,
+              "condition_tokens": 1
+            }
+          ]
+        },
+        {
+          "sequence": 5,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 10560,
+          "samplers": [
+            {
+              "sampled_steps": 5,
+              "returned_audio_tokens": 4,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "untouched-release",
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "generated": "The opposite of loose is tight.",
+      "asr": "The opposite of loose is tight.",
+      "wer": 0.0,
+      "peak": 0.65252685546875,
+      "speech_frames": [
+        {
+          "sequence": 1,
+          "text": "The opposite of loose is",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 24,
+              "returned_audio_tokens": 23,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                785,
+                14002,
+                315,
+                20174,
+                374
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "text": "tight.",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 3,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                74182,
+                13
+              ],
+              "native_rows": 2,
+              "condition_tokens": 3
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 1,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [],
+              "native_rows": 0,
+              "condition_tokens": 1
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 10560,
+          "samplers": [
+            {
+              "sampled_steps": 5,
+              "returned_audio_tokens": 4,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "untouched-release",
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "generated": "One hour has sixty minutes",
+      "asr": "One hour has 60 minutes.",
+      "wer": 0.0,
+      "peak": 0.75946044921875,
+      "speech_frames": [
+        {
+          "sequence": 1,
+          "text": "One hour has",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 13,
+              "returned_audio_tokens": 12,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                3966,
+                6460,
+                702
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "text": "sixty",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 3,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                50364,
+                1881
+              ],
+              "native_rows": 2,
+              "condition_tokens": 3
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "minutes",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                37037
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 15360,
+          "samplers": [
+            {
+              "sampled_steps": 10,
+              "returned_audio_tokens": 9,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "untouched-release",
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "generated": "A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you interested in?",
+      "asr": "A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you interested",
+      "wer": 0.05,
+      "peak": 0.79345703125,
+      "speech_frames": [
+        {
+          "sequence": 1,
+          "text": "A ruler is used to",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                32,
+                47980,
+                374,
+                1483,
+                311
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "text": "measure length.",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                47799,
+                3084,
+                13
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "It usually measures",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                2132,
+                5990,
+                10953
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "in centimeters or",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                258,
+                2889,
+                54236,
+                476
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 5,
+          "text": "inches. Which unit",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                258,
+                8528,
+                13,
+                15920,
+                4982
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 6,
+          "text": "are you interested in?",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                546,
+                498,
+                8014,
+                304,
+                30
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 7,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 30720,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-control-v1-train-ordinary-0126",
+      "generated": "We put lids on jars to seal them and prevent air from entering.",
+      "asr": "We put lids on jars to seal them and prevent air from entering.",
+      "wer": 0.0,
+      "peak": 0.6983642578125,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "We put lids on jars",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                1654,
+                2182,
+                98978,
+                389,
+                60011
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "to seal them and prevent",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 6,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                983,
+                25349,
+                1105,
+                323,
+                5358
+              ],
+              "native_rows": 5,
+              "condition_tokens": 6
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "air from",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 3,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                1310,
+                504
+              ],
+              "native_rows": 2,
+              "condition_tokens": 3
+            }
+          ]
+        },
+        {
+          "sequence": 5,
+          "text": "entering.",
+          "end_of_turn": true,
+          "audio_samples": 30720,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                1950,
+                287,
+                13,
+                151717
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-control-v1-dev-ordinary-0183",
+      "generated": "Hinges allow a door to swing open and closed.",
+      "asr": "Haringers allow a door to swing open and close.",
+      "wer": 0.2222222222222222,
+      "peak": 0.676483154296875,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "Hinges allow a",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 24,
+              "returned_audio_tokens": 23,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                39,
+                40399,
+                2138,
+                264
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "door to swing open",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                10787,
+                311,
+                18806,
+                1787
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "and closed.",
+          "end_of_turn": true,
+          "audio_samples": 30720,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                437,
+                7877,
+                13,
+                151717
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "generated": "Birds use their wings to fly",
+      "asr": "Birds use their wings to fly",
+      "wer": 0.0,
+      "peak": 0.583404541015625,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "Birds use their",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                65270,
+                82,
+                990,
+                862
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": " wings to fly",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                26204,
+                311,
+                11466
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 15360,
+          "samplers": [
+            {
+              "sampled_steps": 10,
+              "returned_audio_tokens": 9,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "generated": "Tight.",
+      "asr": "Tight",
+      "wer": 0.0,
+      "peak": 0.989959716796875,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "Tight.",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 11,
+              "returned_audio_tokens": 10,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 4,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                51,
+                491,
+                13
+              ],
+              "native_rows": 3,
+              "condition_tokens": 4
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 25920,
+          "samplers": [
+            {
+              "sampled_steps": 21,
+              "returned_audio_tokens": 20,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "generated": "There are sixty minutes in an hour.",
+      "asr": "There are six",
+      "wer": 0.7142857142857143,
+      "peak": 0.624053955078125,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "There are sixty minutes in an hour.",
+          "end_of_turn": true,
+          "audio_samples": 30720,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 10,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                3862,
+                525,
+                52374,
+                4420,
+                304,
+                458,
+                6460,
+                13,
+                151717
+              ],
+              "native_rows": 9,
+              "condition_tokens": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "generated": "It is used to measure length",
+      "asr": "It is used to measure length.",
+      "wer": 0.0,
+      "peak": 0.6251220703125,
+      "speech_frames": [
+        {
+          "sequence": 2,
+          "text": "It is used to",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 9,
+              "returned_audio_tokens": 8,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 5,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                2132,
+                374,
+                1483,
+                311
+              ],
+              "native_rows": 4,
+              "condition_tokens": 5
+            }
+          ]
+        },
+        {
+          "sequence": 3,
+          "text": "measure length",
+          "end_of_turn": false,
+          "audio_samples": 24000,
+          "samplers": [
+            {
+              "sampled_steps": 26,
+              "returned_audio_tokens": 25,
+              "maximum": 26,
+              "minimum": 26,
+              "force_no_stop": false,
+              "condition_tokens": 3,
+              "sampled_last_token_is_eos": false,
+              "discarded_non_eos_last_sample": true,
+              "termination": "budget",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                47799,
+                3084
+              ],
+              "native_rows": 2,
+              "condition_tokens": 3
+            }
+          ]
+        },
+        {
+          "sequence": 4,
+          "text": "",
+          "end_of_turn": true,
+          "audio_samples": 26880,
+          "samplers": [
+            {
+              "sampled_steps": 22,
+              "returned_audio_tokens": 21,
+              "maximum": 26,
+              "minimum": 0,
+              "force_no_stop": false,
+              "condition_tokens": 2,
+              "sampled_last_token_is_eos": true,
+              "discarded_non_eos_last_sample": false,
+              "termination": "eos",
+              "observer_only": true,
+              "native_speech_qualified": false
+            }
+          ],
+          "conditioning": [
+            {
+              "native_token_ids": [
+                151717
+              ],
+              "native_rows": 1,
+              "condition_tokens": 2
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "terminal_budget_exhaustions": [
+    {
+      "condition": "untouched-release",
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "sequence": 7,
+      "text": "",
+      "end_of_turn": true,
+      "audio_samples": 30720,
+      "samplers": [
+        {
+          "sampled_steps": 26,
+          "returned_audio_tokens": 25,
+          "maximum": 26,
+          "minimum": 0,
+          "force_no_stop": false,
+          "condition_tokens": 2,
+          "sampled_last_token_is_eos": false,
+          "discarded_non_eos_last_sample": true,
+          "termination": "budget",
+          "observer_only": true,
+          "native_speech_qualified": false
+        }
+      ],
+      "conditioning": [
+        {
+          "native_token_ids": [
+            151717
+          ],
+          "native_rows": 1,
+          "condition_tokens": 2
+        }
+      ]
+    },
+    {
+      "condition": "candidate466",
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "sequence": 2,
+      "text": "There are sixty minutes in an hour.",
+      "end_of_turn": true,
+      "audio_samples": 30720,
+      "samplers": [
+        {
+          "sampled_steps": 26,
+          "returned_audio_tokens": 25,
+          "maximum": 26,
+          "minimum": 0,
+          "force_no_stop": false,
+          "condition_tokens": 10,
+          "sampled_last_token_is_eos": false,
+          "discarded_non_eos_last_sample": true,
+          "termination": "budget",
+          "observer_only": true,
+          "native_speech_qualified": false
+        }
+      ],
+      "conditioning": [
+        {
+          "native_token_ids": [
+            3862,
+            525,
+            52374,
+            4420,
+            304,
+            458,
+            6460,
+            13,
+            151717
+          ],
+          "native_rows": 9,
+          "condition_tokens": 10
+        }
+      ]
+    }
+  ],
+  "strict_word_threshold_unchanged": 0.05,
+  "word_and_peak_passes": {
+    "untouched-release": 4,
+    "candidate466": 4
+  },
+  "cohort_limits": "Six already inspected ordinary scenes; neither fresh generalization nor full behavior qualification.",
+  "findings": [
+    "Candidate466 ordinary0094 emits nine native conditioning rows plus audio BOS in one terminal frame. TTS samples26, returns25, last sample is NOT EOS; waveform30720/24000=1.28s; ASR There are six versus correct full generated sentence. Seven later listen-only frames prove no residual completion in this run.",
+    "Untouched release spreads the same question response across three text frames and an EOS-terminated final flush; ASR recognizes One hour has60minutes. Distinct wording/cadence prevents attributing every difference solely to one weight or label.",
+    "Original release also exhausts its terminal budget on ordinary0095; the issue is not exclusive to adapters. Both conditions pass4/6 at unchanged WER<=.05 and peak<=.995; do not accept a passing subset or report model improvement.",
+    "Pinned upstream sets max_token_per_chunk26 even at end_of_turn, resets TTS KV/text state unconditionally on linguistic end_of_turn, then flushes/resets token2wav. It does not require actual acoustic EOS before reset. Normal nonfinal budget-limited chunks are not themselves proof of truncation.",
+    "This establishes a concrete runtime budget/state-clear mechanism in the reproduced failure, not whether training data, learning rate or adapter width caused the candidate cadence change. No human listening judgment or repaired-native counterfactual has been obtained.",
+    "Old Oct29 budget experiment remains rejected. It used earlier candidate and observed identical audio; do not treat current result as a retroactive pass or blindly enable that wrapper."
+  ],
+  "new36_readonly_data_check": {
+    "scenes": 36,
+    "speech_units": 459,
+    "maximum_whitespace_words_per_unit": {
+      "DEV": 6,
+      "TRAIN": 5
+    },
+    "scope": "Only36 new preserved timelines, not all304/tokenized caches; counts are descriptions, not acceptance thresholds; no labels/audio/approvals changed."
+  },
+  "training_recipe_context": {
+    "parent": 406,
+    "candidate": 466,
+    "updates": 60,
+    "last_layers": 1,
+    "tts_frozen": true,
+    "acoustic_loss_trained": false
+  },
+  "next_sequence": [
+    "Prepare one versioned terminal-completion repair that explicitly separates linguistic end-of-turn from verified acoustic completion; preserve state until completion and keep input/cancellation responsive. A larger blocking output buffer alone is not a live-product solution.",
+    "Reproduce this exact measured budget-hit path in a correct-seam regression; verify normal EOS/ongoing chunks/state/RNG and cancellation boundaries. Require paired native speech evidence before deployment, with untouched baseline and all cases retained.",
+    "Before another training run, compare actual tokenized1s TRAIN cadence targets against native generated bursts; preserve old labels and create new derived targets only for diagnosed defects. Recipe/width changes need their own controlled comparison. No claim that more ElevenLabs audio or more parameters fixes the runtime reset.",
+    "Return to full silence/delegation/cancel/pause/pending/speech qualification, then choose a nonredundant training continuation. Current scope authorized only this completed12case diagnostic, zero updates, one now-consumed interval."
+  ],
+  "compute": {
+    "actual_seconds": 339.460000038147,
+    "carried_new_upper_seconds": 33500,
+    "original_upper_seconds": 54451,
+    "cumulative_upper_seconds": 87951,
+    "phase_conservative_upper_usd": 72.47222222222223,
+    "project_conservative_upper_usd": 164.45670277777776,
+    "temporary_vm_and_disk_removed": true,
+    "active_snapshot_removed": true,
+    "original_disk_preserved": true,
+    "purchases": 0,
+    "external_model_API_calls": 0,
+    "new_optimizer_updates": 0
+  },
+  "adopted": false,
+  "qualified": false
+}
