@@ -157,7 +157,7 @@ def require_authorization():
     lease_path=os.environ.get('DUPLEX_LIVE_LEASE_FILE')
     if not lease_path:raise ValueError('Explicit speech-completion native execution lease required')
     lease=json.loads(Path(lease_path).read_text())
-    if lease.get('resource_key')!='venus-tts-completion-v57':
+    if lease.get('resource_key') not in ('venus-tts-completion-v57','venus-tts-completion-v58'):
         raise ValueError('Speech completion requires its own approved changed-runtime interval')
     from .guard import resource
     resource(lease)

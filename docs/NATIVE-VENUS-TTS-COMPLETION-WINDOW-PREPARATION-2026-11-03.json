@@ -1,0 +1,68 @@
+{
+  "status": "PREPARED_NOT_AUTHORIZED_NOT_ALLOCATED",
+  "at_utc": "2026-11-03T14:18:40.331618+00:00",
+  "base": "039c4e1",
+  "proposal": "docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json",
+  "source_sha256": {
+    "training/venus/tts_completion_window_guard.py": "78830ee9ec2d2125fd2e262ce831e5d13d5062e362a0283639fdadb138a005fd",
+    "training/venus/tts_stop_controller.py": "022e4566937a91f751983ea51ae5bada30db2c0d262303919adf9052bb01c349",
+    "training/venus/tts_placement.py": "42899a9247559576fc3fdae74ab3a9eb8d5ad0da2435a50e4955aa1e4ff4dd4b",
+    "portable/venus/speech_completion.py": "ae97a953ab77d0f1d390f235ac86f7fa26bc793a14e2a0c17814d011423dd64a",
+    "portable/venus/guard.py": "0eaa22250df3e5ebbe91f282d6496311524e20c0dd0becc9e1d5d3d575dd311e",
+    "training/venus/paced_guard.py": "7c72499380248e74c494311e708ea94509b01bf0a4a3f915c9c1609a242183f1"
+  },
+  "auth": {
+    "session": 43372,
+    "pid": 99531,
+    "actual_exit": 0,
+    "secret_log_ignored": true,
+    "owner_completed_official_Google_signin": true,
+    "new_compute_approval": false
+  },
+  "provider": "Fresh authenticatedread confirms same5VMs allTERMINATED; no newauthority/claim/resources/model/optimizer/APIpayloads.",
+  "snapshot": {
+    "recoverable_id": "4803449812932664775",
+    "original_snapshot_id": "4724490043241393447",
+    "source_disk_id": "4375908109499109167",
+    "bytes": 44302022464,
+    "purge_timestamp": "2026-11-05T15:56:24.455-08:00",
+    "effective_system_retention_days": 3,
+    "mutations": 0
+  },
+  "price": {
+    "at_utc": "2026-11-03T14:14:35.269524+00:00",
+    "source": "Official Cloud Billing Catalog v1 exact four existing Americas SKUs",
+    "rates": {
+      "039F-D0DA-4055": {
+        "sku": "039F-D0DA-4055",
+        "description": "Nvidia Tesla A100 GPU running in Americas",
+        "usage_unit": "h",
+        "price": 2.9339079999999997
+      },
+      "2390-DCAF-DA38": {
+        "sku": "2390-DCAF-DA38",
+        "description": "A2 Instance Ram running in Americas",
+        "usage_unit": "GiBy.h",
+        "price": 0.004237
+      },
+      "2922-40C5-B19F": {
+        "sku": "2922-40C5-B19F",
+        "description": "A2 Instance Core running in Americas",
+        "usage_unit": "h",
+        "price": 0.031611
+      },
+      "6AE1-525F-8B80": {
+        "sku": "6AE1-525F-8B80",
+        "description": "Balanced PD Capacity",
+        "usage_unit": "GiBy.mo",
+        "price": 0.1
+      }
+    },
+    "hourly_estimate_usd": 3.687083630136986
+  },
+  "verification": "33relatedtestsPASS2.25s; newrelative7200swindow tiesplan/lease/approvaltime/VMcreation, full24/zero-update/1200STOP/carried33500+54451/overlap tests. Missingauthorityrealcontrollerrejectsbeforeprovider. Oldv57expiredwindowrejectsBEFOREsnapshotwrite. Native speechmath unchanged frompreparedrepair; no nativeGPU/audio/behavior qualification.",
+  "scope": "Same75phase175project/one20minuteinterval/onezoneF100GBclone/reusesnapshot/full24/zero updates/no APIcalls/no purchase. Fresh2hwindow isproposed, NOTinferredfromsignin. Prioractualv56clone13.7143GiBh/snapshot14.2127GiBh bounded20each; totalwithnew2h<=220eachwithin400aggregate. Same2USDmigrationreserve/72hretention/160GiBcopies.",
+  "next": "Commit/pushsource+h accurateandoff, thenONEreplacementdecisionforv58, explicitlysupersedingexpiredunansweredv57. Recordnewauthorityonlyafterdirectapproval; inspectactualprocesses/counters/providersbeforeonesubmission. Keepcomputeoffpendingdecision.",
+  "qualified": false,
+  "adopted": false
+}

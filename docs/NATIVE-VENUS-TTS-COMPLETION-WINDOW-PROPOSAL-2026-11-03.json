@@ -1,0 +1,104 @@
+{
+  "status": "PROPOSED_REQUIRES_REFRESHED_INTERVAL_AND_STORAGE_WINDOW",
+  "purpose": "Validate a concrete resumable terminal acoustic repair against the measured466budget/state-reset failure, preserving native input/listen/speak decisions. Not another unchanged128token blocking experiment.",
+  "prior_diagnostic_authority_sha256": "bbdcccc78f93668119948c1d167a87368ebd4a51feb68ab21bc39b6d737e38cc",
+  "diagnosed_results_path": "docs/NATIVE-VENUS-TTS-STOP-RESULTS-2026-11-02.json",
+  "diagnosed_results_sha256": "dc930fc23cb905685cbf2c3fd3d82127846fd1c154a747b69f0bbdd219f73eca",
+  "code": [
+    "portable/venus/speech_completion.py",
+    "portable/venus/native_app.py",
+    "portable/venus/app.html",
+    "training/venus/tts_stop_probe.py",
+    "training/venus/tts_stop_controller.py",
+    "training/venus/tts_completion_window_guard.py"
+  ],
+  "changes": {
+    "terminal_audio": "Exact pinned sampling math resumed in25token pieces between actual native input frames; hard200token terminal ceiling, explicit failure without EOS, no silent acceptance.",
+    "state": "Reset TTS KV/vocoder only after acousticEOS, native stop/break, new native speaking turn or conversation reset. Preserve linguisticend_of_turn and totalLLMtoken history.",
+    "sampling": "Original temperature/repetition/sampling math and all LLM decoding parameters retained. Extended terminal limit and interleaved RNG execution order are explicit runtime changes; no unchanged-native-RNG claim across intervening realLLM draws.",
+    "browser": "Play only explicit pending-acoustic pieces while linguisticlisten remains true; native newturn cancels queued stale audio. Legacy silentlisten unchanged.",
+    "composition_limit": "Speech-completion plus nonspoken-action-channel combination explicitly unavailable pending separate native integration proof. This validation cannot qualify complete delegation/product."
+  },
+  "evaluation": {
+    "complete_cases": 24,
+    "weight_conditions": [
+      "untouched-release",
+      "candidate466"
+    ],
+    "runtime_conditions": [
+      "original26",
+      "native-terminal-resume-v1"
+    ],
+    "unique_existing_synthetic_inputs": 6,
+    "selection_sha256": "52d1a5510db2fe3b7e627ab49c950ee39aa830374ee39c62da44f4f96102a976",
+    "paired_processes": "One fresh complete12original-runtime process then one fresh complete12repair process on SAME interval; seeds42/voice40159a.../budget26nonterminal/inputs unchanged. No reuse of stale original results as this paired counterfactual.",
+    "api_calls": 0,
+    "optimizer_updates": 0,
+    "originals_and_failures_retained": true,
+    "acceptance": "Actual0terminal/full24report+trace/WAV/ASR+fullhashcopyback. Any pendingfinaltail, noEOS capfailure, dropped/duplicate audio, nonfinite/clipping or WERfailure remainsfailed; all repaired12 must meet unchangedWER<=.05 andpeak<=.995 before speech adoption. No passing subset or threshold normalization change. Full64behavior and unprofiled native live-clock/realWebSocket proof still required; not product/candidate adoption."
+  },
+  "compute": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-f",
+    "machine": "a2-highgpu-1g",
+    "max_running_gpus": 1,
+    "max_new_running_intervals": 1,
+    "max_prestart_attempts": 1,
+    "native_stop_seconds": 1200,
+    "rounding_reserve_seconds": 100,
+    "new_VM_name": "duplex-venus-tts-20261102-f-v58",
+    "new_disk_name": "duplex-venus-tts-data-20261102-f-v58",
+    "disk_gib": 100,
+    "source_original_disk_id": "4375908109499109167",
+    "reuse_owned_regional_snapshot_id": "4724490043241393447",
+    "no_purchase": true,
+    "no_new_API_IAM_firewall_service_account_region_quota": true
+  },
+  "storage": {
+    "same_aggregate_clone_GiBh_max": 400,
+    "same_aggregate_snapshot_GiBh_max": 400,
+    "same_combined_recoverable_bytes_max": 171798691840,
+    "retention_hours_max": 72,
+    "total_migration_reserve_usd": 2,
+    "original_VM_and_disk_preserved": true,
+    "unique_unverified_results_preserved_on_transfer_failure": true,
+    "source": "Gitonly",
+    "artifacts": "Only same verified466checkpoint+recipe<=200MB, existingapprovedsynthetics/caches/weights onclone. Scopedrsync32MiBbatches/noowner/nogroup/excludesession-token/private/credentials/owner/cores, fullinventorybeforecopyback outsideOneDrive, thenstopandremovev58resources.",
+    "temporary_window_seconds": 7200,
+    "window_start": "New immutable local claim BEFORE snapshot recovery/clone; deadline exactlystart+7200s, never renewed by process restart or callback. Start after recorded human approval. No absolute deadline copied fromexpiredv57.",
+    "prior_v56_clone_GiBh_upper": 20,
+    "prior_v56_active_snapshot_GiBh_upper": 20,
+    "combined_v56_plus_v58_clone_GiBh_upper": 220,
+    "combined_v56_plus_v58_active_snapshot_GiBh_upper": 220,
+    "prior_storage_proof": {
+      "measured_clone_GiBh": 13.71432861354616,
+      "measured_active_snapshot_GiBh": 14.21273719602161,
+      "events_path": "runs/venus-training-20261102/tts-placement-v56/events.json",
+      "events_sha256": "f46ef12bd409ee2f8c7731d0018bad938221396d3fde69e266a1c8363d8d6734",
+      "disk_receipt_path": "runs/venus-training-20261102/tts-placement-v56/disk-us-central1-f.json",
+      "disk_receipt_sha256": "0d16c1c88e9e63f1326267028207ae93059e516d6218d469ae9d966c1772a659"
+    }
+  },
+  "budget": {
+    "phase_cap_usd": 75,
+    "project_cap_usd": 175,
+    "prior_focused_seconds_upper": 33500,
+    "original_seconds_upper": 54451,
+    "extra_seconds_upper": 1300,
+    "maximum_focused_seconds_upper": 34800,
+    "maximum_cumulative_seconds_upper": 89251,
+    "hourly_ceiling_usd": 4,
+    "noncompute_reserve_usd": 33,
+    "cpu_recovery_reserve_usd": 0.25,
+    "migration_reserve_usd": 2,
+    "phase_upper_usd": 73.91666666666666,
+    "project_upper_usd": 165.90114722222222
+  },
+  "reason": "The earlier20minute proposal was never approved or launched and its absolute storage windowexpired. This replacement asks for the SAMEone20minute GPU comparison plus a fresh boundedtwohourtemporary-storagewindow, within unchanged75/175caps/400GiBhaggregates/72hretention/160GiBcopies. It supersedes the old pending proposal; no two grants or runs may be combined. Sign-in renewal authorizes access only, not compute.",
+  "supersedes_expired_proposal": {
+    "path": "docs/NATIVE-VENUS-TTS-COMPLETION-PROPOSAL-2026-11-03.json",
+    "sha256": "1f29de4f9eafc43613f1daf2afe9072a62ac17f02fcd879fc4371846d8866ee2",
+    "producer": "7dc05cc495321ed4fe4e492e2e435784c09a4719",
+    "reason": "Its absolute storage deadline elapsed at03:47UTCNov3; no authority/claim/model execution occurred under that proposal."
+  }
+}

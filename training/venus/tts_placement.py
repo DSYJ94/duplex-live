@@ -84,7 +84,7 @@ def stockout_before_start(op,vm):
 
 
 def retire(vm,disk,zone,snap,version='56'):
-    assert version in ('56','57')
+    assert version in ('56','57','58')
     if vm:
         actual=c.cloud('compute','instances','describe',vm['name'],'--zone='+zone)
         assert actual['id']==vm['id'] and actual['status']=='TERMINATED' and actual['name']=='duplex-venus-tts-20261102-'+zone[-1]+'-v'+version
@@ -104,9 +104,19 @@ def retire_snapshot(snap):
 
 
 def allocate(version='56'):
-    assert version in ('56','57')
+    assert version in ('56','57','58')
     duration=1800 if version=='56' else 1200
-    deadline=time.time()+4*3600 if version=='56' else json.loads((c.R.parent/'tts-placement-v56/storage-deadline.json').read_text())['storage_deadline_unix']
+    if version=='58':
+        from .tts_completion_window_guard import AUTH,sha
+        a=json.loads(AUTH.read_text());assert a['status']=='APPROVED' and sha(a['proposal_path'])==a['proposal_sha256']
+        p=json.loads(Path(a['proposal_path']).read_text());assert p['storage']['temporary_window_seconds']==7200
+        proof=p['storage']['prior_storage_proof']
+        assert sha(proof['events_path'])==proof['events_sha256'] and sha(proof['disk_receipt_path'])==proof['disk_receipt_sha256']
+        assert p['storage']['prior_v56_clone_GiBh_upper']+100*7200/3600<=400
+        assert p['storage']['prior_v56_active_snapshot_GiBh_upper']+100*7200/3600<=400
+        deadline=time.time()+7200
+    else:deadline=time.time()+4*3600 if version=='56' else json.loads((c.R.parent/'tts-placement-v56/storage-deadline.json').read_text())['storage_deadline_unix']
+    assert time.time()+2400<deadline,'Expired or insufficient storage window; no snapshot/clone mutation'
     save('storage-deadline.json',dict(storage_deadline_unix=deadline))
     snap=snapshot()
     # The whole loop owns one disk/envelope at a time; never retry a real interval.
@@ -126,7 +136,7 @@ def allocate(version='56'):
         matches=[v for v in c.cloud('compute','instances','list') if v['name']==name];vm=matches[0] if matches else None
         if op.get('error'):
             if not stockout_before_start(op,vm):raise RuntimeError('No further attempts authorized: '+json.dumps(op.get('error')))
-            retire(vm,disk,zone,snap);continue
+            retire(vm,disk,zone,snap,version);continue
         assert vm and vm['status']=='RUNNING' and vm.get('lastStartTimestamp')
         save('allocation.json',dict(vm=vm,disk=disk,zone=zone,snapshot=snap,storage_deadline_unix=deadline))
         return vm,disk,zone,snap,deadline
