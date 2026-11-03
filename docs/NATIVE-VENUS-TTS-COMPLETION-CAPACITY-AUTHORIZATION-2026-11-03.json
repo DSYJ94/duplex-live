@@ -1,0 +1,14 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve C/B fallback within existing caps",
+  "human_approval_verbatim": "Approve C/B fallback within existing caps",
+  "recorded_utc": "2026-11-03T23:53:59.376170+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-COMPLETION-CAPACITY-PROPOSAL-2026-11-03.json",
+  "proposal_commit": "3428ec3c2dd59d99a0321da9c9bd98fa7119ffce",
+  "proposal_sha256": "b04113319a8d3eab03da71162951787c8a519896d3b383c897fcd83bfea76259",
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175,
+  "maximum_gpu_seconds": 1200,
+  "maximum_new_running_intervals": 1,
+  "new_optimizer_updates": 0
+}

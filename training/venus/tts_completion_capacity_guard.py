@@ -24,7 +24,11 @@ def resource(lease):
     previous=Path(amendment['previous_proposal'])
     assert sha(previous)==amendment['previous_proposal_sha256']
     failed=amendment['actual_failed_attempt']
-    assert sha(failed['events_path'])==failed['events_sha256']
+    # The guest receives Git source, not ignored Mac orchestration files.
+    # Preserve the exact original bytes and bind them to the approved digest.
+    proof=json.loads(Path('docs/NATIVE-VENUS-TTS-COMPLETION-PRIOR-ATTEMPT-2026-11-03.json').read_text())
+    assert proof['source_path']==failed['events_path']
+    assert proof['sha256']==failed['events_sha256']==hashlib.sha256(proof['events_json'].encode()).hexdigest()
     assert failed['gpu_intervals']==failed['model_runs']==failed['optimizer_updates']==0
     assert amendment['compute']['ordered_zones']==['us-central1-c','us-central1-b']
     assert amendment['compute']['maximum_running_intervals']==1

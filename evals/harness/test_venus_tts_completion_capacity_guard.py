@@ -27,6 +27,12 @@ def test_exact_scope_lease_and_both_approved_placements(tmp_path,monkeypatch,zon
     plan=dict(resource_key=g.KEY,authorization_sha256=g.sha(auth),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=24,maximum_gpu_seconds=1200,maximum_new_running_intervals=1,vm_id='111',disk_id='222',snapshot_id='333',snapshot_source_disk_id='4375908109499109167',vm_name=vm['name'],disk_name='duplex-venus-tts-data-20261102-'+zone[-1]+'-v59',storage_started_unix=storage,storage_deadline_unix=storage+7200)
     p=tmp_path/'execution.json';p.write_text(json.dumps(plan));monkeypatch.setattr(g,'PLAN',p)
     lease=dict(resource_key=g.KEY,authorization_sha256=g.sha(auth),execution_plan_sha256=g.sha(p),vm_id='111',disk_id='222',snapshot_id='333',disk_size_gib=100,zone=zone,creation_timestamp=vm['creationTimestamp'],stop_unix=start+1200,prior_new_gpu_seconds_upper=33500,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=3.687,storage_started_unix=storage,storage_deadline_unix=storage+7200)
+    original_sha=g.sha
+    def git_deployed_sha(path):
+        if str(path)=='runs/venus-training-20261102/tts-completion-v58/events.json':
+            pytest.fail('Guest cannot depend on an ignored Mac-only receipt')
+        return original_sha(path)
+    monkeypatch.setattr(g,'sha',git_deployed_sha)
     assert execution_plan(lease)==p and guard.validate(vm,[vm],[],lease,start+1)==start+1200
     for change in (dict(zone='us-central1-f'),dict(stop_unix=start+1800),dict(prior_new_gpu_seconds_upper=0),dict(storage_deadline_unix=storage+7300),dict(disk_id='4375908109499109167')):
         with pytest.raises(AssertionError):g.validate(vm,[vm],[],dict(lease,**change),start+1)
