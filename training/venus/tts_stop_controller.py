@@ -33,7 +33,26 @@ def copyback(remote_out,source):
     return result
 
 
-def main(placement=False,completion=False,completion_window=False):
+def resume_import_failure(root):
+    """Resume only the observed terminal missing-import failure before storage.
+
+    This never permits a capacity/model retry or an observation-timeout retry.
+    Keep the original claim and terminal receipt and admit one explicit resume.
+    """
+    rows=json.loads((root/'events.json').read_text())
+    assert len(rows)==1 and rows[0]['event']=='tts_stop_failed'
+    assert rows[0]['error_type']=='NameError' and rows[0]['error']=="name 'Path' is not defined"
+    assert {p.name for p in root.iterdir()}=={'claim.json','events.json','bootstrap.sh','source.bundle'}
+    claim=json.loads((root/'claim.json').read_text())
+    process=subprocess.run(['/bin/ps','-p',str(claim['pid']),'-o','pid='],capture_output=True,text=True)
+    assert process.returncode==1 and not process.stdout.strip(),'Original controller must be actually gone'
+    with (root/'import-failure-resume.json').open('x') as f:
+        json.dump(dict(original_claim=claim,original_events_sha256=sha(root/'events.json'),original_bundle_sha256=sha(root/'source.bundle'),reason='Terminal pre-storage NameError; zero storage/capacity/model attempts',resumed_by_pid=os.getpid()),f)
+    (root/'source.bundle').rename(root/'failed-import-source.bundle')
+    c.events[:]=rows
+
+
+def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
     if completion_window:
         completion=True;placement=True
@@ -55,7 +74,11 @@ def main(placement=False,completion=False,completion_window=False):
         prior_a=json.loads(prior_authority.read_text());assert sha(prior_a['proposal_path'])==prior_a['proposal_sha256']
         proposal=json.loads(Path(prior_a['proposal_path']).read_text())
     c.R=R;R.mkdir(parents=True,exist_ok=True);c.NAME=NAME
-    if (R/'claim.json').exists():raise ValueError('Observe existing controller; never repeat allocation')
+    resume=bool((R/'claim.json').exists())
+    if resume:
+        if not(completion_window and resume_preallocation_import):raise ValueError('Observe existing controller; never repeat allocation')
+        resume_import_failure(R)
+    else:assert not resume_preallocation_import,'No terminal failed claim to resume'
     source=c.run(['git','rev-parse','HEAD']).strip();c.source=source;c.remote=c.ROOT+'/duplex-tts-stop'+version+'-'+source[:12]
     assert not c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus',str(AUTH),proposal['source_selection_path']]).strip(),'Committed source required'
     price=json.loads(Path('runs/venus-training-20261101/current-a100-price.json').read_text());assert price['rates']['6AE1-525F-8B80']['price']<=.1 and 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
@@ -66,7 +89,7 @@ def main(placement=False,completion=False,completion_window=False):
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(v['status'] in ('EXITED','STOPPED','TERMINATED') for v in pods)
     candidate=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52/candidate');assert sha(candidate/'step-0060.pt')==proposal['candidate_checkpoint_sha256']
     assert sum((candidate/n).stat().st_size for n in ('step-0060.pt','recipe.json'))<=200*1024**2
-    with (R/'claim.json').open('x') as f:json.dump(dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=prior),f)
+    with (R/('resumed-controller-claim.json' if resume else 'claim.json')).open('x') as f:json.dump(dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=prior),f)
     c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);guard=None;attempted=False;backed=False;snap=None;allocated=None;remote_out=c.OUT+'/tts-'+('completion' if completion else 'placement' if placement else 'stop')+'-v'+version
     try:
@@ -153,4 +176,4 @@ def main(placement=False,completion=False,completion_window=False):
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv)

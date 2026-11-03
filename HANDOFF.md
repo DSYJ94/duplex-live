@@ -1,3 +1,9 @@
+# LOCAL — v58 terminal pre-storage import failure repaired; same grant resume prepared
+
+2026-11-03T23:40:06.598617+00:00. Approved controller tool96646/PID17802 ACTUAL EXIT1 before any snapshot/storage/capacity/model operation: tts_placement.allocate58 referenced Path without importing it. Events contain only NameError; no storage-deadline/lease/provider/execution receipts, zero GPU time/updates. Added missing import with realallocator regression RED then GREEN; 9 affected guard/placement testsPASS0.12s. Explicit --resume-preallocation-import only admits this exact terminal failure with original PID actually gone and exact pre-storage files; keeps original claim/events/bundle, one x-created resume receipt, refuses storage/model/timeout/capacity retries. Prior scope unchanged/no extra grant. Next Gitdeployfixedsource, ONEsameapprovedcomparisonresume; no general resubmission. Original68b068b failure preserved.
+
+---
+
 # LOCAL — user directs proceed; v58 bounded comparison approved, preflight underway
 
 2026-11-03T23:38:19.135043+00:00. Direct user "Proceed - what's next?" refers to the sole pending concrete v58 comparison; actual wording preserved alongside normalized scope in docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-AUTHORIZATION-2026-11-03.json. Approval is ONE 1200s A10040 interval/one100GB temporary clone/fresh7200s storage window/full24paired/zero optimizer updates/API payload calls/no purchase, unchanged75phase175project. No broader training/placement authorization inferred; old expiredv57 remains superseded. Preflight current provider/price underway, NO v58 claim/allocation yet. Scope source commitpush before controller; never duplicate after timeout. Candidate466 still rejected; full behavior/live latency/British voice remain unfinished. All originals/oldstates/receipts preserved; unrelated local edits unchanged.

@@ -48,3 +48,34 @@ def test_expired_v57_window_cannot_recover_snapshot_before_failure(tmp_path,monk
     monkeypatch.setattr(p,'snapshot',lambda:pytest.fail('Expired window must fail BEFORE provider mutation'))
     with pytest.raises(AssertionError,match='Expired'):p.allocate('57')
     assert not (root/'storage-deadline.json').exists()
+
+
+def test_real_v58_allocator_reaches_snapshot_after_storage_proof(tmp_path,monkeypatch):
+    from training.venus import tts_placement as p
+    proposal=Path('docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json')
+    auth=tmp_path/'fixture-only.json'
+    auth.write_text(json.dumps(dict(status='APPROVED',proposal_path=str(proposal),proposal_sha256=g.sha(proposal))))
+    monkeypatch.setattr(g,'AUTH',auth)
+    monkeypatch.setattr(p.c,'R',tmp_path)
+    class ReachedSnapshot(Exception):pass
+    def snapshot():raise ReachedSnapshot
+    monkeypatch.setattr(p,'snapshot',snapshot)
+    with pytest.raises(ReachedSnapshot):p.allocate('58')
+    assert json.loads((tmp_path/'storage-deadline.json').read_text())['storage_deadline_unix']>0
+
+
+def test_resume_only_exact_terminal_import_failure_without_storage(tmp_path,monkeypatch):
+    from training.venus import tts_stop_controller as ctl
+    from types import SimpleNamespace
+    for n,v in [('claim.json',dict(pid=123,source='failed')),('events.json',[dict(event='tts_stop_failed',error_type='NameError',error="name 'Path' is not defined")])]:
+        (tmp_path/n).write_text(json.dumps(v))
+    (tmp_path/'source.bundle').write_bytes(b'preserve failed source')
+    (tmp_path/'bootstrap.sh').write_text('unused')
+    monkeypatch.setattr(ctl.subprocess,'run',lambda *a,**kw:SimpleNamespace(returncode=1,stdout=''))
+    monkeypatch.setattr(ctl.c,'events',[])
+    (tmp_path/'storage-deadline.json').write_text('{}')
+    with pytest.raises(AssertionError):ctl.resume_import_failure(tmp_path)
+    (tmp_path/'storage-deadline.json').unlink()
+    ctl.resume_import_failure(tmp_path)
+    assert (tmp_path/'claim.json').exists() and (tmp_path/'failed-import-source.bundle').read_bytes()==b'preserve failed source'
+    with pytest.raises(AssertionError):ctl.resume_import_failure(tmp_path)
