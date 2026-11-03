@@ -1,0 +1,17 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve refreshed 20-minute comparison within existing caps",
+  "human_approval_verbatim": "Proceed - what's next?",
+  "approval_interpretation": "Direct instruction to proceed with the single pending concrete v58 comparison; normalized human_approval names its unchanged scope. No broader authorization inferred.",
+  "recorded_utc": "2026-11-03T23:38:19.135043+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json",
+  "proposal_commit": "763ac77d70f806de1d3617544796237f8bf7d95c",
+  "proposal_sha256": "b8548c281e9b489893caf1e2c15cf4c34e0b5ff7982317b34bd5b01730bf29dc",
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175,
+  "maximum_gpu_seconds": 1200,
+  "maximum_new_running_intervals": 1,
+  "maximum_temporary_disk_gib": 100,
+  "maximum_storage_window_seconds": 7200,
+  "new_optimizer_updates": 0
+}
