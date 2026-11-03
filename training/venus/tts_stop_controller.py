@@ -52,9 +52,13 @@ def resume_import_failure(root):
     c.events[:]=rows
 
 
-def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False):
+def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
-    if completion_window:
+    if completion_capacity:
+        completion=True;placement=True
+        from . import tts_completion_capacity_guard as g
+        AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
+    elif completion_window:
         completion=True;placement=True
         from . import tts_completion_window_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
@@ -65,10 +69,13 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     elif placement:
         from . import tts_placement_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
-    version='58' if completion_window else '57' if completion else '56' if placement else '55'
+    version='59' if completion_capacity else '58' if completion_window else '57' if completion else '56' if placement else '55'
     duration=1200 if completion else 1800;prior=33500 if completion else 33100;required=24 if completion else 12
     a=json.loads(AUTH.read_text());proposal=json.loads(Path(a['proposal_path']).read_text())
-    assert a['status']=='APPROVED' and a['human_approval']==('Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    assert a['status']=='APPROVED' and a['human_approval']==('Approve C/B fallback within existing caps' if completion_capacity else 'Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    if completion_capacity:
+        assert sha(proposal['previous_proposal'])==proposal['previous_proposal_sha256']
+        proposal=json.loads(Path(proposal['previous_proposal']).read_text())
     if placement:
         prior_authority=Path('docs/NATIVE-VENUS-TTS-STOP-DIAGNOSTIC-AUTHORIZATION-2026-11-02.json');assert sha(prior_authority)==proposal['prior_diagnostic_authority_sha256']
         prior_a=json.loads(prior_authority.read_text());assert sha(prior_a['proposal_path'])==prior_a['proposal_sha256']
@@ -114,11 +121,11 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/tts'+version+'.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source)
         execution=dict(resource_key=KEY,authorization_sha256=sha(AUTH),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=required,maximum_gpu_seconds=duration,maximum_new_running_intervals=1)
         if placement:execution.update(vm_id=vm['id'],disk_id=disk['id'],snapshot_id=snap['id'],snapshot_source_disk_id=snap['sourceDiskId'],vm_name=NAME,disk_name=disk['name'])
-        if completion_window:execution.update(storage_started_unix=storage_deadline-7200,storage_deadline_unix=storage_deadline)
+        if completion_window or completion_capacity:execution.update(storage_started_unix=storage_deadline-7200,storage_deadline_unix=storage_deadline)
         PLAN.write_text(json.dumps(execution,indent=2)+'\n');c.ssh('mkdir -p '+c.remote+'/'+str(R));c.sync(PLAN,c.remote+'/'+str(PLAN))
         lease=dict(resource_key=KEY,zone=ZONE,vm_id=vm['id'],disk_id=disk['id'],disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         if placement:lease.update(snapshot_id=snap['id'],storage_deadline_unix=storage_deadline)
-        if completion_window:lease.update(storage_started_unix=storage_deadline-7200)
+        if completion_window or completion_capacity:lease.update(storage_started_unix=storage_deadline-7200)
         (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');lp=c.ROOT+'/tts'+version+'-lease.json';c.sync(R/'lease.json',lp)
         guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),'--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(R/'guard.json'),'--stop-file',str(R/'stop-requested')],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT);c.guard=guard
         until=time.time()+90
@@ -176,4 +183,4 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv)

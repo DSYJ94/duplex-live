@@ -85,7 +85,7 @@ def stockout_before_start(op,vm):
 
 
 def retire(vm,disk,zone,snap,version='56'):
-    assert version in ('56','57','58')
+    assert version in ('56','57','58','59')
     if vm:
         actual=c.cloud('compute','instances','describe',vm['name'],'--zone='+zone)
         assert actual['id']==vm['id'] and actual['status']=='TERMINATED' and actual['name']=='duplex-venus-tts-20261102-'+zone[-1]+'-v'+version
@@ -105,9 +105,18 @@ def retire_snapshot(snap):
 
 
 def allocate(version='56'):
-    assert version in ('56','57','58')
+    assert version in ('56','57','58','59')
     duration=1800 if version=='56' else 1200
-    if version=='58':
+    if version=='59':
+        from .tts_completion_capacity_guard import AUTH,sha
+        a=json.loads(AUTH.read_text());assert a['status']=='APPROVED' and sha(a['proposal_path'])==a['proposal_sha256']
+        p=json.loads(Path(a['proposal_path']).read_text());assert p['compute']['ordered_zones']==['us-central1-c','us-central1-b']
+        assert p['storage']['new_temporary_window_seconds']==7200
+        failed=p['actual_failed_attempt'];assert sha(failed['events_path'])==failed['events_sha256']
+        assert failed['gpu_intervals']==failed['model_runs']==0
+        assert p['storage']['clone_aggregate_upper_GiBh']<=400 and p['storage']['active_snapshot_aggregate_upper_GiBh']<=400
+        deadline=time.time()+7200
+    elif version=='58':
         from .tts_completion_window_guard import AUTH,sha
         a=json.loads(AUTH.read_text());assert a['status']=='APPROVED' and sha(a['proposal_path'])==a['proposal_sha256']
         p=json.loads(Path(a['proposal_path']).read_text());assert p['storage']['temporary_window_seconds']==7200
@@ -121,7 +130,7 @@ def allocate(version='56'):
     save('storage-deadline.json',dict(storage_deadline_unix=deadline))
     snap=snapshot()
     # The whole loop owns one disk/envelope at a time; never retry a real interval.
-    for zone in (('us-central1-f','us-central1-c','us-central1-b') if version=='56' else ('us-central1-f',)):
+    for zone in (('us-central1-c','us-central1-b') if version=='59' else ('us-central1-f','us-central1-c','us-central1-b') if version=='56' else ('us-central1-f',)):
         assert time.time()+2400<deadline
         assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
         name='duplex-venus-tts-20261102-'+zone[-1]+'-v'+version;disk_name='duplex-venus-tts-data-20261102-'+zone[-1]+'-v'+version
