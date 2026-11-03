@@ -1,0 +1,85 @@
+{
+  "status": "PROPOSED_REQUIRES_PLACEMENT_APPROVAL",
+  "purpose": "Run the already prepared complete24 speech-completion comparison after the sole zone-F attempt failed before any GPU/model start. One placement fallback, not a training run or repeated optimizer updates.",
+  "previous_proposal": "docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json",
+  "previous_proposal_sha256": "b8548c281e9b489893caf1e2c15cf4c34e0b5ff7982317b34bd5b01730bf29dc",
+  "actual_failed_attempt": {
+    "producer": "d0004b87f8cb70c3cbcc1cb4c687dce2c0c86b4f",
+    "controller_session": 63547,
+    "pid": 18118,
+    "terminal_exit": 1,
+    "operation": "operation-1793749512159-65f67da7d0146-5bc7c9e0-9450614b",
+    "error": "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS",
+    "zone": "us-central1-f",
+    "google_named_alternative": "us-central1-c",
+    "gpu_intervals": 0,
+    "model_runs": 0,
+    "optimizer_updates": 0,
+    "temporary_clone_deleted": true,
+    "active_snapshot_retired": true,
+    "events_path": "runs/venus-training-20261102/tts-completion-v58/events.json",
+    "events_sha256": "05b9472f18d2dcd496ccf328827f3eb7d96cdff344cbe8be369326b06b9fb02e"
+  },
+  "compute": {
+    "project": "aurium-duplex-live-20261024",
+    "ordered_zones": [
+      "us-central1-c",
+      "us-central1-b"
+    ],
+    "machine": "a2-highgpu-1g",
+    "max_prestart_attempts": 2,
+    "only_advance_after": "Authoritative capacity-only stockout with no lastStartTimestamp; retire failed envelope first. Any actual GPU start consumes the ONE interval; no second model run or restart.",
+    "maximum_running_gpus": 1,
+    "maximum_running_intervals": 1,
+    "native_stop_seconds": 1200,
+    "rounding_reserve_seconds": 100,
+    "original_VM_and_disk_preserved": true,
+    "source_original_disk_id": "4375908109499109167",
+    "no_new_API_IAM_firewall_service_account_region_quota": true
+  },
+  "storage": {
+    "maximum_temporary_clone_disks_present": 1,
+    "disk_gib": 100,
+    "reuse_owned_snapshot_id": "4724490043241393447",
+    "new_temporary_window_seconds": 7200,
+    "window": "Immutable claim before first storage operation after approval; never reset. Fresh current price/copy/ancestry/retention checks before any mutation.",
+    "prior_v56_clone_GiBh_upper": 20,
+    "prior_v56_snapshot_GiBh_upper": 20,
+    "actual_v58_clone_GiBh_upper": 8,
+    "actual_v58_active_snapshot_GiBh_upper": 9,
+    "new_all_envelopes_combined_GiBh_upper": 200,
+    "clone_aggregate_upper_GiBh": 228,
+    "active_snapshot_aggregate_upper_GiBh": 229,
+    "unchanged_aggregate_limit_GiBh_each": 400,
+    "maximum_combined_recoverable_bytes": 171798691840,
+    "maximum_retention_hours": 72,
+    "total_migration_reserve_usd": 2,
+    "cleanup": "Full pretransfer inventory and hash-verified copyback outside OneDrive in <=32MiB rsync batches before removing only new temporary envelopes/active snapshot. Stop billed compute early; preserve unverified unique results on failure."
+  },
+  "evaluation": {
+    "inherit_complete_evaluation_from_previous_proposal": true,
+    "required_cases": 24,
+    "processes": [
+      "fresh complete12 original runtime",
+      "fresh complete12 repaired runtime"
+    ],
+    "same_GPU_interval": true,
+    "new_optimizer_updates": 0,
+    "new_external_model_API_calls": 0,
+    "acceptance": "No weaker thresholds/subsets; all repaired12 WER<=.05 and peak<=.995, actual EOS/no incomplete tails and full copyback. Not full behavior, voice, latency or product adoption."
+  },
+  "budget": {
+    "phase_cap_usd": 75,
+    "project_cap_usd": 175,
+    "prior_focused_seconds_upper": 33500,
+    "original_seconds_upper": 54451,
+    "maximum_extra_seconds_upper": 1300,
+    "maximum_cumulative_seconds_upper": 89251,
+    "phase_upper_usd": 73.91666666666666,
+    "project_upper_usd": 165.90114722222222,
+    "new_purchase": false,
+    "cost_time_or_receipt_reset": false
+  },
+  "source_deployment": "Git only; same approved candidate466 checkpoint/recipe <=200MB and existing synthetic artifacts. No owner conversations, credentials, private files or core dumps.",
+  "approval_scope": "Replaces exhausted prestart placement permission only; do not combine grants, repeat saved updates or infer wider training authorization. No resources under this proposal until approved."
+}
