@@ -28,22 +28,27 @@ def copyback(remote_out,source):
         c.run(['/opt/homebrew/bin/rsync','-ar','--no-owner','--no-group','--exclude=session-token','--exclude=.private','--exclude=credentials','--exclude=owner-conversations','--exclude=API keys.md','--exclude=core','--exclude=core.*','--from0','--files-from='+str(filelist),'-e',shlex.join(direct[:-1]),direct[-1]+':'+remote_out+'/',root+'/'],90)
     for row in rows:
         path=Path(root)/row['path'];assert path.stat().st_size==row['bytes'] and sha(path)==row['sha256']
-    result=dict(full_hash_inventory_verified=True,files=len(rows),bytes=sum(x['bytes'] for x in rows),destination=root,source=source,complete_report_present=any(x['path']=='report.json' for x in rows))
+    result=dict(full_hash_inventory_verified=True,files=len(rows),bytes=sum(x['bytes'] for x in rows),destination=root,source=source,complete_report_present=any(Path(x['path']).name=='report.json' for x in rows),report_paths=[x['path'] for x in rows if Path(x['path']).name=='report.json'])
     (R/'copyback-verified.json').write_text(json.dumps(result,indent=2)+'\n');c.record('native_stop_copyback_verified',**result)
     return result
 
 
-def main(placement=False):
+def main(placement=False,completion=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
-    if placement:
+    if completion:
+        placement=True
+        from . import tts_completion_guard as g
+        AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
+    elif placement:
         from . import tts_placement_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
-    version='56' if placement else '55'
+    version='57' if completion else '56' if placement else '55'
+    duration=1200 if completion else 1800;prior=33500 if completion else 33100;required=24 if completion else 12
     a=json.loads(AUTH.read_text());proposal=json.loads(Path(a['proposal_path']).read_text())
-    assert a['status']=='APPROVED' and a['human_approval']==('Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    assert a['status']=='APPROVED' and a['human_approval']==('Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
     if placement:
-        prior=Path('docs/NATIVE-VENUS-TTS-STOP-DIAGNOSTIC-AUTHORIZATION-2026-11-02.json');assert sha(prior)==proposal['prior_diagnostic_authority_sha256']
-        prior_a=json.loads(prior.read_text());assert sha(prior_a['proposal_path'])==prior_a['proposal_sha256']
+        prior_authority=Path('docs/NATIVE-VENUS-TTS-STOP-DIAGNOSTIC-AUTHORIZATION-2026-11-02.json');assert sha(prior_authority)==proposal['prior_diagnostic_authority_sha256']
+        prior_a=json.loads(prior_authority.read_text());assert sha(prior_a['proposal_path'])==prior_a['proposal_sha256']
         proposal=json.loads(Path(prior_a['proposal_path']).read_text())
     c.R=R;R.mkdir(parents=True,exist_ok=True);c.NAME=NAME
     if (R/'claim.json').exists():raise ValueError('Observe existing controller; never repeat allocation')
@@ -57,15 +62,15 @@ def main(placement=False):
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(v['status'] in ('EXITED','STOPPED','TERMINATED') for v in pods)
     candidate=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52/candidate');assert sha(candidate/'step-0060.pt')==proposal['candidate_checkpoint_sha256']
     assert sum((candidate/n).stat().st_size for n in ('step-0060.pt','recipe.json'))<=200*1024**2
-    with (R/'claim.json').open('x') as f:json.dump(dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=33100),f)
+    with (R/'claim.json').open('x') as f:json.dump(dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=prior),f)
     c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
-    awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);guard=None;attempted=False;backed=False;snap=None;allocated=None;remote_out=c.OUT+'/tts-'+('placement' if placement else 'stop')+'-v'+version
+    awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);guard=None;attempted=False;backed=False;snap=None;allocated=None;remote_out=c.OUT+'/tts-'+('completion' if completion else 'placement' if placement else 'stop')+'-v'+version
     try:
         bootstrap=R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-tts'+version+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=1h')
         if placement:
             from .tts_placement import allocate
-            vm,disk,ZONE,snap,storage_deadline=allocate();NAME=vm['name'];c.NAME=NAME;attempted=True;allocated=(vm,disk,ZONE,snap)
+            vm,disk,ZONE,snap,storage_deadline=allocate(version);NAME=vm['name'];c.NAME=NAME;attempted=True;allocated=(vm,disk,ZONE,snap,version)
         else:
             c.cloud('compute','instances','add-metadata',NAME,'--zone='+ZONE,'--metadata-from-file=startup-script='+str(bootstrap))
             c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration=1800s','--instance-termination-action=STOP')
@@ -77,13 +82,13 @@ def main(placement=False):
             (R/'start-operation.json').write_text(json.dumps(op,indent=2)+'\n')
             if op.get('error'):raise RuntimeError(json.dumps(op['error']))
             vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);assert vm['status']=='RUNNING'
-        end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+1800;(R/'provider-start.json').write_text(json.dumps(vm,indent=2)+'\n')
+        end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration;(R/'provider-start.json').write_text(json.dumps(vm,indent=2)+'\n')
         prepare_ssh(vm,ZONE,version);c.sync(R/'source.bundle',c.ROOT+'/tts'+version+'.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/tts'+version+'.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source)
-        execution=dict(resource_key=KEY,authorization_sha256=sha(AUTH),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=12,maximum_gpu_seconds=1800,maximum_new_running_intervals=1)
+        execution=dict(resource_key=KEY,authorization_sha256=sha(AUTH),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=required,maximum_gpu_seconds=duration,maximum_new_running_intervals=1)
         if placement:execution.update(vm_id=vm['id'],disk_id=disk['id'],snapshot_id=snap['id'],snapshot_source_disk_id=snap['sourceDiskId'],vm_name=NAME,disk_name=disk['name'])
         PLAN.write_text(json.dumps(execution,indent=2)+'\n');c.ssh('mkdir -p '+c.remote+'/'+str(R));c.sync(PLAN,c.remote+'/'+str(PLAN))
-        lease=dict(resource_key=KEY,zone=ZONE,vm_id=vm['id'],disk_id=disk['id'],disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=33100,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
+        lease=dict(resource_key=KEY,zone=ZONE,vm_id=vm['id'],disk_id=disk['id'],disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         if placement:lease.update(snapshot_id=snap['id'],storage_deadline_unix=storage_deadline)
         (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');lp=c.ROOT+'/tts'+version+'-lease.json';c.sync(R/'lease.json',lp)
         guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),'--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(R/'guard.json'),'--stop-file',str(R/'stop-requested')],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT);c.guard=guard
@@ -91,7 +96,7 @@ def main(placement=False):
         while not (R/'guard.json').exists():
             assert guard.poll() is None and time.time()<until;time.sleep(1)
         live=json.loads(c.ssh('cat '+c.ROOT+'/venus-live-guard-v1.json'));assert time.time()<live['expires_unix'] and live['vm_id']==vm['id']
-        c.ssh('sudo systemd-run --unit=duplex-tts'+version+'-guest --property=RuntimeMaxSec=1900 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lp)
+        c.ssh('sudo systemd-run --unit=duplex-tts'+version+'-guest --property=RuntimeMaxSec='+str(duration+100)+' --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lp)
         assert c.props('duplex-tts'+version+'-guest')['ActiveState']=='active';c.ssh('sudo systemctl stop duplex-tts'+version+'-bootstrap-stop.timer');c.record('tts_stop_both_guards_live',mac_pid=guard.pid,native_stop_unix=end)
         c.ssh('mkdir -p '+c.ROOT+'/tts'+version+'-input')
         for name in ('step-0060.pt','recipe.json'):c.sync(candidate/name,c.ROOT+'/tts'+version+'-input/'+name)
@@ -99,10 +104,23 @@ def main(placement=False):
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python'
         command='/usr/bin/env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lp+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py+' -u -m training.venus.tts_stop_probe --model '+c.MODEL+' --checkpoint '+c.ROOT+'/tts'+version+'-input/step-0060.pt --selection '+c.remote+'/'+proposal['source_selection_path']+' --timelines '+c.OUT+'/paced-timelines-v22 --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 '+proposal['voice_reference_sha256']+' --lease '+lp+' --source '+source+' --output '+remote_out
         assert not c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip()
-        assert end-time.time()>1000
-        c.start_unit('duplex-venus-tts-stop'+version,command,min(1200,int(end-time.time()-180)));c.wait_unit('duplex-venus-tts-stop'+version,end-180)
-        report=json.loads(c.ssh('cat '+remote_out+'/report.json'));assert report['complete'] and len(report['rows'])==12 and report['new_optimizer_updates']==0
-        c.record('complete12_native_tts_stop',cases=12,adopted=False)
+        if completion:
+            # Both complete cohorts on the SAME new interval; never reuse an
+            # old profiler run as the current counterfactual baseline.
+            for label,flag in [('baseline',''),('completion',' --speech-completion')]:
+                assert end-time.time()>600,'Full next12cases and copyback reserve required'
+                unit='duplex-venus-tts-'+label+version
+                c.start_unit(unit,command.replace('--output '+remote_out,'--output '+remote_out+'/'+label)+' --minimum-start-seconds=600'+flag,min(600,int(end-time.time()-120)))
+                c.wait_unit(unit,end-120)
+                report=json.loads(c.ssh('cat '+remote_out+'/'+label+'/report.json'))
+                assert report['complete'] and len(report['rows'])==12 and report['new_optimizer_updates']==0
+                if label=='completion':assert report['speech_completion'] and report['all_opt_in_tails_complete']
+            c.record('complete24_native_completion_comparison',cases=24,adopted=False)
+        else:
+            assert end-time.time()>1000
+            c.start_unit('duplex-venus-tts-stop'+version,command,min(1200,int(end-time.time()-180)));c.wait_unit('duplex-venus-tts-stop'+version,end-180)
+            report=json.loads(c.ssh('cat '+remote_out+'/report.json'));assert report['complete'] and len(report['rows'])==12 and report['new_optimizer_updates']==0
+            c.record('complete12_native_tts_stop',cases=12,adopted=False)
     except BaseException as error:
         c.record('tts_stop_failed',error_type=type(error).__name__,error=str(error)[-1800:]);raise
     finally:
@@ -110,7 +128,7 @@ def main(placement=False):
             try:
                 for unit in c.UNITS:
                     if c.props(unit).get('SubState')=='running':c.ssh('sudo systemctl stop '+unit,25)
-                c.ssh('mkdir -p '+remote_out+'; sudo journalctl -u duplex-venus-tts-stop'+version+' --no-pager -o cat > '+remote_out+'/journal.log')
+                c.ssh('mkdir -p '+remote_out+'; '+''.join('sudo journalctl -u '+u+' --no-pager -o cat > '+remote_out+'/'+u+'.log; ' for u in c.UNITS))
                 copyback(remote_out,source);backed=True
             except Exception as error:c.record('tts_stop_copyback_failed_preserve_original_disk',error_type=type(error).__name__,error=str(error)[-800:])
         if attempted:
@@ -118,7 +136,7 @@ def main(placement=False):
             if vm['status']!='TERMINATED':c.run(['gcloud','compute','instances','stop',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet','--discard-local-ssd=True'],150)
             final=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);(R/'provider-final.json').write_text(json.dumps(final,indent=2)+'\n')
             actual=0 if final['lastStartTimestamp']==old['lastStartTimestamp'] else datetime.fromisoformat(final['lastStopTimestamp']).timestamp()-datetime.fromisoformat(final['lastStartTimestamp']).timestamp()
-            c.record('tts_stop_gpu_terminal',actual_seconds=actual,upper_seconds=math.ceil(actual/100)*100,prior_focused_gpu_seconds_upper=33100,original_disk_preserved=True)
+            c.record('tts_stop_gpu_terminal',actual_seconds=actual,upper_seconds=math.ceil(actual/100)*100,prior_focused_gpu_seconds_upper=prior,original_disk_preserved=True)
         if allocated and backed:
             from .tts_placement import retire,retire_snapshot
             retire(*allocated);retire_snapshot(snap)
@@ -129,4 +147,4 @@ def main(placement=False):
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv)

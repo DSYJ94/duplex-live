@@ -179,8 +179,13 @@ class DelegateParser:
 
 class NativeEngine:
     def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released'):
+                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released',speech_completion=False):
         ensure_guard()
+        if speech_completion and nonspoken_actions:
+            raise ValueError('Speech completion/action-channel composition requires separate native validation')
+        if speech_completion:
+            from .speech_completion import require_authorization
+            require_authorization()
         import numpy as np
         import torch
         from transformers import AutoModel, set_seed
@@ -204,6 +209,10 @@ class NativeEngine:
             from training.venus.inference import load_candidate
             candidate = load_candidate(self.model.llm, adapter_checkpoint)
         self.duplex = self.model.as_duplex(generate_audio=True)
+        self.speech_completion=None
+        if speech_completion:
+            from .speech_completion import install as install_completion
+            self.speech_completion=install_completion(self.duplex)
         self.action_channel=None
         if nonspoken_actions:
             from .speech_channel import install
@@ -215,7 +224,8 @@ class NativeEngine:
             system_prompt=system_prompt, decode_mode='sampling',
             max_new_speak_tokens_per_chunk=20, temperature=0.7, top_k=20,
             top_p=0.8, listen_prob_scale=1.0, optimizer_updates=0,
-            voice_reference=self.voice_reference,nonspoken_action_channel=bool(self.action_channel))
+            voice_reference=self.voice_reference,nonspoken_action_channel=bool(self.action_channel),
+            speech_completion=dict(enabled=bool(self.speech_completion),version='native-terminal-resume-v1' if self.speech_completion else None,maximum_terminal_tokens=200 if self.speech_completion else None,qualified=False))
         self.profile.update(force_listen_count=int(self.duplex.force_listen_count),
                             listen_speak_mode=str(self.duplex.ls_mode))
         if candidate:
@@ -267,7 +277,7 @@ class NativeEngine:
             raise RuntimeError('Nonfinite native waveform; no clipping/normalization repair')
         omit_silence=bool(result.get('is_listen')) and not np.any(audio)
         wire_audio=b'' if omit_silence else audio.astype('<f4').tobytes()
-        return dict(text=result.get('text',''), raw_text=raw_text,
+        exported=dict(text=result.get('text',''), raw_text=raw_text,
             token_ids=[int(x) for x in ids], is_listen=bool(result.get('is_listen')),
             end_of_turn=bool(result.get('end_of_turn')),
             elapsed=time.monotonic()-started, audio_samples=len(audio),
@@ -275,11 +285,13 @@ class NativeEngine:
             peak=float(np.max(np.abs(audio))) if len(audio) else 0,
             audio=base64.b64encode(wire_audio).decode(),wire_silence_omitted=omit_silence,wire_audio_bytes=len(wire_audio),timings=timings,
             audio_sample_rate=24000)
+        if 'speech_completion' in result:exported['speech_completion']=result['speech_completion']
+        return exported
 
 
 def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
                voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,compare_foundation=False,tts_attention='released',worker_factory=None,
-               reasoning_context=None):
+               reasoning_context=None,speech_completion=False):
     if compare_foundation and not adapter_checkpoint:
         raise ValueError('A comparison requires the explicit trained checkpoint')
     if reasoning_context is not None:
@@ -304,7 +316,7 @@ def create_app(model_dir, system_prompt='Streaming Omni Conversation.', adapter_
     @asynccontextmanager
     async def lifespan(app):
         app.state.engine = await asyncio.to_thread(NativeEngine, model_dir, system_prompt, adapter_checkpoint,
-                                                  voice_reference,voice_reference_sha256,nonspoken_actions,tts_attention)
+                                                  voice_reference,voice_reference_sha256,nonspoken_actions,tts_attention,speech_completion)
         if reasoning_context is not None:
             from .context_asr import GPUContextASR
             from .context_reasoning import EvidenceTransport
@@ -395,6 +407,7 @@ if __name__ == '__main__':
     parser.add_argument('--adapter-checkpoint', help='Verified project checkpoint; experimental native testing only')
     parser.add_argument('--voice-reference', help='Approved original/synthetic mono16k reference for the native voice generator')
     parser.add_argument('--voice-reference-sha256', help='Exact SHA256 required for a custom reference')
+    parser.add_argument('--speech-completion',action='store_true',help='Experimental bounded terminal acoustic continuation; requires paired native speech/control and latency qualification')
     parser.add_argument('--nonspoken-actions',action='store_true',help='Experimental native protocol filter; full speech/behavior qualification still required')
     parser.add_argument('--compare-foundation',action='store_true',help='Allow original/adapted comparison between isolated conversations')
     parser.add_argument('--tts-attention',choices=['released','sdpa'],default='released',help='Experimental TTS-only backend; native speed and audio validation required')
@@ -414,4 +427,4 @@ if __name__ == '__main__':
         from .reasoning import LocalProxy,ReasoningWorker
         proxy=LocalProxy(args.reasoning_proxy,args.reasoning_run_id)
         worker_factory=lambda:ReasoningWorker(proxy)
-    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention,worker_factory,reasoning_context), host='127.0.0.1', port=args.port)
+    uvicorn.run(create_app(args.model_dir,prompt,args.adapter_checkpoint,args.voice_reference,args.voice_reference_sha256,args.nonspoken_actions,args.compare_foundation,args.tts_attention,worker_factory,reasoning_context,args.speech_completion), host='127.0.0.1', port=args.port)

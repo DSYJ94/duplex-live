@@ -1,0 +1,34 @@
+{
+  "status": "LOCAL_CPU_PREPARATION_NATIVE_CUDA_UNRUN",
+  "at_utc": "2026-11-03T00:21:08.764845+00:00",
+  "diagnosis": "docs/NATIVE-VENUS-TTS-STOP-RESULTS-2026-11-02.json",
+  "files": {
+    "portable/venus/speech_completion.py": "f1f38e1178412f1e17ae37f72a991bc20a717f1a825efd321dcb823bd06aa3e8",
+    "portable/venus/native_app.py": "3343b7704ebdb30d871180b3922704b4319af682925f813f14a92228fc97b3bb",
+    "portable/venus/app.html": "236a2edfbea3e4f6a8b56244eaf85614bbcf8cfbccd5f7b672851e688122ff3f",
+    "training/venus/tts_stop_probe.py": "f679d37d92406d53edf2e4bdc940e93f84a8dee792f42a8ce381a69a576177e0",
+    "training/venus/tts_completion_guard.py": "f50e02b8ff0e8724e2a5842dc0815e01727f327326aa7323ad3f165c57294ab6",
+    "training/venus/tts_stop_controller.py": "8c8b004615289d4efc0c1b56cf5e74c6844bf428d5899e6e181916e608d20595",
+    "training/venus/tts_placement.py": "059e0aee625ce78451bb48d67c7b3888463f1c9e9cde6e1204716ca74c761c2b",
+    "evals/fixtures/venus_duplex_generate_4681004.py": "88646bb8d6bc5f6dd40322b82ef435c863410c07057560f7b08da3b174731081"
+  },
+  "red_evidence": "Exact pinned streaming_generate plus exact pinned generate_chunk with tiny scripted logits/codec: actual original path renders25/60tokens and resets; new test1failed1passed before implementation. Shipped browser script then2failed9passed because continuation was discarded while is_listen.",
+  "green_evidence": "Final related51tests PASS2.80s. Forced-logit60token utterance renders25+25+10 through real upstream control methods while3inputframes advance. Native9B/realcodec/CUDA/audio/latency NOT tested onMac.",
+  "coverage": [
+    "NormalEOS0/2/25 keeps scripted PCM/nativeLLMtokens/cache-reset andRNG identical to original.",
+    "Unsegmented200token exactsampler vs resumed pieces EOS0/2/25/26/50/60/198: same sampledtokens, cacheidentity/positionsequence andRNG without intervening stochasticLLMdraws. RealinterleavedLLM-RNG equivalence NOT claimed.",
+    "Explicitnative stop/break, sessionreset, native new-speaking-turn close oldgenerator/resetTTScache/vocoder; absentinput doesnotadvancetail.",
+    "NoEOShard200 raises explicit incomplete-speech failure and clearspending, no silentacceptance. Unknownsource/doubleinstall rejected.",
+    "Actual NativeEngine.step preserveslistenstate+continuationPCM+metadata. Actualshippedbrowser ws.onmessage executes underNodefixtures, queuesexplicitcontinuation andcancelsstalequeue; oldsilentlisten/microphone races stillpass.",
+    "Actualcontrollerentrypoint fails beforeprovider calls ifnewauthorityabsent; oldv56lease cannotenablechangedruntime. Newguard exact1200STOP/oneinterval/full24/zero updates/carried33500+54451/sameoriginalstoragedeadline, nooriginaldiskreplacement/overlap."
+  ],
+  "implementation": "Source-hash-pinned transformations only at terminal TTS sampling/reset/waveform boundaries. Same native sampling math yields25tokens with retained lookahead, then resumes between native inputframes. Defaultoff. Hard200terminalceiling; native linguistic controls unchanged, acoustics completion tracked separately.",
+  "limits": [
+    "No candidate/runtime adoption or full64/latency/EnglishBritishvoice qualification.",
+    "Completion andnonspokenactionchannel composition explicitly rejected untilseparateintegration/nativeproof.",
+    "FakePCM/forcedlogits verify mechanics only; mustmeasure actual native sampler/audio/recognition with fullpaired24.",
+    "Longspeech maystillincreaseplaybackbacklog; listenerlatency/interruptions require native liveclockproof, not profiler timing.",
+    "No newtrainingupdates, savedAdamRNG/OPAL/checkpoints/teacher/audio/folds/heldouthashes unchanged."
+  ],
+  "next": "Prepared docs/NATIVE-VENUS-TTS-COMPLETION-PROPOSAL-2026-11-03.json; requires oneexplicitnew20minute interval+zoneF100GBreplacement withinunchanged75/175 andsameexisting4hstorageenvelope. Source/guardsready, authorityNOTcreated, noallocation."
+}

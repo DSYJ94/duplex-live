@@ -55,3 +55,31 @@ def test_final_speech_is_not_cut_off_when_native_turn_has_ended():
     state=run('final')
     assert not state['speechStopped'],state
     assert state['sourcesAfterListen']==state['sourcesBeforeListen'],state
+
+
+def completion_frame(payload):
+    # Exercise the actual shipped ws.onmessage handler with the continuation
+    # metadata exported by the native frame. Silent legacy listen stays silent.
+    inject=r'''
+ await ws.onmessage({data:JSON.stringify({is_listen:true,audio:audio(.3),wire_audio_bytes:96000,audio_sample_rate:24000,
+  speech_completion:{version:'native-terminal-resume-v1',pending:true,acoustic_complete:false,events:[{kind:'terminal_acoustic_piece'}]}})});
+ const continuation=nodes[1];
+ PAYLOAD
+ console.log(JSON.stringify({sources:nodes.length,oldStopped:!!speech.stopped,continuationStopped:!!continuation?.stopped}));
+'''.replace('PAYLOAD',payload)
+    start=HARNESS.index(' for(let i=0;i<2;i++)')
+    finish=HARNESS.index('\n})().catch',start)
+    code=HARNESS[:start]+inject+HARNESS[finish:]
+    p=subprocess.run(['node','-e',"const MODE='final';"+code],capture_output=True,text=True,check=True)
+    return json.loads(p.stdout)
+
+
+def test_native_continuation_audio_plays_while_llm_is_listening():
+    result=completion_frame('')
+    assert result['sources']==2 and not result['oldStopped'] and not result['continuationStopped'],result
+
+
+def test_new_native_speech_transition_clears_queued_old_continuation_audio():
+    result=completion_frame(r'''await ws.onmessage({data:JSON.stringify({is_listen:false,end_of_turn:true,audio:audio(.4),audio_sample_rate:24000,
+ speech_completion:{version:'native-terminal-resume-v1',pending:false,acoustic_complete:true,events:[{kind:'pending_acoustic_cancelled',reason:'new_native_speaking_turn'}]}})});''')
+    assert result['sources']==3 and result['oldStopped'] and result['continuationStopped'],result

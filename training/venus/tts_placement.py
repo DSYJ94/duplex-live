@@ -83,15 +83,16 @@ def stockout_before_start(op,vm):
     return 'ZONE_RESOURCE_POOL_EXHAUSTED' in json.dumps(op.get('error',{})) and (vm is None or not vm.get('lastStartTimestamp'))
 
 
-def retire(vm,disk,zone,snap):
+def retire(vm,disk,zone,snap,version='56'):
+    assert version in ('56','57')
     if vm:
         actual=c.cloud('compute','instances','describe',vm['name'],'--zone='+zone)
-        assert actual['id']==vm['id'] and actual['status']=='TERMINATED' and actual['name']=='duplex-venus-tts-20261102-'+zone[-1]+'-v56'
+        assert actual['id']==vm['id'] and actual['status']=='TERMINATED' and actual['name']=='duplex-venus-tts-20261102-'+zone[-1]+'-v'+version
         assert actual['disks'][0]['source'].endswith('/disks/'+disk['name'])
         c.run(['gcloud','compute','instances','delete',vm['name'],'--zone='+zone,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
     actual=c.cloud('compute','disks','describe',disk['name'],'--zone='+zone)
     assert actual['id']==disk['id'] and actual['id']!=ORIGINAL and actual['sourceSnapshotId']==snap['id'] and not actual.get('users')
-    assert actual['name']=='duplex-venus-tts-data-20261102-'+zone[-1]+'-v56'
+    assert actual['name']=='duplex-venus-tts-data-20261102-'+zone[-1]+'-v'+version
     c.run(['gcloud','compute','disks','delete',disk['name'],'--zone='+zone,'--project='+c.PROJECT,'--quiet'],150)
     c.record('temporary_envelope_retired',vm_id=vm['id'] if vm else None,disk_id=disk['id'],zone=zone)
 
@@ -102,22 +103,24 @@ def retire_snapshot(snap):
     c.record('active_owned_snapshot_retired',snapshot_id=snap['id'],recycle_retention_reserved=True)
 
 
-def allocate():
-    deadline=time.time()+4*3600
+def allocate(version='56'):
+    assert version in ('56','57')
+    duration=1800 if version=='56' else 1200
+    deadline=time.time()+4*3600 if version=='56' else json.loads((c.R.parent/'tts-placement-v56/storage-deadline.json').read_text())['storage_deadline_unix']
     save('storage-deadline.json',dict(storage_deadline_unix=deadline))
     snap=snapshot()
     # The whole loop owns one disk/envelope at a time; never retry a real interval.
-    for zone in ('us-central1-f','us-central1-c','us-central1-b'):
+    for zone in (('us-central1-f','us-central1-c','us-central1-b') if version=='56' else ('us-central1-f',)):
         assert time.time()+2400<deadline
         assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
-        name='duplex-venus-tts-20261102-'+zone[-1]+'-v56';disk_name='duplex-venus-tts-data-20261102-'+zone[-1]+'-v56'
+        name='duplex-venus-tts-20261102-'+zone[-1]+'-v'+version;disk_name='duplex-venus-tts-data-20261102-'+zone[-1]+'-v'+version
         assert not any(v['name'].startswith('duplex-venus-tts-data-20261102-') for v in c.cloud('compute','disks','list'))
         c.record('one_clone_request',name=disk_name,zone=zone)
-        c.run(['gcloud','compute','disks','create',disk_name,'--zone='+zone,'--source-snapshot='+snap['name'],'--size=100GB','--type=pd-balanced','--labels=duplex-scope=tts-v56','--project='+c.PROJECT,'--quiet','--format=json'],900)
+        c.run(['gcloud','compute','disks','create',disk_name,'--zone='+zone,'--source-snapshot='+snap['name'],'--size=100GB','--type=pd-balanced','--labels=duplex-scope=tts-v'+version,'--project='+c.PROJECT,'--quiet','--format=json'],900)
         disk=c.cloud('compute','disks','describe',disk_name,'--zone='+zone);save('disk-'+zone+'.json',disk)
         assert disk['sourceSnapshotId']==snap['id'] and int(disk['sizeGb'])==100 and not disk.get('users')
         c.NAME=name
-        op=c.cloud('compute','instances','create',name,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=STANDARD','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+disk_name+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(c.R/'bootstrap.sh'),'--max-run-duration=1800s','--instance-termination-action=STOP','--async')
+        op=c.cloud('compute','instances','create',name,'--zone='+zone,'--machine-type=a2-highgpu-1g','--provisioning-model=STANDARD','--maintenance-policy=TERMINATE','--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded','--disk=name='+disk_name+',boot=yes,auto-delete=no,mode=rw','--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE','--metadata-from-file=startup-script='+str(c.R/'bootstrap.sh'),'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP','--async')
         op=op[0] if isinstance(op,list) else op;save('create-'+zone+'.json',op);c.record('one_tts_placement_attempt',zone=zone,operation=op['name'])
         op=observe(op,zone);save('terminal-'+zone+'.json',op)
         matches=[v for v in c.cloud('compute','instances','list') if v['name']==name];vm=matches[0] if matches else None
@@ -128,4 +131,4 @@ def allocate():
         save('allocation.json',dict(vm=vm,disk=disk,zone=zone,snapshot=snap,storage_deadline_unix=deadline))
         return vm,disk,zone,snap,deadline
     retire_snapshot(snap)
-    raise RuntimeError('All three approved zones stockout before start; zero model/GPU intervals')
+    raise RuntimeError('All approved zones stockout before start; zero model/GPU intervals')

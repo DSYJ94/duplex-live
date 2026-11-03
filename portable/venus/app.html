@@ -54,10 +54,17 @@ start.onclick=async()=>{
    }
    queued=Math.max(0,queued-1);const began=sentAt.shift();
    state.textContent=m.is_listen?'Listening':'Speaking';if(m.text)words.textContent+=m.text;
-   // Native listen emits silence. Preserve a valid final chunk while it drains. Never enqueue silent listen buffers.
-   if(m.is_listen){if(!lastSpeechFinal)clearPlayback();else if(players.size)state.textContent='Listening · finishing response';}
+   // Linguistic listening may overlap a previously started acoustic tail.
+   // Only explicitly marked continuation audio can use that path; legacy
+   // silent listening never adds a playback buffer.
+   const completion=m.speech_completion?.version==='native-terminal-resume-v1'?m.speech_completion:null;
+   if(completion?.events?.some(e=>e.kind==='pending_acoustic_cancelled')){clearPlayback();lastSpeechFinal=false;}
+   const continuation=!!(completion&&m.audio&&m.wire_audio_bytes>0&&completion.events?.some(e=>e.kind==='terminal_acoustic_piece'));
+   if(completion?.acoustic_complete)lastSpeechFinal=true;
+   if(m.is_listen&&!continuation){if(!lastSpeechFinal&&!completion?.pending)clearPlayback();else if(players.size)state.textContent='Listening · finishing response';}
    else if(m.audio){
-    lastSpeechFinal=m.end_of_turn===true;
+    lastSpeechFinal=completion?completion.acoustic_complete:m.end_of_turn===true;
+    if(m.is_listen)state.textContent='Listening · finishing response';
     const b=Uint8Array.from(atob(m.audio),c=>c.charCodeAt(0)),samples=new Float32Array(b.buffer);
     if(samples.length){const buf=audio.createBuffer(1,samples.length,m.audio_sample_rate);buf.copyToChannel(samples,0);
      const node=audio.createBufferSource();node.buffer=buf;node.connect(audio.destination);players.add(node);node.onended=()=>players.delete(node);
