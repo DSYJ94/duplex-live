@@ -9,7 +9,9 @@ import math
 FAMILIES=('ordinary','delegate','quiet','cancel','pause','pending')
 FIELDS=('ce','decision_ce','text_ce','kl','hidden','frame_decision_ce','action_ce','argument_ce',
         'frame_decision_token_accuracy','action_token_accuracy','argument_token_accuracy')
-TOKEN_COUNTS=('frame_decision_tokens','action_tokens','argument_tokens')
+from .action_targets import CONTROL_METRICS
+FIELDS+=tuple(name+suffix for name in CONTROL_METRICS for suffix in ('_ce','_token_accuracy'))
+TOKEN_COUNTS=('frame_decision_tokens','action_tokens','argument_tokens')+tuple(name+'_tokens' for name in CONTROL_METRICS)
 
 
 def aggregate(rows):
@@ -80,7 +82,8 @@ def review(rows,step,previous,*,dev=None,data_coverage=None):
             'Low unique-user counts can be intentional matched-world design; do not discard counterfactual pairs.',
             'If evidence supports a recipe change, change one factor with program/state recorded.',
             'If data/targets need repair, request a new version between phases; never silently alter current corpus or accept a passing subset.',
-            'Use native DEV speech/control evidence alongside loss; absent native evidence is unknown, not a pass.'])
+            'Use native DEV speech/control evidence alongside loss; absent native evidence is unknown, not a pass.',
+            'Inspect chunk-end and turn-end separately from listen/speak decisions. These are teacher-forced token metrics, not proof of native cadence or speech.'])
     state=dict(train_ce=current_train if current_train is not None else old_train,
         dev_ce=current_dev if current_dev is not None else old_dev,last_review_step=step)
     return packet,state

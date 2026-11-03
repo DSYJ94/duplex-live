@@ -172,7 +172,7 @@ def scene_loss(llm, example, device, kl_weight=.1, hidden_weight=.01,
     parts = dict(ce=float(ce.detach()), kl=float(kl.detach()), hidden=float(retention.detach()),decision_ce=float(decision_ce.detach()) if decision_ce is not None else None,text_ce=float(text_ce.detach()) if text_ce is not None else None)
     if selected is not None:
         from .action_targets import metrics
-        parts.update(metrics(logits, target, selected, losses))
+        parts.update(metrics(logits, target, selected, losses, control_token_ids=action_token_ids))
         action_mask = selected['action'].to(device)
         auxiliary = losses[action_mask].mean() if action_mask.any() else loss.new_zeros(())
         if action_aux_weight:

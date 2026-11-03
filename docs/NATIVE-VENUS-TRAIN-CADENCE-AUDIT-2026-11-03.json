@@ -1,0 +1,307 @@
+{
+  "status": "COMPLETE_READONLY_ALL304_TARGET_CADENCE_AUDIT_NOT_NATIVE_BEHAVIOR",
+  "at_utc": "2026-11-03T00:31:43.585234+00:00",
+  "source_before_commit": "416160742a474964f5c3f07866411bbc7941df36",
+  "report_path": "runs/venus-training-20261103/cadence-audit-v2.json",
+  "report_sha256": "8a9b5b83605c89edf9d11769692d244995efef1835b60cc2f6e0093b9a5853e3",
+  "script_path": "training/venus/cadence_audit.py",
+  "script_sha256": "f9eca464299c74e8bf9487b3cc22fbc808936eea18392972e1706f82f6ef436b",
+  "complete": true,
+  "scenes": 304,
+  "train": 240,
+  "dev": 64,
+  "actual_target_hashes_match_saved_action_index": 304,
+  "actual_native_schedules_match_every_target_frame": 304,
+  "actual_decision_masks_match": 304,
+  "inputs": {
+    "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+    "old_prefix_manifest_sha256": "e110215f8181be0a85c871e199c07c56274b513d4e6b71254c1aba7d0b37d51b",
+    "timeline_manifest_sha256": "e74e01e2a40c40226c54d09945792a45e157cd833b2c7bba4f30164c782893d7",
+    "tokenizer_sha256": "6d694bbb227bd59984fcad14c7d807ad74507019c9a1a8013d325c9d87977432"
+  },
+  "train_scene_counts": {
+    "quiet": 60,
+    "delegate": 56,
+    "cancel": 44,
+    "pause": 28,
+    "pending": 20,
+    "ordinary": 32
+  },
+  "train_label_counts": {
+    "quiet": 2431,
+    "delegate": 3868,
+    "cancel": 2768,
+    "pause": 1321,
+    "pending": 1602,
+    "ordinary": 675
+  },
+  "train_labels_total": 12665,
+  "train_action_auxiliary_active_scenes": 120,
+  "statistics": [
+    {
+      "fold": "DEV",
+      "family": "cancel",
+      "voice_bearing_frames": 46,
+      "final_frames": 44,
+      "max_voice_tokens": 6,
+      "max_final_voice_tokens": 3,
+      "voice_token_histogram": {
+        "2": 22,
+        "3": 14,
+        "4": 8,
+        "6": 2
+      },
+      "final_voice_token_histogram": {
+        "0": 24,
+        "2": 18,
+        "3": 2
+      }
+    },
+    {
+      "fold": "DEV",
+      "family": "delegate",
+      "voice_bearing_frames": 93,
+      "final_frames": 36,
+      "max_voice_tokens": 7,
+      "max_final_voice_tokens": 5,
+      "voice_token_histogram": {
+        "1": 1,
+        "2": 32,
+        "3": 19,
+        "4": 26,
+        "5": 13,
+        "6": 1,
+        "7": 1
+      },
+      "final_voice_token_histogram": {
+        "0": 20,
+        "2": 15,
+        "5": 1
+      }
+    },
+    {
+      "fold": "DEV",
+      "family": "ordinary",
+      "voice_bearing_frames": 16,
+      "final_frames": 12,
+      "max_voice_tokens": 6,
+      "max_final_voice_tokens": 3,
+      "voice_token_histogram": {
+        "2": 7,
+        "3": 2,
+        "4": 1,
+        "5": 5,
+        "6": 1
+      },
+      "final_voice_token_histogram": {
+        "0": 4,
+        "2": 6,
+        "3": 2
+      }
+    },
+    {
+      "fold": "DEV",
+      "family": "pause",
+      "voice_bearing_frames": 28,
+      "final_frames": 12,
+      "max_voice_tokens": 6,
+      "max_final_voice_tokens": 4,
+      "voice_token_histogram": {
+        "2": 2,
+        "3": 10,
+        "4": 12,
+        "5": 2,
+        "6": 2
+      },
+      "final_voice_token_histogram": {
+        "0": 10,
+        "4": 2
+      }
+    },
+    {
+      "fold": "DEV",
+      "family": "pending",
+      "voice_bearing_frames": 34,
+      "final_frames": 18,
+      "max_voice_tokens": 5,
+      "max_final_voice_tokens": 2,
+      "voice_token_histogram": {
+        "1": 2,
+        "2": 10,
+        "3": 10,
+        "4": 7,
+        "5": 5
+      },
+      "final_voice_token_histogram": {
+        "0": 10,
+        "2": 8
+      }
+    },
+    {
+      "fold": "DEV",
+      "family": "quiet",
+      "voice_bearing_frames": 18,
+      "final_frames": 14,
+      "max_voice_tokens": 5,
+      "max_final_voice_tokens": 2,
+      "voice_token_histogram": {
+        "2": 6,
+        "5": 12
+      },
+      "final_voice_token_histogram": {
+        "0": 10,
+        "2": 4
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "cancel",
+      "voice_bearing_frames": 168,
+      "final_frames": 184,
+      "max_voice_tokens": 5,
+      "max_final_voice_tokens": 4,
+      "voice_token_histogram": {
+        "1": 4,
+        "2": 56,
+        "3": 64,
+        "4": 32,
+        "5": 12
+      },
+      "final_voice_token_histogram": {
+        "0": 96,
+        "2": 56,
+        "3": 24,
+        "4": 8
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "delegate",
+      "voice_bearing_frames": 235,
+      "final_frames": 120,
+      "max_voice_tokens": 7,
+      "max_final_voice_tokens": 4,
+      "voice_token_histogram": {
+        "1": 6,
+        "2": 58,
+        "3": 46,
+        "4": 87,
+        "5": 31,
+        "6": 6,
+        "7": 1
+      },
+      "final_voice_token_histogram": {
+        "0": 74,
+        "2": 27,
+        "3": 9,
+        "4": 10
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "voice_bearing_frames": 66,
+      "final_frames": 32,
+      "max_voice_tokens": 7,
+      "max_final_voice_tokens": 3,
+      "voice_token_histogram": {
+        "2": 15,
+        "3": 21,
+        "4": 20,
+        "5": 8,
+        "6": 1,
+        "7": 1
+      },
+      "final_voice_token_histogram": {
+        "0": 18,
+        "2": 12,
+        "3": 2
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "pause",
+      "voice_bearing_frames": 120,
+      "final_frames": 56,
+      "max_voice_tokens": 6,
+      "max_final_voice_tokens": 4,
+      "voice_token_histogram": {
+        "2": 16,
+        "3": 48,
+        "4": 40,
+        "5": 12,
+        "6": 4
+      },
+      "final_voice_token_histogram": {
+        "0": 44,
+        "2": 8,
+        "4": 4
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "pending",
+      "voice_bearing_frames": 104,
+      "final_frames": 60,
+      "max_voice_tokens": 7,
+      "max_final_voice_tokens": 4,
+      "voice_token_histogram": {
+        "1": 4,
+        "2": 20,
+        "3": 20,
+        "4": 36,
+        "5": 8,
+        "7": 16
+      },
+      "final_voice_token_histogram": {
+        "0": 44,
+        "2": 8,
+        "3": 4,
+        "4": 4
+      }
+    },
+    {
+      "fold": "TRAIN",
+      "family": "quiet",
+      "voice_bearing_frames": 136,
+      "final_frames": 60,
+      "max_voice_tokens": 5,
+      "max_final_voice_tokens": 3,
+      "voice_token_histogram": {
+        "2": 40,
+        "3": 60,
+        "4": 32,
+        "5": 4
+      },
+      "final_voice_token_histogram": {
+        "2": 36,
+        "3": 24
+      }
+    }
+  ],
+  "findings": [
+    "Candidate466 measured ordinary0094 had8visible text tokens plus native turnEOS (9native rows/10TTSconditioning tokens) inONEfinalframe. OrdinaryTRAIN maximum is7texttokens on any frame,3on a finalframe; allTRAINfamilies final maximum4. This particular burst is not an approved teacher pacing target.",
+    "All304 actualcachedtargets match original scheduledframe labels and recordedtargetdigests with originalfolds intact. No broken/mismatched cadence label was diagnosed. This does not independently verify source audio alignment/duration or all possible dataset weaknesses.",
+    "Ordinary is32/240TRAINscenes=13.33percent and675/12665rawlabels=5.33percent. Actual objective averages decision/text groups per scene, then averages four scenes per update. Rawtokenfraction is NOT loss mass or gradient share. 120TRAINscenes additionally receive actionauxiliary .25; ordinary retains .1KL/.01hidden. None of these coefficients changed.",
+    "Current frame_decision metrics coverlisten/speak only, not chunkEOS/turnEOS. Aggregate decisionCE mixes all control classes. New detachedper-class telemetry exposes cadence errors separately for future measured OPAL decisions; no historical per-class logits/results were reconstructed.",
+    "Data labels alone do not establish why freerunning cadence changed. Teacherforced/free-running gap, limitedordinarycoverage, optimizer/objective balance and adaptercapacity remain hypotheses requiring controlled comparisons. Do not regenerate ElevenLabs data, alterbatchsize/LR, expandadapters or switchbase solely on these descriptive counts."
+  ],
+  "code_change": {
+    "files": [
+      "training/venus/action_targets.py",
+      "training/venus/lora.py",
+      "training/venus/diagnostics.py"
+    ],
+    "effect": "Add optional listen/speak/turnEOS/chunkEOS/chunkTTSEOS per-token CE/accuracy/count, one batched small host transfer. Route class metrics through real training/dev aggregates and OPAL agent_metrics. Absentclasses remainNone,zero count; oldrecords remain unchanged. Metrics only, no newobjective/weights/masks/targets/update ownership.",
+    "red": "2 targetedtests initiallyfail missingmetricinterface/OPALfield; existingframe_decision stillcorrect while scriptedchunkEOS prediction wrong.",
+    "green": "30relatedtestsPASS3.11s incl exactdefaultdiagnosticloss/gradient equality, ordinaryKL/hidden retention, existingOPAL/aggregation checks."
+  },
+  "no_new_optimizer_updates": true,
+  "no_new_model_or_API_calls": true,
+  "caches_originals_approvals_receipts_folds_unchanged": true,
+  "heldout_audio_hashes_unchanged": true,
+  "read_scope": "Descriptive label cadence, not speech quality or a new approval. Whitespace/phonetic duration thresholds are not invented. Fullbinary/embedding/prefix hashes inherited from verified original backups; only small actual target+mask storages re-read and checked against saved target digests. No model forward/hidden storage scan, originalfiles/approvals unchanged.",
+  "next": "Complete the pending prepared v57paired24 native speech comparison after the ONE requested newinterval decision. Speech completion remainsunqualified/defaultoff. No further broad preparation needed before that counterfactual; keep computeoff. Then use fullnativebehavior plus class-specific cadence signals to design a nonredundant dataset/recipe/1vs4layer trial; no newtraining authorization inferred.",
+  "qualified": false,
+  "adopted": false
+}

@@ -106,3 +106,28 @@ def test_prepared_objective_rejects_invalid_weights_before_model_loading(weight)
     from training.venus.lora import scene_loss
     with pytest.raises(ValueError, match='weight'):
         scene_loss(None, {}, 'cpu', action_aux_weight=weight)
+
+
+def test_bad_chunk_end_is_visible_even_when_listen_speak_decisions_are_correct():
+    targets,decisions=labelled([LISTEN,SPEAK,2,CHUNK,SPEAK,3,TURN,CHUNK])
+    selected,_=masks(targets,decisions,IDS)
+    logits=torch.full((len(targets),20),-10.)
+    logits[torch.arange(len(targets)),targets]=10.
+    logits[3,CHUNK],logits[3,4]=-10.,10.
+    result=metrics(logits,targets,selected,control_token_ids=IDS)
+    assert result['frame_decision_token_accuracy']==1.
+    assert result['native_chunk_end_tokens']==2 and result['native_chunk_end_token_accuracy']==.5
+    assert result['native_chunk_end_ce']>9 and result['native_turn_end_token_accuracy']==1.
+    assert result['native_chunk_tts_end_tokens']==0 and result['native_chunk_tts_end_ce'] is None
+
+
+def test_native_cadence_fields_reach_opal_review_without_inventing_absent_classes():
+    from training.venus.diagnostics import aggregate,review
+    parts=dict(ce=1.,native_chunk_end_ce=4.,native_chunk_end_token_accuracy=.5,native_chunk_end_tokens=2)
+    groups=aggregate([('ordinary',parts,1),('ordinary',dict(ce=1.),1)])
+    packet,_=review([dict(step=1,family_train_metrics=groups)],1,{})
+    assert packet['agent_metrics']['train_window_ordinary_native_chunk_end_ce']==4.
+    assert packet['agent_metrics']['train_window_ordinary_native_chunk_end_tokens']==2.
+    assert packet['train']['ordinary']['native_chunk_end_ce_count']==1
+    assert packet['train']['ordinary']['native_chunk_tts_end_ce'] is None
+    assert not packet['causal_diagnosis_established'] and not packet['heldout_available']

@@ -14,6 +14,8 @@ from types import SimpleNamespace
 import torch
 
 
+CONTROL_METRICS=('native_listen','native_speak','native_turn_end','native_chunk_end','native_chunk_tts_end')
+
 NAMES = ('<|listen|>', '<|speak|>', '<|turn_eos|>', '<|chunk_eos|>',
          '<|chunk_tts_eos|>', '<delegate>', '</delegate>')
 
@@ -72,7 +74,7 @@ def masks(targets, decision_mask, ids):
     return dict(frame_decision=frame, action=action, argument=argument), spans
 
 
-def metrics(logits, targets, selected, losses=None):
+def metrics(logits, targets, selected, losses=None, *, control_token_ids=None):
     """Teacher-forced token measurements; never call these native task success."""
     if losses is None:
         losses = torch.nn.functional.cross_entropy(logits, targets.to(logits.device), reduction='none')
@@ -84,6 +86,19 @@ def metrics(logits, targets, selected, losses=None):
         result[name + '_ce'] = float(losses[mask].mean().detach()) if count else None
         result[name + '_token_accuracy'] = float((predicted[mask] == targets.to(logits.device)[mask]).float().mean()) if count else None
         result[name + '_tokens'] = count
+    if control_token_ids is not None:
+        target=targets.to(logits.device)
+        control=torch.stack([target==control_token_ids[name] for name in NAMES[:5]])
+        counts=control.sum(1);denominator=counts.clamp_min(1).float()
+        # One small host transfer for the five classes; detached observations
+        # do not add a loss term or affect any existing gradient/mask/weight.
+        ce=(control*losses.detach().float().unsqueeze(0)).sum(1)/denominator
+        accuracy=(control*(predicted==target).unsqueeze(0)).sum(1)/denominator
+        values=torch.stack((counts.float(),ce,accuracy),dim=1).detach().cpu().tolist()
+        for name,(count,loss,accuracy) in zip(CONTROL_METRICS,values):
+            result[name+'_tokens']=int(count)
+            result[name+'_ce']=loss if count else None
+            result[name+'_token_accuracy']=accuracy if count else None
     return result
 
 
