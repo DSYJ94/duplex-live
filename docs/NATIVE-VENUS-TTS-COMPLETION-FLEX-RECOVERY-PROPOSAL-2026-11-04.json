@@ -1,0 +1,83 @@
+{
+  "status": "PROPOSED_REQUIRES_ONE_RECOVERY_INTERVAL_AMENDMENT",
+  "purpose": "Finish the SAME full24 paired native speech comparison after fixing the diagnosed pre-model directory bug. No failed-model retry or repeated optimizer update: no model was constructed in v62.",
+  "prior_authorization": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-AUTHORIZATION-2026-11-04.json",
+  "prior_authorization_sha256": "881796485aec3a2432c3ea2c95c20fe6cc42084dfcb749da389ee7fbcdcd2978",
+  "prior_proposal": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-PROPOSAL-2026-11-04.json",
+  "prior_proposal_sha256": "f821ff23a769652589a2c0176502e7213b8528425437fcda32a809b9d2422153",
+  "startup_result": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-STARTUP-RESULT-2026-11-04.json",
+  "startup_result_sha256": "73a8fc4729cfa6329ea3834eb47be74ddd99de8ddd27ce0ae1dce639c5736091",
+  "compute": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-a",
+    "machine": "a2-highgpu-1g",
+    "provisioning_model": "FLEX_START",
+    "maximum_new_create_requests": 1,
+    "maximum_new_running_intervals": 1,
+    "queue_wait_seconds_max": 3600,
+    "native_stop_seconds": 1000,
+    "rounding_reserve_seconds": 100,
+    "VM_name": "duplex-venus-tts-flex-20261104-a-v63",
+    "maximum_running_GPUs": 1,
+    "no_resubmission_after_actual_request": true
+  },
+  "storage": {
+    "one_temporary_disk_gib": 100,
+    "disk_name": "duplex-venus-tts-flex-data-20261104-a-v63",
+    "source_original_disk_id": "4375908109499109167",
+    "reuse_owned_snapshot_id": "4724490043241393447",
+    "original_VM_and_disk_untouched_and_retained": true,
+    "temporary_window_seconds": 7200,
+    "immutable_window": "Fresh claim after approval before first storage operation; no reset.",
+    "prior_conservative_clone_GiBh": 60,
+    "prior_conservative_active_snapshot_GiBh": 60,
+    "new_clone_GiBh_upper": 200,
+    "new_active_snapshot_GiBh_upper": 200,
+    "aggregate_limit_each_GiBh": 400,
+    "combined_recoverable_bytes_max": 171798691840,
+    "retention_hours_max": 72,
+    "migration_reserve_usd": 2,
+    "cleanup": "Same fullhash/pretransfer inventory/outsideOneDrive <=32MiB copyback, stop early, remove only new verified temporary envelope/active snapshot; preserve unverified unique results."
+  },
+  "evaluation": {
+    "required_native_cases": 24,
+    "fresh_processes": 2,
+    "weight_conditions": [
+      "untouched-release",
+      "candidate466"
+    ],
+    "runtime_conditions": [
+      "original26",
+      "native-terminal-resume-v1"
+    ],
+    "same_existing_inputs_voice_seed": true,
+    "new_optimizer_updates": 0,
+    "new_external_model_API_calls": 0,
+    "full_existing_time_speech_behavior_gates_unchanged": true,
+    "no_passing_subset": true,
+    "no_product_or_candidate_adoption": true
+  },
+  "budget": {
+    "phase_cap_usd": 75,
+    "project_cap_usd": 175,
+    "prior_focused_before_v62_seconds_upper": 33500,
+    "v62_consumed_upper_seconds": 200,
+    "current_prior_focused_seconds_upper": 33700,
+    "original_seconds_upper": 54451,
+    "remaining_new_GPU_seconds_upper": 1100,
+    "maximum_focused_seconds_upper": 34800,
+    "maximum_cumulative_seconds_upper": 89251,
+    "combined_v62_plus_recovery_seconds_upper": 1300,
+    "original_approved_extra_seconds_upper": 1300,
+    "hourly_ceiling_usd": 4,
+    "noncompute_reserve_usd": 33,
+    "cpu_recovery_reserve_usd": 0.25,
+    "migration_reserve_usd": 2,
+    "phase_upper_usd": 73.91666666666666,
+    "project_upper_usd": 165.90114722222222,
+    "no_purchase": true,
+    "no_time_cost_or_receipt_reset": true
+  },
+  "limits": "No new API/IAM/firewall/service-account/region/quota; same approved source/artifact exclusions, strict existing OSLogin/IAP; no Isambard today.",
+  "reason": "The prior grant allowed ONE running interval, now consumed even though the probe failed before loading weights. This explicitly permits one recovery interval while reducing its runtime to16m40s so the combined paid-time upper bound and all spending caps stay unchanged. Source bug is fixed and actual-entrypoint regression passes before this request."
+}

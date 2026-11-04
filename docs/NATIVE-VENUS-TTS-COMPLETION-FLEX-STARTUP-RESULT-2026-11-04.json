@@ -1,0 +1,50 @@
+{
+  "status": "TERMINAL_PRE_MODEL_OUTPUT_DIRECTORY_FAILURE_FIXED_LOCALLY",
+  "producer": "07c1fce30141598a59f85e8494c8b40540381f40",
+  "controller_session": 56004,
+  "controller_PID": 48661,
+  "controller_actual_exit": 1,
+  "VM_id": "2475184712201966740",
+  "disk_id": "1230134329439852298",
+  "native_unit": "duplex-venus-tts-baseline62",
+  "native_invocation": "3df288e4e6454c84a255ee5092604fee",
+  "native_terminal": {
+    "MainPID": "0",
+    "Result": "exit-code",
+    "ExecMainStatus": "1",
+    "ActiveState": "failed",
+    "SubState": "failed",
+    "InvocationID": "3df288e4e6454c84a255ee5092604fee"
+  },
+  "actual_gpu_seconds": 129.9079999923706,
+  "upper_gpu_seconds": 200,
+  "model_constructions": 0,
+  "native_cases_completed": 0,
+  "optimizer_updates": 0,
+  "external_model_API_calls": 0,
+  "cause": "tts_stop_probe used mkdir(exist_ok=False) for nested baseline output without creating its missing parent; exception precedes NativeEngine construction.",
+  "log_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-completion-v62/duplex-venus-tts-baseline62.log",
+  "log_sha256": "8594912a1cf5e8a533efe573964a293303597d026ac72bd9a9f081e00dee1b62",
+  "events_sha256": "e4617376ec42d2942483e38df97b29a85ddf191bb4cdf3acd7ac982267140079",
+  "copyback": {
+    "full_hash_inventory_verified": true,
+    "files": 1,
+    "bytes": 1999,
+    "destination": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-completion-v62",
+    "source": "07c1fce30141598a59f85e8494c8b40540381f40",
+    "complete_report_present": false,
+    "report_paths": []
+  },
+  "temporary_VM_and_disk_deleted": true,
+  "active_snapshot_retired": true,
+  "all_original_VMs_provider_verified_stopped": true,
+  "original_VM_and_disk_preserved": true,
+  "fix": {
+    "path": "training/venus/tts_stop_probe.py",
+    "sha256": "7f72ed965d2b82db8e49443edbef54449ce547d41b4efd0f5298e4f85925b3de",
+    "behavior": "mkdir(parents=True,exist_ok=False), still refuses existing output",
+    "regression": "evals/harness/test_venus_tts_probe_output.py",
+    "test_result": "44 related tests PASS1.54s; actual main reaches intercepted model constructor with missing parent and refuses second-use output",
+    "no_native_qualification": true
+  }
+}

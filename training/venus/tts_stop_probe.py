@@ -26,7 +26,7 @@ def main(a):
     root=Path(a.timelines)
     for s in selected['scenes']:
         assert s['family']=='ordinary' and sha(root/s['id']/'user.wav')==s['user_wav_sha256'] and sha(root/s['id']/'timeline.json')==s['timeline_sha256']
-    out=Path(a.output);out.mkdir(exist_ok=False)
+    out=Path(a.output);out.mkdir(parents=True,exist_ok=False)
     engine=NativeEngine(a.model,adapter_checkpoint=a.checkpoint,voice_reference=a.voice_reference,voice_reference_sha256=a.voice_reference_sha256,tts_attention='released',speech_completion=getattr(a,'speech_completion',False))
     engine.model.requires_grad_(False)
     rows=[]
