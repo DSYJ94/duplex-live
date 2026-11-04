@@ -67,11 +67,12 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if resume80_precreate and not fallback80:raise ValueError('80GB precreate recovery requires the original fallback mode')
     if fallback80 and (resume_sizing or replace_prestart):raise ValueError('Choose one exact allocation mode')
     if replace_prestart and not resume_sizing:raise ValueError('Replacement is scoped only to actual pretraining sizing failure')
     previous_intervals=[];prior_seconds=0;prior_vm=None
@@ -116,7 +117,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
             raise ValueError('Exact zero-new-interval scheduling rejection required')
         NAME='duplex-venus-large-gpu-20261104-a-v66'
-    if R.exists() and not replace_prestart:raise ValueError('Observe the real existing GPU controller; never duplicate')
+    if R.exists() and not replace_prestart and not resume80_precreate:raise ValueError('Observe the real existing GPU controller; never duplicate')
     stage=ROOT/'stage'
     proof=json.loads((stage/'stage-verified.json').read_text())
     previous=json.loads((stage/'provider-final.json').read_text())
@@ -146,9 +147,17 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
             or 'duplex-venus-train-bounded' not in allow['targetTags'] or 'duplex-venus-train-bounded' not in deny['targetTags']
             or allow['priority']>=deny['priority']):raise ValueError('Existing authenticated IAP/restricted-ingress fence required')
     old_disk_name='duplex-venus-large-data-20261104-a-v65'
-    disk=c.cloud('compute','disks','describe',old_disk_name if fallback80 else DISK,'--zone='+('us-central1-a' if fallback80 else ZONE))
+    disk=c.cloud('compute','disks','describe',DISK if resume80_precreate else old_disk_name if fallback80 else DISK,
+                 '--zone='+('us-central1-a' if fallback80 and not resume80_precreate else ZONE))
     olddisk=json.loads((stage/'disk.json').read_text())
-    if disk['id']!=olddisk['id'] or int(disk['sizeGb'])!=250:raise ValueError('SAME staged250GB disk required')
+    expected_disk=json.loads((R/'disk-a.json').read_text()) if resume80_precreate else olddisk
+    if disk['id']!=expected_disk['id'] or int(disk['sizeGb'])!=250:raise ValueError('Exact preserved250GB disk required')
+    if resume80_precreate:
+        failure=json.loads((R/'eu80-precreate-failure.json').read_text())
+        if (failure['third_GPU_interval_started'] or failure['reason']!='Google requires explicit discard-local-ssds-at-termination-timestamp'
+                or disk.get('users') or disk['status']!='READY' or disk['sourceSnapshotId']!='4724490043241393447'
+                or (R/'provider-start.json').exists() or any(v['name']==NAME for v in instances)):
+            raise ValueError('Only exact observed400-before-VM and same free ready disk may recover')
     if resume_sizing:
         same=[v for v in instances if v['name']==prior_vm['name']]
         if (len(same)!=1 or same[0]['id']!=prior_vm['id'] or same[0]['status']!='TERMINATED'
@@ -157,7 +166,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
             raise ValueError('Only SAME stopped zero-update sizing VM may restart')
         if replace_prestart and any(v['name']==NAME for v in instances):raise ValueError('Replacement name already exists; observe it')
     elif any(v['name']==NAME for v in instances):raise ValueError('Existing GPU name must be observed')
-    if replace_prestart:
+    if resume80_precreate:
+        c.events=json.loads((R/'events.json').read_text())
+        claim=R/'eu80-precreate-recovery-claim.json';bundle=R/'eu80-precreate-recovery-source.bundle'
+    elif replace_prestart:
         c.events=json.loads((R/'events.json').read_text())
         claim=R/'prestart-replacement-claim.json';bundle=R/'prestart-replacement-source.bundle'
     else:
@@ -184,13 +196,14 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
             from .large_stage import LOCAL,PARENT
             # No learned state exists on this staging disk. Both unique failed
             # native runs have complete off-machine hash receipts above.
-            exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone=us-central1-a')
-            if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED' or exact['lastStartTimestamp']!=prior_vm['lastStartTimestamp']:
-                raise ValueError('Only exact stopped second sizing instance may retire')
-            c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone=us-central1-a','--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
-            old_disk=c.cloud('compute','disks','describe',old_disk_name,'--zone=us-central1-a')
-            if old_disk['id']!=disk['id'] or old_disk.get('users'):raise ValueError('Only old fully preserved temporary disk may retire')
-            c.run(['gcloud','compute','disks','delete',old_disk_name,'--zone=us-central1-a','--project='+c.PROJECT,'--quiet'],150)
+            if not resume80_precreate:
+                exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone=us-central1-a')
+                if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED' or exact['lastStartTimestamp']!=prior_vm['lastStartTimestamp']:
+                    raise ValueError('Only exact stopped second sizing instance may retire')
+                c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone=us-central1-a','--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+                old_disk=c.cloud('compute','disks','describe',old_disk_name,'--zone=us-central1-a')
+                if old_disk['id']!=disk['id'] or old_disk.get('users'):raise ValueError('Only old fully preserved temporary disk may retire')
+                c.run(['gcloud','compute','disks','delete',old_disk_name,'--zone=us-central1-a','--project='+c.PROJECT,'--quiet'],150)
             snap=c.cloud('compute','snapshots','describe','duplex-venus-context-migrate-20261102-v50')
             if snap['id']!='4724490043241393447' or snap['sourceDiskId']!='4375908109499109167' or snap['status']!='READY':
                 raise ValueError('Same approved owned100GB source snapshot required')
@@ -199,9 +212,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
                 while time.time()<last_submission+600:time.sleep(min(30,last_submission+600-time.time()))
                 ZONE='europe-west4-'+suffix;NAME='duplex-venus-large-gpu-20261104-eu'+suffix+'-v67'
                 DISK='duplex-venus-large-data-20261104-eu'+suffix+'-v67';c.NAME=NAME
-                created_disk=json.loads(c.run(['gcloud','compute','disks','create',DISK,'--zone='+ZONE,
-                    '--source-snapshot='+snap['name'],'--size=250GB','--type=pd-balanced','--labels=duplex-scope=large-v65',
-                    '--project='+c.PROJECT,'--quiet','--format=json'],900));save('disk-create-'+suffix+'.json',created_disk)
+                if not (resume80_precreate and suffix=='a'):
+                    created_disk=json.loads(c.run(['gcloud','compute','disks','create',DISK,'--zone='+ZONE,
+                        '--source-snapshot='+snap['name'],'--size=250GB','--type=pd-balanced','--labels=duplex-scope=large-v65',
+                        '--project='+c.PROJECT,'--quiet','--format=json'],900));save('disk-create-'+suffix+'.json',created_disk)
                 disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
                 if disk['sourceSnapshotId']!=snap['id'] or int(disk['sizeGb'])!=250 or disk.get('users'):raise ValueError('Exact new250GB source clone required')
                 save('disk-'+suffix+'.json',disk);last_submission=time.time()
@@ -211,6 +225,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
                     '--disk=name='+DISK+',boot=yes,auto-delete=no,mode=rw',
                     '--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE',
                     '--metadata-from-file=startup-script='+str(boot),'--max-run-duration='+str(duration)+'s',
+                    '--discard-local-ssds-at-termination-timestamp=true',
                     '--instance-termination-action=STOP','--async')
                 op=op[0] if isinstance(op,list) else op;save('create-'+suffix+'.json',op)
                 c.record('one_A10080_standard_prestart_attempt',zone=ZONE,operation=op['name'],prior_GPU_seconds_upper=prior_seconds)
@@ -334,4 +349,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate)

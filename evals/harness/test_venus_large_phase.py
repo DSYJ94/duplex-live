@@ -47,6 +47,21 @@ def test_native_full_path_reaches_new_earlier_layers():
     assert torch.count_nonzero(params['model.layers.0.mlp.down_proj.b'].grad) > 0
 
 
+def test_shape_probe_preserves_full_causal_gradients_on_tiny_cpu_only():
+    from training.venus.large_memory_probe import whole_backbone_native_heads
+    config=Qwen3Config(hidden_size=32,intermediate_size=64,num_hidden_layers=3,
+                      num_attention_heads=4,num_key_value_heads=2,head_dim=8,vocab_size=48)
+    config._attn_implementation='eager'
+    model=Qwen3ForCausalLM(config).eval();install(model,rank=2,alpha=2,last_layers=1)
+    ex=full_native(example())
+    a,_=selected_forward(model,ex,'cpu');a.square().mean().backward()
+    first={n:p.grad.clone() for n,p in adapter_parameters(model).items()}
+    model.zero_grad(set_to_none=True)
+    b,_=whole_backbone_native_heads(model,ex,'cpu');b.square().mean().backward()
+    torch.testing.assert_close(a,b,rtol=1e-5,atol=1e-7)
+    for name,p in adapter_parameters(model).items():torch.testing.assert_close(first[name],p.grad,rtol=1e-5,atol=1e-7)
+
+
 def test_actual_opal_capacity_boundary_keeps_parent_program_moments_rng_and_new_zero_counters(tmp_path):
     source = Path('/private/tmp/duplex-opal-upstream-20261028')
     if not (source/'.git').exists(): pytest.skip('Pinned upstream unavailable')
