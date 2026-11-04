@@ -54,6 +54,15 @@ def test_capacity_only_retry_requires_real_terminal_stockout_and_unchanged_provi
     assert c.capacity_retry_after(1,vm)==datetime.fromisoformat('2026-11-04T21:04:15+00:00').timestamp()
     with pytest.raises(ValueError):c.capacity_retry_after(3,vm)
     with pytest.raises(ValueError):c.capacity_retry_after(1,dict(vm,lastStartTimestamp='changed'))
+    # A terminal rejected start can advance lastStop but never lastStart.
+    updated=dict(vm,lastStopTimestamp='2026-11-04T20:54:20+00:00')
+    (old/'no-new-running-interval.json').write_text(json.dumps(updated))
+    op.update(startTime='2026-11-04T20:54:15+00:00',endTime='2026-11-04T20:54:22+00:00')
+    (old/'allocation-terminal.json').write_text(json.dumps(op))
+    assert c.capacity_retry_after(1,vm)==datetime.fromisoformat('2026-11-04T21:04:15+00:00').timestamp()
+    (old/'no-new-running-interval.json').write_text(json.dumps(dict(updated,lastStopTimestamp='2026-11-04T20:55:00+00:00')))
+    with pytest.raises(ValueError):c.capacity_retry_after(1,vm)
+    (old/'no-new-running-interval.json').write_text(json.dumps(updated))
     op['error']['errors'][0]['code']='PERMISSION_DENIED'
     (old/'allocation-terminal.json').write_text(json.dumps(op))
     with pytest.raises(ValueError):c.capacity_retry_after(1,vm)

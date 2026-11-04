@@ -77,9 +77,14 @@ def capacity_retry_after(number,previous):
     if (op['status']!='DONE' or not errors
             or any(x['code'] not in ('ZONE_RESOURCE_POOL_EXHAUSTED','ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS') for x in errors)
             or vm['status']!='TERMINATED' or vm['id']!=previous['id']
-            or vm['lastStartTimestamp']!=previous['lastStartTimestamp']
-            or vm['lastStopTimestamp']!=previous['lastStopTimestamp']):
+            or vm['lastStartTimestamp']!=previous['lastStartTimestamp']):
         raise ValueError('Only exact terminal capacity failure with ZERO new start may retry')
+    # Google advances lastStop on a failed start without advancing lastStart.
+    # Preserve the original actual-running receipt; do not charge phantom time.
+    if vm['lastStopTimestamp']!=previous['lastStopTimestamp']:
+        stop=datetime.fromisoformat(vm['lastStopTimestamp'])
+        if not datetime.fromisoformat(op['startTime'])<=stop<=datetime.fromisoformat(op['endTime']):
+            raise ValueError('Updated stop must belong to this exact failed-start operation')
     requests=[v for v in json.loads((old/'events.json').read_text()) if v['event']=='one_value_selected_GPU_request']
     if len(requests)!=1:raise ValueError('One preserved actual request required')
     return datetime.fromisoformat(requests[0]['at_utc']).timestamp()+600
@@ -150,6 +155,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     retry_after=0
     if prefix_capacity_retry:
         retry_after=capacity_retry_after(prefix_capacity_retry,prior_vm)
+        failed=ROOT/('gpu-05' if prefix_capacity_retry==1 else 'gpu-05-capacity-01')
+        prior_vm=json.loads((failed/'no-new-running-interval.json').read_text())
         R=ROOT/('gpu-05-capacity-%02d'%prefix_capacity_retry)
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
