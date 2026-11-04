@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T22:23:20.704127+00:00",
+  "updated_utc": "2026-11-04T22:27:22.731922+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "aggregate_continuation_APPROVED_interval07_backprop_preflight_deploy_next",
+    "status": "ACTUAL_CUDA_MICROPROOF_PASS_full_native_gradient_admission_RUNNING",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "max12actual/2700prior+40400next+100reserve=43200/150new/325project/originalstorageunchanged;2furtheradmissionfailuresstoprule.",
-    "next_material_decision": "Nonepending; fixGPU/backpropusingcontrolledstrictpreflight, thenoriginalnativegates\u2192directtraining.",
+    "next_material_decision": "Nonepending; observeactualfullnative4gradient/restore/schedule thenimmediatetraining.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json"
   },
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "Consolidatedscopeapproved; allGPUspre-startmustSTOP; actual07notyetrequested/no newupdates.",
+  "current_compute_scope": "SAME07A10080RUNNING/source9a7678c/controller52989-PID33310/prepare1318. ActualCUDA27tensor/3layoutstrictproofPASS;fullnativeadmissionrunning;no updatesyet.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
@@ -125,5 +125,11 @@
     "current_loop_evidence": "No repeated4gram in12 ordinary frozen responses; not a general loop test.",
     "do_not_turn_research_into_open_ended_branch": true
   },
-  "latest_memory_admission_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-CUDA-COMPARISON-RESULT-2026-11-04.json"
+  "latest_memory_admission_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-CUDA-COMPARISON-RESULT-2026-11-04.json",
+  "cuda_storage_microproof": {
+    "path": "docs/NATIVE-VENUS-CUDA-STORAGE-MICROPROOF-2026-11-04.json",
+    "sha256": "a8ae7d26bf573d1167c95eeda683902ed4e291187b134cdd4681d929ae1fb404",
+    "passed": true,
+    "full_native_qualification": false
+  }
 }

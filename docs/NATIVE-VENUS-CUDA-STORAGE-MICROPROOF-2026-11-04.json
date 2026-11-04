@@ -1,0 +1,254 @@
+{
+  "passed": true,
+  "actual_CUDA": true,
+  "torch_version": "2.4.0+cu121",
+  "policy": "repeat4-prefix-pageable-v3-layout",
+  "backend": "EFFICIENT_ATTENTION",
+  "cases": [
+    {
+      "layout": "padded",
+      "mask_shape": [
+        1,
+        32,
+        10,
+        1535
+      ],
+      "mask_stride": [
+        491520,
+        15360,
+        1536,
+        1
+      ],
+      "default_reference_repeat": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": false,
+          "all_finite": true,
+          "differing_elements": 45,
+          "maximum_absolute": 3.725290298461914e-09,
+          "relative_l2": 8.122897270368412e-05
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "deterministic_reference_offload": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "roundtrip_checks": 9,
+      "roundtrip_failures": [],
+      "saved_tensors": 7,
+      "physical_saved_bytes": 25874176,
+      "passed": true
+    },
+    {
+      "layout": "broadcast",
+      "mask_shape": [
+        1,
+        32,
+        10,
+        1535
+      ],
+      "mask_stride": [
+        15360,
+        0,
+        1536,
+        1
+      ],
+      "default_reference_repeat": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": false,
+          "all_finite": true,
+          "differing_elements": 38,
+          "maximum_absolute": 3.725290298461914e-09,
+          "relative_l2": 0.00010128605936188251
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "deterministic_reference_offload": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "roundtrip_checks": 9,
+      "roundtrip_failures": [],
+      "saved_tensors": 7,
+      "physical_saved_bytes": 25874176,
+      "passed": true
+    },
+    {
+      "layout": "native-contiguous",
+      "mask_shape": [
+        1,
+        1,
+        10,
+        1535
+      ],
+      "mask_stride": [
+        15350,
+        15350,
+        1535,
+        1
+      ],
+      "default_reference_repeat": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": false,
+          "all_finite": true,
+          "differing_elements": 45,
+          "maximum_absolute": 9.313225746154785e-10,
+          "relative_l2": 3.7050926039228216e-05
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "deterministic_reference_offload": {
+        "output": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dQ": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dK": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        },
+        "dV": {
+          "exact": true,
+          "all_finite": true,
+          "differing_elements": 0,
+          "maximum_absolute": 0.0,
+          "relative_l2": 0.0
+        }
+      },
+      "roundtrip_checks": 9,
+      "roundtrip_failures": [],
+      "saved_tensors": 7,
+      "physical_saved_bytes": 25874176,
+      "passed": true
+    }
+  ],
+  "new_optimizer_updates": 0,
+  "loaded_model_weights": false,
+  "replaces_full_native_admission": false,
+  "strict_equality_requirement_unchanged": true,
+  "training_determinism_flag_changed": false
+}
