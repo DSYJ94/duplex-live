@@ -1,0 +1,60 @@
+{
+  "status": "CONCRETE_PROPOSAL_PENDING_INTERVAL_ONLY_AMENDMENT",
+  "recorded_utc": "2026-11-04T20:23:49.833877+00:00",
+  "purpose": "One native shared-history admission, then sustained698M/control training if full memory/restore/schedule admission passes. Optional single exact-state stop/resume only after real training has begun; not another failed-admission retry.",
+  "prior_authorization": "docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-AUTHORIZATION-2026-11-04.json",
+  "prior_authorization_sha256": "506b6c457285409877c16a905bbbbe41ed77f6b3b7d54073fc2a85ac7effc9ac",
+  "diagnosis_and_CPU_proof": "docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-STORAGE-RESULT-2026-11-04.json",
+  "diagnosis_sha256": "d7bbce5f7ff873c7f6902f529e2ea7da0834c3ac15708986b81879651e41edd3",
+  "only_authority_change": {
+    "actual_GPU_intervals_maximum_from": 4,
+    "actual_GPU_intervals_maximum_to": 6,
+    "maximum_new_actual_intervals": 2,
+    "first_new_interval": "SAME80VM/disk, prefix-storage memory admission then direct training",
+    "second_new_interval": "Only resume a hash-preserved candidate after new optimizer updates have actually started. No second failed-admission retry. Fresh-process state restore, no replay."
+  },
+  "same_resource": {
+    "project": "aurium-duplex-live-20261024",
+    "VM": "duplex-venus-large-gpu-20261104-eua-v67",
+    "VM_id": "7521667153519853425",
+    "disk": "duplex-venus-large-data-20261104-eua-v67",
+    "disk_id": "2297341858915206463",
+    "zone": "europe-west4-a",
+    "machine": "a2-ultragpu-1g STANDARD",
+    "GPU": "one A10080GB",
+    "retained_durable_GB": 250,
+    "included_discardable_scratch_GB": 375,
+    "new_VM_disk_CPU_snapshot_region": false
+  },
+  "unchanged_limits": {
+    "additional_phase_USD": 150,
+    "project_USD": 325,
+    "old_conservative_carry_USD": 165.7900361111111,
+    "aggregate_GPU_seconds": 43200,
+    "prior_actual_GPU_upper_seconds": 2100,
+    "remaining_GPU_seconds_including_rounding": 41100,
+    "next_provider_maximum_running_seconds": 41000,
+    "each_next_duration_rule": "43100 minus ALL actual prior rounded-upper GPU seconds; retain100seconds reserve before each next start; no reset",
+    "original_storage_deadline_unix": 1793897263.296897,
+    "original_storage_deadline_UTC": "2026-11-05T16:47:43.296897Z",
+    "maximum_approved_artifact_transfer_GB": 100
+  },
+  "memory_policy": {
+    "policy": "repeat4-prefix-pageable-v2",
+    "maximum_physical_saved_activation_GiB": 48,
+    "minimum_actual_host_headroom_GiB": 16,
+    "lossless_only": true,
+    "no_native_math_kernel_precision_or_objective_changes": true
+  },
+  "execution": [
+    "Git-deploy committed source; fresh actual price/quota/allGPU-off/identity checks; one model process, native providerSTOP and independent Mac/guest cost/time guards before load",
+    "Full304 data hashes, actual complete four-worst-TRAIN gradients, materialized Adam and native zero-expansion equivalence; record unique storage/prefix reuses/RAM/GPU/time",
+    "Independent fresh-process complete Adam/RNG/OPAL restore before any optimizer work",
+    "If actual whole paired schedule fits, immediately train unchanged recipe: main698351616 vs control851968; max480newupdates/8complete240TRAINepochs perarm, full64DEV at each boundary, no saved-update replay",
+    "Final independent restore and full paired native64 behavior/speech collection; no subset/adoption/threshold changes; live and owner speech acceptance still required",
+    "If admission fails stop this branch, verify all outputs and stop paid compute. No retry under optional sixth interval. Optional sixth is exact saved-state continuation only after measured new training updates, preserving original time/cost/storage bounds"
+  ],
+  "no_credit_purchase_external_model_API_new_IAM_firewall_or_new_payload": true,
+  "preserved": "All original bases/parent466/optimizerRNGOPAL/fit15/history/KLhidden/data/folds/failed receipts and off-machine backups.",
+  "training_or_adoption_proved_by_CPU_tests": false
+}

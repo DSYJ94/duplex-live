@@ -4,9 +4,9 @@ import torch
 from training.venus.offload import ActivationOffload
 
 
-def policy(model=None, **kw):
+def policy(model=None, memory_policy='repeat4-pageable-v1', **kw):
     return ActivationOffload(model or torch.nn.Linear(2,2), minimum_bytes=1,
-                             force_cpu_test=True, policy='repeat4-pageable-v1', **kw)
+                             force_cpu_test=True, policy=memory_policy, **kw)
 
 
 def same_bytes(a,b):
@@ -41,7 +41,8 @@ def test_actual_host_headroom_and_physical_reservation_reject_before_copy():
     assert hook.saved_bytes==0
 
 
-def test_native_segmented_gqa_loss_and_all_gradients_are_exact():
+@pytest.mark.parametrize('memory_policy',['repeat4-pageable-v1','repeat4-prefix-pageable-v2'])
+def test_native_segmented_gqa_loss_and_all_gradients_are_exact(memory_policy):
     from transformers import Qwen3Config,Qwen3ForCausalLM
     from training.venus.lora import install,scene_loss
     from evals.harness.test_venus_training import example
@@ -56,8 +57,48 @@ def test_native_segmented_gqa_loss_and_all_gradients_are_exact():
     e['forward_path']='native-segmented-bptt-v1'
     loss,_=scene_loss(m,e,'cpu');loss.backward()
     expected={n:p.grad.clone() for n,p in m.named_parameters() if p.requires_grad}
-    m.zero_grad();hook=policy(m)
+    m.zero_grad();hook=policy(m,memory_policy=memory_policy)
     with hook.context():
         actual,_=scene_loss(m,e,'cpu');actual.backward()
     assert torch.equal(loss,actual) and hook.saved_bytes>0
     assert all(torch.equal(expected[n],p.grad) for n,p in m.named_parameters() if p.requires_grad)
+    if memory_policy=='repeat4-prefix-pageable-v2':assert hook.prefix_reuses>0
+
+
+def test_growing_native_shaped_history_preserves_every_old_version_without_quadratic_storage():
+    torch.manual_seed(73)
+    original=torch.randn(1,8,1537,128,dtype=torch.bfloat16)
+    hook=policy(memory_policy='repeat4-prefix-pageable-v2')
+    lengths=[1,3,17,32,60,512,1025,1537]
+    handles=[hook.pack(original[:,:,:n].repeat_interleave(4,dim=1)) for n in lengths]
+    assert hook.prefix_reuses==len(lengths)-1 and len(hook.prefix_histories)==1
+    assert hook.saved_bytes==1*8*2048*128*2
+    for n,handle in zip(lengths,handles):
+        assert same_bytes(hook.unpack(handle),original[:,:,:n].repeat_interleave(4,dim=1))
+
+
+def test_forked_equal_first_token_never_overwrites_saved_history_and_owns_input():
+    original=torch.ones(1,2,5,8,dtype=torch.bfloat16)
+    changed=original.clone();changed[:,:,3,0]=-0.
+    hook=policy(memory_policy='repeat4-prefix-pageable-v2')
+    one=hook.pack(original.repeat_interleave(4,dim=1))
+    two=hook.pack(changed.repeat_interleave(4,dim=1))
+    assert len(next(iter(hook.prefix_histories.values())))==2
+    original.add_(10);changed.add_(10)
+    assert same_bytes(hook.unpack(one),torch.ones(1,8,5,8,dtype=torch.bfloat16))
+    expected=torch.ones(1,2,5,8,dtype=torch.bfloat16);expected[:,:,3,0]=-0.
+    assert same_bytes(hook.unpack(two),expected.repeat_interleave(4,dim=1))
+
+
+def test_shared_prefix_physical_cap_cannot_be_bypassed_by_growth_or_fork():
+    x=torch.ones(1,2,5,8,dtype=torch.bfloat16)
+    hook=policy(memory_policy='repeat4-prefix-pageable-v2',maximum_host_bytes=256)
+    original=hook.pack(x.repeat_interleave(4,dim=1))
+    assert hook.saved_bytes==256
+    # Reusing existing exact bytes consumes no new physical storage.
+    hook.pack(x.repeat_interleave(4,dim=1));assert hook.saved_bytes==256
+    fork=x.clone();fork[:,:,3,0]=2
+    with pytest.raises(MemoryError,match='reservation'):hook.pack(fork.repeat_interleave(4,dim=1))
+    grown=torch.ones(1,2,9,8,dtype=torch.bfloat16)
+    with pytest.raises(MemoryError,match='reservation'):hook.pack(grown.repeat_interleave(4,dim=1))
+    assert hook.saved_bytes==256 and same_bytes(hook.unpack(original),x.repeat_interleave(4,dim=1))

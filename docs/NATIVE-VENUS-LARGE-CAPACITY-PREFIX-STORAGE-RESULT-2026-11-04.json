@@ -1,0 +1,89 @@
+{
+  "status": "FOURTH_INTERVAL_FAILED_MEMORY_RESERVATION_ZERO_UPDATES_ALL_STOPPED",
+  "recorded_utc": "2026-11-04T20:23:49.833877+00:00",
+  "source": "6c4550f57b14423940ad18a128088adf5cee4346",
+  "controller": {
+    "pid": 93714,
+    "tool_session": 28937,
+    "terminal": 1
+  },
+  "native": {
+    "unit": "duplex-large65-prepare",
+    "MainPID": 1311,
+    "invocation": "077cf53cb93e4cd58d335cc1619c2434",
+    "terminal": "exit-code",
+    "exit_status": 1,
+    "error": "Native activation CPU reservation exceeded48GiB; no objective/gradient truncation",
+    "OS_oom_kill": false
+  },
+  "provider": {
+    "id": "7521667153519853425",
+    "status": "TERMINATED",
+    "start": "2026-11-04T12:10:42.245-08:00",
+    "stop": "2026-11-04T12:17:45.717-08:00",
+    "actual_seconds": 423.472,
+    "upper_seconds": 500,
+    "receipt_sha256": "1ea5452f0ceb2ae58482771c470965315f784bb07bddeae3c1d4233ea3d3ce6b"
+  },
+  "new_optimizer_updates": 0,
+  "parent466_adopted": false,
+  "aggregate_GPU_seconds_upper": 2100,
+  "remaining_original_GPU_seconds_including_rounding": 41100,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 22,
+    "bytes": 265088,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v68",
+    "inventory_sha256": "1f57479f07439af845e062b0901eab5181cd69a336faf8158c970d531a418a13"
+  },
+  "all_six_project_VMs_freshly_TERMINATED": true,
+  "geometry": {
+    "id": "venus-context-repair-draft-train-simple_or_delegate-01",
+    "tokens": 1537,
+    "segments": 521,
+    "label_positions": 290,
+    "segment_lengths": [
+      1,
+      10,
+      351
+    ],
+    "sum_prefix_lengths": 429662,
+    "repeated32head_BF16_KV_per_segment_bytes": 253424959488,
+    "compressed8head_BF16_KV_per_segment_bytes": 63356239872,
+    "shared2048capacity8head_KV_bytes": 301989888,
+    "limits": "Analytical storage geometry only, not measured native allocation. Excludes MLP/query/other saved tensors and allocator overhead; actual fit remains unproved."
+  },
+  "causal_diagnosis": "The48GiB reservation cannot store separate compressed KV histories across521 streaming segments: estimated59GiB just for these KV tensors. Need preserve native computation while sharing identical history bytes, rather than raise data/quality thresholds or shorten histories. I should have calculated this bound before the fourth restart.",
+  "code_only_followup": {
+    "policy": "repeat4-prefix-pageable-v2",
+    "enabled_by_default": false,
+    "mechanism": "For byte-exact repeated4head tensors only: copy to pageable CPU; hash first token only to select a bucket, verify complete overlapping prefix bytes before reuse; append only new tokens in owned growable power-of-two buffer. Saved handle retains its original length. Never overwrite existing prefix. Forking differences get separate records. All other tensors use original full copy.",
+    "host_reservation_GiB": 48,
+    "minimum_actual_Linux_headroom_GiB": 16,
+    "forward_backward_data_precision_objectives_unchanged": true,
+    "proof": [
+      "22 tests passed in2.30s including old native/prefix/gradient checks (two expected deprecation warnings)",
+      "8 activation-storage tests passed in1.54s after requiring actual prefix reuse in tiny native GQA gradient test",
+      "Native-shaped BF16 growing history reconstructs every earlier length byte-exactly after buffer growth",
+      "Forked equal-first-token history retains distinct owned values even after input mutation",
+      "Tiny native segmented SDPA/GQA loss and ALL adapter gradients exactly equal no hooks; prefix reuse asserted>0",
+      "Final9 activation-storage tests pass including physical-cap enforcement for growth and forks; old saved handles remain exact after rejected allocations."
+    ],
+    "not_proved": "Full698M CUDA fit, throughput, native restore, training quality, speech or product adoption",
+    "repair_source_sha256": {
+      "training/venus/offload.py": "773ace72adae1640d9bca7ad4d3df806d49f7b5045d9b623e3a1c9d81b4b96d1",
+      "training/venus/large_native.py": "ce9526f66034774cb6698e49bbbf56440b74075a148404a7716b0f15c655b54b",
+      "evals/harness/test_venus_activation_storage.py": "69f4ff75b7471140dbfe6a3529e2256e4eb3fc8596a884523025e80457b17cce"
+    }
+  },
+  "original_limits": {
+    "new_phase_USD": 150,
+    "project_USD": 325,
+    "old_carry_USD": 165.7900361111111,
+    "aggregate_GPU_seconds": 43200,
+    "actual_intervals_consumed": 4,
+    "original_storage_deadline_UTC": "2026-11-05T16:47:43.296897Z"
+  },
+  "critical_backups": "All4 failed native outputs hash-verified outsideOneDrive; old checkpoints/AdamRNGOPAL/history/KLhidden/fit15/data/folds retained. Broad Mac source backup partial."
+}

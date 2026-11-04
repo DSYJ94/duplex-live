@@ -102,7 +102,8 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
             (loss/len(rows)).backward()
         parts.append(dict(id=row['id'], family=row['family'], **metrics,
                           offloaded_bytes=context.saved_bytes,logical_saved_bytes=context.logical_bytes,
-                          bit_exact_compressed_tensors=context.compressed_tensors))
+                          bit_exact_compressed_tensors=context.compressed_tensors,
+                          verified_prefix_reuses=context.prefix_reuses))
         del ex, loss
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params.values()):
         raise ValueError('Missing or nonfinite full-architecture gradients')
@@ -275,7 +276,7 @@ if __name__ == '__main__':
     p.add_argument('--parent')
     p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
     p.add_argument('--host-offload-limit-gib',type=int,choices=(48,128),default=48)
-    p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1'),default='legacy-pinned')
+    p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2'),default='legacy-pinned')
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
     prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)
