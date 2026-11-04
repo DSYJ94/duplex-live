@@ -1,0 +1,45 @@
+{
+  "status": "TERMINAL_THREE_CAPACITY_FAILURES_ZERO_GPU",
+  "producer": "1f199aea64c9e27091799321830e5bec8aa63052",
+  "controller_session": 2926,
+  "controller_PID": 42881,
+  "controller_actual_exit": 1,
+  "attempts": [
+    {
+      "index": 1,
+      "operation": "operation-1793784831200-65f7013aacb77-aec64f80-fa43183f",
+      "terminal": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_sha256": "aecbece2a973cd30cacaac51b4447ce8e63d1db170878bf0264c2850bec9dc85"
+    },
+    {
+      "index": 2,
+      "operation": "operation-1793785454286-65f7038ce56c4-ce1b20b2-ced47027",
+      "terminal": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_sha256": "75906ccc6221b38283fd11d583d5630b86408550811d5fe6226d6ae04dd9883e"
+    },
+    {
+      "index": 3,
+      "operation": "operation-1793786074520-65f705dc65bfe-707bd4b5-5379cb74",
+      "terminal": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_sha256": "980c28182c561b117d1d6353d7d56d337253d43700d1ddccbf387d8f3f25b7a6"
+    }
+  ],
+  "events_path": "runs/venus-training-20261102/tts-completion-v61/events.json",
+  "events_sha256": "1bbb91f85032c53e96e504bc8d4b35b07c799250e0e44eacbcb5e2d9d836a84a",
+  "actual_gpu_seconds": 0,
+  "upper_gpu_seconds": 0,
+  "new_model_cases": 0,
+  "new_optimizer_updates": 0,
+  "original_VM_and_disk_preserved": true,
+  "all_five_VMs_provider_verified_stopped": true,
+  "verified_utc": "2026-11-04T09:58:59.304908+00:00"
+}

@@ -1,0 +1,167 @@
+{
+  "status": "PROPOSED_REQUIRES_QUEUED_CAPACITY_AND_TEMPORARY_ENVELOPE_AUTHORIZATION",
+  "purpose": "Run the SAME complete24 paired native speech comparison through one queued A100 Flex-start request instead of more immediate Standard starts. Preserves the original VM/disk and all prior failed attempts.",
+  "failed_capacity_result": "docs/NATIVE-VENUS-TTS-COMPLETION-MORNING-RESULT-2026-11-04.json",
+  "failed_capacity_result_sha256": "44ca898fecbbe71adaa2280a59c7f9907a2e906a02eceb832979e0f914cdfcba",
+  "prior_diagnostic_authority_sha256": "bbdcccc78f93668119948c1d167a87368ebd4a51feb68ab21bc39b6d737e38cc",
+  "inherited_comparison": "docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json",
+  "inherited_comparison_sha256": "b8548c281e9b489893caf1e2c15cf4c34e0b5ff7982317b34bd5b01730bf29dc",
+  "compute": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-a",
+    "machine": "a2-highgpu-1g",
+    "provisioning_model": "FLEX_START",
+    "one_create_request": true,
+    "queue_wait_seconds_max": 3600,
+    "actual_running_intervals_max": 1,
+    "native_stop_seconds": 1200,
+    "rounding_reserve_seconds": 100,
+    "maximum_running_GPUs": 1,
+    "VM_name": "duplex-venus-tts-flex-20261104-a-v62",
+    "no_capacity_resubmission_after_terminal_or_timeout": true
+  },
+  "storage": {
+    "one_temporary_disk_gib": 100,
+    "disk_name": "duplex-venus-tts-flex-data-20261104-a-v62",
+    "source_original_disk_id": "4375908109499109167",
+    "reuse_owned_snapshot_id": "4724490043241393447",
+    "original_VM_id": "3873014408897233554",
+    "original_VM_and_disk_untouched_and_retained": true,
+    "temporary_window_seconds": 7200,
+    "immutable_window_starts": "After explicit approval, before first snapshot/disk operation; never reset by restart",
+    "existing_aggregate_clone_GiBh_max": 400,
+    "existing_aggregate_active_snapshot_GiBh_max": 400,
+    "conservative_prior_completed_clone_GiBh_upper": 50,
+    "conservative_prior_completed_active_snapshot_GiBh_upper": 50,
+    "new_clone_GiBh_upper": 200,
+    "new_active_snapshot_GiBh_upper": 200,
+    "combined_upper_each": 250,
+    "combined_recoverable_bytes_max": 171798691840,
+    "retention_hours_max": 72,
+    "total_migration_reserve_usd": 2,
+    "cleanup": "Pretransfer inventory, full hash copyback outside OneDrive in <=32MiB batches; stop paid compute, delete ONLY new verified temporary VM/disk and active owned snapshot. Preserve unique unverified outputs if copyback fails."
+  },
+  "evaluation": {
+    "required_native_cases": 24,
+    "weight_conditions": [
+      "untouched-release",
+      "candidate466"
+    ],
+    "runtime_conditions": [
+      "original26",
+      "native-terminal-resume-v1"
+    ],
+    "fresh_processes": 2,
+    "existing_synthetic_inputs": 6,
+    "new_optimizer_updates": 0,
+    "new_external_model_API_calls": 0,
+    "unchanged_strict_acceptance": "All repaired12 WER<=.05/peak<=.995, actual acousticEOS/no incomplete tails/dropped/duplicated audio; retain every case and failure/fullcopyback. Not full behavior, live latency, British-voice or product adoption."
+  },
+  "budget": {
+    "phase_cap_usd": 75,
+    "project_cap_usd": 175,
+    "prior_focused_seconds_upper": 33500,
+    "original_seconds_upper": 54451,
+    "maximum_extra_running_seconds_upper": 1300,
+    "maximum_cumulative_seconds_upper": 89251,
+    "hourly_ceiling_usd": 4,
+    "noncompute_reserve_usd": 33,
+    "cpu_recovery_reserve_usd": 0.25,
+    "migration_reserve_usd": 2,
+    "phase_upper_usd": 73.91666666666666,
+    "project_upper_usd": 165.90114722222222,
+    "new_purchase": false,
+    "cost_or_GPU_time_reset": false
+  },
+  "read_only_preflight": {
+    "quota_receipt": "runs/venus-training-20261104/capacity-recon/us-central1-quotas.json",
+    "quota_receipt_sha256": "64ad33f640b23f5ee92eda0239bde209ef57f7f6dd775c9c71ed6870f669e0d7",
+    "A100_standard": {
+      "limit": 1.0,
+      "metric": "NVIDIA_A100_GPUS",
+      "usage": 0.0
+    },
+    "A100_preemptible": {
+      "limit": 16.0,
+      "metric": "PREEMPTIBLE_NVIDIA_A100_GPUS",
+      "usage": 0.0
+    },
+    "CPUs": {
+      "limit": 200.0,
+      "metric": "CPUS",
+      "usage": 0.0
+    },
+    "preemptible_CPUs": {
+      "limit": 0.0,
+      "metric": "PREEMPTIBLE_CPUS",
+      "usage": 0.0
+    },
+    "interpretation": "Quota is not capacity. Revalidate applicable CPU/preemptible fallback and price before any mutation; do not request extra quota. Provider quota/access rejection stops this attempt. One GPU remains the project execution limit despite larger quota.",
+    "current_Flex_price": {
+      "source": "https://cloud.google.com/products/dws/pricing",
+      "verified_utc": "2026-11-04T10:00:47.544638+00:00",
+      "machine": "a2-highgpu-1g",
+      "machine_usd_per_hour": 2,
+      "pd_balanced_100GiB_usd_per_hour": 0.0136986301369863,
+      "combined_estimate_usd_per_hour": 2.0136986301369864,
+      "pricing_note": "Public DWS table rounds machine price to $2/h; exact current catalog component sum is used conservatively plus disk. Neither is a reservation or capacity promise; refresh actual rates before allocation, hard <=$4/h.",
+      "official_catalog_at_utc": "2026-11-04T10:00:27.636818+00:00",
+      "catalog_receipt": "runs/venus-training-20261104/capacity-recon/A100-flex-catalog.json",
+      "catalog_sha256": "379b478bdeb0438ac5d71f7d97153ab8e7271cf25ef0e3db47df759b01656e34",
+      "DWS_catalog_components": [
+        {
+          "id": "0BF8-622D-CDF7",
+          "description": "Nvidia Tesla A100 GPU attached to DWS Defined Duration VMs running in Americas",
+          "category": {
+            "serviceDisplayName": "Compute Engine",
+            "resourceFamily": "Compute",
+            "resourceGroup": "GPU",
+            "usageType": "OnDemand"
+          },
+          "unit": "h",
+          "price": 1.6136490000000001
+        },
+        {
+          "id": "CF97-256B-D7DB",
+          "description": "DWS Defined Duration A2 Core running in Americas",
+          "category": {
+            "serviceDisplayName": "Compute Engine",
+            "resourceFamily": "Compute",
+            "resourceGroup": "CPU",
+            "usageType": "OnDemand"
+          },
+          "unit": "h",
+          "price": 0.017386
+        },
+        {
+          "id": "C099-1D9D-26EA",
+          "description": "DWS Defined Duration A2 Ram running in Americas",
+          "category": {
+            "serviceDisplayName": "Compute Engine",
+            "resourceFamily": "Compute",
+            "resourceGroup": "RAM",
+            "usageType": "OnDemand"
+          },
+          "unit": "GiBy.h",
+          "price": 0.00233
+        }
+      ],
+      "DWS_catalog_machine_estimate_usd_per_hour": 2.020331,
+      "combined_catalog_estimate_usd_per_hour": 2.0340296301369865
+    }
+  },
+  "deployment": "Git source only; same previously approved <=200MB candidate466 checkpoint+recipe, existing synthetic artifacts/weights on verified clone. rsync -ar --no-owner --no-group with session-token/private/credentials/owner conversations/API keys.md/cores excluded. Keys stay on Mac; existing strict OSLogin/IAP only.",
+  "limits": {
+    "no_new_API_IAM_firewall_service_account_region_quota": true,
+    "no_training": true,
+    "no_external_model_payload_calls": true,
+    "no_Isambard_today": true
+  },
+  "official_sources": [
+    "https://docs.cloud.google.com/compute/docs/instances/about-flex-start-vms",
+    "https://docs.cloud.google.com/compute/docs/instances/create-flex-start-vm",
+    "https://docs.cloud.google.com/compute/resource-usage",
+    "https://cloud.google.com/products/dws/pricing"
+  ],
+  "reason": "Current approval allows only starts of the existing Standard VM. Flex-start must be selected when creating a VM; a separate temporary envelope and queue wait need approval. No increase in GPU time or spending. A queue improves opportunity, not a capacity guarantee. Exact current Flex price must be verified <=$4/hour before clone/request; otherwise stop without resources."
+}
