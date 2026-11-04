@@ -1,0 +1,17 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve 20 minutes within existing caps",
+  "human_approval_verbatim": "Approve 20 minutes within existing caps",
+  "recorded_utc": "2026-11-04T13:46:29.361729+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "7d41440633de2e5b03163843457d381259c230c7",
+  "proposal_sha256": "f1bd26ddc936085bfe3f2cde44e55d7667a60b242ec15d5c2b6b210398adf304",
+  "execution_version": 64,
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175,
+  "maximum_gpu_seconds": 1200,
+  "maximum_new_running_intervals": 1,
+  "maximum_queue_seconds": 3600,
+  "prior_focused_gpu_seconds_upper": 34200,
+  "new_optimizer_updates": 0
+}

@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 from . import controller as c
 from . import tts_placement as placement
-from .tts_completion_flex_guard import AUTH,RECOVERY_AUTH,sha,read_scope
+from .tts_completion_flex_guard import AUTH,RECOVERY_AUTH,COMPAT_AUTH,sha,read_scope
 
 NAME='duplex-venus-tts-flex-20261104-a-v62'
 DISK='duplex-venus-tts-flex-data-20261104-a-v62'
@@ -12,8 +12,9 @@ ZONE='us-central1-a'
 
 
 def configuration(version):
-    assert version in ('62','63')
-    return (NAME.rsplit('-v',1)[0]+'-v'+version,DISK.rsplit('-v',1)[0]+'-v'+version,RECOVERY_AUTH if version=='63' else AUTH,1000 if version=='63' else 1200)
+    assert version in ('62','63','64')
+    authority=COMPAT_AUTH if version=='64' else RECOVERY_AUTH if version=='63' else AUTH
+    return (NAME.rsplit('-v',1)[0]+'-v'+version,DISK.rsplit('-v',1)[0]+'-v'+version,authority,1000 if version=='63' else 1200)
 
 
 def retire(vm,disk,zone,snap,version='62'):
@@ -45,7 +46,7 @@ def allocate(version='62'):
     a=json.loads(authority.read_text());p,_=read_scope(a,int(version))
     assert p['compute']['VM_name']==name and p['storage']['disk_name']==disk_name
     assert p['compute']['queue_wait_seconds_max']==3600 and p['storage']['temporary_window_seconds']==7200
-    assert (p['storage']['combined_upper_each'] if version=='62' else max(p['storage']['prior_conservative_clone_GiBh']+p['storage']['new_clone_GiBh_upper'],p['storage']['prior_conservative_active_snapshot_GiBh']+p['storage']['new_active_snapshot_GiBh_upper']))<=400
+    assert (p['storage']['combined_upper_each'] if version in ('62','64') else max(p['storage']['prior_conservative_clone_GiBh']+p['storage']['new_clone_GiBh_upper'],p['storage']['prior_conservative_active_snapshot_GiBh']+p['storage']['new_active_snapshot_GiBh_upper']))<=400
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     assert not any(v['name'].startswith(('duplex-venus-tts-data-','duplex-venus-tts-flex-data-')) for v in c.cloud('compute','disks','list'))
     if (c.R/'storage-deadline.json').exists():

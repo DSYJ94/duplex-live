@@ -14,18 +14,18 @@ def test_missing_flex_authority_blocks_real_controller(tmp_path,monkeypatch):
     with pytest.raises(FileNotFoundError):ctl.main(completion_flex=True)
 
 
-@pytest.mark.parametrize("version",[62,63])
+@pytest.mark.parametrize("version",[62,63,64])
 def test_exact_flex_lease_storage_budget_and_full_cohort(tmp_path,monkeypatch,version):
     from portable.venus import guard
     from training.venus.paced_guard import execution_plan
-    prop=Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-'+('RECOVERY-' if version==63 else '')+'PROPOSAL-2026-11-04.json')
-    duration=1000 if version==63 else 1200;prior=33700 if version==63 else 33500
-    auth=tmp_path/'fixture-only.json';auth.write_text(json.dumps(dict(status='APPROVED',human_approval='Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps',proposal_path=str(prop),proposal_sha256=g.sha(prop),recorded_utc='2026-11-04T13:10:00+00:00',execution_version=version)));monkeypatch.setattr(g,'RECOVERY_AUTH' if version==63 else 'AUTH',auth)
+    prop=Path('docs/NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-PROPOSAL-2026-11-04.json') if version==64 else Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-'+('RECOVERY-' if version==63 else '')+'PROPOSAL-2026-11-04.json')
+    duration=1000 if version==63 else 1200;prior=34200 if version==64 else 33700 if version==63 else 33500
+    auth=tmp_path/'fixture-only.json';auth.write_text(json.dumps(dict(status='APPROVED',human_approval='Approve 20 minutes within existing caps' if version==64 else 'Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps',proposal_path=str(prop),proposal_sha256=g.sha(prop),recorded_utc='2026-11-04T13:10:00+00:00',execution_version=version)));monkeypatch.setattr(g,'COMPAT_AUTH' if version==64 else 'RECOVERY_AUTH' if version==63 else 'AUTH',auth)
     vm=json.loads(Path('runs/venus-training-20261102/tts-placement-v56/provider-start.json').read_text());vm.update(id='111',name='duplex-venus-tts-flex-20261104-a-v'+str(version),creationTimestamp='2026-11-04T14:30:00+00:00',lastStartTimestamp='2026-11-04T14:31:00+00:00',zone=vm['zone'].replace('us-central1-f','us-central1-a'))
     disk='duplex-venus-tts-flex-data-20261104-a-v'+str(version);vm['disks'][0]['source']=vm['disks'][0]['source'].replace('us-central1-f','us-central1-a').replace('duplex-venus-tts-data-20261102-f-v56',disk);vm['scheduling'].update(provisioningModel='FLEX_START',maxRunDuration=dict(seconds=str(duration)))
     start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp();storage=start-60
     plan=dict(resource_key=g.KEY,authorization_sha256=g.sha(auth),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=24,maximum_gpu_seconds=duration,execution_version=version,maximum_new_running_intervals=1,maximum_queue_seconds=3600,vm_id='111',disk_id='222',snapshot_id='4724490043241393447',snapshot_source_disk_id='4375908109499109167',vm_name=vm['name'],disk_name=disk,storage_started_unix=storage,storage_deadline_unix=storage+7200)
-    p=tmp_path/'execution.json';p.write_text(json.dumps(plan));monkeypatch.setattr(g,'RECOVERY_PLAN' if version==63 else 'PLAN',p)
+    p=tmp_path/'execution.json';p.write_text(json.dumps(plan));monkeypatch.setattr(g,'COMPAT_PLAN' if version==64 else 'RECOVERY_PLAN' if version==63 else 'PLAN',p)
     lease=dict(resource_key=g.KEY,authorization_sha256=g.sha(auth),execution_plan_sha256=g.sha(p),vm_id='111',disk_id='222',snapshot_id=plan['snapshot_id'],disk_size_gib=100,zone='us-central1-a',creation_timestamp=vm['creationTimestamp'],stop_unix=start+duration,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=2.034,storage_started_unix=storage,storage_deadline_unix=storage+7200)
     lease['execution_version']=version
     assert execution_plan(lease)==p and guard.validate(vm,[vm],[],lease,start+1)==start+duration
@@ -40,8 +40,8 @@ def test_exact_flex_lease_storage_budget_and_full_cohort(tmp_path,monkeypatch,ve
 
 def allocator_fixture(tmp_path,monkeypatch,timeout=False,version=62):
     from training.venus import tts_flex_allocation as f
-    prop=Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-'+('RECOVERY-' if version==63 else '')+'PROPOSAL-2026-11-04.json');auth=tmp_path/'fixture-only.json';auth.write_text(json.dumps(dict(status='APPROVED',human_approval='Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps',proposal_path=str(prop),proposal_sha256=g.sha(prop))))
-    monkeypatch.setattr(f,'RECOVERY_AUTH' if version==63 else 'AUTH',auth);vm_name,disk_name,_,_=f.configuration(str(version));monkeypatch.setattr(f.c,'R',tmp_path);monkeypatch.setattr(f.c,'record',lambda *a,**kw:None)
+    prop=Path('docs/NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-PROPOSAL-2026-11-04.json') if version==64 else Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-'+('RECOVERY-' if version==63 else '')+'PROPOSAL-2026-11-04.json');auth=tmp_path/'fixture-only.json';auth.write_text(json.dumps(dict(status='APPROVED',human_approval='Approve 20 minutes within existing caps' if version==64 else 'Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps',proposal_path=str(prop),proposal_sha256=g.sha(prop))))
+    monkeypatch.setattr(f,'COMPAT_AUTH' if version==64 else 'RECOVERY_AUTH' if version==63 else 'AUTH',auth);vm_name,disk_name,_,_=f.configuration(str(version));monkeypatch.setattr(f.c,'R',tmp_path);monkeypatch.setattr(f.c,'record',lambda *a,**kw:None)
     clock=SimpleNamespace(now=0);clock.time=lambda:clock.now
     def sleep(n):clock.now+=n
     clock.sleep=sleep;monkeypatch.setattr(f,'time',clock)
@@ -74,7 +74,7 @@ def allocator_fixture(tmp_path,monkeypatch,timeout=False,version=62):
     return f,state
 
 
-@pytest.mark.parametrize("version",[62,63])
+@pytest.mark.parametrize("version",[62,63,64])
 def test_one_real_flex_create_with_fixed_wait_and_native_stop(tmp_path,monkeypatch,version):
     f,state=allocator_fixture(tmp_path,monkeypatch,version=version)
     vm,disk,zone,snapshot,deadline=f.allocate(str(version))
@@ -84,7 +84,7 @@ def test_one_real_flex_create_with_fixed_wait_and_native_stop(tmp_path,monkeypat
     assert disk['id']!='4375908109499109167' and zone=='us-central1-a'
 
 
-@pytest.mark.parametrize("version",[62,63])
+@pytest.mark.parametrize("version",[62,63,64])
 def test_timed_out_queue_cancels_exact_envelope_never_resubmits(tmp_path,monkeypatch,version):
     f,state=allocator_fixture(tmp_path,monkeypatch,timeout=True,version=version)
     with pytest.raises(AssertionError,match='no resubmission'):f.allocate(str(version))
@@ -93,4 +93,17 @@ def test_timed_out_queue_cancels_exact_envelope_never_resubmits(tmp_path,monkeyp
 
 
 def test_unknown_flex_generation_cannot_borrow_authority():
-    with pytest.raises(AssertionError):g.binding(dict(resource_key=g.KEY,execution_version=64))
+    with pytest.raises(AssertionError):g.binding(dict(resource_key=g.KEY,execution_version=65))
+
+
+def test_compat_guest_scope_needs_only_committed_history_not_mac_ignored_receipts(monkeypatch):
+    original=g.sha
+    def portable_hash(path):
+        assert not str(path).startswith('runs/'), 'Guest cannot read historical ignored Mac receipts'
+        return original(path)
+    monkeypatch.setattr(g,'sha',portable_hash)
+    a=json.loads(g.COMPAT_AUTH.read_text())
+    current,base=g.read_scope(a,64)
+    assert current['compute']['VM_name'].endswith('-v64')
+    assert current['budget']['prior_focused_gpu_seconds_upper']==34200
+    assert base['prior_diagnostic_authority_sha256']

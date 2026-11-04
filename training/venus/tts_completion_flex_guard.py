@@ -6,6 +6,8 @@ AUTH=Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-AUTHORIZATION-2026-11-04.json')
 PLAN=Path('runs/venus-training-20261102/tts-completion-v62/execution.json')
 RECOVERY_AUTH=Path('docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-RECOVERY-AUTHORIZATION-2026-11-04.json')
 RECOVERY_PLAN=Path('runs/venus-training-20261102/tts-completion-v63/execution.json')
+COMPAT_AUTH=Path('docs/NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-AUTHORIZATION-2026-11-04.json')
+COMPAT_PLAN=Path('runs/venus-training-20261102/tts-completion-v64/execution.json')
 KEY='venus-tts-completion-v62'
 
 
@@ -15,7 +17,8 @@ def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def binding(lease):
     assert lease['resource_key']==KEY
     version=lease.get('execution_version',62)
-    assert version in (62,63)
+    assert version in (62,63,64)
+    if version==64:return COMPAT_AUTH,COMPAT_PLAN,1200,34200,64
     return (RECOVERY_AUTH,RECOVERY_PLAN,1000,33700,63) if version==63 else (AUTH,PLAN,1200,33500,62)
 
 
@@ -24,10 +27,27 @@ def execution_plan(lease):
 
 
 def read_scope(a,version):
-    expected='Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps'
+    assert version in (62,63,64)
+    expected='Approve 20 minutes within existing caps' if version==64 else 'Approve recovery within unused allowance' if version==63 else 'Approve queued Flex-start within existing caps'
     assert a['status']=='APPROVED' and a['human_approval']==expected
     assert sha(a['proposal_path'])==a['proposal_sha256']
     amendment=json.loads(Path(a['proposal_path']).read_text());base=amendment
+    if version==64:
+        assert sha(amendment['prior_authority'])==amendment['prior_authority_sha256']
+        previous=json.loads(Path(amendment['prior_authority']).read_text())
+        _,base=read_scope(previous,63)
+        assert sha(amendment['prior_result_path'])==amendment['prior_result_sha256']
+        failed=json.loads(Path(amendment['prior_result_path']).read_text())
+        assert failed['gpu_seconds_upper']==500 and 0<failed['actual_gpu_seconds']<=500
+        assert failed['new_focused_upper_seconds']==34200 and failed['baseline_cases_complete']==12 and failed['repaired_runtime_cases_complete']==0
+        assert failed['new_optimizer_updates']==failed['new_external_model_API_calls']==0
+        assert amendment['budget']['prior_focused_gpu_seconds_upper']==34200 and amendment['budget']['new_gpu_seconds_upper']==1300
+        assert amendment['budget']['maximum_focused_gpu_seconds_upper']==35500
+        assert amendment['new_optimizer_updates']==amendment['new_external_model_API_calls']==0
+        assert amendment['evaluation']['complete_required_cases']==24
+        assert sha('portable/venus/speech_completion.py')==amendment['preflight']['fix_file_sha256']
+        # Normalize field names in memory only; the approved proposal is immutable.
+        amendment=dict(amendment,compute=dict(amendment['compute'],queue_wait_seconds_max=amendment['compute']['maximum_queue_seconds'],VM_name='duplex-venus-tts-flex-20261104-a-v64'),storage=dict(amendment['storage'],temporary_window_seconds=amendment['storage']['new_temporary_window_seconds'],reuse_owned_snapshot_id=amendment['storage']['owned_snapshot_id'],disk_name='duplex-venus-tts-flex-data-20261104-a-v64'))
     if version==63:
         assert sha(amendment['prior_authorization'])==amendment['prior_authorization_sha256']
         assert json.loads(Path(amendment['prior_authorization']).read_text())['status']=='APPROVED'
@@ -86,8 +106,10 @@ def validate(vm,instances,pods,lease,now):
     assert lease['stop_unix']==end and start<=now<end
     assert lease['prior_new_gpu_seconds_upper']==r['prior_seconds'] and lease['prior_gpu_seconds']==54451 and lease['prior_scope_usd']==91.98448055555555
     assert 0<lease['verified_hourly_price_usd']<=4
-    assert r['prior_seconds']+r['duration']+100==34800 and 54451+34800==89251
-    assert 34800*4/3600+33+2+.25<=75 and 91.98448055555555+34800*4/3600+33+2+.25<=175
+    total=35500 if lease.get('execution_version',62)==64 else 34800
+    assert r['prior_seconds']+r['duration']+100==total
+    assert 54451+total==(89951 if total==35500 else 89251)
+    assert total*4/3600+33+2+.25<=75 and 91.98448055555555+total*4/3600+33+2+.25<=175
     assert now<lease['storage_deadline_unix'] and end<lease['storage_deadline_unix']
     active=[v for v in instances if v['status'] not in ('TERMINATED','STOPPED') and (v.get('guestAccelerators') or any('/'+m in v.get('machineType','') for m in ('a2-','a3-','a4-','g2-','g4-')))]
     assert len(active)==1 and active[0]['id']==r['ident']
