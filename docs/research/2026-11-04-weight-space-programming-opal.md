@@ -1,0 +1,19 @@
+# Weight-space programming alongside native OPAL
+
+4 November 2026. Decision: adopt bounded causal inspection and auditable counterfactuals now. Direct base-weight surgery remains off; no native weight edit, model API call or new GPU allocation was performed.
+
+The supplied image refers to the authors' early research blog, not a verified peer-reviewed paper. Their Qwen3.5-0.8B experiment used Python inspection plus a finite practice-evaluation budget. They report MATH-5007.9%→48.1% while reasoning-token-limit failures fell93%→33.1%; their Gemma follow-up did not establish a comparable reasoning gain. This supports a narrow loop-repair hypothesis, not general intelligence acquisition. [Authors' post](https://rikiyat.github.io/blog/weight-space-programming/).
+
+The released protocol separates practice from unseen evaluation, keeps exact tensor diffs, and hashes reconstructed BF16 tensors. The successful50-pass run took20.3 elapsed hours, including4.7 hours waiting; it was not a one-shot intervention. We inspected the released protocol and reconstruction code, not the full experiments or model tensors. [Experiment8 protocol](https://raw.githubusercontent.com/RikiyaT/lm_understand-logs/main/exp8_math/README.md), [reconstruction code](https://raw.githubusercontent.com/RikiyaT/lm_understand-logs/main/exp8_math/code/apply_edit.py).
+
+## What enters our next experiment
+
+1. At existing OPAL checkpoints, distinguish a capacity/optimization plateau from a localized execution or repetition defect. Review per-family TRAIN/DEV curves, gradient/update norms, generation stopping reasons and repeated-token behavior. Teacher-forced loss alone cannot identify a generative loop.
+2. Bound inspection and validation work; write the hypothesis, parameter/program intervention and discriminating metric before another experiment. Use TRAIN/DEV for search and preserve the whole held-out evaluation. The existing progress watchdog supplies time/iteration limits.
+3. Preserve immutable parent checkpoints and exact tensor/optimizer/program/RNG identities. The new broad-adapter implementation retains the trained parent's original tensor objects and64-rank matrix multiplies; extra192-rank zero-output branches expand its effective rank without silently resetting old Adam history.
+4. Keep OPAL responsible for the optimizer/updater program. A direct base-weight edit, if later justified by a reproducible defect, belongs on a separate versioned checkpoint at a phase boundary, compared against unchanged decoding, a matched decoding-only intervention and a simple targeted-edit control. Whole native speech, ordinary retention, behavior and live latency must decide adoption.
+5. A base-weight edit would invalidate our current shortcut of obtaining the retention reference merely by disabling LoRA: that would expose the edited base. Such an experiment must retain an independently immutable original foundation's logits/hidden reference. It must also explicitly account for changed weights versus inherited optimizer moments. No current OPAL program or legacy guard is bypassed.
+
+The12 frozen ordinary generated responses in v64 contain zero repeated4-grams. This small diagnostic does not rule out looping elsewhere, but supplies no evidence for applying the paper's loop-direction removal now. The observed cut-off was already repaired in acoustic runtime with no weight updates. Proof is retained in ignored `runs/product-progress-watch/v64-repetition-diagnostic-20261104.json` and the committed v64 result.
+
+The immediate capacity intervention is broader attention **and MLP** adaptation. Thinking Machines' experiments directly motivate testing that coverage, alongside rank and training horizon. [LoRA Without Regret](https://thinkingmachines.ai/blog/lora/). Current698M preparation and the >1B structural/dense alternatives remain untrained; this research integration is not a claimed efficiency or quality gain.

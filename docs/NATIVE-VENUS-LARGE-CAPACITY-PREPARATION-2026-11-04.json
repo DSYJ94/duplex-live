@@ -1,0 +1,114 @@
+{
+  "config_path": "runs/public-data-20261025/model-metadata/venus/Realtime-Venus-Audio/config.json",
+  "config_sha256": "98edf44576907c9d175df9d21d7ca54ef4e4766b390daa0b6e8a56ee04545ea7",
+  "hidden_size": 4096,
+  "intermediate_size": 12288,
+  "layers": 36,
+  "projection_shapes": {
+    "q_proj": [
+      4096,
+      4096
+    ],
+    "k_proj": [
+      4096,
+      1024
+    ],
+    "v_proj": [
+      4096,
+      1024
+    ],
+    "o_proj": [
+      4096,
+      4096
+    ],
+    "gate_proj": [
+      4096,
+      12288
+    ],
+    "up_proj": [
+      4096,
+      12288
+    ],
+    "down_proj": [
+      12288,
+      4096
+    ]
+  },
+  "dense_parameters_per_block": 192946432,
+  "variants": [
+    {
+      "name": "current_qv_last1_rank64",
+      "trainable_parameters": 851968,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "all7_last16_rank64",
+      "trainable_parameters": 77594624,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "all7_all36_rank128",
+      "trainable_parameters": 349175808,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "all7_all36_rank256",
+      "trainable_parameters": 698351616,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "all7_all36_rank512",
+      "trainable_parameters": 1396703232,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "dense_existing_last6",
+      "trainable_parameters": 1157678592,
+      "new_foundation_parameters": 0
+    },
+    {
+      "name": "six_new_identity_blocks",
+      "trainable_parameters": 1157678592,
+      "new_foundation_parameters": 1157678592
+    }
+  ],
+  "excludes": "Embedding/head/speech parameters and activations; optimizer memory not counted.",
+  "native_qualified": false,
+  "optimizer_updates": 0,
+  "recorded_utc": "2026-11-04T15:42:09.961163+00:00",
+  "status": "META_MODULE_GEOMETRY_AND_TINY_CPU_OPTIMIZER_PROOF_ONLY",
+  "proof": {
+    "selected_tests": "57 PASS in6.74s, including real upstreamOPAL restored on a tiny randomQwen3",
+    "parent_GEMM_shape_and_tensor_identity_retained": true,
+    "initial_tiny_Qwen3_logits_exact": true,
+    "initial_global_CPU_RNG_exact": true,
+    "existing_Adam_moments_counters_exact": true,
+    "new_Adam_moments_counters_zero": true,
+    "new_attention_and_MLP_gradients_reachable": true,
+    "native_9B_loaded": false,
+    "native_GPU_RNG_or_fresh_process_proof": false,
+    "actual_large_variant_trained": false
+  },
+  "main_prepared_variant": {
+    "last_layers": 36,
+    "effective_rank": 256,
+    "effective_alpha": 256,
+    "projections": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "trainable_parameters": 698351616,
+    "retained_parent_rank": 64,
+    "new_rank_on_parent_qv": 192,
+    "state_strategy": "Keep inherited A/B tensor identities and old64-rank GEMMs; add independent zero-output192-rank branches. All previously unadapted projections get256-rank zero-output branches. Existing optimizer history is preserved; new tensors get explicit zero moments/counters.",
+    "native_data_path_required": "Original complete native embeddings/segments with full36layer differentiated forward; do not reuse35-layer frozen-prefix inputs for all-layer training.",
+    "new_adapter_parameters_relative_to_parent": 697499648
+  },
+  "native_optimizer_updates": 0,
+  "optimizer_updates_note": "The config audit executes0 updates. Tiny CPU fixtures do perform test updates; no native model weights were loaded or trained."
+}

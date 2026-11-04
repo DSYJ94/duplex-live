@@ -1,0 +1,128 @@
+{
+  "status": "CONCRETE_PROPOSAL_PENDING_NUMERIC_EXECUTION_SCOPE",
+  "recorded_utc": "2026-11-04T15:49:39.376346+00:00",
+  "owner_direction": "User authorizes a proper larger-capacity variant, research-agent investigation and >1B added parameters if needed; says GPU capacity/training cost not limiting. This proposal quantifies the next paid phase rather than inferring unlimited expenditure.",
+  "purpose": "Test a substantial698351616-parameter attention+MLP adapter with sustained learning curves and preserved native speech/control. No foundation growth or direct weight surgery in this first phase.",
+  "research": "docs/research/2026-11-04-native-large-capacity-research.md",
+  "mechanics": "docs/NATIVE-VENUS-LARGE-CAPACITY-PREPARATION-2026-11-04.json",
+  "mechanics_sha256": "6b468fa484b4a25f24d1ba5bac68334d5ab8202d5f79ce31fac8b85768353232",
+  "parent": {
+    "total_updates": 466,
+    "sha256": "e2c16cb825dc654519e922379a220b8c962e9d8a78eec652a3b195922a69720f",
+    "adopted": false,
+    "legacy_tensor_GEMM_Adam_RNG_OPAL_and_loss_history_preserved": true
+  },
+  "compute": {
+    "provider": "GCP existing project/credits",
+    "region": "europe-west4",
+    "reason": "Actual read StandardA10080 quota1/usage0; US-central1 Standard/Flex80 quota0. Quota is not a stock guarantee.",
+    "ordered_zones": [
+      "europe-west4-a",
+      "europe-west4-b",
+      "europe-west4-c"
+    ],
+    "maximum_terminal_capacity_only_prestart_attempts": 3,
+    "one_actual_running_GPU_at_a_time": true,
+    "maximum_actual_GPU_running_intervals": 1,
+    "gpu": "one A10080GB, a2-ultragpu-1g STANDARD",
+    "maximum_GPU_seconds": 43200,
+    "hard_hourly_price_ceiling_usd": 8,
+    "maximum_CPU_staging_intervals": 1,
+    "CPU": "e2-standard-4",
+    "CPU_maximum_seconds": 14400,
+    "CPU_cost_ceiling_usd": 2,
+    "native_STOP_and_independent_Mac_guest_cost_guard_before_model": true,
+    "queue_or_observation_timeout_never_resubmits": true
+  },
+  "storage_and_transfer": {
+    "original_US_disk_id": "4375908109499109167",
+    "original_disk_and_all_existing_backups_preserved": true,
+    "one_source_snapshot_maximum_GiB": 100,
+    "one_temporary_staging_or_GPU_disk_at_a_time_GiB": 250,
+    "temporary_retention_seconds": 86400,
+    "failed_prestart_zonal_clone_removed_before_next": true,
+    "same_staged_disk_moves_from_stopped_CPU_to_GPU_in_zone": true,
+    "maximum_approved_native_artifact_transfer_GB": 100,
+    "payload": "Existing public pinned Venus assets, approved synthetic240TRAIN/64DEV original native embeddings/segments/targets, parent466+optimizer/RNG/OPAL state and manifests/receipts. No source regeneration or owner data.",
+    "mechanism": "Git deployment; rsync-ar no-owner/no-group excludes session-token, owner-conversations, credentials, .private, API keys and core dumps. Snapshot full source only after excluding/attesting absence of credentials/owner data; otherwise stage only allowed artifacts into clean disk.",
+    "backup": "Complete inventory and hashes outsideOneDrive before retiring unique outputs; originals preserved."
+  },
+  "budget": {
+    "new_additional_GCP_usage_usd": 150,
+    "existing_project_cap_usd": 175,
+    "proposed_project_cap_usd": 325,
+    "prior_phase_cap_usd": 75,
+    "prior_phase_accounting_unchanged": true,
+    "prior_cumulative_conservative_usage_usd": 165.7900361111111,
+    "maximum_cumulative_with_new_phase_usd": 315.7900361111111,
+    "GPU_reserve_usd": 96,
+    "CPU_reserve_usd": 2,
+    "storage_network_and_preservation_reserve_usd": 52,
+    "new_credit_purchase": false,
+    "new_external_model_API_calls": 0
+  },
+  "native_admission_before_optimizer_work": [
+    "Use original complete embeddings/segments; all-layer training cannot use35-layer frozen-prefix values.",
+    "Verify old parent restoration, initial old-vs-expanded native language/hidden equivalence, all intended new gradient paths, finite loss/gradients and measured peak memory/throughput.",
+    "Map existing Adam moments/counters/programs/scheduler history exactly; initialize new parameters separately. Prove complete expanded OPAL restore in a separate process.",
+    "Commit/deploy the new versioned producer, candidate loader and resource guards before billed model work; existing train.py one-layer and legacy authority checks remain intact.",
+    "Admit a meaningful complete-epoch schedule from actual throughput including fullDEV/native evaluation, backup and shutdown reserve. No partial-corpus success."
+  ],
+  "training": {
+    "main_variant": {
+      "all_existing_layers": 36,
+      "projections": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "effective_rank": 256,
+      "effective_alpha": 256,
+      "trainable_parameters": 698351616,
+      "new_foundation_parameters": 0
+    },
+    "control": "Same preserved parent with existing851968-parameter adapter; experimental continuation control, not adoption or replay of saved updates.",
+    "data": "Existing completely approved240TRAIN/64DEV; original words/audio/folds/hashes unchanged. This phase diagnoses adaptation capacity; it does not claim a knowledge-pretraining corpus.",
+    "effective_batch": 4,
+    "maximum_complete_epochs_each_arm": 8,
+    "maximum_new_updates_main": 480,
+    "maximum_new_updates_control": 480,
+    "optional_LR_calibration": "At most two12-update independent large branches. Continue the selected branch checkpoint/order through the remaining schedule; do not restart/replay selected updates. Loser preserved.",
+    "maximum_new_optimizer_updates_all_branches": 984,
+    "tentative_LR_candidates": [
+      1e-05,
+      3e-05
+    ],
+    "LR_status": "Starting hypotheses; native gradient/update/DEV calibration decides once, with recorded OPAL/scheduler ownership. Not copied as a universal paper recipe.",
+    "loss": "Existing decision/text group-balanced CE + ordinaryKL0.1 + hidden retention0.01 + approved action auxiliary0.25; approved native histories/fit15/old objectives retained.",
+    "OPAL": "Existing optimizer ownership and exact program/state restoration. Root-agent Git supervision only; no new paid model-agent API calls. Updates only at declared checkpoint/program boundaries.",
+    "new_data_followup": "Versioned~5000 diverse synthetic interaction episodes proposed for later sustained product learning; requires complete source/teacher/quality/semantic/native-data approval. No5000-example batch, speech API payload or corpus approval is implied here.",
+    "preserved_cross_foundation_artifacts": "Old PersonaPlex/Moshi fit15 and teacher/actual-history artifacts remain immutable; their incompatible token/cache/adapters are not silently loaded into Venus. Current approved Venus CE/KL/hidden/action objectives are retained."
+  },
+  "evaluation": {
+    "at_initialization_and_each_complete_epoch": "Full64DEV family losses plus gradient/update norms and branch exposure counts. Loss reduction is not adoption.",
+    "native_before_adoption": "Complete paired native behavior/speech cohort, unchanged thresholds and whole-family checks; record absolute accuracy, ordinary reasoning, silence, pause/resume, cancellation, pending talk and delegation correctness.",
+    "live_before_product_adoption": "Unprofiled real WebSocketPCM latency and interruptions, owner listening/accent and genuine async reasoning backend under its separate API scope.",
+    "all_current_speech_failures_preserved": true,
+    "no_passing_subset_or_threshold_relaxation": true,
+    "stopping": "Stop early on nonfinite/state/guard failure, no complete useful schedule fitting remaining allowance, or measured speech/behavior regression; preserve all branches and results."
+  },
+  "further_capacity_options": {
+    "dense_existing_six_blocks_trainable_parameters": 1157678592,
+    "six_new_blocks_new_foundation_parameters": 1157678592,
+    "rank512_adapter_parameters": 1396703232,
+    "included_in_this_first_GPU_training_phase": false,
+    "decision": "Use declared learning curves and behavior/retention evidence to choose one next capacity intervention, not a parallel architecture sweep."
+  },
+  "weight_space_programming": {
+    "integration_note": "docs/research/2026-11-04-weight-space-programming-opal.md",
+    "direct_base_edits_enabled": false,
+    "adopted_methods": "Bounded causal diagnosis, practice/eval separation, named tensor diffs/hashes, matched controls and stopping rules alongside OPAL."
+  },
+  "no_Isambard_today": true,
+  "new_API_IAM_firewall_or_service_account_changes": false
+}

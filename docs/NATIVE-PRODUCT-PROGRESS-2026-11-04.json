@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T15:03:58.400479+00:00",
+  "updated_utc": "2026-11-04T15:54:19.735930+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -37,15 +37,16 @@
     }
   ],
   "current_work_item": {
-    "id": "frozen-v64-failure-classification",
-    "status": "ready_for_one_bounded_review",
-    "input": "Original24 outputs and native traces from result above; focus diagnostically on3 failed recordings without accepting a passing subset.",
-    "output": "Evidence-backed classification: native pronunciation/acoustic output, text-boundary target, recognizer error or genuinely unresolved. Keep the existing failed qualification intact.",
+    "id": "large-capacity-native-admission",
+    "status": "substantial_code_and_CPU_OPAL_proof_prepared_numeric_phase_scope_pending",
+    "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
+    "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
+    "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
-    "no_fresh_generation_required": true,
-    "new_GPU_intervals_authorized": 0,
-    "new_model_API_calls_authorized": 0,
-    "on_human_dependency": "Record one precise listening/approval/sign-in request, then pause heartbeat until human response."
+    "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
+    "scope_constraint": "No new billed interval/API call or training until the proposed numeric phase is admitted; old diagnostic one-interval claims cannot be reused.",
+    "next_material_decision": "Additional150USD GCP credits, oneA10080<=12h plus boundedCPU/staging/storage; no purchase.",
+    "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate."
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -106,9 +107,21 @@
     "prepared_four_existing_layers_adapter_parameters": 3407872,
     "four_layer_variant_trained": false,
     "foundation_growth_authorized": false,
-    "next_capacity_experiment": "One-versus-four existing-layer LoRA matched comparison only if underfitting remains after bounded data/recipe diagnosis; needs own explicit execution scope.",
-    "keep_heavy_reasoning_external": true
+    "next_capacity_experiment": "One substantial698M arm plus small-adapter continuation control under the concrete new scope; no3.4M ceiling. Native proof and measured whole-epoch schedule required.",
+    "keep_heavy_reasoning_external": true,
+    "main_prepared_variant_parameters": 698351616,
+    "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
+    "structural_new_six_block_parameters": 1157678592,
+    "rank512_adapter_parameters": 1396703232,
+    "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
   "current_compute_scope": "v64 single interval consumed; no new compute restart from this policy or monitor. Existing caps75USD phase/175USD project remain.",
-  "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial."
+  "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
+  "weight_space_programming_policy": {
+    "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
+    "adopted": "Bounded causal diagnostics and named counterfactuals/hashes alongsideOPAL.",
+    "direct_weight_edits_enabled": false,
+    "current_loop_evidence": "No repeated4gram in12 ordinary frozen responses; not a general loop test.",
+    "do_not_turn_research_into_open_ended_branch": true
+  }
 }

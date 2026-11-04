@@ -20,20 +20,43 @@ class LoRALinear(nn.Module):
         if not self.enabled:
             return original
         delta = torch.nn.functional.linear(torch.nn.functional.linear(x.float(), self.a), self.b)
-        return original + (delta * (self.alpha / self.rank)).to(original.dtype)
+        result = original + (delta * (self.alpha / self.rank)).to(original.dtype)
+        if hasattr(self, 'extra_a'):
+            extra = torch.nn.functional.linear(torch.nn.functional.linear(x.float(), self.extra_a), self.extra_b)
+            result = result + (extra * self.extra_scale).to(result.dtype)
+        return result
 
 
-def install(llm, rank=16, alpha=16,last_layers=None):
+ALL_PROJECTIONS = ('q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj')
+
+
+def projection_sites(llm, last_layers, targets):
+    """Resolve the full selection before any module or gradient flag changes."""
+    layers = llm.model.layers
+    if (last_layers is not None and (type(last_layers) is not int or not 1 <= last_layers <= len(layers))
+            or not isinstance(targets, (tuple, list)) or not targets
+            or len(set(targets)) != len(targets) or not set(targets) <= set(ALL_PROJECTIONS)):
+        raise ValueError('Explicit valid layer suffix and unique attention/MLP projections required')
+    sites = []
+    for index, layer in enumerate(layers):
+        if last_layers is not None and index < len(layers) - last_layers:
+            continue
+        for name in targets:
+            parent_name = 'self_attn' if name in ALL_PROJECTIONS[:4] else 'mlp'
+            parent = getattr(layer, parent_name)
+            sites.append((f'model.layers.{index}.{parent_name}.{name}', parent, name, getattr(parent, name)))
+    return sites
+
+
+def install(llm, rank=16, alpha=16,last_layers=None, target_modules=('q_proj','v_proj')):
+    sites = projection_sites(llm, last_layers, target_modules)
+    if any(not isinstance(module, nn.Linear) for _, _, _, module in sites):
+        raise TypeError('Only explicit original Linear projections may be adapted')
     llm.requires_grad_(False)
     names = []
-    for layer_id, layer in enumerate(llm.model.layers):
-        if last_layers is not None and layer_id<len(llm.model.layers)-last_layers:continue
-        for name in ('q_proj', 'v_proj'):
-            base = getattr(layer.self_attn, name)
-            if not isinstance(base, nn.Linear):
-                raise TypeError('Only explicit original Linear projections may be adapted')
-            setattr(layer.self_attn, name, LoRALinear(base, rank, alpha))
-            names.append(f'model.layers.{layer_id}.self_attn.{name}')
+    for path, parent, name, base in sites:
+        setattr(parent, name, LoRALinear(base, rank, alpha))
+        names.append(path)
     return dict(modules=names, rank=rank, alpha=alpha,
                 parameters=sum(p.numel() for p in llm.parameters() if p.requires_grad))
 
@@ -55,7 +78,7 @@ def adapter_parameters(model):
     """Adapter identity is structural; inference freezes its gradients too."""
     return {prefix+'.'+name if prefix else name: getattr(module,name)
             for prefix,module in model.named_modules() if isinstance(module,LoRALinear)
-            for name in ('a','b')}
+            for name in ('a','b','extra_a','extra_b') if hasattr(module,name)}
 
 
 def adapter_state(model):
