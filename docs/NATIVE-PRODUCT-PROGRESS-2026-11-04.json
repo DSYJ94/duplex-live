@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T20:09:53.022692+00:00",
+  "updated_utc": "2026-11-04T20:12:11.741461+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "fourth_same80_interval_approved_deploy_next",
+    "status": "fourth_same80_running_actual_native_zero_update_admission_active",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "Fourth SAME80VM/disk restart approved, not yet submitted. No new optimizer updates. All original bounds and deadlines retained.",
+  "current_compute_scope": "SAME80VM752/disk229 actuallyrunning since20:10:42.245UTC; source6c4550f/onecontroller93714/tool28937/nativeprepare1311. NativeSTOP5Nov07:42:22.245UTC. Prior1600 carried;43200total/150new/325project unchanged. No optimizer updates yet.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
