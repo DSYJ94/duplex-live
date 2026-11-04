@@ -67,11 +67,30 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False):
+def capacity_retry_after(number,previous):
+    """Only terminal pre-start stockout on SAME VM; no new running interval."""
+    if number not in (1,2):raise ValueError('At most two spaced capacity-only retries')
+    old=ROOT/('gpu-05' if number==1 else 'gpu-05-capacity-01')
+    vm=json.loads((old/'no-new-running-interval.json').read_text())
+    op=json.loads((old/'allocation-terminal.json').read_text())
+    errors=op.get('error',{}).get('errors',[])
+    if (op['status']!='DONE' or not errors
+            or any(x['code'] not in ('ZONE_RESOURCE_POOL_EXHAUSTED','ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS') for x in errors)
+            or vm['status']!='TERMINATED' or vm['id']!=previous['id']
+            or vm['lastStartTimestamp']!=previous['lastStartTimestamp']
+            or vm['lastStopTimestamp']!=previous['lastStopTimestamp']):
+        raise ValueError('Only exact terminal capacity failure with ZERO new start may retry')
+    requests=[v for v in json.loads((old/'events.json').read_text()) if v['event']=='one_value_selected_GPU_request']
+    if len(requests)!=1:raise ValueError('One preserved actual request required')
+    return datetime.fromisoformat(requests[0]['at_utc']).timestamp()+600
+
+
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if prefix_capacity_retry and not resume_prefix:raise ValueError('Capacity-only retry requires shared-history mode')
     if resume_prefix:
         prefix_authority()
         if any((resume_sizing,replace_prestart,fallback80,resume80_precreate,resume_memory)):
@@ -128,6 +147,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if resume_prefix:
             R=ROOT/'gpu-05';OUTPUT=REMOTE+'/native-v69'
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v69')
+    retry_after=0
+    if prefix_capacity_retry:
+        retry_after=capacity_retry_after(prefix_capacity_retry,prior_vm)
+        R=ROOT/('gpu-05-capacity-%02d'%prefix_capacity_retry)
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
@@ -198,6 +221,19 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     c.run(['git','bundle','create',str(bundle),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;created=False;end=None
     try:
+        if retry_after:
+            c.record('capacity_only_spaced_wait',retry=prefix_capacity_retry,not_before_unix=retry_after,prior_GPU_seconds_upper=prior_seconds)
+            while time.time()<retry_after:time.sleep(min(30,retry_after-time.time()))
+            current=c.cloud('compute','instances','list')
+            same=[v for v in current if v['name']==NAME]
+            if (any(v['status'] not in ('TERMINATED','STOPPED') for v in current)
+                    or len(same)!=1 or same[0]['id']!=prior_vm['id']
+                    or same[0]['lastStartTimestamp']!=prior_vm['lastStartTimestamp']
+                    or same[0]['lastStopTimestamp']!=prior_vm['lastStopTimestamp']):
+                raise ValueError('Same unchanged stopped provider identity required after spaced wait')
+            fresh_pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip())
+            if isinstance(fresh_pods,dict):fresh_pods=fresh_pods['pods']
+            if any(v['status'] not in ('EXITED','STOPPED','TERMINATED') for v in fresh_pods):raise ValueError('No overlapping GPU after wait')
         if not resume_sizing and not fallback80:
             current=c.cloud('compute','instances','describe',CPU,'--zone='+ZONE)
             if current['id']!=previous['id'] or current['status']!='TERMINATED':raise ValueError('Exact stopped staging CPU required')
@@ -377,4 +413,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry)
