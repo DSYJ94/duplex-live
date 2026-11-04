@@ -2,7 +2,7 @@
   "status": "CONCRETE_PROPOSAL_PENDING_NUMERIC_EXECUTION_SCOPE",
   "recorded_utc": "2026-11-04T15:49:39.376346+00:00",
   "owner_direction": "User authorizes a proper larger-capacity variant, research-agent investigation and >1B added parameters if needed; says GPU capacity/training cost not limiting. This proposal quantifies the next paid phase rather than inferring unlimited expenditure.",
-  "purpose": "Test a substantial698351616-parameter attention+MLP adapter with sustained learning curves and preserved native speech/control. No foundation growth or direct weight surgery in this first phase.",
+  "purpose": "Test a substantial698351616-parameter attention+MLP adapter with sustained learning curves and preserved native speech/control. No foundation growth or direct weight surgery in this first phase. Permit bounded stop/resume within one aggregate grant so offline repairs do not require wasteful idle GPUs or repeated interval-approval requests.",
   "research": "docs/research/2026-11-04-native-large-capacity-research.md",
   "mechanics": "docs/NATIVE-VENUS-LARGE-CAPACITY-PREPARATION-2026-11-04.json",
   "mechanics_sha256": "6b468fa484b4a25f24d1ba5bac68334d5ab8202d5f79ce31fac8b85768353232",
@@ -21,9 +21,9 @@
       "europe-west4-b",
       "europe-west4-c"
     ],
-    "maximum_terminal_capacity_only_prestart_attempts": 3,
+    "maximum_terminal_capacity_only_prestart_attempts": 6,
     "one_actual_running_GPU_at_a_time": true,
-    "maximum_actual_GPU_running_intervals": 1,
+    "maximum_actual_GPU_running_intervals": 3,
     "gpu": "one A10080GB, a2-ultragpu-1g STANDARD",
     "maximum_GPU_seconds": 43200,
     "hard_hourly_price_ceiling_usd": 8,
@@ -32,7 +32,11 @@
     "CPU_maximum_seconds": 14400,
     "CPU_cost_ceiling_usd": 2,
     "native_STOP_and_independent_Mac_guest_cost_guard_before_model": true,
-    "queue_or_observation_timeout_never_resubmits": true
+    "queue_or_observation_timeout_never_resubmits": true,
+    "maximum_GPU_seconds_including_all_intervals_and_startup_rounding": 43200,
+    "maximum_aggregate_running_seconds_not_per_interval": 43200,
+    "restart_policy": "After the first actual allocation, at most2 further running intervals on the SAME successful VM/disk. Stop while idle/blocked, retain exact optimizer/RNG/OPAL/checkpoints and continue only remaining aggregate allowance. Never repeat saved updates or reset budget; actual start/stop receipts and conservative rounding carry across all intervals. New prestart capacity fallback only before first actual model start.",
+    "prestart_policy": "At most3 initial terminal-capacity-only attempts across EuropeA/B/C, >=10minutes apart; at most3 later terminal-capacity-only restart attempts on the already successful exact VM. At most6 total; no timeout/access/partial-start resubmission. All under the same24h temporary-storage window and aggregate12h GPU bound."
   },
   "storage_and_transfer": {
     "original_US_disk_id": "4375908109499109167",
