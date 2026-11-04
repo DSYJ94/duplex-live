@@ -1,0 +1,21 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-04T16:21:19.646655+00:00",
+  "human_reply_verbatim": "Is this the best bang for buck approach? if so go ahead. I just want to make sure we are also being resourceful with pricing and choice of GPU",
+  "proposal_path": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "3753040",
+  "proposal_sha256": "02664b4c23a5715a93b2d7f1648d19676891a27afd41a8f32ced4f4397e83f83",
+  "value_resolution_path": "docs/NATIVE-VENUS-LARGE-CAPACITY-VALUE-DECISION-2026-11-04.json",
+  "value_resolution_sha256": "8f83d643adcacf8c4844f940dfa4351ce3797d5e27cf57ea2525b214c4b0a025",
+  "condition_resolution": "Verified current exact rates and alternative catalog; activeGCPcredits and actually offsetComputeEnginecharges. User explicitly requests resourceful GPU choice: choose cheaperGCP40Flex when nativefit/throughput succeeds, otherwise80Standard under same total limits. No claim of globally proven optimal throughput.",
+  "maximum_new_GCP_USD": 150,
+  "maximum_project_USD": 325,
+  "maximum_aggregate_GPU_seconds": 43200,
+  "maximum_GPU_running_intervals": 3,
+  "maximum_CPU_staging_seconds": 14400,
+  "CPU_maximum_USD": 2,
+  "same_training_VM_after_first_optimizer_update": true,
+  "no_replay_of_saved_updates": true,
+  "no_credit_purchase_or_external_model_API_calls": true,
+  "credit_private_attestation_on_Mac_only": true
+}

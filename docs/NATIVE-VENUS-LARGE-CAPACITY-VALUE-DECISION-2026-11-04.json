@@ -1,0 +1,65 @@
+{
+  "status": "VALUE_FIRST_GCP_SELECTED; NATIVE_FIT_REQUIRED",
+  "recorded_utc": "2026-11-04T16:21:19.646655+00:00",
+  "price_receipt_path": "runs/product-progress-watch/current-capacity-prices-20261104.json",
+  "price_receipt_sha256": "87966c8e84cc4d6a60a014361faaa714a60b8a41277073518bcf2c2d8b742c7d",
+  "public_price_source": "Official Cloud Billing Catalog current exact machine component SKUs, including CPU/RAM/localSSD/250GBPD; no credit deduction assumed in prices.",
+  "hourly_USD": {
+    "GCP_A10040_FLEX_US": 2.0545775753424658,
+    "GCP_A10080_STANDARD_NL": 5.618589712328767,
+    "Runpod_SECURE_A10080_SXM_catalog": 1.79,
+    "Runpod_SECURE_H10080_SXM_catalog": 3.99
+  },
+  "Runpod_read": {
+    "at_utc": "2026-11-04T16:21:19.646655+00:00",
+    "source": "Connected public Runpod v2 GPU catalog, POD/SECURE/count1/minCUDA12.8",
+    "A10080": "NONE available",
+    "H10080": "LOW available, US-NE-1, CUDA13.2",
+    "includes_extra_Runpod_storage_or_migration": false,
+    "no_Runpod_account_mutation_or_purchase": true
+  },
+  "GCP_credit_evidence": {
+    "active_promotional_credit_observed": true,
+    "present_Compute_Engine_charges_reported_fully_offset": true,
+    "private_evidence_stays_Mac": true,
+    "no_financial_account_identifiers_or_credit_balances_in_source": true
+  },
+  "twelve_GPU_hour_list_usage_USD": {
+    "A10040_FLEX": 24.65493090410959,
+    "A10080_STANDARD": 67.4230765479452
+  },
+  "A10080_break_even_throughput_factor_vs40": 2.734669053025285,
+  "memory_estimate": {
+    "language_backbone_geometry_parameter_count": 8189228032,
+    "assumed_base_bytes_per_parameter": 2,
+    "trainable_adapter_parameters": 698351616,
+    "assumed_FP32_adapter_weight_gradient_Adam_moments_bytes_each_parameter": 16,
+    "parameter_and_optimizer_storage_GiB": 25.659875869750977,
+    "excludes": "Activations, temporalKV/autograd, logits, allocator workspace, teacher retention forward and any old CPU state copies. Actual native peak must be measured.",
+    "actual_train_step_accumulation": "Current train_step calls backward per microbatch, then one optimizer update; it does not retain all4 loss graphs simultaneously.",
+    "Mac_native_base_model_loaded": false
+  },
+  "choice": {
+    "preferred": "OneA10040Flex in US-central1 if measured full native workload fits with declared headroom and admits a useful full-epoch schedule.",
+    "fallback": "OneA10080Standard in Europe-west4 if40 cannot support full objective/gradients efficiently; no simultaneous GPUs.",
+    "sizing_probe": "At most20runningminutes, zero optimizer updates, real worst approved batch/gradient and full projected Adam state. Counts toward the same aggregate12hours and atmost3intervals.",
+    "switch_rule": "Only sizing may switch once40\u219280 before candidate updates. Once optimizer work begins, subsequent resumptions use the same successful trainingVM/disk and exact saved state.",
+    "never_trade_for_price": [
+      "quantization",
+      "dropped examples",
+      "truncated temporal gradients",
+      "weaker restore or behavior/speech gates"
+    ],
+    "decision_metric": "Measured valid optimizer updates/wholeepochs per billed dollar, subject to native fidelity, memory and12h elapsed allowance."
+  },
+  "limits": {
+    "new_phase_USD": 150,
+    "GPU_seconds_aggregate_including_sizing_rounding": 43200,
+    "maximum_actual_GPU_intervals": 3,
+    "project_cap_USD": 325,
+    "no_purchase": true,
+    "no_external_model_API_calls": true
+  },
+  "native_step_throughput_measured": false,
+  "GPU_started": false
+}
