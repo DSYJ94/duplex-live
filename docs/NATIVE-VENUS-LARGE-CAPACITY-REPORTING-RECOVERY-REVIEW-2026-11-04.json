@@ -1,0 +1,74 @@
+{
+  "status": "DIAGNOSED_REPORTING_CODE_RECOVERY_WITHIN_APPROVED_AGGREGATE_SCOPE",
+  "failed_source": "fd74989783bafeb34e87315f61ac3c6a015d80e8",
+  "aggregate_authorization_sha256": "06d6bd6fb09adbf647a5781a9c6d9b6cfbdad935712fcc38dc5059b8a636dab4",
+  "failed_interval": 8,
+  "recovery_interval": 9,
+  "error": "AttributeError: 'str' object has no attribute 'grad'",
+  "completed_control_backward_rows": [
+    {
+      "at_unix": 1793833544.2400029,
+      "event": "calibration_row_completed",
+      "id": "venus-context-repair-draft-train-simple_or_delegate-01",
+      "seconds": 8.149056555999977,
+      "physical_saved_bytes": 458150784,
+      "prefix_reuses": 1014
+    },
+    {
+      "at_unix": 1793833551.1160796,
+      "event": "calibration_row_completed",
+      "id": "venus-context-repair-draft-train-simple_or_delegate-03",
+      "seconds": 6.855168606999996,
+      "physical_saved_bytes": 459611648,
+      "prefix_reuses": 1018
+    },
+    {
+      "at_unix": 1793833558.0239816,
+      "event": "calibration_row_completed",
+      "id": "venus-context-repair-draft-train-simple_or_delegate-02",
+      "seconds": 6.882556053000002,
+      "physical_saved_bytes": 454759424,
+      "prefix_reuses": 1010
+    },
+    {
+      "at_unix": 1793833564.566923,
+      "event": "calibration_row_completed",
+      "id": "venus-context-repair-draft-train-simple_or_delegate-00",
+      "seconds": 6.517023383999998,
+      "physical_saved_bytes": 445822720,
+      "prefix_reuses": 976
+    }
+  ],
+  "evidence": {
+    "runs/venus-large-capacity-20261104/v65/gpu-08/provider-final.json": "5eafe148945eca364fa11005146dc40c3e7c1fdf1e24193dd8a13f32d81944d4",
+    "runs/venus-large-capacity-20261104/v65/gpu-08/copyback-verified.json": "1ed69df7f9ce02bf6eb2eb10099428a41db31413e2f482ede1d0b8e0a59a27ec",
+    "runs/venus-large-capacity-20261104/v65/gpu-08/duplex-large65-prepare-terminal.json": "53bdd00c6723821f9dd20c528344d9cbdb9f6f760d21e4c3696c285d447f91af",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v72/control-calibration.jsonl": "826feb34f8a91ad9eaecc41e5994a27d7c4990c5555c829c2e4ccb014bc28620",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v72/journals/duplex-large65-prepare.log": "f51b34cb2d7f4c36a06c3b95127950effbe7ebc2e3f3cbfe14274dfb79282a91"
+  },
+  "backup": {
+    "files": 14,
+    "bytes": 414747,
+    "links": 0,
+    "all_hashes_verified": true
+  },
+  "actual_seconds": 254.189,
+  "rounded_upper_seconds": 300,
+  "all_prior_upper_seconds": 4300,
+  "next_maximum_native_seconds": 38800,
+  "main_broad_admission_started": false,
+  "new_optimizer_updates": 0,
+  "further_failed_kernel_storage_admissions": 1,
+  "classification": "Interval07 timeout counts as failed admission1. Interval08 completed all4 control backward calls and then failed reporting aggregation before main. This is a reporting-code failure, not a second CUDA/kernel/storage failure. All billed time still counts.",
+  "fix": [
+    "Pass Parameter values, not mapping keys, to gradient_norm.",
+    "Import MANIFEST_SHA for the following control-runtime report.",
+    "Exercise complete4-row benchmark with real CPU tiny-model gradients and Adam; CPU fixture explicitly cannot qualify CUDA."
+  ],
+  "verification": {
+    "real_benchmark_CPU_tests": "25 passed in3.85s",
+    "active_module_F821": "All checks passed",
+    "CPU_fixture_not_native_qualification": true
+  },
+  "scope": "One diagnosed reporting recovery09 only. SAME resources/data/objectives/thresholds. No extra budget/time/storage/updates. Any further kernel/storage admission failure or unusable complete schedule stops branch. Later resumes require actual trained state."
+}

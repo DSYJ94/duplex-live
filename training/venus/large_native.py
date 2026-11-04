@@ -12,7 +12,7 @@ import time
 
 import torch
 
-from .large_inputs import Corpus, PARENT_SHA, sha
+from .large_inputs import Corpus, PARENT_SHA, MANIFEST_SHA, sha
 from .large_capacity import expand_broad
 from .lora import install, adapter_parameters, adapter_state, load_adapter, selected_forward
 from .native_optimizer import NativeOpal, assert_optimizer_equal, gradient_norm
@@ -84,13 +84,16 @@ def restore_expanded(state, llm, source, output):
         raise
 
 
-def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3,policy='legacy-pinned',progress_path=None):
+def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3,policy='legacy-pinned',progress_path=None,device='cuda'):
     """Real effective batch4, full temporal gradients and materialized Adam."""
     guarded(lease_path, 180)
     params = adapter_parameters(llm)
     frozen = {n: p._version for n,p in llm.named_parameters() if not p.requires_grad}
     runtime.base.zero_grad(set_to_none=True)
-    torch.cuda.reset_peak_memory_stats(); before = time.monotonic(); parts = []
+    if device not in ('cuda','cpu'):raise ValueError('Explicit CUDA or nonqualifyingCPU fixture required')
+    actual_cuda=device=='cuda'
+    if actual_cuda:torch.cuda.reset_peak_memory_stats()
+    before = time.monotonic(); parts = []
     def progress(value):
         if progress_path is not None:
             with Path(progress_path).open('a') as f:f.write(json.dumps(dict(at_unix=time.time(),**value))+'\n')
@@ -102,7 +105,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
         context = ActivationOffload(llm,maximum_host_bytes=host_limit_bytes,policy=policy)
         from contextlib import nullcontext
         with context.context() if offload else nullcontext():
-            loss, metrics = corpus.loss(llm, ex, 'cuda')
+            loss, metrics = corpus.loss(llm, ex, device)
             if not torch.isfinite(loss): raise ValueError('Nonfinite full native objective')
             (loss/len(rows)).backward()
         parts.append(dict(id=row['id'], family=row['family'], **metrics,
@@ -117,12 +120,14 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
     b_norms = {n: float(torch.linalg.vector_norm(p.grad)) for n,p in params.items() if n.endswith(('.b','.extra_b'))}
     if not b_norms or any(v <= 0 for v in b_norms.values()):
         raise ValueError('Every intended attention/MLP B path must receive gradients')
-    norm = float(gradient_norm(params)); torch.cuda.synchronize()
-    peak = torch.cuda.max_memory_allocated(); reserved = torch.cuda.max_memory_reserved()
-    total = torch.cuda.get_device_properties(0).total_memory
+    norm = float(gradient_norm(params.values()))
+    if actual_cuda:torch.cuda.synchronize()
+    peak = torch.cuda.max_memory_allocated() if actual_cuda else 0
+    reserved = torch.cuda.max_memory_reserved() if actual_cuda else 0
+    total = torch.cuda.get_device_properties(0).total_memory if actual_cuda else 0
     if any(p._version != frozen[n] for n,p in llm.named_parameters() if n in frozen):
         raise ValueError('Frozen foundation weights changed during no-update admission')
-    result = dict(seconds=time.monotonic()-before, peak_allocated_bytes=peak, peak_reserved_bytes=reserved,
+    result = dict(seconds=time.monotonic()-before,actual_CUDA=actual_cuda,nonqualifying_CPU_fixture=not actual_cuda,peak_allocated_bytes=peak, peak_reserved_bytes=reserved,
                   device_memory_bytes=total, headroom_bytes=total-reserved,
                   full_temporal_autograd=True, optimizer_updates=0, effective_batch=len(rows),
                   trainable_parameters=sum(p.numel() for p in params.values()),
@@ -132,7 +137,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
                   activation_offload_policy=policy,
                   all_Adam_moments_materialized=len(runtime.base.state)==len(params))
     runtime.base.zero_grad(set_to_none=True)
-    if not result['all_Adam_moments_materialized'] or result['headroom_bytes'] < max(2*1024**3, total*.05):
+    if not result['all_Adam_moments_materialized'] or actual_cuda and result['headroom_bytes'] < max(2*1024**3, total*.05):
         raise MemoryError('Full workload has less than the declared2GiB/5percent memory headroom')
     return result
 
@@ -210,6 +215,7 @@ def prepare(a):
                                      policy=getattr(a,'activation_memory_policy','legacy-pinned'),progress_path=out/'main-calibration.jsonl'),cleanup,
             lambda:write(out,'no-offload-oom.json',dict(optimizer_updates=0,lossless_offload_fallback=True)),
             start_offloaded=bool(getattr(a,'activation_offload',False)))
+        if not measured['actual_CUDA']:raise ValueError('Actual nativeCUDA gradient admission required')
         restore_rng(parent['rng'])
         assert_optimizer_equal(mapped, runtime.optimizer.state_dict())
         metadata = dict(parent['metadata'], expansion=expansion, capacity_schema='native-broad-init-v1',

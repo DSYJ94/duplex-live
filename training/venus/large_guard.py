@@ -12,6 +12,8 @@ MEMORY_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-AUTHORIZATION
 PREFIX_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-CONTINUATION-AUTHORIZATION-2026-11-04.json')
 LAYOUT_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-LAYOUT-CONTINUATION-AUTHORIZATION-2026-11-04.json')
 AGGREGATE_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-AGGREGATE-CONTINUATION-AUTHORIZATION-2026-11-04.json')
+REPORTING_REVIEW = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json')
+REPORTING_REVIEW_SHA = '046b8d504a3ff3d38cc1201660f581319b8824db4d58c412b330622238661b68'
 ROOT = Path('runs/venus-large-capacity-20261104/v65')
 OLD_USD = 165.7900361111111
 
@@ -111,7 +113,12 @@ def resource(lease):
                 or p.get('activation_memory_policy')!='repeat4-prefix-pageable-v3-layout'):
             raise ValueError('Aggregate continuation requires exact authority and same GPU/disk')
         if number>8 and not p['optimizer_work_started']:
-            raise ValueError('At most two new admissions; later intervals require actual trained state')
+            # Owner's limit covers kernel/storage failures, not this diagnosed
+            # Python reporting exception after successful CONTROL backward.
+            # Keep this exception bound to one reviewed recovery, never a loop.
+            if (number!=9 or p.get('reporting_recovery_review_sha256')!=REPORTING_REVIEW_SHA
+                    or sha(REPORTING_REVIEW)!=REPORTING_REVIEW_SHA):
+                raise ValueError('Later intervals require actual trained state or exact ninth reporting recovery')
         if p['optimizer_work_started']:
             receipt=Path(p['trained_state_receipt_path'])
             if receipt.parent!=ROOT or sha(receipt)!=p['trained_state_receipt_sha256']:
