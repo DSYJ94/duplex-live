@@ -84,7 +84,7 @@ def restore_expanded(state, llm, source, output):
         raise
 
 
-def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3):
+def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3,policy='legacy-pinned'):
     """Real effective batch4, full temporal gradients and materialized Adam."""
     guarded(lease_path, 180)
     params = adapter_parameters(llm)
@@ -94,14 +94,15 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
     for row in rows:
         guarded(lease_path, 180)
         ex = corpus.read(row)
-        context = ActivationOffload(llm,maximum_host_bytes=host_limit_bytes)
+        context = ActivationOffload(llm,maximum_host_bytes=host_limit_bytes,policy=policy)
         from contextlib import nullcontext
         with context.context() if offload else nullcontext():
             loss, metrics = corpus.loss(llm, ex, 'cuda')
             if not torch.isfinite(loss): raise ValueError('Nonfinite full native objective')
             (loss/len(rows)).backward()
         parts.append(dict(id=row['id'], family=row['family'], **metrics,
-                          offloaded_bytes=context.saved_bytes))
+                          offloaded_bytes=context.saved_bytes,logical_saved_bytes=context.logical_bytes,
+                          bit_exact_compressed_tensors=context.compressed_tensors))
         del ex, loss
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params.values()):
         raise ValueError('Missing or nonfinite full-architecture gradients')
@@ -121,6 +122,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
                   nonzero_B_gradient_paths=len(b_norms), gradient_norm=norm,
                   activation_offload=offload, examples=parts,
                   activation_offload_cpu_limit_bytes=host_limit_bytes,
+                  activation_offload_policy=policy,
                   all_Adam_moments_materialized=len(runtime.base.state)==len(params))
     runtime.base.zero_grad(set_to_none=True)
     if not result['all_Adam_moments_materialized'] or result['headroom_bytes'] < max(2*1024**3, total*.05):
@@ -181,7 +183,8 @@ def prepare(a):
         def cleanup():
             runtime.base.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache()
         measured=memory_fallback(
-            lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload,host_limit_bytes=host_gib*1024**3),cleanup,
+            lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload,host_limit_bytes=host_gib*1024**3,
+                                     policy=getattr(a,'activation_memory_policy','legacy-pinned')),cleanup,
             lambda:write(out,'no-offload-oom.json',dict(optimizer_updates=0,lossless_offload_fallback=True)),
             start_offloaded=bool(getattr(a,'activation_offload',False)))
         restore_rng(parent['rng'])
@@ -272,6 +275,7 @@ if __name__ == '__main__':
     p.add_argument('--parent')
     p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
     p.add_argument('--host-offload-limit-gib',type=int,choices=(48,128),default=48)
+    p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1'),default='legacy-pinned')
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
     prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)

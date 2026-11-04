@@ -76,6 +76,7 @@ def main(a):
                   train_count=240, dev_count=64, seed=20261104, learning_rate=1e-5,
                   warmup_updates=16, activation_offload=sizing['measured']['activation_offload'])
     recipe['activation_offload_cpu_limit_bytes']=sizing['measured']['activation_offload_cpu_limit_bytes']
+    recipe['activation_offload_policy']=sizing['measured'].get('activation_offload_policy','legacy-pinned')
     recipe['opal'] = dict(recipe['opal'], backend='keep', agent_budget_usd=0.)
     if full:
         recipe.update(rank=256, alpha=256, last_layers=36,

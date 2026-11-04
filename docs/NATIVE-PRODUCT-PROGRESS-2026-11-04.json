@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T18:33:46.557782+00:00",
+  "updated_utc": "2026-11-04T19:33:29.926696+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "both40zero_update_attempts_backed_up_and_stopped_original80_native_admission_next",
+    "status": "host_OOM_all_three_intervals_stopped_zero_updates_local_lossless_storage_proof_passed",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
-    "scope_constraint": "OneGCPGPUatatime, sizing+training+eval+startup conservative rounding aggregate12hours/3intervals/new150USD/project325; no purchase/API calls or replay.",
-    "next_material_decision": "None pending; Google browser access and value check resolved. Native memory/restore/schedule admission decides40vs80.",
+    "scope_constraint": "Original3intervals consumed/1600upperseconds; fourthinterval proposal only, no launch authority yet.",
+    "next_material_decision": "One additional actual interval on SAME80VM/disk under unchanged remaining43200aggregate/$150/$325; original3-intervalcap consumed.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json"
   },
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "All GPUs stopped. New80GB thirdinterval pending, prior300+400=700GPUupper carried; same150new/325project/43200aggregate/3intervals. No newoptimizerupdates.",
+  "current_compute_scope": "All6 project VMs freshly TERMINATED. Three actualGPUintervals/1600upperseconds, ZERO new optimizer updates. One-interval amendment pending; same remaining41600seconds including100rounding/$150new/$325project.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
@@ -124,5 +124,6 @@
     "direct_weight_edits_enabled": false,
     "current_loop_evidence": "No repeated4gram in12 ordinary frozen responses; not a general loop test.",
     "do_not_turn_research_into_open_ended_branch": true
-  }
+  },
+  "latest_memory_admission_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESULT-2026-11-04.json"
 }

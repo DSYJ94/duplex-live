@@ -1,0 +1,128 @@
+{
+  "status": "FAILED_NATIVE_ADMISSION_NO_NEW_TRAINING",
+  "recorded_utc": "2026-11-04T19:33:29.926696+00:00",
+  "source": "b3e0beffcacbd38552ce1411459ae35864c58aa1",
+  "parent_total_updates": 466,
+  "parent_adopted": false,
+  "new_optimizer_updates": 0,
+  "intervals": [
+    {
+      "interval": 1,
+      "vm_id": "6045511400968083611",
+      "name": "duplex-venus-large-gpu-20261104-a-v65",
+      "start": "2026-11-04T09:09:20.851-08:00",
+      "stop": "2026-11-04T09:13:58.664-08:00",
+      "status": "TERMINATED",
+      "upper_seconds": 300,
+      "provider_receipt_sha256": "1d95e8252be198c0b2d25a0ecbf26b142e9f98e13b6db4ba2435cf9d757ce054",
+      "backup": {
+        "all_hashes_verified": true,
+        "files": 23,
+        "bytes": 223562,
+        "links": 0,
+        "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v65",
+        "inventory_sha256": "931c35e6d2ddae9a0f4be0fc5fbc6792f43f78baa24342bafef8f5d176d69cb7"
+      },
+      "new_optimizer_updates": 0
+    },
+    {
+      "interval": 2,
+      "vm_id": "7200459808016091836",
+      "name": "duplex-venus-large-gpu-20261104-a-v66",
+      "start": "2026-11-04T10:08:00.197-08:00",
+      "stop": "2026-11-04T10:14:00.399-08:00",
+      "status": "TERMINATED",
+      "upper_seconds": 400,
+      "provider_receipt_sha256": "6220b99e161e992bd6be0cc240742773b5bdb0e2dde39aa8620cc9ab0fdf9f8b",
+      "backup": {
+        "all_hashes_verified": true,
+        "files": 22,
+        "bytes": 273425,
+        "links": 0,
+        "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66",
+        "inventory_sha256": "6c10432a8727058f658844dc088fa1bc9aa2bc40d3a3e3edf7b865c32a9afd26"
+      },
+      "new_optimizer_updates": 0
+    },
+    {
+      "interval": 3,
+      "vm_id": "7521667153519853425",
+      "name": "duplex-venus-large-gpu-20261104-eua-v67",
+      "start": "2026-11-04T11:04:13.669-08:00",
+      "stop": "2026-11-04T11:18:40.942-08:00",
+      "status": "TERMINATED",
+      "upper_seconds": 900,
+      "provider_receipt_sha256": "d8c97e749d29743a8655c062dde35d59b35dd3174d305e0aaafce0878b65c95a",
+      "backup": {
+        "all_hashes_verified": true,
+        "files": 22,
+        "bytes": 201271,
+        "links": 0,
+        "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67",
+        "inventory_sha256": "3219b8d2ca951e1568abaf45dff956fec9f95111df8d8c71ae4289a17f1906a3"
+      },
+      "new_optimizer_updates": 0
+    }
+  ],
+  "aggregate_GPU_seconds_upper": 1600,
+  "remaining_GPU_seconds_including_rounding": 41600,
+  "actual_native_failure": {
+    "unit": "duplex-large65-prepare",
+    "first_MainPID": 1428,
+    "invocation": "f8639f39aa2f4e10be70cbe3a4961335",
+    "result": "oom-kill",
+    "exit_signal": 9
+  },
+  "diagnosis": "Host memory exhausted during full native segmented backward with128GiB logical per-microbatch pinned-host allowance. Possible repeated-head storage and pinned-host allocator/cache accumulation; relative contributions not measured. Not evidence of a dataset, batch-size, LR or capacity-quality problem.",
+  "closed_whole_causal_probe": {
+    "new_optimizer_updates": 0,
+    "forward_only": true,
+    "changes_training_admission": false,
+    "original_sha256": "0dddaf8b69f7b068b09de0427016346e0ce7cd251b29a7f9ce73977b04096907",
+    "whole_training_path_enabled": false,
+    "performed": true,
+    "report": {
+      "forward_path": "whole-causal-native-head-shape-probe-v1",
+      "compared": 21,
+      "minimum_cosine": 0.9994461536407471,
+      "relative_l2": 0.00909261591732502,
+      "maximum_target_ce_delta": 0.09909749031066895,
+      "argmax_agreement": 1.0,
+      "maximum_absolute_logit_error": 1.0625,
+      "limits": {
+        "minimum_cosine": 0.9999,
+        "maximum_relative_l2": 0.01,
+        "maximum_target_ce_delta": 0.03,
+        "minimum_argmax_agreement": 0.95
+      },
+      "passed": false
+    },
+    "next_action": "Retire this avenue for this phase; no kernel or precision sweep"
+  },
+  "whole_causal_route_enabled": false,
+  "next_single_intervention": "Lossless repeat4-pageable-v1 saved-activation storage; same native computation, data and gradients. No more whole-causal/kernel/precision sweep.",
+  "local_proof": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 /private/tmp/duplex-context-checks-20261101/bin/python -m pytest -q evals/harness/test_venus_activation_storage.py evals/harness/test_venus_training.py evals/harness/test_venus_large_train.py evals/harness/test_venus_large_controller.py",
+    "passed": 30,
+    "seconds": 3.17,
+    "expected_deprecation_warnings": 2,
+    "coverage": [
+      "Native-shaped BF16 repeatedKV stores one quarter of bytes and reconstructs byte-exactly",
+      "Nonrepeated/strided/signed-zero tensors retain exact bytes",
+      "Physical reservation and actual host headroom reject before allocation",
+      "Tiny native segmented GQA full loss and all adapter gradients match exactly",
+      "Existing old native/prefix, scheduling and controller tests"
+    ],
+    "limitations": "CPU proof only; full698M GPU memory/throughput, CUDA byte equality and independent restore still required."
+  },
+  "all_project_VMs_stopped_verified": true,
+  "all_failed_outputs_hash_verified_off_OneDrive": true,
+  "broad_Mac_source_backup": "PARTIAL",
+  "repair_source_file_sha256": {
+    "training/venus/offload.py": "95300437bfc1f0e741ed38a69c63acb3af3008947cf7500f0495c29ba16518a9",
+    "training/venus/train.py": "674377f3b00bfa48ebfd4efa25b5927e865f7f3591906cd6246a151550af643f",
+    "training/venus/large_native.py": "58a314d2a3958a0efedf1d8b7ec8155da5a110514923d89b7ee04de367f727ef",
+    "training/venus/large_train.py": "d2695bf4d81817b8b4e98006f22ba7701a287d8a602cba3f77cccbbfb250ebce",
+    "evals/harness/test_venus_activation_storage.py": "dd4802e84ec5b5c4281d6c616e1fdd239856007b80ceff0312e2815402ed210b"
+  }
+}

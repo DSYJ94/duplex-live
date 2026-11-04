@@ -83,7 +83,8 @@ def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None,*,rea
     metrics=[];losses=[];before=time.monotonic()
     for row in batch:
         ex=reader(cache,row)
-        offload=ActivationOffload(llm,config['activation_offload_minimum_bytes'],config['activation_offload_cpu_limit_bytes'])
+        offload=ActivationOffload(llm,config['activation_offload_minimum_bytes'],config['activation_offload_cpu_limit_bytes'],
+                                 policy=config.get('activation_offload_policy','legacy-pinned'))
         with offload.context() if config['activation_offload'] else nullcontext():
             loss,parts=loss_fn(llm,ex,'cuda')
             if not torch.isfinite(loss):raise ValueError('Nonfinite native loss')

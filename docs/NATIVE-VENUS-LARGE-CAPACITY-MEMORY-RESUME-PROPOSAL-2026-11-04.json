@@ -1,0 +1,65 @@
+{
+  "status": "CONCRETE_PROPOSAL_PENDING_ONE_INTERVAL_AMENDMENT",
+  "recorded_utc": "2026-11-04T19:33:29.926696+00:00",
+  "original_authorization": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
+  "original_authorization_sha256": "81edd13598058e7120ef9a9f822290c224859b004b3d6cd0b4a8a641021192cd",
+  "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESULT-2026-11-04.json",
+  "result_sha256": "f29e2db53fdf2958eb4d45bcec32a216d333c68bb5832c57b395bec58b121336",
+  "purpose": "Finish one lossless memory repair then immediately train the approved substantial698M and small-adapter control if full native memory/state/schedule admission passes. No new research branch.",
+  "only_authority_change": {
+    "maximum_actual_GPU_running_intervals_from": 3,
+    "maximum_actual_GPU_running_intervals_to": 4,
+    "additional_actual_intervals": 1
+  },
+  "resource": {
+    "project": "aurium-duplex-live-20261024",
+    "vm": "duplex-venus-large-gpu-20261104-eua-v67",
+    "vm_id": "7521667153519853425",
+    "zone": "europe-west4-a",
+    "machine": "a2-ultragpu-1g",
+    "GPU": "one A10080GB STANDARD",
+    "same_disk": "duplex-venus-large-data-20261104-eua-v67",
+    "same_disk_id": "2297341858915206463",
+    "durable_disk_GB": 250,
+    "automatic_existing_scratch_GB": 375,
+    "new_VM_disk_snapshot_CPU_or_region": false,
+    "maximum_actual_start_attempts": 1
+  },
+  "unchanged_limits": {
+    "additional_phase_USD": 150,
+    "project_USD": 325,
+    "old_conservative_carry_USD": 165.7900361111111,
+    "aggregate_GPU_seconds": 43200,
+    "prior_GPU_seconds_upper": 1600,
+    "remaining_GPU_seconds_including_rounding": 41600,
+    "next_native_STOP_seconds": 41500,
+    "shutdown_rounding_reserve_seconds": 100,
+    "original_storage_deadline_unix": 1793897263.296897,
+    "original_storage_deadline_UTC": "2026-11-05T16:47:43.296897Z",
+    "maximum_approved_artifact_transfer_GB": 100,
+    "no_credit_purchases": true,
+    "no_external_model_API_calls": true
+  },
+  "memory_intervention": {
+    "policy": "repeat4-pageable-v1",
+    "default_enabled": false,
+    "compression": "Byte-check each four-head group; exact head repetition stored once, otherwise store entire tensor; preserve signed zeros/NaN payloads.",
+    "host_storage": "Synchronous pageable CPU storage; no pinned-host allocation under this policy.",
+    "maximum_stored_activation_GiB_per_microbatch": 48,
+    "minimum_actual_Linux_host_headroom_GiB": 16,
+    "native_forward_backward_precision_data_losses_unchanged": true,
+    "risks": "Pageable transfers and byte checks can reduce throughput. Actual698M CUDA equivalence, fit and throughput remain unproved; stop early if no complete useful schedule fits."
+  },
+  "sequence": [
+    "Fresh source/prices/quota/projectGPU-off/provider identities and actual old terminal hashes; no capacity loop or resource replacement",
+    "Git-deploy policy with old receipts intact; native41500sSTOP and independent live Mac/guest cost/time guards before model load",
+    "Do not repeat the closed whole-causal probe. Run original full304 integrity admission, full four-worst-TRAIN gradients and materialized Adam; record actual RAM/GPU/transfer timings and byte-compression counts",
+    "Independent fresh-process full Adam/RNG/OPAL restore before any optimizer updates",
+    "If complete paired epoch schedule and <=100GB backup fit remaining allowance, train immediately: 240TRAIN per epoch/full64DEV at boundaries; at most480 new updates per arm/8 epochs; original LR1e-5/effectivebatch4/micro1/KL.1/hidden.01/action.25/old objectives retained",
+    "Final fresh-process restore and full paired native behavior/speech; no adoption without full gates and live/owner validation",
+    "Early stop on failed admission, actual host headroom, nonfinite, state/guard or useful-schedule failure; verify output copyback and stop paid compute"
+  ],
+  "saved_updates_replayed": 0,
+  "all_failed_artifacts_and_parent_preserved": true,
+  "no_new_data_or_API_IAM_firewall_changes": true
+}
