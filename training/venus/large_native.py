@@ -143,6 +143,9 @@ def prepare(a):
     if host_gib not in (48,128) or (host_gib==128 and limits['machine']!='a2-ultragpu-1g'):
         raise ValueError('128GiB offload is only admitted on the approved170GiB A10080 host')
     out = Path(a.output); out.mkdir(parents=True, exist_ok=False)
+    if getattr(a,'activation_memory_policy','legacy-pinned')=='repeat4-prefix-pageable-v3-layout':
+        from .layout_preflight import check
+        write(out,'cuda-layout-preflight.json',check())
     corpus = Corpus(a.cache, action_index=a.action_index, admission=a.data_admission)
     if sha(a.parent) != PARENT_SHA: raise ValueError('Exact candidate466 parent required')
     parent = torch.load(a.parent, map_location='cpu', weights_only=False)
@@ -276,7 +279,7 @@ if __name__ == '__main__':
     p.add_argument('--parent')
     p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
     p.add_argument('--host-offload-limit-gib',type=int,choices=(48,128),default=48)
-    p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2'),default='legacy-pinned')
+    p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2','repeat4-prefix-pageable-v3-layout'),default='legacy-pinned')
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
     prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)

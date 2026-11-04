@@ -1,0 +1,63 @@
+{
+  "status": "CONCRETE_PROPOSAL_PENDING_UNUSED_SIXTH_PURPOSE_AMENDMENT",
+  "recorded_utc": "2026-11-04T21:28:20.352038+00:00",
+  "purpose": "Use the already-counted unused sixth interval for layout-correct native admission and immediate sustained training if feasible. No increase of GPU count/time/spending/storage bounds.",
+  "prior_authorization": "docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-CONTINUATION-AUTHORIZATION-2026-11-04.json",
+  "prior_authorization_sha256": "e8ad1b9bec841f888d8509c386cc2224598ac9780e7ab83900f60d0f5915a67d",
+  "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-LAYOUT-RESULT-2026-11-04.json",
+  "result_sha256": "eefd7abc8cfba1a8b42b69a1788c15ce3f6b4d45748cc6a83fc361b8c336f6f9",
+  "only_authority_change": "Allow unused sixth interval to start before new optimizer updates for this diagnosed layout correction, replacing the previous after-new-updates-only restriction. Maximumactualintervals remains6.",
+  "resource": {
+    "project": "aurium-duplex-live-20261024",
+    "VM": "duplex-venus-large-gpu-20261104-eua-v67",
+    "VM_id": "7521667153519853425",
+    "disk": "duplex-venus-large-data-20261104-eua-v67",
+    "disk_id": "2297341858915206463",
+    "zone": "europe-west4-a",
+    "machine": "a2-ultragpu-1g STANDARD",
+    "GPU": "one A10080GB",
+    "retained_durable_GB": 250,
+    "included_scratch_GB": 375,
+    "new_VM_disk_snapshot_CPU_region": false
+  },
+  "unchanged_limits": {
+    "additional_phase_USD": 150,
+    "project_USD": 325,
+    "old_conservative_carry_USD": 165.7900361111111,
+    "aggregate_GPU_seconds": 43200,
+    "actual_intervals_consumed": 5,
+    "maximum_actual_intervals": 6,
+    "actual_prior_GPU_upper_seconds": 2600,
+    "remaining_GPU_seconds_including_rounding": 40600,
+    "next_native_STOP_seconds": 40500,
+    "rounding_reserve_seconds": 100,
+    "storage_deadline_unix": 1793897263.296897,
+    "storage_deadline_UTC": "2026-11-05T16:47:43.296897Z",
+    "approved_artifact_GB": 100,
+    "physical_saved_activation_GiB": 48,
+    "minimum_actual_host_headroom_GiB": 16
+  },
+  "capacity_policy": {
+    "maximum_prestart_requests": 3,
+    "minimum_spacing_seconds": 600,
+    "only_retry": "ActualDONEcapacity-onlyfailure with exactsameVM/unchangedlastStart/no-newrunning receipt; failed-startlastStop may only advance inside corresponding failedoperation. No retry after partial start, access/unknown error or model/admission failure."
+  },
+  "implementation": {
+    "policy": "repeat4-prefix-pageable-v3-layout",
+    "defaults_changed": false,
+    "old_failedv2_preserved": true,
+    "forward_backward_precision_data_loss_unchanged": true
+  },
+  "sequence": [
+    "Fresh exactprice/quota/allGPU-off/VMdiskidentity/source/2600prior actual receipt checks; Gitdeploy andnative40500STOP+independentMacguestguards before compute",
+    "Run prepared tiny actualCUDA memory-efficient SDPA backward reference/candidate checks on padded/broadcast/native-contiguous masks BEFOREloadinganymodelweights. Exactoutputs/ALLQKVgradients, failfast on incompatibility. CPUtests do not substitute.",
+    "Originalfull304 integrity + zero-expansion native equivalence + fullfour-worstTRAINnativegradients + materializedAdam with exactoldbasis/state; no closedwholecausalprobe",
+    "Independent fresh-process fullAdam/RNG/OPALrestore, then actualcompletepairedschedule and <=100GBbackup admission",
+    "If admitted train immediately unchanged698351616main vs851968control, atmost480newupdates/8complete240TRAINepochs perarm/full64DEV perboundary/LR1e-5/effectivebatch4/micro1/KL.1/hidden.01/action.25/oldapprovedobjectives",
+    "Finalindependent restores/fullpairednative64behaviorandspeech; wholequality/live/owneracceptance beforeadoption; no passing subset/weakerthresholds",
+    "On nativeadmission/guard/state failure stopthisbranch,hashcopyalluniqueoutputs,stopcomputeearly/retain durable disk. No furtheractualinterval underthisscope."
+  ],
+  "no_credit_purchases_external_model_API_new_IAM_firewall_or_new_payload": true,
+  "no_saved_update_replay": true,
+  "risks": "ActualCUDAcompatibility, full4gradient completion and useful complete-epoch throughput remainunproved. The corrected run may stillstopwithouttraining if those gates fail. No CPU-only claim of model improvement/adoption."
+}

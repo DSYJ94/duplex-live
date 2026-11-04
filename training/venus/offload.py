@@ -20,7 +20,7 @@ def available_host_bytes():
 class ActivationOffload:
     def __init__(self,model,minimum_bytes=256*1024,maximum_host_bytes=48*1024**3,force_cpu_test=False,
                  policy='legacy-pinned',available_host_fn=available_host_bytes):
-        if policy not in ('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2'):raise ValueError('Explicit lossless storage policy required')
+        if policy not in ('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2','repeat4-prefix-pageable-v3-layout'):raise ValueError('Explicit lossless storage policy required')
         self.parameter_storage={p.untyped_storage().data_ptr() for p in model.parameters()}
         self.minimum_bytes=minimum_bytes;self.maximum_host_bytes=maximum_host_bytes;self.force_cpu_test=force_cpu_test
         self.saved_bytes=0;self.tensors=0;self.logical_bytes=0;self.compressed_tensors=0
@@ -40,6 +40,21 @@ class ActivationOffload:
     @staticmethod
     def byte_equal(a,b):
         return torch.equal(a.contiguous().view(torch.uint8),b.contiguous().view(torch.uint8))
+
+    @staticmethod
+    def restore_layout(tensor,strides):
+        if strides is None or tensor.stride()==strides:return tensor
+        # Include final vector-load padding as well as row padding. Rebuild
+        # broadcast axes by copying one unique slice, never overlapping writes.
+        span=1+sum((n-1)*s for n,s in zip(tensor.shape,strides))
+        base=torch.zeros(((span+7)//8)*8,dtype=tensor.dtype,device=tensor.device)
+        result=base.as_strided(tensor.shape,strides)
+        target=result;source=tensor
+        for dim in reversed(range(tensor.ndim)):
+            if strides[dim]==0 and tensor.shape[dim]>1:
+                target=target.select(dim,0);source=source.select(dim,0)
+        target.copy_(source)
+        return result
 
     def prefix_pack(self,host,device,repeat):
         """Keep immutable verified KV prefixes in a growable owned CPU buffer.
@@ -99,7 +114,7 @@ class ActivationOffload:
             return ('direct',tensor.detach())
         payload,repeat=(self.compact_repeated_heads(tensor) if self.policy!='legacy-pinned' else (tensor.detach(),1))
         stored=payload.numel()*payload.element_size()
-        prefix=self.policy=='repeat4-prefix-pageable-v2' and repeat==4
+        prefix=self.policy in ('repeat4-prefix-pageable-v2','repeat4-prefix-pageable-v3-layout') and repeat==4
         if not prefix:self.reserve(stored)
         pinned=tensor.is_cuda and self.policy=='legacy-pinned'
         if self.policy!='legacy-pinned':self.host_headroom(stored,tensor.is_cuda)
@@ -109,18 +124,24 @@ class ActivationOffload:
         host.copy_(payload,non_blocking=pinned)
         self.logical_bytes+=size;self.tensors+=1
         self.compressed_tensors+=int(repeat!=1)
-        if prefix:return self.prefix_pack(host,tensor.device,repeat)
+        strides=tensor.stride() if self.policy=='repeat4-prefix-pageable-v3-layout' else None
+        if prefix:
+            packed=self.prefix_pack(host,tensor.device,repeat)
+            return packed+(strides,) if strides is not None else packed
         self.saved_bytes+=stored
-        return ('offloaded',host,tensor.device,repeat)
+        packed=('offloaded',host,tensor.device,repeat)
+        return packed+(strides,) if strides is not None else packed
 
     def unpack(self,packed):
         if packed[0]=='direct':return packed[1]
         if packed[0]=='prefix':
             result=packed[1]['buffer'][:,:,:packed[2]].to(packed[3])
-            return result.repeat_interleave(packed[4],dim=1)
+            result=result.repeat_interleave(packed[4],dim=1)
+            return self.restore_layout(result,packed[5] if len(packed)>5 else None)
         result=packed[1].to(packed[2],non_blocking=packed[2].type=='cuda' and self.policy=='legacy-pinned')
         repeat=packed[3] if len(packed)>3 else 1
-        return result.repeat_interleave(repeat,dim=1) if repeat!=1 else result
+        result=result.repeat_interleave(repeat,dim=1) if repeat!=1 else result
+        return self.restore_layout(result,packed[4] if len(packed)>4 else None)
 
     @contextmanager
     def context(self):

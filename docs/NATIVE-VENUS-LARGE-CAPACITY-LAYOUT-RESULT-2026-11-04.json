@@ -1,0 +1,80 @@
+{
+  "status": "FIFTH_ACTUAL_INTERVAL_FAILED_BACKWARD_LAYOUT_ZERO_UPDATES_ALL_COMPUTE_STOPPED",
+  "recorded_utc": "2026-11-04T21:28:20.352038+00:00",
+  "source": "85e08c268f5183fe0902ce29c3acc9e4c83bfd14",
+  "controller": {
+    "tool_session": 6032,
+    "PID": 4365,
+    "actual_exit": 1
+  },
+  "unit": {
+    "name": "duplex-large65-prepare",
+    "first_PID": 1307,
+    "invocation": "c128e23180614b1398442a0c9fb7b0c9",
+    "terminal": "exit-code",
+    "exit_status": 1
+  },
+  "provider": {
+    "id": "7521667153519853425",
+    "status": "TERMINATED",
+    "start": "2026-11-04T13:04:34.364-08:00",
+    "stop": "2026-11-04T13:12:49.161-08:00",
+    "actual_seconds": 494.797,
+    "upper_seconds": 500,
+    "terminal_sha256": "dc5943e463faae680543b2b776785d3b894fe1821d2c84506c775ebe19b68db2"
+  },
+  "previous_GPU_upper_seconds": 2100,
+  "aggregate_GPU_upper_seconds": 2600,
+  "remaining_original_GPU_seconds_including_rounding": 40600,
+  "new_optimizer_updates": 0,
+  "parent466_adopted": false,
+  "full_native_forward_first_workload_completed": true,
+  "forward_evidence": "Failure stack is benchmark loss.backward AFTER corpus.loss returned and finite loss check succeeded. This proves the first full native forward fit its48GiB saved-storage reservation; not completion of all4 gradients.",
+  "failure": "RuntimeError: attn_bias is not correctly aligned (strideH) .attn_bias.stride(1) = 15350, and should be a multiple of 4.",
+  "causal_evidence": {
+    "actual_error": "CUDA memory-efficient SDPA backward rejected strideH15350",
+    "CPU_reproduction": "Same(1,32,10,1535)BF16 masks with original padded or broadcast layout are reconstructed contiguously byv2: strideH15350. Both layout assertions fail before fix.",
+    "correction": "Newexplicitv3-layout saves original strides and rebuilds original broadcast/padded GPU layout with owned vector-aligned backing. Existing prefix bytes/math/gradients/data/objectives unchanged; v2 failed behavior still reproducible.",
+    "limit": "Original native saved-mask strides were not instrumented; actual CUDA baseline/candidate kernel proof remains required. CPU proof is not full native qualification."
+  },
+  "local_proof": {
+    "passed": 26,
+    "seconds": 4.77,
+    "expected_deprecation_warnings": 2,
+    "coverage": [
+      "RED2\u2192GREEN original padded/broadcast strides plus exact logical bytes at failing1535width",
+      "Tiny native segmented GQA full loss and ALL gradients exactly equal reference; actual prefix reuse asserted",
+      "Previous legacy native/prefix/gradient/restore and shared-history/physical-cap tests"
+    ],
+    "actual_GPU_proof": false
+  },
+  "pre_model_CUDA_probe": {
+    "prepared": true,
+    "executed": false,
+    "source": "training/venus/layout_preflight.py",
+    "torch_backend": "EFFICIENT_ATTENTION",
+    "cases": [
+      "padded",
+      "broadcast",
+      "native-contiguous input"
+    ],
+    "checks": "Actual CUDA BF16 outputs and ALL Q/K/V gradients exactly equal no-hook reference; run before any model weights loaded. Explicit proof of kernel compatibility only; does not replace full304/fourworst/state/behavior gates."
+  },
+  "source_files_sha256": {
+    "training/venus/offload.py": "23620e798d989ef7eeea93d9a7e756e6cc199064e45106acfbbbf607cdee3789",
+    "training/venus/layout_preflight.py": "ecf63f46500fe7b52e5cc539d0d149c285a14b74ff0ccb4efbe53836d98b3081",
+    "training/venus/large_native.py": "a42c15a3baa9e0531ba7db20b74e4cb94b7c6c1af9d4fe0f0af7703ff12b418a",
+    "evals/harness/test_venus_activation_storage.py": "f5cf4312e3c8042e9ddb8245ad2bbb9634f3136d5743560e9e2ccc9c19017c06"
+  },
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 22,
+    "bytes": 312659,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v69",
+    "inventory_sha256": "b7a82e944b575e199c9f68e7b211c9901ae9ab62226102c4158cd16823c90356"
+  },
+  "all_six_project_VMs_freshly_TERMINATED": true,
+  "scope_blocker": "Unusedsixthinterval is currently restricted to checkpoint resume AFTERactualnewupdates. None have occurred; no sixth start permitted for this failed-admission repair without explicit amendment.",
+  "critical_history": "Original4failedbackups plusnewv69 allhashverified outsideOneDrive; oldweights/AdamRNGOPAL/KLhidden/fit15/history/data/folds unchanged. BroadMacsourcebackup remainsPARTIAL."
+}

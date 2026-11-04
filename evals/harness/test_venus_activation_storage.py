@@ -41,7 +41,7 @@ def test_actual_host_headroom_and_physical_reservation_reject_before_copy():
     assert hook.saved_bytes==0
 
 
-@pytest.mark.parametrize('memory_policy',['repeat4-pageable-v1','repeat4-prefix-pageable-v2'])
+@pytest.mark.parametrize('memory_policy',['repeat4-pageable-v1','repeat4-prefix-pageable-v2','repeat4-prefix-pageable-v3-layout'])
 def test_native_segmented_gqa_loss_and_all_gradients_are_exact(memory_policy):
     from transformers import Qwen3Config,Qwen3ForCausalLM
     from training.venus.lora import install,scene_loss
@@ -62,7 +62,7 @@ def test_native_segmented_gqa_loss_and_all_gradients_are_exact(memory_policy):
         actual,_=scene_loss(m,e,'cpu');actual.backward()
     assert torch.equal(loss,actual) and hook.saved_bytes>0
     assert all(torch.equal(expected[n],p.grad) for n,p in m.named_parameters() if p.requires_grad)
-    if memory_policy=='repeat4-prefix-pageable-v2':assert hook.prefix_reuses>0
+    if memory_policy.startswith('repeat4-prefix'):assert hook.prefix_reuses>0
 
 
 def test_growing_native_shaped_history_preserves_every_old_version_without_quadratic_storage():
@@ -102,3 +102,18 @@ def test_shared_prefix_physical_cap_cannot_be_bypassed_by_growth_or_fork():
     grown=torch.ones(1,2,9,8,dtype=torch.bfloat16)
     with pytest.raises(MemoryError,match='reservation'):hook.pack(grown.repeat_interleave(4,dim=1))
     assert hook.saved_bytes==256 and same_bytes(hook.unpack(original),x.repeat_interleave(4,dim=1))
+
+
+@pytest.mark.parametrize('broadcast',[False,True])
+def test_native_attention_bias_keeps_exact_padded_or_broadcast_strides(broadcast):
+    # Actual CUDA failure: compact reconstruction changed strideH to15350,
+    # which memory-efficient SDPA backward requires to be a multiple of4.
+    x=torch.zeros(1,1 if broadcast else 32,10,1536,dtype=torch.bfloat16)[...,:1535]
+    if broadcast:x=x.expand(1,32,10,1535)
+    assert x.stride(1)%4==0
+    old=policy(memory_policy='repeat4-prefix-pageable-v2')
+    assert old.unpack(old.pack(x)).stride(1)==15350
+    hook=policy(memory_policy='repeat4-prefix-pageable-v3-layout')
+    actual=hook.unpack(hook.pack(x))
+    assert same_bytes(x,actual)
+    assert actual.stride()==x.stride()
