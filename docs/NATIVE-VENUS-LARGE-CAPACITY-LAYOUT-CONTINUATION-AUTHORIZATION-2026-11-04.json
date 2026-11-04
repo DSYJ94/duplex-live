@@ -1,0 +1,21 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-04T21:45:14.001589+00:00",
+  "human_reply_verbatim": "Approve repurposing sixth; keep limits",
+  "proposal_path": "docs/NATIVE-VENUS-LARGE-CAPACITY-LAYOUT-CONTINUATION-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "5d31af9ffe14ae6059af1a6eb8e4a3a9a67b6587",
+  "proposal_sha256": "b01c76dbd8fc3c2517c4bf9b323ae8d4bc338ef92d5dcc199f1e33f4ebeaad2b",
+  "prior_authorization_sha256": "e8ad1b9bec841f888d8509c386cc2224598ac9780e7ab83900f60d0f5915a67d",
+  "sixth_may_validate_layout_before_new_updates": true,
+  "maximum_GPU_running_intervals": 6,
+  "maximum_new_GCP_USD": 150,
+  "maximum_project_USD": 325,
+  "maximum_aggregate_GPU_seconds": 43200,
+  "prior_GPU_seconds_upper": 2600,
+  "next_maximum_interval_seconds": 40500,
+  "shutdown_rounding_reserve_seconds": 100,
+  "vm_id": "7521667153519853425",
+  "disk_id": "2297341858915206463",
+  "maximum_capacity_only_prestart_requests": 3,
+  "minimum_capacity_request_spacing_seconds": 600
+}

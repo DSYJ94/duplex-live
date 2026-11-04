@@ -15,7 +15,7 @@ import sys
 import time
 
 from . import controller as c
-from .large_guard import AUTH, MEMORY_AUTH, PREFIX_AUTH, ROOT, KEY, OLD_USD, authority, memory_authority, prefix_authority
+from .large_guard import AUTH, MEMORY_AUTH, PREFIX_AUTH, LAYOUT_AUTH, ROOT, KEY, OLD_USD, authority, memory_authority, prefix_authority, layout_authority
 from .large_inputs import PARENT_SHA, MANIFEST_SHA, sha
 from .large_stage import NAME as CPU, DISK, ZONE, REMOTE
 
@@ -67,10 +67,12 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def capacity_retry_after(number,previous):
+def capacity_retry_after(number,previous,family="prefix"):
     """Only terminal pre-start stockout on SAME VM; no new running interval."""
     if number not in (1,2):raise ValueError('At most two spaced capacity-only retries')
-    old=ROOT/('gpu-05' if number==1 else 'gpu-05-capacity-01')
+    if family not in ('prefix','layout'):raise ValueError('Exact authorized capacity family required')
+    base='gpu-06' if family=='layout' else 'gpu-05'
+    old=ROOT/(base if number==1 else base+'-capacity-01')
     vm=json.loads((old/'no-new-running-interval.json').read_text())
     op=json.loads((old/'allocation-terminal.json').read_text())
     errors=op.get('error',{}).get('errors',[])
@@ -90,11 +92,17 @@ def capacity_retry_after(number,previous):
     return datetime.fromisoformat(requests[0]['at_utc']).timestamp()+600
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0,resume_layout=False,layout_capacity_retry=0):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if resume_layout:
+        layout_authority()
+        if any((resume_sizing,replace_prestart,fallback80,resume80_precreate,resume_memory,resume_prefix,prefix_capacity_retry)):
+            raise ValueError("Layout restart is one independent same-resource mode")
+        resume_prefix=True
+    if layout_capacity_retry and not resume_layout:raise ValueError("Layout capacity retry requires layout mode")
     if prefix_capacity_retry and not resume_prefix:raise ValueError('Capacity-only retry requires shared-history mode')
     if resume_prefix:
         prefix_authority()
@@ -128,8 +136,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
     if fallback80:
-        for number in ((1,2,3,4) if resume_prefix else (1,2,3) if resume_memory else (1,2)):
-            old=ROOT/('gpu-%02d'%number)
+        for number in ((1,2,3,4,5) if resume_layout else (1,2,3,4) if resume_prefix else (1,2,3) if resume_memory else (1,2)):
+            old=ROOT/('gpu-05-capacity-01' if number==5 else 'gpu-%02d'%number)
             terminal=json.loads((old/'provider-final.json').read_text())
             verified=json.loads((old/'copyback-verified.json').read_text())
             if terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists():
@@ -141,7 +149,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
                 disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
             prior_seconds+=seconds;prior_vm=terminal
-        if prior_seconds!=(2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
+        if prior_seconds!=(2600 if resume_layout else 2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
         R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
         ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
@@ -152,12 +160,20 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if resume_prefix:
             R=ROOT/'gpu-05';OUTPUT=REMOTE+'/native-v69'
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v69')
+        if resume_layout:
+            R=ROOT/'gpu-06';OUTPUT=REMOTE+'/native-v70'
+            BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v70')
     retry_after=0
     if prefix_capacity_retry:
         retry_after=capacity_retry_after(prefix_capacity_retry,prior_vm)
         failed=ROOT/('gpu-05' if prefix_capacity_retry==1 else 'gpu-05-capacity-01')
         prior_vm=json.loads((failed/'no-new-running-interval.json').read_text())
         R=ROOT/('gpu-05-capacity-%02d'%prefix_capacity_retry)
+    if layout_capacity_retry:
+        retry_after=capacity_retry_after(layout_capacity_retry,prior_vm,'layout')
+        failed=ROOT/('gpu-06' if layout_capacity_retry==1 else 'gpu-06-capacity-01')
+        prior_vm=json.loads((failed/'no-new-running-interval.json').read_text())
+        R=ROOT/('gpu-06-capacity-%02d'%layout_capacity_retry)
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
@@ -171,7 +187,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     clock=json.loads((stage/'storage-deadline.json').read_text())
     duration=43100-prior_seconds
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
-    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json').read_text())
+    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v70' if resume_layout else 'v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json').read_text())
     hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
     if not 0<hourly<=8 or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
@@ -229,7 +245,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;created=False;end=None
     try:
         if retry_after:
-            c.record('capacity_only_spaced_wait',retry=prefix_capacity_retry,not_before_unix=retry_after,prior_GPU_seconds_upper=prior_seconds)
+            c.record('capacity_only_spaced_wait',retry=layout_capacity_retry or prefix_capacity_retry,not_before_unix=retry_after,prior_GPU_seconds_upper=prior_seconds)
             while time.time()<retry_after:time.sleep(min(30,retry_after-time.time()))
             current=c.cloud('compute','instances','list')
             same=[v for v in current if v['name']==NAME]
@@ -339,7 +355,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
              machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
         if resume_memory:plan['memory_authorization_sha256']=sha(MEMORY_AUTH)
         if resume_prefix:plan.update(prefix_authorization_sha256=sha(PREFIX_AUTH),activation_memory_policy='repeat4-prefix-pageable-v2')
-        plan_path=ROOT/('interval-05.json' if resume_prefix else 'interval-04.json' if resume_memory else 'interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
+        if resume_layout:plan.update(layout_authorization_sha256=sha(LAYOUT_AUTH),activation_memory_policy='repeat4-prefix-pageable-v3-layout')
+        plan_path=ROOT/('interval-06.json' if resume_layout else 'interval-05.json' if resume_prefix else 'interval-04.json' if resume_memory else 'interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
         with plan_path.open('x') as f:json.dump(plan,f,indent=2)
         lease=dict(plan,execution_plan_path=str(plan_path),execution_plan_sha256=sha(plan_path),
              prior_capacity_GPU_seconds_upper=prior_seconds,verified_hourly_price_usd=hourly,stop_unix=end,
@@ -373,7 +390,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
         sizing_remaining=1200 if fallback80 else 1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
-        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
+        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v3-layout' if resume_layout else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         for arm in ('main','control'):
             execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
@@ -420,4 +437,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-layout',action='store_true');p.add_argument('--layout-capacity-retry',type=int,choices=(1,2),default=0);a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry,a.resume_layout,a.layout_capacity_retry)

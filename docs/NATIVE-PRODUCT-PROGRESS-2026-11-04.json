@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T21:28:20.352038+00:00",
+  "updated_utc": "2026-11-04T21:47:05.015757+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "fifth_interval_stopped_backward_layout_failure_zero_updates_CPU_fix_passed",
+    "status": "sixth_layout_purpose_amendment_APPROVED_deploy_next",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
-    "scope_constraint": "5actualintervals/2600upperseconds;40600remaininginclrounding;150new/325project/originalstorageclock unchanged. Sixthcurrentlyforbiddenbeforeupdates.",
-    "next_material_decision": "Repurpose existing unusedsixthinterval frompost-update-onlyresume tocorrectedCUDApreflight/nativeadmission\u2192training;max6/time/moneyunchanged.",
+    "scope_constraint": "max6/2600prior+40500native+100reserve=43200/150new/325project/originalstorageunchanged.",
+    "next_material_decision": "None pending; sixthactualinterval mayrunpre-updateCUDApreflight/nativeadmission thentrain underunchangedlimits.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json"
   },
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "All6VMs freshlyTERMINATED;controller6032EXIT1;5actualintervals/2600GPUupper;ZEROnewupdates. No furtherstartcurrentlyauthorizedforthisfailure.",
+  "current_compute_scope": "Sixthpurposeamendmentapproved, same80 restartnotyetsubmitted; no newupdates.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
