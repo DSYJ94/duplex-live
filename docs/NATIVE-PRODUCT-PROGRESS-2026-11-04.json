@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T20:57:36.139281+00:00",
+  "updated_utc": "2026-11-04T21:05:55.071592+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "interval05_start_rejected_for_capacity_no_new_running_time_sameVM_spaced_retry_next",
+    "status": "interval05_shared_history_native_admission_ACTUALLY_RUNNING",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "Initialprefixstart operationfailedterminalcapacity BEFOREnewstart;allcomputeSTOPPED/2100prior/no optimizerupdates. Firstnewactualinterval05 stillapproved; atmost2additionalcapacity-onlysameVMstarts>=10min apart.",
+  "current_compute_scope": "SAME80VM752/disk229 actuallyRUNNING21:04:34.364UTC/source85e08c2/controller6032-PID4365/nativeprepare1307. STOP5Nov08:27:54.364UTC;prior2100+41000+100=43200/150new/325project;no newupdatesyet.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
