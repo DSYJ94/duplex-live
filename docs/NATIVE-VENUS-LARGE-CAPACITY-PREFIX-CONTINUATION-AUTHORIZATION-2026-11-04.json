@@ -1,0 +1,20 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-04T20:51:58.080052+00:00",
+  "human_reply_verbatim": "Approve continuation within unchanged limits",
+  "proposal_path": "docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-CONTINUATION-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "ec59de4642756075ddded5faa964aa1afbe21e63",
+  "proposal_sha256": "6130c8ee9b4289053967d90e7cd873cf84f62ae031eedd91c6629a75de60aaf6",
+  "prior_authorization_sha256": "506b6c457285409877c16a905bbbbe41ed77f6b3b7d54073fc2a85ac7effc9ac",
+  "maximum_GPU_running_intervals": 6,
+  "maximum_new_GCP_USD": 150,
+  "maximum_project_USD": 325,
+  "maximum_aggregate_GPU_seconds": 43200,
+  "prior_GPU_seconds_upper": 2100,
+  "next_maximum_interval_seconds": 41000,
+  "shutdown_rounding_reserve_seconds": 100,
+  "vm_id": "7521667153519853425",
+  "disk_id": "2297341858915206463",
+  "optional_sixth_only_after_actual_new_updates": true,
+  "no_failed_admission_retry": true
+}

@@ -72,11 +72,12 @@ def test_80GB_fallback_requires_exact_included_scratch_and_standard_zone(tmp_pat
     with pytest.raises(ValueError,match='scratch'):g.validate(vm,[vm],[],lease,now)
 
 
-def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_time(tmp_path,monkeypatch):
+@pytest.mark.parametrize('fifth',[False,True])
+def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_time(tmp_path,monkeypatch,fifth):
     actual_root=g.ROOT
     p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
     previous=[]
-    for i,upper in ((1,300),(2,400),(3,900)):
+    for i,upper in ([(1,300),(2,400),(3,900)]+([(4,500)] if fifth else [])):
         original=actual_root/f'gpu-{i:02d}'/'provider-final.json'
         terminal=json.loads(original.read_text());receipt=tmp_path/f'provider-final-{i:02d}.json'
         receipt.write_bytes(original.read_bytes())
@@ -87,10 +88,11 @@ def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_t
              vm_name='duplex-venus-large-gpu-20261104-eua-v67',disk_name='duplex-venus-large-data-20261104-eua-v67',
              storage_started_unix=1793810863.296897,storage_deadline_unix=1793897263.296897,
              memory_authorization_sha256=sha(g.MEMORY_AUTH),previous_intervals=previous)
-    path=tmp_path/'interval-04.json';path.write_text(json.dumps(p))
-    lease.update(p,execution_plan_path=str(path),execution_plan_sha256=sha(path),prior_capacity_GPU_seconds_upper=1600)
-    assert g.resource(lease)['duration']==41500
-    for key,value in [('disk_id','wrong'),('maximum_running_seconds',41600),('memory_authorization_sha256','wrong'),
+    if fifth:p.update(prefix_authorization_sha256=sha(g.PREFIX_AUTH),maximum_running_seconds=41000,activation_memory_policy='repeat4-prefix-pageable-v2')
+    path=tmp_path/('interval-05.json' if fifth else 'interval-04.json');path.write_text(json.dumps(p))
+    lease.update(p,execution_plan_path=str(path),execution_plan_sha256=sha(path),prior_capacity_GPU_seconds_upper=2100 if fifth else 1600)
+    assert g.resource(lease)['duration']==(41000 if fifth else 41500)
+    for key,value in [('disk_id','wrong'),('maximum_running_seconds',41600),('prefix_authorization_sha256' if fifth else 'memory_authorization_sha256','wrong'),
                       ('storage_deadline_unix',1793897264.296897)]:
         changed=dict(p,**{key:value});path.write_text(json.dumps(changed))
         bad=dict(lease,**{key:value},execution_plan_sha256=sha(path))

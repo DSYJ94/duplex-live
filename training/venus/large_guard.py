@@ -9,6 +9,7 @@ from .large_inputs import sha, PARENT_SHA, MANIFEST_SHA
 KEY = 'venus-large-capacity-v65'
 AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json')
 MEMORY_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-AUTHORIZATION-2026-11-04.json')
+PREFIX_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-CONTINUATION-AUTHORIZATION-2026-11-04.json')
 ROOT = Path('runs/venus-large-capacity-20261104/v65')
 OLD_USD = 165.7900361111111
 
@@ -39,13 +40,41 @@ def memory_authority():
     return a
 
 
+def prefix_authority():
+    memory_authority()
+    a=json.loads(PREFIX_AUTH.read_text())
+    if (a['status']!='APPROVED' or sha(a['proposal_path'])!=a['proposal_sha256']
+            or a['prior_authorization_sha256']!=sha(MEMORY_AUTH)
+            or a['maximum_GPU_running_intervals']!=6 or a['maximum_new_GCP_USD']!=150
+            or a['maximum_project_USD']!=325 or a['maximum_aggregate_GPU_seconds']!=43200
+            or a['prior_GPU_seconds_upper']!=2100 or a['next_maximum_interval_seconds']!=41000
+            or a['shutdown_rounding_reserve_seconds']!=100
+            or a['vm_id']!='7521667153519853425' or a['disk_id']!='2297341858915206463'
+            or not a['optional_sixth_only_after_actual_new_updates'] or not a['no_failed_admission_retry']):
+        raise ValueError('Exact shared-history continuation authorization required')
+    return a
+
+
 def resource(lease):
     authority()
     path = Path(lease['execution_plan_path'])
-    if path.parent != ROOT or path.name not in ('interval-01.json', 'interval-02.json', 'interval-03.json','interval-04.json'):
+    if path.parent != ROOT or path.name not in ('interval-01.json', 'interval-02.json', 'interval-03.json','interval-04.json','interval-05.json'):
         raise ValueError('Only explicitly authorized immutable interval plans required')
     p = json.loads(path.read_text())
     fourth=path.name=='interval-04.json'
+    fifth=path.name=='interval-05.json'
+    if fifth:
+        a=prefix_authority()
+        if (p.get('prefix_authorization_sha256')!=sha(PREFIX_AUTH)
+                or lease.get('prefix_authorization_sha256')!=sha(PREFIX_AUTH)
+                or p['vm_id']!=a['vm_id'] or p['disk_id']!=a['disk_id']
+                or p['zone']!='europe-west4-a' or p['machine']!='a2-ultragpu-1g'
+                or p['vm_name']!='duplex-venus-large-gpu-20261104-eua-v67'
+                or p['disk_name']!='duplex-venus-large-data-20261104-eua-v67'
+                or p['provisioning']!='STANDARD' or p['maximum_running_seconds']!=41000
+                or p['storage_deadline_unix']!=1793897263.296897
+                or p.get('activation_memory_policy')!='repeat4-prefix-pageable-v2'):
+            raise ValueError('Fifth interval requires exact shared-history authority and same resources')
     if fourth:
         a=memory_authority()
         if (p.get('memory_authorization_sha256')!=sha(MEMORY_AUTH)
@@ -67,7 +96,7 @@ def resource(lease):
     for key in ('vm_id', 'disk_id', 'zone', 'creation_timestamp', 'storage_started_unix', 'storage_deadline_unix'):
         if lease[key] != p[key]: raise ValueError('Provider identity or storage clock differs')
     previous = p['previous_intervals']
-    if len(previous) != int(path.stem[-2:]) - 1 or len(previous) > (3 if fourth else 2):
+    if len(previous) != int(path.stem[-2:]) - 1 or len(previous) > (4 if fifth else 3 if fourth else 2):
         raise ValueError('All prior actual intervals required; never reset the clock')
     seconds = 0
     for row in previous:
@@ -87,6 +116,7 @@ def resource(lease):
             if row['optimizer_updates'] != 0: raise ValueError('Never migrate an already training arm silently')
     duration = p['maximum_running_seconds']
     if fourth and seconds!=1600:raise ValueError('All1600 actual prior GPU upper seconds must carry forward')
+    if fifth and seconds!=2100:raise ValueError('All2100 actual prior GPU upper seconds must carry forward')
     if (type(duration) is not int or duration < 1 or seconds + duration + 100 > 43200
             or lease['prior_capacity_GPU_seconds_upper'] != seconds
             or p['storage_deadline_unix'] != p['storage_started_unix'] + 86400

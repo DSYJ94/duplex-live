@@ -15,7 +15,7 @@ import sys
 import time
 
 from . import controller as c
-from .large_guard import AUTH, MEMORY_AUTH, ROOT, KEY, OLD_USD, authority, memory_authority
+from .large_guard import AUTH, MEMORY_AUTH, PREFIX_AUTH, ROOT, KEY, OLD_USD, authority, memory_authority, prefix_authority
 from .large_inputs import PARENT_SHA, MANIFEST_SHA, sha
 from .large_stage import NAME as CPU, DISK, ZONE, REMOTE
 
@@ -67,11 +67,16 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if resume_prefix:
+        prefix_authority()
+        if any((resume_sizing,replace_prestart,fallback80,resume80_precreate,resume_memory)):
+            raise ValueError("Shared-history restart is one independent same-resource mode")
+        resume_memory=True
     if resume_memory:
         memory_authority()
         if any((resume_sizing,replace_prestart,fallback80,resume80_precreate)):
@@ -99,7 +104,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
     if fallback80:
-        for number in ((1,2,3) if resume_memory else (1,2)):
+        for number in ((1,2,3,4) if resume_prefix else (1,2,3) if resume_memory else (1,2)):
             old=ROOT/('gpu-%02d'%number)
             terminal=json.loads((old/'provider-final.json').read_text())
             verified=json.loads((old/'copyback-verified.json').read_text())
@@ -112,7 +117,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
                 disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
             prior_seconds+=seconds;prior_vm=terminal
-        if prior_seconds!=(1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
+        if prior_seconds!=(2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
         R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
         ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
@@ -120,6 +125,9 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if resume_memory:
             R=ROOT/'gpu-04';OUTPUT=REMOTE+'/native-v68'
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v68')
+        if resume_prefix:
+            R=ROOT/'gpu-05';OUTPUT=REMOTE+'/native-v69'
+            BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v69')
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
@@ -133,7 +141,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     clock=json.loads((stage/'storage-deadline.json').read_text())
     duration=43100-prior_seconds
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
-    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v68' if resume_memory else 'v65')+'.json').read_text())
+    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json').read_text())
     hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
     if not 0<hourly<=8 or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
@@ -287,7 +295,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
              **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
              machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
         if resume_memory:plan['memory_authorization_sha256']=sha(MEMORY_AUTH)
-        plan_path=ROOT/('interval-04.json' if resume_memory else 'interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
+        if resume_prefix:plan.update(prefix_authorization_sha256=sha(PREFIX_AUTH),activation_memory_policy='repeat4-prefix-pageable-v2')
+        plan_path=ROOT/('interval-05.json' if resume_prefix else 'interval-04.json' if resume_memory else 'interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
         with plan_path.open('x') as f:json.dump(plan,f,indent=2)
         lease=dict(plan,execution_plan_path=str(plan_path),execution_plan_sha256=sha(plan_path),
              prior_capacity_GPU_seconds_upper=prior_seconds,verified_hourly_price_usd=hourly,stop_unix=end,
@@ -321,7 +330,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
         sizing_remaining=1200 if fallback80 else 1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
-        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
+        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         for arm in ('main','control'):
             execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
@@ -368,4 +377,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix)

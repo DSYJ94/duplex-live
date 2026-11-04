@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T20:23:49.833877+00:00",
+  "updated_utc": "2026-11-04T20:53:40.802142+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "fourth_interval_stopped_memory_cap_zero_updates_shared_history_CPU_fix_proved",
+    "status": "shared_history_continuation_approved_interval05_deploy_next",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
-    "scope_constraint": "2100prior rounded seconds/41100remaininginclrounding; original4intervals consumed/150new/325project/storage deadline unchanged.",
-    "next_material_decision": "Exact4-to6 interval amendment; optional sixth only saved-state resume AFTERactualnewupdates, not another failed-admission retry.",
+    "scope_constraint": "Approvedmax6intervals;prior2100+next41000+100round=43200;150new/325project/originalstorageunchanged.",
+    "next_material_decision": "None pending. Optional06 only actual trained-checkpoint resume, no failed-admission retry.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json"
   },
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "All6projectVMs freshlyTERMINATED; controller28937 actualEXIT1;4intervals/2100GPUupperseconds;ZEROupdates. No further running interval authorized.",
+  "current_compute_scope": "Shared-history SAME80 restart approved, not yet submitted; no newupdates. Full native admission then direct training.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
