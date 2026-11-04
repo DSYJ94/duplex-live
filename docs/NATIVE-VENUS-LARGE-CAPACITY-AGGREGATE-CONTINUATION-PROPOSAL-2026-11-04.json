@@ -1,0 +1,71 @@
+{
+  "status": "CONCRETE_PROPOSAL_PENDING_AGGREGATE_CONTINUATION_AMENDMENT",
+  "recorded_utc": "2026-11-04T21:59:40.937116+00:00",
+  "purpose": "Finish alreadyapproved698M/control training with corrected reproducible CUDA preflight, using original remaining aggregate time/spend. Consolidate stop/resume authority so safe early shutdowns do not force one amendment per restart.",
+  "prior_authorization": "docs/NATIVE-VENUS-LARGE-CAPACITY-LAYOUT-CONTINUATION-AUTHORIZATION-2026-11-04.json",
+  "prior_authorization_sha256": "8cd4ceac72196860bfae813bb33c21e79a2f972d46388e81ba1cf57745938990",
+  "evidence": "docs/NATIVE-VENUS-LARGE-CAPACITY-CUDA-COMPARISON-RESULT-2026-11-04.json",
+  "evidence_sha256": "dc441f8145e23fae6b2669b123496bb548e3c861a9e5e2092254205b5c6ec1c3",
+  "authority_change": {
+    "maximum_actual_GPU_intervals_from": 6,
+    "maximum_actual_GPU_intervals_to": 12,
+    "maximum_additional_actual_intervals": 6,
+    "extra_aggregate_GPU_seconds": 0,
+    "extra_phase_or_project_USD": 0
+  },
+  "same_resource": {
+    "project": "aurium-duplex-live-20261024",
+    "VM": "duplex-venus-large-gpu-20261104-eua-v67",
+    "VM_id": "7521667153519853425",
+    "disk": "duplex-venus-large-data-20261104-eua-v67",
+    "disk_id": "2297341858915206463",
+    "zone": "europe-west4-a",
+    "machine": "a2-ultragpu-1g STANDARD",
+    "GPU": "oneA10080GB",
+    "durable_disk_GB": 250,
+    "included_scratch_GB": 375,
+    "new_VM_disk_CPU_snapshot_region": false
+  },
+  "unchanged_limits": {
+    "additional_phase_USD": 150,
+    "project_USD": 325,
+    "old_conservative_carry_USD": 165.7900361111111,
+    "aggregate_GPU_seconds": 43200,
+    "prior_actual_GPU_upper_seconds": 2700,
+    "remaining_GPU_seconds_including_rounding": 40500,
+    "next_native_STOP_maximum_seconds": 40400,
+    "each_next_interval": "At most43100 minus ALL prior actual rounded-upperseconds;100reserve before each start, including startup, no time reset.",
+    "storage_deadline_unix": 1793897263.296897,
+    "storage_deadline_UTC": "2026-11-05T16:47:43.296897Z",
+    "approved_native_artifact_GB": 100,
+    "physical_saved_activation_GiB": 48,
+    "minimum_actual_host_headroom_GiB": 16
+  },
+  "preflight": "Prepared corrected preflight: default baseline repetition recorded to test nondeterminism hypothesis, then strict deterministic SAME-backend exact outputs/ALLQKV gradients plus every saved-tensor raw-byte/original-stride audit. No numerical tolerance increased. Global deterministic/warn-only flags restored before native model load/training. JSON preserved even on failure. Originalfailedsixthreport retained.",
+  "execution": [
+    "Freshprice/quota/allGPUoff/actualVMdiskidentity and complete actual running history. Gitdeploy immutable source. NativeSTOP and independentMacguest guards before model work. OneGPU/modelunit at a time.",
+    "Tiny correctedCUDApreflight BEFOREweights. Then ALL304integrity/fourworst native fullgradients/materializedAdam/zero-expansion native equivalence. No closedwholecausalprobe or kernel/precision sweep.",
+    "Independent fresh-process fullAdam/RNG/OPALrestore and useful completepaired schedule/backup admission. Ifadmitted trainimmediately same698Mmain/851968control <=480newupdates/8complete240TRAINepochs each/full64DEV atboundaries/oldKLhidden/action/nativeobjectives. Maximum984allbranches unchanged; optionalcalibration notused.",
+    "Stop/resume afterupdates only from actual verified fullcheckpoint and exactcurrentarm/clock/recipe/state/source binding. No replayofsavedupdates. No source repairs represented as trained progress.",
+    "Stream immutable completed checkpoints to the existing approved Mac backup destination during training, with inventory/hash receipts, so finalcopyback retrieves only missing outputs. Preserve finalrolling state and all completeepochs; same<=100GBapprovedartifactset, no extraCPU/VM/storage.",
+    "Final independent restores/fullpairednative64behaviorandspeech; alloldthresholds/fullcohorts/ownerlivevoiceacceptance beforeadoption. Current466remainsrejected."
+  ],
+  "anti_spiral": {
+    "unchanged_failed_run_repeats": 0,
+    "maximum_further_failed_kernel_or_storage_admissions": 2,
+    "one_followup_per_diagnosed_locally_reproduced_fix": true,
+    "if_same_failure_persists_or_no_complete_useful_schedule": "Stopbranch/preserveallresults/stoppaidcompute/reportmaterialdecision, do not use remaining intervals for blind repetitions.",
+    "active_hypothesis_reassessment_minutes": 30,
+    "active_infrastructure_reassessment_minutes": 20
+  },
+  "capacity": {
+    "maximum_terminal_capacity_only_prestart_failures_in_whole_phase": 6,
+    "already_observed_in_phase": 1,
+    "maximum_prestart_requests_per_requested_interval": 3,
+    "minimum_spacing_seconds": 600,
+    "only_retry": "ExactDONEstockout +unchangedlastStart/sameVM/no-newreceipt; failedlastStopadvance must fall insidefailedoperation. No access/unknown/partialstart resubmit."
+  },
+  "no_purchases_external_model_API_new_IAM_firewall_or_new_payload": true,
+  "no_data_fold_target_history_KLhidden_changes": true,
+  "risks": "CUDA strict comparison, complete native gradients and useful training throughput remainunproved. This is bounded continuation authority, not model adoption or permission to lower numerical/behavior/audio gates."
+}

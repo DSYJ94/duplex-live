@@ -145,7 +145,7 @@ def prepare(a):
     out = Path(a.output); out.mkdir(parents=True, exist_ok=False)
     if getattr(a,'activation_memory_policy','legacy-pinned')=='repeat4-prefix-pageable-v3-layout':
         from .layout_preflight import check
-        write(out,'cuda-layout-preflight.json',check())
+        check(report_path=out/'cuda-layout-preflight.json')
     corpus = Corpus(a.cache, action_index=a.action_index, admission=a.data_admission)
     if sha(a.parent) != PARENT_SHA: raise ValueError('Exact candidate466 parent required')
     parent = torch.load(a.parent, map_location='cpu', weights_only=False)

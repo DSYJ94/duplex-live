@@ -1,0 +1,76 @@
+{
+  "status": "SIXTH_INTERVAL_FAILED_PREWEIGHT_CUDA_EXACT_COMPARISON_ALL_GPU_OFF_ZERO_UPDATES",
+  "recorded_utc": "2026-11-04T21:59:40.937116+00:00",
+  "producer_source": "dfbd000d9d1c4f8bf09d1adcb18ae05c8de0c86c",
+  "controller": {
+    "tool_session": 80424,
+    "PID": 20044,
+    "exit": 1
+  },
+  "unit": {
+    "name": "duplex-large65-prepare",
+    "first_PID": 1309,
+    "invocation": "14e07e831c27425da8b4537158939b9c",
+    "exit_status": 1
+  },
+  "failure": "Actual CUDA attention output/gradients differ after layout restoration",
+  "model_weights_loaded": false,
+  "new_optimizer_updates": 0,
+  "parent466_adopted": false,
+  "provider": {
+    "id": "7521667153519853425",
+    "status": "TERMINATED",
+    "start": "2026-11-04T13:47:53.764-08:00",
+    "stop": "2026-11-04T13:49:32.864-08:00",
+    "actual_seconds": 99.1,
+    "upper_seconds": 100,
+    "receipt_sha256": "afc6817bd1272a4e1bfd12ad78c860fac855afc5c56a04d632bf5a0738b0f084"
+  },
+  "aggregate_GPU_upper_seconds": 2700,
+  "remaining_original_GPU_seconds_including_rounding": 40500,
+  "actual_GPU_intervals_consumed": 6,
+  "all_six_project_VMs_freshly_TERMINATED": true,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 1,
+    "bytes": 145477,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v70",
+    "inventory_sha256": "3e77bbe72681e3505b031f66a2565e657382770dc0174b338d0ac5727d01af61"
+  },
+  "evidence_limit": "Original preflight raised before persisting case-level numeric differences. Which mask case, which tensors and magnitudes are unknown. Cannot attribute failure conclusively to storage corruption or kernel nondeterminism; cannot claim a pass.",
+  "primary_source": {
+    "version": "PyTorch2.4.0 matching actual native runtime",
+    "backward": "https://github.com/pytorch/pytorch/blob/v2.4.0/aten/src/ATen/native/transformers/cuda/attention_backward.cu#L579-L590",
+    "mask_padding": "https://github.com/pytorch/pytorch/blob/v2.4.0/aten/src/ATen/native/transformers/attention.cpp#L504-L539",
+    "finding": "Pinned source explicitly documents efficient backward default nondeterminism and uses one key split under strict deterministic mode; also preprocesses masks with padded strides. This supports a stochastic-comparison confound, not proof it caused this actual failure."
+  },
+  "prepared_corrected_preflight": {
+    "default_reference_repeat": "Record exact/finite/differing-count/max-absolute/relativeL2 separately for output,dQ,dK,dV; diagnostic only, no relaxed acceptance",
+    "strict_comparison": "Enable deterministic algorithms ONLY inside tiny GPU comparison; same efficient backend; require EXACT output and ALLQKV gradients and finite values. Restore caller enabled/warn-only flags on success or failure.",
+    "storage_audit": "Retain tiny originals; EVERYunpacked saved tensor must match shape/dtype/device/original strides and raw bytes exactly, including NaN payloads; record failures.",
+    "persistence": "Atomic partial JSON before any strict assertion, including runtime exceptions; original generic failure remains preserved.",
+    "training_kernel_precision_losses_or_hyperparameters_changed": false,
+    "old_native_thresholds_changed": false,
+    "actual_GPU_correction_proved": false
+  },
+  "CPU_proof": {
+    "passed": 28,
+    "seconds": 3.99,
+    "expected_deprecation_warnings": 2,
+    "coverage": [
+      "Old native/prefix/full temporal gradient/storage/layout tests",
+      "Determinism enabled and warn-only flags restored after both success and exception",
+      "Roundtrip audit passes exact storage and catches deliberate corrupted original",
+      "Nonfinite diagnostics serialize valid JSON without NaN tokens"
+    ],
+    "latest_targeted_nonfinite_check": "Two helper tests pass after adding nonfinite validJSON and zero-dimensional saved-RNG tensor audit coverage."
+  },
+  "source_files_sha256": {
+    "training/venus/layout_preflight.py": "221ee2bbffeaa0cb374839d167bbc46ca8594e05970738d2545aa03d7007de6f",
+    "training/venus/large_native.py": "1030659a238c24f9cb8abf96811ff5b0671051aaf29e5d64c0155d555410bc87",
+    "evals/harness/test_venus_activation_storage.py": "8a306d383dbc7460eb844334d164f7b44fc98d3c4f73d1154742f755211bba4b"
+  },
+  "scope": "Six actualintervals exhausted. No seventh start authorized. All previous actual running clocks/receipts retained; old165.79003611carry/150new/325project/43200GPU/originalstorage5Nov16:47:43.296897UTC intact.",
+  "backups": "All6 failed outputs hash-verified outsideOneDrive; originals/AdamRNGOPAL/KLhidden/fit15/history/data/folds unchanged. BroadMacsourcebackup remainsPARTIAL."
+}

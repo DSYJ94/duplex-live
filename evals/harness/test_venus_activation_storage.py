@@ -117,3 +117,39 @@ def test_native_attention_bias_keeps_exact_padded_or_broadcast_strides(broadcast
     actual=hook.unpack(hook.pack(x))
     assert same_bytes(x,actual)
     assert actual.stride()==x.stride()
+
+
+def test_deterministic_preflight_restores_training_flags_on_success_and_failure():
+    from training.venus.layout_preflight import deterministic_comparison
+    original=(torch.are_deterministic_algorithms_enabled(),torch.is_deterministic_algorithms_warn_only_enabled())
+    for enabled,warn in ((False,False),(True,True)):
+        try:
+            torch.use_deterministic_algorithms(enabled,warn_only=warn)
+            for fail in (False,True):
+                try:
+                    with deterministic_comparison():
+                        assert torch.are_deterministic_algorithms_enabled()
+                        assert not torch.is_deterministic_algorithms_warn_only_enabled()
+                        if fail:raise ValueError('Synthetic test exception')
+                except ValueError:pass
+                assert (torch.are_deterministic_algorithms_enabled(),torch.is_deterministic_algorithms_warn_only_enabled())==(enabled,warn)
+        finally:torch.use_deterministic_algorithms(original[0],warn_only=original[1])
+
+
+def test_roundtrip_audit_reports_storage_corruption_and_exact_restore():
+    from training.venus.layout_preflight import RoundtripAudit,difference
+    hook=RoundtripAudit();hook.force_cpu_test=True
+    source=torch.randn(1,4,3,8)
+    packed=hook.pack(source)
+    actual=hook.unpack(packed);assert hook.checks==1 and not hook.failures
+    assert difference(source,actual)['exact']
+    packed[1].add_(1)
+    hook.unpack(packed);assert len(hook.failures)==1
+    nonfinite=difference(torch.tensor([float('nan')]),torch.zeros(1))
+    assert not nonfinite['all_finite'] and nonfinite['maximum_absolute'] is None
+    import json
+    json.dumps(nonfinite,allow_nan=False)
+    # SDPA can save scalar RNG tensors even when model inputs are batched.
+    scalar=RoundtripAudit();value=torch.tensor(17,dtype=torch.int64)
+    assert torch.equal(scalar.unpack(scalar.pack(value)),value)
+    assert scalar.checks==1 and not scalar.failures
