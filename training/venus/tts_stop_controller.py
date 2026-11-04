@@ -52,10 +52,15 @@ def resume_import_failure(root):
     c.events[:]=rows
 
 
-def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False,completion_same_vm=False,completion_same_vm_retry=False):
+def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False,completion_same_vm=False,completion_same_vm_retry=False,completion_flex=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
     if completion_same_vm_retry:completion_same_vm=True
-    if completion_same_vm:
+    if completion_flex:
+        assert not(placement or completion_window or completion_capacity or completion_same_vm or resume_preallocation_import)
+        completion=True;placement=True
+        from . import tts_completion_flex_guard as g
+        AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
+    elif completion_same_vm:
         assert not(placement or completion_window or completion_capacity or resume_preallocation_import)
         completion=True
         from . import tts_completion_same_vm_guard as g
@@ -75,10 +80,10 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     elif placement:
         from . import tts_placement_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
-    version='61' if completion_same_vm_retry else '60' if completion_same_vm else '59' if completion_capacity else '58' if completion_window else '57' if completion else '56' if placement else '55'
+    version='62' if completion_flex else '61' if completion_same_vm_retry else '60' if completion_same_vm else '59' if completion_capacity else '58' if completion_window else '57' if completion else '56' if placement else '55'
     duration=1200 if completion else 1800;prior=33500 if completion else 33100;required=24 if completion else 12
     a=json.loads(AUTH.read_text());proposal=json.loads(Path(a['proposal_path']).read_text())
-    assert a['status']=='APPROVED' and a['human_approval']==('Approve existing-VM retry within existing caps' if completion_same_vm else 'Approve C/B fallback within existing caps' if completion_capacity else 'Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    assert a['status']=='APPROVED' and a['human_approval']==('Approve queued Flex-start within existing caps' if completion_flex else 'Approve existing-VM retry within existing caps' if completion_same_vm else 'Approve C/B fallback within existing caps' if completion_capacity else 'Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
     if completion_same_vm:
         assert sha(proposal['prior_diagnostic_authority'])==proposal['prior_diagnostic_authority_sha256']
         assert sha(proposal['complete_evaluation_inherited_from'])==proposal['complete_evaluation_sha256']
@@ -100,11 +105,17 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     else:assert not resume_preallocation_import,'No terminal failed claim to resume'
     source=c.run(['git','rev-parse','HEAD']).strip();c.source=source;c.remote=c.ROOT+'/duplex-tts-stop'+version+'-'+source[:12]
     assert not c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus',str(AUTH),proposal['source_selection_path']]).strip(),'Committed source required'
-    price=json.loads(Path('runs/venus-training-20261101/current-a100-price.json').read_text());assert price['rates']['6AE1-525F-8B80']['price']<=.1 and 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
+    price_path='runs/venus-training-20261104/capacity-recon/current-a100-flex-price.json' if completion_flex else 'runs/venus-training-20261101/current-a100-price.json'
+    price=json.loads(Path(price_path).read_text());disk_price=price['pd_balanced_GiB_month'] if completion_flex else price['rates']['6AE1-525F-8B80']['price']
+    assert disk_price<=.1 and 0<price['hourly_estimate_usd']<=4 and time.time()-datetime.fromisoformat(price['at_utc']).timestamp()<3600
     instances=c.cloud('compute','instances','list');assert all(v['status']=='TERMINATED' for v in instances)
     old=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);assert old['id']=='3873014408897233554' and old['status']=='TERMINATED'
     disk=c.cloud('compute','disks','describe','duplex-venus-train-20261026-v1','--zone='+ZONE);assert disk['id']=='4375908109499109167' and int(disk['sizeGb'])==100
     quota={v['metric']:v for v in c.cloud('compute','regions','describe','us-central1')['quotas']};assert quota['NVIDIA_A100_GPUS']['usage']==0 and quota['NVIDIA_A100_GPUS']['limit']>=1
+    if completion_flex:
+        assert quota['PREEMPTIBLE_NVIDIA_A100_GPUS']['usage']==0 and quota['PREEMPTIBLE_NVIDIA_A100_GPUS']['limit']>=1
+        cpu=quota['PREEMPTIBLE_CPUS'] if quota['PREEMPTIBLE_CPUS']['limit'] else quota['CPUS']
+        assert cpu['limit']-cpu['usage']>=12
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(v['status'] in ('EXITED','STOPPED','TERMINATED') for v in pods)
     candidate=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52/candidate');assert sha(candidate/'step-0060.pt')==proposal['candidate_checkpoint_sha256']
     assert sum((candidate/n).stat().st_size for n in ('step-0060.pt','recipe.json'))<=200*1024**2
@@ -117,10 +128,15 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);guard=None;attempted=False;backed=False;snap=None;allocated=None;remote_out=c.OUT+'/tts-'+('completion' if completion else 'placement' if placement else 'stop')+'-v'+version
     try:
         bootstrap=R/'bootstrap.sh';bootstrap.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-tts'+version+'-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=1h')
+        c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl='+('2h' if completion_flex else '1h'))
         if placement:
-            from .tts_placement import allocate
-            vm,disk,ZONE,snap,storage_deadline=allocate(version);NAME=vm['name'];c.NAME=NAME;attempted=True;allocated=(vm,disk,ZONE,snap,version)
+            if completion_flex:
+                from .tts_flex_allocation import allocate
+                vm,disk,ZONE,snap,storage_deadline=allocate()
+            else:
+                from .tts_placement import allocate
+                vm,disk,ZONE,snap,storage_deadline=allocate(version)
+            NAME=vm['name'];c.NAME=NAME;attempted=True;allocated=(vm,disk,ZONE,snap,version)
         else:
             c.cloud('compute','instances','add-metadata',NAME,'--zone='+ZONE,'--metadata-from-file=startup-script='+str(bootstrap))
             c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP')
@@ -142,13 +158,14 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/tts'+version+'.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source)
         execution=dict(resource_key=KEY,authorization_sha256=sha(AUTH),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=required,maximum_gpu_seconds=duration,maximum_new_running_intervals=1)
         if placement:execution.update(vm_id=vm['id'],disk_id=disk['id'],snapshot_id=snap['id'],snapshot_source_disk_id=snap['sourceDiskId'],vm_name=NAME,disk_name=disk['name'])
-        if completion_window or completion_capacity:execution.update(storage_started_unix=storage_deadline-7200,storage_deadline_unix=storage_deadline)
+        if completion_window or completion_capacity or completion_flex:execution.update(storage_started_unix=storage_deadline-7200,storage_deadline_unix=storage_deadline)
+        if completion_flex:execution['maximum_queue_seconds']=3600
         if completion_same_vm:execution.update(prestart_started_unix=claim['prestart_started_unix'],prestart_deadline_unix=claim['prestart_deadline_unix'],maximum_prestart_attempts=3,actual_start_attempt_index=actual_attempt)
         if completion_same_vm_retry:execution['execution_version']=61
         PLAN.write_text(json.dumps(execution,indent=2)+'\n');c.ssh('mkdir -p '+c.remote+'/'+str(R));c.sync(PLAN,c.remote+'/'+str(PLAN))
         lease=dict(resource_key=KEY,zone=ZONE,vm_id=vm['id'],disk_id=disk['id'],disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         if placement:lease.update(snapshot_id=snap['id'],storage_deadline_unix=storage_deadline)
-        if completion_window or completion_capacity:lease.update(storage_started_unix=storage_deadline-7200)
+        if completion_window or completion_capacity or completion_flex:lease.update(storage_started_unix=storage_deadline-7200)
         if completion_same_vm:lease.update(prestart_started_unix=claim['prestart_started_unix'],prestart_deadline_unix=claim['prestart_deadline_unix'])
         if completion_same_vm_retry:lease['execution_version']=61
         (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');lp=c.ROOT+'/tts'+version+'-lease.json';c.sync(R/'lease.json',lp)
@@ -199,7 +216,11 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
             actual=0 if final['lastStartTimestamp']==old['lastStartTimestamp'] else datetime.fromisoformat(final['lastStopTimestamp']).timestamp()-datetime.fromisoformat(final['lastStartTimestamp']).timestamp()
             c.record('tts_stop_gpu_terminal',actual_seconds=actual,upper_seconds=math.ceil(actual/100)*100,prior_focused_gpu_seconds_upper=prior,original_disk_preserved=True)
         if allocated and backed:
-            from .tts_placement import retire,retire_snapshot
+            from .tts_placement import retire_snapshot
+            if completion_flex:
+                from .tts_flex_allocation import retire
+            else:
+                from .tts_placement import retire
             retire(*allocated);retire_snapshot(snap)
         elif allocated:c.record('temporary_disk_preserved_unverified_results',disk_id=disk['id'],zone=ZONE,storage_deadline_unix=storage_deadline)
         if guard:
@@ -208,4 +229,4 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv,completion_same_vm='--completion-same-vm' in sys.argv,completion_same_vm_retry='--completion-same-vm-retry' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv,completion_same_vm='--completion-same-vm' in sys.argv,completion_same_vm_retry='--completion-same-vm-retry' in sys.argv,completion_flex='--completion-flex' in sys.argv)

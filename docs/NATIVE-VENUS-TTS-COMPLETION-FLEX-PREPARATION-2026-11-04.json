@@ -1,0 +1,43 @@
+{
+  "status": "PREPARED_NOT_AUTHORIZED_OR_NATIVE_VALIDATED",
+  "at_utc": "2026-11-04T12:09:56.733496+00:00",
+  "proposal_commit": "651e99f",
+  "source_sha256": {
+    "training/venus/tts_completion_flex_guard.py": "4f862e67f7612e93016c06945cfbdb88ff207c7e9890d4d8068636b705f9dfac",
+    "training/venus/tts_flex_allocation.py": "bccdc44b35591c39b4ee4d5c3f3cae718ec50b154f761cc59b7b88f89bdf0d0c",
+    "training/venus/tts_stop_controller.py": "0fff06c41fc6ef222f625feab0b4a0f2cbf23192d0095a4b0c2455b4e36444e6",
+    "portable/venus/guard.py": "8459bc8e28a00c4fe5954d25aa0885e31649826b5aa6613ec566651ffd40ab1b",
+    "portable/venus/speech_completion.py": "051a0f46dc593d1e407e381d7f96191b652cd216607c43d44f862ddb52458f2e",
+    "training/venus/paced_guard.py": "3cf3e086b92285c1a34f957b11cfc168b4104dfee81da2eba6f9829e5e54b4bc",
+    "evals/harness/test_venus_tts_flex.py": "1d1ce6bf4ca63b18c798c6aeffab6e7a38c3020752a7c68ef7e0830f9848b099"
+  },
+  "tests": {
+    "related_passes": 43,
+    "seconds": 1.89,
+    "scope": "CPU/controller fixtures only: exact complete24/zero-update/resource/provisioning/budget/time lease, missing authority blocks actual entrypoint, one actual Flex create with3600request/1200STOP, timed-out queue canceled without resubmission"
+  },
+  "entrypoint": "python3 -u -m training.venus.tts_stop_controller --completion-flex",
+  "required_authority": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-AUTHORIZATION-2026-11-04.json",
+  "claim": "runs/venus-training-20261102/tts-completion-v62/claim.json",
+  "authority_present": false,
+  "claim_present": false,
+  "operator_next": "Only after direct approval: record exact proposal SHA/human words/caps, refresh official DWS A100/A2+PD price receipt and snapshot/quota/copy/retention evidence; Git commit/push then one controller. Observe same real operation, never resubmit on timeout.",
+  "price_receipt": "runs/venus-training-20261104/capacity-recon/current-a100-flex-price.json",
+  "price_SKUs": [
+    "0BF8-622D-CDF7",
+    "CF97-256B-D7DB",
+    "C099-1D9D-26EA",
+    "6AE1-525F-8B80"
+  ],
+  "price_max_age_seconds": 3600,
+  "queued_access": {
+    "OSLogin_public_key_ttl": "2h",
+    "private_credentials": "Mac only"
+  },
+  "limitations": [
+    "No native GPU/audio/latency/voice/behavior proof",
+    "Candidate466 remains rejected",
+    "No optimizer updates or dataset/recipe/speech math changes",
+    "Same phase75/project175 and prior33500+54451; no grant/cost reset"
+  ]
+}
