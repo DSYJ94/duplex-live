@@ -155,7 +155,12 @@ def suffix_forward(llm,example,device):
         h=entry['hidden'].to(device).detach()
         kwargs={k:(v.to(device) if torch.is_tensor(v) else tuple(t.to(device) for t in v) if isinstance(v,tuple) else v) for k,v in entry['kwargs'].items()}
         kwargs.update(past_key_value=cache,use_cache=True,output_attentions=False)
-        for layer in llm.model.layers[start_layer:]:h=layer(h,**kwargs)[0]
+        for layer in llm.model.layers[start_layer:]:
+            output=layer(h,**kwargs)
+            # Qwen3 decoder layers return a tuple in the pinned older runtime,
+            # and the whole tensor in newer Transformers. Never drop batch0's
+            # dimension by indexing a tensor as though it were a tuple.
+            h=output[0] if isinstance(output,tuple) else output
         h=llm.model.norm(h);cursor+=n;last=cursor-1
         if last in wanted:logits[last]=llm.lm_head(h)[0,-1].float();hidden[last]=h[0,-1].float()
     assert len(example['prefix_inputs'])==len(example['segments']) and cursor==len(example['embeddings']) and set(logits)==wanted
