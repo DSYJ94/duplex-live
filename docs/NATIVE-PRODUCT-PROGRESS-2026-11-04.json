@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T23:01:48.093375+00:00",
+  "updated_utc": "2026-11-04T23:32:27.450801+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,16 +38,29 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "GPU_microproof_PASS_full_calibration_timeout_one_changed_throughput_followup_ready",
+    "status": "same_A10080_interval09_live_first_698M_native_backward_completed_full_admission_pending",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
-    "scope_constraint": "max12actual/2700prior+40400next+100reserve=43200/150new/325project/originalstorageunchanged;2furtheradmissionfailuresstoprule.",
-    "next_material_decision": "Nonepending;onechanged08withinAGGAUTH, allqualitygatesunchanged;persistentfailure/no usefulschedule stopsbranch.",
+    "scope_constraint": "max12actual;8prior4300upper +38800native09 +100reserve=43200;150new/325project/originalstorage5Nov16:47:43.296897UTC unchanged",
+    "next_material_decision": "None pending while actual native model runs. Full4 main gradients/materializedAdam/freshrestore/useful paired complete schedule remain required; if kernel/storage or schedule fails, stop branch/preserve/stop compute.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
-    "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json"
+    "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
+    "source": "a833a32f30aa9f99b47a15dad57b7df33f816ff6",
+    "actual_controller_session": 93556,
+    "actual_controller_pid": 56260,
+    "native_prepare_pid": 1323,
+    "native_invocation": "4649b15e032b448a90d577a9aa6ad9ec",
+    "first_main_native_backward_seconds": 451.16340064599996,
+    "control_four_native_backward_seconds": 30.371352763999994,
+    "control_complete_DEV_seconds": 47.427065846999994,
+    "control_DEV_scenes": 64,
+    "new_optimizer_updates": 0,
+    "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
+    "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
+    "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts."
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
