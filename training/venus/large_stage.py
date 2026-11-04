@@ -33,6 +33,12 @@ def stop_exact(ident):
         c.run(['gcloud','compute','instances','stop',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet'],150)
 
 
+def create_disk(snap):
+    return json.loads(c.run(['gcloud','compute','disks','create',DISK,'--zone='+ZONE,
+              '--source-snapshot='+snap['name'],'--size=250GB','--type=pd-balanced',
+              '--labels=duplex-scope=large-v65','--project='+c.PROJECT,'--quiet','--format=json'],900))
+
+
 def guard():
     authority(); lease=json.loads((R/'lease.json').read_text())
     try:
@@ -85,12 +91,14 @@ def verify(a):
     print(json.dumps(result),flush=True)
 
 
-def main():
+def main(resume_precreate=False):
     from .source_controller import prepare_ssh
     from .tts_placement import snapshot, observe
     from portable.venus.guard import bounded_runpod_read
     authority()
-    if R.exists():raise ValueError('Observe existing stage process; never restart its claim')
+    if R.exists() and not resume_precreate:raise ValueError('Observe existing stage process; never restart its claim')
+    if resume_precreate and (not (R/'claim.json').exists() or (R/'provider-start.json').exists() or (R/'disk.json').exists()):
+        raise ValueError('Only a confirmed failure before disk/CPU creation may resume')
     price=json.loads(Path('runs/product-progress-watch/current-cpu-stage-price-20261104.json').read_text())
     if (time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600
             or not 0<price['hourly_usd']<=.5 or price['hourly_usd']*4>2):
@@ -106,18 +114,40 @@ def main():
     if any(p['status'] not in ('EXITED','STOPPED','TERMINATED') for p in pods):raise ValueError('Runpod GPU must be stopped')
     if any(x['name'] in (NAME,DISK) for x in current+c.cloud('compute','disks','list')):
         raise ValueError('Existing named resource must be observed, never duplicated')
-    R.mkdir(parents=True);c.R=R;c.NAME=NAME;c.events=[]
-    with (R/'claim.json').open('x') as f:json.dump(dict(source=source,pid=os.getpid(),authority_sha256=sha(AUTH)),f)
-    deadline=time.time()+86400;save('storage-deadline.json',dict(storage_started_unix=deadline-86400,storage_deadline_unix=deadline))
-    c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
+    if resume_precreate:
+        # The named resources were freshly absent above. This is not a second
+        # CPU interval or a new storage clock; preserve the original claim.
+        prior=json.loads((R/'claim.json').read_text())
+        failure=json.loads((R/'precreate-failure.json').read_text())
+        if failure['reason']!='gcloud disks create rejects --async before provider request' or failure['CPU_intervals']!=0:
+            raise ValueError('Exact terminal pre-provider failure proof required')
+        c.events=json.loads((R/'events.json').read_text())
+        with (R/'precreate-recovery-claim.json').open('x') as f:
+            json.dump(dict(previous_claim_source=prior['source'],source=source,pid=os.getpid(),
+                           original_claim_preserved=True,named_resources_freshly_absent=True),f)
+        deadline=json.loads((R/'storage-deadline.json').read_text())['storage_deadline_unix']
+        bundle=R/'source-precreate-recovery.bundle'
+    else:
+        R.mkdir(parents=True);c.events=[]
+        with (R/'claim.json').open('x') as f:json.dump(dict(source=source,pid=os.getpid(),authority_sha256=sha(AUTH)),f)
+        deadline=time.time()+86400;save('storage-deadline.json',dict(storage_started_unix=deadline-86400,storage_deadline_unix=deadline))
+        bundle=R/'source.bundle'
+    c.R=R;c.NAME=NAME
+    if time.time()+14400>=deadline:raise ValueError('Original immutable storage window insufficient')
+    c.run(['git','bundle','create',str(bundle),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;vm=None
     try:
-        snap=snapshot()
+        if resume_precreate:
+            previous=json.loads((R/'snapshot-ready.json').read_text())
+            snap=c.cloud('compute','snapshots','describe',previous['name'])
+            if snap['id']!=previous['id'] or snap['status']!='READY' or snap['sourceDiskId']!='4375908109499109167':
+                raise ValueError('Same owned already recovered snapshot required')
+        else:snap=snapshot()
         c.record('one_CPU_stage_clone_request',source=source,disk_name=DISK,maximum_GiB=250,storage_deadline_unix=deadline)
-        op=c.cloud('compute','disks','create',DISK,'--zone='+ZONE,'--source-snapshot='+snap['name'],
-                   '--size=250GB','--type=pd-balanced','--labels=duplex-scope=large-v65','--async')
-        op=op[0] if isinstance(op,list) else op;save('disk-create.json',op);op=observe(op,ZONE)
-        if op.get('error'):raise RuntimeError(str(op['error']))
+        # This gcloud command has no --async flag. Wait on this one request;
+        # timeout means inspect the SAME named disk, never submit again.
+        result=create_disk(snap)
+        save('disk-create-terminal.json',result)
         disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE);save('disk.json',disk)
         if disk['sourceSnapshotId']!=snap['id'] or int(disk['sizeGb'])!=250 or disk.get('users'):
             raise ValueError('Exact approved source clone required')
@@ -145,7 +175,7 @@ def main():
             time.sleep(1)
         if c.props('duplex-large65-cpu-stop.timer')['ActiveState']!='active':raise RuntimeError('CPU guest STOP timer absent')
         c.remote=c.ROOT+'/duplex-large-'+source[:12]
-        c.sync(R/'source.bundle',c.ROOT+'/large65-source.bundle')
+        c.sync(bundle,c.ROOT+'/large65-source.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/large65-source.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source,120)
         c.ssh('mkdir -p '+REMOTE)
         c.sync(str(LOCAL/'cache')+'/',REMOTE+'/cache/',900)
@@ -181,5 +211,5 @@ def main():
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--guard',action='store_true');p.add_argument('--verify',action='store_true');p.add_argument('--remote-root');p.add_argument('--source');a=p.parse_args()
-    guard() if a.guard else verify(a) if a.verify else main()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--guard',action='store_true');p.add_argument('--verify',action='store_true');p.add_argument('--resume-precreate',action='store_true');p.add_argument('--remote-root');p.add_argument('--source');a=p.parse_args()
+    guard() if a.guard else verify(a) if a.verify else main(a.resume_precreate)

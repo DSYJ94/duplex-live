@@ -37,6 +37,19 @@ def test_existing_stage_claim_blocks_before_any_provider_call(monkeypatch,tmp_pa
     with pytest.raises(ValueError,match='never restart'):stage.main()
 
 
+def test_disk_create_uses_supported_single_request_not_async(monkeypatch):
+    from training.venus import large_stage as stage
+    calls=[]
+    def run(argv,timeout):
+        calls.append(argv)
+        assert argv[:4]==['gcloud','compute','disks','create'] and '--async' not in argv
+        assert '--size=250GB' in argv and timeout==900
+        return '[{"name":"verified-disk","status":"READY"}]'
+    monkeypatch.setattr(stage.c,'run',run)
+    assert stage.create_disk(dict(name='existing-owned-snapshot'))[0]['status']=='READY'
+    assert len(calls)==1
+
+
 def test_unadmitted_native_entrypoint_never_loads_weights(monkeypatch,tmp_path):
     from training.venus import large_native as native
     from training.venus import native_cache
