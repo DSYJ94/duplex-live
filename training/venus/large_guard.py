@@ -11,6 +11,7 @@ AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json')
 MEMORY_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-AUTHORIZATION-2026-11-04.json')
 PREFIX_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-PREFIX-CONTINUATION-AUTHORIZATION-2026-11-04.json')
 LAYOUT_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-LAYOUT-CONTINUATION-AUTHORIZATION-2026-11-04.json')
+AGGREGATE_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-AGGREGATE-CONTINUATION-AUTHORIZATION-2026-11-04.json')
 ROOT = Path('runs/venus-large-capacity-20261104/v65')
 OLD_USD = 165.7900361111111
 
@@ -72,15 +73,53 @@ def layout_authority():
     return a
 
 
+def aggregate_authority():
+    layout_authority()
+    a=json.loads(AGGREGATE_AUTH.read_text())
+    if (a['status']!='APPROVED' or sha(a['proposal_path'])!=a['proposal_sha256']
+            or a['prior_authorization_sha256']!=sha(LAYOUT_AUTH)
+            or a['maximum_GPU_running_intervals']!=12 or a['maximum_new_GCP_USD']!=150
+            or a['maximum_project_USD']!=325 or a['maximum_aggregate_GPU_seconds']!=43200
+            or a['prior_GPU_seconds_upper']!=2700 or a['next_maximum_interval_seconds']!=40400
+            or a['shutdown_rounding_reserve_seconds']!=100
+            or a['vm_id']!='7521667153519853425' or a['disk_id']!='2297341858915206463'
+            or a['maximum_further_failed_kernel_storage_admissions']!=2 or not a['no_unchanged_failed_repeats']):
+        raise ValueError('Exact unchanged-budget aggregate continuation authority required')
+    return a
+
+
 def resource(lease):
     authority()
     path = Path(lease['execution_plan_path'])
-    if path.parent != ROOT or path.name not in ('interval-01.json', 'interval-02.json', 'interval-03.json','interval-04.json','interval-05.json','interval-06.json'):
+    if path.parent != ROOT or path.name not in tuple('interval-%02d.json'%i for i in range(1,13)):
         raise ValueError('Only explicitly authorized immutable interval plans required')
     p = json.loads(path.read_text())
     fourth=path.name=='interval-04.json'
     fifth=path.name=='interval-05.json'
     sixth=path.name=='interval-06.json'
+    number=int(path.stem[-2:]);aggregate=number>=7
+    if aggregate:
+        a=aggregate_authority()
+        if (p.get('aggregate_authorization_sha256')!=sha(AGGREGATE_AUTH)
+                or lease.get('aggregate_authorization_sha256')!=sha(AGGREGATE_AUTH)
+                or p['vm_id']!=a['vm_id'] or p['disk_id']!=a['disk_id']
+                or p['zone']!='europe-west4-a' or p['machine']!='a2-ultragpu-1g'
+                or p['vm_name']!='duplex-venus-large-gpu-20261104-eua-v67'
+                or p['disk_name']!='duplex-venus-large-data-20261104-eua-v67'
+                or p['provisioning']!='STANDARD' or not 0<p['maximum_running_seconds']<=40400
+                or p['storage_deadline_unix']!=1793897263.296897
+                or p.get('activation_memory_policy')!='repeat4-prefix-pageable-v3-layout'):
+            raise ValueError('Aggregate continuation requires exact authority and same GPU/disk')
+        if number>8 and not p['optimizer_work_started']:
+            raise ValueError('At most two new admissions; later intervals require actual trained state')
+        if p['optimizer_work_started']:
+            receipt=Path(p['trained_state_receipt_path'])
+            if receipt.parent!=ROOT or sha(receipt)!=p['trained_state_receipt_sha256']:
+                raise ValueError('Bound actual trained checkpoint receipt required')
+            trained=json.loads(receipt.read_text())
+            if (trained['actual_new_updates']<=0 or trained['vm_id']!=p['vm_id'] or trained['disk_id']!=p['disk_id']
+                    or trained['cache_manifest_sha256']!=MANIFEST_SHA):
+                raise ValueError('Actual same-resource trained state required, never replay parent')
     if sixth:
         a=layout_authority()
         if (p.get('layout_authorization_sha256')!=sha(LAYOUT_AUTH)
@@ -126,7 +165,7 @@ def resource(lease):
     for key in ('vm_id', 'disk_id', 'zone', 'creation_timestamp', 'storage_started_unix', 'storage_deadline_unix'):
         if lease[key] != p[key]: raise ValueError('Provider identity or storage clock differs')
     previous = p['previous_intervals']
-    if len(previous) != int(path.stem[-2:]) - 1 or len(previous) > (5 if sixth else 4 if fifth else 3 if fourth else 2):
+    if len(previous) != number - 1 or len(previous) > (11 if aggregate else 5 if sixth else 4 if fifth else 3 if fourth else 2):
         raise ValueError('All prior actual intervals required; never reset the clock')
     seconds = 0
     for row in previous:
@@ -148,6 +187,7 @@ def resource(lease):
     if fourth and seconds!=1600:raise ValueError('All1600 actual prior GPU upper seconds must carry forward')
     if fifth and seconds!=2100:raise ValueError('All2100 actual prior GPU upper seconds must carry forward')
     if sixth and seconds!=2600:raise ValueError('All2600 actual prior GPU upper seconds must carry forward')
+    if aggregate and (seconds<2700 or number==7 and seconds!=2700):raise ValueError('Carry all actual GPU history, at least2700 seconds')
     if (type(duration) is not int or duration < 1 or seconds + duration + 100 > 43200
             or lease['prior_capacity_GPU_seconds_upper'] != seconds
             or p['storage_deadline_unix'] != p['storage_started_unix'] + 86400
