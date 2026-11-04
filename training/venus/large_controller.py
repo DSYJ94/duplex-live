@@ -67,17 +67,36 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main():
+def main(resume_sizing=False):
+    global R,OUTPUT,BACKUP
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    previous_intervals=[];prior_seconds=0;prior_vm=None
+    if resume_sizing:
+        old=ROOT/'gpu-01'
+        prior_vm=json.loads((old/'provider-final.json').read_text())
+        verified=json.loads((old/'copyback-verified.json').read_text())
+        if (prior_vm['status']!='TERMINATED' or not verified['all_hashes_verified']
+                or not (Path(verified['backup'])/'no-offload-oom.json').exists()
+                or (Path(verified['backup'])/'admission.json').exists()):
+            raise ValueError('Exact preserved zero-update sizing failure required')
+        prior_seconds=math.ceil((datetime.fromisoformat(prior_vm['lastStopTimestamp'])-datetime.fromisoformat(prior_vm['lastStartTimestamp'])).total_seconds()/100)*100
+        if prior_seconds!=300:raise ValueError('Carry the actual300second first-interval upper bound')
+        receipt=ROOT/'provider-final-01.json'
+        if not receipt.exists():receipt.write_bytes((old/'provider-final.json').read_bytes())
+        if sha(receipt)!=sha(old/'provider-final.json'):raise ValueError('Original provider receipt differs')
+        previous_intervals=[dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=prior_vm['id'],
+             disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=prior_seconds,optimizer_updates=0)]
+        R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
+        BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
     if R.exists():raise ValueError('Observe the real existing GPU controller; never duplicate')
     stage=ROOT/'stage'
     proof=json.loads((stage/'stage-verified.json').read_text())
     previous=json.loads((stage/'provider-final.json').read_text())
     if not proof['passed'] or previous['status']!='TERMINATED':raise ValueError('Complete CPU stage and actual STOP required')
     clock=json.loads((stage/'storage-deadline.json').read_text())
-    duration=43100
+    duration=43100-prior_seconds
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
     price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-v65.json').read_text())
     hourly=price['options']['GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
@@ -103,20 +122,29 @@ def main():
     disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
     olddisk=json.loads((stage/'disk.json').read_text())
     if disk['id']!=olddisk['id'] or int(disk['sizeGb'])!=250:raise ValueError('SAME staged250GB disk required')
-    if any(v['name']==NAME for v in instances):raise ValueError('Existing GPU name must be observed')
+    if resume_sizing:
+        same=[v for v in instances if v['name']==NAME]
+        if len(same)!=1 or same[0]['id']!=prior_vm['id'] or same[0]['status']!='TERMINATED':
+            raise ValueError('Only SAME stopped zero-update sizing VM may restart')
+    elif any(v['name']==NAME for v in instances):raise ValueError('Existing GPU name must be observed')
     R.mkdir();c.R=R;c.NAME=NAME;c.events=[]
     with (R/'claim.json').open('x') as stream:json.dump(dict(source=source,pid=os.getpid(),authority_sha256=sha(AUTH)),stream)
     c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;created=False;end=None
     try:
-        current=c.cloud('compute','instances','describe',CPU,'--zone='+ZONE)
-        if current['id']!=previous['id'] or current['status']!='TERMINATED':raise ValueError('Exact stopped staging CPU required')
-        c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
-        if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
+        if not resume_sizing:
+            current=c.cloud('compute','instances','describe',CPU,'--zone='+ZONE)
+            if current['id']!=previous['id'] or current['status']!='TERMINATED':raise ValueError('Exact stopped staging CPU required')
+            c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+            if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
         boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-large65-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=14h')
         created=True
-        op=c.cloud('compute','instances','create',NAME,'--zone='+ZONE,'--machine-type=a2-highgpu-1g',
+        if resume_sizing:
+            c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration='+str(duration)+'s',
+                    '--instance-termination-action=STOP','--no-restart-on-failure','--maintenance-policy=TERMINATE')
+            op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async')
+        else:op=c.cloud('compute','instances','create',NAME,'--zone='+ZONE,'--machine-type=a2-highgpu-1g',
              '--provisioning-model=FLEX_START','--request-valid-for-duration=900s','--maintenance-policy=TERMINATE',
              '--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded',
              '--disk=name='+DISK+',boot=yes,auto-delete=no,mode=rw',
@@ -124,29 +152,33 @@ def main():
              '--metadata-from-file=startup-script='+str(boot),'--max-run-duration='+str(duration)+'s',
              '--instance-termination-action=STOP','--async')
         op=op[0] if isinstance(op,list) else op;save('create.json',op)
-        c.record('one_A10040_Flex_request',source=source,operation=op['name'],maximum_queue_seconds=900)
+        c.record('one_A10040_Flex_request',source=source,operation=op['name'],maximum_queue_seconds=900,
+                 same_VM_sizing_recovery=resume_sizing,prior_GPU_seconds_upper=prior_seconds)
         op=observe(op);save('allocation-terminal.json',op)
         if op.get('error'):raise RuntimeError(json.dumps(op['error']))
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         if vm['status']!='RUNNING':raise ValueError('Actual running provider state required')
+        if resume_sizing and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
+            raise ValueError('Do not claim an old provider interval as a new start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
-        prepare_ssh(vm,ZONE,'65gpu')
+        prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
         c.remote=c.ROOT+'/duplex-large-'+source[:12]
         c.sync(R/'source.bundle',c.ROOT+'/large65-gpu-source.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/large65-gpu-source.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source,120)
         plan=dict(resource_key=KEY,authorization_sha256=sha(AUTH),parent_sha256=PARENT_SHA,cache_manifest_sha256=MANIFEST_SHA,
              maximum_all_branch_updates=984,external_model_API_calls=0,prior_project_USD=OLD_USD,
              vm_id=vm['id'],disk_id=disk['id'],zone=ZONE,creation_timestamp=vm['creationTimestamp'],
-             **clock,previous_intervals=[],maximum_running_seconds=duration,disk_size_gib=250,
+             **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
              machine='a2-highgpu-1g',provisioning='FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
-        plan_path=ROOT/'interval-01.json'
+        plan_path=ROOT/('interval-02.json' if resume_sizing else 'interval-01.json')
         with plan_path.open('x') as f:json.dump(plan,f,indent=2)
         lease=dict(plan,execution_plan_path=str(plan_path),execution_plan_sha256=sha(plan_path),
-             prior_capacity_GPU_seconds_upper=0,verified_hourly_price_usd=hourly,stop_unix=end,
-             prior_gpu_seconds=89151,prior_scope_usd=OLD_USD,controller_pid=os.getpid(),
+             prior_capacity_GPU_seconds_upper=prior_seconds,verified_hourly_price_usd=hourly,stop_unix=end,
+             prior_gpu_seconds=89151+prior_seconds,prior_scope_usd=OLD_USD,controller_pid=os.getpid(),
              controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         save('lease.json',lease)
         c.ssh('mkdir -p '+c.remote+'/'+str(ROOT))
+        for row in previous_intervals:c.sync(row['provider_final_path'],c.remote+'/'+row['provider_final_path'])
         c.sync(plan_path,c.remote+'/'+str(plan_path));lease_path=c.ROOT+'/large65-lease.json';c.sync(R/'lease.json',lease_path)
         watch=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),
              '--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key',
@@ -168,7 +200,8 @@ def main():
         def execute(unit,module,args,seconds):
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
-        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',1200)
+        sizing_remaining=1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
+        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         for arm in ('main','control'):
             execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
@@ -194,12 +227,15 @@ def main():
         if created:
             actual=[v for v in c.cloud('compute','instances','list') if v['name']==NAME]
             if actual:
-                if not actual[0].get('lastStartTimestamp'):
+                no_new_start=resume_sizing and actual[0].get('lastStartTimestamp')==prior_vm['lastStartTimestamp']
+                if no_new_start and actual[0]['status']=='TERMINATED':
+                    save('no-new-running-interval.json',actual[0])
+                elif not actual[0].get('lastStartTimestamp') or no_new_start:
                     save('cancelled-before-start.json',actual[0])
                     c.run(['gcloud','compute','instances','delete',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
                 elif actual[0]['status']!='TERMINATED':
                     c.run(['gcloud','compute','instances','stop',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet'],150)
-                if actual[0].get('lastStartTimestamp'):
+                if actual[0].get('lastStartTimestamp') and not no_new_start:
                     final=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-final.json',final)
                     elapsed=(datetime.fromisoformat(final['lastStopTimestamp'])-datetime.fromisoformat(final['lastStartTimestamp'])).total_seconds()
                     c.record('actual_GPU_stopped',vm_id=final['id'],actual_seconds=elapsed,upper_seconds=math.ceil(elapsed/100)*100)
@@ -210,4 +246,6 @@ def main():
         awake.terminate()
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    import argparse
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');a=p.parse_args();main(a.resume_sizing)

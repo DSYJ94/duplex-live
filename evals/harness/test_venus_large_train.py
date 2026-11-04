@@ -61,6 +61,24 @@ def test_unadmitted_native_entrypoint_never_loads_weights(monkeypatch,tmp_path):
     assert not output.exists()
 
 
+def test_oom_fallback_exits_exception_context_and_releases_failed_graph():
+    import sys,gc,weakref,torch
+    from training.venus.large_native import memory_fallback
+    class Graph:pass
+    seen=[];refs=[]
+    def attempt(offload):
+        seen.append(offload)
+        if not offload:
+            graph=Graph();refs.append(weakref.ref(graph))
+            raise torch.cuda.OutOfMemoryError('Synthetic CPU-only failure')
+        assert sys.exc_info()==(None,None,None)
+        assert refs[0]() is None,'Failed graph still live during retry'
+        return 'measured'
+    records=[]
+    assert memory_fallback(attempt,gc.collect,lambda:records.append('first failure'))=='measured'
+    assert seen==[False,True] and records==['first failure']
+
+
 def test_explicit_new_training_hooks_preserve_native_opal_step(monkeypatch,tmp_path):
     from training.venus import train
     from training.venus.lora import scene_loss

@@ -40,6 +40,22 @@ def tensor_sha(tensor):
     return hashlib.sha256(tensor.detach().float().cpu().contiguous().numpy().tobytes()).hexdigest()
 
 
+def memory_fallback(attempt,cleanup,record,*,start_offloaded=False):
+    """Release the exception/traceback graph BEFORE a lossless retry."""
+    failed=False
+    try:
+        result=attempt(start_offloaded)
+    except torch.cuda.OutOfMemoryError:
+        if start_offloaded:raise
+        failed=True
+    # Running inside `except` retains the first failed frame and its tensors;
+    # empty_cache cannot release those still-live allocations.
+    if failed:
+        cleanup();record()
+        result=attempt(True)
+    return result
+
+
 def restore_expanded(state, llm, source, output):
     """Restore all original and new named states; no uniform-counter shortcut."""
     from .large_phase import write_programs
@@ -153,12 +169,12 @@ def prepare(a):
         restore_rng(parent['rng']); assert_optimizer_equal(mapped, runtime.optimizer.state_dict())
         calibration = sorted([r for r in corpus.rows if r['fold']=='TRAIN'],
                              key=lambda r:r['tokens']*(1.5 if r['family']=='ordinary' else 1), reverse=True)[:4]
-        try:
-            measured = benchmark(llm, runtime, corpus, calibration, a.lease, offload=False)
-        except torch.cuda.OutOfMemoryError:
-            runtime.base.zero_grad(set_to_none=True); gc.collect(); torch.cuda.empty_cache()
-            write(out, 'no-offload-oom.json', dict(optimizer_updates=0, lossless_offload_fallback=True))
-            measured = benchmark(llm, runtime, corpus, calibration, a.lease, offload=True)
+        def cleanup():
+            runtime.base.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache()
+        measured=memory_fallback(
+            lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload),cleanup,
+            lambda:write(out,'no-offload-oom.json',dict(optimizer_updates=0,lossless_offload_fallback=True)),
+            start_offloaded=bool(getattr(a,'activation_offload',False)))
         restore_rng(parent['rng'])
         assert_optimizer_equal(mapped, runtime.optimizer.state_dict())
         metadata = dict(parent['metadata'], expansion=expansion, capacity_schema='native-broad-init-v1',
@@ -245,6 +261,7 @@ if __name__ == '__main__':
     for name in ('model','cache','action-index','data-admission','opal-source','lease','output','source'):
         p.add_argument('--'+name, required=True)
     p.add_argument('--parent')
+    p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
     prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)

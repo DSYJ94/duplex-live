@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-11-04T17:58:54.045129+00:00",
+  "status": "FIRST_NATIVE_SIZING_FAILED_ZERO_UPDATES_AND_BACKED_UP",
+  "source": "59dc08d833e5b67bc2810bb42a45445f00c270b1",
+  "vm_id": "6045511400968083611",
+  "disk_id": "4166410943511059526",
+  "actual_start_utc": "2026-11-04T17:09:20.851+00:00",
+  "actual_stop_utc": "2026-11-04T17:13:58.664+00:00",
+  "actual_GPU_seconds": 277.813,
+  "GPU_seconds_upper": 300,
+  "new_optimizer_updates": 0,
+  "first_gradient_attempt": "No-offload actual CUDA OOM, GPU39.49GiB,38.39GiB allocated; full workload no-offload does not fit40.",
+  "fallback_diagnosis": "Fallback was called INSIDE exception handler; first traceback/failed computation stayed alive during the new attempt. Thus first offload attempt is confounded, not proof corrected40GB/offload is unfit.",
+  "repair": "memory_fallback exits exception context and clears graph/grads before lossless retry; explicit start_offloaded allowed using actual prior no-offload failure.",
+  "CPU_regression": "Live graph weakref released and sys.exc_info empty before retry;13 relevant tests PASS5.87s. Not native40 fit evidence.",
+  "preservation": {
+    "all_hashes_verified": true,
+    "files": 23,
+    "bytes": 223562,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v65",
+    "inventory_sha256": "931c35e6d2ddae9a0f4be0fc5fbc6792f43f78baa24342bafef8f5d176d69cb7"
+  },
+  "next": "One corrected SAMEVM/disk sizing continuation, starts lossless activation offload; no saved optimizer updates repeat. Remaining aggregate probe <=900runningseconds inclstartup/shutdown reserve, counts interval2/3 and prior300+current+100<=43200. Otherwise80 fallback remainsinterval3 before any optimizer update.",
+  "budget": {
+    "additional_GCP_USD": 150,
+    "project_USD": 325,
+    "old_project_carry_USD": 165.7900361111111,
+    "remaining_aggregate_GPU_seconds_before_startup_rounding_reserve": 42900,
+    "maximum_intervals_total": 3
+  },
+  "all_original_artifacts_and_failures_preserved": true
+}
