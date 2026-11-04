@@ -1,0 +1,46 @@
+{
+  "status": "TERMINAL_CAPACITY_FAILURE_ZERO_GPU",
+  "producer": "0c2cc5173bc4ad99e140ee55373b26f5de1b971b",
+  "controller_session": 44114,
+  "pid": 21782,
+  "controller_actual_exit": 1,
+  "checked_utc": "2026-11-04T00:07:50.212179+00:00",
+  "attempts": [
+    {
+      "zone": "us-central1-c",
+      "operation": "operation-1793750274214-65f6807e909b0-b90713db-0b3211a0",
+      "status": "DONE",
+      "errors": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "disk_id": "4046187030710307479",
+      "disk_deleted_utc": "2026-11-03T23:58:10.338243+00:00",
+      "disk_GiBh": 4.264340083333333,
+      "disk_GiBh_upper": 5
+    },
+    {
+      "zone": "us-central1-b",
+      "operation": "operation-1793750358954-65f680cf61369-a3300d32-bc137c03",
+      "status": "DONE",
+      "errors": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "disk_id": "3626964777710373882",
+      "disk_deleted_utc": "2026-11-03T23:59:35.372207+00:00",
+      "disk_GiBh": 2.2582001944444445,
+      "disk_GiBh_upper": 3
+    }
+  ],
+  "events_path": "runs/venus-training-20261102/tts-completion-v59/events.json",
+  "events_sha256": "bbe0ffd8099e23829d3a059e6231da34e2100c9175f83ddf9510eb48d206d199",
+  "new_gpu_intervals": 0,
+  "new_optimizer_updates": 0,
+  "new_model_cases": 0,
+  "temporary_disks_deleted": true,
+  "active_snapshot_retired": "2026-11-03T23:59:42.217448+00:00",
+  "all_five_existing_VMs_provider_verified": "TERMINATED",
+  "original_disk_preserved": "4375908109499109167",
+  "candidate466": "REJECTED_UNCHANGED",
+  "prior_focused_seconds_upper": 33500,
+  "original_seconds_upper": 54451
+}

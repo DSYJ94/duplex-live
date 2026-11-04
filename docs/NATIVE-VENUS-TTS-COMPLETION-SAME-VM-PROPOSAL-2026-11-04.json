@@ -1,0 +1,75 @@
+{
+  "status": "PROPOSED_REQUIRES_SAME_VM_RETRY_AUTHORIZATION",
+  "purpose": "Complete the SAME prepared24 paired native speech-completion cases after F/C/B all failed before any GPU start. Avoid repeated temporary-clone provisioning by reusing the existing source VM/disk in zoneA.",
+  "failed_capacity_result": "docs/NATIVE-VENUS-TTS-COMPLETION-CAPACITY-RESULT-2026-11-04.json",
+  "failed_capacity_result_sha256": "149adaab421bf785a9e92d7d43de9f530cc073e02e1e11a8b14457d301619163",
+  "prior_diagnostic_authority": "docs/NATIVE-VENUS-TTS-STOP-DIAGNOSTIC-AUTHORIZATION-2026-11-02.json",
+  "prior_diagnostic_authority_sha256": "bbdcccc78f93668119948c1d167a87368ebd4a51feb68ab21bc39b6d737e38cc",
+  "complete_evaluation_inherited_from": "docs/NATIVE-VENUS-TTS-COMPLETION-WINDOW-PROPOSAL-2026-11-03.json",
+  "complete_evaluation_sha256": "b8548c281e9b489893caf1e2c15cf4c34e0b5ff7982317b34bd5b01730bf29dc",
+  "compute": {
+    "project": "aurium-duplex-live-20261024",
+    "zone": "us-central1-a",
+    "VM_name": "duplex-venus-source-20261101-v46",
+    "VM_id": "3873014408897233554",
+    "disk_name": "duplex-venus-train-20261026-v1",
+    "disk_id": "4375908109499109167",
+    "machine": "a2-highgpu-1g",
+    "maximum_running_gpus": 1,
+    "maximum_new_running_intervals": 1,
+    "native_stop_seconds": 1200,
+    "rounding_reserve_seconds": 100,
+    "maximum_prestart_attempts": 3,
+    "minimum_seconds_between_terminal_stockout_and_next_attempt": 600,
+    "prestart_retry_window_seconds": 2700,
+    "window": "Immutable claim starts after approval; no reset. Retry ONLY after actual terminal capacity error AND provider lastStartTimestamp unchanged. Never retry timeout, access failure, partial startup or model failure. First actual GPU start consumes the sole interval; stop early after full copied-back comparison or genuine blocker."
+  },
+  "storage": {
+    "new_VM": false,
+    "new_disk": false,
+    "new_snapshot": false,
+    "original_VM_and_disk_retained": true,
+    "all_original_data_checkpoints_Adam_RNG_OPAL_retained": true,
+    "versioned_new_worktree_and_output_only": true
+  },
+  "evaluation": {
+    "required_complete_cases": 24,
+    "unique_existing_synthetic_inputs": 6,
+    "conditions": [
+      "untouched-release/original-runtime",
+      "candidate466/original-runtime",
+      "untouched-release/repaired-runtime",
+      "candidate466/repaired-runtime"
+    ],
+    "same_running_interval": true,
+    "fresh_complete12_processes": 2,
+    "new_optimizer_updates": 0,
+    "new_external_model_API_calls": 0,
+    "unchanged_strict_acceptance": "All repaired12 WER<=.05/peak<=.995, actualEOS/no pendingtail/no dropped or duplicate audio; full reports/traces/WAVs retained/hash-verified. No subset acceptance, fabricated legacy pass, full behavior/voice/latency or model adoption."
+  },
+  "budget": {
+    "phase_cap_usd": 75,
+    "project_cap_usd": 175,
+    "hourly_ceiling_usd": 4,
+    "prior_focused_seconds_upper": 33500,
+    "original_seconds_upper": 54451,
+    "maximum_extra_seconds_upper": 1300,
+    "maximum_focused_seconds_upper": 34800,
+    "maximum_cumulative_seconds_upper": 89251,
+    "noncompute_reserve_usd": 33,
+    "cpu_recovery_reserve_usd": 0.25,
+    "migration_reserve_usd": 2,
+    "phase_upper_usd": 73.91666666666666,
+    "project_upper_usd": 165.90114722222222,
+    "no_purchase": true,
+    "no_reset": true
+  },
+  "deployment": "Git source; only previously approved candidate466 checkpoint+recipe <=200MB, existing synthetic/audio/weights remain on original disk. rsync -ar --no-owner --no-group --exclude=session-token/.private/credentials/owner-conversations/API keys.md/cores. Full pretransfer inventory; <=32MiB copyback batches outside OneDrive with exact hashes.",
+  "limits": {
+    "no_new_API_IAM_firewall_service_account_region_quota": true,
+    "no_simultaneous_GPU_jobs": true,
+    "no_training_or_payload_API_calls": true,
+    "strict_SSH_existing_OSLogin": true
+  },
+  "reason": "Prior approval specified only zonesC/B and two prestart attempts, both now consumed without a GPU start. This changes only capacity retry placement/timing and uses existing storage; no extra GPU-time or spending grant. Isambard excluded today by explicit owner instruction."
+}
