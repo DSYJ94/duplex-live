@@ -1,0 +1,62 @@
+{
+  "status": "ONE_CHANGED_FOLLOWUP_WITHIN_APPROVED_AGGREGATE_SCOPE",
+  "recorded_utc": "2026-11-04T23:01:48.093375+00:00",
+  "previous_source": "9a7678c9ba2996cf96293f5e57d371498ee0cffa",
+  "previous_native_result": {
+    "MainPID": "0",
+    "Result": "timeout",
+    "ExecMainStatus": "15",
+    "ActiveState": "failed",
+    "SubState": "failed",
+    "InvocationID": "66e07d1438a745e89dc3af1d5e3f47bb"
+  },
+  "provider": {
+    "id": "7521667153519853425",
+    "start": "2026-11-04T14:24:14.692-08:00",
+    "stop": "2026-11-04T14:45:54.364-08:00",
+    "actual_seconds": 1299.672,
+    "upper_seconds": 1300,
+    "status": "TERMINATED",
+    "sha256": "9ac9e8c696a08b03d189fd4939608714164cc03b46e05d3272600232f8692018"
+  },
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 22,
+    "bytes": 352107,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v71",
+    "inventory_sha256": "69ce819861139cbfc8a941ca7383f9c66372dc4e57792381c8df10a8af4fe4af"
+  },
+  "actual_GPU_upper_total": 4000,
+  "remaining_GPU_seconds_including_rounding": 39200,
+  "next_native_STOP_seconds": 39100,
+  "new_optimizer_updates": 0,
+  "actual_GPU_microproof": "docs/NATIVE-VENUS-CUDA-STORAGE-MICROPROOF-2026-11-04.json",
+  "microproof_passed": true,
+  "full_native_admission_passed": false,
+  "diagnosis": [
+    "Fullfour-row calibration timed out at1200s with1h17m32.840s CPU; no new kernel error. Full4gradients/state/throughput remain unproved.",
+    "Old schedule assumed two LARGE arms and60worst-batches per epoch for each, although control uses one trainable frozen-prefix suffix and240scene shapes vary. This is a runtime-estimator defect, not evidence of data/base/learning failure."
+  ],
+  "changes": [
+    "Byte-exact CPU prefix comparison uses zero-copy strided uint8 NumPy views instead of two contiguous Torch copies plus threaded Torch equality; same bits including signed-zero/NaN payloads. No global CPU/thread limits.",
+    "Localnative-shaped3.15MBcomparison20calls: old1.0537937487242743ms/new0.6373771000653505ms,1.65x onMacTorch4threads. NOTclaimedfullGPU/model speedup.",
+    "OriginalALL304 hashes/targets preserved; derive native token/segment/KVprefix/attention/head geometry forALL240TRAIN+64DEV. No omitted scenes, fold changes, loss-based selection or numerical threshold changes.",
+    "Before expansion measure actual preservedparent CONTROLfullfourworst-gradientbatch andcomplete64DEV on sameGPU, then restore exactparentoptimizer/RNG; no updates. Main stillALLfourworst fullnativegradients/materializedAdam.",
+    "Jointepochestimate uses COMPLETE240geometry with each separately MEASURED arm,1.35training/1.25DEV safety factors/fixed1secondperscene/4200sfinalreserve/same100GBbackup admission; providerSTOP+independentcostguards remainhardlimits.",
+    "Per-row start/completion/timing/memory/prefixreuse logs; bound this one changed all-four admission at2700s withinremainingaggregate39100. No closedwholecausal/precisionkernel sweep."
+  ],
+  "quality_gates_unchanged": true,
+  "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AGGREGATE-CONTINUATION-AUTHORIZATION-2026-11-04.json",
+  "aggregate_failed_admissions_before_followup": 1,
+  "maximum_further_failed_admissions": 2,
+  "stop_on_persistent_failure_or_no_complete_useful_schedule": true,
+  "tests": "38PASS4.55s including exactnativegradient/layout/wholeworkload;36PASS3.41s guard/controller/workload/storage; finalsubset results in run logs. CPUtests are notnativequalification.",
+  "source_files_sha256": {
+    "training/venus/offload.py": "031f785cefa4917b13297ae310b0c7b42048d76c21994f24abd13def01ce8b03",
+    "training/venus/workload.py": "f1c1757fa14658ec14ea13d4539b25004ad4ea7a2b341664a850258778f3b6ab",
+    "training/venus/large_native.py": "d288d9f708dfe5d156a6f7a0546fe6229e22684c28d23e784990c9f711c95664",
+    "training/venus/large_train.py": "2ad1dda8020110eef644dc78121eb66ad500e9f96b84e4ab5014fa9d5353d8aa",
+    "training/venus/large_controller.py": "4221a84c470ad1f4eea4cdae9c4e3833e22a8c16abd1fbe4661f0ad49bf2e9f5"
+  }
+}

@@ -39,6 +39,11 @@ class ActivationOffload:
 
     @staticmethod
     def byte_equal(a,b):
+        if a.device.type=='cpu' and b.device.type=='cpu' and a.stride(-1)==1 and b.stride(-1)==1:
+            # Zero-copy strided byte views avoid two full contiguous copies and
+            # a threaded Torch comparison on EVERY growing KV prefix.
+            import numpy as np
+            return np.array_equal(a.view(torch.uint8).numpy(),b.view(torch.uint8).numpy())
         return torch.equal(a.contiguous().view(torch.uint8),b.contiguous().view(torch.uint8))
 
     @staticmethod

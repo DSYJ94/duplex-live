@@ -84,14 +84,19 @@ def restore_expanded(state, llm, source, output):
         raise
 
 
-def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3,policy='legacy-pinned'):
+def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3,policy='legacy-pinned',progress_path=None):
     """Real effective batch4, full temporal gradients and materialized Adam."""
     guarded(lease_path, 180)
     params = adapter_parameters(llm)
     frozen = {n: p._version for n,p in llm.named_parameters() if not p.requires_grad}
     runtime.base.zero_grad(set_to_none=True)
     torch.cuda.reset_peak_memory_stats(); before = time.monotonic(); parts = []
+    def progress(value):
+        if progress_path is not None:
+            with Path(progress_path).open('a') as f:f.write(json.dumps(dict(at_unix=time.time(),**value))+'\n')
+            print(json.dumps(value),flush=True)
     for row in rows:
+        row_start=time.monotonic();progress(dict(event='calibration_row_start',id=row['id']))
         guarded(lease_path, 180)
         ex = corpus.read(row)
         context = ActivationOffload(llm,maximum_host_bytes=host_limit_bytes,policy=policy)
@@ -104,6 +109,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_byte
                           offloaded_bytes=context.saved_bytes,logical_saved_bytes=context.logical_bytes,
                           bit_exact_compressed_tensors=context.compressed_tensors,
                           verified_prefix_reuses=context.prefix_reuses))
+        progress(dict(event='calibration_row_completed',id=row['id'],seconds=time.monotonic()-row_start,physical_saved_bytes=context.saved_bytes,prefix_reuses=context.prefix_reuses))
         del ex, loss
     if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params.values()):
         raise ValueError('Missing or nonfinite full-architecture gradients')
@@ -154,7 +160,11 @@ def prepare(a):
         raise ValueError('Never repeat saved406-to466 updates')
     # Validate ALL304 original hashes/targets before model allocation, not just
     # the four workload examples used below for memory sizing.
-    for row in corpus.rows: corpus.read(row)
+    from .workload import geometry,whole_corpus
+    calibration=sorted([r for r in corpus.rows if r['fold']=='TRAIN'],key=lambda r:r['tokens']*(1.5 if r['family']=='ordinary' else 1),reverse=True)[:4]
+    shapes=[]
+    for row in corpus.rows:shapes.append(geometry(row,corpus.read(row)))
+    work=whole_corpus(shapes,[r['id'] for r in calibration]);write(out,'workload-geometry.json',dict(source=a.source,**work))
     model, _ = load_native(a.model, language_only=True); llm = model.llm
     llm.eval(); llm.gradient_checkpointing_disable()
     if limits['machine']=='a2-ultragpu-1g' and getattr(a,'activation_memory_policy','legacy-pinned')=='legacy-pinned':
@@ -164,6 +174,15 @@ def prepare(a):
     install(llm, rank=64, alpha=64, last_layers=1)
     base = torch.optim.AdamW(list(adapter_parameters(llm).values()), lr=parent['metadata']['recipe']['learning_rate'])
     old, parent_proof = restore(a.parent, PARENT_SHA, llm, base, source=a.opal_source, run_dir=out/'parent-opal')
+    if getattr(a,'measured_joint_schedule',False):
+        from types import SimpleNamespace
+        from . import train as core
+        control=benchmark(llm,old,SimpleNamespace(read=lambda r:corpus.read(r,full=False),loss=corpus.loss),calibration,a.lease,offload=True,policy=a.activation_memory_policy,progress_path=out/'control-calibration.jsonl')
+        started=time.monotonic()
+        dev=core.dev_loss(llm,a.cache,corpus.rows,True,reader=lambda _,r:corpus.read(r,full=False),loss_fn=corpus.loss,recipe=dict(parent['metadata']['recipe'],dev_count=64))
+        control['full_dev_seconds']=time.monotonic()-started
+        write(out,'control-runtime.json',dict(source=a.source,cache_manifest_sha256=MANIFEST_SHA,new_optimizer_updates=0,measured=control,full_dev_scenes=64,dev=dev))
+        assert_optimizer_equal(parent['optimizer'],old.optimizer.state_dict());restore_rng(parent['rng'])
     row = next(r for r in sorted(corpus.rows, key=lambda r:r['id']) if r['fold']=='TRAIN' and r['family']=='ordinary')
     check = corpus.read(row)
     with torch.no_grad(): before = selected_forward(llm, check, 'cuda')[0]
@@ -188,7 +207,7 @@ def prepare(a):
             runtime.base.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache()
         measured=memory_fallback(
             lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload,host_limit_bytes=host_gib*1024**3,
-                                     policy=getattr(a,'activation_memory_policy','legacy-pinned')),cleanup,
+                                     policy=getattr(a,'activation_memory_policy','legacy-pinned'),progress_path=out/'main-calibration.jsonl'),cleanup,
             lambda:write(out,'no-offload-oom.json',dict(optimizer_updates=0,lossless_offload_fallback=True)),
             start_offloaded=bool(getattr(a,'activation_offload',False)))
         restore_rng(parent['rng'])
@@ -277,6 +296,7 @@ if __name__ == '__main__':
     for name in ('model','cache','action-index','data-admission','opal-source','lease','output','source'):
         p.add_argument('--'+name, required=True)
     p.add_argument('--parent')
+    p.add_argument('--measured-joint-schedule',action='store_true')
     p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
     p.add_argument('--host-offload-limit-gib',type=int,choices=(48,128),default=48)
     p.add_argument('--activation-memory-policy',choices=('legacy-pinned','repeat4-pageable-v1','repeat4-prefix-pageable-v2','repeat4-prefix-pageable-v3-layout'),default='legacy-pinned')

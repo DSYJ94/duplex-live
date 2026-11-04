@@ -72,13 +72,13 @@ def test_80GB_fallback_requires_exact_included_scratch_and_standard_zone(tmp_pat
     with pytest.raises(ValueError,match='scratch'):g.validate(vm,[vm],[],lease,now)
 
 
-@pytest.mark.parametrize('number',[4,5,6,7])
+@pytest.mark.parametrize('number',[4,5,6,7,8])
 def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_time(tmp_path,monkeypatch,number):
     fifth=number==5;sixth=number==6
     actual_root=g.ROOT
     p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
     previous=[]
-    for i,upper in ([(1,300),(2,400),(3,900)]+([(4,500)] if number>=5 else [])+([(5,500)] if number>=6 else [])+([(6,100)] if number>=7 else [])):
+    for i,upper in ([(1,300),(2,400),(3,900)]+([(4,500)] if number>=5 else [])+([(5,500)] if number>=6 else [])+([(6,100)] if number>=7 else [])+([(7,1300)] if number>=8 else [])):
         original=actual_root/('gpu-05-capacity-01' if i==5 else f'gpu-{i:02d}')/'provider-final.json'
         terminal=json.loads(original.read_text());receipt=tmp_path/f'provider-final-{i:02d}.json'
         receipt.write_bytes(original.read_bytes())
@@ -92,9 +92,10 @@ def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_t
     if fifth:p.update(prefix_authorization_sha256=sha(g.PREFIX_AUTH),maximum_running_seconds=41000,activation_memory_policy='repeat4-prefix-pageable-v2')
     if sixth:p.update(layout_authorization_sha256=sha(g.LAYOUT_AUTH),maximum_running_seconds=40500,activation_memory_policy='repeat4-prefix-pageable-v3-layout')
     if number>=7:p.update(aggregate_authorization_sha256=sha(g.AGGREGATE_AUTH),maximum_running_seconds=40400,activation_memory_policy='repeat4-prefix-pageable-v3-layout')
+    if number==8:p['maximum_running_seconds']=39100
     path=tmp_path/('interval-%02d.json'%number);path.write_text(json.dumps(p))
-    lease.update(p,execution_plan_path=str(path),execution_plan_sha256=sha(path),prior_capacity_GPU_seconds_upper=2700 if number>=7 else 2600 if sixth else 2100 if fifth else 1600)
-    assert g.resource(lease)['duration']==(40400 if number>=7 else 40500 if sixth else 41000 if fifth else 41500)
+    lease.update(p,execution_plan_path=str(path),execution_plan_sha256=sha(path),prior_capacity_GPU_seconds_upper=4000 if number==8 else 2700 if number>=7 else 2600 if sixth else 2100 if fifth else 1600)
+    assert g.resource(lease)['duration']==(39100 if number==8 else 40400 if number>=7 else 40500 if sixth else 41000 if fifth else 41500)
     for key,value in [('disk_id','wrong'),('maximum_running_seconds',41600),('aggregate_authorization_sha256' if number>=7 else 'layout_authorization_sha256' if sixth else 'prefix_authorization_sha256' if fifth else 'memory_authorization_sha256','wrong'),
                       ('storage_deadline_unix',1793897264.296897)]:
         changed=dict(p,**{key:value});path.write_text(json.dumps(changed))

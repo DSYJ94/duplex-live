@@ -6,6 +6,7 @@ phase clock, with inherited Adam/OPAL programs and immutable parent history.
 import argparse
 import copy
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -21,12 +22,19 @@ from .state import save, restore_rng
 from . import train as core
 
 
-def admission(step_seconds, dev_seconds, available_seconds, checkpoint_bytes):
+def admission(step_seconds, dev_seconds, available_seconds, checkpoint_bytes,*,workload=None,control=None):
     """Joint whole-epoch arms; measured timing and backup size, never loss."""
-    if min(step_seconds, dev_seconds, available_seconds, checkpoint_bytes) <= 0:
+    if any(not math.isfinite(v) or v<=0 for v in (step_seconds,dev_seconds,available_seconds,checkpoint_bytes)):
         raise ValueError('Positive actual native timing/size required')
+    epoch_cost=None
+    if workload is not None or control is not None:
+        from .workload import epoch_seconds
+        if (workload is None or control is None or control['optimizer_updates']!=0 or control['effective_batch']!=4
+                or any(not math.isfinite(control[k]) or control[k]<=0 for k in ('seconds','full_dev_seconds'))):
+            raise ValueError('Actual same-corpus control runtime and whole geometry required')
+        epoch_cost=epoch_seconds(step_seconds,control['seconds'],workload)
     for epochs in range(8, 0, -1):
-        seconds = 2*epochs*60*step_seconds*1.35 + 2*(epochs+1)*dev_seconds*1.25 + 4200
+        seconds = (epochs*(epoch_cost['main']+epoch_cost['control'])*1.35+(epochs+1)*(dev_seconds+control['full_dev_seconds'])*1.25+4200 if epoch_cost else 2*epochs*60*step_seconds*1.35+2*(epochs+1)*dev_seconds*1.25+4200)
         # Preserve initialization, every whole-epoch full-state checkpoint and
         # one interruption state; reserve5GB for control/audio/receipts. Stay
         # within the approved100GB transfer ceiling, not just local disk size.
@@ -37,7 +45,7 @@ def admission(step_seconds, dev_seconds, available_seconds, checkpoint_bytes):
                         complete_train_per_epoch=240, full_dev_per_review=64,
                         joint_required_seconds=seconds, joint_backup_bytes_upper=size,
                         measured_step_seconds=step_seconds, measured_full_dev_seconds=dev_seconds,
-                        actual_initial_checkpoint_bytes=checkpoint_bytes,
+                        actual_initial_checkpoint_bytes=checkpoint_bytes,epoch_runtime_basis=epoch_cost,
                         selection_uses_losses_or_heldout=False)
     raise TimeoutError('No complete useful main/control epoch pair fits time and backup allowance')
 
@@ -117,8 +125,13 @@ def main(a):
             write(out, 'dev-baseline.json', dict(source=a.source, **baseline, seconds=dev_seconds, scenes=64))
             if full:
                 lease = json.loads(Path(a.lease).read_text())
-                admitted = admission(sizing['measured']['seconds'], dev_seconds,
-                                     lease['stop_unix']-time.time()-180, init.stat().st_size)
+                timing={}
+                if (root/'control-runtime.json').exists():
+                    record=json.loads((root/'control-runtime.json').read_text());work=json.loads((root/'workload-geometry.json').read_text())
+                    if record['source']!=a.source or work.pop('source')!=a.source or record['cache_manifest_sha256']!=MANIFEST_SHA or record['full_dev_scenes']!=64:
+                        raise ValueError('Actual control/data/source runtime binding required')
+                    timing=dict(workload=work,control=record['measured'])
+                admitted = admission(sizing['measured']['seconds'],dev_seconds,lease['stop_unix']-time.time()-180,init.stat().st_size,**timing)
                 write(root, 'joint-schedule-admission.json', admitted)
             else:
                 admitted = json.loads((root/'joint-schedule-admission.json').read_text())
