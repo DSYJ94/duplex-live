@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T16:21:19.646655+00:00",
+  "updated_utc": "2026-11-04T17:07:18.528786+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "value_condition_resolved_phase_authorized_producer_and_admission_next",
+    "status": "CPU_complete304_verified_and_stopped_GPU_native_admission_next",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -116,7 +116,7 @@
     "rank512_adapter_parameters": 1396703232,
     "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
   },
-  "current_compute_scope": "New approved value-selected capacity phase. No resources created yet; CPU staging and new producer/guards first, GPU only for ready native work.",
+  "current_compute_scope": "CPU stage actual194.069s complete/STOPPED; first A10040Flex request next on retained250GB. No native new updates yet.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",

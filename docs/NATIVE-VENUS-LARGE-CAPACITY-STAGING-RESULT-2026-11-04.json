@@ -1,0 +1,41 @@
+{
+  "at_utc": "2026-11-04T17:07:18.528786+00:00",
+  "status": "CPU_STAGE_COMPLETE_GUARDED_GPU_CONTROLLER_READY_NOT_NATIVE_QUALIFIED",
+  "source_stage": "2aeeec1fafd1b5cd15aefc5ee4bb256a1faba7cf",
+  "stage_vm_id": "6696109563747687682",
+  "stage_disk_id": "4166410943511059526",
+  "CPU_actual_seconds": 194.069,
+  "CPU_hourly_full_USD": 0.16826941534246576,
+  "CPU_cost_upper_200seconds_USD": 0.009348300852359208,
+  "CPU_provider_state": "TERMINATED",
+  "stage_report_sha256": "09c115f11d3f0b7c37bd2ea51c064f5dfc8a9001b8b5b86b539d13b508a9d73b",
+  "stage_terminal_sha256": "a273bc482285074dd6653ed83ca76a675979a7f3917b1a4ea280efb808b5c5bc",
+  "full240TRAIN64DEV_native_hashes_targets_and_original_inputs_passed": true,
+  "parent466_verified": true,
+  "largest_native_input_tokens": 1537,
+  "native_runtime_python": "3.10.12",
+  "native_runtime_torch": "2.4.0+cu121",
+  "new_optimizer_updates": 0,
+  "GPU_starts": 0,
+  "source_only_checks": {
+    "focused_tests": 28,
+    "seconds": 7.21,
+    "GPU_controller_duplicate_claim_rejection": true,
+    "Linux_stdlib_guard_dependency_proof": true,
+    "whole64_input_pair_requirement": true
+  },
+  "next": "ONE A10040Flex request from SAME retained250GB disk; native0-update size/restore then serial admitted complete-epoch main/control and full64speech/native collection; no adoption",
+  "limits": {
+    "new_GCP_USD": 150,
+    "project_USD": 325,
+    "aggregate_GPU_seconds": 43200,
+    "intervals": 3,
+    "no_purchase": true,
+    "external_model_API_calls": 0
+  },
+  "original_storage_deadline": {
+    "storage_started_unix": 1793810863.296897,
+    "storage_deadline_unix": 1793897263.296897
+  },
+  "all_old_artifacts_and_original_disk_preserved": true
+}

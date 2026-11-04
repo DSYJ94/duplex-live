@@ -8,8 +8,6 @@ import hashlib
 import json
 from pathlib import Path
 
-import torch
-
 MANIFEST_SHA = '1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807'
 APPROVAL_SHA = 'fe6b9c061ef7083658e7c6254598d916f96689578c9b44ef0d6e981be8c1add1'
 PARENT_SHA = 'e2c16cb825dc654519e922379a220b8c962e9d8a78eec652a3b195922a69720f'
@@ -25,6 +23,7 @@ def sha(path):
 
 def full_native(example):
     """Select saved original native inputs, never reconstruct teacher targets."""
+    import torch
     required = {'embeddings', 'segments', 'positions', 'targets', 'decision_mask',
                 'id', 'fold', 'family'}
     if not required <= example.keys() or example['fold'] not in ('TRAIN', 'DEV'):
@@ -70,6 +69,7 @@ class Corpus:
         self.objective = ContextObjective(action_index, self.root/'manifest.json', admission)
 
     def read(self, row, *, full=True):
+        import torch
         path = self.root/row['file']
         if Path(row['file']).is_absolute() or '..' in Path(row['file']).parts or sha(path) != row['sha256']:
             raise ValueError('Exact approved native artifact hash required')

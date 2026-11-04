@@ -14,7 +14,7 @@ import time
 import torch
 
 from .large_inputs import Corpus, PARENT_SHA, MANIFEST_SHA, sha
-from .large_native import guarded, restore_expanded, write
+from .large_native import guarded, restore_expanded, write, tensor_sha
 from .native_cache import load_native
 from .native_optimizer import assert_optimizer_equal
 from .state import save, restore_rng
@@ -139,7 +139,8 @@ def main(a):
                         model_revision=corpus.manifest['model_revision'], recipe=copy.deepcopy(recipe),
                         parent_training_steps=466, parent_checkpoint_sha256=PARENT_SHA, cache_sha256=MANIFEST_SHA,
                         initial_programs=parent['optimizer']['files'], admitted=admitted, adopted=False,
-                        independent_native_restore=proof, expanded_init_checkpoint_sha256=proof['checkpoint_sha256'])
+                        independent_native_restore=proof, expanded_init_checkpoint_sha256=proof['checkpoint_sha256'],
+                        training_native_pid=os.getpid())
             if full: meta['expansion'] = initialized['metadata']['expansion']
             write(out, 'recipe.json', meta)
             start = 0
@@ -158,7 +159,15 @@ def main(a):
                 if any(p._version != frozen[n] for n,p in llm.named_parameters() if n in frozen):
                     raise ValueError('Frozen model mutated during capacity training')
                 log.write(json.dumps(row)+'\n'); log.flush(); print(json.dumps(row), flush=True)
-                if actual % 8 == 0: runtime.diagnose([row], actual)
+                if actual % 8 == 0:
+                    runtime.diagnose([row], actual)
+                    # Atomic replacement keeps one rolling resumable state;
+                    # every complete-epoch state is retained separately below.
+                    # This avoids losing a long partial epoch on reauthentication
+                    # while respecting the declared artifact-byte admission.
+                    live_hash=save(out/'live-resume.pt',llm,runtime.optimizer,actual,meta,
+                                   diagnostics_state=runtime.diagnostics_state)
+                    log.write(json.dumps(dict(event='live_state_saved',step=actual,sha256=live_hash))+'\n');log.flush()
                 if actual % 60 == 0:
                     guarded(a.lease, 180)
                     dev = core.dev_loss(llm, a.cache, corpus.rows, True, reader=reader, loss_fn=corpus.loss, recipe=recipe)
@@ -166,6 +175,11 @@ def main(a):
                     write(out, f'dev-{actual:04d}.json', dict(step=actual, scenes=64, **dev, adopted=False))
                     save(out/f'step-{actual:04d}.pt', llm, runtime.optimizer, actual, meta,
                          diagnostics_state=runtime.diagnostics_state)
+            from .lora import selected_forward
+            reference_row=next(r for r in sorted(corpus.rows,key=lambda r:r['id']) if r['fold']=='TRAIN' and r['family']=='ordinary')
+            with torch.no_grad():reference_logits,_=selected_forward(llm,reader(a.cache,reference_row),'cuda')
+            write(out,'final-native-reference.json',dict(id=reference_row['id'],logits_sha256=tensor_sha(reference_logits),
+                  checkpoint_sha256=sha(out/f'step-{actual:04d}.pt'),source=a.source,training_native_pid=os.getpid()))
             write(out, 'training-terminal.json', dict(completed=True, actual_new_updates=actual,
                     complete_epochs=actual//60, train_scenes_per_epoch=240, full_dev_scenes=64,
                     parent_training_steps=466, adopted=False, native_behavior_and_speech_required=True))
@@ -173,7 +187,7 @@ def main(a):
             # Read the real OPAL clock, including a completed step whose later
             # logging failed. Never guess progress from a loop variable.
             actual = runtime.optimizer.update
-            save(out/'interrupted-state.pt', llm, runtime.optimizer, actual, meta,
+            save(out/'live-resume.pt', llm, runtime.optimizer, actual, meta,
                  diagnostics_state=runtime.diagnostics_state)
             raise
         finally:

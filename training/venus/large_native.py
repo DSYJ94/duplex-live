@@ -203,12 +203,48 @@ def restore_only(a):
         runtime.close()
 
 
+def final_restore(a):
+    from .native_cache import load_native
+    guarded(a.lease,300)
+    root=Path(a.output);terminal=json.loads((root/'training-terminal.json').read_text())
+    reference=json.loads((root/'final-native-reference.json').read_text())
+    checkpoint=root/('step-%04d.pt'%terminal['actual_new_updates'])
+    if (not terminal['completed'] or reference['source']!=a.source
+            or reference['training_native_pid']==os.getpid() or sha(checkpoint)!=reference['checkpoint_sha256']):
+        raise ValueError('Actual successful training and distinct source-bound restore process required')
+    state=torch.load(checkpoint,map_location='cpu',weights_only=False)
+    if (state['metadata']['capacity_schema']!='native-capacity-trained-v1'
+            or state['step']!=terminal['actual_new_updates'] or state['metadata']['source']!=a.source):
+        raise ValueError('Exact saved completed capacity checkpoint required')
+    corpus=Corpus(a.cache,action_index=a.action_index,admission=a.data_admission)
+    model,_=load_native(a.model,language_only=True);llm=model.llm
+    llm.eval();llm.gradient_checkpointing_disable()
+    full=state['metadata']['arm']=='main'
+    if full:runtime=restore_expanded(state,llm,a.opal_source,root/'final-restore')
+    else:
+        from .checkpoint_restore import restore
+        install(llm,rank=64,alpha=64,last_layers=1)
+        base=torch.optim.AdamW(list(adapter_parameters(llm).values()),lr=state['metadata']['recipe']['learning_rate'])
+        runtime,_=restore(checkpoint,reference['checkpoint_sha256'],llm,base,source=a.opal_source,run_dir=root/'final-restore')
+    try:
+        row=next(r for r in corpus.rows if r['id']==reference['id'])
+        with torch.no_grad():logits,_=selected_forward(llm,corpus.read(row,full=full),'cuda')
+        if tensor_sha(logits)!=reference['logits_sha256']:raise ValueError('Final independently restored native logits differ')
+        restore_rng(state['rng'])
+        assert_optimizer_equal(state['optimizer'],runtime.optimizer.state_dict())
+        write(root,'final-native-restore.json',dict(passed=True,source=a.source,
+                checkpoint_sha256=reference['checkpoint_sha256'],training_native_pid=reference['training_native_pid'],
+                restore_native_pid=os.getpid(),actual_CUDA=True,optimizer_RNG_OPAL_exact=True,
+                native_logits_exact=True,new_optimizer_updates=0,adopted=False))
+    finally:runtime.close()
+
+
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--stage', choices=('prepare','restore'), required=True)
+    p.add_argument('--stage', choices=('prepare','restore','final-restore'), required=True)
     for name in ('model','cache','action-index','data-admission','opal-source','lease','output','source'):
         p.add_argument('--'+name, required=True)
     p.add_argument('--parent')
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
-    prepare(a) if a.stage == 'prepare' else restore_only(a)
+    prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)
