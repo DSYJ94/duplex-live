@@ -1,0 +1,47 @@
+{
+  "status": "SOURCE_PREPARED_LOCAL_TESTS_PASS_NOT_NATIVE_QUALIFIED",
+  "at_utc": "2026-11-04T16:47:20.717089+00:00",
+  "authorization": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
+  "source_sha256": {
+    "training/venus/large_inputs.py": "584db7e5b9c7fa464a72175c5a13059caf86e7e5569abca7fa9042549d18f334",
+    "training/venus/large_phase.py": "aab83151e0c7903de4aee576e68a97e4829a453498309dafa96ab2bfced1ed36",
+    "training/venus/large_guard.py": "86b7ee7d3a58d0e4c998b41bbf9c256b15fdc7ced76be6d4a0f58ae9783d20ef",
+    "training/venus/large_native.py": "3a97e01bb4b83a83c7d0e2572624e1901cebe4138e3d76f0f98c948c9088b689",
+    "training/venus/large_train.py": "18984b5d222d17329494668e29c521d9f80b91f27ab53a8fdde5b75f865a748b",
+    "training/venus/large_inference.py": "ebc8311353a65739b28c58b718954376017133f066ab00d5d5b1ffeb8c9f9ae6",
+    "training/venus/large_stage.py": "723868c85e9bee28b52b1ee32091972475ef2f37220502e252612a6da49b8da5",
+    "training/venus/train.py": "6e1b0f0253ceda09865f48f0a37b99fd60514a54f21268a99c6215bddb245892",
+    "training/venus/inference.py": "5b6d85971b2746b52d4e810626abd1c3d4fa10bb2c1174e5fdf918f737bfeebc",
+    "portable/venus/guard.py": "05c48aec5581b73234e62a80aa4ee498df62a330f6d173dbabc9d3094e10c17e"
+  },
+  "checks": {
+    "focused_tests_passed": 23,
+    "seconds": 7.68,
+    "actual_upstream_OPAL_tiny_CPU": true,
+    "all_layer_original_input_selection": true,
+    "legacy_phase_limits_preserved": true,
+    "saved_native_updates_repeated": 0,
+    "GPU_loaded": false,
+    "native_large_fresh_process_restore_passed": false
+  },
+  "execution": {
+    "CPU_stage": "one e2-standard-4/250GBclone/4h/2USD, then STOP; no GPU allocation path",
+    "CPU_fresh_full_hourly_USD": 0.16826941534246576,
+    "native_sizing": "real full4batch gradients and materialized Adam, parent exact native output, complete304 cache hashes/masks, fresh-process exact expanded optimizer/RNG/logits",
+    "schedule": "both complete240TRAIN arms, full64DEV each epoch, jointly measured time and <=100GB backup admission, <=480updates each, no LR branches initially",
+    "new_broad_training_recipe": "all36 attention+MLP rank256/alpha256;1e-5 warmup16/cosine/effective4; original .1KL/.01hidden/.25action retained",
+    "control": "same466/sameepochorder/effectivebatch/recipe losses; original851968 suffix adapter and approved exact suffix path",
+    "OPAL": "actual pinned updater/scheduler/diagnostic state; inherited programs, no external model calls; keep transport by default",
+    "candidate_loader": "separate capacity schema binds original466/cache/native restore proof, never marks adopted"
+  },
+  "limits": {
+    "new_GCP_USD": 150,
+    "project_USD": 325,
+    "aggregate_GPU_seconds": 43200,
+    "GPU_intervals": 3,
+    "CPU_seconds": 14400,
+    "CPU_USD": 2,
+    "new_optimizer_updates_all_branches_upper": 984
+  },
+  "remaining": "CPU actual staging, GPU controller actual runtime fit/restore, full learning curves and complete native speech/behavior/live qualification; no claim of training progress from these tests."
+}

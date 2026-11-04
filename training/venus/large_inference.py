@@ -1,0 +1,39 @@
+"""Explicit experimental loader for the new capacity schema, never adoption."""
+from .large_inputs import PARENT_SHA, MANIFEST_SHA
+from .lora import install, load_adapter, ALL_PROJECTIONS
+from .large_capacity import expand_broad
+
+
+def load(llm, state, checkpoint_sha256):
+    meta = state['metadata']; recipe = meta['recipe']; arm = meta['arm']
+    proof = meta['independent_native_restore']
+    if (meta['capacity_schema'] != 'native-capacity-trained-v1' or arm not in ('main','control')
+            or meta['parent_training_steps'] != 466 or meta['parent_checkpoint_sha256'] != PARENT_SHA
+            or meta['cache_sha256'] != MANIFEST_SHA or meta['adopted']
+            or not 0 < state['step'] <= recipe['updates'] <= 480
+            or recipe['updates'] != recipe['epochs']*60
+            or not proof['passed'] or not proof['actual_CUDA'] or proof['new_optimizer_updates'] != 0
+            or proof['initialization_pid'] == proof['restore_pid'] or proof['source'] != meta['source']
+            or meta['expanded_init_checkpoint_sha256'] != proof['checkpoint_sha256']):
+        raise ValueError('Exact independently restored capacity phase and parent required')
+    if (recipe['ordinary_kl_weight'] != .1 or recipe['ordinary_hidden_weight'] != .01
+            or recipe['action_aux_weight'] != .25 or recipe['microbatch'] != 1 or recipe['accumulation'] != 4):
+        raise ValueError('Original loss and effective batch required')
+    if arm == 'main':
+        if (recipe['forward_path'] != 'native-segmented-bptt-v1' or recipe['last_layers'] != 36
+                or recipe['rank'] != 256 or recipe['alpha'] != 256 or recipe['projections'] != list(ALL_PROJECTIONS)):
+            raise ValueError('Exact broad native candidate required')
+    elif (recipe['forward_path'] != 'native-frozen-prefix-v1' or recipe['last_layers'] != 1
+            or recipe['rank'] != 64 or recipe['alpha'] != 64 or recipe['projections'] != ['q_proj','v_proj']):
+        raise ValueError('Exact same-parent small-adapter control required')
+    spec = install(llm, rank=64, alpha=64, last_layers=1)
+    if arm == 'main':
+        spec = expand_broad(llm, last_layers=36, rank=256, alpha=256, seed=20261104)
+        if spec != meta['expansion'] or spec['parameters'] != 698351616:
+            raise ValueError('Declared broad tensor geometry differs')
+    load_adapter(llm, state['adapter']); llm.requires_grad_(False)
+    return dict(checkpoint_sha256=checkpoint_sha256, optimizer_updates=466+state['step'],
+                current_round_updates=state['step'], parent_training_steps=466,
+                planned_updates=466+recipe['updates'], adapter=spec, training_source=meta['source'],
+                model_revision=meta['model_revision'], experimental_candidate=True,
+                adopted=False, native_behavior_qualified=False, arm=arm)

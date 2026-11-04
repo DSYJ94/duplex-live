@@ -67,21 +67,25 @@ def read_example(cache,row):
     return torch.load(path,map_location='cpu',weights_only=False)
 
 
-def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None):
+def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None,*,reader=None,loss_fn=None,recipe=None):
     if opal and control:raise ValueError("OPAL and bounded LR control cannot own the same optimizer")
+    config=RECIPE if recipe is None else recipe
+    reader=read_example if reader is None else reader
+    loss_fn=objective if loss_fn is None else loss_fn
+    if recipe is not None and not opal:raise ValueError('An explicit alternative recipe requires its OPAL scheduler owner')
     torch.cuda.reset_peak_memory_stats()
     opt.zero_grad(set_to_none=True)
     multiplier=control.state['lr_multiplier'] if control else 1.
-    clip=control.state['gradient_clip'] if control else RECIPE['gradient_clip']
+    clip=control.state['gradient_clip'] if control else config['gradient_clip']
     if not opal:
         for group in opt.param_groups:group['lr']=learning_rate(step)*multiplier
     rate_before=float(opt.param_groups[0]['lr'])
     metrics=[];losses=[];before=time.monotonic()
     for row in batch:
-        ex=read_example(cache,row)
-        offload=ActivationOffload(llm,RECIPE['activation_offload_minimum_bytes'],RECIPE['activation_offload_cpu_limit_bytes'])
-        with offload.context() if RECIPE['activation_offload'] else nullcontext():
-            loss,parts=objective(llm,ex,'cuda')
+        ex=reader(cache,row)
+        offload=ActivationOffload(llm,config['activation_offload_minimum_bytes'],config['activation_offload_cpu_limit_bytes'])
+        with offload.context() if config['activation_offload'] else nullcontext():
+            loss,parts=loss_fn(llm,ex,'cuda')
             if not torch.isfinite(loss):raise ValueError('Nonfinite native loss')
             (loss/len(batch)).backward()
         losses.append(loss.detach())
@@ -111,14 +115,17 @@ def train_step(llm,opt,cache,batch,step,update=True,control=None,opal=None):
     return result
 
 
-def dev_loss(llm,cache,rows,with_details=False):
+def dev_loss(llm,cache,rows,with_details=False,*,reader=None,loss_fn=None,recipe=None):
     from .diagnostics import aggregate
+    reader=read_example if reader is None else reader
+    loss_fn=objective if loss_fn is None else loss_fn
+    config=RECIPE if recipe is None else recipe
     measured=[]
     with torch.no_grad():
         for row in rows:
             if row['fold']=='DEV':
-                _,parts=objective(llm,read_example(cache,row),'cuda');measured.append((row['family'],parts,1))
-    assert len(measured)==RECIPE.get('dev_count',36)
+                _,parts=loss_fn(llm,reader(cache,row),'cuda');measured.append((row['family'],parts,1))
+    assert len(measured)==config.get('dev_count',36)
     details=aggregate(measured);values={k:v['ce'] for k,v in details.items()}
     return dict(ce=values,per_family=details) if with_details else values
 

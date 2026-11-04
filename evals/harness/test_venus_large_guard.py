@@ -1,0 +1,59 @@
+import copy
+import json
+from datetime import datetime, timezone
+
+import pytest
+
+from training.venus import large_guard as g
+from training.venus.large_inputs import sha, PARENT_SHA, MANIFEST_SHA
+
+
+def fixture(tmp_path, monkeypatch):
+    monkeypatch.setattr(g, 'ROOT', tmp_path)
+    now = datetime.now(timezone.utc).timestamp()
+    creation = datetime.fromtimestamp(now-5, timezone.utc).isoformat()
+    p = dict(resource_key=g.KEY, authorization_sha256=sha(g.AUTH),
+             parent_sha256=PARENT_SHA, cache_manifest_sha256=MANIFEST_SHA,
+             maximum_all_branch_updates=984, external_model_API_calls=0,
+             prior_project_USD=g.OLD_USD, vm_id='123', disk_id='456', zone='us-central1-a',
+             creation_timestamp=creation, storage_started_unix=now-10,
+             storage_deadline_unix=now-10+86400, previous_intervals=[],
+             maximum_running_seconds=43100, disk_size_gib=250,
+             machine='a2-highgpu-1g', provisioning='FLEX_START', optimizer_work_started=False,
+             vm_name='duplex-venus-large-gpu-v65', disk_name='duplex-venus-large-data-v65')
+    path = tmp_path/'interval-01.json'; path.write_text(json.dumps(p))
+    lease = dict(p, execution_plan_path=str(path), execution_plan_sha256=sha(path),
+                 prior_capacity_GPU_seconds_upper=0, verified_hourly_price_usd=2.1, stop_unix=now+43100)
+    vm = dict(id='123', name=p['vm_name'], status='RUNNING', creationTimestamp=creation,
+              lastStartTimestamp=datetime.fromtimestamp(now,timezone.utc).isoformat(),
+              machineType='machines/a2-highgpu-1g', zone='zones/us-central1-a',
+              tags=dict(items=['duplex-venus-train-bounded']),
+              disks=[dict(boot=True, autoDelete=False, diskSizeGb=250, source='/disks/'+p['disk_name'])],
+              scheduling=dict(provisioningModel='FLEX_START', maxRunDuration=dict(seconds=43100),
+                              instanceTerminationAction='STOP', automaticRestart=False))
+    return p,path,lease,vm,now
+
+
+def test_new_guard_dispatch_and_complete_scope(tmp_path,monkeypatch):
+    p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
+    from portable.venus.guard import resource,validate
+    assert resource(lease)['machine']=='a2-highgpu-1g'
+    assert validate(vm,[vm],[dict(status='EXITED')],lease,now)==lease['stop_unix']
+    for change in (dict(verified_hourly_price_usd=8.1),dict(stop_unix=lease['stop_unix']+1),
+                   dict(storage_deadline_unix=lease['storage_deadline_unix']+1)):
+        with pytest.raises(ValueError):validate(vm,[vm],[],dict(lease,**change),now)
+    with pytest.raises(ValueError):validate(vm,[vm,dict(vm,id='999')],[],lease,now)
+    with pytest.raises(ValueError):validate(vm,[vm],[dict(status='RUNNING')],lease,now)
+    broken=copy.deepcopy(vm);broken['disks'][0]['autoDelete']=True
+    with pytest.raises(ValueError):validate(broken,[vm],[],lease,now)
+
+
+def test_aggregate_time_and_plan_hash_cannot_reset(tmp_path,monkeypatch):
+    p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
+    p['maximum_running_seconds']=43200;path.write_text(json.dumps(p))
+    with pytest.raises(ValueError):g.resource(lease)
+    lease['execution_plan_sha256']=sha(path)
+    with pytest.raises(ValueError,match='Aggregate'):g.resource(lease)
+    p['maximum_running_seconds']=43100;p['previous_intervals']=[dict()];path.write_text(json.dumps(p))
+    lease['execution_plan_sha256']=sha(path)
+    with pytest.raises(ValueError,match='prior actual intervals'):g.resource(lease)

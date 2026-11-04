@@ -16,6 +16,9 @@ def load_candidate(llm, checkpoint):
     metadata = state['metadata']; recipe = metadata['recipe']; step = state['step']
     if metadata['model_revision'] != MODEL_REVISION:
         raise ValueError('Candidate belongs to a different published model revision')
+    if metadata.get('capacity_schema')=='native-capacity-trained-v1':
+        from .large_inference import load as load_large
+        return load_large(llm,state,hashlib.sha256(path.read_bytes()).hexdigest())
     if (recipe['forward_path'] != 'native-frozen-prefix-v1'
             or recipe['last_layers'] != 1
             or recipe['projections'] != ['q_proj', 'v_proj']
