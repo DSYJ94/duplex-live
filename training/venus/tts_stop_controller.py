@@ -205,6 +205,10 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         command='/usr/bin/env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lp+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '+py+' -u -m training.venus.tts_stop_probe --model '+c.MODEL+' --checkpoint '+c.ROOT+'/tts'+version+'-input/step-0060.pt --selection '+c.remote+'/'+proposal['source_selection_path']+' --timelines '+c.OUT+'/paced-timelines-v22 --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 '+proposal['voice_reference_sha256']+' --lease '+lp+' --source '+source+' --output '+remote_out
         assert not c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip()
         if completion:
+            # Exercise the pinned method transformation on the actual guest
+            # Python before paying for either model load. This loads no weights.
+            preflight=c.ssh('cd '+c.remote+' && PYTHONDONTWRITEBYTECODE=1 '+py+' -m unittest evals.harness.test_venus_completion_python_runtime 2>&1',25)
+            c.record('actual_guest_completion_transform_preflight_pass',source=source,output=preflight[-1000:])
             # Both complete cohorts on the SAME new interval; never reuse an
             # old profiler run as the current counterfactual baseline.
             for label,flag in [('baseline',''),('completion',' --speech-completion')]:

@@ -55,11 +55,18 @@ yield new_tokens[:, _completion_start:t, :], past_key_values, True
 
 def _duplex_generate(method,completion):
     raw,source=_source(method,'streaming_generate')
+    # Python 3.9/3.10 unparse tuple assignments with parentheses; 3.11+
+    # omits them. Match the pinned sampler call structurally on both runtimes.
+    module=ast.parse(source)
+    sampler=ast.dump(ast.parse('self.model.tts.generate_chunk',mode='eval').body)
+    calls=[n for n in ast.walk(module) if isinstance(n,ast.Call) and ast.dump(n.func)==sampler]
+    if len(calls)!=1:raise ValueError('Pinned native completion sampler seam changed')
+    calls[0].func=ast.parse('_completion.sample',mode='eval').body
+    calls[0].keywords.insert(0,ast.keyword(arg='terminal',value=ast.Name(id='end_of_turn',ctx=ast.Load())))
+    source=ast.unparse(ast.fix_missing_locations(module))
     edits=[
         ('tts_condition = self._convert_results_to_tts_input(total_hidden_in_unit)',
          '_completion.begin_native_speech(prompt_wav_path)\n    tts_condition = self._convert_results_to_tts_input(total_hidden_in_unit)'),
-        ('new_tokens, old_kv = self.model.tts.generate_chunk(',
-         'new_tokens, old_kv = _completion.sample(terminal=end_of_turn,'),
         ('if end_of_turn:\n        self.tts_text_start_pos = 0',
          'if end_of_turn and _completion.acoustic_complete:\n        self.tts_text_start_pos = 0'),
         ('new_tokens, prompt_wav_path, end_of_turn, force_flush=force_flush',

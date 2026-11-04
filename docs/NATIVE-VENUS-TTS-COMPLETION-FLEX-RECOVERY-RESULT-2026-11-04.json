@@ -1,0 +1,238 @@
+{
+  "status": "FAILED_REPAIRED_RUNTIME_STARTUP; COMPLETE_BASELINE_ONLY",
+  "at_utc": "2026-11-04T13:41:25.495443+00:00",
+  "authorization_path": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-RECOVERY-AUTHORIZATION-2026-11-04.json",
+  "model_source": "7ec78bff0314bed1878ee8676238fa795c4793aa",
+  "vm_id": "5372901565156199451",
+  "disk_id": "7029321213994765491",
+  "start_utc": "2026-11-04T13:28:55.141Z",
+  "stop_utc": "2026-11-04T13:36:43.211Z",
+  "actual_gpu_seconds": 468.0699999332428,
+  "gpu_seconds_upper": 500,
+  "carried_prior_focused_upper_seconds": 33700,
+  "new_focused_upper_seconds": 34200,
+  "original_upper_seconds": 54451,
+  "cumulative_upper_seconds": 88651,
+  "conservative_phase_usd_upper": 73.25,
+  "conservative_project_usd_upper": 165.23448055555556,
+  "phase_cap_usd": 75,
+  "project_cap_usd": 175,
+  "gpu_unit_terminals": [
+    {
+      "MainPID": "0",
+      "Result": "success",
+      "ExecMainStatus": "0",
+      "ActiveState": "active",
+      "SubState": "exited",
+      "InvocationID": "4fd78e767c1949f8a4d1a6988f4ac613",
+      "unit": "duplex-venus-tts-baseline63"
+    },
+    {
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "InvocationID": "51985a7b09c84af88286d7c11e1f24ec",
+      "unit": "duplex-venus-tts-completion63"
+    }
+  ],
+  "required_paired_cases": 24,
+  "baseline_cases_complete": 12,
+  "repaired_runtime_cases_complete": 0,
+  "baseline_results": {
+    "untouched-release": {
+      "required": 6,
+      "completed": 6,
+      "unchanged_word_error_and_peak_pass": 4,
+      "peak_pass": 6,
+      "rows": [
+        {
+          "id": "venus-control-v1-train-ordinary-0126",
+          "references": {
+            "literal_generated": "We put lids on jar s to keep food fresh and prevent it from spoiling",
+            "intended_user_facing": "We put lids on jar s to keep food fresh and prevent it from spoiling",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " We put lids on jars to keep food fresh and prevent it from spoiling.",
+          "wer": 0.13333333333333333,
+          "raw_peak": 0.660736083984375
+        },
+        {
+          "id": "venus-control-v1-dev-ordinary-0183",
+          "references": {
+            "literal_generated": "Hinges are used to allow doors to open and close.",
+            "intended_user_facing": "Hinges are used to allow doors to open and close.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " Hinges are used to allow doors to open and close.",
+          "wer": 0.0,
+          "raw_peak": 0.78857421875
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0092",
+          "references": {
+            "literal_generated": "Birds wings help them fly",
+            "intended_user_facing": "Birds wings help them fly",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " Bird's wings help them fly. Ah, look.",
+          "wer": 0.6,
+          "raw_peak": 0.654632568359375
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0093",
+          "references": {
+            "literal_generated": "The opposite of loose is tight.",
+            "intended_user_facing": "The opposite of loose is tight.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " The opposite of loose is tight.",
+          "wer": 0.0,
+          "raw_peak": 0.65252685546875
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0094",
+          "references": {
+            "literal_generated": "One hour has sixty minutes",
+            "intended_user_facing": "One hour has sixty minutes",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " One hour has 60 minutes.",
+          "wer": 0.0,
+          "raw_peak": 0.75946044921875
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0095",
+          "references": {
+            "literal_generated": "A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you interested in?",
+            "intended_user_facing": "A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you interested in?",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you interested",
+          "wer": 0.05,
+          "raw_peak": 0.79345703125
+        }
+      ]
+    },
+    "candidate466": {
+      "required": 6,
+      "completed": 6,
+      "unchanged_word_error_and_peak_pass": 4,
+      "peak_pass": 6,
+      "rows": [
+        {
+          "id": "venus-control-v1-train-ordinary-0126",
+          "references": {
+            "literal_generated": "We put lids on jars to seal them and prevent air from entering.",
+            "intended_user_facing": "We put lids on jars to seal them and prevent air from entering.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " We put lids on jars to seal them and prevent air from entering.",
+          "wer": 0.0,
+          "raw_peak": 0.6983642578125
+        },
+        {
+          "id": "venus-control-v1-dev-ordinary-0183",
+          "references": {
+            "literal_generated": "Hinges allow a door to swing open and closed.",
+            "intended_user_facing": "Hinges allow a door to swing open and closed.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " Haringers allow a door to swing open and close.",
+          "wer": 0.2222222222222222,
+          "raw_peak": 0.676483154296875
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0092",
+          "references": {
+            "literal_generated": "Birds use their wings to fly",
+            "intended_user_facing": "Birds use their wings to fly",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " Birds use their wings to fly",
+          "wer": 0.0,
+          "raw_peak": 0.583404541015625
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0093",
+          "references": {
+            "literal_generated": "Tight.",
+            "intended_user_facing": "Tight.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " Tight",
+          "wer": 0.0,
+          "raw_peak": 0.989959716796875
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0094",
+          "references": {
+            "literal_generated": "There are sixty minutes in an hour.",
+            "intended_user_facing": "There are sixty minutes in an hour.",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " There are six",
+          "wer": 0.7142857142857143,
+          "raw_peak": 0.624053955078125
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0095",
+          "references": {
+            "literal_generated": "It is used to measure length",
+            "intended_user_facing": "It is used to measure length",
+            "unclosed_tool_call": false,
+            "complete_tool_calls": 0
+          },
+          "asr_text": " It is used to measure length.",
+          "wer": 0.0,
+          "raw_peak": 0.6251220703125
+        }
+      ]
+    }
+  },
+  "baseline_report_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-completion-v63/baseline/report.json",
+  "baseline_report_sha256": "ec0c108f26773964e02e01351ea6545285f210c1fada3a7cc914a97629a04dfd",
+  "events_path": "runs/venus-training-20261102/tts-completion-v63/events.json",
+  "events_sha256": "ac917f2ee24d7b8e2cbe006916f126e7aff1b9f77011dc9434206f3f5b9217fd",
+  "copyback": {
+    "full_hash_inventory_verified": true,
+    "files": 150,
+    "bytes": 23569977,
+    "destination": "/Users/daryl/Documents/duplex-native-recovery-20261102/tts-completion-v63",
+    "source": "7ec78bff0314bed1878ee8676238fa795c4793aa",
+    "complete_report_present": true,
+    "report_paths": [
+      "baseline/report.json"
+    ]
+  },
+  "inventory_sha256": "a6cb17f88a32eddff81f285004c7b1326929db14e17a060d138dd0849edcac04",
+  "diagnosed_startup_failure": "Pinned SHA matched. Python3.9/3.10 AST unparse adds parentheses around tuple assignment, unlike Mac Python3.11+. Literal sampler assignment match therefore rejected unchanged native method. Reproduced actual transform on Python3.9 before fix; structural ast.Call match fixes formatting dependency without weakening full source hash or unique-seam gates.",
+  "repair_checks": {
+    "older_python_regression": "RED original seam ValueError -> GREEN real transform and stop branch on Python3.9.6",
+    "related_tests": "59 PASS /2.40s Python3.11",
+    "actual_guest_python3_10_check": "NOT_YET_RUN; now mandatory weight-free preflight before any further model load",
+    "python310_regression": "Original source RED on Python3.10.20 with exact seam ValueError; fixed structural match GREEN real transform and native stop branch. No Torch/model weights.",
+    "python310_receipt_path": "runs/venus-training-20261102/tts-completion-v63/python310-fix-regression.json",
+    "python310_receipt_sha256": "a8d8c0bfce166af023ecf98c3c3933a16f5a1d5c7eb3deb3e89162eb5442d89e"
+  },
+  "cleanup": "Controller stop observation timed out150s; subsequent actual provider read confirmed TERMINATED. Verified full150file copyback again, recorded actual stop468.07s/upper500; removed only exact temporaryVM/disk/active owned snapshot. Original VM/disk intact. All5 original VMs TERMINATED; no temporaryTTSdisks.",
+  "new_optimizer_updates": 0,
+  "new_external_model_API_calls": 0,
+  "adopted": false,
+  "candidate466_still_rejected": true,
+  "broad_mac_source_backup": "PARTIAL",
+  "final_cleanup_receipt_path": "runs/venus-training-20261102/tts-completion-v63/final-cleanup-state.json",
+  "final_cleanup_receipt_sha256": "d8c3fe225e8c627a3535523a067b9ca3b087514d6cfe3f72092371b836358b0b"
+}
