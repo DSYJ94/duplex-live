@@ -1,0 +1,18 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve recovery within unused allowance",
+  "human_approval_verbatim": "Approve recovery within unused allowance",
+  "recorded_utc": "2026-11-04T13:10:22.710388+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-COMPLETION-FLEX-RECOVERY-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "f1efd90",
+  "proposal_sha256": "88cb7ed9fa02afe8de8897908dd1412ac1f5f81695892184f272f08bd491f2a7",
+  "execution_version": 63,
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175,
+  "maximum_gpu_seconds": 1000,
+  "maximum_new_running_intervals": 1,
+  "maximum_queue_seconds": 3600,
+  "prior_focused_gpu_seconds_upper": 33700,
+  "previous_consumed_upper_seconds": 200,
+  "new_optimizer_updates": 0
+}
