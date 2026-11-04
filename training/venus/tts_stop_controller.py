@@ -52,9 +52,14 @@ def resume_import_failure(root):
     c.events[:]=rows
 
 
-def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False):
+def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False,completion_same_vm=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
-    if completion_capacity:
+    if completion_same_vm:
+        assert not(placement or completion_window or completion_capacity or resume_preallocation_import)
+        completion=True
+        from . import tts_completion_same_vm_guard as g
+        AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
+    elif completion_capacity:
         completion=True;placement=True
         from . import tts_completion_capacity_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
@@ -69,10 +74,16 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     elif placement:
         from . import tts_placement_guard as g
         AUTH,PLAN,KEY=g.AUTH,g.PLAN,g.KEY;R=PLAN.parent
-    version='59' if completion_capacity else '58' if completion_window else '57' if completion else '56' if placement else '55'
+    version='60' if completion_same_vm else '59' if completion_capacity else '58' if completion_window else '57' if completion else '56' if placement else '55'
     duration=1200 if completion else 1800;prior=33500 if completion else 33100;required=24 if completion else 12
     a=json.loads(AUTH.read_text());proposal=json.loads(Path(a['proposal_path']).read_text())
-    assert a['status']=='APPROVED' and a['human_approval']==('Approve C/B fallback within existing caps' if completion_capacity else 'Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    assert a['status']=='APPROVED' and a['human_approval']==('Approve existing-VM retry within existing caps' if completion_same_vm else 'Approve C/B fallback within existing caps' if completion_capacity else 'Approve refreshed 20-minute comparison within existing caps' if completion_window else 'Approve 20-minute completion validation within existing caps' if completion else 'Approve fallback within existing caps' if placement else 'Approve 30 minutes within existing caps') and sha(a['proposal_path'])==a['proposal_sha256']
+    if completion_same_vm:
+        assert sha(proposal['prior_diagnostic_authority'])==proposal['prior_diagnostic_authority_sha256']
+        assert sha(proposal['complete_evaluation_inherited_from'])==proposal['complete_evaluation_sha256']
+        prior_a=json.loads(Path(proposal['prior_diagnostic_authority']).read_text())
+        assert sha(prior_a['proposal_path'])==prior_a['proposal_sha256']
+        proposal=json.loads(Path(prior_a['proposal_path']).read_text())
     if completion_capacity:
         assert sha(proposal['previous_proposal'])==proposal['previous_proposal_sha256']
         proposal=json.loads(Path(proposal['previous_proposal']).read_text())
@@ -96,7 +107,10 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip());pods=pods.get('pods',[]) if isinstance(pods,dict) else pods;assert all(v['status'] in ('EXITED','STOPPED','TERMINATED') for v in pods)
     candidate=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52/candidate');assert sha(candidate/'step-0060.pt')==proposal['candidate_checkpoint_sha256']
     assert sum((candidate/n).stat().st_size for n in ('step-0060.pt','recipe.json'))<=200*1024**2
-    with (R/('resumed-controller-claim.json' if resume else 'claim.json')).open('x') as f:json.dump(dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=prior),f)
+    claim=dict(pid=os.getpid(),source=source,prior_focused_gpu_seconds_upper=prior)
+    if completion_same_vm:
+        started=time.time();claim.update(prestart_started_unix=started,prestart_deadline_unix=started+2700,maximum_prestart_attempts=3)
+    with (R/('resumed-controller-claim.json' if resume else 'claim.json')).open('x') as f:json.dump(claim,f)
     c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);guard=None;attempted=False;backed=False;snap=None;allocated=None;remote_out=c.OUT+'/tts-'+('completion' if completion else 'placement' if placement else 'stop')+'-v'+version
     try:
@@ -107,25 +121,32 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
             vm,disk,ZONE,snap,storage_deadline=allocate(version);NAME=vm['name'];c.NAME=NAME;attempted=True;allocated=(vm,disk,ZONE,snap,version)
         else:
             c.cloud('compute','instances','add-metadata',NAME,'--zone='+ZONE,'--metadata-from-file=startup-script='+str(bootstrap))
-            c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration=1800s','--instance-termination-action=STOP')
-            op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async');op=op[0] if isinstance(op,list) else op;attempted=True;c.record('one_tts_stop_gpu_attempt',operation=op['name'],source=source)
-            until=time.time()+900
-            while op['status']!='DONE':
-                assert time.time()<until,'Observe SAME operation; no resubmission'
-                time.sleep(4);op=c.cloud('compute','operations','describe',op['name'],'--zone='+ZONE)
-            (R/'start-operation.json').write_text(json.dumps(op,indent=2)+'\n')
-            if op.get('error'):raise RuntimeError(json.dumps(op['error']))
-            vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);assert vm['status']=='RUNNING'
+            c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP')
+            attempted=True
+            if completion_same_vm:
+                from .tts_same_vm_start import start
+                vm,actual_attempt=start(old,claim)
+            else:
+                op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async');op=op[0] if isinstance(op,list) else op;c.record('one_tts_stop_gpu_attempt',operation=op['name'],source=source)
+                until=time.time()+900
+                while op['status']!='DONE':
+                    assert time.time()<until,'Observe SAME operation; no resubmission'
+                    time.sleep(4);op=c.cloud('compute','operations','describe',op['name'],'--zone='+ZONE)
+                (R/'start-operation.json').write_text(json.dumps(op,indent=2)+'\n')
+                if op.get('error'):raise RuntimeError(json.dumps(op['error']))
+                vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);assert vm['status']=='RUNNING'
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration;(R/'provider-start.json').write_text(json.dumps(vm,indent=2)+'\n')
         prepare_ssh(vm,ZONE,version);c.sync(R/'source.bundle',c.ROOT+'/tts'+version+'.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/tts'+version+'.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source)
         execution=dict(resource_key=KEY,authorization_sha256=sha(AUTH),new_optimizer_updates_authorized_by_this_execution=0,required_native_cases=required,maximum_gpu_seconds=duration,maximum_new_running_intervals=1)
         if placement:execution.update(vm_id=vm['id'],disk_id=disk['id'],snapshot_id=snap['id'],snapshot_source_disk_id=snap['sourceDiskId'],vm_name=NAME,disk_name=disk['name'])
         if completion_window or completion_capacity:execution.update(storage_started_unix=storage_deadline-7200,storage_deadline_unix=storage_deadline)
+        if completion_same_vm:execution.update(prestart_started_unix=claim['prestart_started_unix'],prestart_deadline_unix=claim['prestart_deadline_unix'],maximum_prestart_attempts=3,actual_start_attempt_index=actual_attempt)
         PLAN.write_text(json.dumps(execution,indent=2)+'\n');c.ssh('mkdir -p '+c.remote+'/'+str(R));c.sync(PLAN,c.remote+'/'+str(PLAN))
         lease=dict(resource_key=KEY,zone=ZONE,vm_id=vm['id'],disk_id=disk['id'],disk_size_gib=100,creation_timestamp=vm['creationTimestamp'],stop_unix=end,prior_new_gpu_seconds_upper=prior,prior_gpu_seconds=54451,prior_scope_usd=91.98448055555555,verified_hourly_price_usd=price['hourly_estimate_usd'],authorization_sha256=sha(AUTH),execution_plan_sha256=sha(PLAN),controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         if placement:lease.update(snapshot_id=snap['id'],storage_deadline_unix=storage_deadline)
         if completion_window or completion_capacity:lease.update(storage_started_unix=storage_deadline-7200)
+        if completion_same_vm:lease.update(prestart_started_unix=claim['prestart_started_unix'],prestart_deadline_unix=claim['prestart_deadline_unix'])
         (R/'lease.json').write_text(json.dumps(lease,indent=2)+'\n');lp=c.ROOT+'/tts'+version+'-lease.json';c.sync(R/'lease.json',lp)
         guard=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),'--ssh-argv',str(R/'ssh.json'),'--runpod-key','runs/local-migration-20261021/.private/runpod-budget-api-key','--status',str(R/'guard.json'),'--stop-file',str(R/'stop-requested')],stdout=(R/'guard.log').open('x'),stderr=subprocess.STDOUT);c.guard=guard
         until=time.time()+90
@@ -183,4 +204,4 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv,completion_same_vm='--completion-same-vm' in sys.argv)

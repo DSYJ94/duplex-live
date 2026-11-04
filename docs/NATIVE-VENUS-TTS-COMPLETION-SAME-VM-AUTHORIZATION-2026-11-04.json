@@ -1,0 +1,15 @@
+{
+  "status": "APPROVED",
+  "human_approval": "Approve existing-VM retry within existing caps",
+  "human_approval_verbatim": "Approve existing-VM retry within existing caps",
+  "recorded_utc": "2026-11-04T00:15:53.016783+00:00",
+  "proposal_path": "docs/NATIVE-VENUS-TTS-COMPLETION-SAME-VM-PROPOSAL-2026-11-04.json",
+  "proposal_sha256": "ceadd995146ed6a95765d6f7b61ffe673c8a5469379bec024d85b545bec02563",
+  "proposal_commit": "37e1275",
+  "maximum_phase_usd": 75,
+  "maximum_project_usd": 175,
+  "maximum_gpu_seconds": 1200,
+  "maximum_new_running_intervals": 1,
+  "maximum_prestart_attempts": 3,
+  "new_optimizer_updates": 0
+}
