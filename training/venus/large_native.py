@@ -84,7 +84,7 @@ def restore_expanded(state, llm, source, output):
         raise
 
 
-def benchmark(llm, runtime, corpus, rows, lease_path, *, offload):
+def benchmark(llm, runtime, corpus, rows, lease_path, *, offload,host_limit_bytes=48*1024**3):
     """Real effective batch4, full temporal gradients and materialized Adam."""
     guarded(lease_path, 180)
     params = adapter_parameters(llm)
@@ -94,7 +94,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload):
     for row in rows:
         guarded(lease_path, 180)
         ex = corpus.read(row)
-        context = ActivationOffload(llm)
+        context = ActivationOffload(llm,maximum_host_bytes=host_limit_bytes)
         from contextlib import nullcontext
         with context.context() if offload else nullcontext():
             loss, metrics = corpus.loss(llm, ex, 'cuda')
@@ -120,6 +120,7 @@ def benchmark(llm, runtime, corpus, rows, lease_path, *, offload):
                   trainable_parameters=sum(p.numel() for p in params.values()),
                   nonzero_B_gradient_paths=len(b_norms), gradient_norm=norm,
                   activation_offload=offload, examples=parts,
+                  activation_offload_cpu_limit_bytes=host_limit_bytes,
                   all_Adam_moments_materialized=len(runtime.base.state)==len(params))
     runtime.base.zero_grad(set_to_none=True)
     if not result['all_Adam_moments_materialized'] or result['headroom_bytes'] < max(2*1024**3, total*.05):
@@ -133,6 +134,11 @@ def prepare(a):
     from .capacity_state import expand_opal_state
     from .large_phase import write_programs
     guarded(a.lease, 600)
+    from .large_guard import resource
+    limits=resource(json.loads(Path(a.lease).read_text()))
+    host_gib=getattr(a,'host_offload_limit_gib',48)
+    if host_gib not in (48,128) or (host_gib==128 and limits['machine']!='a2-ultragpu-1g'):
+        raise ValueError('128GiB offload is only admitted on the approved170GiB A10080 host')
     out = Path(a.output); out.mkdir(parents=True, exist_ok=False)
     corpus = Corpus(a.cache, action_index=a.action_index, admission=a.data_admission)
     if sha(a.parent) != PARENT_SHA: raise ValueError('Exact candidate466 parent required')
@@ -172,7 +178,7 @@ def prepare(a):
         def cleanup():
             runtime.base.zero_grad(set_to_none=True);gc.collect();torch.cuda.empty_cache()
         measured=memory_fallback(
-            lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload),cleanup,
+            lambda offload:benchmark(llm,runtime,corpus,calibration,a.lease,offload=offload,host_limit_bytes=host_gib*1024**3),cleanup,
             lambda:write(out,'no-offload-oom.json',dict(optimizer_updates=0,lossless_offload_fallback=True)),
             start_offloaded=bool(getattr(a,'activation_offload',False)))
         restore_rng(parent['rng'])
@@ -262,6 +268,7 @@ if __name__ == '__main__':
         p.add_argument('--'+name, required=True)
     p.add_argument('--parent')
     p.add_argument('--activation-offload',action='store_true',help='Lossless saved-activation offload; original full gradients/objectives remain')
+    p.add_argument('--host-offload-limit-gib',type=int,choices=(48,128),default=48)
     a = p.parse_args()
     if a.stage == 'prepare' and not a.parent: p.error('--parent required for preparation')
     prepare(a) if a.stage == 'prepare' else restore_only(a) if a.stage=='restore' else final_restore(a)

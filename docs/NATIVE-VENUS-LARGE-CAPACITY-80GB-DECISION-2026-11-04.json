@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-11-04T18:29:00.359032+00:00",
+  "status": "CORRECTED40_LOSSLESS_OFFLOAD_EXCEEDS_48GiB_HOST_RESERVATION_ZERO_UPDATES",
+  "source": "d90233a24be3c4b5623f8b106ac921941da16013",
+  "vm_id": "7200459808016091836",
+  "actual_start": "2026-11-04T10:08:00.197-08:00",
+  "actual_stop": "2026-11-04T10:14:00.399-08:00",
+  "actual_GPU_seconds": 360.202,
+  "upper_GPU_seconds": 400,
+  "first_interval_upper_seconds": 300,
+  "combined_prior_upper_seconds": 700,
+  "new_optimizer_updates": 0,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 22,
+    "bytes": 273425,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66",
+    "inventory_sha256": "6c10432a8727058f658844dc088fa1bc9aa2bc40d3a3e3edf7b865c32a9afd26"
+  },
+  "decision": "Use originally proposed A10080/170GiB host;128GiB lossless activation reservation, same objectives/gradients/data. Cheaper40 optional probe closed after700roundedseconds; no further40 trial.",
+  "owner_limits_unchanged": {
+    "new_GCP_USD": 150,
+    "project_USD": 325,
+    "GPU_aggregate_seconds": 43200,
+    "actual_GPU_intervals": 3
+  },
+  "native80_qualification_allocation": {
+    "maximum_prepare_seconds": 1200,
+    "reason": "Original approved80GB native-gradient qualification. Internal diagnostic allocation follows observed40 host-memory lower bound; no additional owner budget/time/updates or gate weakening."
+  },
+  "data_preservation": "Both unique failed runs fully hash-backed up. Retireonlyowned stopped40VM+temporary250GBstage after receipts; original100GB source and all oldarchives preserved; recreateone250GBEUclone from same approved source100GBsnapshot and overlayexactsame approvedcache/parent."
+}

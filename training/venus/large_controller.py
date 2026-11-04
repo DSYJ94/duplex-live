@@ -67,11 +67,12 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False,replace_prestart=False):
-    global R,OUTPUT,BACKUP,NAME
+def main(resume_sizing=False,replace_prestart=False,fallback80=False):
+    global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if fallback80 and (resume_sizing or replace_prestart):raise ValueError('Choose one exact allocation mode')
     if replace_prestart and not resume_sizing:raise ValueError('Replacement is scoped only to actual pretraining sizing failure')
     previous_intervals=[];prior_seconds=0;prior_vm=None
     if resume_sizing:
@@ -91,6 +92,25 @@ def main(resume_sizing=False,replace_prestart=False):
              disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=prior_seconds,optimizer_updates=0)]
         R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
+    if fallback80:
+        for number in (1,2):
+            old=ROOT/('gpu-%02d'%number)
+            terminal=json.loads((old/'provider-final.json').read_text())
+            verified=json.loads((old/'copyback-verified.json').read_text())
+            if terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists():
+                raise ValueError('Both actual zero-update failures must be stopped and hash-backed-up')
+            seconds=math.ceil((datetime.fromisoformat(terminal['lastStopTimestamp'])-datetime.fromisoformat(terminal['lastStartTimestamp'])).total_seconds()/100)*100
+            receipt=ROOT/('provider-final-%02d.json'%number)
+            if not receipt.exists():receipt.write_bytes((old/'provider-final.json').read_bytes())
+            if sha(receipt)!=sha(old/'provider-final.json'):raise ValueError('Actual prior receipt differs')
+            previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
+                disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
+            prior_seconds+=seconds;prior_vm=terminal
+        if prior_seconds!=700:raise ValueError('Carry actual300+400 first two interval bounds')
+        R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
+        BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
+        ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
+        DISK='duplex-venus-large-data-20261104-eua-v67'
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
@@ -105,7 +125,7 @@ def main(resume_sizing=False,replace_prestart=False):
     duration=43100-prior_seconds
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
     price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-v65.json').read_text())
-    hourly=price['options']['GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
+    hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
     if not 0<hourly<=8 or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
     source=c.run(['git','rev-parse','HEAD']).strip()
@@ -116,8 +136,8 @@ def main(resume_sizing=False,replace_prestart=False):
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip())
     if isinstance(pods,dict):pods=pods['pods']
     if any(v['status'] not in ('EXITED','STOPPED','TERMINATED') for v in pods):raise ValueError('No overlapping Runpod GPU')
-    quotas={v['metric']:v for v in c.cloud('compute','regions','describe','us-central1')['quotas']}
-    q=quotas['PREEMPTIBLE_NVIDIA_A100_GPUS']
+    quotas={v['metric']:v for v in c.cloud('compute','regions','describe','europe-west4' if fallback80 else 'us-central1')['quotas']}
+    q=quotas['NVIDIA_A100_80GB_GPUS' if fallback80 else 'PREEMPTIBLE_NVIDIA_A100_GPUS']
     if q['usage']!=0 or q['limit']<1:raise ValueError('Actual available FlexA100 quota required; quota is not stock')
     rules={v['name']:v for v in c.cloud('compute','firewall-rules','list')}
     allow=rules['duplex-venus-train-iap-v1'];deny=rules['duplex-venus-train-deny-v1']
@@ -125,7 +145,8 @@ def main(resume_sizing=False,replace_prestart=False):
             or deny['denied']!=[dict(IPProtocol='all')] or deny['sourceRanges']!=['0.0.0.0/0']
             or 'duplex-venus-train-bounded' not in allow['targetTags'] or 'duplex-venus-train-bounded' not in deny['targetTags']
             or allow['priority']>=deny['priority']):raise ValueError('Existing authenticated IAP/restricted-ingress fence required')
-    disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
+    old_disk_name='duplex-venus-large-data-20261104-a-v65'
+    disk=c.cloud('compute','disks','describe',old_disk_name if fallback80 else DISK,'--zone='+('us-central1-a' if fallback80 else ZONE))
     olddisk=json.loads((stage/'disk.json').read_text())
     if disk['id']!=olddisk['id'] or int(disk['sizeGb'])!=250:raise ValueError('SAME staged250GB disk required')
     if resume_sizing:
@@ -146,7 +167,7 @@ def main(resume_sizing=False,replace_prestart=False):
     c.run(['git','bundle','create',str(bundle),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;created=False;end=None
     try:
-        if not resume_sizing:
+        if not resume_sizing and not fallback80:
             current=c.cloud('compute','instances','describe',CPU,'--zone='+ZONE)
             if current['id']!=previous['id'] or current['status']!='TERMINATED':raise ValueError('Exact stopped staging CPU required')
             c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
@@ -159,7 +180,49 @@ def main(resume_sizing=False,replace_prestart=False):
             c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Same staged disk must be free before replacement')
         created=True
-        if resume_sizing and not replace_prestart:
+        if fallback80:
+            from .large_stage import LOCAL,PARENT
+            # No learned state exists on this staging disk. Both unique failed
+            # native runs have complete off-machine hash receipts above.
+            exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone=us-central1-a')
+            if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED' or exact['lastStartTimestamp']!=prior_vm['lastStartTimestamp']:
+                raise ValueError('Only exact stopped second sizing instance may retire')
+            c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone=us-central1-a','--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+            old_disk=c.cloud('compute','disks','describe',old_disk_name,'--zone=us-central1-a')
+            if old_disk['id']!=disk['id'] or old_disk.get('users'):raise ValueError('Only old fully preserved temporary disk may retire')
+            c.run(['gcloud','compute','disks','delete',old_disk_name,'--zone=us-central1-a','--project='+c.PROJECT,'--quiet'],150)
+            snap=c.cloud('compute','snapshots','describe','duplex-venus-context-migrate-20261102-v50')
+            if snap['id']!='4724490043241393447' or snap['sourceDiskId']!='4375908109499109167' or snap['status']!='READY':
+                raise ValueError('Same approved owned100GB source snapshot required')
+            last_submission=0
+            for suffix in ('a','b','c'):
+                while time.time()<last_submission+600:time.sleep(min(30,last_submission+600-time.time()))
+                ZONE='europe-west4-'+suffix;NAME='duplex-venus-large-gpu-20261104-eu'+suffix+'-v67'
+                DISK='duplex-venus-large-data-20261104-eu'+suffix+'-v67';c.NAME=NAME
+                created_disk=json.loads(c.run(['gcloud','compute','disks','create',DISK,'--zone='+ZONE,
+                    '--source-snapshot='+snap['name'],'--size=250GB','--type=pd-balanced','--labels=duplex-scope=large-v65',
+                    '--project='+c.PROJECT,'--quiet','--format=json'],900));save('disk-create-'+suffix+'.json',created_disk)
+                disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
+                if disk['sourceSnapshotId']!=snap['id'] or int(disk['sizeGb'])!=250 or disk.get('users'):raise ValueError('Exact new250GB source clone required')
+                save('disk-'+suffix+'.json',disk);last_submission=time.time()
+                op=c.cloud('compute','instances','create',NAME,'--zone='+ZONE,'--machine-type=a2-ultragpu-1g',
+                    '--provisioning-model=STANDARD','--maintenance-policy=TERMINATE',
+                    '--no-restart-on-failure','--no-service-account','--no-scopes','--tags=duplex-venus-train-bounded',
+                    '--disk=name='+DISK+',boot=yes,auto-delete=no,mode=rw',
+                    '--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE',
+                    '--metadata-from-file=startup-script='+str(boot),'--max-run-duration='+str(duration)+'s',
+                    '--instance-termination-action=STOP','--async')
+                op=op[0] if isinstance(op,list) else op;save('create-'+suffix+'.json',op)
+                c.record('one_A10080_standard_prestart_attempt',zone=ZONE,operation=op['name'],prior_GPU_seconds_upper=prior_seconds)
+                op=observe(op);save('allocation-terminal-'+suffix+'.json',op)
+                if not op.get('error'):break
+                existing=[v for v in c.cloud('compute','instances','list') if v['name']==NAME]
+                if ('ZONE_RESOURCE_POOL_EXHAUSTED' not in json.dumps(op['error']) or any(v.get('lastStartTimestamp') for v in existing)):
+                    raise RuntimeError('No fallback after partial start/access/unknown error: '+json.dumps(op['error']))
+                if existing:c.run(['gcloud','compute','instances','delete',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+                c.run(['gcloud','compute','disks','delete',DISK,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet'],150)
+            else:raise RuntimeError('All three approved Europe zones failed before starting; no GPU interval3 consumed')
+        elif resume_sizing and not replace_prestart:
             c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration='+str(duration)+'s',
                     '--instance-termination-action=STOP','--no-restart-on-failure','--maintenance-policy=TERMINATE')
             op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async')
@@ -171,14 +234,14 @@ def main(resume_sizing=False,replace_prestart=False):
              '--metadata-from-file=startup-script='+str(boot),'--max-run-duration='+str(duration)+'s',
              '--instance-termination-action=STOP','--async')
         op=op[0] if isinstance(op,list) else op;save('create.json',op)
-        c.record('one_A10040_Flex_request',source=source,operation=op['name'],maximum_queue_seconds=900,
+        c.record('one_value_selected_GPU_request',source=source,operation=op['name'],maximum_queue_seconds=900,
                  same_VM_sizing_recovery=resume_sizing and not replace_prestart,
                  same_disk_pretraining_replacement=replace_prestart,prior_GPU_seconds_upper=prior_seconds)
         op=observe(op);save('allocation-terminal.json',op)
         if op.get('error'):raise RuntimeError(json.dumps(op['error']))
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         if vm['status']!='RUNNING':raise ValueError('Actual running provider state required')
-        if resume_sizing and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
+        if (resume_sizing or fallback80) and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
             raise ValueError('Do not claim an old provider interval as a new start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
         prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
@@ -189,8 +252,8 @@ def main(resume_sizing=False,replace_prestart=False):
              maximum_all_branch_updates=984,external_model_API_calls=0,prior_project_USD=OLD_USD,
              vm_id=vm['id'],disk_id=disk['id'],zone=ZONE,creation_timestamp=vm['creationTimestamp'],
              **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
-             machine='a2-highgpu-1g',provisioning='FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
-        plan_path=ROOT/('interval-02.json' if resume_sizing else 'interval-01.json')
+             machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
+        plan_path=ROOT/('interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
         with plan_path.open('x') as f:json.dump(plan,f,indent=2)
         lease=dict(plan,execution_plan_path=str(plan_path),execution_plan_sha256=sha(plan_path),
              prior_capacity_GPU_seconds_upper=prior_seconds,verified_hourly_price_usd=hourly,stop_unix=end,
@@ -212,6 +275,9 @@ def main(resume_sizing=False,replace_prestart=False):
               ' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path)
         if c.props('duplex-large65-guest')['ActiveState']!='active':raise RuntimeError('Guest GPU guard absent')
         c.ssh('sudo systemctl stop duplex-large65-bootstrap-stop.timer')
+        if fallback80:
+            c.ssh('mkdir -p '+REMOTE)
+            c.sync(str(LOCAL/'cache')+'/',REMOTE+'/cache/',900);c.sync(PARENT,REMOTE+'/parent466.pt',180)
         if c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip():raise ValueError('GPU already has a model process')
         c.record('actual_A10040_running_both_guards_live',vm_id=vm['id'],disk_id=disk['id'],source=source,native_STOP_unix=end)
         env='env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '
@@ -220,8 +286,8 @@ def main(resume_sizing=False,replace_prestart=False):
         def execute(unit,module,args,seconds):
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
-        sizing_remaining=1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
-        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
+        sizing_remaining=1200 if fallback80 else 1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
+        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         for arm in ('main','control'):
             execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
@@ -254,7 +320,7 @@ def main(resume_sizing=False,replace_prestart=False):
                     save('cancelled-before-start.json',actual[0])
                     c.run(['gcloud','compute','instances','delete',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
                 elif actual[0]['status']!='TERMINATED':
-                    c.run(['gcloud','compute','instances','stop',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet'],150)
+                    c.run(['gcloud','compute','instances','stop',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--quiet']+(['--discard-local-ssd=True'] if fallback80 else []),150)
                 if actual[0].get('lastStartTimestamp') and not no_new_start:
                     final=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-final.json',final)
                     elapsed=(datetime.fromisoformat(final['lastStopTimestamp'])-datetime.fromisoformat(final['lastStartTimestamp'])).total_seconds()
@@ -268,4 +334,4 @@ def main(resume_sizing=False,replace_prestart=False):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80)

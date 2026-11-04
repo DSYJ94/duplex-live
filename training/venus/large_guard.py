@@ -87,6 +87,10 @@ def validate(vm, instances, pods, lease, now):
             or set(vm['tags']['items']) != {'duplex-venus-train-bounded'} or vm.get('serviceAccounts')):
         raise ValueError('Actual approved isolated GPU identity required')
     disks = [d for d in vm['disks'] if d.get('type') != 'SCRATCH']
+    scratch=[d for d in vm['disks'] if d.get('type')=='SCRATCH']
+    if (r['machine']=='a2-ultragpu-1g' and (len(scratch)!=1 or int(scratch[0]['diskSizeGb'])!=375)
+            or r['machine']=='a2-highgpu-1g' and scratch):
+        raise ValueError('Exact priced local scratch storage required')
     if (len(disks) != 1 or not disks[0]['boot'] or disks[0]['autoDelete']
             or int(disks[0]['diskSizeGb']) != 250 or not disks[0]['source'].endswith('/disks/' + r['disk_name'])):
         raise ValueError('Exact retained250GB boot disk required')

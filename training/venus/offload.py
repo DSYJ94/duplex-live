@@ -19,7 +19,7 @@ class ActivationOffload:
                 tensor.untyped_storage().data_ptr() in self.parameter_storage):
             return ('direct',tensor.detach())
         if self.saved_bytes+size>self.maximum_host_bytes:
-            raise MemoryError('Native activation CPU reservation exceeded48GiB; no objective/gradient truncation')
+            raise MemoryError(f'Native activation CPU reservation exceeded{self.maximum_host_bytes/1024**3:g}GiB; no objective/gradient truncation')
         host=torch.empty_like(tensor,device='cpu',pin_memory=tensor.is_cuda)
         host.copy_(tensor.detach(),non_blocking=tensor.is_cuda)
         self.saved_bytes+=size;self.tensors+=1

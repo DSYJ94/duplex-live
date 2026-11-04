@@ -57,3 +57,16 @@ def test_aggregate_time_and_plan_hash_cannot_reset(tmp_path,monkeypatch):
     p['maximum_running_seconds']=43100;p['previous_intervals']=[dict()];path.write_text(json.dumps(p))
     lease['execution_plan_sha256']=sha(path)
     with pytest.raises(ValueError,match='prior actual intervals'):g.resource(lease)
+
+
+def test_80GB_fallback_requires_exact_included_scratch_and_standard_zone(tmp_path,monkeypatch):
+    p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
+    p.update(machine='a2-ultragpu-1g',provisioning='STANDARD',zone='europe-west4-a')
+    path.write_text(json.dumps(p));lease.update(zone=p['zone'],execution_plan_sha256=sha(path))
+    vm.update(machineType='machines/a2-ultragpu-1g',zone='zones/europe-west4-a')
+    vm['scheduling']['provisioningModel']='STANDARD'
+    with pytest.raises(ValueError,match='scratch'):g.validate(vm,[vm],[],lease,now)
+    vm['disks'].append(dict(type='SCRATCH',diskSizeGb=375))
+    assert g.validate(vm,[vm],[],lease,now)==lease['stop_unix']
+    vm['disks'].append(dict(type='SCRATCH',diskSizeGb=375))
+    with pytest.raises(ValueError,match='scratch'):g.validate(vm,[vm],[],lease,now)
