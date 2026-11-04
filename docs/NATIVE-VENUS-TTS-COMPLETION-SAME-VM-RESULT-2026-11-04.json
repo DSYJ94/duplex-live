@@ -1,0 +1,50 @@
+{
+  "status": "TERMINAL_THREE_CAPACITY_FAILURES_ZERO_GPU",
+  "producer": "5c1b4b85aeb32bd72734acddf6c3d0b99b164fbf",
+  "controller_session": 93935,
+  "controller_PID": 25766,
+  "controller_handle": "Missing at morning verification",
+  "controller_PID_running": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "operation": "operation-1793751565339-65f6854de0b84-5abdc7d5-86bc3c35",
+      "terminal_status": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_path": "runs/venus-training-20261102/tts-completion-v60/start-attempt-1-terminal.json",
+      "receipt_sha256": "c45cc819455d9cf87bb9ba39d8c695367c47eaa4c6042e7a22b22309e11de1eb"
+    },
+    {
+      "attempt": 2,
+      "operation": "operation-1793752181520-65f6879983707-64d93476-c1799aee",
+      "terminal_status": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_path": "runs/venus-training-20261102/tts-completion-v60/start-attempt-2-terminal.json",
+      "receipt_sha256": "b0956ea96a6d70a31defd9c9665615218250468d1d7bea5948e18c56bdb76bc3"
+    },
+    {
+      "attempt": 3,
+      "operation": "operation-1793752795851-65f689e36297c-37a68dc4-2c684e5a",
+      "terminal_status": "DONE",
+      "error_codes": [
+        "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+      ],
+      "receipt_path": "runs/venus-training-20261102/tts-completion-v60/start-attempt-3-terminal.json",
+      "receipt_sha256": "5be2e5390b3fa32d98ebe800fd532920fc6bd7544a3df08454fae260106ea32c"
+    }
+  ],
+  "events_sha256": "fbb54ab41b3f29a176d43eedce75f3cad64db50b4c019f1ac6326bb4ef346b3f",
+  "provider_final_sha256": "e7f29dab8da93abc54ccccc595f6fddc09484d01a14384d4d00403ee484cce4f",
+  "provider_final_id": "3873014408897233554",
+  "provider_final_status": "TERMINATED",
+  "last_start_unchanged": "2026-11-01T15:10:19.545-08:00",
+  "actual_gpu_seconds": 0,
+  "upper_gpu_seconds": 0,
+  "new_model_cases": 0,
+  "new_optimizer_updates": 0,
+  "original_disk_preserved": true
+}

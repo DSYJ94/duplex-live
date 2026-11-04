@@ -4,24 +4,41 @@ from pathlib import Path
 from datetime import datetime
 AUTH=Path('docs/NATIVE-VENUS-TTS-COMPLETION-SAME-VM-AUTHORIZATION-2026-11-04.json')
 PLAN=Path('runs/venus-training-20261102/tts-completion-v60/execution.json')
+RETRY_AUTH=Path('docs/NATIVE-VENUS-TTS-COMPLETION-SAME-VM-RETRY-AUTHORIZATION-2026-11-04.json')
+RETRY_PLAN=Path('runs/venus-training-20261102/tts-completion-v61/execution.json')
 KEY='venus-tts-completion-v60'
 
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def execution_plan(lease):
+def binding(lease):
     assert lease['resource_key']==KEY
-    return PLAN
+    version=lease.get('execution_version',60)
+    assert version in (60,61),'Unknown execution must not borrow an existing grant'
+    return (RETRY_AUTH,RETRY_PLAN) if version==61 else (AUTH,PLAN)
+
+
+def execution_plan(lease):
+    return binding(lease)[1]
 
 
 def resource(lease):
-    a=json.loads(AUTH.read_text());p=json.loads(PLAN.read_text())
+    authority,plan=binding(lease)
+    a=json.loads(authority.read_text());p=json.loads(plan.read_text())
     assert lease['resource_key']==p['resource_key']==KEY
+    assert p.get('execution_version',60)==a.get('execution_version',60)==lease.get('execution_version',60)
     assert a['status']=='APPROVED' and a['human_approval']=='Approve existing-VM retry within existing caps'
     assert sha(a['proposal_path'])==a['proposal_sha256']
-    assert lease['authorization_sha256']==p['authorization_sha256']==sha(AUTH)
-    assert lease['execution_plan_sha256']==sha(PLAN) and p['new_optimizer_updates_authorized_by_this_execution']==0 and p['required_native_cases']==24
+    assert lease['authorization_sha256']==p['authorization_sha256']==sha(authority)
+    assert lease['execution_plan_sha256']==sha(plan) and p['new_optimizer_updates_authorized_by_this_execution']==0 and p['required_native_cases']==24
+    if lease.get('execution_version',60)==61:
+        assert sha(a['previous_authorization_path'])==a['previous_authorization_sha256']
+        prior=json.loads(Path(a['previous_authorization_path']).read_text());assert prior['status']=='APPROVED'
+        assert datetime.fromisoformat(prior['recorded_utc'])<=datetime.fromisoformat(a['recorded_utc'])
+        assert sha(a['previous_execution_result'])==a['previous_execution_result_sha256']
+        failed=json.loads(Path(a['previous_execution_result']).read_text())
+        assert failed['actual_gpu_seconds']==failed['upper_gpu_seconds']==failed['new_optimizer_updates']==failed['new_model_cases']==0
     assert p['maximum_gpu_seconds']==1200 and p['maximum_new_running_intervals']==1
     assert lease['vm_id']=='3873014408897233554' and lease['disk_id']=='4375908109499109167' and lease['zone']=='us-central1-a'
     assert lease['disk_size_gib']==100
@@ -32,7 +49,7 @@ def resource(lease):
     assert p['prestart_started_unix']==lease['prestart_started_unix']
     assert p['prestart_deadline_unix']==lease['prestart_deadline_unix']==lease['prestart_started_unix']+2700
     assert datetime.fromisoformat(a['recorded_utc']).timestamp()<=lease['prestart_started_unix']
-    return dict(name='duplex-venus-source-20261101-v46',ident=lease['vm_id'],disk=lease['disk_id'],zone=lease['zone'],disk_name='duplex-venus-train-20261026-v1',machine='a2-highgpu-1g',authority=AUTH,provider_read_limits=(25,20))
+    return dict(name='duplex-venus-source-20261101-v46',ident=lease['vm_id'],disk=lease['disk_id'],zone=lease['zone'],disk_name='duplex-venus-train-20261026-v1',machine='a2-highgpu-1g',authority=authority,provider_read_limits=(25,20))
 
 
 def validate(vm,instances,pods,lease,now):
