@@ -1,6 +1,14 @@
 # Native duplex product execution plan
 
-Updated 1 November 2026. The goal remains a useful native full-duplex voice model: ordinary conversation, deliberate silence, interruptions, natural chosen speech and asynchronous delegation of harder work. Candidate406 remains rejected; no accepted production model or current training run is claimed.
+Updated 4 November 2026. Latest trained candidate466 remains rejected. The goal is useful native full-duplex conversation with natural chosen speech and asynchronous reasoning delegation.
+
+Current measured state: the complete24 runtime comparison fixed the demonstrated acoustic cut-off without optimizer updates. Candidate speech/text consistency4/6→5/6, release4/6 unchanged; all12 repaired acoustic tails reach actualEOS, but the complete repaired speech gate remains9/12 and fails. All paired native language/control traces are unchanged. Full64 behavior and unprofiled live voice/latency/delegation remain unproved. [Latest result](NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-RESULT-2026-11-04.json).
+
+The next item is ONE30-active-minute independent diagnosis of the3 existing failed recordings; no fresh data generation, GPU restart, API call or gate change is authorized by this plan. Then complete speech qualification and move to full behavior/live product evaluation. A larger foundation is not established as the fix. The prepared1-vs4-existing-layer LoRA comparison is a future conditional experiment, not trained or authorized. [Capacity decision](research/2026-11-04-native-capacity-growth-decision.md).
+
+A30-minute same-chat progress monitor follows the [progress ledger](NATIVE-PRODUCT-PROGRESS-2026-11-04.json): stop repeated diagnostic branches, count causal/product evidence instead of bookkeeping, preserve safeguards and pause on human dependencies. It cannot extend compute/update/API authority or alter OPAL programs. All GCP compute was verified stopped after v64 and its temporary resources removed; any future interval needs its explicit scope. Caps remain75USD phase/175USD project.
+
+The sections below retain the earlier measured history and dated authorization limits. Their historical candidate406/70USD/access/remaining-time statements are superseded by the current ledger and newest HANDOFF; they must not be reused as new execution authority.
 
 ## Completed evidence that changes the next step
 

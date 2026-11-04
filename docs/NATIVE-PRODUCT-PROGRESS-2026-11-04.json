@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "updated_utc": "2026-11-04T15:03:58.400479+00:00",
+  "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
+  "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
+  "latest_evidence": {
+    "path": "docs/NATIVE-VENUS-TTS-COMPLETION-RUNTIME-COMPAT-RESULT-2026-11-04.json",
+    "sha256": "1641cd5ac027008a54e1ea4aa12bc1f1f9317eb363a6dffeb2eb7c46e3ac82df",
+    "source": "9eeb47d599facc30043a5157f8cfc19c2814eba5",
+    "native_cases_completed": 24,
+    "repaired_acoustic_EOS_pass": 12,
+    "repaired_speech_word_and_peak_pass": 9,
+    "repaired_speech_required": 12,
+    "candidate_adopted": false,
+    "optimizer_updates_in_comparison": 0
+  },
+  "milestones": [
+    {
+      "id": "runtime-terminal-completion",
+      "status": "demonstrated_in_complete24_diagnostic",
+      "acceptance": "Actual acousticEOS in12/12, unchanged native language/control traces, fixed observed0094 truncation; not whole-model adoption."
+    },
+    {
+      "id": "whole-speech-qualification",
+      "status": "failed_three_frozen_recordings",
+      "acceptance": "Complete cohort at unchanged speech/peak thresholds; preserve originals and failed audits."
+    },
+    {
+      "id": "full-behavior-and-delegation",
+      "status": "unproved",
+      "acceptance": "Full64 behavior and actual async backend, interruption, silence, pause/resume, cancellation and pending-work conversation."
+    },
+    {
+      "id": "live-voice-product",
+      "status": "unproved",
+      "acceptance": "Real released/candidate WebSocket PCM route, unprofiled live latency and owner listening of chosen voice/accent."
+    }
+  ],
+  "current_work_item": {
+    "id": "frozen-v64-failure-classification",
+    "status": "ready_for_one_bounded_review",
+    "input": "Original24 outputs and native traces from result above; focus diagnostically on3 failed recordings without accepting a passing subset.",
+    "output": "Evidence-backed classification: native pronunciation/acoustic output, text-boundary target, recognizer error or genuinely unresolved. Keep the existing failed qualification intact.",
+    "maximum_active_minutes": 30,
+    "no_fresh_generation_required": true,
+    "new_GPU_intervals_authorized": 0,
+    "new_model_API_calls_authorized": 0,
+    "on_human_dependency": "Record one precise listening/approval/sign-in request, then pause heartbeat until human response."
+  },
+  "anti_stall_rules": {
+    "heartbeat_minutes": 30,
+    "maximum_active_diagnostic_minutes_per_hypothesis": 30,
+    "maximum_active_infrastructure_minutes_before_reassessment": 20,
+    "maximum_consecutive_actionable_checks_without_new_evidence": 2,
+    "third_implementation_only_repair_for_same_hypothesis": "Stop branch, preserve failure, choose shortest authorized product action or a concrete decision.",
+    "unchanged_experiment_repeats_allowed": 0,
+    "repeat_requires": [
+      "changed falsifiable hypothesis",
+      "changed intervention",
+      "distinguishing measurement",
+      "available explicit compute/update/API authority"
+    ],
+    "progress_counts": [
+      "measured product gain",
+      "new reproducible causal diagnosis",
+      "completed nonredundant experiment that changes a decision",
+      "material human decision resolved"
+    ],
+    "does_not_count_alone": [
+      "documentation commits",
+      "test count increases",
+      "receipt formatting",
+      "repeated infrastructure patching",
+      "preparation of unexecuted experiments"
+    ],
+    "exclude_from_active_work_clock": [
+      "ordinary queue wait",
+      "explicit human/sign-in/authorization blocker"
+    ],
+    "do_not_interrupt": [
+      "actual live authorized model process",
+      "required preservation/copyback",
+      "provider native shutdown/independent guards"
+    ],
+    "safety_and_integrity": "No weakened gates, subset adoption, new purchases, unauthorized interval/API/transfer, duplicate jobs, cost/time resets, saved-update repeats or unrelated-file edits.",
+    "while_blocked": "No automatic capacity or credential polling; pause heartbeat after one exact pending human action."
+  },
+  "monitor_state_path": "runs/product-progress-watch/state.json",
+  "state_required_fields": [
+    "last_check_utc",
+    "active_work_item",
+    "last_meaningful_evidence_utc",
+    "evidence_paths",
+    "changed_hypothesis",
+    "consecutive_actionable_checks_without_evidence",
+    "active_diagnostic_minutes",
+    "active_infrastructure_minutes",
+    "decision",
+    "next_action",
+    "blocker",
+    "last_notified_fingerprint"
+  ],
+  "notification_policy": "Quiet while unchanged or non-actionable; notify meaningful completion/failure/decision or real human action only.",
+  "capacity_policy": {
+    "current_trained_adapter_parameters": 851968,
+    "prepared_four_existing_layers_adapter_parameters": 3407872,
+    "four_layer_variant_trained": false,
+    "foundation_growth_authorized": false,
+    "next_capacity_experiment": "One-versus-four existing-layer LoRA matched comparison only if underfitting remains after bounded data/recipe diagnosis; needs own explicit execution scope.",
+    "keep_heavy_reasoning_external": true
+  },
+  "current_compute_scope": "v64 single interval consumed; no new compute restart from this policy or monitor. Existing caps75USD phase/175USD project remain.",
+  "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial."
+}
