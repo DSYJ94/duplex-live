@@ -1,5 +1,5 @@
 """Scoped approved snapshot reuse and pre-start-only zonal capacity fallback."""
-import json,subprocess,time,urllib.request
+import json,subprocess,time,urllib.request,urllib.error
 from pathlib import Path
 from datetime import datetime,timezone
 from . import controller as c
@@ -41,7 +41,14 @@ def snapshot():
     token=c.run(['gcloud','auth','print-access-token']).strip()
     for _ in range(20):
         url='https://cloudbilling.googleapis.com/v1/services/6F81-5844-456A/skus?currencyCode=USD&pageSize=5000'+('&pageToken='+page if page else '')
-        with urllib.request.urlopen(urllib.request.Request(url,headers={'Authorization':'Bearer '+token}),timeout=60) as f:data=json.load(f)
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(urllib.request.Request(url,headers={'Authorization':'Bearer '+token}),timeout=60) as f:data=json.load(f)
+                break
+            except urllib.error.HTTPError as error:
+                if error.code!=429 or attempt==2:raise
+                # Only retry this read-only catalog page, never a resource create.
+                time.sleep(20*(attempt+1))
         for row in data.get('skus',[]):
             if row['skuId'] in wanted:
                 p=row['pricingInfo'][-1]['pricingExpression'];v=p['tieredRates'][0]['unitPrice'];usd=int(v.get('units',0))+v.get('nanos',0)/1e9

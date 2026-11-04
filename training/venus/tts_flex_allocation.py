@@ -48,8 +48,15 @@ def allocate(version='62'):
     assert (p['storage']['combined_upper_each'] if version=='62' else max(p['storage']['prior_conservative_clone_GiBh']+p['storage']['new_clone_GiBh_upper'],p['storage']['prior_conservative_active_snapshot_GiBh']+p['storage']['new_active_snapshot_GiBh_upper']))<=400
     assert all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list'))
     assert not any(v['name'].startswith(('duplex-venus-tts-data-','duplex-venus-tts-flex-data-')) for v in c.cloud('compute','disks','list'))
-    deadline=time.time()+7200
-    with (c.R/'storage-deadline.json').open('x') as f:json.dump(dict(storage_deadline_unix=deadline),f)
+    if (c.R/'storage-deadline.json').exists():
+        assert version=='63'
+        proof=json.loads((c.R/'price-preflight-resume.json').read_text())
+        assert sha(c.R/'storage-deadline.json')==proof['storage_deadline_sha256']
+        deadline=json.loads((c.R/'storage-deadline.json').read_text())['storage_deadline_unix']
+        assert deadline==proof['storage_deadline_unix'] and time.time()+4900<deadline
+    else:
+        deadline=time.time()+7200
+        with (c.R/'storage-deadline.json').open('x') as f:json.dump(dict(storage_deadline_unix=deadline),f)
     snap=None;disk=None
     try:
         snap=placement.snapshot()

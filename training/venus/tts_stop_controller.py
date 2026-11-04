@@ -52,7 +52,24 @@ def resume_import_failure(root):
     c.events[:]=rows
 
 
-def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False,completion_same_vm=False,completion_same_vm_retry=False,completion_flex=False,completion_flex_recovery=False):
+def resume_price_preflight(root):
+    """Continue the exact terminal read-only 429 failure; keep its original clock."""
+    assert root.name=='tts-completion-v63'
+    rows=json.loads((root/'events.json').read_text())
+    assert len(rows)==1 and rows[0]['event']=='tts_stop_failed' and rows[0]['error_type']=='HTTPError' and rows[0]['error']=='HTTP Error 429: Too Many Requests'
+    assert {p.name for p in root.iterdir()}=={'claim.json','events.json','bootstrap.sh','source.bundle','storage-deadline.json'}
+    claim=json.loads((root/'claim.json').read_text());assert claim['prior_focused_gpu_seconds_upper']==33700
+    process=subprocess.run(['/bin/ps','-p',str(claim['pid']),'-o','pid='],capture_output=True,text=True)
+    assert process.returncode==1 and not process.stdout.strip(),'Original controller must be gone'
+    deadline=json.loads((root/'storage-deadline.json').read_text())['storage_deadline_unix']
+    assert time.time()+4900<deadline,'No reset of expired or insufficient storage time'
+    with (root/'price-preflight-resume.json').open('x') as f:
+        json.dump(dict(original_claim=claim,original_events_sha256=sha(root/'events.json'),original_bundle_sha256=sha(root/'source.bundle'),storage_deadline_sha256=sha(root/'storage-deadline.json'),storage_deadline_unix=deadline,resumed_by_pid=os.getpid(),reason='Terminal 429 before any snapshot/disk/VM/queue mutation'),f)
+    (root/'source.bundle').rename(root/'price-throttled-source.bundle')
+    c.events[:]=rows
+
+
+def main(placement=False,completion=False,completion_window=False,resume_preallocation_import=False,completion_capacity=False,completion_same_vm=False,completion_same_vm_retry=False,completion_flex=False,completion_flex_recovery=False,resume_price=False):
     global AUTH,PLAN,KEY,R,NAME,ZONE
     if completion_same_vm_retry:completion_same_vm=True
     if completion_flex_recovery:completion_flex=True
@@ -102,9 +119,10 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
     c.R=R;R.mkdir(parents=True,exist_ok=True);c.NAME=NAME
     resume=bool((R/'claim.json').exists())
     if resume:
-        if not(completion_window and resume_preallocation_import):raise ValueError('Observe existing controller; never repeat allocation')
-        resume_import_failure(R)
-    else:assert not resume_preallocation_import,'No terminal failed claim to resume'
+        if completion_flex_recovery and resume_price:resume_price_preflight(R)
+        elif completion_window and resume_preallocation_import:resume_import_failure(R)
+        else:raise ValueError('Observe existing controller; never repeat allocation')
+    else:assert not(resume_preallocation_import or resume_price),'No terminal failed claim to resume'
     source=c.run(['git','rev-parse','HEAD']).strip();c.source=source;c.remote=c.ROOT+'/duplex-tts-stop'+version+'-'+source[:12]
     assert not c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus',str(AUTH),proposal['source_selection_path']]).strip(),'Committed source required'
     price_path='runs/venus-training-20261104/capacity-recon/current-a100-flex-price.json' if completion_flex else 'runs/venus-training-20261101/current-a100-price.json'
@@ -233,4 +251,4 @@ def main(placement=False,completion=False,completion_window=False,resume_preallo
         awake.terminate()
 
 
-if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv,completion_same_vm='--completion-same-vm' in sys.argv,completion_same_vm_retry='--completion-same-vm-retry' in sys.argv,completion_flex='--completion-flex' in sys.argv,completion_flex_recovery='--completion-flex-recovery' in sys.argv)
+if __name__=='__main__':main(placement='--placement' in sys.argv,completion='--completion' in sys.argv,completion_window='--completion-window' in sys.argv,resume_preallocation_import='--resume-preallocation-import' in sys.argv,completion_capacity='--completion-capacity' in sys.argv,completion_same_vm='--completion-same-vm' in sys.argv,completion_same_vm_retry='--completion-same-vm-retry' in sys.argv,completion_flex='--completion-flex' in sys.argv,completion_flex_recovery='--completion-flex-recovery' in sys.argv,resume_price='--resume-price-preflight' in sys.argv)
