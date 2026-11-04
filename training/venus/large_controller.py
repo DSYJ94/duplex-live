@@ -67,11 +67,12 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False):
-    global R,OUTPUT,BACKUP
+def main(resume_sizing=False,replace_prestart=False):
+    global R,OUTPUT,BACKUP,NAME
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if replace_prestart and not resume_sizing:raise ValueError('Replacement is scoped only to actual pretraining sizing failure')
     previous_intervals=[];prior_seconds=0;prior_vm=None
     if resume_sizing:
         old=ROOT/'gpu-01'
@@ -90,7 +91,12 @@ def main(resume_sizing=False):
              disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=prior_seconds,optimizer_updates=0)]
         R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
-    if R.exists():raise ValueError('Observe the real existing GPU controller; never duplicate')
+    if replace_prestart:
+        rejected=json.loads((R/'no-new-running-interval.json').read_text())
+        if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
+            raise ValueError('Exact zero-new-interval scheduling rejection required')
+        NAME='duplex-venus-large-gpu-20261104-a-v66'
+    if R.exists() and not replace_prestart:raise ValueError('Observe the real existing GPU controller; never duplicate')
     stage=ROOT/'stage'
     proof=json.loads((stage/'stage-verified.json').read_text())
     previous=json.loads((stage/'provider-final.json').read_text())
@@ -123,13 +129,21 @@ def main(resume_sizing=False):
     olddisk=json.loads((stage/'disk.json').read_text())
     if disk['id']!=olddisk['id'] or int(disk['sizeGb'])!=250:raise ValueError('SAME staged250GB disk required')
     if resume_sizing:
-        same=[v for v in instances if v['name']==NAME]
-        if len(same)!=1 or same[0]['id']!=prior_vm['id'] or same[0]['status']!='TERMINATED':
+        same=[v for v in instances if v['name']==prior_vm['name']]
+        if (len(same)!=1 or same[0]['id']!=prior_vm['id'] or same[0]['status']!='TERMINATED'
+                or same[0]['lastStartTimestamp']!=prior_vm['lastStartTimestamp']
+                or same[0]['lastStopTimestamp']!=prior_vm['lastStopTimestamp']):
             raise ValueError('Only SAME stopped zero-update sizing VM may restart')
+        if replace_prestart and any(v['name']==NAME for v in instances):raise ValueError('Replacement name already exists; observe it')
     elif any(v['name']==NAME for v in instances):raise ValueError('Existing GPU name must be observed')
-    R.mkdir();c.R=R;c.NAME=NAME;c.events=[]
-    with (R/'claim.json').open('x') as stream:json.dump(dict(source=source,pid=os.getpid(),authority_sha256=sha(AUTH)),stream)
-    c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
+    if replace_prestart:
+        c.events=json.loads((R/'events.json').read_text())
+        claim=R/'prestart-replacement-claim.json';bundle=R/'prestart-replacement-source.bundle'
+    else:
+        R.mkdir();c.events=[];claim=R/'claim.json';bundle=R/'source.bundle'
+    c.R=R;c.NAME=NAME
+    with claim.open('x') as stream:json.dump(dict(source=source,pid=os.getpid(),authority_sha256=sha(AUTH),same_disk_pretraining_replacement=replace_prestart),stream)
+    c.run(['git','bundle','create',str(bundle),'HEAD'],120)
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())]);watch=None;created=False;end=None
     try:
         if not resume_sizing:
@@ -139,8 +153,13 @@ def main(resume_sizing=False):
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
         boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-large65-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=14h')
+        if replace_prestart:
+            exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone='+ZONE)
+            if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED':raise ValueError('Only preserved stopped sizing envelope may retire')
+            c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
+            if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Same staged disk must be free before replacement')
         created=True
-        if resume_sizing:
+        if resume_sizing and not replace_prestart:
             c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration='+str(duration)+'s',
                     '--instance-termination-action=STOP','--no-restart-on-failure','--maintenance-policy=TERMINATE')
             op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async')
@@ -153,7 +172,8 @@ def main(resume_sizing=False):
              '--instance-termination-action=STOP','--async')
         op=op[0] if isinstance(op,list) else op;save('create.json',op)
         c.record('one_A10040_Flex_request',source=source,operation=op['name'],maximum_queue_seconds=900,
-                 same_VM_sizing_recovery=resume_sizing,prior_GPU_seconds_upper=prior_seconds)
+                 same_VM_sizing_recovery=resume_sizing and not replace_prestart,
+                 same_disk_pretraining_replacement=replace_prestart,prior_GPU_seconds_upper=prior_seconds)
         op=observe(op);save('allocation-terminal.json',op)
         if op.get('error'):raise RuntimeError(json.dumps(op['error']))
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
@@ -163,7 +183,7 @@ def main(resume_sizing=False):
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
         prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
         c.remote=c.ROOT+'/duplex-large-'+source[:12]
-        c.sync(R/'source.bundle',c.ROOT+'/large65-gpu-source.bundle')
+        c.sync(bundle,c.ROOT+'/large65-gpu-source.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/large65-gpu-source.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source,120)
         plan=dict(resource_key=KEY,authorization_sha256=sha(AUTH),parent_sha256=PARENT_SHA,cache_manifest_sha256=MANIFEST_SHA,
              maximum_all_branch_updates=984,external_model_API_calls=0,prior_project_USD=OLD_USD,
@@ -248,4 +268,4 @@ def main(resume_sizing=False):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');a=p.parse_args();main(a.resume_sizing)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart)
