@@ -15,7 +15,7 @@ import sys
 import time
 
 from . import controller as c
-from .large_guard import AUTH, ROOT, KEY, OLD_USD, authority
+from .large_guard import AUTH, MEMORY_AUTH, ROOT, KEY, OLD_USD, authority, memory_authority
 from .large_inputs import PARENT_SHA, MANIFEST_SHA, sha
 from .large_stage import NAME as CPU, DISK, ZONE, REMOTE
 
@@ -67,11 +67,16 @@ print(json.dumps(dict(files=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_s
          backup=str(BACKUP),inventory_sha256=sha(R/'remote-inventory.json')))
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
+    if resume_memory:
+        memory_authority()
+        if any((resume_sizing,replace_prestart,fallback80,resume80_precreate)):
+            raise ValueError("Memory restart is one independent same-resource mode")
+        fallback80=True
     if resume80_precreate and not fallback80:raise ValueError('80GB precreate recovery requires the original fallback mode')
     if fallback80 and (resume_sizing or replace_prestart):raise ValueError('Choose one exact allocation mode')
     if replace_prestart and not resume_sizing:raise ValueError('Replacement is scoped only to actual pretraining sizing failure')
@@ -94,7 +99,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         R=ROOT/'gpu-02';OUTPUT=REMOTE+'/native-v66'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v66')
     if fallback80:
-        for number in (1,2):
+        for number in ((1,2,3) if resume_memory else (1,2)):
             old=ROOT/('gpu-%02d'%number)
             terminal=json.loads((old/'provider-final.json').read_text())
             verified=json.loads((old/'copyback-verified.json').read_text())
@@ -107,11 +112,14 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
                 disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
             prior_seconds+=seconds;prior_vm=terminal
-        if prior_seconds!=700:raise ValueError('Carry actual300+400 first two interval bounds')
+        if prior_seconds!=(1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
         R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
         ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
         DISK='duplex-venus-large-data-20261104-eua-v67'
+        if resume_memory:
+            R=ROOT/'gpu-04';OUTPUT=REMOTE+'/native-v68'
+            BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v68')
     if replace_prestart:
         rejected=json.loads((R/'no-new-running-interval.json').read_text())
         if rejected['id']!=prior_vm['id'] or rejected['lastStartTimestamp']!=prior_vm['lastStartTimestamp'] or rejected['status']!='TERMINATED':
@@ -125,7 +133,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     clock=json.loads((stage/'storage-deadline.json').read_text())
     duration=43100-prior_seconds
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
-    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-v65.json').read_text())
+    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v68' if resume_memory else 'v65')+'.json').read_text())
     hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
     if not 0<hourly<=8 or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
@@ -147,10 +155,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             or 'duplex-venus-train-bounded' not in allow['targetTags'] or 'duplex-venus-train-bounded' not in deny['targetTags']
             or allow['priority']>=deny['priority']):raise ValueError('Existing authenticated IAP/restricted-ingress fence required')
     old_disk_name='duplex-venus-large-data-20261104-a-v65'
-    disk=c.cloud('compute','disks','describe',DISK if resume80_precreate else old_disk_name if fallback80 else DISK,
-                 '--zone='+('us-central1-a' if fallback80 and not resume80_precreate else ZONE))
+    disk=c.cloud('compute','disks','describe',DISK if (resume80_precreate or resume_memory) else old_disk_name if fallback80 else DISK,
+                 '--zone='+('us-central1-a' if fallback80 and not (resume80_precreate or resume_memory) else ZONE))
     olddisk=json.loads((stage/'disk.json').read_text())
-    expected_disk=json.loads((R/'disk-a.json').read_text()) if resume80_precreate else olddisk
+    expected_disk=json.loads(((ROOT/'gpu-03' if resume_memory else R)/'disk-a.json').read_text()) if (resume80_precreate or resume_memory) else olddisk
     if disk['id']!=expected_disk['id'] or int(disk['sizeGb'])!=250:raise ValueError('Exact preserved250GB disk required')
     if resume80_precreate:
         failure=json.loads((R/'eu80-precreate-failure.json').read_text())
@@ -158,12 +166,15 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
                 or disk.get('users') or disk['status']!='READY' or disk['sourceSnapshotId']!='4724490043241393447'
                 or (R/'provider-start.json').exists() or any(v['name']==NAME for v in instances)):
             raise ValueError('Only exact observed400-before-VM and same free ready disk may recover')
-    if resume_sizing:
+    if resume_sizing or resume_memory:
         same=[v for v in instances if v['name']==prior_vm['name']]
         if (len(same)!=1 or same[0]['id']!=prior_vm['id'] or same[0]['status']!='TERMINATED'
                 or same[0]['lastStartTimestamp']!=prior_vm['lastStartTimestamp']
                 or same[0]['lastStopTimestamp']!=prior_vm['lastStopTimestamp']):
             raise ValueError('Only SAME stopped zero-update sizing VM may restart')
+        if resume_memory and (prior_vm['id']!='7521667153519853425' or disk['id']!='2297341858915206463'
+                or disk.get('users')!=[prior_vm['selfLink']] or disk['sourceSnapshotId']!='4724490043241393447'):
+            raise ValueError('Only SAME stopped80VM and attached exact250disk may restart')
         if replace_prestart and any(v['name']==NAME for v in instances):raise ValueError('Replacement name already exists; observe it')
     elif any(v['name']==NAME for v in instances):raise ValueError('Existing GPU name must be observed')
     if resume80_precreate:
@@ -192,7 +203,13 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             c.run(['gcloud','compute','instances','delete',prior_vm['name'],'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Same staged disk must be free before replacement')
         created=True
-        if fallback80:
+        if resume_memory:
+            c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,
+                    '--max-run-duration='+str(duration)+'s','--instance-termination-action=STOP',
+                    '--discard-local-ssds-at-termination-timestamp=true','--no-restart-on-failure',
+                    '--maintenance-policy=TERMINATE')
+            op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async')
+        elif fallback80:
             from .large_stage import LOCAL,PARENT
             # No learned state exists on this staging disk. Both unique failed
             # native runs have complete off-machine hash receipts above.
@@ -251,12 +268,13 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         op=op[0] if isinstance(op,list) else op;save('create.json',op)
         c.record('one_value_selected_GPU_request',source=source,operation=op['name'],maximum_queue_seconds=900,
                  same_VM_sizing_recovery=resume_sizing and not replace_prestart,
+                 same_80VM_lossless_memory_restart=resume_memory,
                  same_disk_pretraining_replacement=replace_prestart,prior_GPU_seconds_upper=prior_seconds)
         op=observe(op);save('allocation-terminal.json',op)
         if op.get('error'):raise RuntimeError(json.dumps(op['error']))
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         if vm['status']!='RUNNING':raise ValueError('Actual running provider state required')
-        if (resume_sizing or fallback80) and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
+        if (resume_sizing or fallback80 or resume_memory) and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
             raise ValueError('Do not claim an old provider interval as a new start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
         prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
@@ -268,7 +286,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
              vm_id=vm['id'],disk_id=disk['id'],zone=ZONE,creation_timestamp=vm['creationTimestamp'],
              **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
              machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
-        plan_path=ROOT/('interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
+        if resume_memory:plan['memory_authorization_sha256']=sha(MEMORY_AUTH)
+        plan_path=ROOT/('interval-04.json' if resume_memory else 'interval-03.json' if fallback80 else 'interval-02.json' if resume_sizing else 'interval-01.json')
         with plan_path.open('x') as f:json.dump(plan,f,indent=2)
         lease=dict(plan,execution_plan_path=str(plan_path),execution_plan_sha256=sha(plan_path),
              prior_capacity_GPU_seconds_upper=prior_seconds,verified_hourly_price_usd=hourly,stop_unix=end,
@@ -290,11 +309,11 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
               ' /usr/bin/python3 -u -m portable.venus.guard --guest --guard '+c.ROOT+'/venus-live-guard-v1.json --lease '+lease_path)
         if c.props('duplex-large65-guest')['ActiveState']!='active':raise RuntimeError('Guest GPU guard absent')
         c.ssh('sudo systemctl stop duplex-large65-bootstrap-stop.timer')
-        if fallback80:
+        if fallback80 and not resume_memory:
             c.ssh('mkdir -p '+REMOTE)
             c.sync(str(LOCAL/'cache')+'/',REMOTE+'/cache/',900);c.sync(PARENT,REMOTE+'/parent466.pt',180)
         if c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip():raise ValueError('GPU already has a model process')
-        c.record('actual_A10040_running_both_guards_live',vm_id=vm['id'],disk_id=disk['id'],source=source,native_STOP_unix=end)
+        c.record('actual_GPU_running_both_guards_live',vm_id=vm['id'],disk_id=disk['id'],source=source,native_STOP_unix=end)
         env='env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python'
         common=' --model '+c.MODEL+' --cache '+REMOTE+'/cache --action-index '+REMOTE+'/cache/action-index.json --data-admission '+c.remote+'/docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-V3-2026-11-02.json --opal-source '+c.ROOT+'/opal-upstream-v34 --lease '+lease_path+' --source '+source
@@ -302,7 +321,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
         sizing_remaining=1200 if fallback80 else 1200-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
-        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
+        execute('duplex-large65-prepare','training.venus.large_native',common+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(1200,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         for arm in ('main','control'):
             execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
@@ -328,10 +347,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if created:
             actual=[v for v in c.cloud('compute','instances','list') if v['name']==NAME]
             if actual:
-                no_new_start=resume_sizing and actual[0].get('lastStartTimestamp')==prior_vm['lastStartTimestamp']
+                no_new_start=(resume_sizing or resume_memory) and actual[0].get('lastStartTimestamp')==prior_vm['lastStartTimestamp']
                 if no_new_start and actual[0]['status']=='TERMINATED':
                     save('no-new-running-interval.json',actual[0])
-                elif not actual[0].get('lastStartTimestamp') or no_new_start:
+                elif (not actual[0].get('lastStartTimestamp') or no_new_start) and not resume_memory:
                     save('cancelled-before-start.json',actual[0])
                     c.run(['gcloud','compute','instances','delete',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
                 elif actual[0]['status']!='TERMINATED':
@@ -349,4 +368,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory)

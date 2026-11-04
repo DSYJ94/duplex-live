@@ -153,7 +153,7 @@ def prepare(a):
     for row in corpus.rows: corpus.read(row)
     model, _ = load_native(a.model, language_only=True); llm = model.llm
     llm.eval(); llm.gradient_checkpointing_disable()
-    if limits['machine']=='a2-ultragpu-1g':
+    if limits['machine']=='a2-ultragpu-1g' and getattr(a,'activation_memory_policy','legacy-pinned')=='legacy-pinned':
         from .large_memory_probe import probe
         write(out,'whole-causal-native-head-shape-diagnostic.json',probe(model))
     if len(llm.model.layers) != 36: raise ValueError('Pinned native36-layer model required')

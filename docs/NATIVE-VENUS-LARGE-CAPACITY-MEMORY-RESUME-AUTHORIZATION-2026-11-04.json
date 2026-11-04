@@ -1,0 +1,19 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-04T20:07:34.514412+00:00",
+  "human_reply_verbatim": "Approve one restart; keep existing limits",
+  "proposal_path": "docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-PROPOSAL-2026-11-04.json",
+  "proposal_commit": "4d740bb2244f8e2836ade56abd45231ac6199281",
+  "proposal_sha256": "df8d4ddec6cc84fa1164ba0aeb56aa281e3376f0fd27a4a5cce28c63f21d9f4f",
+  "original_authorization_sha256": "81edd13598058e7120ef9a9f822290c224859b004b3d6cd0b4a8a641021192cd",
+  "maximum_GPU_running_intervals": 4,
+  "maximum_new_GCP_USD": 150,
+  "maximum_project_USD": 325,
+  "maximum_aggregate_GPU_seconds": 43200,
+  "prior_GPU_seconds_upper": 1600,
+  "maximum_new_interval_seconds": 41500,
+  "shutdown_rounding_reserve_seconds": 100,
+  "vm_id": "7521667153519853425",
+  "disk_id": "2297341858915206463",
+  "maximum_actual_start_attempts": 1
+}

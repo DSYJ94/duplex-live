@@ -8,6 +8,7 @@ from .large_inputs import sha, PARENT_SHA, MANIFEST_SHA
 
 KEY = 'venus-large-capacity-v65'
 AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json')
+MEMORY_AUTH = Path('docs/NATIVE-VENUS-LARGE-CAPACITY-MEMORY-RESUME-AUTHORIZATION-2026-11-04.json')
 ROOT = Path('runs/venus-large-capacity-20261104/v65')
 OLD_USD = 165.7900361111111
 
@@ -24,12 +25,38 @@ def authority():
     return a
 
 
+def memory_authority():
+    authority()
+    a=json.loads(MEMORY_AUTH.read_text())
+    if (a['status']!='APPROVED' or sha(a['proposal_path'])!=a['proposal_sha256']
+            or a['original_authorization_sha256']!=sha(AUTH)
+            or a['maximum_GPU_running_intervals']!=4 or a['maximum_new_GCP_USD']!=150
+            or a['maximum_project_USD']!=325 or a['maximum_aggregate_GPU_seconds']!=43200
+            or a['prior_GPU_seconds_upper']!=1600 or a['maximum_new_interval_seconds']!=41500
+            or a['shutdown_rounding_reserve_seconds']!=100 or a['maximum_actual_start_attempts']!=1
+            or a['vm_id']!='7521667153519853425' or a['disk_id']!='2297341858915206463'):
+        raise ValueError('Exact same-resource fourth-interval amendment required')
+    return a
+
+
 def resource(lease):
     authority()
     path = Path(lease['execution_plan_path'])
-    if path.parent != ROOT or path.name not in ('interval-01.json', 'interval-02.json', 'interval-03.json'):
-        raise ValueError('One phase, at most three immutable interval plans required')
+    if path.parent != ROOT or path.name not in ('interval-01.json', 'interval-02.json', 'interval-03.json','interval-04.json'):
+        raise ValueError('Only explicitly authorized immutable interval plans required')
     p = json.loads(path.read_text())
+    fourth=path.name=='interval-04.json'
+    if fourth:
+        a=memory_authority()
+        if (p.get('memory_authorization_sha256')!=sha(MEMORY_AUTH)
+                or lease.get('memory_authorization_sha256')!=sha(MEMORY_AUTH)
+                or p['vm_id']!=a['vm_id'] or p['disk_id']!=a['disk_id']
+                or p['zone']!='europe-west4-a' or p['machine']!='a2-ultragpu-1g'
+                or p['vm_name']!='duplex-venus-large-gpu-20261104-eua-v67'
+                or p['disk_name']!='duplex-venus-large-data-20261104-eua-v67'
+                or p['provisioning']!='STANDARD' or p['maximum_running_seconds']!=41500
+                or p['storage_deadline_unix']!=1793897263.296897):
+            raise ValueError('Fourth interval is bound to the same80VM/disk and original clock')
     if (lease['resource_key'] != p['resource_key'] or p['resource_key'] != KEY
             or lease['authorization_sha256'] != p['authorization_sha256'] or sha(AUTH) != lease['authorization_sha256']
             or sha(path) != lease['execution_plan_sha256']
@@ -40,7 +67,7 @@ def resource(lease):
     for key in ('vm_id', 'disk_id', 'zone', 'creation_timestamp', 'storage_started_unix', 'storage_deadline_unix'):
         if lease[key] != p[key]: raise ValueError('Provider identity or storage clock differs')
     previous = p['previous_intervals']
-    if len(previous) != int(path.stem[-2:]) - 1 or len(previous) > 2:
+    if len(previous) != int(path.stem[-2:]) - 1 or len(previous) > (3 if fourth else 2):
         raise ValueError('All prior actual intervals required; never reset the clock')
     seconds = 0
     for row in previous:
@@ -59,6 +86,7 @@ def resource(lease):
             # placement. Once training starts its identity is immutable.
             if row['optimizer_updates'] != 0: raise ValueError('Never migrate an already training arm silently')
     duration = p['maximum_running_seconds']
+    if fourth and seconds!=1600:raise ValueError('All1600 actual prior GPU upper seconds must carry forward')
     if (type(duration) is not int or duration < 1 or seconds + duration + 100 > 43200
             or lease['prior_capacity_GPU_seconds_upper'] != seconds
             or p['storage_deadline_unix'] != p['storage_started_unix'] + 86400

@@ -70,3 +70,32 @@ def test_80GB_fallback_requires_exact_included_scratch_and_standard_zone(tmp_pat
     assert g.validate(vm,[vm],[],lease,now)==lease['stop_unix']
     vm['disks'].append(dict(type='SCRATCH',diskSizeGb=375))
     with pytest.raises(ValueError,match='scratch'):g.validate(vm,[vm],[],lease,now)
+
+
+def test_fourth_interval_requires_exact_amendment_same_resources_and_all_prior_time(tmp_path,monkeypatch):
+    actual_root=g.ROOT
+    p,path,lease,vm,now=fixture(tmp_path,monkeypatch)
+    previous=[]
+    for i,upper in ((1,300),(2,400),(3,900)):
+        original=actual_root/f'gpu-{i:02d}'/'provider-final.json'
+        terminal=json.loads(original.read_text());receipt=tmp_path/f'provider-final-{i:02d}.json'
+        receipt.write_bytes(original.read_bytes())
+        previous.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),
+                             vm_id=terminal['id'],disk_id='preserved',upper_seconds=upper,optimizer_updates=0))
+    p.update(vm_id='7521667153519853425',disk_id='2297341858915206463',zone='europe-west4-a',
+             machine='a2-ultragpu-1g',provisioning='STANDARD',maximum_running_seconds=41500,
+             vm_name='duplex-venus-large-gpu-20261104-eua-v67',disk_name='duplex-venus-large-data-20261104-eua-v67',
+             storage_started_unix=1793810863.296897,storage_deadline_unix=1793897263.296897,
+             memory_authorization_sha256=sha(g.MEMORY_AUTH),previous_intervals=previous)
+    path=tmp_path/'interval-04.json';path.write_text(json.dumps(p))
+    lease.update(p,execution_plan_path=str(path),execution_plan_sha256=sha(path),prior_capacity_GPU_seconds_upper=1600)
+    assert g.resource(lease)['duration']==41500
+    for key,value in [('disk_id','wrong'),('maximum_running_seconds',41600),('memory_authorization_sha256','wrong'),
+                      ('storage_deadline_unix',1793897264.296897)]:
+        changed=dict(p,**{key:value});path.write_text(json.dumps(changed))
+        bad=dict(lease,**{key:value},execution_plan_sha256=sha(path))
+        with pytest.raises(ValueError):g.resource(bad)
+    path.write_text(json.dumps(p));lease['execution_plan_sha256']=sha(path)
+    with pytest.raises(ValueError):g.resource(dict(lease,prior_capacity_GPU_seconds_upper=0))
+    monkeypatch.setattr(g,'MEMORY_AUTH',tmp_path/'missing-amendment.json')
+    with pytest.raises(FileNotFoundError):g.resource(lease)
