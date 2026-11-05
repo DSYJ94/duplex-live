@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T20:20:37.577505+00:00",
+  "updated_utc": "2026-11-05T21:22:42.140904+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 40,
+    "new_optimizer_updates": 48,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -67,14 +67,14 @@
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "Saved8/16/24/32/40 full Mac and remote hashes verified. Current12 final full inventory pending.",
+    "backup_status": "Saved8/16/24/32/40/48 full Mac and remote hashes verified. Current12 final full inventory pending.",
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 21900,
     "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json",
     "expected_new_updates_each_arm": 60,
     "expected_total_new_updates": 120,
-    "main_completed_new_updates": 40,
+    "main_completed_new_updates": 48,
     "control_completed_new_updates": 0,
     "first_observed_step_seconds": [
       318.165510689,
@@ -85,15 +85,15 @@
     "all_prior_GPU_upper_seconds": 21900,
     "execution_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
     "latest_trained_state_backup": {
-      "remote_path": "/workspace/migration/venus-large-capacity-v65/recovery-v75/main-step-0040.pt",
-      "actual_new_updates": 40,
+      "remote_path": "/workspace/migration/venus-large-capacity-v65/recovery-v75/main-step-0048.pt",
+      "actual_new_updates": 48,
       "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
       "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
-      "sha256": "dd8f9dad92e1d3d5d18c84e934113eb37347dd186536eb13f1c36a14ce7aeb1b",
-      "bytes": 8511525944,
+      "sha256": "630adb3ef102e5e9dc22c75623d8163189f9c2a137a56083c823cf05910cfe79",
+      "bytes": 8511814520,
       "backup_controller_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
       "execution_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
-      "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0040.pt",
+      "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0048.pt",
       "all_hashes_verified": true,
       "vm_id": "7521667153519853425",
       "disk_id": "2297341858915206463",
@@ -124,7 +124,7 @@
     },
     "remaining_schedule_seconds": 39906.6193459921,
     "remaining_schedule_margins_unchanged": true,
-    "confirmed_minimum_updates": 40,
+    "confirmed_minimum_updates": 48,
     "updates_after24_unknown_until_actual_disk_state_read": false,
     "actual_selected_durable_state_step": 24,
     "actual_current_restore_proof": {
@@ -150,15 +150,15 @@
     },
     "known_prior_uncheckpointed_step25": true,
     "latest_actual_observation": {
-      "at_unix": 1793910005.0113196,
+      "at_unix": 1793913729.8565,
       "MainPID": "1589",
       "ActiveState": "active",
       "SubState": "running",
       "main_log_path": "/workspace/migration/venus-large-capacity-v65/native-v75/main/training-resume-0024.jsonl",
       "main_last_training_records": [
-        "{\"step\": 39, \"seconds\": 411.8262743380001, \"gradient_norm\": 1.6600992679595947, \"lr\": 5.000000000000001e-06, \"ce\": 0.40601590275764465, \"kl\": 0.12861484289169312, \"hidden\": 0.3527233600616455}",
-        "{\"step\": 40, \"seconds\": 438.08143180499974, \"gradient_norm\": 1.9072551727294922, \"lr\": 4.643304084003839e-06, \"ce\": 0.40157150849699974, \"kl\": 0.0, \"hidden\": 0.0}",
-        "{\"event\": \"live_state_saved\", \"step\": 40, \"sha256\": \"dd8f9dad92e1d3d5d18c84e934113eb37347dd186536eb13f1c36a14ce7aeb1b\"}"
+        "{\"step\": 47, \"seconds\": 419.3950055630012, \"gradient_norm\": 1.1638572216033936, \"lr\": 2.296795912722014e-06, \"ce\": 0.1465556100010872, \"kl\": 0.0, \"hidden\": 0.0}",
+        "{\"step\": 48, \"seconds\": 378.3943685389986, \"gradient_norm\": 1.2731668949127197, \"lr\": 2.0036116674432653e-06, \"ce\": 0.09305166732519865, \"kl\": 0.11830908060073853, \"hidden\": 0.457184374332428}",
+        "{\"event\": \"live_state_saved\", \"step\": 48, \"sha256\": \"630adb3ef102e5e9dc22c75623d8163189f9c2a137a56083c823cf05910cfe79\"}"
       ]
     }
   },
@@ -227,7 +227,7 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "698351616 adapter main40/60 confirmed; control0/60; SAME final interval12 worker1589 active. Saved40 fully hash-backed-up; full epoch/evaluation pending; no quality/adoption claim.",
+    "current_stage": "698351616 adapter main48/60 confirmed; control0/60; SAME final interval12 worker1589 active. Saved48 fully hash-backed-up; full epoch/evaluation pending; no quality/adoption claim.",
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
