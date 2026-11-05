@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T10:56:55.129663+00:00",
+  "updated_utc": "2026-11-05T11:15:24.215440+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "SUSTAINED_actual_MAIN3_new_optimizer_updates_completed_and_training_live",
+    "status": "SUSTAINED_actual_MAIN6_new_optimizer_updates_completed_and_training_live",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 3,
+    "new_optimizer_updates": 6,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -71,17 +71,18 @@
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 8700,
-    "remaining_GPU_seconds_including_reserve": 34500,
     "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json",
     "expected_new_updates_each_arm": 60,
     "expected_total_new_updates": 120,
-    "main_completed_new_updates": 3,
+    "main_completed_new_updates": 6,
     "control_completed_new_updates": 0,
     "first_observed_step_seconds": [
       318.165510689,
       519.442999604,
       362.318373735
-    ]
+    ],
+    "current_interval_native_limit_seconds": 64800,
+    "all_prior_GPU_upper_seconds": 8700
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -148,9 +149,11 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "Substantial broadened architecture ready in code with CPU/meta/realOPAL proof; no native larger-model training yet"
+    "current_stage": "698351616 experimental adapter ACTUALLY training:6newupdates/60, small-control0/60; no adoptedcandidate or demonstrated capacity benefit yet",
+    "experimental_active_trainable_parameters": 698351616,
+    "prior_small_adapter_trainable_parameters": 851968
   },
-  "current_compute_scope": "AllGPUstoppedafter07;4000priorupper/39200remaininginclround;next39100STOP;150new/325project/originalstorageunchanged;ZEROupdates.",
+  "current_compute_scope": "ONE SAME A10080VM752/disk229 RUNNING interval10/sourceb39; main1492/controller91828/tool26279;6 mainNEWupdates/control0 atlastcheck. Prior8700+64800native+100reserve=73600 aggregate/175phase350project/old165.79003611carry/storage7Nov12UTC. NativeSTOP6Nov04:23:25.865UTC. No otherGPU job.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
@@ -159,11 +162,41 @@
     "current_loop_evidence": "No repeated4gram in12 ordinary frozen responses; not a general loop test.",
     "do_not_turn_research_into_open_ended_branch": true
   },
-  "latest_memory_admission_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-CUDA-COMPARISON-RESULT-2026-11-04.json",
+  "latest_memory_admission_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json",
   "cuda_storage_microproof": {
     "path": "docs/NATIVE-VENUS-CUDA-STORAGE-MICROPROOF-2026-11-04.json",
     "sha256": "a8ae7d26bf573d1167c95eeda683902ed4e291187b134cdd4681d929ae1fb404",
     "passed": true,
     "full_native_qualification": false
+  },
+  "live_product_gaps": {
+    "backend_status_label": {
+      "status": "fixed_in_local_source_not_deployed_to_running_GPU",
+      "path": "portable/venus/app.html",
+      "cause": "workerLabel recognized mac-reasoning-proxy but incorrectly called mac-context-reasoning-proxy arithmetic-only",
+      "verification": "Actual JS function RED beforefix/GREEN afterfix forbothbackendmodes/arithmetic; existingbrowseraudio/transport/contextWebSocketfixture suite13passed3.49s",
+      "actual_backend_live_qualification": false
+    },
+    "reasoning_integration": {
+      "status": "opt_in_contextual_backend_hook_exists_actual_live_qualification_pending",
+      "path": "portable/venus/native_app.py",
+      "default": "arithmetic-diagnostic",
+      "actual_hook": "mac-context-reasoning-proxy",
+      "scope": "No provider request or backend deployment performed; currenttrainingphaseallowszeroexternalAPIcalls"
+    },
+    "British_voice": {
+      "status": "preference_recorded_explicit_reference_exists_native_accent_unqualified",
+      "direction": "British English/RP, preferredtrialorderGeorge/Ben/Alice",
+      "evidence": "docs/NATIVE-BRITISH-VOICE-DIRECTION-2026-10-27.json",
+      "reference_sha256": "40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674",
+      "runtime_requires_explicit_reference": true,
+      "current_language_training_changes_accent": false
+    },
+    "next_candidate_live_route": {
+      "status": "prepare_only_after_candidate_checkpoint_and_full_evaluation",
+      "existing_generic_loader": "training/venus/inference.py supports native-capacity-trained-v1 via large_inference.py",
+      "legacy_trial": "training/venus/live_trial.py deliberately fixes244checkpoint; futurecandidate526 needs explicitcorrectcheckpoint/hash/update count andactualreleased/candidatePCMproof",
+      "current_GPU_must_not_overlap_live_server": true
+    }
   }
 }

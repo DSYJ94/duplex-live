@@ -12,7 +12,7 @@
 let socket,ctx,input,processor,stream,nextPlay=0,queued=0,closing=false,generation=0,lastSpeechFinal=false;
 const players=new Set(),sentAt=[];
 const variant=document.querySelector('#variant');
-function workerLabel(profile){document.querySelector('#work').textContent=profile.worker_backend==='mac-reasoning-proxy'?'Reasoning backend configured for delegated tasks. Cancellation stops delivery; remote work may continue.':'Background worker: arithmetic only. General reasoning backend is not connected yet.';}
+function workerLabel(profile){document.querySelector('#work').textContent=['mac-reasoning-proxy','mac-context-reasoning-proxy'].includes(profile.worker_backend)?'Reasoning backend configured for delegated tasks. Cancellation stops delivery; remote work may continue.':'Background worker: arithmetic only. General reasoning backend is not connected yet.';}
 fetch('/health').then(r=>r.json()).then(p=>{workerLabel(p);if(p.comparison_available){document.querySelector('#variants').hidden=false;variant.value='released';}document.querySelector('#voice').textContent=p.voice_reference?.mode==='released-native-reference'?'Voice: released reference · British voice not configured':'Voice: custom reference · experimental';}).catch(()=>{});
 const start=document.querySelector('#start'),stop=document.querySelector('#stop'),state=document.querySelector('#state'),words=document.querySelector('#words'),work=document.querySelector('#work'),timing=document.querySelector('#timing');
 function clearPlayback(){for(const node of players){try{node.stop();node.disconnect();}catch{}}players.clear();nextPlay=0;}
