@@ -76,7 +76,7 @@ def capacity_retry_after(number,previous,family="prefix",aggregate_interval=7):
     """Only terminal pre-start stockout on SAME VM; no new running interval."""
     if number not in (1,2):raise ValueError('At most two spaced capacity-only retries')
     if family not in ('prefix','layout','aggregate'):raise ValueError('Exact authorized capacity family required')
-    if aggregate_interval not in (7,8,9):raise ValueError('Exact supported aggregate interval required')
+    if aggregate_interval not in (7,8,9,10,11):raise ValueError('Exact supported aggregate interval required')
     base=('gpu-%02d'%aggregate_interval) if family=='aggregate' else 'gpu-06' if family=='layout' else 'gpu-05'
     old=ROOT/(base if number==1 else base+'-capacity-01')
     vm=json.loads((old/'no-new-running-interval.json').read_text())
@@ -98,16 +98,23 @@ def capacity_retry_after(number,previous,family="prefix",aggregate_interval=7):
     return datetime.fromisoformat(requests[0]['at_utc']).timestamp()+600
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0,resume_layout=False,layout_capacity_retry=0,resume_aggregate=False,aggregate_capacity_retry=0,aggregate_interval=7,sustained_first=False):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0,resume_layout=False,layout_capacity_retry=0,resume_aggregate=False,aggregate_capacity_retry=0,aggregate_interval=7,sustained_first=False,sustained_resume8=False):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
-    if sustained_first:
+    if sustained_first and sustained_resume8:raise ValueError('One sustained mode required')
+    sustained_run=sustained_first or sustained_resume8
+    resume_evidence_path=ROOT/'sustained-saved-state-0008-evidence.json'
+    if sustained_run:
         from .sustained import authority as sustained_authority
-        sustained_authority();resume_aggregate=True;aggregate_interval=10
-    if aggregate_interval==10 and not sustained_first:raise ValueError('Explicit sustained mode required')
-    if aggregate_interval not in (7,8,9,10) or aggregate_interval!=7 and not resume_aggregate:
+        sustained_authority();resume_aggregate=True;aggregate_interval=11 if sustained_resume8 else 10
+    if sustained_resume8:
+        saved_evidence=json.loads(resume_evidence_path.read_text())
+        if saved_evidence['vm_id']!='7521667153519853425' or saved_evidence['disk_id']!='2297341858915206463' or saved_evidence['cache_manifest_sha256']!=MANIFEST_SHA or saved_evidence['remote_checkpoint']!=REMOTE+'/recovery-v75/main-step-0008.pt':raise ValueError('Exact saved checkpoint path/resource/data required')
+        if saved_evidence['actual_new_updates']!=8 or saved_evidence['checkpoint_sha256']!='82c1d407a236d823b772f9e4c6f126e4eaec3bb6fb8f0d8147d9260c539b1cd3' or saved_evidence['source']!='b39ce3ebe167b059b67fa3d131978e5da7c41ac1':raise ValueError('Actual saved8 evidence required')
+    if aggregate_interval>=10 and not sustained_run:raise ValueError('Explicit sustained mode required')
+    if aggregate_interval not in (7,8,9,10,11) or aggregate_interval!=7 and not resume_aggregate:
         raise ValueError("Only actual initial, throughput follow-up or exact reporting recovery supported")
     if resume_aggregate:
         aggregate_authority()
@@ -157,17 +164,20 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         for number in (tuple(range(1,aggregate_interval)) if resume_aggregate else (1,2,3,4,5) if resume_layout else (1,2,3,4) if resume_prefix else (1,2,3) if resume_memory else (1,2)):
             old=ROOT/('gpu-05-capacity-01' if number==5 else 'gpu-%02d'%number)
             terminal=json.loads((old/'provider-final.json').read_text())
-            verified=json.loads((old/'copyback-verified.json').read_text())
-            if terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists() and not (sustained_first and number==9):
+            if sustained_resume8 and number==10:
+                if terminal['status']!='TERMINATED':raise ValueError('Actual interrupted GPU must be stopped')
+                verified=None
+            else:verified=json.loads((old/'copyback-verified.json').read_text())
+            if not (sustained_resume8 and number==10) and (terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists() and not (sustained_run and number==9)):
                 raise ValueError('Both actual zero-update failures must be stopped and hash-backed-up')
             seconds=math.ceil((datetime.fromisoformat(terminal['lastStopTimestamp'])-datetime.fromisoformat(terminal['lastStartTimestamp'])).total_seconds()/100)*100
             receipt=ROOT/('provider-final-%02d.json'%number)
             if not receipt.exists():receipt.write_bytes((old/'provider-final.json').read_bytes())
             if sha(receipt)!=sha(old/'provider-final.json'):raise ValueError('Actual prior receipt differs')
             previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
-                disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
+                disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=8 if sustained_resume8 and number==10 else 0))
             prior_seconds+=seconds;prior_vm=terminal
-        if prior_seconds!=(({7:2700,8:4000,9:4300,10:8700}[aggregate_interval]) if resume_aggregate else 2600 if resume_layout else 2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
+        if prior_seconds!=(({7:2700,8:4000,9:4300,10:8700,11:12800}[aggregate_interval]) if resume_aggregate else 2600 if resume_layout else 2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
         R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
         ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
@@ -182,9 +192,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             R=ROOT/'gpu-06';OUTPUT=REMOTE+'/native-v70'
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v70')
         if resume_aggregate:
-            version=75 if sustained_first else 64+aggregate_interval
+            version=75 if sustained_run else 64+aggregate_interval
             R=ROOT/('gpu-%02d'%aggregate_interval);OUTPUT=REMOTE+('/native-v%d'%version)
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v%d'%version)
+            if sustained_resume8:BACKUP=BACKUP/'resume11'
     retry_after=0
     if prefix_capacity_retry:
         retry_after=capacity_retry_after(prefix_capacity_retry,prior_vm)
@@ -212,14 +223,14 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     previous=json.loads((stage/'provider-final.json').read_text())
     if not proof['passed'] or previous['status']!='TERMINATED':raise ValueError('Complete CPU stage and actual STOP required')
     clock=json.loads((stage/'storage-deadline.json').read_text())
-    duration=(73500 if sustained_first else 43100)-prior_seconds
-    if sustained_first:
+    duration=(73500 if sustained_run else 43100)-prior_seconds
+    if sustained_run:
         clock=dict(clock,storage_deadline_unix=1794052800.)
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
-    price_path=Path('runs/product-progress-watch/current-capacity-prices-20261105-launch-v75.json') if sustained_first else Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v72' if resume_aggregate and aggregate_interval>=8 else 'v71' if resume_aggregate else 'v70' if resume_layout else 'v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json')
+    price_path=Path('runs/product-progress-watch/current-capacity-prices-20261105-launch-v76.json' if sustained_resume8 else 'runs/product-progress-watch/current-capacity-prices-20261105-launch-v75.json') if sustained_run else Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v72' if resume_aggregate and aggregate_interval>=8 else 'v71' if resume_aggregate else 'v70' if resume_layout else 'v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json')
     price=json.loads(price_path.read_text())
     hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
-    if not 0<hourly<=(5.9 if sustained_first else 8) or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
+    if not 0<hourly<=(5.9 if sustained_run else 8) or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
     source=c.run(['git','rev-parse','HEAD']).strip()
     if c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus']).strip():
@@ -293,7 +304,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
         boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-large65-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        if sustained_first:
+        if sustained_run:
             from .oslogin_access import ensure as ensure_key
             ensure_key(time.time()+duration,R)
         else:
@@ -378,19 +389,21 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if (resume_sizing or fallback80 or resume_memory) and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
             raise ValueError('Do not claim an old provider interval as a new start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
-        if sustained_first:c.ssh_repair=lambda:ensure_key(end,R,force=True)
+        if sustained_run:c.ssh_repair=lambda:ensure_key(end,R,force=True)
         prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
         c.remote=c.ROOT+'/duplex-large-'+source[:12]
         c.sync(bundle,c.ROOT+'/large65-gpu-source.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/large65-gpu-source.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source,120)
         plan=dict(resource_key=KEY,authorization_sha256=sha(AUTH),parent_sha256=PARENT_SHA,cache_manifest_sha256=MANIFEST_SHA,
-             maximum_all_branch_updates=120 if sustained_first else 984,external_model_API_calls=0,prior_project_USD=OLD_USD,
+             maximum_all_branch_updates=120 if sustained_run else 984,external_model_API_calls=0,prior_project_USD=OLD_USD,
              vm_id=vm['id'],disk_id=disk['id'],zone=ZONE,creation_timestamp=vm['creationTimestamp'],
              **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
              machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
-        if sustained_first:
+        if sustained_run:
             from .sustained import AUTH as S_AUTH
             plan['sustained_authorization_sha256']=sha(S_AUTH)
+        plan['execution_source']=source
+        if sustained_resume8:plan.update(optimizer_work_started=True,trained_state_receipt_path=str(resume_evidence_path),trained_state_receipt_sha256=sha(resume_evidence_path),training_source=saved_evidence['source'])
         if resume_memory:plan['memory_authorization_sha256']=sha(MEMORY_AUTH)
         if resume_prefix:plan.update(prefix_authorization_sha256=sha(PREFIX_AUTH),activation_memory_policy='repeat4-prefix-pageable-v2')
         if resume_layout:plan.update(layout_authorization_sha256=sha(LAYOUT_AUTH),activation_memory_policy='repeat4-prefix-pageable-v3-layout')
@@ -406,6 +419,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
              controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip())
         save('lease.json',lease)
         c.ssh('mkdir -p '+c.remote+'/'+str(ROOT))
+        if sustained_resume8:c.sync(resume_evidence_path,c.remote+'/'+str(resume_evidence_path))
         for row in previous_intervals:c.sync(row['provider_final_path'],c.remote+'/'+row['provider_final_path'])
         c.sync(plan_path,c.remote+'/'+str(plan_path));lease_path=c.ROOT+'/large65-lease.json';c.sync(R/'lease.json',lease_path)
         watch=subprocess.Popen([sys.executable,'-u','-m','portable.venus.guard','--lease',str(R/'lease.json'),
@@ -427,7 +441,8 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         c.record('actual_GPU_running_both_guards_live',vm_id=vm['id'],disk_id=disk['id'],source=source,native_STOP_unix=end)
         env='env DUPLEX_LIVE_GUARD_FILE='+c.ROOT+'/venus-live-guard-v1.json DUPLEX_LIVE_LEASE_FILE='+lease_path+' HF_HOME='+c.ROOT+'/venus-runtime-v1/hf-cache '
         py=c.ROOT+'/venus-runtime-v1/venv/bin/python'
-        common=' --model '+c.MODEL+' --cache '+REMOTE+'/cache --action-index '+REMOTE+'/cache/action-index.json --data-admission '+c.remote+'/docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-V3-2026-11-02.json --opal-source '+c.ROOT+'/opal-upstream-v34 --lease '+lease_path+' --source '+source
+        model_source=saved_evidence['source'] if sustained_resume8 else source
+        common=' --model '+c.MODEL+' --cache '+REMOTE+'/cache --action-index '+REMOTE+'/cache/action-index.json --data-admission '+c.remote+'/docs/NATIVE-VENUS-CONTEXT-TRAINING-ADMISSION-V3-2026-11-02.json --opal-source '+c.ROOT+'/opal-upstream-v34 --lease '+lease_path+' --source '+model_source
         def execute(unit,module,args,seconds):
             if seconds<1:raise TimeoutError('No authorized running allowance remains')
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
@@ -435,20 +450,22 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         sizing_remaining=sizing_limit if fallback80 else sizing_limit-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
         if sustained_first:
             execute('duplex-large75-reuse','training.venus.sustained',' --output '+OUTPUT+' --source '+source,300)
+        elif sustained_resume8:
+            execute('duplex-large76-resume-proof','training.venus.resume_native',common+' --root '+OUTPUT+' --checkpoint '+saved_evidence['remote_checkpoint']+' --evidence '+c.remote+'/'+str(resume_evidence_path),900)
         else:
             execute('duplex-large65-prepare','training.venus.large_native',common+(' --measured-joint-schedule' if resume_aggregate and aggregate_interval>=8 else '')+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v3-layout' if resume_layout else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(sizing_limit,sizing_remaining))
-        execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
+        if not sustained_resume8:execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         if resume_aggregate:
             from .checkpoint_stream import CheckpointStream
             checkpoint_stream=CheckpointStream(c.ssh_argv,OUTPUT,BACKUP,R,source).start()
         for arm in ('main','control'):
-            execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt',int(end-time.time()-1800))
+            execute('duplex-large65-train-'+arm,'training.venus.large_train',common+' --arm '+arm+' --root '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --resume '+saved_evidence['remote_checkpoint'] if sustained_resume8 and arm=='main' else ''),int(end-time.time()-1800))
             execute('duplex-large65-final-'+arm,'training.venus.large_native',common+' --stage final-restore --output '+OUTPUT+'/'+arm,900)
         c.record('both_complete_training_arms_and_independent_final_restores',source=source,adopted=False)
-        evaluate=' --root '+OUTPUT+' --model '+c.MODEL+' --lease '+lease_path+' --source '+source+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674'
+        evaluate=' --root '+OUTPUT+' --model '+c.MODEL+' --lease '+lease_path+' --source '+model_source+' --plan '+c.remote+'/evals/fixtures/venus-control-repair-source-v2-20261027.json --timelines '+c.OUT+'/paced-timelines-v22 --approval '+c.OUT+'/paced-data-approval-v22.json --word-quality '+c.OUT+'/paced-word-quality-v22.json --old-plan '+c.remote+'/evals/fixtures/venus-control-corpus-v4-20261026.json --old-timelines '+c.OUT+'/timelines-v7-repaired --old-approval '+c.OUT+'/data-approval-v7.json --voice-reference '+c.OUT+'/george-reference-v33/reference-16k.wav --voice-reference-sha256 40159a59a35053c358d5192b3919a86453c8c6bf1b2019b289119ceca444f674'
         for arm in ('main','control'):
             execute('duplex-large65-native-'+arm,'training.venus.large_behavior',evaluate+' --arm '+arm,int(end-time.time()-600))
-        execute('duplex-large65-combine','training.venus.large_behavior',' --combine --root '+OUTPUT+' --source '+source,120)
+        execute('duplex-large65-combine','training.venus.large_behavior',' --combine --root '+OUTPUT+' --source '+model_source,120)
         c.record('complete64_native_speech_collection',source=source,adopted=False)
     except BaseException as error:
         c.record('capacity_interval_failure',error_type=type(error).__name__,error=str(error)[-1500:]);raise
@@ -487,4 +504,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-layout',action='store_true');p.add_argument('--layout-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-aggregate',action='store_true');p.add_argument('--aggregate-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--aggregate-interval',type=int,choices=(7,8,9),default=7);p.add_argument('--sustained-first',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry,a.resume_layout,a.layout_capacity_retry,a.resume_aggregate,a.aggregate_capacity_retry,a.aggregate_interval,a.sustained_first)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-layout',action='store_true');p.add_argument('--layout-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-aggregate',action='store_true');p.add_argument('--aggregate-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--aggregate-interval',type=int,choices=(7,8,9),default=7);p.add_argument('--sustained-first',action='store_true');p.add_argument('--sustained-resume8',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry,a.resume_layout,a.layout_capacity_retry,a.resume_aggregate,a.aggregate_capacity_retry,a.aggregate_interval,a.sustained_first,a.sustained_resume8)

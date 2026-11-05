@@ -72,7 +72,7 @@ def main(a):
         from .sustained import validate
         reused=validate(root,a.source)
     original_source=reused['original_source'] if reused else a.source
-    if (not proof['passed'] or proof['restore_pid'] == os.getpid() or not proof['actual_CUDA']
+    if (not proof['passed'] or (not a.resume and proof['restore_pid'] == os.getpid()) or not proof['actual_CUDA']
             or proof['source'] != a.source or proof['checkpoint_sha256'] != sha(init)
             or proof['new_optimizer_updates'] != 0 or sizing['source'] != original_source):
         raise ValueError('Actual independent expanded native state proof required')
@@ -114,6 +114,30 @@ def main(a):
                 runtime, _ = restore(a.resume, sha(a.resume), llm, base, source=a.opal_source,
                                      run_dir=out/('resume-'+str(saved['step'])))
             start = saved['step']
+            from .resume_native import validate_state,verify_proof
+            lease=json.loads(Path(a.lease).read_text());evidence=json.loads(Path(lease['trained_state_receipt_path']).read_text())
+            validate_state(saved,evidence)
+            resumed=json.loads((root/'fresh-resume-0008.json').read_text())
+            verify_proof(resumed,evidence,lease,os.getpid(),Path('/proc/sys/kernel/random/boot_id').read_text().strip())
+            if sha(a.resume)!=resumed['checkpoint_sha256']:raise ValueError('Resumed checkpoint differs')
+            from .lora import selected_forward
+            ref=next(r for r in corpus.rows if r['id']==resumed['native_reference']['id'])
+            with torch.no_grad():ref_logits,_=selected_forward(llm,reader(a.cache,ref),'cuda')
+            if tensor_sha(ref_logits)!=resumed['native_reference']['logits_sha256']:raise ValueError('Independent native resume predictions differ')
+            restore_rng(saved['rng'])
+            meta=copy.deepcopy(meta)
+            meta.setdefault('initial_training_native_pid',meta['training_native_pid'])
+            meta['training_native_pid']=os.getpid()
+            meta.setdefault('resume_executions',[]).append(dict(execution_source=lease['execution_source'],saved_step=start,
+                checkpoint_sha256=resumed['checkpoint_sha256'],independent_restore_pid=resumed['restore_pid'],training_pid=os.getpid()))
+            # Do not reset OPAL/scheduler or repeat the first8 batches.
+            admitted=meta['admitted']
+            if admitted['epochs']!=1 or admitted['updates_each_arm']!=60:raise ValueError('Same complete schedule required')
+            if lease['stop_unix']-time.time()-180<admitted['joint_required_seconds']:
+                raise TimeoutError('Original conservative complete-pair timing no longer fits')
+            write(out,'resume-from-0008.json',dict(source=a.source,execution_source=lease['execution_source'],
+                actual_saved_step=start,new_updates_before_this_process=8,all_state_exact=True,native_reference_exact=True,
+                restore_pid=resumed['restore_pid'],training_pid=os.getpid(),no_saved_updates_replayed=True))
         else:
             if full:
                 initialized = torch.load(init, map_location='cpu', weights_only=False)
@@ -178,7 +202,7 @@ def main(a):
         ordered = batches(corpus.rows, recipe['epochs'], recipe['seed'])
         if len(ordered) != recipe['updates'] or runtime.optimizer.update != start:
             raise ValueError('Exact admitted schedule/OPAL clock required')
-        log = (out/'training.jsonl').open('a' if a.resume else 'x')
+        log = (out/('training-resume-%04d.jsonl'%start if a.resume else 'training.jsonl')).open('x')
         frozen = {n:p._version for n,p in llm.named_parameters() if not p.requires_grad}
         actual = start
         try:
