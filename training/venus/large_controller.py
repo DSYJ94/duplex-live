@@ -293,7 +293,11 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
         boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-large65-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl='+('24h' if sustained_first else '14h'))
+        if sustained_first:
+            from .oslogin_access import ensure as ensure_key
+            ensure_key(time.time()+duration,R)
+        else:
+            c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=14h')
         if replace_prestart:
             exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone='+ZONE)
             if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED':raise ValueError('Only preserved stopped sizing envelope may retire')
@@ -374,6 +378,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         if (resume_sizing or fallback80 or resume_memory) and vm['lastStartTimestamp']==prior_vm['lastStartTimestamp']:
             raise ValueError('Do not claim an old provider interval as a new start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+duration
+        if sustained_first:c.ssh_repair=lambda:ensure_key(end,R,force=True)
         prepare_ssh(vm,ZONE,'66gpu' if resume_sizing else '65gpu')
         c.remote=c.ROOT+'/duplex-large-'+source[:12]
         c.sync(bundle,c.ROOT+'/large65-gpu-source.bundle')

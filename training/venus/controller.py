@@ -23,6 +23,7 @@ NAME='duplex-venus-train-20261026-v1';TAG='duplex-venus-train-bounded'
 ROOT='/workspace/migration';OUT=ROOT+'/venus-training-v1'
 MODEL=ROOT+'/venus-public-v1/Realtime-Venus-Audio'
 UNITS=[];events=[];vm=None;guard=None;ssh_argv=None;created=False;source=None
+ssh_repair=None  # Only explicitly configured sustained runs can renew their existing key.
 FIREWALL=['duplex-venus-train-iap-v1','duplex-venus-train-deny-v1']
 
 
@@ -49,14 +50,21 @@ def sync(local,dest,timeout=180):
 
 def props(unit):
     command='sudo systemctl show '+unit+' -p ActiveState -p SubState -p Result -p ExecMainStatus -p MainPID -p InvocationID'
+    fresh=[('ControlMaster=no' if x.startswith('ControlMaster=') else 'ControlPath=none' if x.startswith('ControlPath=') else x) for x in ssh_argv]
+    def repaired_read(error):
+        if not callable(ssh_repair) or 'Permission denied (publickey)' not in str(error):raise error
+        ssh_repair()  # Existing public key only; no job submission or model mutation.
+        raw=run(fresh+[command],25)
+        record('existing_public_key_repaired_read_only_status_reconnected',unit=unit)
+        return raw
     try:raw=ssh(command)
     except RuntimeError as error:
-        if not any(s in str(error) for s in ('Broken pipe','Connection closed','read from master failed')):raise
-        # Reconnect a read only. Never retry a submission or model mutation.
-        # Removing option values would leave orphan -o flags: replace in place.
-        fresh=[('ControlMaster=no' if x.startswith('ControlMaster=') else 'ControlPath=none' if x.startswith('ControlPath=') else x) for x in ssh_argv]
-        raw=run(fresh+[command],25)
-        record('read_only_unit_status_reconnected',unit=unit)
+        if 'Permission denied (publickey)' in str(error):raw=repaired_read(error)
+        elif any(s in str(error) for s in ('Broken pipe','Connection closed','read from master failed')):
+            try:raw=run(fresh+[command],25)
+            except RuntimeError as reconnect_error:raw=repaired_read(reconnect_error)
+            record('read_only_unit_status_reconnected',unit=unit)
+        else:raise
     return dict(x.split('=',1) for x in raw.splitlines())
 
 

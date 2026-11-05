@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T11:15:24.215440+00:00",
+  "updated_utc": "2026-11-05T11:40:23.613544+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "SUSTAINED_actual_MAIN6_new_optimizer_updates_completed_and_training_live",
+    "status": "STOPPED_after_SSH_publickey_failure_saved_MAIN8_registration_repaired_resume8_preparation_needed",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "prior8700+native64800+reserve100=73600aggregate;175phase350project;storage7Nov12UTC;noreset",
-    "next_material_decision": "Nonepending; keep SAME actual training running. Fulllearning/behavior/speech verdict requirescompletepairedrun; perbatchCE notconvergenceproof.",
+    "next_material_decision": "Nonehumanpending; implementtestedpostupdate11resume underexistingSUSTAINEDauthority, native<=60700s, no saved1..8replay. DoNOTrerunfirst10.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
     "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 6,
+    "new_optimizer_updates": 8,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -67,14 +67,14 @@
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "First3 actual update log records saved locally; no new trained-state checkpoint yet (first rolling dueat8). Originalinit/v73completeverified; v75finalstatecopybackpending.",
+    "backup_status": "Actual8state saved on retaineddisk/snapshotSHAobserved; Maccopy interrupted~2.488GB/UNVERIFIED. Originalinit/v73completeverified. Fullsaved8hashreverification andfreshstate restore required beforetrainingresume.",
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 8700,
     "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json",
     "expected_new_updates_each_arm": 60,
     "expected_total_new_updates": 120,
-    "main_completed_new_updates": 6,
+    "main_completed_new_updates": 8,
     "control_completed_new_updates": 0,
     "first_observed_step_seconds": [
       318.165510689,
@@ -82,7 +82,7 @@
       362.318373735
     ],
     "current_interval_native_limit_seconds": 64800,
-    "all_prior_GPU_upper_seconds": 8700
+    "all_prior_GPU_upper_seconds": 12800
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -153,7 +153,7 @@
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
-  "current_compute_scope": "ONE SAME A10080VM752/disk229 RUNNING interval10/sourceb39; main1492/controller91828/tool26279;6 mainNEWupdates/control0 atlastcheck. Prior8700+64800native+100reserve=73600 aggregate/175phase350project/old165.79003611carry/storage7Nov12UTC. NativeSTOP6Nov04:23:25.865UTC. No otherGPU job.",
+  "current_compute_scope": "All paidGPU stopped afterinterval10 SSHauthfailure;12800prioractualupper/nextnative<=60700+100reserve=73600;175phase350project;storage7Nov12UTC. Savedmain8/control0, localnewcheckpointcopyINCOMPLETE; onlyauthorizedpostupdate11/12resumes remain.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
