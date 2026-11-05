@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T22:23:12.820517+00:00",
+  "updated_utc": "2026-11-05T22:49:53.455992+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 56,
+    "new_optimizer_updates": 60,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -74,7 +74,7 @@
     "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json",
     "expected_new_updates_each_arm": 60,
     "expected_total_new_updates": 120,
-    "main_completed_new_updates": 56,
+    "main_completed_new_updates": 60,
     "control_completed_new_updates": 0,
     "first_observed_step_seconds": [
       318.165510689,
@@ -124,7 +124,7 @@
     },
     "remaining_schedule_seconds": 39906.6193459921,
     "remaining_schedule_margins_unchanged": true,
-    "confirmed_minimum_updates": 56,
+    "confirmed_minimum_updates": 60,
     "updates_after24_unknown_until_actual_disk_state_read": false,
     "actual_selected_durable_state_step": 24,
     "actual_current_restore_proof": {
@@ -150,17 +150,22 @@
     },
     "known_prior_uncheckpointed_step25": true,
     "latest_actual_observation": {
-      "at_unix": 1793917362.8736622,
+      "at_unix": 1793918929.2073355,
       "MainPID": "1589",
       "ActiveState": "active",
       "SubState": "running",
       "main_log_path": "/workspace/migration/venus-large-capacity-v65/native-v75/main/training-resume-0024.jsonl",
       "main_last_training_records": [
-        "{\"step\": 55, \"seconds\": 400.45755837700017, \"gradient_norm\": 1.8896316289901733, \"lr\": 4.5184002322740895e-07, \"ce\": 0.4484531991183758, \"kl\": 0.14402064681053162, \"hidden\": 0.6077358722686768}",
-        "{\"step\": 56, \"seconds\": 698.6729274030004, \"gradient_norm\": 2.7751777172088623, \"lr\": 3.1525137500119207e-07, \"ce\": 0.4809398092329502, \"kl\": 0.0, \"hidden\": 0.0}",
-        "{\"event\": \"live_state_saved\", \"step\": 56, \"sha256\": \"febd68d84adfa04d6ab0620b76461030d92072429a2e346a38f519216439e74c\"}"
+        "{\"step\": 58, \"seconds\": 570.4919311769991, \"gradient_norm\": 2.307711601257324, \"lr\": 1.1426567014420297e-07, \"ce\": 0.4636363051831722, \"kl\": 0.11078853160142899, \"hidden\": 0.4109395742416382}",
+        "{\"step\": 59, \"seconds\": 394.8717110189973, \"gradient_norm\": 7.193249702453613, \"lr\": 5.089279059533658e-08, \"ce\": 0.5563779249787331, \"kl\": 0.16121093928813934, \"hidden\": 0.5920547246932983}",
+        "{\"step\": 60, \"seconds\": 400.1728693860023, \"gradient_norm\": 2.797887086868286, \"lr\": 1.2739426948732426e-08, \"ce\": 0.24006439885124564, \"kl\": 0.17599700391292572, \"hidden\": 0.4012870490550995}"
       ]
-    }
+    },
+    "main_training_optimizer_updates_complete": true,
+    "main_training_terminal_verified": false,
+    "main_post_training_DEV_complete_verified": false,
+    "main_epoch60_checkpoint_verified": false,
+    "main_final_independent_restore_verified": false
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -227,7 +232,7 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "698351616 adapter main56/60 confirmed; control0/60; SAME final interval12 worker1589 active. Saved56 fully hash-backed-up; full epoch/evaluation pending; no quality/adoption claim.",
+    "current_stage": "Main60/60 optimizer updates completed on SAME1589; worker still active for post-update full64DEV/checkpoint/native reference. No successful training terminal/epoch60 checkpoint/final restore yet verified. Control0/60; saved56 full backup verified; no behavioral qualification.",
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
