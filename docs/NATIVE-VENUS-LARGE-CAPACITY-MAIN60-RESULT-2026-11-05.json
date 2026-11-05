@@ -1,0 +1,150 @@
+{
+  "recorded_utc": "2026-11-05T23:28:10.499604+00:00",
+  "status": "MAIN60_FULL64_DEV_FINAL_NATIVE_RESTORE_AND_CHECKPOINT_MAC_HASH_VERIFIED_CONTROL_RUNNING",
+  "actual_execution_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
+  "training_math_source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+  "baseline_original_source": "a833a32f30aa9f99b47a15dad57b7df33f816ff6",
+  "actual_main_terminal": {
+    "at_utc": "2026-11-05T23:26:39.204265+00:00",
+    "event": "actual_unit_terminal",
+    "unit": "duplex-large65-train-main",
+    "state": {
+      "MainPID": "0",
+      "Result": "success",
+      "ExecMainStatus": "0",
+      "ActiveState": "active",
+      "SubState": "exited",
+      "InvocationID": "f4709b954114401a867ed04227edaa5f"
+    }
+  },
+  "actual_training_terminal": {
+    "completed": true,
+    "actual_new_updates": 60,
+    "complete_epochs": 1,
+    "train_scenes_per_epoch": 240,
+    "full_dev_scenes": 64,
+    "parent_training_steps": 466,
+    "adopted": false,
+    "native_behavior_and_speech_required": true
+  },
+  "main_trainable_parameters": 698351616,
+  "control_trainable_parameters": 851968,
+  "base_parent_updates": 466,
+  "actual_main_new_updates": 60,
+  "control_new_updates_verified": 24,
+  "main_total_updates": 526,
+  "actual_checkpoint": {
+    "remote_path": "/workspace/migration/venus-large-capacity-v65/native-v75/main/step-0060.pt",
+    "sha256_from_actual_native_reference": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81",
+    "bytes_observed": 8511983946,
+    "Mac_full_hash_backup_verified": true,
+    "independent_final_restore_verified": true,
+    "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/main/step-0060.pt",
+    "verification": "Existing CheckpointStream verifies complete remote/local bytes and SHA before publishing checkpoint_verified; no redundant whole-file rehash."
+  },
+  "baseline_inventory_verified": {
+    "path": "main/dev-baseline.json",
+    "bytes": 12486,
+    "sha256": "bd3ec1161ff52a6e667e0a123ef7b3b23cf481c506d043799df45b11d94b505c",
+    "inventory": "runs/venus-large-capacity-20261104/v65/gpu-09/remote-inventory.json"
+  },
+  "actual_observation": {
+    "path": "runs/venus-large-capacity-20261104/v65/gpu-12/main60-completed-observation.json",
+    "sha256": "b968d60c2f9b2e0777008f1ff94db636c563357720d2a30f1626ab433d5897ff",
+    "capture_kind": "Derived structured live SSH observation; original raw DEV/reference/terminal file copyback still required"
+  },
+  "full_DEV_scenes": 64,
+  "metric": "Teacher-forced family mean CE from the unchanged complete64 DEV cohort; lower is better. This is not native free-running behavior or speech quality.",
+  "families": {
+    "quiet": {
+      "scenes": 14,
+      "baseline_CE": 0.8782868097935405,
+      "after60_CE": 0.7024596626205104,
+      "change_percent": -20.019331408877918
+    },
+    "delegate": {
+      "scenes": 16,
+      "baseline_CE": 0.3435114901512861,
+      "after60_CE": 0.18715915130451322,
+      "change_percent": -45.5158978169591
+    },
+    "cancel": {
+      "scenes": 10,
+      "baseline_CE": 0.874286213517189,
+      "after60_CE": 0.5346196040511131,
+      "change_percent": -38.850733800276025
+    },
+    "pause": {
+      "scenes": 6,
+      "baseline_CE": 0.990069309870402,
+      "after60_CE": 0.7223694200317065,
+      "change_percent": -27.03849994842653
+    },
+    "pending": {
+      "scenes": 6,
+      "baseline_CE": 0.6289350390434265,
+      "after60_CE": 0.46743979553381604,
+      "change_percent": -25.677571368139272
+    },
+    "ordinary": {
+      "scenes": 12,
+      "baseline_CE": 1.031377414862315,
+      "after60_CE": 0.7436014289657275,
+      "change_percent": -27.902102736562682
+    }
+  },
+  "retention_diagnostics": {
+    "ordinary_kl": {
+      "baseline": 0.43566099057594937,
+      "after60": 0.5568207477529844,
+      "change_percent": 27.810559081009355
+    },
+    "ordinary_hidden": {
+      "baseline": 1.8577143450578053,
+      "after60": 1.9145037929217021,
+      "change_percent": 3.0569526480202613
+    },
+    "pause_native_turn_end_token_accuracy": {
+      "baseline": 0.4166666666666667,
+      "after60": 0.4166666666666667
+    }
+  },
+  "limitations": [
+    "Control arm has not completed; capacity benefit versus small-adapter training is not established.",
+    "Whole paired native64 behavior/speech and later actual live acceptance remain required.",
+    "All six family CE means decreased, but pause native turn-end token accuracy remains unchanged at0.4166666666666667.",
+    "Ordinary KL and hidden drift rose versus initialization despite lower target CE; ordinary free-running retention remains unproven.",
+    "No recipe, data, thresholds or evaluation subset changed during this comparison.",
+    "Complete original raw JSON/report/journal inventory copyback is still pending; verified epoch checkpoint backup does not establish complete final archive."
+  ],
+  "candidate_adopted": false,
+  "product_qualified": false,
+  "training_continuation_beyond_approved_one_epoch_authorized": false,
+  "updated_utc": "2026-11-05T23:33:11.868556+00:00",
+  "actual_independent_final_restore": {
+    "passed": true,
+    "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+    "checkpoint_sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81",
+    "training_native_pid": 1589,
+    "restore_native_pid": 30242,
+    "actual_CUDA": true,
+    "optimizer_RNG_OPAL_exact": true,
+    "native_logits_exact": true,
+    "new_optimizer_updates": 0,
+    "adopted": false
+  },
+  "restore_and_control_observation": {
+    "path": "runs/venus-large-capacity-20261104/v65/gpu-12/main60-restored-control-started-observation.json",
+    "sha256": "da0a114c0b7b801ca57aa721a541ad5e5fdb7f01890810ef6d4a2dfa733c31e4",
+    "kind": "Derived structured actual live SSH observation; complete raw file copyback still required"
+  },
+  "main_epoch_checkpoint_stream_receipt": {
+    "at_unix": 1793921418.8584352,
+    "checkpoint_verified": {
+      "path": "main/step-0060.pt",
+      "bytes": 8511983946,
+      "sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81"
+    }
+  },
+  "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T22:49:53.455992+00:00",
+  "updated_utc": "2026-11-05T23:33:11.868556+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -57,17 +57,17 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 60,
+    "new_optimizer_updates": 84,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
-    "training_worker_pid": 1589,
-    "training_worker_invocation": "f4709b954114401a867ed04227edaa5f",
+    "training_worker_pid": 30389,
+    "training_worker_invocation": "044dbe97e43a41fe8693f4daf2dce26e",
     "full_four_main_backward_seconds": 1820.826916902,
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "Saved8/16/24/32/40/48/56 full Mac and remote hashes verified. Current12 final full inventory pending.",
+    "backup_status": "Main epoch60 checkpoint and rolling8/16/24/32/40/48/56 full Mac/remote hashes verified. Final whole inventory pending.",
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 21900,
@@ -75,7 +75,7 @@
     "expected_new_updates_each_arm": 60,
     "expected_total_new_updates": 120,
     "main_completed_new_updates": 60,
-    "control_completed_new_updates": 0,
+    "control_completed_new_updates": 24,
     "first_observed_step_seconds": [
       318.165510689,
       519.442999604,
@@ -124,7 +124,7 @@
     },
     "remaining_schedule_seconds": 39906.6193459921,
     "remaining_schedule_margins_unchanged": true,
-    "confirmed_minimum_updates": 60,
+    "confirmed_minimum_updates": 84,
     "updates_after24_unknown_until_actual_disk_state_read": false,
     "actual_selected_durable_state_step": 24,
     "actual_current_restore_proof": {
@@ -150,22 +150,41 @@
     },
     "known_prior_uncheckpointed_step25": true,
     "latest_actual_observation": {
-      "at_unix": 1793918929.2073355,
-      "MainPID": "1589",
+      "at_unix": 1793921507.2050002,
+      "unit": "duplex-large65-train-control.service",
+      "MainPID": "30389",
       "ActiveState": "active",
       "SubState": "running",
-      "main_log_path": "/workspace/migration/venus-large-capacity-v65/native-v75/main/training-resume-0024.jsonl",
-      "main_last_training_records": [
-        "{\"step\": 58, \"seconds\": 570.4919311769991, \"gradient_norm\": 2.307711601257324, \"lr\": 1.1426567014420297e-07, \"ce\": 0.4636363051831722, \"kl\": 0.11078853160142899, \"hidden\": 0.4109395742416382}",
-        "{\"step\": 59, \"seconds\": 394.8717110189973, \"gradient_norm\": 7.193249702453613, \"lr\": 5.089279059533658e-08, \"ce\": 0.5563779249787331, \"kl\": 0.16121093928813934, \"hidden\": 0.5920547246932983}",
-        "{\"step\": 60, \"seconds\": 400.1728693860023, \"gradient_norm\": 2.797887086868286, \"lr\": 1.2739426948732426e-08, \"ce\": 0.24006439885124564, \"kl\": 0.17599700391292572, \"hidden\": 0.4012870490550995}"
+      "running_model_units": [
+        {
+          "MainPID": "30389",
+          "Result": "success",
+          "ExecMainStatus": "0",
+          "Id": "duplex-large65-train-control.service",
+          "ActiveState": "active",
+          "SubState": "running",
+          "InvocationID": "044dbe97e43a41fe8693f4daf2dce26e"
+        }
+      ],
+      "control_last_training_records": [
+        "{\"step\": 23, \"seconds\": 11.206874688003154, \"gradient_norm\": 1.4639990329742432, \"lr\": 9.548159976772593e-06, \"ce\": 0.5666241571307182, \"kl\": 0.0, \"hidden\": 0.0}",
+        "{\"step\": 24, \"seconds\": 6.6545417529996485, \"gradient_norm\": 1.4818570613861084, \"lr\": 9.388394947836278e-06, \"ce\": 0.4527074731886387, \"kl\": 0.0, \"hidden\": 0.0}",
+        "{\"event\": \"live_state_saved\", \"step\": 24, \"sha256\": \"e2400c5997be21b67d69792531ee4e588239c3646d5923896c2aca854cca081c\"}"
       ]
     },
     "main_training_optimizer_updates_complete": true,
-    "main_training_terminal_verified": false,
-    "main_post_training_DEV_complete_verified": false,
-    "main_epoch60_checkpoint_verified": false,
-    "main_final_independent_restore_verified": false
+    "main_training_terminal_verified": true,
+    "main_post_training_DEV_complete_verified": true,
+    "main_epoch60_checkpoint_verified": true,
+    "main_final_independent_restore_verified": true,
+    "main_epoch60_checkpoint_backup": {
+      "path": "main/step-0060.pt",
+      "bytes": 8511983946,
+      "sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81",
+      "all_hashes_verified": true,
+      "stream_receipt": "runs/venus-large-capacity-20261104/v65/gpu-12/stream-backup.jsonl"
+    },
+    "main_result_report": "docs/NATIVE-VENUS-LARGE-CAPACITY-MAIN60-RESULT-2026-11-05.json"
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -232,7 +251,7 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "Main60/60 optimizer updates completed on SAME1589; worker still active for post-update full64DEV/checkpoint/native reference. No successful training terminal/epoch60 checkpoint/final restore yet verified. Control0/60; saved56 full backup verified; no behavioral qualification.",
+    "current_stage": "Main60 complete/actual terminal0/full64DEV/fresh native restore PASS/full epoch60 Mac hash verified; control24/60 actualrunning on sole30389. All6 main DEV CE lower20-46percent, ordinary drift rose and pause turn-end accuracy unchanged; full paired behavior/speech required, no adoption.",
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
