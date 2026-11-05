@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T12:39:41.133832+00:00",
+  "updated_utc": "2026-11-05T13:10:10.552301+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "LIVE_interval11_main12_of60_control0_of60_exact_saved8_resume_verified",
+    "status": "LIVE_interval11_main16_of60_control0_of60_saved16_backup_verified",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 12,
+    "new_optimizer_updates": 16,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -67,7 +67,7 @@
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "Saved8 fully hash-verified on Mac and retained disk:8512759608bytes/SHA82c1d407a236d823b772f9e4c6f126e4eaec3bb6fb8f0d8147d9260c539b1cd3; original init/v73 verified. Current11 final full inventory pending.",
+    "backup_status": "Saved16 fully Mac/remote hash-verified8512538808B/SHA0eb3d471d7ca9e13d2dc54dbe9b036c5d610ab38a7ebd275a680eae2afb1c643; saved8/originalinit backups retained. Final11 whole inventory pending.",
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 12800,
@@ -83,7 +83,22 @@
     ],
     "current_interval_native_limit_seconds": 64800,
     "all_prior_GPU_upper_seconds": 12800,
-    "execution_source": "455505352868bfdb3b7095ca698126ccc3400a90"
+    "execution_source": "455505352868bfdb3b7095ca698126ccc3400a90",
+    "latest_trained_state_backup": {
+      "remote_path": "/workspace/migration/venus-large-capacity-v65/recovery-v75/main-step-0016.pt",
+      "actual_new_updates": 16,
+      "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+      "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+      "sha256": "0eb3d471d7ca9e13d2dc54dbe9b036c5d610ab38a7ebd275a680eae2afb1c643",
+      "bytes": 8512538808,
+      "execution_source": "455505352868bfdb3b7095ca698126ccc3400a90",
+      "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0016.pt",
+      "all_hashes_verified": true,
+      "vm_id": "7521667153519853425",
+      "disk_id": "2297341858915206463",
+      "not_a_fresh_state_restore": true,
+      "no_adoption": true
+    }
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -150,7 +165,7 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "698351616 adapter ACTUALLY training:12/60 new phase updates; control0/60; capacity benefit unproved.",
+    "current_stage": "698351616 adapter ACTUALLY training:16/60 new phase updates; control0/60; capacity benefit unproved.",
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
