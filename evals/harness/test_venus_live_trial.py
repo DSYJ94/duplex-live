@@ -16,7 +16,7 @@ def setup(monkeypatch,tmp_path,busy):
         return io.StringIO(json.dumps(dict(ready=True,busy=busy(clock.now),optimizer_updates=244,
             candidate={'checkpoint_sha256':'c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'})))
     monkeypatch.setattr(live_trial,'urlopen',health)
-    monkeypatch.setattr(live_trial,'websocket_probe',lambda url:dict(complete=True,fixture_only=True))
+    monkeypatch.setattr(live_trial,'websocket_probe',lambda url,**kwargs:dict(complete=True,fixture_only=True))
     c=SimpleNamespace(R=tmp_path,OUT='/approved-native',MODEL='/public-model',ssh_argv=['ssh','-o','StrictHostKeyChecking=yes','-o','ControlMaster=auto','-o','ControlPath=/old','owner@host'],
         guard=SimpleNamespace(poll=lambda:None),start_unit=lambda *args:calls.append(args),record=lambda event,**kwargs:events.append(event))
     return c,clock,calls,events
@@ -93,3 +93,58 @@ def test_two_sequential_runtime_variants_keep_distinct_tunnel_logs(monkeypatch,t
     assert (tmp_path/'released-tunnel.log').exists()
     assert (tmp_path/'sdpa-tunnel.log').exists()
     assert calls.count('terminated')==2
+
+
+def test_explicit_candidate_binds_launcher_health_and_conversation_proof(monkeypatch,tmp_path):
+    c,clock,calls,events=setup(monkeypatch,tmp_path,lambda now:False)
+    digest='a'*64
+    monkeypatch.setattr(live_trial,'urlopen',lambda *a,**k:io.StringIO(json.dumps(dict(
+        ready=True,busy=False,optimizer_updates=526,candidate={'checkpoint_sha256':digest}))))
+    proofs=[]
+    monkeypatch.setattr(live_trial,'websocket_probe',lambda url,**k:(proofs.append(k) or {'complete':True}))
+    live_trial.serve(c,'python',1000,'new',candidate_checkpoint='/approved-native/main/step-0060.pt',
+                     candidate_sha256=digest,candidate_updates=526)
+    command=next(x[1] for x in calls if isinstance(x,tuple))
+    assert '--adapter-checkpoint /approved-native/main/step-0060.pt' in command
+    assert proofs==[dict(candidate_updates=526,candidate_sha256=digest)]
+    assert json.loads((tmp_path/'live-ready.json').read_text())['profile']['optimizer_updates']==526
+
+
+@pytest.mark.parametrize('overrides',[
+    dict(candidate_checkpoint='/new.pt'),
+    dict(candidate_checkpoint='relative.pt',candidate_sha256='a'*64,candidate_updates=526),
+    dict(candidate_checkpoint='/new.pt',candidate_sha256='not-a-hash',candidate_updates=526),
+    dict(candidate_checkpoint='/new.pt',candidate_sha256='a'*64,candidate_updates=True),
+])
+def test_incomplete_candidate_identity_never_starts_a_service(monkeypatch,tmp_path,overrides):
+    c,clock,calls,events=setup(monkeypatch,tmp_path,lambda now:False)
+    with pytest.raises(ValueError,match='Explicit candidate'):
+        live_trial.serve(c,'python',1000,'new',**overrides)
+    assert not calls
+
+
+def test_wrong_candidate_health_closes_tunnel_without_publishing_ready(monkeypatch,tmp_path):
+    c,clock,calls,events=setup(monkeypatch,tmp_path,lambda now:False)
+    with pytest.raises(RuntimeError,match='requested candidate'):
+        live_trial.serve(c,'python',1000,'new',candidate_checkpoint='/new.pt',
+                         candidate_sha256='a'*64,candidate_updates=526)
+    assert calls[-1]=='terminated' and not (tmp_path/'live-ready.json').exists()
+
+
+def test_probe_rejects_candidate_hash_mismatch_even_with_correct_updates(monkeypatch):
+    from contextlib import contextmanager
+    import sys
+    from types import ModuleType
+    profiles=iter([dict(optimizer_updates=0),dict(optimizer_updates=526,candidate={'checkpoint_sha256':'b'*64})])
+    @contextmanager
+    def connect(*args,**kwargs):
+        profile=next(profiles)
+        messages=iter([json.dumps(dict(ready=True,profile=profile)),json.dumps(dict(sequence=0,is_listen=True))])
+        yield SimpleNamespace(recv=lambda **k:next(messages),send=lambda data:None)
+    client=ModuleType('websockets.sync.client');client.connect=connect
+    monkeypatch.setitem(sys.modules,'websockets',ModuleType('websockets'))
+    monkeypatch.setitem(sys.modules,'websockets.sync',ModuleType('websockets.sync'))
+    monkeypatch.setitem(sys.modules,'websockets.sync.client',client)
+    monkeypatch.setattr(live_trial,'urlopen',lambda *a,**k:io.StringIO('{"busy":false}'))
+    with pytest.raises(RuntimeError,match='wrong candidate checkpoint'):
+        live_trial.websocket_probe('http://127.0.0.1:8037',candidate_updates=526,candidate_sha256='a'*64)

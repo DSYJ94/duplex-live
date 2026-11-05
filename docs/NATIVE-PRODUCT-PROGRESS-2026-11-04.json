@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T12:29:41.285910+00:00",
+  "updated_utc": "2026-11-05T12:39:41.133832+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "LIVE_interval11_main11_of60_control0_of60_exact_saved8_resume_verified",
+    "status": "LIVE_interval11_main12_of60_control0_of60_exact_saved8_resume_verified",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -57,7 +57,7 @@
     "control_four_native_backward_seconds": 30.371352763999994,
     "control_complete_DEV_seconds": 47.427065846999994,
     "control_DEV_scenes": 64,
-    "new_optimizer_updates": 11,
+    "new_optimizer_updates": 12,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
     "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
@@ -150,7 +150,7 @@
     "main_prepared_variant": "all36/all7 rank256; inherited64-rank bases preserved plus192-rank branches",
     "structural_new_six_block_parameters": 1157678592,
     "rank512_adapter_parameters": 1396703232,
-    "current_stage": "698351616 adapter ACTUALLY training:11/60 new phase updates; control0/60; capacity benefit unproved.",
+    "current_stage": "698351616 adapter ACTUALLY training:12/60 new phase updates; control0/60; capacity benefit unproved.",
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
@@ -194,10 +194,11 @@
       "current_language_training_changes_accent": false
     },
     "next_candidate_live_route": {
-      "status": "prepare_only_after_candidate_checkpoint_and_full_evaluation",
+      "status": "explicit_checkpoint_launcher_prepared_locally_not_deployed_or_GPU_qualified",
       "existing_generic_loader": "training/venus/inference.py supports native-capacity-trained-v1 via large_inference.py",
-      "legacy_trial": "training/venus/live_trial.py deliberately fixes244checkpoint; futurecandidate526 needs explicitcorrectcheckpoint/hash/update count andactualreleased/candidatePCMproof",
-      "current_GPU_must_not_overlap_live_server": true
+      "legacy_trial": "Default244 retained; explicit checkpoint path/SHA256/update count must all be provided and match health plus released/candidate WebSocket route before ready.",
+      "current_GPU_must_not_overlap_live_server": true,
+      "verification": "18 local launcher/browser fixtures passed; no actual new native live route proof yet."
     }
   }
 }

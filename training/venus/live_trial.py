@@ -11,21 +11,26 @@ from urllib.request import build_opener, ProxyHandler
 
 # Local tunnel health must never travel through an inherited HTTP proxy.
 urlopen = build_opener(ProxyHandler({})).open
+LEGACY_CHECKPOINT_SHA256 = 'c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'
 
 
-def websocket_probe(url):
+def websocket_probe(url, *, candidate_updates=244, candidate_sha256=LEGACY_CHECKPOINT_SHA256):
     """Exercise the actual conversation route before publishing a live URL."""
     from websockets.sync.client import connect
     rows=[]
-    for variant,updates in (('released',0),('candidate',244)):
+    for variant,updates in (('released',0),('candidate',candidate_updates)):
         with connect(url.replace('http://','ws://')+'/ws?variant='+variant,
                      origin=url, proxy=None, open_timeout=10, close_timeout=3) as ws:
             ready=json.loads(ws.recv(timeout=40))
-            assert ready['ready'] and ready['profile']['optimizer_updates']==updates
+            if not ready['ready'] or ready['profile']['optimizer_updates']!=updates:
+                raise RuntimeError('Conversation route served the wrong model update count')
+            if variant=='candidate' and ready['profile'].get('candidate',{}).get('checkpoint_sha256')!=candidate_sha256:
+                raise RuntimeError('Conversation route served the wrong candidate checkpoint')
             # One second of synthetic silence, never the owner's microphone.
             ws.send(bytes(32000));frame=json.loads(ws.recv(timeout=40))
             assert frame['sequence']==0 and isinstance(frame['is_listen'],bool)
             rows.append(dict(variant=variant,optimizer_updates=updates,
+                checkpoint_sha256=candidate_sha256 if variant=='candidate' else None,
                 sequence=frame['sequence'],is_listen=frame['is_listen'],
                 audio_samples=frame.get('audio_samples'),actual_pcm_roundtrip=True))
         for _ in range(50):
@@ -37,15 +42,23 @@ def websocket_probe(url):
                 behavioral_approval=False)
 
 
-def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90,voice_reference=None,voice_reference_sha256=None,benchmark_only=False,tts_attention='released',benchmark_dir='latency-benchmark'):
+def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_timeout=300,idle_timeout=90,voice_reference=None,voice_reference_sha256=None,benchmark_only=False,tts_attention='released',benchmark_dir='latency-benchmark',candidate_checkpoint=None,candidate_sha256=None,candidate_updates=None):
     if not 90<=idle_timeout<=300 or not 300<=unused_timeout<=1800:
         raise ValueError("Bounded live waiting windows required")
     if bool(voice_reference)!=bool(voice_reference_sha256):raise ValueError('Exact custom reference hash required')
+    explicit = (candidate_checkpoint is not None, candidate_sha256 is not None, candidate_updates is not None)
+    if any(explicit) and (not all(explicit) or not isinstance(candidate_checkpoint,str)
+            or not candidate_checkpoint.startswith('/') or not isinstance(candidate_sha256,str)
+            or len(candidate_sha256)!=64 or any(x not in '0123456789abcdef' for x in candidate_sha256)
+            or type(candidate_updates) is not int or candidate_updates<1):
+        raise ValueError('Explicit candidate requires absolute checkpoint path, SHA256 and positive update count')
     c = controller
     unit = unit_prefix + '-microphone'
-    checkpoint = c.OUT + '/paced-candidate-v25/step-0054.pt'
+    checkpoint = candidate_checkpoint or c.OUT + '/paced-candidate-v25/step-0054.pt'
+    expected_sha = candidate_sha256 if all(explicit) else LEGACY_CHECKPOINT_SHA256
+    expected_updates = candidate_updates if all(explicit) else 244
     command = python_command + ' -u -m portable.venus.native_app --model-dir ' + c.MODEL
-    command += ' --adapter-checkpoint ' + checkpoint + ' --compare-foundation --port ' + str(port)
+    command += ' --adapter-checkpoint ' + shlex.quote(checkpoint) + ' --compare-foundation --port ' + str(port)
     command+=' --tts-attention '+shlex.quote(tts_attention)
     if voice_reference:command+=' --voice-reference '+shlex.quote(voice_reference)+' --voice-reference-sha256 '+voice_reference_sha256
     c.start_unit(unit, command, max(1, int(end-time.time()-180)))
@@ -82,9 +95,10 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
                 time.sleep(2); continue
             last_health=time.time()
             if ready is None:
-                assert health['ready'] and health['optimizer_updates']==244
-                assert health['candidate']['checkpoint_sha256']=='c634e6cf38831210be0165ce7f6dd09c5454226f62ff622477fd4d051abde270'
-                proof=websocket_probe(url)
+                if (not health['ready'] or health['optimizer_updates']!=expected_updates
+                        or health.get('candidate',{}).get('checkpoint_sha256')!=expected_sha):
+                    raise RuntimeError('Live service does not match the requested candidate checkpoint')
+                proof=websocket_probe(url,candidate_updates=expected_updates,candidate_sha256=expected_sha)
                 (c.R/'native-websocket-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
                 if benchmark_only:
                     c.record('native_benchmark_service_ready',reference_sha256=health['voice_reference']['sha256'])
@@ -101,7 +115,8 @@ def serve(controller, python_command, end, unit_prefix, *, port=8037,unused_time
                 ready = time.time()
                 (c.R/'live-ready.json').write_text(json.dumps(dict(url=url, ready_unix=ready,
                     stop_unix=end, profile=health, experimental=True, microphone_recorded=False),indent=2)+'\n')
-                c.record('native_microphone_ready', url=url, optimizer_updates=244,
+                c.record('native_microphone_ready', url=url, optimizer_updates=expected_updates,
+                    checkpoint_sha256=expected_sha,
                     microphone_recorded=False, general_reasoning_backend=False)
             if health['busy']:
                 first_conversation=True; last_busy=time.time()
