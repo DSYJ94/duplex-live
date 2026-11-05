@@ -1,0 +1,40 @@
+{
+  "status": "STOPPED_NO_COMPLETE_PAIRED_SCHEDULE_FITS",
+  "source": "a833a32f30aa9f99b47a15dad57b7df33f816ff6",
+  "actual_new_optimizer_updates": 0,
+  "native_gradient_admission_passed": true,
+  "independent_restore_passed": true,
+  "main_four_backward_seconds": 1820.826916902,
+  "main_full64_DEV_seconds": 1957.4802121929997,
+  "control_four_backward_seconds": 30.371352763999994,
+  "control_full64_DEV_seconds": 47.427065846999994,
+  "whole_epoch_runtime_basis": {
+    "main": 35704.39456683981,
+    "control": 831.5453182028878,
+    "scenes_each": 240,
+    "main_basis": "complete240nativegeometry/all4measuredlongrows",
+    "control_basis": "complete240geometry/actual4prefixrows",
+    "fixed_scene_overhead_seconds": 1,
+    "selection_uses_losses_or_heldout": false
+  },
+  "one_paired_epoch_required_seconds": 58535.78703990764,
+  "one_paired_epoch_required_hours": 16.25994084441879,
+  "prior_before09_upper_seconds": 4300,
+  "interval09_actual_seconds": 4379.113,
+  "interval09_upper_seconds": 4400,
+  "all_actual_upper_seconds": 8700,
+  "remaining_including_reserve_seconds": 34500,
+  "original_native_stop_unix": 1793873126.622,
+  "available_at_terminal_seconds": 34360.481999874115,
+  "backup": {
+    "all_hashes_verified": true,
+    "files": 55,
+    "bytes": 8387133380,
+    "links": 0,
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73",
+    "inventory_sha256": "f893c7fc96f6226a9b24e35d234b04865827605fd4fd7b5515b3d1bd7b036a6c"
+  },
+  "conclusion": "Memory, full native gradients and exact fresh restore passed; current serial segmented runtime cannot fit even one complete paired epoch in remaining approved wall time. This is throughput/scheduling, not observed model-learning or dataset failure. No new optimizer updates occurred.",
+  "next_action": "No more zero-update GPU restarts. Preserve proven expanded init. Prepare a separate concrete sustained-training time/resource plan, reusing verified init and proofs with independent reload; do not repeat calibration unchanged or weaken gates. Prefer larger time allowance on same resources if grant permits; assess faster placement or equivalent segmented execution only as separate measured intervention, not a blind retry.",
+  "original_storage_deadline_UTC": "2026-11-05T16:47:43.296897Z"
+}

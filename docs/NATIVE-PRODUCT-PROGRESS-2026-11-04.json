@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T00:06:53.199759+00:00",
+  "updated_utc": "2026-11-05T00:36:31.301355+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "full_698M_gradient_admission_and_independent_restore_PASS_main_full64DEV_baseline_live",
+    "status": "STOPPED_no_complete_paired_epoch_fits_original_time_allowance",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "max12actual;8prior4300upper +38800native09 +100reserve=43200;150new/325project/originalstorage5Nov16:47:43.296897UTC unchanged",
-    "next_material_decision": "None pending while actual native model runs. Full4 main gradients/materializedAdam/freshrestore/useful paired complete schedule remain required; if kernel/storage or schedule fails, stop branch/preserve/stop compute.",
+    "next_material_decision": "Adequate sustained training time and storage window, or separately measured faster execution, before any further optimizer work. No automatic zero-update GPU restart.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
     "source": "a833a32f30aa9f99b47a15dad57b7df33f816ff6",
@@ -67,7 +67,12 @@
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "Top-level proof JSON all hashes verified; streamed expanded-init transfer failed after2.62GB; full artifact backup partial, durable source intact, final full copyback required."
+    "backup_status": "COMPLETE55files8387133380bytes0links allSHAverified outsideOneDrive; previousstreamfailure resolved by finalcopyback",
+    "main_full64_DEV_seconds": 1957.480212193,
+    "one_paired_epoch_required_hours": 16.25994084441879,
+    "all_actual_GPU_upper_seconds": 8700,
+    "remaining_GPU_seconds_including_reserve": 34500,
+    "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-THROUGHPUT-RESULT-2026-11-05.json"
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
