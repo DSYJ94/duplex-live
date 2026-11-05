@@ -116,6 +116,14 @@ def resource(lease):
             if receipt.parent!=ROOT or sha(receipt)!=p["trained_state_receipt_sha256"]:raise ValueError("Bound trained state required")
             trained=json.loads(receipt.read_text())
             if trained["actual_new_updates"]<=0 or trained["vm_id"]!=p["vm_id"] or trained["disk_id"]!=p["disk_id"] or trained["cache_manifest_sha256"]!=MANIFEST_SHA:raise ValueError("Actual same-resource trained state required")
+        if number==12:
+            if (not p.get('resume_latest_saved_state') or not lease.get('resume_latest_saved_state')
+                    or trained['actual_new_updates']!=24
+                    or trained['checkpoint_sha256']!='8f2d829d57f0fce4340967cf00af97e0d610054ea7e605ad1e29d5e6244e7401'
+                    or trained['source']!='b39ce3ebe167b059b67fa3d131978e5da7c41ac1'):
+                raise ValueError('Final interval requires actual saved24 seed and latest-state inspection')
+        elif p.get('resume_latest_saved_state') or lease.get('resume_latest_saved_state'):
+            raise ValueError('Latest-state recovery is bound only to final interval12')
     if aggregate:
         a=aggregate_authority()
         if (p.get('aggregate_authorization_sha256')!=sha(AGGREGATE_AUTH)

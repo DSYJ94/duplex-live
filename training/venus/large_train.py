@@ -72,7 +72,7 @@ def main(a):
         from .sustained import validate
         reused=validate(root,a.source)
     original_source=reused['original_source'] if reused else a.source
-    if (not proof['passed'] or (not a.resume and proof['restore_pid'] == os.getpid()) or not proof['actual_CUDA']
+    if (not proof['passed'] or (not reused and not a.resume and proof['restore_pid'] == os.getpid()) or not proof['actual_CUDA']
             or proof['source'] != a.source or proof['checkpoint_sha256'] != sha(init)
             or proof['new_optimizer_updates'] != 0 or sizing['source'] != original_source):
         raise ValueError('Actual independent expanded native state proof required')
@@ -114,10 +114,16 @@ def main(a):
                 runtime, _ = restore(a.resume, sha(a.resume), llm, base, source=a.opal_source,
                                      run_dir=out/('resume-'+str(saved['step'])))
             start = saved['step']
-            from .resume_native import validate_state,verify_proof
+            from .resume_native import validate_state,verify_proof,verify_selection
             lease=json.loads(Path(a.lease).read_text());evidence=json.loads(Path(lease['trained_state_receipt_path']).read_text())
+            if sha(lease['trained_state_receipt_path'])!=lease['trained_state_receipt_sha256']:raise ValueError('Resume seed evidence changed')
+            selection_path=root/'resume-selection-0012.json'
+            if lease.get('resume_latest_saved_state'):
+                evidence=verify_selection(json.loads(selection_path.read_text()),evidence,lease)
+                if a.resume!=evidence['remote_checkpoint']:raise ValueError('Actual selected checkpoint path required')
             validate_state(saved,evidence)
-            resumed=json.loads((root/'fresh-resume-0008.json').read_text())
+            resumed=json.loads((root/('fresh-resume-latest-0012.json' if lease.get('resume_latest_saved_state') else 'fresh-resume-%04d.json'%start)).read_text())
+            if lease.get('resume_latest_saved_state') and resumed['selection_sha256']!=sha(selection_path):raise ValueError('Native proof and actual selection differ')
             verify_proof(resumed,evidence,lease,os.getpid(),Path('/proc/sys/kernel/random/boot_id').read_text().strip())
             if sha(a.resume)!=resumed['checkpoint_sha256']:raise ValueError('Resumed checkpoint differs')
             from .lora import selected_forward
@@ -130,13 +136,22 @@ def main(a):
             meta['training_native_pid']=os.getpid()
             meta.setdefault('resume_executions',[]).append(dict(execution_source=lease['execution_source'],saved_step=start,
                 checkpoint_sha256=resumed['checkpoint_sha256'],independent_restore_pid=resumed['restore_pid'],training_pid=os.getpid()))
-            # Do not reset OPAL/scheduler or repeat the first8 batches.
+            # Preserve the actual saved OPAL/scheduler clock and ordered data.
             admitted=meta['admitted']
             if admitted['epochs']!=1 or admitted['updates_each_arm']!=60:raise ValueError('Same complete schedule required')
-            if lease['stop_unix']-time.time()-180<admitted['joint_required_seconds']:
+            required=admitted['joint_required_seconds']
+            if lease.get('resume_latest_saved_state'):
+                from .resume_schedule import remaining_schedule
+                work=json.loads((root/'workload-geometry.json').read_text());control=json.loads((root/'control-runtime.json').read_text())
+                if work.pop('source')!=original_source or control['source']!=original_source or control['cache_manifest_sha256']!=MANIFEST_SHA or control['full_dev_scenes']!=64:raise ValueError('Original complete native timing evidence required')
+                baseline=json.loads((root/'original-proofs/main/dev-baseline.json').read_text())
+                remaining=remaining_schedule(work,sizing['measured']['seconds'],control['measured'],baseline['seconds'],start)
+                write(out,'remaining-schedule-resume-%04d.json'%start,remaining)
+                required=remaining['joint_required_seconds']
+            if lease['stop_unix']-time.time()-180<required:
                 raise TimeoutError('Original conservative complete-pair timing no longer fits')
-            write(out,'resume-from-0008.json',dict(source=a.source,execution_source=lease['execution_source'],
-                actual_saved_step=start,new_updates_before_this_process=8,all_state_exact=True,native_reference_exact=True,
+            write(out,'resume-from-%04d.json'%start,dict(source=a.source,execution_source=lease['execution_source'],
+                actual_saved_step=start,new_updates_before_this_process=start,all_state_exact=True,native_reference_exact=True,
                 restore_pid=resumed['restore_pid'],training_pid=os.getpid(),no_saved_updates_replayed=True))
         else:
             if full:

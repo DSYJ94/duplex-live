@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T17:12:01.149078+00:00",
+  "updated_utc": "2026-11-05T17:35:06.368865+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "STOPPED_interval11_connectivity_DNS_failure_actual_saved24_remote_verified_Mac24_partial_resume12_preparation",
+    "status": "OFF_final_recovery12_implemented_28CPUtests_passed_pending_Git_deploy_and_one_start",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "21900prior+51600native+100reserve=73600aggregate;175phase350project;storage7Nov12UTC;max12",
-    "next_material_decision": "No human decision pending for authorized postupdate12 preparation. Implement verified latest-state restore and exact remaining whole-epoch accounting before any start.",
+    "next_material_decision": "None pending for already authorized recovery12. Commit/push source; one actual sameVM resume; actual latest-state inspection/fullnative independent restore required before updates.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
     "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
@@ -129,7 +129,11 @@
       "last_Mac_verified_checkpoint_step": 16,
       "last_remote_verified_checkpoint_step": 24,
       "reason": "Local DNS/API and SSH/IAP access failed; controller final recording failed. Provider state captured after connectivity returned. No model/numerical failure established."
-    }
+    },
+    "remaining_schedule_seconds": 39906.6193459921,
+    "remaining_schedule_margins_unchanged": true,
+    "confirmed_minimum_updates": 24,
+    "updates_after24_unknown_until_actual_disk_state_read": true
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
