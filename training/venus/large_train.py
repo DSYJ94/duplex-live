@@ -67,9 +67,14 @@ def main(a):
     proof = json.loads((root/'fresh-process-restore.json').read_text())
     sizing = json.loads((root/'admission.json').read_text())
     init = root/'expanded-init.pt'
+    reused=None
+    if (root/'reuse-manifest.json').exists():
+        from .sustained import validate
+        reused=validate(root,a.source)
+    original_source=reused['original_source'] if reused else a.source
     if (not proof['passed'] or proof['restore_pid'] == os.getpid() or not proof['actual_CUDA']
             or proof['source'] != a.source or proof['checkpoint_sha256'] != sha(init)
-            or proof['new_optimizer_updates'] != 0 or sizing['source'] != a.source):
+            or proof['new_optimizer_updates'] != 0 or sizing['source'] != original_source):
         raise ValueError('Actual independent expanded native state proof required')
     if sha(a.parent) != PARENT_SHA: raise ValueError('Exact preserved466 parent required')
     parent = torch.load(a.parent, map_location='cpu', weights_only=False)
@@ -120,18 +125,29 @@ def main(a):
                 base = torch.optim.AdamW([p for p in llm.parameters() if p.requires_grad], lr=recipe['learning_rate'])
                 runtime, _ = restore(a.parent, PARENT_SHA, llm, base, source=a.opal_source, run_dir=out/'parent-restore')
             before = time.monotonic()
-            baseline = core.dev_loss(llm, a.cache, corpus.rows, True, reader=reader, loss_fn=corpus.loss, recipe=recipe)
-            dev_seconds = time.monotonic()-before
-            write(out, 'dev-baseline.json', dict(source=a.source, **baseline, seconds=dev_seconds, scenes=64))
+            if reused:
+                baseline=json.loads((root/'original-proofs/main/dev-baseline.json').read_text())
+                if not full:
+                    record=json.loads((root/'control-runtime.json').read_text())
+                    baseline=dict(record['dev'],source=record['source'],seconds=record['measured']['full_dev_seconds'],scenes=record['full_dev_scenes'])
+                dev_seconds=baseline['seconds']
+                if baseline['source']!=original_source or baseline['scenes']!=64:raise ValueError('Complete original baseline required')
+                write(out,'dev-baseline-reused.json',dict(original_source=original_source,controller_source=a.source,original_path='original-proofs/main/dev-baseline.json' if full else 'original-proofs/control-runtime.json',new_measurement=False,seconds=dev_seconds,scenes=64))
+            else:
+                baseline = core.dev_loss(llm, a.cache, corpus.rows, True, reader=reader, loss_fn=corpus.loss, recipe=recipe)
+                dev_seconds = time.monotonic()-before
+                write(out, 'dev-baseline.json', dict(source=a.source, **baseline, seconds=dev_seconds, scenes=64))
             if full:
                 lease = json.loads(Path(a.lease).read_text())
                 timing={}
                 if (root/'control-runtime.json').exists():
                     record=json.loads((root/'control-runtime.json').read_text());work=json.loads((root/'workload-geometry.json').read_text())
-                    if record['source']!=a.source or work.pop('source')!=a.source or record['cache_manifest_sha256']!=MANIFEST_SHA or record['full_dev_scenes']!=64:
+                    if record['source']!=original_source or work.pop('source')!=original_source or record['cache_manifest_sha256']!=MANIFEST_SHA or record['full_dev_scenes']!=64:
                         raise ValueError('Actual control/data/source runtime binding required')
                     timing=dict(workload=work,control=record['measured'])
                 admitted = admission(sizing['measured']['seconds'],dev_seconds,lease['stop_unix']-time.time()-180,init.stat().st_size,**timing)
+                if reused and (admitted['epochs']!=1 or admitted['updates_each_arm']!=60):raise ValueError('Exactly one complete paired epoch approved')
+                if reused:admitted['maximum_all_branch_updates']=120
                 write(root, 'joint-schedule-admission.json', admitted)
             else:
                 admitted = json.loads((root/'joint-schedule-admission.json').read_text())

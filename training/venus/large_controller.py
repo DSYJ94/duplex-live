@@ -98,12 +98,16 @@ def capacity_retry_after(number,previous,family="prefix",aggregate_interval=7):
     return datetime.fromisoformat(requests[0]['at_utc']).timestamp()+600
 
 
-def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0,resume_layout=False,layout_capacity_retry=0,resume_aggregate=False,aggregate_capacity_retry=0,aggregate_interval=7):
+def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_precreate=False,resume_memory=False,resume_prefix=False,prefix_capacity_retry=0,resume_layout=False,layout_capacity_retry=0,resume_aggregate=False,aggregate_capacity_retry=0,aggregate_interval=7,sustained_first=False):
     global R,OUTPUT,BACKUP,NAME,ZONE,DISK
     from .source_controller import prepare_ssh
     from portable.venus.guard import bounded_runpod_read
     authority()
-    if aggregate_interval not in (7,8,9) or aggregate_interval!=7 and not resume_aggregate:
+    if sustained_first:
+        from .sustained import authority as sustained_authority
+        sustained_authority();resume_aggregate=True;aggregate_interval=10
+    if aggregate_interval==10 and not sustained_first:raise ValueError('Explicit sustained mode required')
+    if aggregate_interval not in (7,8,9,10) or aggregate_interval!=7 and not resume_aggregate:
         raise ValueError("Only actual initial, throughput follow-up or exact reporting recovery supported")
     if resume_aggregate:
         aggregate_authority()
@@ -154,7 +158,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             old=ROOT/('gpu-05-capacity-01' if number==5 else 'gpu-%02d'%number)
             terminal=json.loads((old/'provider-final.json').read_text())
             verified=json.loads((old/'copyback-verified.json').read_text())
-            if terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists():
+            if terminal['status']!='TERMINATED' or not verified['all_hashes_verified'] or (Path(verified['backup'])/'admission.json').exists() and not (sustained_first and number==9):
                 raise ValueError('Both actual zero-update failures must be stopped and hash-backed-up')
             seconds=math.ceil((datetime.fromisoformat(terminal['lastStopTimestamp'])-datetime.fromisoformat(terminal['lastStartTimestamp'])).total_seconds()/100)*100
             receipt=ROOT/('provider-final-%02d.json'%number)
@@ -163,7 +167,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             previous_intervals.append(dict(provider_final_path=str(receipt),sha256=sha(receipt),vm_id=terminal['id'],
                 disk_id=json.loads((old/'lease.json').read_text())['disk_id'],upper_seconds=seconds,optimizer_updates=0))
             prior_seconds+=seconds;prior_vm=terminal
-        if prior_seconds!=(({7:2700,8:4000,9:4300}[aggregate_interval]) if resume_aggregate else 2600 if resume_layout else 2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
+        if prior_seconds!=(({7:2700,8:4000,9:4300,10:8700}[aggregate_interval]) if resume_aggregate else 2600 if resume_layout else 2100 if resume_prefix else 1600 if resume_memory else 700):raise ValueError('Carry ALL actual prior interval upper bounds')
         R=ROOT/'gpu-03';OUTPUT=REMOTE+'/native-v67'
         BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v67')
         ZONE='europe-west4-a';NAME='duplex-venus-large-gpu-20261104-eua-v67'
@@ -178,7 +182,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             R=ROOT/'gpu-06';OUTPUT=REMOTE+'/native-v70'
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v70')
         if resume_aggregate:
-            version=64+aggregate_interval
+            version=75 if sustained_first else 64+aggregate_interval
             R=ROOT/('gpu-%02d'%aggregate_interval);OUTPUT=REMOTE+('/native-v%d'%version)
             BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v%d'%version)
     retry_after=0
@@ -208,11 +212,14 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
     previous=json.loads((stage/'provider-final.json').read_text())
     if not proof['passed'] or previous['status']!='TERMINATED':raise ValueError('Complete CPU stage and actual STOP required')
     clock=json.loads((stage/'storage-deadline.json').read_text())
-    duration=43100-prior_seconds
+    duration=(73500 if sustained_first else 43100)-prior_seconds
+    if sustained_first:
+        clock=dict(clock,storage_deadline_unix=1794052800.)
     if time.time()+duration+1800>=clock['storage_deadline_unix']:raise ValueError('Original storage clock insufficient')
-    price=json.loads(Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v72' if resume_aggregate and aggregate_interval>=8 else 'v71' if resume_aggregate else 'v70' if resume_layout else 'v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json').read_text())
+    price_path=Path('runs/product-progress-watch/current-capacity-prices-20261105-launch-v75.json') if sustained_first else Path('runs/product-progress-watch/current-capacity-prices-20261104-launch-'+('v72' if resume_aggregate and aggregate_interval>=8 else 'v71' if resume_aggregate else 'v70' if resume_layout else 'v69' if resume_prefix else 'v68' if resume_memory else 'v65')+'.json')
+    price=json.loads(price_path.read_text())
     hourly=price['options']['GCP_A10080_STANDARD_Netherlands_12CPU_170GiB_375SSD_250PD' if fallback80 else 'GCP_A10040_FLEX_US_12CPU_85GiB_250PD']
-    if not 0<hourly<=8 or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
+    if not 0<hourly<=(5.9 if sustained_first else 8) or time.time()-datetime.fromisoformat(price['at_utc']).timestamp()>3600:
         raise ValueError('Refresh actual full GPU component price before allocation')
     source=c.run(['git','rev-parse','HEAD']).strip()
     if c.run(['git','-c','core.filemode=false','status','--porcelain','--','training/venus','portable/venus']).strip():
@@ -286,7 +293,7 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             c.run(['gcloud','compute','instances','delete',CPU,'--zone='+ZONE,'--project='+c.PROJECT,'--keep-disks=boot','--quiet'],150)
             if c.cloud('compute','disks','describe',DISK,'--zone='+ZONE).get('users'):raise ValueError('Staged disk still attached')
         boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-large65-bootstrap-stop --on-active=600s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-        c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl=14h')
+        c.cloud('compute','os-login','ssh-keys','add','--key-file=runs/local-migration-20261024/.private/gcp-native-ssh.pub','--ttl='+('24h' if sustained_first else '14h'))
         if replace_prestart:
             exact=c.cloud('compute','instances','describe',prior_vm['name'],'--zone='+ZONE)
             if exact['id']!=prior_vm['id'] or exact['status']!='TERMINATED':raise ValueError('Only preserved stopped sizing envelope may retire')
@@ -372,10 +379,13 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
         c.sync(bundle,c.ROOT+'/large65-gpu-source.bundle')
         c.ssh('git --git-dir='+c.ROOT+'/source.git fetch '+c.ROOT+'/large65-gpu-source.bundle HEAD && git --git-dir='+c.ROOT+'/source.git worktree add --detach '+c.remote+' '+source,120)
         plan=dict(resource_key=KEY,authorization_sha256=sha(AUTH),parent_sha256=PARENT_SHA,cache_manifest_sha256=MANIFEST_SHA,
-             maximum_all_branch_updates=984,external_model_API_calls=0,prior_project_USD=OLD_USD,
+             maximum_all_branch_updates=120 if sustained_first else 984,external_model_API_calls=0,prior_project_USD=OLD_USD,
              vm_id=vm['id'],disk_id=disk['id'],zone=ZONE,creation_timestamp=vm['creationTimestamp'],
              **clock,previous_intervals=previous_intervals,maximum_running_seconds=duration,disk_size_gib=250,
              machine='a2-ultragpu-1g' if fallback80 else 'a2-highgpu-1g',provisioning='STANDARD' if fallback80 else 'FLEX_START',optimizer_work_started=False,vm_name=NAME,disk_name=DISK)
+        if sustained_first:
+            from .sustained import AUTH as S_AUTH
+            plan['sustained_authorization_sha256']=sha(S_AUTH)
         if resume_memory:plan['memory_authorization_sha256']=sha(MEMORY_AUTH)
         if resume_prefix:plan.update(prefix_authorization_sha256=sha(PREFIX_AUTH),activation_memory_policy='repeat4-prefix-pageable-v2')
         if resume_layout:plan.update(layout_authorization_sha256=sha(LAYOUT_AUTH),activation_memory_policy='repeat4-prefix-pageable-v3-layout')
@@ -418,7 +428,10 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
             c.start_unit(unit,env+py+' -u -m '+module+args,seconds);c.wait_unit(unit,min(time.time()+seconds+15,end-180))
         sizing_limit=2700 if resume_aggregate and aggregate_interval>=8 else 1200
         sizing_remaining=sizing_limit if fallback80 else sizing_limit-prior_seconds-int(time.time()-datetime.fromisoformat(vm['lastStartTimestamp']).timestamp())-100
-        execute('duplex-large65-prepare','training.venus.large_native',common+(' --measured-joint-schedule' if resume_aggregate and aggregate_interval>=8 else '')+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v3-layout' if resume_layout else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(sizing_limit,sizing_remaining))
+        if sustained_first:
+            execute('duplex-large75-reuse','training.venus.sustained',' --output '+OUTPUT+' --source '+source,300)
+        else:
+            execute('duplex-large65-prepare','training.venus.large_native',common+(' --measured-joint-schedule' if resume_aggregate and aggregate_interval>=8 else '')+' --stage prepare --output '+OUTPUT+' --parent '+REMOTE+'/parent466.pt'+(' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v3-layout' if resume_layout else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-prefix-pageable-v2' if resume_prefix else ' --activation-offload --host-offload-limit-gib 48 --activation-memory-policy repeat4-pageable-v1' if resume_memory else ' --activation-offload --host-offload-limit-gib 128' if fallback80 else ' --activation-offload' if resume_sizing else ''),min(sizing_limit,sizing_remaining))
         execute('duplex-large65-restore','training.venus.large_native',common+' --stage restore --output '+OUTPUT,900)
         if resume_aggregate:
             from .checkpoint_stream import CheckpointStream
@@ -469,4 +482,4 @@ def main(resume_sizing=False,replace_prestart=False,fallback80=False,resume80_pr
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-layout',action='store_true');p.add_argument('--layout-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-aggregate',action='store_true');p.add_argument('--aggregate-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--aggregate-interval',type=int,choices=(7,8,9),default=7);a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry,a.resume_layout,a.layout_capacity_retry,a.resume_aggregate,a.aggregate_capacity_retry,a.aggregate_interval)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--resume-sizing',action='store_true');p.add_argument('--replace-prestart',action='store_true');p.add_argument('--fallback80',action='store_true');p.add_argument('--resume80-precreate',action='store_true');p.add_argument('--resume-memory',action='store_true');p.add_argument('--resume-prefix',action='store_true');p.add_argument('--prefix-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-layout',action='store_true');p.add_argument('--layout-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--resume-aggregate',action='store_true');p.add_argument('--aggregate-capacity-retry',type=int,choices=(1,2),default=0);p.add_argument('--aggregate-interval',type=int,choices=(7,8,9),default=7);p.add_argument('--sustained-first',action='store_true');a=p.parse_args();main(a.resume_sizing,a.replace_prestart,a.fallback80,a.resume80_precreate,a.resume_memory,a.resume_prefix,a.prefix_capacity_retry,a.resume_layout,a.layout_capacity_retry,a.resume_aggregate,a.aggregate_capacity_retry,a.aggregate_interval,a.sustained_first)

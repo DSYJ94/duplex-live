@@ -99,7 +99,23 @@ def resource(lease):
     fourth=path.name=='interval-04.json'
     fifth=path.name=='interval-05.json'
     sixth=path.name=='interval-06.json'
-    number=int(path.stem[-2:]);aggregate=number>=7
+    number=int(path.stem[-2:]);sustained=number>=10 and bool(p.get("sustained_authorization_sha256"));aggregate=number>=7 and not sustained
+    if sustained:
+        from .sustained import AUTH as S_AUTH,authority as s_authority
+        a=s_authority()
+        if (p["sustained_authorization_sha256"]!=sha(S_AUTH) or lease.get("sustained_authorization_sha256")!=sha(S_AUTH)
+                or p["vm_id"]!=a["vm_id"] or p["disk_id"]!=a["disk_id"]
+                or p["zone"]!="europe-west4-a" or p["machine"]!="a2-ultragpu-1g" or p["provisioning"]!="STANDARD"
+                or p["vm_name"]!="duplex-venus-large-gpu-20261104-eua-v67" or p["disk_name"]!="duplex-venus-large-data-20261104-eua-v67"
+                or not 0<p["maximum_running_seconds"]<=64800 or p["storage_deadline_unix"]!=a["storage_deadline_unix"]
+                or p.get("activation_memory_policy")!="repeat4-prefix-pageable-v3-layout"
+                or number==10 and p["optimizer_work_started"] or number>10 and not p["optimizer_work_started"]):
+            raise ValueError("Exact sustained resources, clock and actual state required")
+        if p["optimizer_work_started"]:
+            receipt=Path(p["trained_state_receipt_path"])
+            if receipt.parent!=ROOT or sha(receipt)!=p["trained_state_receipt_sha256"]:raise ValueError("Bound trained state required")
+            trained=json.loads(receipt.read_text())
+            if trained["actual_new_updates"]<=0 or trained["vm_id"]!=p["vm_id"] or trained["disk_id"]!=p["disk_id"] or trained["cache_manifest_sha256"]!=MANIFEST_SHA:raise ValueError("Actual same-resource trained state required")
     if aggregate:
         a=aggregate_authority()
         if (p.get('aggregate_authorization_sha256')!=sha(AGGREGATE_AUTH)
@@ -166,13 +182,13 @@ def resource(lease):
             or lease['authorization_sha256'] != p['authorization_sha256'] or sha(AUTH) != lease['authorization_sha256']
             or sha(path) != lease['execution_plan_sha256']
             or p['parent_sha256'] != PARENT_SHA or p['cache_manifest_sha256'] != MANIFEST_SHA
-            or p['maximum_all_branch_updates'] != 984 or p['external_model_API_calls'] != 0
+            or p['maximum_all_branch_updates'] != (120 if sustained else 984) or p['external_model_API_calls'] != 0
             or p['prior_project_USD'] != OLD_USD):
         raise ValueError('Exact parent/data/budget/interval binding required')
     for key in ('vm_id', 'disk_id', 'zone', 'creation_timestamp', 'storage_started_unix', 'storage_deadline_unix'):
         if lease[key] != p[key]: raise ValueError('Provider identity or storage clock differs')
     previous = p['previous_intervals']
-    if len(previous) != number - 1 or len(previous) > (11 if aggregate else 5 if sixth else 4 if fifth else 3 if fourth else 2):
+    if len(previous) != number - 1 or len(previous) > (11 if aggregate or sustained else 5 if sixth else 4 if fifth else 3 if fourth else 2):
         raise ValueError('All prior actual intervals required; never reset the clock')
     seconds = 0
     for row in previous:
@@ -195,9 +211,10 @@ def resource(lease):
     if fifth and seconds!=2100:raise ValueError('All2100 actual prior GPU upper seconds must carry forward')
     if sixth and seconds!=2600:raise ValueError('All2600 actual prior GPU upper seconds must carry forward')
     if aggregate and (seconds<2700 or number==7 and seconds!=2700):raise ValueError('Carry all actual GPU history, at least2700 seconds')
-    if (type(duration) is not int or duration < 1 or seconds + duration + 100 > 43200
+    if (type(duration) is not int or duration < 1 or seconds + duration + 100 > (73600 if sustained else 43200)
+            or sustained and (seconds<8700 or number==10 and seconds!=8700)
             or lease['prior_capacity_GPU_seconds_upper'] != seconds
-            or p['storage_deadline_unix'] != p['storage_started_unix'] + 86400
+            or not sustained and p['storage_deadline_unix'] != p['storage_started_unix'] + 86400
             or p['disk_size_gib'] != 250 or p['disk_id'] == '4375908109499109167'):
         raise ValueError('Aggregate running/storage limits or original-disk protection failed')
     choice = (p['machine'], p['provisioning'], p['zone'].rsplit('-', 1)[0])
@@ -239,7 +256,10 @@ def validate(vm, instances, pods, lease, now):
         raise ValueError('Fresh bounded price required')
     # 12h at the hard8USD/h maximum + all52USD preservation/network and2USD CPU
     # reserves, carrying old spending; credits never erase recorded consumption.
-    if 43200 * 8 / 3600 + 54 > 150 or OLD_USD + 150 > 325:
+    if p.get('sustained_authorization_sha256'):
+        if not 0<lease['verified_hourly_price_usd']<=5.9 or 73600*5.9/3600+54>175 or OLD_USD+175>350:
+            raise ValueError('Sustained budget exceeded')
+    elif 43200 * 8 / 3600 + 54 > 150 or OLD_USD + 150 > 325:
         raise ValueError('Aggregate project/phase budget exceeded')
     active = [v for v in instances if v['status'] not in ('TERMINATED', 'STOPPED') and
               (v.get('guestAccelerators') or any('/' + m in v.get('machineType', '') for m in ('a2-', 'a3-', 'a4-', 'g2-', 'g4-')))]

@@ -236,7 +236,11 @@ def restore_only(a):
     guarded(a.lease, 300)
     root = Path(a.output); proof = json.loads((root/'admission.json').read_text())
     checkpoint = root/'expanded-init.pt'
-    if (proof['native_process_pid'] == os.getpid() or proof['source'] != a.source
+    expected_source=a.source
+    if (root/'reuse-manifest.json').exists():
+        from .sustained import validate
+        expected_source=validate(root,a.source)['original_source']
+    if (proof['native_process_pid'] == os.getpid() or proof['source'] != expected_source
             or sha(checkpoint) != proof['checkpoint_sha256'] or proof['new_optimizer_updates'] != 0):
         raise ValueError('Actual independent process and exact native initialization proof required')
     state = torch.load(checkpoint, map_location='cpu', weights_only=False)
