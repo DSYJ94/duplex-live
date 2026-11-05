@@ -1,0 +1,258 @@
+{
+  "recorded_utc": "2026-11-05T23:41:21.036892+00:00",
+  "status": "BOTH_COMPLETE_EPOCHS_FULL64_DEV_EXACT_NATIVE_RESTORES_AND_CHECKPOINT_BACKUPS_VERIFIED_NATIVE_EVALUATION_RUNNING",
+  "actual_execution_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
+  "training_math_source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+  "baseline_original_source": "a833a32f30aa9f99b47a15dad57b7df33f816ff6",
+  "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+  "actual_training_updates": 120,
+  "updates_each_arm": 60,
+  "complete_TRAIN_scenes_each_arm": 240,
+  "full_DEV_scenes_each_arm": 64,
+  "main_parameters": 698351616,
+  "control_parameters": 851968,
+  "comparison": "Same starting native logits, frozen base/audio/TTS, data, update count, effective batch and losses; substantially different trainable capacity and compute time. This is not an equal-compute comparison.",
+  "baseline_inventory_verified": {
+    "path": "main/dev-baseline.json",
+    "bytes": 12486,
+    "sha256": "bd3ec1161ff52a6e667e0a123ef7b3b23cf481c506d043799df45b11d94b505c"
+  },
+  "baseline_inventory": "runs/venus-large-capacity-20261104/v65/gpu-09/remote-inventory.json",
+  "observation": {
+    "path": "runs/venus-large-capacity-20261104/v65/gpu-12/both60-restored-native-main-observation.json",
+    "sha256": "eecc3d5c353fab4c097682f9f57e04b0bfe099e858252dd6dd2982bff7c82910",
+    "type": "Derived structured actual SSH/systemd observation; raw artifact full inventory copyback still pending"
+  },
+  "arms": {
+    "main": {
+      "training_terminal": {
+        "completed": true,
+        "actual_new_updates": 60,
+        "complete_epochs": 1,
+        "train_scenes_per_epoch": 240,
+        "full_dev_scenes": 64,
+        "parent_training_steps": 466,
+        "adopted": false,
+        "native_behavior_and_speech_required": true
+      },
+      "independent_native_restore": {
+        "passed": true,
+        "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+        "checkpoint_sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81",
+        "training_native_pid": 1589,
+        "restore_native_pid": 30242,
+        "actual_CUDA": true,
+        "optimizer_RNG_OPAL_exact": true,
+        "native_logits_exact": true,
+        "new_optimizer_updates": 0,
+        "adopted": false
+      },
+      "actual_successful_terminal_records": [
+        {
+          "at_utc": "2026-11-05T23:26:39.204265+00:00",
+          "event": "actual_unit_terminal",
+          "unit": "duplex-large65-train-main",
+          "state": {
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "exited",
+            "InvocationID": "f4709b954114401a867ed04227edaa5f"
+          }
+        },
+        {
+          "at_utc": "2026-11-05T23:28:02.166125+00:00",
+          "event": "actual_unit_terminal",
+          "unit": "duplex-large65-final-main",
+          "state": {
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "exited",
+            "InvocationID": "7f735f88db8b4f85b3878a4435249ab1"
+          }
+        }
+      ],
+      "checkpoint_stream_receipt": {
+        "at_unix": 1793921418.8584352,
+        "checkpoint_verified": {
+          "path": "main/step-0060.pt",
+          "bytes": 8511983946,
+          "sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81"
+        }
+      },
+      "checkpoint_local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/main/step-0060.pt",
+      "checkpoint_all_hashes_verified": true,
+      "DEV_CE": {
+        "quiet": 0.7024596626205104,
+        "delegate": 0.18715915130451322,
+        "cancel": 0.5346196040511131,
+        "pause": 0.7223694200317065,
+        "pending": 0.46743979553381604,
+        "ordinary": 0.7436014289657275
+      }
+    },
+    "control": {
+      "training_terminal": {
+        "completed": true,
+        "actual_new_updates": 60,
+        "complete_epochs": 1,
+        "train_scenes_per_epoch": 240,
+        "full_dev_scenes": 64,
+        "parent_training_steps": 466,
+        "adopted": false,
+        "native_behavior_and_speech_required": true
+      },
+      "independent_native_restore": {
+        "passed": true,
+        "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+        "checkpoint_sha256": "df75747e576c0c72bfede122a4f9e39e8f1fa26964538523a91e59f58bbcc991",
+        "training_native_pid": 30389,
+        "restore_native_pid": 31150,
+        "actual_CUDA": true,
+        "optimizer_RNG_OPAL_exact": true,
+        "native_logits_exact": true,
+        "new_optimizer_updates": 0,
+        "adopted": false
+      },
+      "actual_successful_terminal_records": [
+        {
+          "at_utc": "2026-11-05T23:37:08.092059+00:00",
+          "event": "actual_unit_terminal",
+          "unit": "duplex-large65-train-control",
+          "state": {
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "exited",
+            "InvocationID": "044dbe97e43a41fe8693f4daf2dce26e"
+          }
+        },
+        {
+          "at_utc": "2026-11-05T23:37:28.642523+00:00",
+          "event": "actual_unit_terminal",
+          "unit": "duplex-large65-final-control",
+          "state": {
+            "MainPID": "0",
+            "Result": "success",
+            "ExecMainStatus": "0",
+            "ActiveState": "active",
+            "SubState": "exited",
+            "InvocationID": "6790dc38d5aa43acb300e3b439183740"
+          }
+        }
+      ],
+      "checkpoint_stream_receipt": {
+        "at_unix": 1793921840.154529,
+        "checkpoint_verified": {
+          "path": "control/step-0060.pt",
+          "bytes": 15682384,
+          "sha256": "df75747e576c0c72bfede122a4f9e39e8f1fa26964538523a91e59f58bbcc991"
+        }
+      },
+      "checkpoint_local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/control/step-0060.pt",
+      "checkpoint_all_hashes_verified": true,
+      "DEV_CE": {
+        "quiet": 0.8831263738019126,
+        "delegate": 0.33620361471548676,
+        "cancel": 0.8701021045446395,
+        "pause": 0.9831817050774893,
+        "pending": 0.6124369998772939,
+        "ordinary": 1.0337705289324124
+      }
+    }
+  },
+  "families": {
+    "quiet": {
+      "DEV_scenes": 14,
+      "baseline_CE": 0.8782868097935405,
+      "main_CE": 0.7024596626205104,
+      "control_CE": 0.8831263738019126,
+      "main_change_vs_baseline_percent": -20.019331408877918,
+      "control_change_vs_baseline_percent": 0.5510231913319785,
+      "main_change_vs_control_percent": -20.45762832374953
+    },
+    "delegate": {
+      "DEV_scenes": 16,
+      "baseline_CE": 0.3435114901512861,
+      "main_CE": 0.18715915130451322,
+      "control_CE": 0.33620361471548676,
+      "main_change_vs_baseline_percent": -45.5158978169591,
+      "control_change_vs_baseline_percent": -2.1274034916796802,
+      "main_change_vs_control_percent": -44.331606469223374
+    },
+    "cancel": {
+      "DEV_scenes": 10,
+      "baseline_CE": 0.874286213517189,
+      "main_CE": 0.5346196040511131,
+      "control_CE": 0.8701021045446395,
+      "main_change_vs_baseline_percent": -38.850733800276025,
+      "control_change_vs_baseline_percent": -0.47857428241000477,
+      "main_change_vs_control_percent": -38.55668188150152
+    },
+    "pause": {
+      "DEV_scenes": 6,
+      "baseline_CE": 0.990069309870402,
+      "main_CE": 0.7223694200317065,
+      "control_CE": 0.9831817050774893,
+      "main_change_vs_baseline_percent": -27.03849994842653,
+      "control_change_vs_baseline_percent": -0.6956689520872361,
+      "main_change_vs_control_percent": -26.52737369896716
+    },
+    "pending": {
+      "DEV_scenes": 6,
+      "baseline_CE": 0.6289350390434265,
+      "main_CE": 0.46743979553381604,
+      "control_CE": 0.6124369998772939,
+      "main_change_vs_baseline_percent": -25.677571368139272,
+      "control_change_vs_baseline_percent": -2.6231706204865146,
+      "main_change_vs_control_percent": -23.675448147732602
+    },
+    "ordinary": {
+      "DEV_scenes": 12,
+      "baseline_CE": 1.031377414862315,
+      "main_CE": 0.7436014289657275,
+      "control_CE": 1.0337705289324124,
+      "main_change_vs_baseline_percent": -27.902102736562682,
+      "control_change_vs_baseline_percent": 0.23203087789323007,
+      "main_change_vs_control_percent": -28.06900485607248
+    }
+  },
+  "ordinary_retention": {
+    "main": {
+      "kl": 0.5568207477529844,
+      "hidden": 1.9145037929217021
+    },
+    "control": {
+      "kl": 0.4331679443518321,
+      "hidden": 1.8598618408044179
+    }
+  },
+  "pause_native_turn_end_token_accuracy": {
+    "baseline": 0.4166666666666667,
+    "main": 0.4166666666666667,
+    "control": 0.3333333333333333
+  },
+  "native_evaluation_progress": {
+    "native/main/collection_progress": {
+      "completed": 1,
+      "required": 32,
+      "quiet_cases_with_pre_cue_voice": 0,
+      "qualified": false
+    }
+  },
+  "candidate_adopted": false,
+  "product_qualified": false,
+  "complete_final_raw_inventory_backup_verified": false,
+  "limitations": [
+    "Lower teacher-forced loss and exact optimizer/RNG/OPAL restore do not prove native behavioral correctness, speech quality or GPT-live-level performance.",
+    "All32 native scenes per arm, matched input hashes, full independent speech audit, semantic/control/retention review and naturalness listening remain required.",
+    "Main ordinary KL drift rose27.81percent and hidden drift3.06percent versus initialization; ordinary native retention is still unproven.",
+    "Main pause turn-end token accuracy stayed0.416667 despite lower family CE.",
+    "No additional optimizer updates or recipe changes beyond this approved one complete epoch per arm.",
+    "Language adapter training does not train a British TTS accent or qualify actual asynchronous general-reasoning backend use."
+  ]
+}
