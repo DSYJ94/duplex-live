@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-04T23:32:27.450801+00:00",
+  "updated_utc": "2026-11-05T00:06:53.199759+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,7 +38,7 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "same_A10080_interval09_live_first_698M_native_backward_completed_full_admission_pending",
+    "status": "full_698M_gradient_admission_and_independent_restore_PASS_main_full64DEV_baseline_live",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
@@ -60,7 +60,14 @@
     "new_optimizer_updates": 0,
     "reporting_recovery_review": "docs/NATIVE-VENUS-LARGE-CAPACITY-REPORTING-RECOVERY-REVIEW-2026-11-04.json",
     "OPAL_current_arm_policy": "Native OPAL state/wrapper retained; backend keep/agent API budget0 for controlled capacity comparison, no claim autonomous external code rewriting is active.",
-    "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts."
+    "MiRL_status": "Primary-source research in parallel, no current data/recipe/RL changes; use only after diagnosis and capacity comparison, preserve held-out cohorts.",
+    "training_worker_pid": 2593,
+    "training_worker_invocation": "5a2219570ae74a208bfa1c7e576b5baf",
+    "full_four_main_backward_seconds": 1820.826916902,
+    "native_gradient_B_paths": 254,
+    "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
+    "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
+    "backup_status": "Top-level proof JSON all hashes verified; streamed expanded-init transfer failed after2.62GB; full artifact backup partial, durable source intact, final full copyback required."
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
