@@ -1,0 +1,53 @@
+{
+  "recorded_utc": "2026-11-06T16:49:31.440798+00:00",
+  "status": "CPU_RESCUE_COMPLETE_AND_STOPPED",
+  "actual_source": "e911920f92b435847140541e696b55d26563b06f",
+  "controller_tool": "97613",
+  "controller_PID": 63039,
+  "actual_exit_code": 0,
+  "CPU_id": "6614314114913385900",
+  "CPU_name": "duplex-venus-data-rescue-20261106-v3",
+  "actual_start": "2026-11-06T08:41:52.418-08:00",
+  "actual_stop": "2026-11-06T08:45:37.511-08:00",
+  "actual_seconds": 225.093,
+  "seconds_upper": 230,
+  "all_rescue_intervals_seconds_upper": 490,
+  "all_rescue_actual_seconds": 476.459,
+  "CPU_cost_estimate_USD": 0.009763709001766667,
+  "attempted_artifact_transfer_bytes_upper": 2630225126,
+  "transfer_failures_recovered_within_same_CPU": 1,
+  "backup": {
+    "files": 2333,
+    "bytes": 2397604746,
+    "links": 6,
+    "all_hashes_verified": true,
+    "exact268_cache_targets_hash_verified": true,
+    "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+    "all304_materialization": {
+      "recorded_utc": "2026-11-06T16:46:01.690989+00:00",
+      "all304_real_files_hash_verified": true,
+      "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+      "folds": {
+        "TRAIN": 240,
+        "DEV": 64
+      },
+      "files": 304,
+      "bytes": 2581236033,
+      "path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-cache-v52-materialized-v1",
+      "original_cache_links_preserved": true,
+      "original_words_folds_receipts_unchanged": true,
+      "tensors_loaded": false,
+      "new_optimizer_updates": 0
+    }
+  },
+  "same_original_GPU_OFF_and_non_auto_delete_disk_binding_restored": true,
+  "empty_temporary_CPU_deleted": true,
+  "new_GPU_seconds": 0,
+  "new_optimizer_updates": 0,
+  "phase_cap_USD": 175,
+  "project_cap_USD": 350,
+  "previous_USD_carry": 165.7900361111111,
+  "GCP_GPU_seconds_upper": 46860,
+  "retained_original_disk_deadline_utc": "2026-11-07T12:00:00Z",
+  "next": "Upload sealed13.53GB artifact inventory to Isambard via scopedrsync, including publicARM64runtime. Slurm hashverify all2640files6links before declaring destination ready. Then minimal Venus ARM64 environment/Slurmguard and native speech/action fix/fullpaired64 validation; no replay saved120updates/adoption from loss."
+}
