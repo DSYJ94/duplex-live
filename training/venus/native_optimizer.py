@@ -93,7 +93,7 @@ def assert_optimizer_equal(expected,actual):
             raise ValueError('Fresh-process OPAL field set differs')
         for key in set(expected)-excluded:
             if not exact_state(expected[key],actual[key]):
-                raise ValueError('Fresh-process OPAL state differs: '+key)
+                raise ValueError('Fresh-process OPAL state differs: '+key+'; '+state_difference(expected[key],actual[key],key))
     elif not exact_state(expected,actual):
         raise ValueError('Fresh-process Adam state differs')
 

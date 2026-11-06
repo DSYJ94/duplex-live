@@ -46,10 +46,12 @@ def adam_format(state,torch):
                     if not {'lr','betas','eps','weight_decay','params'}<=set(group):raise ValueError('Unknown optimizer group in format derivation')
                     if 'decoupled_weight_decay' not in group:
                         if default is not True:raise ValueError('Unknown AdamW default')
-                        group['decoupled_weight_decay']=True;changes.append(path+'/param_groups/'+str(i)+'/decoupled_weight_decay=true')
+                        group['decoupled_weight_decay']=None if path.startswith('optimizer/devices') else True
+                        changes.append(path+'/param_groups/'+str(i)+'/decoupled_weight_decay='+('device-metadata-none' if path.startswith('optimizer/devices') else 'true'))
             if {'base_lrs','last_epoch','_step_count','_last_lr','lr_lambdas'}<=set(result) and '_is_initial' not in result and scheduler_default is not None:
                 if scheduler_default is not False:raise ValueError('Unknown scheduler initialization default')
-                result['_is_initial']=False;changes.append(path+'/_is_initial=false')
+                result['_is_initial']=None if path.startswith('optimizer/devices') else False
+                changes.append(path+'/_is_initial='+('device-metadata-none' if path.startswith('optimizer/devices') else 'false'))
             return result
         if isinstance(value,list):return [walk(v,path+'/'+str(i)) for i,v in enumerate(value)]
         if isinstance(value,tuple):return tuple(walk(v,path+'/'+str(i)) for i,v in enumerate(value))
