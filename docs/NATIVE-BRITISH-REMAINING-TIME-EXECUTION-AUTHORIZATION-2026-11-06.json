@@ -1,0 +1,20 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-06T11:54:46.970903+00:00",
+  "human_reply_verbatim": "Approve remaining-time execution",
+  "proposal_path": "docs/NATIVE-BRITISH-REMAINING-TIME-EXECUTION-PROPOSAL-2026-11-06.json",
+  "proposal_sha256": "fdc2e922b707a08cf9a06bde711dc7d3a432a54bd42829ec7d43e7b93ef1f4e8",
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "maximum_new_GPU_intervals": 3,
+  "maximum_new_GPU_seconds_including_reserve": 3370,
+  "same_GPU_id": "7521667153519853425",
+  "same_disk_id": "2297341858915206463",
+  "new_optimizer_updates": 0,
+  "files_first_same_approved_GPU": true,
+  "first_actual_GPU_interval": 15,
+  "first_prior_GPU_seconds_upper": 45730,
+  "first_maximum_native_GPU_seconds": 3270,
+  "per_interval_shutdown_reserve_seconds": 100,
+  "original_phase_GPU_upper_seconds_maximum": 49100
+}
