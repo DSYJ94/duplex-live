@@ -164,3 +164,17 @@ def test_final_downloaded_reports_require_whole_cohorts_and_matched_inputs(tmp_p
     rows[-1]['input_sha256']='changed';p.write_text(json.dumps(dict(cases=rows)))
     with pytest.raises(ValueError,match='paired32'):b.validate_outputs(tmp_path,'actual-source')
     with pytest.raises(ValueError,match='source-bound'):b.validate_outputs(tmp_path,'wrong-source')
+
+
+def test_capacity_retry_requires_terminal_stockout_unchanged_stopped_gpu_and_spacing():
+    previous=dict(id=b.g.VM_ID,status='TERMINATED',lastStartTimestamp='oldstart',lastStopTimestamp='oldstop')
+    op=dict(status='DONE',endTime='2026-11-06T09:29:31+00:00',error=dict(errors=[dict(code='ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS')]))
+    assert b.capacity_retry_after(op,previous,dict(previous),2)==datetime.fromisoformat(op['endTime']).timestamp()+600
+    for attempt in (1,4):
+        with pytest.raises(ValueError):b.capacity_retry_after(op,previous,previous,attempt)
+    changed=dict(previous,lastStartTimestamp='newactualstart')
+    with pytest.raises(ValueError):b.capacity_retry_after(op,previous,changed,2)
+    for code in ('PERMISSION_DENIED','UNKNOWN'):
+        bad=dict(op,error=dict(errors=[dict(code=code)]))
+        with pytest.raises(ValueError):b.capacity_retry_after(bad,previous,previous,2)
+    with pytest.raises(ValueError):b.capacity_retry_after(dict(op,status='RUNNING'),previous,previous,2)

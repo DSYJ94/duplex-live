@@ -1,0 +1,24 @@
+{
+  "status": "TERMINAL_CAPACITY_ONLY_NO_NEW_GPU_INTERVAL",
+  "recorded_utc": "2026-11-06T09:35:04.920226+00:00",
+  "source": "930145723e068051c91ff307b9fc96b619d714eb",
+  "controller_tool": 84319,
+  "controller_pid": 60207,
+  "actual_exit_code": 1,
+  "operation": "operation-1793957363756-65f983f68ad50-b5396e0b-98ffb7c9",
+  "operation_status": "DONE",
+  "operation_end": "2026-11-06T01:29:31.523-08:00",
+  "error_codes": [
+    "ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS"
+  ],
+  "same_VM_id": "7521667153519853425",
+  "provider_status": "TERMINATED",
+  "last_start_unchanged": "2026-11-05T09:38:53.272-08:00",
+  "last_stop_unchanged": "2026-11-06T01:29:31.437-08:00",
+  "new_GPU_seconds": 0,
+  "new_GPU_intervals": 0,
+  "new_model_constructions": 0,
+  "new_optimizer_updates": 0,
+  "first_spaced_retry_after_UTC": "2026-11-06T09:39:31.523Z",
+  "scope": "Same original VM, at most3 terminal-capacity-only attempts spaced>=600s, ONE actual approved3500s interval+100reserve, no resource/hardware/zone/disk fallback or extra spend. No retry after timeout/partial/access/model failure."
+}

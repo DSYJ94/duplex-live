@@ -18,7 +18,8 @@ import urllib.error
 
 from . import british_speech_guard as g, results_recovery as recovery
 
-R=g.PLAN.parent
+ATTEMPT=int(os.environ.get('DUPLEX_BRITISH_START_ATTEMPT','1'))
+R=g.PLAN.parent if ATTEMPT==1 else g.PLAN.parent/('capacity-attempt-%02d'%ATTEMPT)
 NAME='duplex-venus-large-gpu-20261104-eua-v67'
 DISK='duplex-venus-large-data-20261104-eua-v67'
 ZONE='europe-west4-a'
@@ -69,6 +70,16 @@ def price_admission(price,now):
     if price.get('source')!='Official Cloud Billing Catalog exact Netherlands SKUs' or not 0<=age<3600 or not 0<price['hourly_USD']<=5.9:
         raise ValueError('Fresh all-in price <=5.9USD/hour required')
     return price['hourly_USD']
+
+
+def capacity_retry_after(operation,previous,current,attempt):
+    """A terminal stockout with no actual start cannot consume GPU hours."""
+    errors=operation.get('error',{}).get('errors',[])
+    if attempt not in (2,3) or operation.get('status')!='DONE' or not errors or any(e['code'] not in ('ZONE_RESOURCE_POOL_EXHAUSTED','ZONE_RESOURCE_POOL_EXHAUSTED_WITH_DETAILS') for e in errors):
+        raise ValueError('Only bounded terminal capacity-only retries admitted')
+    if any(v['id']!=g.VM_ID or v['status']!='TERMINATED' for v in (previous,current)) or any(current.get(k)!=previous.get(k) for k in ('lastStartTimestamp','lastStopTimestamp')):
+        raise ValueError('No retry after partial start/access/unknown state')
+    return datetime.fromisoformat(operation['endTime']).timestamp()+600
 
 
 def common_args(source,worktree):
@@ -168,6 +179,20 @@ def execute():
     from .source_controller import prepare_ssh
     from .oslogin_access import ensure as ensure_key
     from portable.venus.guard import bounded_runpod_read
+    if ATTEMPT>1:
+        previous_root=g.PLAN.parent if ATTEMPT==2 else g.PLAN.parent/('capacity-attempt-%02d'%(ATTEMPT-1))
+        initial=json.loads((previous_root/'start-operation.json').read_text());initial=initial[0] if isinstance(initial,list) else initial
+        op=c.cloud('compute','operations','describe',initial['name'],'--zone='+ZONE)
+        previous=json.loads((previous_root/'provider-final.json').read_text())
+        current=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE)
+        after=capacity_retry_after(op,previous,current,ATTEMPT)
+        save('previous-capacity-terminal.json',op)
+        save('capacity-wait.json',dict(attempt=ATTEMPT,not_before_unix=after,actual_new_GPU_intervals=0))
+        while time.time()<after:time.sleep(min(30,after-time.time()))
+        if not (R/'price.json').exists():
+            previous_price=json.loads((previous_root/'price.json').read_text())
+            try:price_admission(previous_price,time.time());save('price.json',previous_price)
+            except ValueError:quote()
     hourly=price_admission(json.loads((R/'price.json').read_text()),time.time())
     needs_recovery=not g.BACKUP.exists()
     if needs_recovery:
@@ -290,8 +315,11 @@ def execute():
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);m=p.add_mutually_exclusive_group(required=True)
+    p.add_argument('--attempt',type=int,choices=(1,2,3),default=ATTEMPT)
     for mode in ('plan','quote','execute','file-guard'):m.add_argument('--'+mode,action='store_true')
     a=p.parse_args()
+    ATTEMPT=a.attempt;os.environ['DUPLEX_BRITISH_START_ATTEMPT']=str(ATTEMPT)
+    R=g.PLAN.parent if ATTEMPT==1 else g.PLAN.parent/('capacity-attempt-%02d'%ATTEMPT)
     if a.plan:print(json.dumps(dict(stages=[dict(name=n,module=module) for n,module,args in stages('SOURCE','WORKTREE')],required_native_cases=64,required_separate_audition_cases=9,maximum_native_seconds=3500,shutdown_reserve_seconds=100,authorization_present=g.AUTH.exists(),cloud_mutations=0)))
     elif a.quote:print(json.dumps(quote()))
     elif a.file_guard:
