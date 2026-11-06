@@ -85,7 +85,7 @@ def assert_optimizer_equal(expected,actual):
                   'observations','ledger','follows','next_analysis','decision_schedule','decisions','cost')
         for key in required:
             if key not in expected or key not in actual or not exact_state(expected[key],actual[key]):
-                raise ValueError('Fresh-process OPAL state differs: '+key)
+                raise ValueError('Fresh-process OPAL state differs: '+key+'; '+state_difference(expected.get(key),actual.get(key),key))
         # Fresh transport/directory identities can differ. Everything else,
         # including predecessor code, devices and development history, must not.
         excluded={'run_dir','event_offset','backend'}
@@ -96,6 +96,20 @@ def assert_optimizer_equal(expected,actual):
                 raise ValueError('Fresh-process OPAL state differs: '+key)
     elif not exact_state(expected,actual):
         raise ValueError('Fresh-process Adam state differs')
+
+
+def state_difference(left,right,path):
+    """One exact mismatch location; no omitted fields or relaxed comparison."""
+    if isinstance(left,dict) and isinstance(right,dict):
+        if left.keys()!=right.keys():return path+' missing='+repr(sorted(set(left)-set(right),key=str))+' extra='+repr(sorted(set(right)-set(left),key=str))
+        for key in left:
+            if not exact_state(left[key],right[key]):return state_difference(left[key],right[key],path+'/'+str(key))
+    if isinstance(left,(list,tuple)) and isinstance(right,(list,tuple)):
+        if len(left)!=len(right):return path+' lengths='+str((len(left),len(right)))
+        for index,(a,b) in enumerate(zip(left,right)):
+            if not exact_state(a,b):return state_difference(a,b,path+'/'+str(index))
+    if torch.is_tensor(left) and torch.is_tensor(right):return path+' tensor values differ; shapes='+str((tuple(left.shape),tuple(right.shape)))
+    return path+' values='+repr((left,right))[:300]
 
 
 def verified_parent(state,sha256,*,allow244=False,allow298=False,allow406=False):

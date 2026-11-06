@@ -36,6 +36,7 @@ def adam_format(state,torch):
     """Explicitly derive only a new Torch AdamW format default, never moments."""
     from .state import exact_state
     p=torch.nn.Parameter(torch.ones(1));probe=torch.optim.AdamW([p]);default=probe.param_groups[0].get('decoupled_weight_decay');changes=[]
+    scheduler_default=torch.optim.lr_scheduler.LambdaLR(probe,lambda _:1.).state_dict().get('_is_initial')
     def walk(value,path):
         if isinstance(value,dict):
             result={k:walk(v,path+'/'+str(k)) for k,v in value.items()}
@@ -45,6 +46,9 @@ def adam_format(state,torch):
                     if 'decoupled_weight_decay' not in group:
                         if default is not True:raise ValueError('Unknown AdamW default')
                         group['decoupled_weight_decay']=True;changes.append(path+'/param_groups/'+str(i)+'/decoupled_weight_decay=true')
+            if {'base_lrs','last_epoch','_step_count','_last_lr','lr_lambdas'}<=set(result) and '_is_initial' not in result and scheduler_default is not None:
+                if scheduler_default is not False:raise ValueError('Unknown scheduler initialization default')
+                result['_is_initial']=False;changes.append(path+'/_is_initial=false')
             return result
         if isinstance(value,list):return [walk(v,path+'/'+str(i)) for i,v in enumerate(value)]
         if isinstance(value,tuple):return tuple(walk(v,path+'/'+str(i)) for i,v in enumerate(value))
@@ -64,11 +68,15 @@ def schema_selftest(a):
     from .large_native import write
     guarded(a.lease,180)
     p=torch.nn.Parameter(torch.ones(1));optimizer=torch.optim.AdamW([p]);p.grad=torch.ones_like(p);optimizer.step()
+    scheduler=torch.optim.lr_scheduler.LambdaLR(optimizer,lambda _:1.)
     legacy=optimizer.state_dict();legacy['param_groups'][0].pop('decoupled_weight_decay',None)
-    old=dict(optimizer=dict(user_optimizers=[legacy],updater=dict(opts=[legacy])))
+    legacy_scheduler=scheduler.state_dict();legacy_scheduler.pop('_is_initial',None)
+    old=dict(optimizer=dict(user_optimizers=[legacy],user_schedulers=[legacy_scheduler],updater=dict(opts=[legacy],scheds=[legacy_scheduler])))
     derived,changes=adam_format(old,torch)
     other=torch.optim.AdamW([torch.nn.Parameter(torch.ones(1))]);other.load_state_dict(derived['optimizer']['user_optimizers'][0])
     if not exact_state(other.state_dict(),derived['optimizer']['user_optimizers'][0]):raise ValueError('Actual Torch optimizer format restore differs')
+    other_scheduler=torch.optim.lr_scheduler.LambdaLR(other,lambda _:1.);other_scheduler.load_state_dict(derived['optimizer']['user_schedulers'][0])
+    if not exact_state(other_scheduler.state_dict(),derived['optimizer']['user_schedulers'][0]):raise ValueError('Actual Torch scheduler format restore differs')
     out=Path(a.root)/'migration';out.mkdir(parents=True,exist_ok=True)
     write(out,'schema-selftest.json',dict(passed=True,torch=torch.__version__,declared_format_defaults=changes,fixture_optimizer_updates=1,native_model_updates=0,source=a.source))
 
