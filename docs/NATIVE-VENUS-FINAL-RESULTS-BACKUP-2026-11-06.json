@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETE_HASH_VERIFIED",
+  "recorded_utc": "2026-11-06T12:02:52.266954+00:00",
+  "actual_recovery_source": "bb3ecaafe4d245cedb0b67e8dcda13a4f867c153",
+  "actual_GPU_interval": 15,
+  "receipt_path": "runs/venus-large-capacity-20261104/results-recovery-v83/copyback-verified.json",
+  "receipt_sha256": "6fb4f3453bbcf119b55d568026824c4e0b90573dbc4fd2cad192a494fd1741b7",
+  "destination": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12",
+  "all_hashes_verified": true,
+  "all_link_targets_verified": true,
+  "files": 1856,
+  "bytes": 17330768218,
+  "links": 1,
+  "inventory_sha256": "e36199a1ad93b745281586c2fc839860f24cf982d7849b01060c6b0845c7d6c2",
+  "recovered_via": "same approved GPU interval, before any native model loading",
+  "prior_CPU_attempts_preserved_as_failed": true,
+  "vm_id": "7521667153519853425",
+  "new_optimizer_updates": 0,
+  "broad_Mac_source_backup": "PARTIAL; this completion covers the exact1856-file native final-run inventory only."
+}

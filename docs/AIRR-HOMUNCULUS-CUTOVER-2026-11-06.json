@@ -1,0 +1,41 @@
+{
+  "status": "OWNER_DIRECTED_NEXT_PROVIDER",
+  "recorded_utc": "2026-11-06T12:02:52.267200+00:00",
+  "human_instruction_verbatim": "Isambard is now available for compute - lets use that for the next run from now on.",
+  "award_id": "0261-8264-3465-1",
+  "project_identifier_from_owner_screenshot": "u6ada.brics",
+  "portal_status_from_owner_screenshot": "Active",
+  "allocation_GPU_hours_from_owner_screenshot": 20000,
+  "used_GPU_hours_from_owner_screenshot": 0,
+  "end_date_from_owner_screenshot": "2027-01-31",
+  "cluster_access_verified": false,
+  "local_expired_certificate_until_UTC": "2026-11-04T12:01:47Z",
+  "bounded_actual_SSH_exit": 255,
+  "renewal": {
+    "tool_session": 88436,
+    "process": "clifton auth --open-browser true --show-qr false --write-config false",
+    "status": "Awaiting institutional sign-in; no passwords/codes requested in chat"
+  },
+  "current_GCP_interval": {
+    "ordinal": 15,
+    "controller_tool_session": 64092,
+    "PID": 5939,
+    "execution_source": "bb3ecaafe4d245cedb0b67e8dcda13a4f867c153",
+    "native_STOP_UTC": "2026-11-06T12:50:51.505Z",
+    "action": "Finish valid current recovery/evaluation, preserve full results and stop. No further GCP interval."
+  },
+  "next_steps": [
+    "Observe same Clifton renewal; verify new signed project principal and exact alias before bounded actual SSH. Preserve unrelated SSH config.",
+    "Read actual Slurm associations/account/QoS and current jobs. Portal activation alone is not scheduler proof. No overlapping GPU jobs across providers.",
+    "Inventory existing Venus artifacts and container/runtime on the ARM64 GH200 platform before transferring missing approved model/config/data/state only. Git source deployment; rsync-ar/noowner/nogroup/excludesession-token/.private/credentials/owner-conversations/API keys.md/cores.",
+    "Use current British full64/nine-case results to choose the next useful native job. Verify independent state restore on the new platform; do not replay saved120updates or redo unchanged kernel sweeps.",
+    "Only then run bounded necessary native validation/targeted training on the new allocation, with explicit source/data/recipe/run records and retention gates."
+  ],
+  "official_sources": [
+    "https://docs.isambard.ac.uk/user-documentation/guides/login/",
+    "https://docs.isambard.ac.uk/user-documentation/guides/accounting/",
+    "https://docs.isambard.ac.uk/user-documentation/guides/file_transfer/between-projects/"
+  ],
+  "new_GPU_jobs_submitted_to_Isambard": 0,
+  "new_external_model_API_calls": 0
+}
