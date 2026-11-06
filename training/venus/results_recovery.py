@@ -32,6 +32,9 @@ REMOTE = '/workspace/migration/venus-large-capacity-v65/native-v75'
 DEST = Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12')
 DEADLINE = 1794052800.0
 GCLOUD = '/opt/homebrew/bin/gcloud'
+RUN_SECONDS = 900
+PRIOR_CPU_USD = 0.0
+ENTRYPOINT = 'training.venus.results_recovery'
 EXCLUDED = frozenset(('.private', 'credentials', 'owner-conversations', 'session-token', 'API keys.md'))
 
 
@@ -149,7 +152,7 @@ def validate_cpu(vm, allow_detached=False):
     if not detached and (len(vm.get('disks', [])) != 1 or len(bound) != 1 or not bound[0]['boot'] or bound[0]['autoDelete']):
         raise ValueError('CPU boot disk retention mismatch')
     scheduling = vm['scheduling']
-    if int(scheduling['maxRunDuration']['seconds']) > 900 or scheduling['instanceTerminationAction'] != 'STOP':
+    if int(scheduling['maxRunDuration']['seconds']) > RUN_SECONDS or scheduling['instanceTerminationAction'] != 'STOP':
         raise ValueError('Native CPU STOP bound missing')
     if vm.get('serviceAccounts') or vm['tags']['items'] != ['duplex-venus-train-bounded']:
         raise ValueError('CPU credentials or ingress scope changed')
@@ -300,7 +303,7 @@ def execute():
     if price.get('source') != 'Official Cloud Billing Catalog' or price.get('region') != 'europe-west4' or price.get('machine_type') != 'e2-standard-2':
         raise ValueError('Wrong regional CPU quote')
     computed = 2*price['rates']['core']['usd'] + 8*price['rates']['ram']['usd']
-    if not (computed == price['hourly_usd'] and 0 <= age < 3600 and 0 < computed <= .12 and computed * 1000 / 3600 + .06 <= .1):
+    if not (computed == price['hourly_usd'] and 0 <= age < 3600 and 0 < computed <= .12 and PRIOR_CPU_USD + computed * (RUN_SECONDS+100) / 3600 + .06 <= .1):
         raise ValueError('Fresh CPU price and whole recovery reserve required')
     if not all(v['status'] == 'TERMINATED' for v in cloud('compute', 'instances', 'list')):
         raise ValueError('Other compute running')
@@ -312,7 +315,8 @@ def execute():
     # Existing OSLogin public key must be valid; credentials never leave Mac.
     run([GCLOUD, 'auth', 'print-access-token'])  # Keep output in memory, never log it.
     source = run(['git', 'rev-parse', 'HEAD']).strip()
-    if run(['git', '-c', 'core.filemode=false', 'status', '--porcelain', '--', __file__, str(PROPOSAL)]).strip():
+    entrypoint_file=Path(__file__).with_name(ENTRYPOINT.rsplit('.',1)[-1]+'.py')
+    if run(['git', '-c', 'core.filemode=false', 'status', '--porcelain', '--', __file__, str(entrypoint_file), str(PROPOSAL)]).strip():
         raise ValueError('Recovery source/proposal must be committed')
     with (R / 'claim.json').open('x') as f:
         json.dump(dict(controller_pid=os.getpid(), source=source, authorization_sha256=sha(AUTH)), f)
@@ -323,13 +327,13 @@ def execute():
         run([GCLOUD, 'compute', 'instances', 'detach-disk', GPU, '--disk=' + DISK, '--zone=' + ZONE, '--project=' + PROJECT, '--quiet'], 90)
         validate_original(cloud('compute', 'instances', 'describe', GPU, '--zone=' + ZONE), cloud('compute', 'disks', 'describe', DISK, '--zone=' + ZONE), attached=False)
         boot = R / 'bootstrap.sh'
-        boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-results-stop --on-active=810s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
+        boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-results-stop --on-active='+str(RUN_SECONDS-90)+'s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
         op = cloud('compute', 'instances', 'create', CPU, '--zone=' + ZONE,
             '--machine-type=e2-standard-2', '--provisioning-model=STANDARD',
             '--no-restart-on-failure', '--no-service-account', '--no-scopes',
             '--tags=duplex-venus-train-bounded', '--disk=name=' + DISK + ',boot=yes,auto-delete=no,mode=rw',
             '--metadata=enable-oslogin=TRUE,enable-guest-attributes=TRUE,block-project-ssh-keys=TRUE,duplex-results-recovery-claim=' + sha(R / 'claim.json'),
-            '--metadata-from-file=startup-script=' + str(boot), '--max-run-duration=900s',
+            '--metadata-from-file=startup-script=' + str(boot), '--max-run-duration='+str(RUN_SECONDS)+'s',
             '--instance-termination-action=STOP', '--async')
         save('create-operation.json', op)
         wait_operation(op)
@@ -337,10 +341,10 @@ def execute():
         validate_cpu(vm)
         if vm['status'] != 'RUNNING': raise ValueError('CPU not actually running')
         save('provider-start.json', vm)
-        end = datetime.fromisoformat(vm['lastStartTimestamp']).timestamp() + 900
+        end = datetime.fromisoformat(vm['lastStartTimestamp']).timestamp() + RUN_SECONDS
         save('lease.json', dict(vm_id=vm['id'], stop_unix=end, controller_pid=os.getpid(),
             controller_birth=run(['/bin/ps', '-p', str(os.getpid()), '-o', 'lstart=']).strip()))
-        watch = subprocess.Popen([sys.executable, '-u', '-m', 'training.venus.results_recovery', '--guard'], stdout=(R / 'guard.log').open('x'), stderr=subprocess.STDOUT)
+        watch = subprocess.Popen([sys.executable, '-u', '-m', ENTRYPOINT, '--guard'], stdout=(R / 'guard.log').open('x'), stderr=subprocess.STDOUT)
         ssh = prepare_ssh(vm)
         run(ssh + ['sudo systemctl is-active duplex-results-stop.timer'], 30)
         active = run(ssh + ['sudo systemctl list-units --type=service --state=running --no-legend --plain'], 30)
