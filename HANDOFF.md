@@ -1,3 +1,15 @@
+# LOCAL — Complete native evaluation submitted8149356; SAME job, no duplicate
+
+6Nov19:36UTC. Actual source6b111008be6e83850b9076585827db13d438be60 /worktree /projects/u6ada/duplex-live/source-native-v3. ONE evaluation Slurm8149356/accountbrics.u6ada/interactive/1GPU100G/2h/no-requeue. Root /projects/u6ada/duplex-live/native-evaluation-v2; localclaim/job/log runs/isambard-native-20261106/native-v3. Observe actual scheduler/host execution-8149356/current-process.json and stage-terminal files; never resubmit on observation timeout. Originalproofs unchanged8files; symlinks reuse verified currentstates. No native new updates yet.
+
+Preserved earlier evaluation failures:8149291 sourcec7b4844 FAILED4s before container(TMPDIR Path+str);8149314 sourcec2ebc71 FAILED28s after actual schema-selftestPASS, before weights because Git worktree points at physical /lus path hidden by container. Fixed physical-project bind and verified actual container git rev-parse onlogin BEFORE next GPU; symlinked-project launcher regression10PASS. Existing failed outputs native-evaluation-v1 remain intact. Runtime8148961PASS/41s/ARM64 GH200120GB/NGC25.10/compiledTorch2.9/venv/models pinned, no repeated runtime preparation.
+
+Next actual stages: main reference +independent fresh restore, control reference+fresh restore, complete32 native+speech perarm/RPBen/new turn_eos fix, combine64. After actual full results review, submit sustainedworkq trainjob --epochs2 from source6b111/worktree source-native-v3, newroot native-training-v1. This code requires actual evaluation-v2 complete64 and matching source proofs; preserves all moments/RNG/OPAL/nativeBPTT and starts global526→646 (120NEWupdates, no repeats), LR5e-6/warm16/effective4/KL.1/hidden.01/action.25, full240TRAIN each epoch/full64DEV boundary, immutablecheckpoints/freshfinalrestore. OPALKEEP/API0; no claimed Jev/paid code agent. Candidate unadopted/main13of32 original wordpasses vscontrol11; lossimprovement notproductapproval.
+
+LOCAL soleexecutor; noagents/otherchats/newGCP/modelAPI/purchase. All GCP computeOFF/originalstorage7Nov12UTC/caps175350 unchanged. Critical backups/staged2640 hashes/public35/current3states ready; broadMacsourcebackupPARTIAL. Currentcertificate7Nov00:10:16UTC; remoteSlurmguard+walltime independent ofMac. Preserve unrelatedPYC/probes/roadmap, oldhistories/KLhidden/fit15/allfailedruns. HeartbeatPAUSED. Continue through actualtraining, monitor SAME processes and copy immutable state/evidence.
+
+---
+
 # LOCAL — ARM runtime READY; native evaluation wrapper fix ready
 
 6Nov2026 19:32UTC. LOCAL sole executor; continue through actual Isambard training, no GCP GPU/model restart. Latest model remains main698,351,616 trainable adapter parameters /60 new updates vs control851,968 /60, both parent466→526. Main held-out family CE improved20–46%, but original native words only13/32 vs control11/32; all32 peaks passed per arm. Candidate remains experimental/unadopted.
