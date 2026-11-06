@@ -1,0 +1,104 @@
+{
+  "recorded_utc": "2026-11-06T20:01:29.276876+00:00",
+  "source": "35d40392b641d31023723d87edb72bb224af37b8",
+  "complete_main32": true,
+  "word_pass": 18,
+  "peak_pass": 28,
+  "failed_waveforms": [
+    {
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "sha256": "d0c0066f18f1b41ba0d52b88bcaa949e97bd2b6ab7d4699be241a4f899b04b47",
+      "sample_rate": 24000,
+      "samples": 830400,
+      "peak": 0.999969482421875,
+      "samples_over_peak_limit": 4,
+      "full_scale_samples": 4,
+      "longest_full_scale_run": 2,
+      "full_scale_sample_positions": [
+        221260,
+        221372,
+        221484,
+        221485
+      ],
+      "original_unchanged": true
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "sha256": "e1677e7d2a279fa45689d43e64e8df8b2b0a058bad024ea27b0b81691af1dcd9",
+      "sample_rate": 24000,
+      "samples": 831360,
+      "peak": 0.999969482421875,
+      "samples_over_peak_limit": 4,
+      "full_scale_samples": 4,
+      "longest_full_scale_run": 2,
+      "full_scale_sample_positions": [
+        221260,
+        221372,
+        221484,
+        221485
+      ],
+      "original_unchanged": true
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "sha256": "d71c744dc08d96f8457db7d738d541961d43a5fa07800da05abfc131bc854bb6",
+      "sample_rate": 24000,
+      "samples": 240000,
+      "peak": 0.999969482421875,
+      "samples_over_peak_limit": 31,
+      "full_scale_samples": 29,
+      "longest_full_scale_run": 5,
+      "full_scale_sample_positions": [
+        96524,
+        96910,
+        98975,
+        98976,
+        98977,
+        98978,
+        98979,
+        99007,
+        99008,
+        99053,
+        99054,
+        99055,
+        99056,
+        99057,
+        99447,
+        99448,
+        99449,
+        99450,
+        99451,
+        99463,
+        99464,
+        99545,
+        99546,
+        99547
+      ],
+      "original_unchanged": true
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "sha256": "0f1f2c329c50ca06c028cd29886f2d93515abe0bea08c3f4b1e2957fc8a25fca",
+      "sample_rate": 24000,
+      "samples": 270720,
+      "peak": 0.999969482421875,
+      "samples_over_peak_limit": 6,
+      "full_scale_samples": 6,
+      "longest_full_scale_run": 4,
+      "full_scale_sample_positions": [
+        122197,
+        122198,
+        122199,
+        122200,
+        122340,
+        122341
+      ],
+      "original_unchanged": true
+    }
+  ],
+  "repair_applied": false,
+  "gain_changed": false,
+  "threshold_changed": false,
+  "diagnosis": "Four original native output WAVs reach the PCM16 positive full-scale value. Counts and contiguous runs are measured here; upstream acoustic causes and perceptual severity are not inferred from peak alone.",
+  "adopted": false
+}

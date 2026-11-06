@@ -41,5 +41,34 @@
     "new_training_data_generated": false
   },
   "qualified": false,
-  "adopted": false
+  "adopted": false,
+  "archived_retention_counterexample": {
+    "id": "venus-control-v1-holdout-ordinary-0222",
+    "question": "What is a funnel used for?",
+    "archived_report": "docs/NATIVE-VENUS-FOUNDATION64-REVIEW-2026-10-31.json",
+    "archived_report_sha256": "f810858c0171781e8be4be1e53370fb07d09ee9f29eb8d2ae896bebaec3e215b",
+    "conditions": [
+      {
+        "condition": "untouched-release",
+        "generated_text": "A funnel is used for pouring liquid or powder into a small opening. It helps to prevent spill age and makes transfer smoother",
+        "word_pass": false
+      },
+      {
+        "condition": "candidate406",
+        "generated_text": "It is used for filtering liquids.",
+        "word_pass": true
+      }
+    ],
+    "current_main526": {
+      "generated_text": "It is used for filtering liquids.",
+      "word_pass": true,
+      "asr_text": " It is used for filtering liquids."
+    },
+    "inference": "This specific factual regression predates the698M expansion and was present in candidate406; it is not evidence that the current larger capacity introduced it or that the base lacks this knowledge.",
+    "limit": "One archived case does not establish the general cause or its prevalence. Input/source conditions and framework differ across dates.",
+    "semantic_judge": "LOCAL diagnostic assessment, not independent semantic approval",
+    "data_action": "Broaden ordinary/common-knowledge and technical-dialogue retention in a new version, with non-delegation contrasts. Do not train this inspected HOLDOUT question or relabel a wrong answer as passing.",
+    "current_run_purpose": "Finish the fixed two-epoch control-learning continuation; no claim it repairs all inherited knowledge regressions. No automatic extension beyond120newupdates based only on CE."
+  },
+  "updated_utc": "2026-11-06T20:04:05.727939+00:00"
 }
