@@ -3,7 +3,8 @@ import argparse,json,time
 from training.venus import isambard_job as job
 
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch):
-    base=tmp_path/'base';base.mkdir();root=base/'evaluation';root.mkdir()
+    real=tmp_path/'physical-project';real.mkdir()
+    base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
     monkeypatch.setattr(job,'BASE',base);monkeypatch.setattr(job,'ART',base/'artifacts')
     monkeypatch.setenv('SLURM_JOB_ID','123');monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
     monkeypatch.setattr(job.subprocess,'check_output',lambda argv,**kwargs: 'source' if argv[0]=='git' else 'NodeList=nid1 StartTime=start EndTime=end')
@@ -24,6 +25,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     native=[args for args in calls if args[0]=='apptainer']
     assert len(native)==8
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
+    assert all(str(real)+':'+str(real) in args for args in native)
     assert all('SLURM_JOB_ID=123' in args and 'CUDA_VISIBLE_DEVICES=0' in args for args in native)
     assert [args[args.index('--stage')+1] for args in native]==['schema-selftest','reference','restore','reference','restore','collect','collect','combine']
     terminal=json.loads((root/'execution-123/terminal.json').read_text())

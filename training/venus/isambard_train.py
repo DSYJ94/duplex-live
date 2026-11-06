@@ -36,7 +36,7 @@ def main(a):
         if not terminal['completed'] or reference['source']!=a.source:raise ValueError('Actual complete new training required')
         checkpoint=out/('step-%04d.pt'%terminal['actual_new_updates'])
     else:
-        evaluation=BASE/'native-evaluation-v1'
+        evaluation=BASE/'native-evaluation-v2'
         paired=json.loads((evaluation/'native/paired-native-report.json').read_text())
         reference=json.loads((evaluation/'migration/main/reference.json').read_text())
         proof=json.loads((evaluation/'migration/main/restore.json').read_text())
