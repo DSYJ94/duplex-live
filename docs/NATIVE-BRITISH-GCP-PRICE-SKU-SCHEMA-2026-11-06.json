@@ -1,0 +1,37 @@
+{
+  "AC33-B5A5-C20F": {
+    "description": "Nvidia Tesla A100 80GB GPU running in Netherlands",
+    "usage_unit": "h",
+    "regions": [
+      "europe-west4"
+    ]
+  },
+  "896E-DB80-1131": {
+    "description": "A2 Instance Core running in Netherlands",
+    "usage_unit": "h",
+    "regions": [
+      "europe-west4"
+    ]
+  },
+  "A78A-A063-7D5A": {
+    "description": "A2 Instance Ram running in Netherlands",
+    "usage_unit": "GiBy.h",
+    "regions": [
+      "europe-west4"
+    ]
+  },
+  "EFD6-4D88-8C94": {
+    "description": "SSD backed Local Storage in Netherlands",
+    "usage_unit": "GiBy.mo",
+    "regions": [
+      "europe-west4"
+    ]
+  },
+  "5CFD-16B2-4F41": {
+    "description": "Balanced PD Capacity in Netherlands",
+    "usage_unit": "GiBy.mo",
+    "regions": [
+      "europe-west4"
+    ]
+  }
+}

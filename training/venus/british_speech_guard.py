@@ -19,7 +19,11 @@ CHECKPOINTS=dict(main='a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d8529
 RUNTIME_FILES=('portable/venus/native_app.py','portable/venus/guard.py','portable/venus/speech_completion.py','portable/venus/speech_channel.py','portable/venus/speech_composition.py','training/venus/british_speech_guard.py','training/venus/british_behavior.py','training/venus/british_audition.py','training/venus/large_behavior.py')
 
 
-def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def sha(path):
+    h=hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda:stream.read(4*1024**2),b''):h.update(block)
+    return h.hexdigest()
 
 
 def authority():
@@ -33,6 +37,13 @@ def authority():
             or p['phase_ceiling_USD']!=175 or p['project_ceiling_USD']!=350):
         raise ValueError('Consolidated proposal changed')
     return a
+
+
+def complete_backup():
+    b=json.loads(BACKUP.read_text())
+    if not (b.get('all_hashes_verified') and b.get('all_link_targets_verified') and b.get('files')==1856 and b.get('bytes')==17330768218 and b.get('links')==1 and b.get('inventory_sha256')=='e36199a1ad93b745281586c2fc839860f24cf982d7849b01060c6b0845c7d6c2'):
+        raise ValueError('Full1856-file backup proof required')
+    return b
 
 
 def resource(lease):
@@ -50,9 +61,7 @@ def resource(lease):
         raise ValueError('Preselected RP reference required')
     if p.get('runtime_file_sha256')!={name:sha(name) for name in RUNTIME_FILES}:raise ValueError('Changed runtime bytes differ from bound source')
     if p.get('backup_receipt_sha256')!=sha(BACKUP):raise ValueError('Complete original results recovery required first')
-    b=json.loads(BACKUP.read_text())
-    if not (b.get('all_hashes_verified') and b.get('all_link_targets_verified') and b.get('files')==1856 and b.get('bytes')==17330768218 and b.get('links')==1 and b.get('inventory_sha256')=='e36199a1ad93b745281586c2fc839860f24cf982d7849b01060c6b0845c7d6c2'):
-        raise ValueError('Full1856-file backup proof required')
+    complete_backup()
     return dict(name='duplex-venus-large-gpu-20261104-eua-v67',ident=VM_ID,disk=DISK_ID,zone='europe-west4-a',disk_name='duplex-venus-large-data-20261104-eua-v67',machine='a2-ultragpu-1g',authority=AUTH,provider_read_limits=(25,20))
 
 

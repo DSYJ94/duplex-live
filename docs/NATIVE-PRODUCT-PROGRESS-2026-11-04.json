@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-06T01:18:25.186081+00:00",
+  "updated_utc": "2026-11-06T01:30:05.802329+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -45,7 +45,7 @@
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "21900prior+51600native+100reserve=73600aggregate;175phase350project;storage7Nov12UTC;max12",
-    "next_material_decision": "One CPU-only204MB recovery scope amendment; no GPU restart or repeat training.",
+    "next_material_decision": "Existing consolidated approval9ae2f66, then official Google renewal; local execution preparation complete, no more placeholder diagnostics.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
     "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
@@ -384,5 +384,11 @@
     "omitted_reference_hypothesis": "RUled_out_with_intact_cache",
     "accent_root_cause": "UNPROVED",
     "audition_preparation": "docs/NATIVE-BRITISH-AUDITION-PREPARATION-2026-11-06.json"
+  },
+  "British_execution_readiness": {
+    "status": "LOCAL_EXECUTION_PREPARATION_COMPLETE_HUMAN_APPROVAL_AND_GOOGLE_REAUTH_REQUIRED",
+    "report": "docs/NATIVE-BRITISH-EXECUTION-READINESS-2026-11-06.json",
+    "tests_passed": 121,
+    "native_executed": false
   }
 }

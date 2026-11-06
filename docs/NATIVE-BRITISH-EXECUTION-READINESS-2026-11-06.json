@@ -1,0 +1,66 @@
+{
+  "status": "LOCAL_EXECUTION_PREPARATION_COMPLETE_HUMAN_APPROVAL_AND_GOOGLE_REAUTH_REQUIRED",
+  "recorded_utc": "2026-11-06T01:30:05.802329+00:00",
+  "source_parent": "9b3db4c",
+  "source_file_sha256": {
+    "training/venus/british_controller.py": "eedda44cf33dc65fc452cc1b6d250c11f240540defab07cb4c530f0203121ddb",
+    "training/venus/british_speech_guard.py": "530508d5240bbff21dd0df4c9c8356a26f0a3e3695b63c8abf9a8041fe3e4a47",
+    "evals/harness/test_venus_british_controller.py": "0a145b1aa33701838088f49b16ce50bade37ddfe1d8f9265119a38b4ffab73d2",
+    "docs/NATIVE-BRITISH-GCP-PRICE-SKU-SCHEMA-2026-11-06.json": "39bcdfdf807d66f08feb21606e86da65a3a4554ef288caeba9c62d407c85ada0"
+  },
+  "tests": {
+    "passed": 121,
+    "seconds": 1.56,
+    "deployment_Python310_compile_passed": true,
+    "whole_controller_success_and_failed_copyback_paths_exercised_with_scripted_provider_and_process_boundaries": true,
+    "native_model_executed": false
+  },
+  "execution_entrypoints": {
+    "CPU_recovery": "python -m training.venus.british_recovery --quote THEN --execute after exact authorization and live checks",
+    "GPU_evaluation": "python -m training.venus.british_controller --quote THEN --execute after recovery verified and exact authorization"
+  },
+  "stages": [
+    "Separate9voiceaudition",
+    "Complete32 mainRP",
+    "Complete32 controlRP",
+    "Full64 combine and downloaded-report validation"
+  ],
+  "safety": [
+    "Missing new owner approval fails before provider calls.",
+    "Complete original1856file/17.33GB/1link proof required BEFORE allocation as well as model construction.",
+    "Fresh exact5-SKU Netherlands quote, existing stoppedGPU identity/unchanged laststart/stop and samePD binding, no otherGPU/Runpod, committed source and existing publickey lifetime checked.",
+    "One3500s nativeSTOP plus100s reserve,300s bootstrapSTOP, independent acknowledged Mac guard and guest expiry guard BEFORE model stage.",
+    "Source deployed by Gitbundle; original native source and tokenizer/Torch verified; Python3.10 transform check before loading weights.",
+    "Saved main/control checkpoints and original training/restore reports linked unchanged, no gradient/optimizer/replay stages.",
+    "JSONfirst <=32MiB output batches, exact hashes and linktargets, no checkpointlink-following, no owner/private/credentials/core data.",
+    "Full sourcebound downloaded64+9 reports and paired32 inputhashes required for COMPLETE copyback receipt; partial result receipt named separately.",
+    "Failure remains nonzero even if shutdown succeeds; stop only exactsameGPU and never delete original resources."
+  ],
+  "actual_this_turn": {
+    "new_CPU_intervals": 0,
+    "new_GPU_intervals": 0,
+    "new_optimizer_updates": 0,
+    "new_model_API_calls": 0,
+    "new_native_audio": 0,
+    "provider_reauth_retried": false
+  },
+  "remaining_blockers": [
+    "Consolidated proposal9ae2f66 has no owner approval yet.",
+    "Google tokenrefresh requires institutional/account verification; do not open another expiring flow until owner returns."
+  ],
+  "proposed_scope": "docs/NATIVE-BRITISH-SPEECH-RECOVERY-PROPOSAL-2026-11-06.json",
+  "limits": {
+    "phase_USD": 175,
+    "project_USD": 350,
+    "storage_deadline_UTC": "2026-11-07T12:00:00Z",
+    "prior12_GPU_upper_seconds": 45500,
+    "CPU_next600seconds": true,
+    "GPU_native3500seconds_plus100reserve": true
+  },
+  "qualification": {
+    "native_qualified": false,
+    "voice_adopted": false,
+    "goal_complete": false
+  },
+  "blocked_audit": "Same pending authorization persisted through at least3 consecutive resumed goal turns; Google auth blocker persisted through3. Useful local prerequisite scripts/tests now complete; further causal accent/behavior/speech/latency evidence requires actual authorized native execution."
+}
