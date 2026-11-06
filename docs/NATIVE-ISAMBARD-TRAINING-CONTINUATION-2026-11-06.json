@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-11-06T17:44:41.639592+00:00",
+  "status": "OWNER_INSTRUCTED_CONTINUE_THROUGH_TRAINING",
+  "owner_verbatim": "What is the current performance/state since the latest run? Go ahead with next steps, all the way till training",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "sole_executor": "LOCAL",
+  "existing_award_GPU_hours": 20000,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "first_task": "One bounded30minute singleGPU interactive runtime preparation, immutable existingARM64SIF; no modelweights/optimizer inthatstage.",
+  "subsequent_tasks": [
+    "GenuineSlurmguard and exact original cache/approval/action-index/OPAL source deployment",
+    "Fresh-process complete Adam/RNG/OPAL restore onGH200 with currentcheckpoints; retain originalGCP receipts honestly",
+    "Complete frozen pairednative64 speech/behavior test of turn_eos fix and Britishreference",
+    "Continue training from actualsavedmainstep60, never repeatupdates. Choose bounded completeepoch schedule and data/recipe adjustment from actual failures; preserve all304/240TRAIN64DEV/folds/originalwords/KLhidden/objectives/AdamRNGOPAL, saveimmutableepochs/fullreceipts and evaluate beforeadoption."
+  ],
+  "adoption_gates_unchanged": true
+}
