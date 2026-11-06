@@ -72,7 +72,7 @@ def inventory(request_path,output):
     authority();q=json.loads(Path(request_path).read_text());expected=request('/workspace/migration/data-rescue-cache-manifest.json')
     # The remote has a Git-deployed source request, not the Mac's cache directory.
     if q!=expected:raise ValueError('Bound cache request differs')
-    base=BASE;files={};links=[]
+    base=BASE.resolve();files={};links=[];cache_sources=[]
     def add(path,required_sha=None):
         rel=str(path.relative_to(base))
         if not allowed(rel):return
@@ -93,7 +93,11 @@ def inventory(request_path,output):
     for row in q['required_cache']:
         p=base/row['path']
         if not p.is_file():raise ValueError('Missing exact source cache: '+row['path'])
-        add(p,row['sha256'])
+        target=p.resolve()
+        if not target.is_relative_to(base/'venus-training-v1') or not allowed(str(target.relative_to(base))):raise ValueError('Exact cache reference escapes approved native data')
+        if p.is_symlink():links.append(dict(path=row['path'],target=os.readlink(p)))
+        add(target,row['sha256'])
+        cache_sources.append(dict(requested_path=row['path'],stored_path=str(target.relative_to(base)),sha256=row['sha256']))
     for rel in EXTRAS:
         top=base/rel
         if not top.is_dir() or top.is_symlink() or not top.resolve().is_relative_to(base):raise ValueError('Missing/linked named native directory: '+rel)
@@ -105,7 +109,17 @@ def inventory(request_path,output):
     total=sum(x['bytes'] for x in files.values())
     if total>MAX_BYTES:raise ValueError('Rescue exceeds exact20GB transfer cap')
     ordered=sorted(files.values(),key=lambda x:(not x['path'].startswith('venus-training-v1/paced-prefix-cache-v24/'),not x['path'].endswith(('.json','.jsonl')),x['path']))
-    Path(output).write_text(json.dumps(dict(files=ordered,links=links,bytes=total,required_cache=268),indent=2)+'\n')
+    Path(output).write_text(json.dumps(dict(files=ordered,links=links,bytes=total,required_cache=268,cache_sources=cache_sources),indent=2)+'\n')
+
+
+def admit_inventory(inv,q):
+    files={x['path']:x for x in inv['files']}
+    if len(files)!=len(inv['files']) or inv['bytes']!=sum(x['bytes'] for x in files.values()) or not 0<inv['bytes']<=MAX_BYTES:raise ValueError('Unique bounded complete file inventory required')
+    if any(not allowed(p) or x['bytes']<0 for p,x in files.items()):raise ValueError('Private or unsafe inventory file')
+    expected={x['path']:x['sha256'] for x in q['required_cache']}
+    actual={x['requested_path']:x['sha256'] for x in inv['cache_sources']}
+    if len(inv['cache_sources'])!=268 or actual!=expected:raise ValueError('All268 exact data references required')
+    if any(files.get(x['stored_path'],{}).get('sha256')!=x['sha256'] for x in inv['cache_sources']):raise ValueError('Every cached reference needs actual inventoried bytes')
 
 
 def groups(rows):
@@ -170,7 +184,7 @@ print(json.dumps(found))
         c.sync(ROOT/'request.json','/workspace/migration/data-rescue-request.json')
         c.sync(CACHE/'manifest.json','/workspace/migration/data-rescue-cache-manifest.json')
         c.ssh('cd '+work+' && /usr/bin/python3 -m training.venus.data_rescue --inventory --request /workspace/migration/data-rescue-request.json --output /workspace/migration/data-rescue-inventory.json',180)
-        inv=json.loads(c.ssh('cat /workspace/migration/data-rescue-inventory.json',30));r.save('inventory.json',inv)
+        inv=json.loads(c.ssh('cat /workspace/migration/data-rescue-inventory.json',30));admit_inventory(inv,q);r.save('inventory.json',inv)
         for n,batch in enumerate(groups(inv['files'])):
             if watch.poll() is not None or end-time.time()<180 or time.time()>json.loads((ROOT/'guard.json').read_text())['expires_unix']:raise RuntimeError('Rescue guard/time exhausted')
             files=ROOT/('batch-%03d.files'%n);files.write_bytes(b''.join(x['path'].encode()+b'\0' for x in batch))
@@ -185,7 +199,7 @@ print(json.dumps(found))
             if p.is_symlink() and os.readlink(p)==row['target']:continue
             if p.exists() or p.is_symlink():raise ValueError('Never overwrite differing original link')
             p.symlink_to(row['target'])
-        r.save('copyback-verified.json',dict(all_hashes_verified=True,files=len(inv['files']),bytes=inv['bytes'],exact_old268_cache_verified=True,original_cache_manifest_sha256=MANIFEST_SHA,original_link_targets_preserved=inv['links'],new_optimizer_updates=0,new_GPU_jobs=0))
+        r.save('copyback-verified.json',dict(all_hashes_verified=True,files=len(inv['files']),bytes=inv['bytes'],exact_old268_cache_verified=True,cache_sources=inv['cache_sources'],original_cache_manifest_sha256=MANIFEST_SHA,original_link_targets_preserved=inv['links'],new_optimizer_updates=0,new_GPU_jobs=0))
     finally:
         try:
             if detached:

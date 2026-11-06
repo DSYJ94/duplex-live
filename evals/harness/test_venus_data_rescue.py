@@ -58,3 +58,15 @@ def test_oversize_selection_cannot_be_accepted(inventory_inputs,monkeypatch):
     _,request,output=inventory_inputs;monkeypatch.setattr(d,'MAX_BYTES',1)
     with pytest.raises(ValueError,match='transfer cap'):d.inventory(request,output)
     assert not output.exists()
+
+
+def test_exact_pinned_cache_reference_can_resolve_to_its_same_native_bytes(inventory_inputs):
+    base,request,output=inventory_inputs
+    original=base/'venus-training-v1/paced-prefix-cache-v24/scene-000.pt'
+    target=base/'venus-training-v1/earlier-cache/scene-000.pt';target.parent.mkdir();original.rename(target)
+    original.symlink_to(target)
+    d.inventory(request,output);a=json.loads(output.read_text());d.admit_inventory(a,json.loads(request.read_text()))
+    assert a['cache_sources'][0]['stored_path']=='venus-training-v1/earlier-cache/scene-000.pt'
+    assert len(a['cache_sources'])==268
+    a['cache_sources'].pop()
+    with pytest.raises(ValueError,match='All268'):d.admit_inventory(a,json.loads(request.read_text()))
