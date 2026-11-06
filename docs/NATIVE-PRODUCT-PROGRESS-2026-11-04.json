@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-06T00:31:58.604981+00:00",
+  "updated_utc": "2026-11-06T00:40:21.506233+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -349,5 +349,13 @@
     "CPU_tests_passed": 49,
     "native_qualified": false,
     "live_defaults_changed": false
+  },
+  "results_recovery_readiness": {
+    "status": "LOCAL_RECOVERY_IMPLEMENTATION_READY_PENDING_OWNER_AMENDMENT",
+    "report": "docs/NATIVE-VENUS-RESULTS-CPU-RECOVERY-READINESS-2026-11-06.json",
+    "CPU_tests_passed": 28,
+    "missing_bytes": 204312087,
+    "batches": 7,
+    "cloud_mutations": 0
   }
 }
