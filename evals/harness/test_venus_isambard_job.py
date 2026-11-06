@@ -24,7 +24,11 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage='evaluate',epochs=2))
     native=[args for args in calls if args[0]=='apptainer']
     assert len(native)==8
-    assert all('--contain' in args and '--containall' not in args and '--cleanenv' in args for args in native)
+    assert all('--containall' in args and '--cleanenv' in args for args in native)
+    invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
+    assert len(set(invocations))==8
+    last=json.loads((root/'execution-123/combine-terminal.json').read_text())
+    assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
     assert all(str(real)+':'+str(real) in args for args in native)
     assert all('SLURM_JOB_ID=123' in args and 'CUDA_VISIBLE_DEVICES=0' in args for args in native)

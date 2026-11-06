@@ -1,7 +1,7 @@
 """One scheduler allocation, independent host guard, serial native processes."""
 import argparse
 from datetime import datetime,timezone
-import json,os,signal,subprocess,sys,time
+import json,os,signal,subprocess,sys,time,uuid
 from pathlib import Path
 from . import isambard_guard as g
 
@@ -30,7 +30,7 @@ def main(a):
         visible=os.environ['CUDA_VISIBLE_DEVICES']
         if not visible or ',' in visible:raise ValueError('One actual scheduler-selected GPU required')
         work=str(BASE/a.worktree)
-        common=['apptainer','exec','--cleanenv','--contain','--nv','--bind',str(BASE)+':'+str(BASE),
+        common=['apptainer','exec','--cleanenv','--containall','--nv','--bind',str(BASE)+':'+str(BASE),
                 '--bind',str(BASE.resolve())+':'+str(BASE.resolve()),
                 '--bind',str(ART/'recovered-data-v1/venus-training-v1')+':/workspace/migration/venus-training-v1:ro','--pwd',work]
         env=dict(CUDA_VISIBLE_DEVICES=visible,SLURM_JOB_ID=job_id,SLURM_JOB_ACCOUNT=g.ACCOUNT,
@@ -39,7 +39,7 @@ def main(a):
                  TMPDIR=str(BASE/('tmp/native-'+job_id)))
         Path(env['TMPDIR']).mkdir(parents=True,exist_ok=True)
         for key,value in env.items():common+=['--env',key+'='+value]
-        common += [str(ART/'runtime/pytorch-new.sif'),str(BASE/'envs/venus-arm64-v1/bin/python'),'-u','-m']
+        runtime=[str(ART/'runtime/pytorch-new.sif'),str(BASE/'envs/venus-arm64-v1/bin/python'),'-u','-m']
         model=str(BASE/'public-model-slurm-v1/Realtime-Venus-Audio');data=str(ART/'recovered-data-v1/venus-training-v1')
         args=['--root',str(root),'--source',source,'--lease',str(lease_path),'--model',model,'--opal-source',str(BASE/'opal-upstream-v1'),
               '--plan',work+'/evals/fixtures/venus-control-repair-source-v2-20261027.json','--timelines',data+'/paced-timelines-v22',
@@ -58,12 +58,13 @@ def main(a):
         for module,argv,name in stages:
             g.ensure(lease,json.loads(guard_path.read_text()))
             started=time.time();log=(execution/(name+'.log')).open('x')
-            child=subprocess.Popen(common+[module]+argv,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-            (execution/'current-process.json').write_text(json.dumps(dict(stage=name,pid=child.pid,module=module,source=source,started_unix=started),indent=2)+'\n')
+            invocation=uuid.uuid4().hex
+            child=subprocess.Popen(common+['--env','DUPLEX_NATIVE_EXECUTION_ID='+invocation]+runtime+[module]+argv,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+            (execution/'current-process.json').write_text(json.dumps(dict(stage=name,pid=child.pid,execution_id=invocation,module=module,source=source,started_unix=started),indent=2)+'\n')
             while child.poll() is None:
                 if watcher.poll() is not None:raise RuntimeError('Independent scheduler guard exited')
                 g.ensure(lease,json.loads(guard_path.read_text()));time.sleep(5)
-            log.close();result=dict(stage=name,pid=child.pid,actual_exit_code=child.returncode,seconds=time.time()-started,source=source)
+            log.close();result=dict(stage=name,pid=child.pid,execution_id=invocation,actual_exit_code=child.returncode,seconds=time.time()-started,source=source)
             (execution/(name+'-terminal.json')).write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
             if child.returncode:raise RuntimeError('Actual native stage failed: '+name)
         code=0

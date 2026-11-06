@@ -58,8 +58,9 @@ def main(a):
         if tensor_sha(logits)!=reference['logits_sha256']:raise ValueError('Actual training/fresh final restore differs from independent native reference')
         restore_rng(state['rng'])
         if a.final_restore:
-            if reference['training_pid']==os.getpid():raise ValueError('Final restore must be a distinct process')
-            write(out,'final-native-restore.json',dict(passed=True,source=a.source,checkpoint_sha256=expected,training_pid=reference['training_pid'],restore_pid=os.getpid(),actual_CUDA=True,Adam_RNG_OPAL_exact=True,native_logits_exact=True,new_optimizer_updates=0,derived_format_defaults=format_changes,adopted=False))
+            execution=os.environ['DUPLEX_NATIVE_EXECUTION_ID']
+            if reference['training_execution_id']==execution:raise ValueError('Final restore must have a distinct host-bound process invocation')
+            write(out,'final-native-restore.json',dict(passed=True,source=a.source,checkpoint_sha256=expected,training_pid=reference['training_pid'],restore_pid=os.getpid(),training_execution_id=reference['training_execution_id'],restore_execution_id=execution,host_pid_evidence='execution Slurm stage-terminal receipts',actual_CUDA=True,Adam_RNG_OPAL_exact=True,native_logits_exact=True,new_optimizer_updates=0,derived_format_defaults=format_changes,adopted=False))
             return
         recipe=copy.deepcopy(parent['metadata']['recipe'])
         recipe.update(learning_rate=5e-6,epochs=a.epochs,updates=60*a.epochs,warmup_updates=16,seed=20261106,train_count=240,dev_count=64)
@@ -95,7 +96,7 @@ def main(a):
                         write(out,'dev-%04d.json'%actual,dict(step=actual,scenes=64,**dev,adopted=False))
                         save(out/('step-%04d.pt'%actual),llm,runtime.optimizer,actual,metadata,diagnostics_state=runtime.diagnostics_state)
                 with torch.no_grad():logits,_=selected_forward(llm,corpus.read(reference_row),'cuda')
-                write(out,'final-native-reference.json',dict(source=a.source,training_pid=os.getpid(),checkpoint_sha256=sha(out/('step-%04d.pt'%actual)),logits_sha256=tensor_sha(logits)))
+                write(out,'final-native-reference.json',dict(source=a.source,training_pid=os.getpid(),training_execution_id=os.environ['DUPLEX_NATIVE_EXECUTION_ID'],checkpoint_sha256=sha(out/('step-%04d.pt'%actual)),logits_sha256=tensor_sha(logits)))
                 write(out,'training-terminal.json',dict(completed=True,actual_new_updates=actual,total_optimizer_updates=526+actual,complete_epochs=actual//60,TRAIN=240,DEV=64,adopted=False))
             except BaseException:
                 save(out/'interrupted-state.pt',llm,runtime.optimizer,runtime.optimizer.update,metadata,diagnostics_state=runtime.diagnostics_state)
