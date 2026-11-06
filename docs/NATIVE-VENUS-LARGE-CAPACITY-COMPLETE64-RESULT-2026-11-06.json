@@ -1,0 +1,90 @@
+{
+  "status": "TRAINING_COMPLETE_NATIVE64_COMPLETE_SPEECH_FAILED_BACKUP_PARTIAL",
+  "recorded_utc": "2026-11-06T00:26:33.832360+00:00",
+  "execution_source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
+  "math_source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
+  "training": {
+    "main_parameters": 698351616,
+    "control_parameters": 851968,
+    "new_updates_per_arm": 60,
+    "new_updates_total": 120,
+    "TRAIN_scenes_per_arm": 240,
+    "DEV_scenes_per_arm": 64,
+    "both_final_independent_Adam_RNG_OPAL_native_restores_passed": true,
+    "result": "docs/NATIVE-VENUS-LARGE-CAPACITY-PAIRED60-RESULT-2026-11-05.json"
+  },
+  "native": {
+    "main": {
+      "completed": 32,
+      "required": 32,
+      "word_pass": 13,
+      "peak_pass": 32,
+      "qualified": false
+    },
+    "control": {
+      "completed": 32,
+      "required": 32,
+      "word_pass": 11,
+      "peak_pass": 32,
+      "qualified": false
+    },
+    "observation_path": "/private/tmp/duplex-v80-current-observation.json",
+    "observation_sha256": "cb777e76ad1c77f2b394eaaceb32fec589f2ba62e5fd58b5757c6aa343c6182f",
+    "raw_control_and_paired_report_copyback_pending": true,
+    "WER_maximum": 0.05,
+    "peak_maximum": 0.995,
+    "qualified": false,
+    "adopted": false
+  },
+  "provider": {
+    "vm_id": "7521667153519853425",
+    "disk_id": "2297341858915206463",
+    "status": "TERMINATED",
+    "last_start_utc": "2026-11-05T17:38:53.272Z",
+    "last_stop_utc": "2026-11-06T00:10:49.641Z",
+    "actual_interval_seconds": 23516.369,
+    "upper_interval_seconds": 23600,
+    "all12_upper_GPU_seconds": 45500,
+    "maximum_intervals": 12,
+    "remaining_intervals": 0,
+    "phase_ceiling_USD": 175,
+    "project_ceiling_USD": 350,
+    "storage_deadline_utc": "2026-11-07T12:00:00Z"
+  },
+  "backup": {
+    "both_final_checkpoints_complete_hash_verified": true,
+    "main32_review_complete_hash_verified": true,
+    "remote_inventory_sha256": "e36199a1ad93b745281586c2fc839860f24cf982d7849b01060c6b0845c7d6c2",
+    "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12",
+    "all_source_files": 1856,
+    "all_source_bytes": 17330768218,
+    "locally_hash_verified_files": 164,
+    "locally_hash_verified_bytes": 17126456131,
+    "materialized_aliases": 70,
+    "missing_files": 1692,
+    "missing_bytes": 204312087,
+    "links_verified": 1,
+    "complete_final_run_inventory": false,
+    "failed_partial_artifacts_preserved": true,
+    "source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
+    "broad_Mac_source_backup": "PARTIAL"
+  },
+  "diagnosis": {
+    "original_main_WAVs_examined": 32,
+    "original_hashes_preserved": true,
+    "speech_completion_enabled": false,
+    "nonspoken_actions_enabled": false,
+    "observed_failures": [
+      "Correct raw language truncated in emitted audio: quiet-0080.",
+      "Internal delegate text enters actual speech; spurious delegation: pause-0097.",
+      "Wrong/unclosed delegate query; no actual worker dispatch: cancel-0086."
+    ],
+    "existing_fixes": [
+      "portable/venus/speech_channel.py",
+      "portable/venus/speech_completion.py"
+    ],
+    "next_hypothesis": "Qualify composition of existing action filtering and acoustic terminal completion; separately measure language/routing errors. Do not repeat blind audio-budget increase or train to compensate for renderer faults.",
+    "qualification_changed": false
+  },
+  "next_action": "One CPU-only missing-results recovery needs scope amendment; do not repeat training or restart GPU."
+}

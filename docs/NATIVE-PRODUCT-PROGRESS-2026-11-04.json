@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-05T23:41:21.036892+00:00",
+  "updated_utc": "2026-11-06T00:26:33.832360+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -38,14 +38,14 @@
   ],
   "current_work_item": {
     "id": "large-capacity-native-admission",
-    "status": "LIVE_final_interval12_native_restore24_PASS_main_resumed_no_new_update_verified_yet",
+    "status": "TRAINING_COMPLETE_NATIVE64_COMPLETE_SPEECH_FAILED_BACKUP_PARTIAL",
     "owner_direction": "docs/NATIVE-VENUS-LARGE-CAPACITY-DIRECTION-2026-11-04.json",
     "input": "Preserved466, approved240TRAIN64DEV, broad698M attention+MLP implementation, current primary-source research and frozen regression artifacts.",
     "output": "New versioned native producer/loader/guards, actual native zero/gradient/fresh-process restore and throughput admission, then sustained complete-epoch controlled learning curves.",
     "maximum_active_minutes": 30,
     "scope_proposal": "docs/NATIVE-VENUS-LARGE-CAPACITY-PHASE-PROPOSAL-2026-11-04.json",
     "scope_constraint": "21900prior+51600native+100reserve=73600aggregate;175phase350project;storage7Nov12UTC;max12",
-    "next_material_decision": "None pending; continue SAME active worker through whole main60/control60/finalrestore/fullnative64; do not pause routine checks or duplicate jobs.",
+    "next_material_decision": "One CPU-only204MB recovery scope amendment; no GPU restart or repeat training.",
     "remaining_speech_failures": "Keep all3 immutable failed records; do not make this frozen-diagnostic branch a permanent blocker to an explicitly approved capacity counterfactual. Adoption still requires the whole speech/behavior/live gate.",
     "authority": "docs/NATIVE-VENUS-LARGE-CAPACITY-AUTHORIZATION-2026-11-04.json",
     "source": "b39ce3ebe167b059b67fa3d131978e5da7c41ac1",
@@ -67,7 +67,24 @@
     "native_gradient_B_paths": 254,
     "independent_Adam_RNG_OPAL_native_logits_restore_passed": true,
     "init_checkpoint_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
-    "backup_status": "Both immutable epoch60 checkpoints and main rolling8/16/24/32/40/48/56 full Mac/remote hashes verified; final whole raw artifact inventory pending.",
+    "backup_status": {
+      "both_final_checkpoints_complete_hash_verified": true,
+      "main32_review_complete_hash_verified": true,
+      "remote_inventory_sha256": "e36199a1ad93b745281586c2fc839860f24cf982d7849b01060c6b0845c7d6c2",
+      "backup": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12",
+      "all_source_files": 1856,
+      "all_source_bytes": 17330768218,
+      "locally_hash_verified_files": 164,
+      "locally_hash_verified_bytes": 17126456131,
+      "materialized_aliases": 70,
+      "missing_files": 1692,
+      "missing_bytes": 204312087,
+      "links_verified": 1,
+      "complete_final_run_inventory": false,
+      "failed_partial_artifacts_preserved": true,
+      "source": "fe669ea4fb858018c7141dfaf1c9f01cf1dc279a",
+      "broad_Mac_source_backup": "PARTIAL"
+    },
     "main_full64_DEV_seconds": 1957.480212193,
     "one_paired_epoch_required_hours": 16.25994084441879,
     "all_actual_GPU_upper_seconds": 21900,
@@ -150,22 +167,19 @@
     },
     "known_prior_uncheckpointed_step25": true,
     "latest_actual_observation": {
-      "at_unix": 1793921971.7541516,
-      "unit": "duplex-large65-native-main.service",
-      "MainPID": "31207",
-      "ActiveState": "active",
-      "SubState": "running",
-      "running_model_units": [
-        {
-          "MainPID": "31207",
-          "Result": "success",
-          "ExecMainStatus": "0",
-          "Id": "duplex-large65-native-main.service",
-          "ActiveState": "active",
-          "SubState": "running",
-          "InvocationID": "4adbc918dc094967a2c43ad50d0551da"
-        }
-      ]
+      "vm_id": "7521667153519853425",
+      "disk_id": "2297341858915206463",
+      "status": "TERMINATED",
+      "last_start_utc": "2026-11-05T17:38:53.272Z",
+      "last_stop_utc": "2026-11-06T00:10:49.641Z",
+      "actual_interval_seconds": 23516.369,
+      "upper_interval_seconds": 23600,
+      "all12_upper_GPU_seconds": 45500,
+      "maximum_intervals": 12,
+      "remaining_intervals": 0,
+      "phase_ceiling_USD": 175,
+      "project_ceiling_USD": 350,
+      "storage_deadline_utc": "2026-11-07T12:00:00Z"
     },
     "main_training_optimizer_updates_complete": true,
     "main_training_terminal_verified": true,
@@ -180,22 +194,38 @@
       "stream_receipt": "runs/venus-large-capacity-20261104/v65/gpu-12/stream-backup.jsonl"
     },
     "main_result_report": "docs/NATIVE-VENUS-LARGE-CAPACITY-MAIN60-RESULT-2026-11-05.json",
-    "active_model_worker_pid": 31207,
-    "active_model_unit": "duplex-large65-native-main.service",
-    "active_model_invocation": "4adbc918dc094967a2c43ad50d0551da",
+    "active_model_worker_pid": null,
+    "active_model_unit": null,
+    "active_model_invocation": null,
     "control_training_terminal_verified": true,
     "control_post_training_DEV_complete_verified": true,
     "control_epoch60_checkpoint_verified": true,
     "control_final_independent_restore_verified": true,
     "paired_training_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-PAIRED60-RESULT-2026-11-05.json",
     "native_evaluation_progress": {
-      "native/main/collection_progress": {
-        "completed": 1,
+      "main": {
+        "completed": 32,
         "required": 32,
-        "quiet_cases_with_pre_cue_voice": 0,
+        "word_pass": 13,
+        "peak_pass": 32,
         "qualified": false
-      }
-    }
+      },
+      "control": {
+        "completed": 32,
+        "required": 32,
+        "word_pass": 11,
+        "peak_pass": 32,
+        "qualified": false
+      },
+      "observation_path": "/private/tmp/duplex-v80-current-observation.json",
+      "observation_sha256": "cb777e76ad1c77f2b394eaaceb32fec589f2ba62e5fd58b5757c6aa343c6182f",
+      "raw_control_and_paired_report_copyback_pending": true,
+      "WER_maximum": 0.05,
+      "peak_maximum": 0.995,
+      "qualified": false,
+      "adopted": false
+    },
+    "complete64_result": "docs/NATIVE-VENUS-LARGE-CAPACITY-COMPLETE64-RESULT-2026-11-06.json"
   },
   "anti_stall_rules": {
     "heartbeat_minutes": 30,
@@ -266,7 +296,7 @@
     "experimental_active_trainable_parameters": 698351616,
     "prior_small_adapter_trainable_parameters": 851968
   },
-  "current_compute_scope": "ONE sameA10080 interval12 RUNNING since5Nov17:38:53.272UTC; nativeSTOP6Nov07:58:53.272UTC/51600s;prior21900+51600+100=73600;175phase350project/storage7Nov12UTC. Finalauthorizedinterval12/no further restartcount.",
+  "current_compute_scope": "OFF after interval12; all12 upper45500GPU seconds. No further GPU starts authorized; $175phase/$350project/storage7Nov12UTC unchanged. CPU-only results recovery proposed, not authorized.",
   "source_backup_status": "Critical run artifacts verified outsideOneDrive; broad Mac source backup remains partial.",
   "weight_space_programming_policy": {
     "note": "docs/research/2026-11-04-weight-space-programming-opal.md",
