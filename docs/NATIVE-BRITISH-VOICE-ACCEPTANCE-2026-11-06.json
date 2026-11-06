@@ -1,0 +1,19 @@
+{
+  "status": "OWNER_DIRECTION_RECORDED_NATIVE_VOICE_UNQUALIFIED",
+  "recorded_utc": "2026-11-06T00:52:57.193166+00:00",
+  "owner_verbatim": "i dont want chinese accents",
+  "target_language": "en-GB",
+  "target_accent": "Natural British English; RP and regional options remain available",
+  "owner_rejected_output_characteristic": "Chinese-sounding accent",
+  "rejected_characteristic_is_listening_feedback_not_automated_ethnicity_classification": true,
+  "current_George_conditioned_native_output_approved": false,
+  "original_scores_and_audio_preserved": true,
+  "saved_prior_preferences": "docs/NATIVE-OWNER-VOICE-FEEDBACK-2026-10-27.json",
+  "next_voice_trial": [
+    "Compare existing RP Ben and British Alice reference against current George using identical native text and decoding.",
+    "Judge actual generated English speech for accent, naturalness, pronunciation and complete words; a British reference label alone does not qualify output.",
+    "Retain full speech/behavior/silence/delegation checks; prefer fixing reference/conditioning before changing acoustic weights.",
+    "No voice adopted until owner listening approval and objective gates pass."
+  ],
+  "paid_execution_or_new_API_payload_authorized": false
+}

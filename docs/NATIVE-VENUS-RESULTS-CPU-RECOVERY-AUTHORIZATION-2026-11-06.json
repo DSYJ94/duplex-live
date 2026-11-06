@@ -1,0 +1,17 @@
+{
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "recovery_maximum_USD": 0.1,
+  "maximum_CPU_running_intervals": 1,
+  "maximum_CPU_running_seconds": 900,
+  "original_GPU_id": "7521667153519853425",
+  "same_disk_id": "2297341858915206463",
+  "new_GPU_intervals": 0,
+  "new_optimizer_updates": 0,
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-06T00:52:57.193166+00:00",
+  "human_reply_verbatim": "1. i dont want chinese accents\n2. Proceed with next steps",
+  "proposal_path": "docs/NATIVE-VENUS-RESULTS-CPU-RECOVERY-PROPOSAL-2026-11-06.json",
+  "proposal_sha256": "c58a01101fa33d1fabb4895e9c8ab3c8dd1392aa624ca97c276d95066561b572",
+  "authority_interpretation": "Direct owner proceed instruction following the concrete pending CPU-only next-step proposal; authorizes that bounded recovery only. No GPU time, training or other scope added."
+}
