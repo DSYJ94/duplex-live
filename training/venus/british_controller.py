@@ -179,6 +179,7 @@ def execute():
     from .source_controller import prepare_ssh
     from .oslogin_access import ensure as ensure_key
     from portable.venus.guard import bounded_runpod_read
+    retry_baseline=None
     if ATTEMPT>1:
         previous_root=g.PLAN.parent if ATTEMPT==2 else g.PLAN.parent/('capacity-attempt-%02d'%(ATTEMPT-1))
         initial=json.loads((previous_root/'start-operation.json').read_text());initial=initial[0] if isinstance(initial,list) else initial
@@ -186,6 +187,7 @@ def execute():
         previous=json.loads((previous_root/'provider-final.json').read_text())
         current=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE)
         after=capacity_retry_after(op,previous,current,ATTEMPT)
+        retry_baseline=previous
         save('previous-capacity-terminal.json',op)
         save('capacity-wait.json',dict(attempt=ATTEMPT,not_before_unix=after,actual_new_GPU_intervals=0))
         while time.time()<after:time.sleep(min(30,after-time.time()))
@@ -204,7 +206,11 @@ def execute():
     vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
     recovery.validate_original(vm,disk,attached=True)
     old=json.loads((recovery.PRIOR/'provider-final.json').read_text())
-    if vm['lastStartTimestamp']!=old['lastStartTimestamp'] or vm['lastStopTimestamp']!=old['lastStopTimestamp']:raise ValueError('An unknown GPU interval has occurred')
+    expected_stop=(retry_baseline or old)['lastStopTimestamp']
+    # GCP advances lastStopTimestamp on a terminal failed start as well. An
+    # unchanged lastStart plus the exact previously verified stockout snapshot
+    # distinguishes it from a real new running interval.
+    if vm['lastStartTimestamp']!=old['lastStartTimestamp'] or vm['lastStopTimestamp']!=expected_stop:raise ValueError('An unknown GPU interval has occurred')
     pods=bounded_runpod_read(Path('runs/local-migration-20261021/.private/runpod-budget-api-key').read_text().strip())
     if isinstance(pods,dict):pods=pods['pods']
     if any(p['status'] not in ('EXITED','STOPPED','TERMINATED') for p in pods):raise ValueError('Runpod overlap')

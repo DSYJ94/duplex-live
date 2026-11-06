@@ -20,5 +20,7 @@
   "new_model_constructions": 0,
   "new_optimizer_updates": 0,
   "first_spaced_retry_after_UTC": "2026-11-06T09:39:31.523Z",
-  "scope": "Same original VM, at most3 terminal-capacity-only attempts spaced>=600s, ONE actual approved3500s interval+100reserve, no resource/hardware/zone/disk fallback or extra spend. No retry after timeout/partial/access/model failure."
+  "scope": "Same original VM, at most3 terminal-capacity-only attempts spaced>=600s, ONE actual approved3500s interval+100reserve, no resource/hardware/zone/disk fallback or extra spend. No retry after timeout/partial/access/model failure.",
+  "provider_last_stop_after_failed_transition": "2026-11-06T01:29:31.437-08:00",
+  "stop_timestamp_explanation": "Google advances lastStopTimestamp on terminal failed start; unchanged lastStartTimestamp plus DONE stockout is authoritative evidence of no new running interval. Earlier handoff wording claiming original lastStop unchanged was incorrect."
 }
