@@ -35,6 +35,7 @@ def admit(a,require_restore=True):
 def adam_format(state,torch):
     """Explicitly derive only a new Torch AdamW format default, never moments."""
     from .state import exact_state
+    import io,hashlib
     p=torch.nn.Parameter(torch.ones(1));probe=torch.optim.AdamW([p]);default=probe.param_groups[0].get('decoupled_weight_decay');changes=[]
     scheduler_default=torch.optim.lr_scheduler.LambdaLR(probe,lambda _:1.).state_dict().get('_is_initial')
     def walk(value,path):
@@ -60,6 +61,13 @@ def adam_format(state,torch):
         if isinstance(old,(list,tuple)):return len(old)==len(new) and all(original_equal(a,b) for a,b in zip(old,new))
         return exact_state(old,new)
     if not original_equal(state['optimizer'],mapped['optimizer']):raise ValueError('Original optimizer field changed during format derivation')
+    if isinstance(state['optimizer'].get('memory'),bytes):
+        original_memory=torch.load(io.BytesIO(state['optimizer']['memory']),weights_only=False)
+        encoded=io.BytesIO();torch.save(original_memory,encoded);new_memory=encoded.getvalue()
+        if not exact_state(original_memory,torch.load(io.BytesIO(new_memory),weights_only=False)):raise ValueError('Original OPAL memory values changed during serialization migration')
+        mapped['optimizer']['memory']=new_memory
+        if new_memory!=state['optimizer']['memory']:
+            changes.append('optimizer/memory: exact decoded values; serialization '+hashlib.sha256(state['optimizer']['memory']).hexdigest()+' -> '+hashlib.sha256(new_memory).hexdigest())
     return mapped,changes
 
 def schema_selftest(a):

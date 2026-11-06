@@ -1,5 +1,5 @@
 """Migration defaults are explicit; every old optimizer leaf stays exact."""
-import copy
+import copy,io
 import torch
 from training.venus.isambard_native import adam_format
 from training.venus.state import exact_state
@@ -22,3 +22,12 @@ def test_legacy_adam_and_scheduler_restore_without_changing_old_fields():
 
 def test_mismatch_reports_the_real_nested_field():
     assert state_difference({'scheds':[{}]},{'scheds':[{'_is_initial':False}]},'updater')=="updater/scheds/0 missing=[] extra=['_is_initial']"
+
+def test_opal_memory_serialization_migration_preserves_every_decoded_value():
+    memory={'window_means':[.25,.5], 'history':{'step':60,'observed':torch.tensor([1.,2.])}}
+    old=io.BytesIO();torch.save(memory,old,_use_new_zipfile_serialization=False)
+    state={'optimizer':{'memory':old.getvalue()}}
+    mapped,changes=adam_format(state,torch)
+    assert mapped['optimizer']['memory']!=state['optimizer']['memory']
+    assert exact_state(torch.load(io.BytesIO(mapped['optimizer']['memory']),weights_only=False),memory)
+    assert len(changes)==1 and 'exact decoded values; serialization' in changes[0]
