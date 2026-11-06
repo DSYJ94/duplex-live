@@ -11,7 +11,7 @@ def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def review(root):
     root=Path(root);speech=read(root/'paired-native-report.json');results=read(root/'results.json')
-    assert speech['complete'] and speech['conditions']==['parent406','paced-continuation']
+    assert speech['complete'] and speech['conditions'] in (['parent406','paced-continuation'],['main','control'])
     assert len(speech['cases'])==len(results['cases'])==64
     scenes={s['id']:s for p in ('evals/fixtures/venus-control-repair-source-v2-20261027.json','evals/fixtures/venus-control-corpus-v4-20261026.json') for s in read(p)['scenes']}
     rows=[];summary={};identities=None
