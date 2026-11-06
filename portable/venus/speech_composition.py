@@ -15,9 +15,13 @@ def require_authorization(reference=None,reference_sha256=None):
     lease_path=os.environ.get('DUPLEX_LIVE_LEASE_FILE')
     if not lease_path:raise ValueError(message)
     lease=json.loads(Path(lease_path).read_text())
-    from training.venus.british_speech_guard import KEY,resource,sha
-    if lease.get('resource_key')!=KEY:raise ValueError(message)
-    resource(lease)
+    if lease.get('provider')=='Slurm':
+        from training.venus.isambard_guard import ensure,sha
+        ensure(lease,json.loads(Path(os.environ['DUPLEX_LIVE_GUARD_FILE']).read_text()))
+    else:
+        from training.venus.british_speech_guard import KEY,resource,sha
+        if lease.get('resource_key')!=KEY:raise ValueError(message)
+        resource(lease)
     if not reference or reference_sha256 not in REFERENCES:
         raise ValueError('Explicit approved English/British reference required; no default reference fallback')
     if sha(reference)!=reference_sha256:raise ValueError('Native audition reference bytes changed')

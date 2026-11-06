@@ -16,7 +16,7 @@ from .large_inputs import sha
 from .large_native import guarded
 
 
-async def collect(a,*,british_composition=False):
+async def collect(a,*,british_composition=False,execution_context=None):
     import numpy as np
     import soundfile as sf
     import torch
@@ -28,7 +28,12 @@ async def collect(a,*,british_composition=False):
     from data.venus.pacing import words
     from data.venus.repair import wer
     check=guarded;training_source=a.source;engine_options={}
-    if british_composition:
+    if execution_context is not None:
+        execution_context.admit(a)
+        check=execution_context.guarded
+        training_source=execution_context.original_training_source
+        engine_options=dict(nonspoken_actions=True,speech_completion=True)
+    elif british_composition:
         from .british_behavior import admit,guarded as british_guarded
         admit(a);check=british_guarded
         training_source='b39ce3ebe167b059b67fa3d131978e5da7c41ac1'

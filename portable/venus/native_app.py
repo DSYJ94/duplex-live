@@ -19,8 +19,12 @@ from contextlib import ExitStack
 
 def ensure_guard():
     g=json.loads(Path(os.environ['DUPLEX_LIVE_GUARD_FILE']).read_text())
-    from .guard import resource
     lease=json.loads(Path(os.environ['DUPLEX_LIVE_LEASE_FILE']).read_text()) if os.environ.get('DUPLEX_LIVE_LEASE_FILE') else {}
+    if lease.get('provider')=='Slurm':
+        from training.venus.isambard_guard import ensure
+        ensure(lease,g)
+        return
+    from .guard import resource
     b=resource(lease)
     if (g['vm_id']!=b['ident'] or g['disk_id']!=b['disk']
             or (lease and g['authorization_sha256']!=lease['authorization_sha256'])
@@ -189,6 +193,8 @@ class NativeEngine:
             require_authorization()
         import numpy as np
         import torch
+        from .wav_io import install as install_wav_io
+        install_wav_io()
         from transformers import AutoModel, set_seed
         self.np, self.torch = np, torch
         if not torch.cuda.is_available() or torch.cuda.device_count() != 1:

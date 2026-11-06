@@ -1,16 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 BASE=/projects/u6ada/duplex-live
-OUT=$BASE/runtime-preparation-v2
+ATTEMPT=${DUPLEX_RUNTIME_ATTEMPT:?}
+OUT=$BASE/runtime-preparation-v$ATTEMPT
 VENV=$BASE/envs/venus-arm64-v1
-export TMPDIR=$BASE/tmp/venus-runtime-v2
+export TMPDIR=$BASE/tmp/venus-runtime-v$ATTEMPT
 mkdir -p "$TMPDIR"
 python -m venv --system-site-packages "$VENV"
 PY=$VENV/bin/python
 "$PY" - <<'PY'
-import importlib.metadata as m,json,torch
+import importlib.metadata as m,json,torch,os
 from pathlib import Path
-p=Path('/projects/u6ada/duplex-live/runtime-preparation-v2')
+p=Path('/projects/u6ada/duplex-live/runtime-preparation-v'+os.environ['DUPLEX_RUNTIME_ATTEMPT'])
 versions={d.metadata['Name']:d.version for d in m.distributions() if d.metadata['Name'].lower().startswith(('torch','triton','nvidia-'))}
 (p/'compiled-constraints.txt').write_text(''.join(k+'==='+v+'\n' for k,v in sorted(versions.items())))
 assert torch.cuda.is_available() and torch.cuda.device_count()==1
@@ -21,6 +22,7 @@ PY
 unset PIP_CONSTRAINT
 export PIP_REQUIRE_VIRTUALENV=1
 "$PY" -m pip install --no-cache-dir --disable-pip-version-check --no-input --no-deps 'minicpmo-utils==1.0.6'
+"$PY" -m pip install --no-cache-dir --disable-pip-version-check --no-input --no-deps 'torchaudio==2.9.0'
 "$PY" -m pip install --no-cache-dir --disable-pip-version-check --no-input -c "$OUT/compiled-constraints.txt" \
   'transformers==4.51.3' 'numpy==1.26.4' 'pillow==10.4.0' 'librosa==0.9.0' \
   'accelerate>=1.3,<2' 'sentencepiece==0.2.0' 'safetensors>=0.5,<1' \
@@ -28,13 +30,15 @@ export PIP_REQUIRE_VIRTUALENV=1
   'onnxruntime==1.21.0' onnx 'HyperPyYAML==1.2.3' 'einops==0.8.1' \
   'fastapi>=0.115,<1' 'uvicorn>=0.30,<1' 'websockets>=13,<16'
 "$PY" - <<'PY'
-import importlib.metadata as m,json,hashlib,torch,torchaudio
+import importlib.metadata as m,json,hashlib,torch,torchaudio,os
 from pathlib import Path
 from transformers.dynamic_module_utils import get_class_from_dynamic_module
-p=Path('/projects/u6ada/duplex-live/runtime-preparation-v2')
+p=Path('/projects/u6ada/duplex-live/runtime-preparation-v'+os.environ['DUPLEX_RUNTIME_ATTEMPT'])
 before=json.loads((p/'base-runtime.json').read_text())
 assert torch.__version__==before['torch'] and torch.cuda.is_available() and torch.cuda.device_count()==1
 assert m.version('transformers')=='4.51.3' and m.version('minicpmo-utils')=='1.0.6'
+from portable.venus.wav_io import install
+assert install()
 import stepaudio2
 t=m.distribution('minicpmo-utils').locate_file('stepaudio2/token2wav.py')
 assert hashlib.sha256(Path(t).read_bytes()).hexdigest()=='0598c25ad9883f75d6d5ca1e9276c03adbfa0357a29442164198ea6931a06efb'

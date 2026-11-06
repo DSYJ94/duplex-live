@@ -29,8 +29,12 @@ def write(folder, name, value):
 
 def guarded(lease_path, needed=0):
     from portable.venus.native_app import ensure_guard
-    from .large_guard import resource
-    lease = json.loads(Path(lease_path).read_text()); resource(lease); ensure_guard()
+    lease = json.loads(Path(lease_path).read_text())
+    if lease.get('provider')=='Slurm':
+        from .isambard_guard import resource
+    else:
+        from .large_guard import resource
+    resource(lease); ensure_guard()
     if time.time() + needed >= lease['stop_unix'] - 180:
         raise TimeoutError('Preserve full state and copyback before native STOP')
 
