@@ -23,9 +23,9 @@ R=g.PLAN.parent if ATTEMPT==1 else g.PLAN.parent/('capacity-attempt-%02d'%ATTEMP
 NAME='duplex-venus-large-gpu-20261104-eua-v67'
 DISK='duplex-venus-large-data-20261104-eua-v67'
 ZONE='europe-west4-a'
-OUT='/workspace/migration/venus-british-native-v84'
+OUT='/workspace/migration/venus-british-native-v85'
 OLD='/workspace/migration/venus-large-capacity-v65/native-v75'
-BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/british-native-v84')
+BACKUP=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/british-native-v85')
 REFS=Path('runs/british-reference-replacement-20261106')
 PRICE_SCHEMA=Path('docs/NATIVE-BRITISH-GCP-PRICE-SKU-SCHEMA-2026-11-06.json')
 
@@ -104,8 +104,8 @@ def stages(source,worktree):
 
 def make_plan(vm,source):
     p=dict(resource_key=g.KEY,authorization_sha256=g.sha(g.AUTH),vm_id=g.VM_ID,disk_id=g.DISK_ID,zone=ZONE,
-        disk_size_gib=250,prior_GPU_seconds_upper=45640,prior_gpu_seconds=134791,prior_scope_usd=165.7900361111111,
-        actual_GPU_interval=14,maximum_native_GPU_seconds=3360,shutdown_reserve_seconds=100,storage_deadline_unix=g.DEADLINE,
+        disk_size_gib=250,prior_GPU_seconds_upper=45730,prior_gpu_seconds=134881,prior_scope_usd=165.7900361111111,
+        actual_GPU_interval=15,maximum_native_GPU_seconds=3270,shutdown_reserve_seconds=100,storage_deadline_unix=g.DEADLINE,
         new_optimizer_updates=0,required_native_cases=64,required_voice_audition_cases=9,qualified=False,
         checkpoint_hashes=g.CHECKPOINTS,training_math_source='b39ce3ebe167b059b67fa3d131978e5da7c41ac1',execution_source=source,
         selected_profile='rp-ben',reference_sha256='552adfe446367b04b29cdc0c715822fee95c45e485046ae50ff0a06b7afc61d0',
@@ -178,6 +178,7 @@ def execute():
     from . import controller as c
     from .source_controller import prepare_ssh
     from .oslogin_access import ensure as ensure_key
+    from .boot_hostkeys import verified as verified_boot_hostkeys
     from portable.venus.guard import bounded_runpod_read
     retry_baseline=None
     if ATTEMPT>1:
@@ -196,6 +197,7 @@ def execute():
             try:price_admission(previous_price,time.time());save('price.json',previous_price)
             except ValueError:quote()
     hourly=price_admission(json.loads((R/'price.json').read_text()),time.time())
+    trusted_boot_keys=verified_boot_hostkeys()  # Before any allocation; no network trust-on-first-use.
     needs_recovery=not g.BACKUP.exists()
     if needs_recovery:
         from .british_files_first import precheck
@@ -205,7 +207,7 @@ def execute():
     if not all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list')):raise ValueError('Other compute active')
     vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
     recovery.validate_original(vm,disk,attached=True)
-    old=json.loads(Path('runs/venus-large-capacity-20261104/british-native-v83/capacity-attempt-02/provider-final.json').read_text())
+    old=json.loads(Path('runs/venus-large-capacity-20261104/british-native-v84/provider-final.json').read_text())
     expected_stop=(retry_baseline or old)['lastStopTimestamp']
     # GCP advances lastStopTimestamp on a terminal failed start as well. An
     # unchanged lastStart plus the exact previously verified stockout snapshot
@@ -231,21 +233,21 @@ def execute():
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())])
     try:
         c.run([recovery.GCLOUD,'compute','instances','add-metadata',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--metadata-from-file=startup-script='+str(boot),'--quiet'],60)
-        c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration=3360s','--instance-termination-action=STOP','--discard-local-ssds-at-termination-timestamp=true','--no-restart-on-failure','--maintenance-policy=TERMINATE')
+        c.cloud('compute','instances','set-scheduling',NAME,'--zone='+ZONE,'--max-run-duration=3270s','--instance-termination-action=STOP','--discard-local-ssds-at-termination-timestamp=true','--no-restart-on-failure','--maintenance-policy=TERMINATE')
         submitted=True
         op=c.cloud('compute','instances','start',NAME,'--zone='+ZONE,'--async');save('start-operation.json',op)
         recovery.wait_operation(op,180)
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         if vm['status']!='RUNNING' or vm['lastStartTimestamp']==old['lastStartTimestamp']:raise ValueError('No new actual GPU start')
-        end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+3360
+        end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+3270
         if needs_recovery:
-            save('file-lease.json',dict(start_unix=end-3360,stop_unix=end,controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()))
+            save('file-lease.json',dict(start_unix=end-3270,stop_unix=end,controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()))
             file_watch=subprocess.Popen([sys.executable,'-u','-m','training.venus.british_controller','--file-guard'],stdout=(R/'file-guard.log').open('x'),stderr=subprocess.STDOUT)
             until=time.time()+60
             while not (R/'file-guard.json').exists():
                 if file_watch.poll() is not None or time.time()>until:raise RuntimeError('Files-first guard not ready')
                 time.sleep(1)
-        prepare_ssh(vm,ZONE,'83british',require_gpu=True,readiness_timeout=240);ssh_ready=True
+        prepare_ssh(vm,ZONE,'83british',require_gpu=True,readiness_timeout=240,trusted_boot_keys=trusted_boot_keys);ssh_ready=True
         if c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip():raise ValueError('Model already active')
         if needs_recovery:
             from .british_files_first import recover
@@ -267,7 +269,7 @@ def execute():
         while not (R/'guard.json').exists():
             if watch.poll() is not None or time.time()>until:raise RuntimeError('Independent Mac guard failed before model')
             time.sleep(1)
-        c.ssh('sudo systemd-run --unit=duplex-british83-guest --property=RuntimeMaxSec=3360 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard /workspace/migration/venus-live-guard-v1.json --lease /workspace/migration/british83-lease.json')
+        c.ssh('sudo systemd-run --unit=duplex-british83-guest --property=RuntimeMaxSec=3270 --working-directory='+c.remote+' /usr/bin/python3 -u -m portable.venus.guard --guest --guard /workspace/migration/venus-live-guard-v1.json --lease /workspace/migration/british83-lease.json')
         if c.props('duplex-british83-guest')['ActiveState']!='active':raise ValueError('Guest guard not active')
         c.ssh('sudo systemctl stop duplex-british83-bootstrap-stop.timer')
         save('both-guards-ready.json',dict(mac_pid=watch.pid,guest=c.props('duplex-british83-guest'),native_STOP_unix=end))
@@ -311,7 +313,7 @@ def execute():
                 final=stop_exact(c)
                 if final.get('lastStartTimestamp')!=old.get('lastStartTimestamp'):
                     elapsed=datetime.fromisoformat(final['lastStopTimestamp']).timestamp()-datetime.fromisoformat(final['lastStartTimestamp']).timestamp()
-                    save('actual-usage.json',dict(seconds=elapsed,prior_GPU_upper_seconds=45640,qualified=False,complete_native_stages=complete,full_copyback_verified=backed))
+                    save('actual-usage.json',dict(seconds=elapsed,prior_GPU_upper_seconds=45730,qualified=False,complete_native_stages=complete,full_copyback_verified=backed))
         finally:
             if watch:
                 (R/'stop-requested').write_text('closed\n')
@@ -331,7 +333,7 @@ if __name__=='__main__':
     a=p.parse_args()
     ATTEMPT=a.attempt;os.environ['DUPLEX_BRITISH_START_ATTEMPT']=str(ATTEMPT)
     R=g.PLAN.parent if ATTEMPT==1 else g.PLAN.parent/('capacity-attempt-%02d'%ATTEMPT)
-    if a.plan:print(json.dumps(dict(stages=[dict(name=n,module=module) for n,module,args in stages('SOURCE','WORKTREE')],required_native_cases=64,required_separate_audition_cases=9,maximum_native_seconds=3360,shutdown_reserve_seconds=100,authorization_present=g.AUTH.exists(),cloud_mutations=0)))
+    if a.plan:print(json.dumps(dict(stages=[dict(name=n,module=module) for n,module,args in stages('SOURCE','WORKTREE')],required_native_cases=64,required_separate_audition_cases=9,maximum_native_seconds=3270,shutdown_reserve_seconds=100,authorization_present=g.AUTH.exists(),cloud_mutations=0)))
     elif a.quote:print(json.dumps(quote()))
     elif a.file_guard:
         from .british_files_first import file_guard

@@ -33,7 +33,7 @@ def file_guard():
             if vm['id']!=g.VM_ID:raise ValueError('Files-first GPU identity changed')
             if vm['status']=='TERMINATED':return
             start=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()
-            if vm['status']!='RUNNING' or start!=lease['start_unix'] or lease['stop_unix']!=start+3360 or time.time()>lease['stop_unix']-100:raise ValueError('Files-first actual clock mismatch')
+            if vm['status']!='RUNNING' or start!=lease['start_unix'] or lease['stop_unix']!=start+3270 or time.time()>lease['stop_unix']-100:raise ValueError('Files-first actual clock mismatch')
             if c.run(['/bin/ps','-p',str(lease['controller_pid']),'-o','lstart=']).strip()!=lease['controller_birth']:raise ValueError('Files-first controller gone')
             disk=c.cloud('compute','disks','describe','duplex-venus-large-data-20261104-eua-v67','--zone='+ZONE)
             if disk['id']!=g.DISK_ID or int(disk['sizeGb'])!=250:raise ValueError('Files-first disk changed')

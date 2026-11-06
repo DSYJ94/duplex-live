@@ -68,7 +68,8 @@ def test_copyback_failure_never_creates_success_receipt(tmp_path,monkeypatch):
 @pytest.mark.parametrize('copyback_fails',[False,True])
 def test_complete_orchestration_stops_exact_gpu_and_never_hides_copyback_failure(tmp_path,monkeypatch,copyback_fails):
     # Entire provider/process boundary is scripted; no real approval or resource.
-    from training.venus import controller as c,source_controller,oslogin_access
+    from training.venus import controller as c,source_controller,oslogin_access,boot_hostkeys
+    monkeypatch.setattr(boot_hostkeys,'verified',lambda:[dict(key='ssh-ed25519',value='TEST_PUBLIC_ONLY')])
     from portable.venus import guard as provider_guard
     for name in ('R','NAME','events','UNITS','source','remote','guard','ssh_argv'):
         monkeypatch.setattr(c,name,getattr(c,name,None),raising=False)
@@ -95,7 +96,7 @@ def test_complete_orchestration_stops_exact_gpu_and_never_hides_copyback_failure
     original_read=Path.read_text
     def read(path,*a,**kw):
         if str(path)=='runs/local-migration-20261021/.private/runpod-budget-api-key':return 'TEST_ONLY_NOT_A_CREDENTIAL'
-        if str(path)=='runs/venus-large-capacity-20261104/british-native-v83/capacity-attempt-02/provider-final.json':return json.dumps(old)
+        if str(path)=='runs/venus-large-capacity-20261104/british-native-v84/provider-final.json':return json.dumps(old)
         return original_read(path,*a,**kw)
     monkeypatch.setattr(Path,'read_text',read)
     monkeypatch.setattr(provider_guard,'bounded_runpod_read',lambda key:[])
