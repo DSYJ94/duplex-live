@@ -365,7 +365,7 @@ def mac(args):
             vm,disk,instances,pods,snapshot_start=provider_snapshot(b,key)
             if vm['status']=='TERMINATED':return
             assert str(disk['id'])==b['disk']
-            if lease.get('resource_key')=='venus-large-capacity-v65':assert int(disk['sizeGb'])==250
+            if lease.get('resource_key') in ('venus-large-capacity-v65','venus-british-speech-v83'):assert int(disk['sizeGb'])==250
             if lease.get('resource_key') in ('venus-tts-stop-v55','venus-tts-completion-v60'):assert int(disk['sizeGb'])==100
             if lease.get('resource_key') in ('venus-context-train-v50','venus-context-train-v52','venus-tts-placement-v56','venus-tts-completion-v57','venus-tts-completion-v58','venus-tts-completion-v59','venus-tts-completion-v62'):
                 assert int(disk['sizeGb'])==100 and str(disk['sourceSnapshotId'])==lease['snapshot_id']

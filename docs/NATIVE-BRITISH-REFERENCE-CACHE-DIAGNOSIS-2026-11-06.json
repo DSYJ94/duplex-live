@@ -1,0 +1,43 @@
+{
+  "status": "OMITTED_REFERENCE_ALONE_RULED_OUT_WITH_INTACT_PREPARED_CACHE_ACCENT_CAUSE_STILL_UNPROVED",
+  "recorded_utc": "2026-11-06T01:18:25.186081+00:00",
+  "hypothesis": "NativeEngine.step omits prompt_wav_path, which might discard the chosen British reference.",
+  "pinned_model_source": {
+    "repository": "inclusionAI/Realtime-Venus",
+    "revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "path": "Realtime-Venus-Audio/modeling_minicpmo.py",
+    "sha256": "b7b4070cead9b88347f6e39d8333706ec007e2a832d6bcde5755063bf1453774",
+    "verified_against_original_public_manifest": true
+  },
+  "tokenizer_source": {
+    "distribution": "minicpmo-utils",
+    "version": "1.0.6",
+    "filename": "minicpmo_utils-1.0.6.tar.gz",
+    "archive_sha256": "3b35de45a46db449079d96fc96723df4151ab8db319888016edfd9475f9406c3",
+    "source_file": "minicpmo_utils-1.0.6/src/stepaudio2/token2wav.py",
+    "source_sha256": "0598c25ad9883f75d6d5ca1e9276c03adbfa0357a29442164198ea6931a06efb"
+  },
+  "observations": [
+    "NativeEngine.prepare passes selected reference into duplex.prepare after session reset.",
+    "Pinned duplex._init_token2wav_cache clears prior cache then calls Token2wav.set_stream_cache(selected_path).",
+    "Pinned Token2wav.set_stream_cache assigns self.cache from selected reference.",
+    "Pinned Token2wav.stream calls _prepare_prompt only if self.cache is None; omission on later frames does not replace existing reference cache.",
+    "Pinned TTS conditioning combines text embeddings and projected LLM hidden states; reference waveform is used by token-to-wave conditioning. This does not establish how much either stage controls perceived accent."
+  ],
+  "tests": {
+    "reference_cache_cases": 3,
+    "pinned_methods_executed_with_scripted_dependencies": true,
+    "stopped_before_first_acoustic_tensor_creation": true,
+    "no_CUDA_or_model_weights": true,
+    "combined_related_suite_passed": 111,
+    "combined_seconds": 1.62
+  },
+  "conclusions": [
+    "Do not claim dropped-reference root cause or patch the per-frame argument based only on omission.",
+    "Historical GPU cache corruption/invalidation is untested; current finding is control-flow evidence with intact prepared cache.",
+    "Accent source remains unresolved: assess actual matched native output first.",
+    "If references do not produce acceptable accent, investigate targeted frozen speech-generator adaptation with qualified British speech, rather than assuming additional language-adapter training will fix pronunciation."
+  ],
+  "runtime_change_from_this_hypothesis": false,
+  "adopted": false
+}

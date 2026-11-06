@@ -1,0 +1,43 @@
+{
+  "status": "NINE_CASE_AUDITION_PRODUCER_PREPARED_CONTROLLER_STILL_PENDING",
+  "recorded_utc": "2026-11-06T01:18:25.186081+00:00",
+  "conditions": [
+    "rp-ben",
+    "british-alice",
+    "british-george-comparator"
+  ],
+  "frozen_input_ids": [
+    "venus-control-v1-holdout-ordinary-0216",
+    "venus-repair-v2-holdout-quiet-0080",
+    "venus-repair-v2-holdout-pause-0097"
+  ],
+  "cases_required": 9,
+  "full_paired_qualification_cases_required_separately": 64,
+  "preselected_full64_voice": "rp-ben",
+  "new_optimizer_updates": 0,
+  "API_calls": 0,
+  "native_audio_generated": 0,
+  "qualified": false,
+  "adopted": false,
+  "tests_passed": 111,
+  "seconds": 1.62,
+  "changes": [
+    "New strictly admitted native audition producer, exact3profiles by3inputs and matched hashes; full raw traces/chunks/ASR/word/peak reports, always unqualified.",
+    "Preserve actual saved main checkpoint, current language/control policy and independent scoring normalizer.",
+    "Mac guard validates250GB native disk for this key; plan and lease carry old totalGPU seconds134651 and priorScopeUSD165.7900361111111."
+  ],
+  "not_complete": [
+    "Consolidated owner approval pending.",
+    "Google official sign-in expired; no further provider polling during blocker.",
+    "Controller/source deployment/full stage integration still need preparation before execution.",
+    "204MB prior final results still need approved CPUv2 recovery before model construction."
+  ],
+  "source_file_sha256": {
+    "training/venus/british_audition.py": "7cafe07ca3c888c6374fd8ea1132d4afeca39fb36c4cbc386ace0bfbb913062a",
+    "training/venus/british_speech_guard.py": "61d0ebf8caf1947977e740e151add9af4611b9527807e525174179af39307208",
+    "portable/venus/guard.py": "daece522d2b93cb5248d926f8344b2d8b4c99c87c8b78f9aedb2c2a7b1432b91",
+    "evals/fixtures/venus_token2wav_reference_1_0_6.py": "c02a3d605f59d32394ca7c398483d6c3820b2194ddd4166560d411bfc2be79ad",
+    "evals/harness/test_venus_reference_cache.py": "3eb8120986d048196e2dc5697a455338df2a3831826dce09b383f69dd2f56c5a",
+    "evals/harness/test_venus_british_audition.py": "3826a2aa3ab9ddb685e191a31a323bbad445cc484d06ee0f7c5bddaa3e4279ee"
+  }
+}
