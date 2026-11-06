@@ -87,8 +87,15 @@ def test_remaining_time_binds_actual_stopped_removed_first_cpu(tmp_path,monkeypa
     (tmp_path/'temporary-cpu-removed.json').write_text(json.dumps(dict(name='duplex-venus-data-rescue-20261106-v1',original_disk_preserved=True)))
     monkeypatch.setattr(d,'PRIOR_RESCUE',tmp_path)
     monkeypatch.setattr(d,'PRIOR_FINAL_SHA',d.r.sha(p))
+    second=tmp_path/'second';second.mkdir()
+    q=second/'provider-final.json'
+    q.write_text(json.dumps(dict(id='5600212168130936686',name='duplex-venus-data-rescue-20261106-v2',status='TERMINATED',lastStartTimestamp='2026-11-06T16:34:19.371+00:00',lastStopTimestamp='2026-11-06T16:36:54.516+00:00')))
+    (second/'original-binding-restored.json').write_bytes((tmp_path/'original-binding-restored.json').read_bytes())
+    (second/'temporary-cpu-removed.json').write_text(json.dumps(dict(name='duplex-venus-data-rescue-20261106-v2')))
+    monkeypatch.setattr(d,'SECOND_RESCUE',second)
+    monkeypatch.setattr(d,'SECOND_FINAL_SHA',d.r.sha(q))
     usage=d.prior_usage()
-    assert usage['prior_actual_seconds']==96.221
+    assert usage['prior_actual_seconds']==96.221+155.145
     assert usage['prior_seconds_upper']+usage['this_native_max_seconds']+usage['shutdown_reserve_seconds']==2800
     p.write_text('{}')
     with pytest.raises(ValueError,match='terminal receipt'):d.prior_usage()
@@ -103,6 +110,7 @@ def test_whole_cpu_transfer_without_docker_cli_restores_binding_and_never_accept
     base,request,inventory=inventory_inputs
     monkeypatch.setattr(d,'prior_usage',lambda:dict(combined_seconds_upper=2800))
     d.inventory(request,inventory);inv=json.loads(inventory.read_text())
+    monkeypatch.setattr(d,'prior_transfer',lambda:(inv,0))
     root=base.parent/'receipts';root.mkdir();monkeypatch.setattr(d,'ROOT',root)
     monkeypatch.setattr(d,'DEST',base.parent/'download')
     monkeypatch.setattr(d,'AUTH',base.parent/'approval');d.AUTH.write_text('{}')
@@ -162,3 +170,27 @@ def test_whole_cpu_transfer_without_docker_cli_restores_binding_and_never_accept
         assert proof['all_hashes_verified'] and proof['exact_old268_cache_verified']
         assert len(proof['cache_sources'])==268 and proof['new_optimizer_updates']==0 and copied
     assert len(created)==1 and restored==[True]
+
+
+@pytest.mark.parametrize('failures',[1,3])
+def test_retry_only_terminal_connection_errors_same_running_cpu_and_count_every_attempt(tmp_path,monkeypatch,failures):
+    from types import SimpleNamespace
+    monkeypatch.setattr(d,'ROOT',tmp_path);monkeypatch.setattr(d.r,'R',tmp_path)
+    monkeypatch.setattr(d.time,'time',lambda:1000)
+    (tmp_path/'guard.json').write_text(json.dumps(dict(expires_unix=1045)))
+    (tmp_path/'lease.json').write_text(json.dumps(dict(vm_id='BOUND_CPU')))
+    monkeypatch.setattr(d.r,'cloud',lambda *a:dict(status='RUNNING',id='BOUND_CPU'))
+    monkeypatch.setattr(d.r,'validate_cpu',lambda *a:None)
+    calls=[]
+    def run(*a):
+        calls.append(a)
+        if len(calls)<=failures:raise RuntimeError('rsync: connection unexpectedly closed; (code 12)')
+    monkeypatch.setattr(d.r,'run',run)
+    args=(['rsync'],300,0,100,SimpleNamespace(poll=lambda:None),2000,50)
+    if failures==3:
+        with pytest.raises(RuntimeError,match='connection unexpectedly'):d.copy_batch(*args)
+        assert len(calls)==3
+    else:
+        assert d.copy_batch(*args)==250 and len(calls)==2
+    receipts=[json.loads(p.read_text()) for p in sorted(tmp_path.glob('batch-*-attempt-*.json'))]
+    assert [r['aggregate_attempted_bytes_upper'] for r in receipts]==[150+100*n for n in range(len(calls))]

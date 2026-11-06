@@ -6,6 +6,7 @@ Missing owner authorization fails before any provider call.
 import argparse
 from datetime import datetime
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import shlex
@@ -15,20 +16,22 @@ import time
 
 from . import results_recovery as r
 
-ROOT=Path('runs/isambard-cutover-20261106/data-rescue-v2')
+ROOT=Path('runs/isambard-cutover-20261106/data-rescue-v3')
 AUTH=Path('docs/NATIVE-ISAMBARD-DATA-RESCUE-RESUME-AUTHORIZATION-2026-11-06.json')
 PROPOSAL=Path('docs/NATIVE-ISAMBARD-DATA-RESCUE-RESUME-PROPOSAL-2026-11-06.json')
 CACHE=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/context-v52/cache')
 DEST=Path('/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-data-rescue-v1')
 MANIFEST_SHA='1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807'
-CPU='duplex-venus-data-rescue-20261106-v2'
+CPU='duplex-venus-data-rescue-20261106-v3'
 MAX_BYTES=20_000_000_000
 BASE=Path('/workspace/migration')
-CPU_SECONDS=2600
-PRIOR_CPU_SECONDS_UPPER=100
+CPU_SECONDS=2440
+PRIOR_CPU_SECONDS_UPPER=260
 CPU_AGGREGATE_SECONDS_UPPER=2800
 PRIOR_RESCUE=Path('runs/isambard-cutover-20261106/data-rescue-v1')
 PRIOR_FINAL_SHA='48e5ae369827e55e883aabdd1088db31f205aa819e646b638358b955be9da23b'
+SECOND_RESCUE=Path('runs/isambard-cutover-20261106/data-rescue-v2')
+SECOND_FINAL_SHA='2e0a3a14b711cf1e8ccbcc792e4e32c129b6af834a8841fb9ee01a6fdcfdfb7c'
 PREVIOUS_GPU_RECEIPT=Path('runs/venus-large-capacity-20261104/british-native-v85/provider-after-interruption.json')
 EXTRAS=('venus-training-v1/paced-timelines-v22','venus-training-v1/timelines-v7-repaired',
         'venus-training-v1/george-reference-v33','venus-british-native-v85')
@@ -59,13 +62,52 @@ def prior_usage():
     seconds=(datetime.fromisoformat(vm['lastStopTimestamp'])-datetime.fromisoformat(vm['lastStartTimestamp'])).total_seconds()
     restored=json.loads((PRIOR_RESCUE/'original-binding-restored.json').read_text())
     removed=json.loads((PRIOR_RESCUE/'temporary-cpu-removed.json').read_text())
-    if vm['id']!='3473476360381416918' or vm['status']!='TERMINATED' or not 0<seconds<=PRIOR_CPU_SECONDS_UPPER:raise ValueError('First CPU running time/identity differs')
+    if vm['id']!='3473476360381416918' or vm['status']!='TERMINATED' or not 0<seconds<=100:raise ValueError('First CPU running time/identity differs')
     if restored!=dict(original_vm_id=r.GPU_ID,disk_id=r.DISK_ID,status='TERMINATED',auto_delete=False) or not removed.get('original_disk_preserved') or removed.get('name')!=vm['name']:raise ValueError('First CPU cleanup not proven')
     if (PRIOR_RESCUE/'inventory.json').exists() or list(PRIOR_RESCUE.glob('batch-*-verified.json')):raise ValueError('Prior payload must be accounted before another transfer')
-    if PRIOR_CPU_SECONDS_UPPER+CPU_SECONDS+100!=CPU_AGGREGATE_SECONDS_UPPER:raise ValueError('Original aggregate CPU time changed')
-    return dict(prior_actual_seconds=seconds,prior_seconds_upper=PRIOR_CPU_SECONDS_UPPER,
+    second=SECOND_RESCUE/'provider-final.json'
+    if r.sha(second)!=SECOND_FINAL_SHA:raise ValueError('Second CPU terminal receipt changed')
+    v=json.loads(second.read_text())
+    s=(datetime.fromisoformat(v['lastStopTimestamp'])-datetime.fromisoformat(v['lastStartTimestamp'])).total_seconds()
+    if v['id']!='5600212168130936686' or v['status']!='TERMINATED' or not 0<s<=160:raise ValueError('Second CPU time/identity differs')
+    if json.loads((SECOND_RESCUE/'original-binding-restored.json').read_text())!=restored or json.loads((SECOND_RESCUE/'temporary-cpu-removed.json').read_text()).get('name')!=v['name']:raise ValueError('Second CPU cleanup not proven')
+    if 100+math.ceil(s/10)*10!=PRIOR_CPU_SECONDS_UPPER or PRIOR_CPU_SECONDS_UPPER+CPU_SECONDS+100!=CPU_AGGREGATE_SECONDS_UPPER:raise ValueError('Original aggregate CPU time changed')
+    return dict(prior_actual_seconds=seconds+s,prior_seconds_upper=PRIOR_CPU_SECONDS_UPPER,
                 this_native_max_seconds=CPU_SECONDS,shutdown_reserve_seconds=100,
                 combined_seconds_upper=CPU_AGGREGATE_SECONDS_UPPER)
+
+
+def prior_transfer():
+    inv=json.loads((SECOND_RESCUE/'inventory.json').read_text())
+    files={x['path']:x for x in inv['files']}
+    upper=sum(files[p.decode()]['bytes'] for batch in SECOND_RESCUE.glob('batch-*.files') for p in batch.read_bytes().split(b'\0') if p)
+    return inv,upper
+
+
+def verified_local(row):
+    p=r.checked_path(DEST,row['path'])
+    return not p.is_symlink() and p.is_file() and p.stat().st_size==row['bytes'] and r.sha(p)==row['sha256']
+
+
+def copy_batch(argv,timeout,batch_number,batch_bytes,watch,end,transferred):
+    for attempt in range(3):
+        if watch.poll() is not None or end-time.time()<180 or time.time()>json.loads((ROOT/'guard.json').read_text())['expires_unix']:raise RuntimeError('Rescue guard/time exhausted')
+        transferred+=batch_bytes
+        if transferred>MAX_BYTES:raise ValueError('Aggregate attempted transfer allowance exhausted')
+        name='batch-%03d-attempt-%d.json'%(batch_number,attempt+1)
+        r.save(name,dict(aggregate_attempted_bytes_upper=transferred,batch_bytes_upper=batch_bytes,status='STARTING'))
+        try:r.run(argv,min(timeout,int(end-time.time()-120)))
+        except RuntimeError as error:
+            message=str(error)
+            r.save(name,dict(aggregate_attempted_bytes_upper=transferred,batch_bytes_upper=batch_bytes,status='FAILED',error=message))
+            transient='rsync: connection unexpectedly closed' in message and any(x in message for x in ('(code 12)','(code 255)')) and not any(x in message.lower() for x in ('permission denied','reauth','invalid_grant','no space left'))
+            if not transient or attempt==2:raise
+            vm=r.cloud('compute','instances','describe',CPU,'--zone='+r.ZONE)
+            r.validate_cpu(vm)
+            if vm['status']!='RUNNING' or vm['id']!=json.loads((ROOT/'lease.json').read_text())['vm_id']:raise ValueError('Never retry an unknown/stopped CPU')
+            continue
+        r.save(name,dict(aggregate_attempted_bytes_upper=transferred,batch_bytes_upper=batch_bytes,status='SUCCESS'))
+        return transferred
 
 
 def configure():
@@ -215,11 +257,16 @@ def execute():
         c.sync(CACHE/'manifest.json','/workspace/migration/data-rescue-cache-manifest.json')
         c.ssh('cd '+work+' && /usr/bin/python3 -m training.venus.data_rescue --inventory --request /workspace/migration/data-rescue-request.json --output /workspace/migration/data-rescue-inventory.json',180)
         inv=json.loads(c.ssh('cat /workspace/migration/data-rescue-inventory.json',30));admit_inventory(inv,q);r.save('inventory.json',inv)
-        for n,batch in enumerate(groups(inv['files'])):
+        old_inventory,transferred=prior_transfer()
+        if inv!=old_inventory:raise ValueError('Previously verified source inventory changed')
+        pending=[row for row in inv['files'] if not verified_local(row)]
+        if transferred+3*sum(row['bytes'] for row in pending)>MAX_BYTES:raise ValueError('Entire bounded retry/copy cohort must fit aggregate payload')
+        r.save('resume-copy-admission.json',dict(previous_attempted_bytes_upper=transferred,already_verified_files=len(inv['files'])-len(pending),pending_files=len(pending)))
+        for n,batch in enumerate(groups(pending)):
             if watch.poll() is not None or end-time.time()<180 or time.time()>json.loads((ROOT/'guard.json').read_text())['expires_unix']:raise RuntimeError('Rescue guard/time exhausted')
             files=ROOT/('batch-%03d.files'%n);files.write_bytes(b''.join(x['path'].encode()+b'\0' for x in batch))
             argv=['/opt/homebrew/bin/rsync','-ar','--no-owner','--no-group','--partial-dir=.rsync-partial',*['--exclude='+x for x in sorted(r.EXCLUDED|{'core','core.*'})],'--from0','--files-from='+str(files),'-e',shlex.join(ssh[:-1]),ssh[-1]+':/workspace/migration/',str(DEST)+'/']
-            r.run(argv,min(300,int(end-time.time()-120)))
+            transferred=copy_batch(argv,300,n,sum(x['bytes'] for x in batch),watch,end,transferred)
             for row in batch:
                 p=r.checked_path(DEST,row['path'])
                 if p.is_symlink() or p.stat().st_size!=row['bytes'] or r.sha(p)!=row['sha256']:raise ValueError('Recovered native artifact differs')

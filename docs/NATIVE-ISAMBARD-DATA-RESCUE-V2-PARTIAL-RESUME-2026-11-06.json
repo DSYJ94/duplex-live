@@ -1,0 +1,23 @@
+{
+  "recorded_utc": "2026-11-06T16:40:48.961851+00:00",
+  "actual_source": "2a8f558d96263418b1234a78c70b05ff6123419d",
+  "controller_tool": "50880",
+  "controller_PID": 57917,
+  "CPU_id": "5600212168130936686",
+  "CPU_name": "duplex-venus-data-rescue-20261106-v2",
+  "actual_CPU_seconds": 155.145,
+  "CPU_seconds_upper": 160,
+  "original_GPU_OFF_and_disk_restored": true,
+  "temporary_CPU_deleted": true,
+  "source_inventory_files": 2333,
+  "source_inventory_bytes": 2397604746,
+  "source_cache_exact268_verified": true,
+  "destination_verified_batches": 2,
+  "destination_verified_files": 40,
+  "destination_verified_bytes": 266201983,
+  "conservative_attempted_transfer_upper_bytes": 393179290,
+  "status": "PARTIAL_NOT_COMPLETE",
+  "failure": "Terminal rsync connection unexpectedly closed, exit12/255; controller exited1 and stoppedCPU/restoredsamePD.",
+  "next": "Authorized additional interval2of3: v3 native2440s+100reserve+prior260=original2800; skipactualhashverifiedlocalfiles, reusefullsourceinventory, retryonlyterminalconnectionerrorswithinSAMECPU/guard/time; at most3copyattemptsperbatch, countfullattemptbytes. No extraapproval/time/money/data/GPU.",
+  "validation": "53 focused CPU/source/transfer retry/cleanup testsPASS0.56s; notlive/nativequalification"
+}
