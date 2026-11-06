@@ -1,0 +1,121 @@
+{
+  "recorded_utc": "2026-11-06T17:17:58.525480+00:00",
+  "status": "NATIVE_MIGRATION_ARTIFACTS_DESTINATION_HASH_VERIFIED",
+  "destination": "/projects/u6ada/duplex-live/artifacts/native-v75",
+  "destination_proof": {
+    "all_hashes_verified": true,
+    "files": 2640,
+    "links": 6,
+    "bytes": 13530922139,
+    "manifest_sha256": "0299916cfd80da52b766870a3fc27deb9508fcc1abd9436cb3a88ce9a7681145",
+    "model_execution": false,
+    "new_optimizer_updates": 0,
+    "job_id": "8145515",
+    "source": "0f4c90acc375d1b91f702c55d21c346a0e8e1620",
+    "completed_utc": "2026-11-06T17:13:41.146972+00:00"
+  },
+  "proof_receipt": "runs/isambard-cutover-20261106/artifact-stage-v1/verification-interactive-v3/destination-verified.json",
+  "source": "0f4c90acc375d1b91f702c55d21c346a0e8e1620",
+  "Git_worktree": "/projects/u6ada/duplex-live/source-0f4c90a-v1",
+  "upload": {
+    "actual_exit_code": 0,
+    "tool": "75090",
+    "PID": 69151,
+    "source": "d9ad4bf48c1fc78688ff0b02f7cb29cecf6d4fa2",
+    "groups": 3
+  },
+  "jobs": [
+    {
+      "id": "8142150",
+      "purpose": "public35 fetch/hash",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "GPU_count": 1,
+      "elapsed_seconds": 247
+    },
+    {
+      "id": "8145128",
+      "purpose": "normal-queue artifact verification",
+      "state": "CANCELLED_BEFORE_START",
+      "elapsed_seconds": 0
+    },
+    {
+      "id": "8145364",
+      "purpose": "interactive verification before Python compatibility fix",
+      "state": "FAILED",
+      "exit": "1:0",
+      "GPU_count": 1,
+      "elapsed_seconds": 3
+    },
+    {
+      "id": "8145515",
+      "purpose": "complete sealed artifact verification",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "GPU_count": 1,
+      "elapsed_seconds": 21,
+      "partition": "interactive",
+      "start_utc": "2026-11-06T17:13:20Z",
+      "end_utc": "2026-11-06T17:13:41Z"
+    }
+  ],
+  "physical_GPU_seconds_for_these_staging_jobs": 271,
+  "allocation_billing_debit_not_independently_queried": true,
+  "interactive_billing_policy_source": "https://docs.isambard.ac.uk/user-documentation/information/job-scheduling/",
+  "system_Python": "3.6.15",
+  "actual_system_Python_tests": {
+    "passed": 4,
+    "seconds": 0.005
+  },
+  "complete_cache": {
+    "files": 304,
+    "TRAIN": 240,
+    "DEV": 64,
+    "PT_bytes": 2581236033,
+    "manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+    "all_original_words_folds_hashes_preserved": true
+  },
+  "runtime": {
+    "file": "runtime/pytorch-new.sif",
+    "bytes": 8551931904,
+    "sha256": "c00bc99693e4908ea75d17df9c379b93ae9a1678a65d875565ad5d52f76fa27b",
+    "architecture": "arm64",
+    "vendor_image": "nvcr.io/nvidia/pytorch:25.10-py3",
+    "Venus_dependency_or_native_qualification": false
+  },
+  "public_model": {
+    "files": 35,
+    "bytes": 19993772218,
+    "revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "all_hashes_verified": true
+  },
+  "checkpoints": {
+    "files": 3,
+    "bytes": 8543216554,
+    "all_destination_hashes_previously_verified": true
+  },
+  "GCP": {
+    "all_compute_OFF": true,
+    "temporary_rescue_CPUs_deleted": true,
+    "original_GPU_id": "7521667153519853425",
+    "same_disk_id": "2297341858915206463",
+    "same_disk_retained_non_auto_delete": true,
+    "retention_deadline_utc": "2026-11-07T12:00:00Z",
+    "phase_cap_USD": 175,
+    "project_cap_USD": 350,
+    "prior_USD_carry": 165.7900361111111,
+    "GPU_seconds_upper_unchanged": 46860,
+    "rescue_CPU_seconds_upper": 490,
+    "rescue_attempted_egress_bytes_upper": 2630225126
+  },
+  "new_optimizer_updates": 0,
+  "native_model_execution": false,
+  "adopted": false,
+  "broad_Mac_source_backup": "PARTIAL",
+  "next_actions": [
+    "Use container Python for Venus; systemPython3.6 is only for the small stdlib scheduler/hash helpers. Prepare minimal pinned Venus ARM64 dependencies and genuine Slurm guard, not a fabricated GCP lease.",
+    "Independently restore the saved state on the new runtime before further learning/adoption; preserve old source/restore proofs and all120 completed updates. Do not repeat unchanged gradient/kernel sweeps.",
+    "Validate the actual turn_eos action/speech fix, complete pairednative64 behavior/speech and British listening/latency/async work before adoption or choosing further repair training.",
+    "Keep all model/GPU work on Isambard. Short development/validation may use --reservation=interactive WITHOUT --partition; sustained batch training uses normal workq. Resolve retained GCP storage before its unchanged deadline; original resources are not deletion-authorized by the CPU-rescue grant."
+  ]
+}
