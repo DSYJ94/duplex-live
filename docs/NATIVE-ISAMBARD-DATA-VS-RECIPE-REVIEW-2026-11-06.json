@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-11-06T19:50:05.190476+00:00",
+  "status": "CURRENT_RUN_FROZEN_NEXT_DATA_REVIEW_PREPARED",
+  "manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+  "counts": {
+    "TRAIN": {
+      "quiet": 60,
+      "delegate": 56,
+      "cancel": 44,
+      "pause": 28,
+      "pending": 20,
+      "ordinary": 32
+    },
+    "DEV": {
+      "quiet": 14,
+      "delegate": 16,
+      "cancel": 10,
+      "pause": 6,
+      "pending": 6,
+      "ordinary": 12
+    }
+  },
+  "facts": [
+    "The current corpus has240TRAIN and64DEV; only32TRAIN/12DEV ordinary-conversation scenes.",
+    "The frozen32-per-arm comparison has already been inspected, so it is a regression cohort, not fresh generalization evidence.",
+    "The current698M adapter previously learned60updates/oneepoch; larger trainable capacity does not supply new conversational knowledge by itself.",
+    "The audio encoder, base LLM and TTS remain frozen; this continuation changes language/control adapters. British reference conditioning is evaluated separately."
+  ],
+  "current_decision": {
+    "data": "Preserve exact current corpus for this complete-epoch continuation; no mid-run shard/label changes.",
+    "recipe": "Two further full epochs, nominalLR5e-6 with inherited0.5 updater, effective batch4; all original retention/objectives and Adam history preserved.",
+    "reason": "First compare actual free-running failures after the diagnosed speech-output fix, then measure learning beyond one large-adapter epoch. This is not a claim of a unique causal diagnosis."
+  },
+  "next_review": {
+    "trigger": "Full native64 result plus epoch DEV/TRAIN trends and post-training speech/behavior.",
+    "data_hypothesis": "If spurious delegation/low ordinary correctness persist despite falling training loss, add more ordinary non-delegation contrasts and broader real conversation/technical explanations, with complex tasks delegated. Keep held-out task structures and synthetic worlds separate.",
+    "recipe_hypothesis": "If TRAIN and DEV jointly improve with stable ordinary retention, more useful training may be justified; if DEV/behavior degrades as TRAIN improves, review mixture/regularization rather than blindly add epochs or parameters.",
+    "rendering_hypothesis": "Correct generated user-facing words with missing or wrong audio calls for acoustic/runtime repair, not language labels rewritten to match a broken renderer.",
+    "fresh_evaluation": "Prepare a separate uninspected product cohort before claiming generalization or adoption.",
+    "new_API_calls": 0,
+    "new_training_data_generated": false
+  },
+  "qualified": false,
+  "adopted": false
+}
