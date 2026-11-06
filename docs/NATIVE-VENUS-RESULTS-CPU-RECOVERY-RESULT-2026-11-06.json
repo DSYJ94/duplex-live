@@ -1,0 +1,33 @@
+{
+  "status": "RECOVERY_FAILED_BEFORE_TRANSFER_CLEANUP_VERIFIED",
+  "recorded_utc": "2026-11-06T00:58:58.010775+00:00",
+  "execution_source": "ad73f27",
+  "CPU_id": "1327566272434576329",
+  "CPU_name": "duplex-venus-results-cpu-20261106-v1",
+  "CPU_actual_seconds": 137.69999980926514,
+  "CPU_hourly_USD": 0.07377204,
+  "estimated_CPU_usage_USD": 0.002821780526091417,
+  "downloaded_files": 0,
+  "missing_bytes_still": 204312087,
+  "original_GPU_off": true,
+  "original_disk_retained_and_reattached": true,
+  "temporary_CPU_deleted": true,
+  "all_final_checkpoints_safe": true,
+  "failures": [
+    "First pre-claim source check rejected only OneDrive filemode drift; no resource started. Fixed with core.filemode=false.",
+    "Guest hostkeys not published yet: HTTP404 was incorrectly fatal. CPU stopped early.",
+    "Cleanup auto-delete command hit gcloud local-SSD disk-name parsing bug; original PD already attached and retained. Corrected to explicit device-name and verified cleanup."
+  ],
+  "fixed_regressions": {
+    "passed": 30,
+    "seconds": 0.09,
+    "files": [
+      "training/venus/results_recovery.py",
+      "evals/harness/test_venus_results_recovery.py"
+    ]
+  },
+  "new_GPU_intervals": 0,
+  "new_optimizer_updates": 0,
+  "external_model_API_calls": 0,
+  "paid_restart_not_submitted": true
+}

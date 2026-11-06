@@ -238,7 +238,11 @@ def guard():
 def prepare_ssh(vm):
     keys = []
     for _ in range(15):
-        keys = cloud('compute', 'instances', 'get-guest-attributes', CPU, '--zone=' + ZONE, '--query-path=hostkeys/')
+        try:
+            keys = cloud('compute', 'instances', 'get-guest-attributes', CPU, '--zone=' + ZONE, '--query-path=hostkeys/')
+        except RuntimeError as error:
+            if '404' not in str(error) or 'Guest Attribute' not in str(error): raise
+            keys = []  # Guest agent has not published authenticated keys yet.
         if keys: break
         time.sleep(3)
     if not keys: raise RuntimeError('No authenticated host keys; no insecure fallback')
@@ -276,7 +280,7 @@ def restore_binding(watch=None):
     disk = cloud('compute', 'disks', 'describe', DISK, '--zone=' + ZONE)
     if not disk.get('users'):
         run([GCLOUD, 'compute', 'instances', 'attach-disk', GPU, '--disk=' + DISK, '--boot', '--device-name=persistent-disk-0', '--zone=' + ZONE, '--project=' + PROJECT, '--quiet'], 90)
-        run([GCLOUD, 'compute', 'instances', 'set-disk-auto-delete', GPU, '--disk=' + DISK, '--no-auto-delete', '--zone=' + ZONE, '--project=' + PROJECT, '--quiet'], 90)
+        run([GCLOUD, 'compute', 'instances', 'set-disk-auto-delete', GPU, '--device-name=persistent-disk-0', '--no-auto-delete', '--zone=' + ZONE, '--project=' + PROJECT, '--quiet'], 90)
     original = cloud('compute', 'instances', 'describe', GPU, '--zone=' + ZONE)
     disk = cloud('compute', 'disks', 'describe', DISK, '--zone=' + ZONE)
     validate_original(original, disk, attached=True)

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-06T00:40:21.506233+00:00",
+  "updated_utc": "2026-11-06T00:58:58.010775+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -357,5 +357,13 @@
     "missing_bytes": 204312087,
     "batches": 7,
     "cloud_mutations": 0
-  }
+  },
+  "results_recovery_latest": {
+    "status": "RECOVERY_FAILED_BEFORE_TRANSFER_CLEANUP_VERIFIED",
+    "report": "docs/NATIVE-VENUS-RESULTS-CPU-RECOVERY-RESULT-2026-11-06.json",
+    "CPU_actual_seconds": 137.69999980926514,
+    "original_GPU_off": true,
+    "missing_bytes": 204312087
+  },
+  "voice_direction": "Owner rejects Chinese-sounding generated accent. British/RP natural output must pass actual listening; George label is not approval. Existing RP Ben and Alice references prepared, no new API."
 }

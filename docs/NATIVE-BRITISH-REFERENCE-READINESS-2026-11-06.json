@@ -1,0 +1,48 @@
+{
+  "purpose": "RP/British candidates prepared for matched native voice trial; no native output generated or adopted",
+  "owner_audio_used": false,
+  "API_calls": 0,
+  "optimizer_updates": 0,
+  "voices": [
+    {
+      "profile": "rp-ben",
+      "source_path": "runs/venus-training-20261027/voice-eleven-listening-v1/accents/media/rp-ben--voice-v1-reference.wav",
+      "source_sha256": "ccde5b1a8491081fd368ddb446e63fa2660ffde014857f4afd18c85d8976c102",
+      "source_split": "REFERENCE_ONLY",
+      "original_independent_audit": "runs/venus-training-20261027/paced-recovery-v31/copyback/voice-source-quality-v26/rp-ben--voice-v1-reference.json",
+      "original_word_error_rate": 0.0,
+      "native_reference": {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/british-reference-replacement-20261106/rp-ben-16k.wav",
+        "sha256": "552adfe446367b04b29cdc0c715822fee95c45e485046ae50ff0a06b7afc61d0",
+        "seconds": 14.72,
+        "peak": 0.9485847353935242,
+        "mode": "custom-native-reference",
+        "qualified": false,
+        "hosted_tts": false
+      },
+      "derived_independent_word_audit_done": false,
+      "native_accent_listening_approved": false,
+      "conversion": "Full waveform24kHz-to16kHz ffmpeg resample only; no gain, trim, normalization or synthesis."
+    },
+    {
+      "profile": "british-alice",
+      "source_path": "runs/venus-training-20261027/voice-eleven-listening-v1/accents/media/british-alice--voice-v1-reference.wav",
+      "source_sha256": "4cf282ddbe795e44de58ae0242096f689309559dad47c53a8084fbffff5bd578",
+      "source_split": "REFERENCE_ONLY",
+      "original_independent_audit": "runs/venus-training-20261027/paced-recovery-v31/copyback/voice-source-quality-v26/british-alice--voice-v1-reference.json",
+      "original_word_error_rate": 0.0,
+      "native_reference": {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/british-reference-replacement-20261106/british-alice-16k.wav",
+        "sha256": "33a4b2813cd3736d9e54f2d840385f0ec7530681b70b1d793271c72ae0336049",
+        "seconds": 13.84,
+        "peak": 0.8773627281188965,
+        "mode": "custom-native-reference",
+        "qualified": false,
+        "hosted_tts": false
+      },
+      "derived_independent_word_audit_done": false,
+      "native_accent_listening_approved": false,
+      "conversion": "Full waveform24kHz-to16kHz ffmpeg resample only; no gain, trim, normalization or synthesis."
+    }
+  ]
+}

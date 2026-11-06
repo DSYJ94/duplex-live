@@ -86,6 +86,29 @@ def test_batches_keep_json_priority_and_no_file_larger_than_limit():
     with pytest.raises(ValueError): list(r.batches([dict(bytes=32*1024**2+1)]))
 
 
+def test_authenticated_hostkey_publication_404_is_bounded_wait_not_insecure_fallback(tmp_path,monkeypatch):
+    monkeypatch.setattr(r,'R',tmp_path)
+    monkeypatch.setattr(r.time,'sleep',lambda seconds:None)
+    calls=[]
+    def cloud(*args):
+        calls.append(args)
+        if len(calls)==1:raise RuntimeError("HTTPError404 resource 'hostkeys/' of type 'Guest Attribute' not found")
+        return [dict(key='ssh-ed25519',value='PUBLIC_TEST_FIXTURE')]
+    monkeypatch.setattr(r,'cloud',cloud)
+    vm=dict(networkInterfaces=[dict(accessConfigs=[dict(natIP='192.0.2.1')])])
+    argv=r.prepare_ssh(vm)
+    assert len(calls)==2 and 'StrictHostKeyChecking=yes' in argv
+    assert 'PUBLIC_TEST_FIXTURE' in (tmp_path/'known-hosts').read_text()
+
+
+def test_hostkey_auth_failure_is_not_treated_as_boot_delay(tmp_path,monkeypatch):
+    monkeypatch.setattr(r,'R',tmp_path)
+    def cloud(*args):raise RuntimeError('authentication expired')
+    monkeypatch.setattr(r,'cloud',cloud)
+    with pytest.raises(RuntimeError,match='authentication expired'):r.prepare_ssh({})
+    assert not (tmp_path/'known-hosts').exists()
+
+
 @pytest.mark.parametrize('field,value', [('id','wrong'),('status','RUNNING')])
 def test_original_identity_and_stopped_state_required(field,value):
     vm=original();vm[field]=value
@@ -130,6 +153,9 @@ def test_cleanup_restores_original_before_deleting_only_empty_cpu(tmp_path,monke
         calls.append(argv)
         if 'detach-disk' in argv:temp['disks']=[];pd['users']=[]
         if 'attach-disk' in argv:vm['disks']=original()['disks'];pd['users']=['original-link']
+        if 'set-disk-auto-delete' in argv:
+            assert '--device-name=persistent-disk-0' in argv
+            assert not any(x.startswith('--disk=') for x in argv)
         if 'delete' in argv:
             assert r.GPU not in argv and r.DISK not in argv
             assert not temp['disks'] and pd['users']==['original-link']

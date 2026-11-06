@@ -1,0 +1,59 @@
+{
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_utc": "2026-11-06T00:58:58.010775+00:00",
+  "purpose": "Finish missing-results backup and qualify existing speech fixes with actual British-accent native output; no further training.",
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "new_purchase": false,
+  "new_external_model_API_calls": 0,
+  "new_optimizer_updates": 0,
+  "new_disks_snapshots": 0,
+  "zone": "europe-west4-a",
+  "same_GPU_name": "duplex-venus-large-gpu-20261104-eua-v67",
+  "same_GPU_id": "7521667153519853425",
+  "same_250GB_disk_id": "2297341858915206463",
+  "storage_deadline_utc": "2026-11-07T12:00:00Z",
+  "CPU": {
+    "maximum_new_CPU_machines": 1,
+    "name": "duplex-venus-results-cpu-20261106-v2",
+    "type": "e2-standard-2",
+    "maximum_new_running_seconds": 600,
+    "maximum_new_intervals": 1,
+    "recovery_total_USD_maximum": 0.1,
+    "prior_actual_seconds": 137.69999980926514,
+    "remaining_shutdown_reserve_seconds": 100,
+    "same_disk_temporarily_moved_and_restored": true,
+    "original_GPU_stays_off": true,
+    "missing_files": 1692,
+    "missing_bytes": 204312087,
+    "complete_inventory_files": 1856,
+    "complete_inventory_bytes": 17330768218,
+    "complete_inventory_links": 1
+  },
+  "GPU": {
+    "maximum_additional_running_seconds_including_shutdown_reserve": 3600,
+    "maximum_new_running_intervals": 1,
+    "prior_all12_upper_seconds": 45500,
+    "new_all13_upper_seconds_maximum": 49100,
+    "original_aggregate_seconds_limit": 73600,
+    "current_official_all_in_hourly_ceiling_USD": 5.9,
+    "maximum_new_GPU_usage_USD": 5.9
+  },
+  "estimated_phase_upper_with_prior_GPU_and54reserve_USD": 134.56944444444446,
+  "authorizes": [
+    "ONE replacement CPU interval for missing-results recovery after exact gate/manifest/price/strictSSH checks; retain original source/disk/failed artifacts. Full hash inventory and original binding restoration before deleting only empty temporary CPU.",
+    "ONE same A10080 running interval after successful recovery, source deployed through Git and both independent native/Mac STOP guards verified.",
+    "Experimental, explicitly leased composition of existing speech_channel.py plus speech_completion.py. No default change or production adoption.",
+    "RP Ben preselected for full paired64 native behavior/speech comparison:32 main698M plus32 small-control, frozen inputs/thresholds/voice conditioning and preserved old outputs. No optimizer or gradient admission repeated.",
+    "Separate nine-case voice audition: existing RP Ben/British Alice/George references on same three existing evaluation inputs, native audio only, no hosted synthesis; not a passing subset or qualification cohort.",
+    "All64 word/peak checks, raw text/actions/task receipts/quiet/pause/resume/cancel/pending/ordinary retention comparison, actual timing and owner accent listening remain required before adoption.",
+    "Copy back full outputs/hash inventories and stop early after completion or unrecoverable error. No extra start on observation timeout; no capacity/zone/disk fallback."
+  ],
+  "scope_amendment_reason": "Current CPU allowance explicitly permits one running interval, consumed by137.7seconds before transfer; all12 earlier GPU intervals consumed. This single amendment permits one replacementCPU interval and one native-validationGPU interval under unchanged money/storage and original73600seconds ceiling.",
+  "before_execution": [
+    "Record explicit owner approval bound to exact proposal SHA.",
+    "Prepare and test versioned CPU-v2 execution and strict new changed-runtime native lease; do not borrow consumed original grants.",
+    "Fresh official price/auth/provider state, clean Git source, actual backups, sameIDs, guards and one-GPU checks.",
+    "No bypass of current NativeEngine combined-flags rejection without this exact experimental lease."
+  ]
+}
