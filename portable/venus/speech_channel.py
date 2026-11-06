@@ -27,6 +27,8 @@ class ActionChannel:
 
 def install(duplex):
     import torch
+    if getattr(duplex,'_action_channel',None) is not None:
+        raise ValueError('Action channel already installed')
     tokenizer=duplex.tokenizer
     open_id=tokenizer.convert_tokens_to_ids('<delegate>');close_id=tokenizer.convert_tokens_to_ids('</delegate>')
     assert open_id!=close_id and tokenizer.decode([open_id],skip_special_tokens=False)=='<delegate>' and tokenizer.decode([close_id],skip_special_tokens=False)=='</delegate>'
@@ -47,4 +49,8 @@ def install(duplex):
         return generate(*args,**kwargs)
     duplex._convert_results_to_tts_input=speech_condition
     duplex.model.tts.generate_chunk=speech_generate
+    # Completion owns a pinned sampler captured before this wrapper. Publish
+    # the channel so that its direct sampler path can honor empty conditioning
+    # too. Install completion first; reverse order fails its source check.
+    duplex._action_channel=channel
     return channel

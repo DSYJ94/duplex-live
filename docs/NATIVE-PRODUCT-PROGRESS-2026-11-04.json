@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-06T00:26:33.832360+00:00",
+  "updated_utc": "2026-11-06T00:31:58.604981+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -342,5 +342,12 @@
       "current_GPU_must_not_overlap_live_server": true,
       "verification": "18 local launcher/browser fixtures passed; no actual new native live route proof yet."
     }
+  },
+  "speech_composition_repair": {
+    "status": "CPU_REGRESSION_FIXED_NATIVE_VALIDATION_PENDING",
+    "report": "docs/NATIVE-VENUS-SPEECH-COMPOSITION-CPU-RESULT-2026-11-06.json",
+    "CPU_tests_passed": 49,
+    "native_qualified": false,
+    "live_defaults_changed": false
   }
 }

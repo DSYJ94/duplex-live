@@ -103,6 +103,8 @@ class Completion:
 
     def prepare(self,*args,**kwargs):
         self.cancel('session_reset');self.events=[];self.acoustic_complete=False
+        channel=getattr(self.duplex,'_action_channel',None)
+        if channel is not None:channel.reset()
         return self.original_prepare(*args,**kwargs)
 
     def begin_native_speech(self,prompt):
@@ -122,6 +124,17 @@ class Completion:
         return tokens,cache
 
     def sample(self,terminal,**kwargs):
+        channel=getattr(self.duplex,'_action_channel',None)
+        embeddings=kwargs.get('inputs_embeds')
+        if channel is not None and embeddings is not None and embeddings.shape[1]==0:
+            # The pinned sampler and resumable sampler bypass the later action
+            # wrapper. Never sample phonemes from an action-only empty input.
+            # Native terminal handling may still flush already buffered speech;
+            # this event does not claim that acoustic EOS was sampled.
+            import torch
+            self.acoustic_complete=bool(terminal)
+            self._event('action_only_without_acoustic_sampling',terminal=bool(terminal))
+            return torch.empty((embeddings.shape[0],0),dtype=torch.long,device=embeddings.device),kwargs.get('past_key_values')
         if not terminal:
             self.acoustic_complete=False
             return self.original_sampler(**kwargs)

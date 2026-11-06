@@ -1,0 +1,59 @@
+{
+  "status": "CPU_REGRESSION_FIXED_NATIVE_VALIDATION_PENDING",
+  "recorded_utc": "2026-11-06T00:31:58.604981+00:00",
+  "base_source": "41044f57a1f1a4898455acfcf825ff5147958212",
+  "previous_goal_turn": "PROGRESS: completed training/evaluation record and local backup materialization",
+  "current_goal_turn": "PROGRESS: reproduced and fixed actual pinned call-path composition faults locally",
+  "hypotheses": [
+    "Completion captures its sampler before the action-channel wrapper and bypasses zero-conditioning suppression.",
+    "A cancelled pending acoustic tail may survive tool-only/native reset transitions.",
+    "Unclosed action state may survive session reset."
+  ],
+  "reproduction": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=/private/tmp/duplex-compose-test-deps-20261106:/private/tmp/duplex-context-checks-20261101/lib/python3.11/site-packages /opt/homebrew/bin/python3.11 -m pytest -q evals/harness/test_venus_speech_composition.py",
+    "before": {
+      "failed": 4,
+      "passed": 2,
+      "seconds": 0.74,
+      "symptoms": [
+        "25 acoustic tokens generated from zero-length action-only conditioning, terminal and nonterminal.",
+        "Unclosed action channel survives duplex.prepare."
+      ]
+    },
+    "after": {
+      "passed": 49,
+      "seconds": 1.52,
+      "scope": [
+        "test_venus_speech_composition.py",
+        "test_venus_speech_completion.py",
+        "test_venus_completion_python_runtime.py",
+        "test_venus_voice.py",
+        "test_venus_browser_audio.py"
+      ]
+    }
+  },
+  "fix": [
+    "Publish single installed action channel on duplex so completion direct-sampler path honors zero conditioning without sampling or RNG advancement.",
+    "Reset channel with completion.prepare; retain native model text/history and existing pending-tail cancellation.",
+    "Explicit action-only event does not claim sampled acoustic EOS. Duplicate/reverse installs fail before further mutation."
+  ],
+  "boundary": {
+    "pinned_upstream_methods_executed_with_tiny_scripted_CPU_tensors": true,
+    "native_weights_loaded": false,
+    "CUDA_executed": false,
+    "source_fixes_deployed_to_GPU": false,
+    "live_entrypoint_still_rejects_composition": true,
+    "defaults_changed": false,
+    "native_audio_behavior_latency_qualified": false,
+    "adopted": false,
+    "optimizer_updates": 0,
+    "external_API_calls": 0,
+    "GPU_starts": 0
+  },
+  "source_file_sha256": {
+    "portable/venus/speech_channel.py": "01efe4dab803cefb89afd629b63555758fe4480c1c98d4eaa8873d3c56f0d104",
+    "portable/venus/speech_completion.py": "22d37d605a4527d2259e9ca615e6726a9f69fb363c59706c2ad0350d6da7d7fe",
+    "evals/harness/test_venus_speech_composition.py": "1b06c0f9339dcb21ca99f94cdeab0ac352fd69b6c462348a0c7b4ea3010697f8"
+  },
+  "next_action": "Finish pending CPU-only results recovery after scope approval, then prepare a full paired native audio/behavior comparison of composed fixes; do not rerun training or weaken WER/peak gates. Current compute authorization does not admit another GPU interval."
+}
