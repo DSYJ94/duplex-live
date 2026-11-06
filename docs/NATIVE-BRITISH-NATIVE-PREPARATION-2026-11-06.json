@@ -1,0 +1,40 @@
+{
+  "status": "NATIVE_GUARD_AND_PAIRED_PRODUCER_LOCAL_PREP_CONTROLLER_AND_APPROVAL_PENDING",
+  "recorded_utc": "2026-11-06T01:10:33.971127+00:00",
+  "base_source": "7c60b6b",
+  "source_file_sha256": {
+    "training/venus/british_speech_guard.py": "0d273179741841fe7fba9710817adcc5954fdbfd5d77ed91deb3bd228d65ac36",
+    "training/venus/british_behavior.py": "afbc012f04742e01210dda0ade7a36d322c4156e9b3c716355797e128b60738b",
+    "training/venus/large_behavior.py": "7ef2e3463e4d388c4fc0b8390c53a520de63cfd4cd8438166373b1526656ec30",
+    "portable/venus/guard.py": "489f1c4447f94699b9224412aff8ff967de96b9b92be4598c4499ca6407e039e",
+    "portable/venus/native_app.py": "31e95eb24ead3f56207c7414784283b9713d1471ea4630127138e8169fb96711",
+    "portable/venus/speech_composition.py": "103b309ba0d5fe277b58fc944ae4e6979c57df6ec7d53fd7548a2d0a24806e0c",
+    "evals/harness/test_venus_british_speech_guard.py": "d0f3932c21589bdc17ed42492435e7624c7bfd4d0a966c38446369d339c1fbea"
+  },
+  "tests": {
+    "passed": 104,
+    "seconds": 1.57,
+    "command": "pytest focused British guard, composition, completion, Python runtime, voice, browser audio and both recovery suites",
+    "deployment_Python310_pinned_transform_unittest_passed": true
+  },
+  "prepared": [
+    "Strict new resource key venus-british-speech-v83; exact new owner authorization/plan hashes required.",
+    "Complete1856file/17330768218byte/1link recovered backup proof required before model construction.",
+    "Same VM/disk, actual interval13, carried45500seconds, native3500seconds+100reserve,175phase350project and7Nov12UTC deadline bound; no GPU overlap.",
+    "NativeEngine composition available ONLY under exact new experimental lease and explicit hash-approved reference; no default reference fallback. Old leases still reject composition.",
+    "RP full64 collector reuses existing complete32-per-arm path and unchanged speech scoring; original training proof source b39 retained separately from actual new Git evaluation source.",
+    "No change to previous training records/metadata/checkpoints or saved updates."
+  ],
+  "not_complete": [
+    "Consolidated owner approval has not arrived.",
+    "Paid CPUv2/GPU stages not run;204312087bytes still missing.",
+    "GPU controller/source deployment, nine-case audition producer and full native phase integration still need preparation.",
+    "No native audio/behavior/latency/accent qualification from these local tests.",
+    "Fresh provider verification failed because Google requires reauthentication; last verified GPU state remains historical off."
+  ],
+  "new_GPU_intervals": 0,
+  "new_CPU_intervals": 0,
+  "new_optimizer_updates": 0,
+  "new_API_calls": 0,
+  "adopted": false
+}

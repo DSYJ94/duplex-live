@@ -22,6 +22,9 @@ PRIOR_USD=91.98448055555555
 
 
 def resource(lease):
+    if lease.get('resource_key')=='venus-british-speech-v83':
+        from training.venus.british_speech_guard import resource as british_resource
+        return british_resource(lease)
     if lease.get('resource_key')=='venus-large-capacity-v65':
         from training.venus.large_guard import resource as large_resource
         return large_resource(lease)
@@ -175,6 +178,9 @@ def provider_snapshot(binding,key):
 
 
 def validate(vm,instances,runpods,lease,now):
+    if lease.get('resource_key')=='venus-british-speech-v83':
+        from training.venus.british_speech_guard import validate as british_validate
+        return british_validate(vm,instances,runpods,lease,now)
     if lease.get('resource_key')=='venus-large-capacity-v65':
         from training.venus.large_guard import validate as large_validate
         return large_validate(vm,instances,runpods,lease,now)
@@ -328,7 +334,10 @@ def mac(args):
     a=json.loads(authority)
     expected='APPROVED_WITHIN_EXISTING_TRAINING_SCOPE' if lease.get('resource_key') in ('venus-memory-v11','venus-recovery-v13','venus-behavior-v14') else 'APPROVED'
     maximum=70 if lease.get('resource_key') in ('venus-adaptive-v34','venus-adaptive-v35','venus-adaptive-v36','venus-adaptive-v37','venus-adaptive-v38','venus-terminal-render-v39','venus-terminal-render-v40','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 40 if lease.get('resource_key') in ('venus-focused-audit-v15','venus-voice-reference-v16','venus-voice-reference-v17','venus-voice-reference-v18','venus-cadence-qualify-v19','venus-cadence-qualify-v20','venus-cadence-qualify-v21','venus-paced-continuation-v22','venus-paced-continuation-v23','venus-paced-recovery-v24','venus-paced-recovery-v25','venus-paced-recovery-v26','venus-paced-recovery-v27','venus-paced-recovery-v28','venus-paced-recovery-v29','venus-paced-recovery-v30','venus-paced-recovery-v31','venus-paced-recovery-v32','venus-paced-recovery-v33') else 35
-    if lease.get('resource_key')=='venus-large-capacity-v65':
+    if lease.get('resource_key')=='venus-british-speech-v83':
+        from training.venus.british_speech_guard import authority as british_authority
+        british_authority()
+    elif lease.get('resource_key')=='venus-large-capacity-v65':
         from training.venus.large_guard import authority as large_authority
         large_authority()
     elif lease.get('resource_key') in ('venus-tts-completion-v60','venus-context-train-v52','venus-tts-stop-v55','venus-tts-placement-v56','venus-tts-completion-v57','venus-tts-completion-v58','venus-tts-completion-v59','venus-tts-completion-v62'):

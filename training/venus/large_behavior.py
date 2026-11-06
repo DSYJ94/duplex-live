@@ -16,7 +16,7 @@ from .large_inputs import sha
 from .large_native import guarded
 
 
-async def collect(a):
+async def collect(a,*,british_composition=False):
     import numpy as np
     import soundfile as sf
     import torch
@@ -27,12 +27,18 @@ async def collect(a):
     from .spoken_audit import references,REVISION
     from data.venus.pacing import words
     from data.venus.repair import wer
-    guarded(a.lease,600)
+    check=guarded;training_source=a.source;engine_options={}
+    if british_composition:
+        from .british_behavior import admit,guarded as british_guarded
+        admit(a);check=british_guarded
+        training_source='b39ce3ebe167b059b67fa3d131978e5da7c41ac1'
+        engine_options=dict(nonspoken_actions=True,speech_completion=True)
+    check(a.lease,600)
     root=Path(a.root);arm=root/a.arm
     terminal=json.loads((arm/'training-terminal.json').read_text())
     restore=json.loads((arm/'final-native-restore.json').read_text())
     checkpoint=arm/('step-%04d.pt'%terminal['actual_new_updates'])
-    if (not terminal['completed'] or not restore['passed'] or restore['source']!=a.source
+    if (not terminal['completed'] or not restore['passed'] or restore['source']!=training_source
             or not restore['actual_CUDA'] or restore['new_optimizer_updates']!=0
             or sha(checkpoint)!=restore['checkpoint_sha256']):
         raise ValueError('Actual complete training and independent full native restore required')
@@ -51,9 +57,9 @@ async def collect(a):
         raise TimeoutError('Whole32 plus independent speech review must fit; never a subset')
     out=root/'native'/a.arm;out.mkdir(parents=True,exist_ok=False)
     engine=NativeEngine(a.model,adapter_checkpoint=checkpoint,voice_reference=a.voice_reference,
-                        voice_reference_sha256=a.voice_reference_sha256,tts_attention='released')
+                        voice_reference_sha256=a.voice_reference_sha256,tts_attention='released',**engine_options)
     (out/'profile.json').write_text(json.dumps(dict(engine.profile,source=a.source,
-                  checkpoint_sha256=restore['checkpoint_sha256'],arm=a.arm,adopted=False),indent=2)+'\n')
+                  training_proof_source=restore['source'],checkpoint_sha256=restore['checkpoint_sha256'],arm=a.arm,adopted=False),indent=2)+'\n')
     results=[]
     for case in cases:
         ensure_guard();set_seed(42)
@@ -71,7 +77,7 @@ async def collect(a):
     del engine;gc.collect();torch.cuda.empty_cache()
     pipe=recognizer();audits=[]
     for result in results:
-        ensure_guard();guarded(a.lease,180)
+        ensure_guard();check(a.lease,180)
         folder=out/result['id'];traces=[json.loads(s) for s in (folder/'trace.jsonl').read_text().splitlines()]
         data=[sf.read(folder/t['chunk_file'],dtype='float32')[0] for t in traces]
         audio=np.concatenate(data)
@@ -107,10 +113,14 @@ def combine(a):
                 normalizer='unchanged predeclared orthography/cardinal0..100, no homophones',matched_input_hashes=True),indent=2)+'\n')
 
 
-if __name__=='__main__':
+def parser():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--combine',action='store_true')
     p.add_argument('--root',required=True);p.add_argument('--source',required=True)
     p.add_argument('--arm',choices=('main','control'))
     for name in ('model','lease','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','voice-reference','voice-reference-sha256'):
         p.add_argument('--'+name)
-    a=p.parse_args();combine(a) if a.combine else asyncio.run(collect(a))
+    return p
+
+
+if __name__=='__main__':
+    a=parser().parse_args();combine(a) if a.combine else asyncio.run(collect(a))

@@ -182,8 +182,9 @@ class NativeEngine:
                  voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released',speech_completion=False):
         ensure_guard()
         if speech_completion and nonspoken_actions:
-            raise ValueError('Speech completion/action-channel composition requires separate native validation')
-        if speech_completion:
+            from .speech_composition import require_authorization
+            require_authorization(voice_reference,voice_reference_sha256)
+        elif speech_completion:
             from .speech_completion import require_authorization
             require_authorization()
         import numpy as np

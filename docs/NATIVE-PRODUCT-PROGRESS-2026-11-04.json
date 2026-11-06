@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_utc": "2026-11-06T01:02:27.162259+00:00",
+  "updated_utc": "2026-11-06T01:10:33.971127+00:00",
   "goal": "Usable native full-duplex voice: natural chosen British/English speech, ordinary reasoning, silence/interruption/pause/resume/cancellation and asynchronous delegation of harder tasks.",
   "sole_executor": "This LOCAL chat; monitor resumes the same chat, no separate executor",
   "latest_evidence": {
@@ -371,5 +371,12 @@
     "report": "docs/NATIVE-BRITISH-RECOVERY-V2-READINESS-2026-11-06.json",
     "tests_passed": 35,
     "authorized": false
+  },
+  "british_native_preparation": {
+    "status": "NATIVE_GUARD_AND_PAIRED_PRODUCER_LOCAL_PREP_CONTROLLER_AND_APPROVAL_PENDING",
+    "report": "docs/NATIVE-BRITISH-NATIVE-PREPARATION-2026-11-06.json",
+    "local_checks_passed": 104,
+    "Google_authentication": "REAUTHENTICATION_REQUIRED",
+    "native_qualified": false
   }
 }
