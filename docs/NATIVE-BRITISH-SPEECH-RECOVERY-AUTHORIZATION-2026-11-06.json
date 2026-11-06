@@ -1,0 +1,18 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-06T09:13:40.160767+00:00",
+  "human_reply_verbatim": "Unblock it",
+  "authority_interpretation": "Direct owner response to the pending consolidated recovery and British-speech proposal; execute that exact scope only, within unchanged ceilings. Google sign-in remains a separate human-only step.",
+  "proposal_path": "docs/NATIVE-BRITISH-SPEECH-RECOVERY-PROPOSAL-2026-11-06.json",
+  "proposal_sha256": "203a7c66ed4e65d65141b388a73d1eb4697094937b8d41fa30d619a1f3c6386a",
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "maximum_new_CPU_intervals": 1,
+  "maximum_new_CPU_seconds": 600,
+  "CPU_recovery_total_USD_maximum": 0.1,
+  "maximum_new_GPU_intervals": 1,
+  "maximum_new_GPU_seconds_including_reserve": 3600,
+  "same_GPU_id": "7521667153519853425",
+  "same_disk_id": "2297341858915206463",
+  "new_optimizer_updates": 0
+}
