@@ -14,6 +14,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 
 from . import british_speech_guard as g, results_recovery as recovery
 
@@ -39,7 +40,13 @@ def quote():
     for _ in range(20):
         url='https://cloudbilling.googleapis.com/v1/services/6F81-5844-456A/skus?currencyCode=USD&pageSize=5000'
         if page:url+='&pageToken='+urllib.parse.quote(page,safe='')
-        with urllib.request.urlopen(urllib.request.Request(url,headers={'Authorization':'Bearer '+token}),timeout=45) as response:data=json.load(response)
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(urllib.request.Request(url,headers={'Authorization':'Bearer '+token}),timeout=45) as response:data=json.load(response)
+                break
+            except urllib.error.HTTPError as error:
+                if error.code!=429 or attempt==2:raise
+                time.sleep(20*(attempt+1))
         for row in data.get('skus',[]):
             key=row['skuId']
             if key not in schema:continue
@@ -162,7 +169,11 @@ def execute():
     from .oslogin_access import ensure as ensure_key
     from portable.venus.guard import bounded_runpod_read
     hourly=price_admission(json.loads((R/'price.json').read_text()),time.time())
-    g.complete_backup()
+    needs_recovery=not g.BACKUP.exists()
+    if needs_recovery:
+        from .british_files_first import precheck
+        precheck()
+    else:g.complete_backup()
     if time.time()+3800>=g.DEADLINE:raise ValueError('Whole native phase cannot fit storage deadline')
     if not all(v['status']=='TERMINATED' for v in c.cloud('compute','instances','list')):raise ValueError('Other compute active')
     vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);disk=c.cloud('compute','disks','describe',DISK,'--zone='+ZONE)
@@ -185,7 +196,7 @@ def execute():
     c.run(['git','bundle','create',str(R/'source.bundle'),'HEAD'],120)
     ensure_key(time.time()+3700,R)
     boot=R/'bootstrap.sh';boot.write_text('#!/bin/sh\nset -eu\nsystemd-run --unit=duplex-british83-bootstrap-stop --on-active=300s /sbin/shutdown -h now || /sbin/shutdown -h now\n')
-    watch=None;submitted=False;ssh_ready=False;complete=False;backed=False;end=None
+    watch=None;file_watch=None;submitted=False;ssh_ready=False;complete=False;backed=False;end=None
     awake=subprocess.Popen(['caffeinate','-i','-s','-w',str(os.getpid())])
     try:
         c.run([recovery.GCLOUD,'compute','instances','add-metadata',NAME,'--zone='+ZONE,'--project='+c.PROJECT,'--metadata-from-file=startup-script='+str(boot),'--quiet'],60)
@@ -196,8 +207,18 @@ def execute():
         vm=c.cloud('compute','instances','describe',NAME,'--zone='+ZONE);save('provider-start.json',vm)
         if vm['status']!='RUNNING' or vm['lastStartTimestamp']==old['lastStartTimestamp']:raise ValueError('No new actual GPU start')
         end=datetime.fromisoformat(vm['lastStartTimestamp']).timestamp()+3500
+        if needs_recovery:
+            save('file-lease.json',dict(start_unix=end-3500,stop_unix=end,controller_pid=os.getpid(),controller_birth=c.run(['/bin/ps','-p',str(os.getpid()),'-o','lstart=']).strip()))
+            file_watch=subprocess.Popen([sys.executable,'-u','-m','training.venus.british_controller','--file-guard'],stdout=(R/'file-guard.log').open('x'),stderr=subprocess.STDOUT)
+            until=time.time()+60
+            while not (R/'file-guard.json').exists():
+                if file_watch.poll() is not None or time.time()>until:raise RuntimeError('Files-first guard not ready')
+                time.sleep(1)
         prepare_ssh(vm,ZONE,'83british',require_gpu=True);ssh_ready=True
         if c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip():raise ValueError('Model already active')
+        if needs_recovery:
+            from .british_files_first import recover
+            recover(c,end,file_watch);g.complete_backup()
         c.sync(R/'source.bundle','/workspace/migration/british83-source.bundle')
         c.ssh('git --git-dir=/workspace/migration/source.git fetch /workspace/migration/british83-source.bundle HEAD && git --git-dir=/workspace/migration/source.git worktree add --detach '+c.remote+' '+source,90)
         c.ssh('mkdir -p '+OUT+'/references '+c.remote+'/'+str(R)+' '+c.remote+'/'+str(g.BACKUP.parent))
@@ -219,6 +240,8 @@ def execute():
         if c.props('duplex-british83-guest')['ActiveState']!='active':raise ValueError('Guest guard not active')
         c.ssh('sudo systemctl stop duplex-british83-bootstrap-stop.timer')
         save('both-guards-ready.json',dict(mac_pid=watch.pid,guest=c.props('duplex-british83-guest'),native_STOP_unix=end))
+        if file_watch:
+            if file_watch.wait(timeout=30)!=0:raise RuntimeError('Files-first guard handoff failed')
         # Original proof metadata and saved checkpoints stay original, never rewritten.
         setup='import pathlib;root=pathlib.Path('+repr(OUT)+');old=pathlib.Path('+repr(OLD)+');'
         setup+='\nfor arm in ("main","control"):\n d=root/arm;d.mkdir(exist_ok=False)\n for name in ("training-terminal.json","final-native-restore.json","step-0060.pt"):(d/name).symlink_to(old/arm/name)'
@@ -258,14 +281,20 @@ def execute():
                 (R/'stop-requested').write_text('closed\n')
                 try:watch.wait(timeout=25)
                 except subprocess.TimeoutExpired:watch.terminate()
+            if file_watch:
+                try:file_watch.wait(timeout=25)
+                except subprocess.TimeoutExpired:file_watch.terminate()
             awake.terminate()
     if not complete or not backed:raise RuntimeError('Incomplete native phase; never imply qualification')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);m=p.add_mutually_exclusive_group(required=True)
-    for mode in ('plan','quote','execute'):m.add_argument('--'+mode,action='store_true')
+    for mode in ('plan','quote','execute','file-guard'):m.add_argument('--'+mode,action='store_true')
     a=p.parse_args()
     if a.plan:print(json.dumps(dict(stages=[dict(name=n,module=module) for n,module,args in stages('SOURCE','WORKTREE')],required_native_cases=64,required_separate_audition_cases=9,maximum_native_seconds=3500,shutdown_reserve_seconds=100,authorization_present=g.AUTH.exists(),cloud_mutations=0)))
     elif a.quote:print(json.dumps(quote()))
+    elif a.file_guard:
+        from .british_files_first import file_guard
+        file_guard()
     else:execute()

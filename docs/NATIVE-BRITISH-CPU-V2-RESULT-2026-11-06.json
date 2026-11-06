@@ -1,0 +1,17 @@
+{
+  "status": "CPU_V2_FAILED_IAP_LOOKUP_ALL_RESOURCES_CLEANED",
+  "recorded_utc": "2026-11-06T09:27:27.756404+00:00",
+  "CPU_id": "2296018948858061861",
+  "actual_seconds": 51.37100005149841,
+  "controller_tool_session": 77192,
+  "actual_exit_code": 1,
+  "error": "IAP4047 Failed to lookup instance before SSH/transfer",
+  "downloaded_files": 0,
+  "original_GPU_off": true,
+  "original_disk_retained_and_restored": true,
+  "empty_CPU_removed": true,
+  "remaining_bytes": 204312087,
+  "Google_authentication": "RENEWED_ACTUAL_CLOUD_READ_PASS",
+  "next": "Use same already-approved originalGPU interval files-first; no extra machine/start/time/spending/payload, no native model before full1856 hash backup.",
+  "new_optimizer_updates": 0
+}

@@ -14,5 +14,7 @@
   "maximum_new_GPU_seconds_including_reserve": 3600,
   "same_GPU_id": "7521667153519853425",
   "same_disk_id": "2297341858915206463",
-  "new_optimizer_updates": 0
+  "new_optimizer_updates": 0,
+  "files_first_same_approved_GPU": true,
+  "execution_order_note": "After the authorized replacement CPU failed before any transfer due to IAP instance lookup propagation, recover the SAME204MB during the already-approved SAME originalGPU running interval. This uses no extra resources/start/time/spending/payload. Critical epoch checkpoints remain fully Mac-backed-up before allocation; complete1856-file hash proof is still required BEFORE ANY native model loading/evaluation. This is an execution-order implementation choice under the owner Unblock it instruction; no new owner reply is fabricated."
 }

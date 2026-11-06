@@ -16,7 +16,7 @@ VM_ID='7521667153519853425'
 DISK_ID='2297341858915206463'
 DEADLINE=1794052800.0
 CHECKPOINTS=dict(main='a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81',control='df75747e576c0c72bfede122a4f9e39e8f1fa26964538523a91e59f58bbcc991')
-RUNTIME_FILES=('portable/venus/native_app.py','portable/venus/guard.py','portable/venus/speech_completion.py','portable/venus/speech_channel.py','portable/venus/speech_composition.py','training/venus/british_speech_guard.py','training/venus/british_behavior.py','training/venus/british_audition.py','training/venus/large_behavior.py')
+RUNTIME_FILES=('portable/venus/native_app.py','portable/venus/guard.py','portable/venus/speech_completion.py','portable/venus/speech_channel.py','portable/venus/speech_composition.py','training/venus/british_speech_guard.py','training/venus/british_behavior.py','training/venus/british_audition.py','training/venus/british_controller.py','training/venus/british_files_first.py','training/venus/large_behavior.py')
 
 
 def sha(path):
