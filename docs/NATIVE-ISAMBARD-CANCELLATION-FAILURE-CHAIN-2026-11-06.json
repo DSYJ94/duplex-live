@@ -1,0 +1,257 @@
+{
+  "recorded_utc": "2026-11-06T20:13:55.853955+00:00",
+  "source": "35d40392b641d31023723d87edb72bb224af37b8",
+  "complete_cases": 8,
+  "all_pending_when_followup_false": true,
+  "cases": [
+    {
+      "arm": "main",
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "main",
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "main",
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup landmark berlin",
+        "cancel pendinglookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup landmark berlin",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "main",
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup landmark berlin",
+        "cancel pendinglookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup landmark berlin",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "control",
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel",
+        "lookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "control",
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "control",
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel pending",
+        "lookup",
+        "lookup",
+        "lookup",
+        "lookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    },
+    {
+      "arm": "control",
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "pending_when_followup": false,
+      "native_queries": [
+        "lookup",
+        "cancel pending",
+        "lookup"
+      ],
+      "lookup_errors": [
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        },
+        {
+          "query": "lookup",
+          "result": "Lookup requires one explicit alphabetic key.",
+          "error": "lookup_requires_explicit_key"
+        }
+      ],
+      "cancellation_targets": [
+        []
+      ]
+    }
+  ],
+  "observed_failure_chain": "Malformed/incomplete lookup requests receive immediate worker error receipts. All eight cancellation followups found no pending task; emitted cancel commands had no genuine task to cancel.",
+  "interpretation": "The complete benchmark fails genuine cancellation. This cohort does not separately establish that cancellation of a valid still-running job is broken: valid delegation was not established first.",
+  "score_changed": false,
+  "threshold_changed": false,
+  "grammar_relaxed": false,
+  "adopted": false,
+  "next_action": "Continue the admitted full-epoch action-fidelity training; then require both valid pending work and actual cancellation in full native review. For the product, separately evaluate the existing context-spanning reasoning backend rather than requiring the voice model to reconstruct all task context unaided."
+}
