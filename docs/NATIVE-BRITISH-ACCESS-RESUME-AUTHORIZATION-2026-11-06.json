@@ -1,0 +1,18 @@
+{
+  "status": "APPROVED",
+  "recorded_utc": "2026-11-06T11:13:55.887460+00:00",
+  "human_reply_verbatim": "Approve recovery within remaining time",
+  "proposal_path": "docs/NATIVE-BRITISH-ACCESS-RESUME-PROPOSAL-2026-11-06.json",
+  "proposal_sha256": "80794dd102865463850f8b73281cf05daa232098f19d74b5d5ecd9c4ec8d6b1d",
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "maximum_new_GPU_intervals": 1,
+  "maximum_new_GPU_seconds_including_reserve": 3460,
+  "maximum_native_GPU_seconds": 3360,
+  "prior_GPU_seconds_upper": 45640,
+  "actual_GPU_interval": 14,
+  "same_GPU_id": "7521667153519853425",
+  "same_disk_id": "2297341858915206463",
+  "new_optimizer_updates": 0,
+  "files_first_same_approved_GPU": true
+}
