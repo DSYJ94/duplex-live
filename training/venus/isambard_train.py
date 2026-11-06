@@ -8,6 +8,10 @@ from pathlib import Path
 
 from .isambard_native import BASE,ART,SHA,adam_format,guarded
 
+# Preserve the actual completed evaluation producer when only the Slurm
+# transport wrapper evolves. Never relabel the old proof as the new trainer.
+EVALUATION_SOURCE='35d40392b641d31023723d87edb72bb224af37b8'
+
 def restore_runtime(state,llm,source,out):
     import torch
     from .large_native import restore_expanded
@@ -36,11 +40,11 @@ def main(a):
         if not terminal['completed'] or reference['source']!=a.source:raise ValueError('Actual complete new training required')
         checkpoint=out/('step-%04d.pt'%terminal['actual_new_updates'])
     else:
-        evaluation=BASE/'native-evaluation-v6'
+        evaluation=BASE/'native-evaluation-v5'
         paired=json.loads((evaluation/'native/paired-native-report.json').read_text())
         reference=json.loads((evaluation/'migration/main/reference.json').read_text())
         proof=json.loads((evaluation/'migration/main/restore.json').read_text())
-        if not paired['complete'] or len(paired['cases'])!=64 or paired['source']!=a.source or not proof['passed'] or proof['source']!=a.source:raise ValueError('Complete actual pairednative64 and independent new-runtime restore required')
+        if not paired['complete'] or len(paired['cases'])!=64 or paired['source']!=EVALUATION_SOURCE or not proof['passed'] or proof['source']!=EVALUATION_SOURCE or reference['source']!=EVALUATION_SOURCE:raise ValueError('Complete actual pairednative64 and independent new-runtime restore required')
         checkpoint=ART/'checkpoints/main-step-0060.pt';out.mkdir(parents=True,exist_ok=False)
     expected=reference['checkpoint_sha256']
     if sha(checkpoint)!=expected:raise ValueError('Exact preserved training state required')
@@ -66,7 +70,7 @@ def main(a):
         write(out,'phase-transition.json',dict(transition,source=a.source,parent_checkpoint_sha256=SHA['main'],derived_Adam_format_defaults=format_changes))
         metadata=dict(capacity_schema='native-capacity-continuation-v1',arm='main',source=a.source,model_revision=parent['metadata']['model_revision'],recipe=recipe,
             parent_training_steps=526,parent_checkpoint_sha256=SHA['main'],parent_local_step=60,cache_sha256=MANIFEST_SHA,expansion=parent['metadata']['expansion'],
-            original_capacity_metadata=parent['metadata'],independent_parent_restore=proof,phase_transition=transition,adopted=False)
+            original_capacity_metadata=parent['metadata'],independent_parent_restore=proof,parent_evaluation_source=EVALUATION_SOURCE,phase_transition=transition,adopted=False)
         write(out,'recipe.json',metadata)
         save(out/'phase-init.pt',llm,runtime.optimizer,0,metadata,diagnostics_state=runtime.diagnostics_state)
         ordered=batches(corpus.rows,a.epochs,recipe['seed']);last_seconds=600.;actual=0

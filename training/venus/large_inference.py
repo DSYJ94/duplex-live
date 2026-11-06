@@ -10,7 +10,8 @@ def load_continuation(llm,state,checkpoint_sha256):
             or meta['parent_checkpoint_sha256']!='a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81'
             or meta['cache_sha256']!=MANIFEST_SHA or meta['adopted'] or not 0<state['step']<=recipe['updates']<=240
             or recipe['updates']!=recipe['epochs']*60 or not proof['passed'] or not proof['actual_CUDA']
-            or proof['pid']==proof['reference_pid'] or proof['source']!=meta['source']
+            or proof['pid']==proof['reference_pid'] or proof['source']!=meta['parent_evaluation_source']
+            or meta['parent_evaluation_source']!='35d40392b641d31023723d87edb72bb224af37b8'
             or proof['checkpoint_sha256']!=meta['parent_checkpoint_sha256']
             or not transition['adam_moments_and_counters_exact'] or not transition['rng_exact']):raise ValueError('Exact independently restored526 continuation required')
     if any(recipe[k]!=v for k,v in dict(rank=256,alpha=256,last_layers=36,ordinary_kl_weight=.1,ordinary_hidden_weight=.01,action_aux_weight=.25,microbatch=1,accumulation=4,forward_path='native-segmented-bptt-v1').items()) or recipe['projections']!=list(ALL_PROJECTIONS):raise ValueError('Native architecture/objectives changed')
