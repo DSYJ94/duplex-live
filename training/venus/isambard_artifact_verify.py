@@ -22,7 +22,8 @@ def verify(root, manifest, digest):
         rel=PurePosixPath(row['path'])
         if rel.is_absolute() or '..' in rel.parts or row['path'] in seen:raise ValueError('Unsafe or duplicate artifact path')
         seen.add(row['path']);p=root.joinpath(*rel.parts)
-        if not p.parent.resolve().is_relative_to(root.resolve()):raise ValueError('Artifact parent escapes root')
+        try:p.parent.resolve().relative_to(root.resolve())
+        except ValueError:raise ValueError('Artifact parent escapes root')
         if 'target' in row:
             if not p.is_symlink() or os.readlink(p)!=row['target']:raise ValueError('Original artifact link differs')
         else:
@@ -37,7 +38,7 @@ if __name__=='__main__':
     for name in ('root','manifest','sha256','source','output'):p.add_argument('--'+name,required=True)
     a=p.parse_args()
     if not os.environ.get('SLURM_JOB_ID') or os.environ.get('SLURM_JOB_ACCOUNT')!='brics.u6ada':raise ValueError('Run artifact hashing through the project scheduler')
-    if subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source:raise ValueError('Exact deployed Git source required')
+    if subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()!=a.source:raise ValueError('Exact deployed Git source required')
     result=verify(Path(a.root),Path(a.manifest),a.sha256)
     result.update(job_id=os.environ['SLURM_JOB_ID'],source=a.source,completed_utc=datetime.now(timezone.utc).isoformat())
     with Path(a.output).open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
