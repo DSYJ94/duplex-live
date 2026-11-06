@@ -1,0 +1,60 @@
+{
+  "recorded_utc": "2026-11-06T16:30:48.652578+00:00",
+  "status": "FIRST_CPU_FAILED_BEFORE_COPY; ISAMBARD_PUBLIC_STAGE_COMPLETE; REMAINING_CPU_RESUME_UNAPPROVED",
+  "CPU_rescue": {
+    "recorded_utc": "2026-11-06T16:30:48.652578+00:00",
+    "source": "d676b809448ebf5f374dd64d8844b4c941be9f09",
+    "CPU_id": "3473476360381416918",
+    "CPU_name": "duplex-venus-data-rescue-20261106-v1",
+    "started_utc": "2026-11-06T16:07:30.775000+00:00",
+    "stopped_utc": "2026-11-06T16:09:06.996000+00:00",
+    "actual_running_seconds": 96.221,
+    "rounded_upper_seconds": 100,
+    "original_aggregate_upper_seconds": 2800,
+    "remaining_aggregate_upper_seconds": 2700,
+    "transfer_bytes": 0,
+    "inventory_completed": false,
+    "new_GPU_seconds": 0,
+    "new_optimizer_updates": 0,
+    "failure": "sudo: docker: command not found",
+    "original_disk_binding_restored": true,
+    "temporary_CPU_removed": true
+  },
+  "process_fix": "Use Git-deployed direct /proc probe; Docker CLI or Docker daemon is not required. Reject actual native/container processes before inventory or transfer.",
+  "validation": {
+    "focused_tests_passed": 51,
+    "seconds": 0.52,
+    "Python310_syntax": "PASS",
+    "full_orchestration_coverage": [
+      "No Docker CLI installed, exact268 fullcopy plus cleanup",
+      "Unexpected actual container process rejects before transfer and restores binding",
+      "Prior CPU STOP/hash/time/cleanup bound; changed receipt rejected",
+      "Inherited original disk restoration and privacy/selection tests"
+    ]
+  },
+  "Isambard": {
+    "job_id": "8142150",
+    "actual_source": "fc4af79f19f54afb223c5bb05caaf4758484148f",
+    "account": "brics.u6ada",
+    "node": "nid010042",
+    "state": "COMPLETED",
+    "Slurm_exit": "0:0",
+    "elapsed_seconds": 247,
+    "allocated_GPU": 1,
+    "actual_GPU_hours": 0.06861111111111111,
+    "all35_hashes_verified": true,
+    "files": 35,
+    "bytes": 19993772218,
+    "revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "started_utc": "2026-11-06T16:05:25.277702+00:00",
+    "worker_ended_utc": "2026-11-06T16:09:31.267222+00:00",
+    "new_optimizer_updates": 0,
+    "model_execution": false,
+    "receipt": "runs/isambard-cutover-20261106/public-stage-8142150-completion.txt"
+  },
+  "resume_proposal_path": "docs/NATIVE-ISAMBARD-DATA-RESCUE-RESUME-PROPOSAL-2026-11-06.json",
+  "resume_proposal_sha256": "cd112ea9f6a7be78ea46d19a1e6bf5aeecaeb2627d82167a919f4b12cde5ca95",
+  "next": "Owner count amendment needed only because one-CPU interval/machine was consumed. No added time/money/data/GPU. Then exact268 copyback; stage data and minimal ARM64 runtime/Slurm guard for native speech validation before more learning.",
+  "new_GPU_jobs_authorized_by_CPU_exception": 0,
+  "model_adopted": false
+}
