@@ -37,3 +37,21 @@ def test_native_entrypoint_dispatches_slurm_without_gcp(bound,tmp_path,monkeypat
         p=tmp_path/(name+'.json');p.write_text(json.dumps(value));monkeypatch.setenv('DUPLEX_LIVE_'+name.upper()+'_FILE',str(p))
     monkeypatch.setattr(g.time,'time',lambda:now)
     ensure_guard()
+
+def test_timeout_retries_without_refreshing_or_extending_old_proof(bound,tmp_path,monkeypatch):
+    import subprocess
+    lease,job,_,_,now=bound;clock=[now];out=tmp_path/'guard.json'
+    monkeypatch.setattr(g.time,'time',lambda:clock[0])
+    text=' '.join(k+'='+v for k,v in job.items())
+    monkeypatch.setattr(g.subprocess,'check_output',lambda *a,**kw:text)
+    last,ok=g.refresh(lease,out);assert ok
+    original=out.read_text();clock[0]+=30
+    def timeout(*a,**kw):raise subprocess.TimeoutExpired(a[0],kw['timeout'])
+    monkeypatch.setattr(g.subprocess,'check_output',timeout)
+    old,ok=g.refresh(lease,out,last)
+    assert not ok and old==last and out.read_text()==original
+    clock[0]+=1;monkeypatch.setattr(g.subprocess,'check_output',lambda *a,**kw:text)
+    fresh,ok=g.refresh(lease,out,last)
+    assert ok and fresh==clock[0] and json.loads(out.read_text())['checked_unix']==clock[0]
+    clock[0]=fresh+44;monkeypatch.setattr(g.subprocess,'check_output',timeout)
+    with pytest.raises(subprocess.TimeoutExpired):g.refresh(lease,out,fresh)

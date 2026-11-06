@@ -55,6 +55,9 @@ def main(a):
         else:
             stages=[('training.venus.isambard_train',args+['--epochs',str(a.epochs)],'training'),
                     ('training.venus.isambard_train',args+['--epochs',str(a.epochs),'--final-restore'],'final-restore')]
+            if a.resume_checkpoint:
+                extra=['--resume-checkpoint',a.resume_checkpoint,'--resume-sha',a.resume_sha,'--resume-step',str(a.resume_step),'--resume-prior-root',a.resume_prior_root]
+                stages=[('training.venus.isambard_resume',args+extra+['--stage',stage],'resume-'+stage) for stage in ('reference','restore')]+[(stages[0][0],stages[0][1]+extra,'training'),stages[1]]
         for module,argv,name in stages:
             g.ensure(lease,json.loads(guard_path.read_text()))
             started=time.time();log=(execution/(name+'.log')).open('x')
@@ -82,4 +85,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
     p.add_argument('--stage',choices=('evaluate','train'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
     main(p.parse_args())

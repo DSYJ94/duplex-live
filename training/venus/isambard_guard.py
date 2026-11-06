@@ -51,15 +51,30 @@ def ensure(lease,guard,now=None,environ=None):
     if not 0<=now-guard['checked_unix']<=45 or not now<min(guard['expires_unix'],guard['stop_unix']-30):
         raise RuntimeError('Independent Slurm guard is absent or expired')
 
+def refresh(lease,output,last_success=None):
+    """Retry a timed-out observation within the ORIGINAL freshness window.
+
+    A timeout never creates a fresh guard or extends its expiry. Identity,
+    terminal-state and deadline failures remain fatal.
+    """
+    now=time.time()
+    timeout=20 if last_success is None else min(20,max(1,last_success+44-now))
+    try:
+        text=subprocess.check_output(['scontrol','show','job','-o',lease['job_id']],universal_newlines=True,timeout=timeout)
+    except subprocess.TimeoutExpired:
+        if last_success is None or time.time()>=last_success+44:raise
+        print(json.dumps(dict(event='scheduler_poll_timeout',last_verified_unix=last_success,original_expiry_unix=min(last_success+45,lease['stop_unix']-30))),flush=True)
+        return last_success,False
+    now=time.time();validate_job(parse_job(text),lease,now)
+    row=dict((k,lease[k]) for k in ('job_id','account','node','source','authorization_sha256','stop_unix'))
+    row.update(checked_unix=now,expires_unix=min(now+45,lease['stop_unix']-30))
+    path=Path(output);tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(row));os.replace(str(tmp),str(path))
+    return now,True
+
 def watch(lease_path,output):
-    lease=json.loads(Path(lease_path).read_text());resource(lease)
+    lease=json.loads(Path(lease_path).read_text());resource(lease);last=None
     while True:
-        text=subprocess.check_output(['scontrol','show','job','-o',lease['job_id']],universal_newlines=True,timeout=20)
-        now=time.time();validate_job(parse_job(text),lease,now)
-        row=dict((k,lease[k]) for k in ('job_id','account','node','source','authorization_sha256','stop_unix'))
-        row.update(checked_unix=now,expires_unix=min(now+45,lease['stop_unix']-30))
-        path=Path(output);tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(row));os.replace(str(tmp),str(path))
-        time.sleep(10)
+        last,ok=refresh(lease,output,last);time.sleep(10 if ok else 1)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--lease',required=True);p.add_argument('--output',required=True);a=p.parse_args();watch(a.lease,a.output)
