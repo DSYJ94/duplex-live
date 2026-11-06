@@ -30,7 +30,7 @@ def main(a):
         visible=os.environ['CUDA_VISIBLE_DEVICES']
         if not visible or ',' in visible:raise ValueError('One actual scheduler-selected GPU required')
         work=str(BASE/a.worktree)
-        common=['apptainer','exec','--cleanenv','--containall','--nv','--bind',str(BASE)+':'+str(BASE),
+        common=['apptainer','exec','--cleanenv','--contain','--nv','--bind',str(BASE)+':'+str(BASE),
                 '--bind',str(BASE.resolve())+':'+str(BASE.resolve()),
                 '--bind',str(ART/'recovered-data-v1/venus-training-v1')+':/workspace/migration/venus-training-v1:ro','--pwd',work]
         env=dict(CUDA_VISIBLE_DEVICES=visible,SLURM_JOB_ID=job_id,SLURM_JOB_ACCOUNT=g.ACCOUNT,
