@@ -3,6 +3,23 @@ from .large_inputs import PARENT_SHA, MANIFEST_SHA
 from .lora import install, load_adapter, ALL_PROJECTIONS
 from .large_capacity import expand_broad
 
+def load_continuation(llm,state,checkpoint_sha256):
+    """Explicit new phase; never reinterpret the old466->526 phase as new work."""
+    meta=state['metadata'];recipe=meta['recipe'];proof=meta['independent_parent_restore'];transition=meta['phase_transition']
+    if (meta['capacity_schema']!='native-capacity-continuation-v1' or meta['arm']!='main' or meta['parent_training_steps']!=526
+            or meta['parent_checkpoint_sha256']!='a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81'
+            or meta['cache_sha256']!=MANIFEST_SHA or meta['adopted'] or not 0<state['step']<=recipe['updates']<=240
+            or recipe['updates']!=recipe['epochs']*60 or not proof['passed'] or not proof['actual_CUDA']
+            or proof['pid']==proof['reference_pid'] or proof['source']!=meta['source']
+            or proof['checkpoint_sha256']!=meta['parent_checkpoint_sha256']
+            or not transition['adam_moments_and_counters_exact'] or not transition['rng_exact']):raise ValueError('Exact independently restored526 continuation required')
+    if any(recipe[k]!=v for k,v in dict(rank=256,alpha=256,last_layers=36,ordinary_kl_weight=.1,ordinary_hidden_weight=.01,action_aux_weight=.25,microbatch=1,accumulation=4,forward_path='native-segmented-bptt-v1').items()) or recipe['projections']!=list(ALL_PROJECTIONS):raise ValueError('Native architecture/objectives changed')
+    install(llm,rank=64,alpha=64,last_layers=1)
+    spec=expand_broad(llm,last_layers=36,rank=256,alpha=256,seed=20261104)
+    if spec!=meta['expansion'] or spec['parameters']!=698351616:raise ValueError('Exact preserved broad adapter required')
+    load_adapter(llm,state['adapter']);llm.requires_grad_(False)
+    return dict(checkpoint_sha256=checkpoint_sha256,optimizer_updates=526+state['step'],current_round_updates=state['step'],parent_training_steps=526,planned_updates=526+recipe['updates'],adapter=spec,training_source=meta['source'],model_revision=meta['model_revision'],experimental_candidate=True,adopted=False,native_behavior_qualified=False,arm='main')
+
 
 def load(llm, state, checkpoint_sha256):
     meta = state['metadata']; recipe = meta['recipe']; arm = meta['arm']

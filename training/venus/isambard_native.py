@@ -41,6 +41,7 @@ def adam_format(state,torch):
             result={k:walk(v,path+'/'+str(k)) for k,v in value.items()}
             if 'param_groups' in result and default is not None:
                 for i,group in enumerate(result['param_groups']):
+                    if not {'lr','betas','eps','weight_decay','params'}<=set(group):raise ValueError('Unknown optimizer group in format derivation')
                     if 'decoupled_weight_decay' not in group:
                         if default is not True:raise ValueError('Unknown AdamW default')
                         group['decoupled_weight_decay']=True;changes.append(path+'/param_groups/'+str(i)+'/decoupled_weight_decay=true')
@@ -56,6 +57,20 @@ def adam_format(state,torch):
         return exact_state(old,new)
     if not original_equal(state['optimizer'],mapped['optimizer']):raise ValueError('Original optimizer field changed during format derivation')
     return mapped,changes
+
+def schema_selftest(a):
+    import torch
+    from .state import exact_state
+    from .large_native import write
+    guarded(a.lease,180)
+    p=torch.nn.Parameter(torch.ones(1));optimizer=torch.optim.AdamW([p]);p.grad=torch.ones_like(p);optimizer.step()
+    legacy=optimizer.state_dict();legacy['param_groups'][0].pop('decoupled_weight_decay',None)
+    old=dict(optimizer=dict(user_optimizers=[legacy],updater=dict(opts=[legacy])))
+    derived,changes=adam_format(old,torch)
+    other=torch.optim.AdamW([torch.nn.Parameter(torch.ones(1))]);other.load_state_dict(derived['optimizer']['user_optimizers'][0])
+    if not exact_state(other.state_dict(),derived['optimizer']['user_optimizers'][0]):raise ValueError('Actual Torch optimizer format restore differs')
+    out=Path(a.root)/'migration';out.mkdir(parents=True,exist_ok=True)
+    write(out,'schema-selftest.json',dict(passed=True,torch=torch.__version__,declared_format_defaults=changes,fixture_optimizer_updates=1,native_model_updates=0,source=a.source))
 
 def restore(a):
     import torch
@@ -107,8 +122,9 @@ def restore(a):
 
 def main():
     from .large_behavior import parser,collect,combine
-    p=parser();p.add_argument('--stage',required=True,choices=('reference','restore','collect','combine'));p.add_argument('--opal-source',required=True);a=p.parse_args()
-    if a.stage in ('reference','restore'):restore(a)
+    p=parser();p.add_argument('--stage',required=True,choices=('schema-selftest','reference','restore','collect','combine'));p.add_argument('--opal-source',required=True);a=p.parse_args()
+    if a.stage=='schema-selftest':schema_selftest(a)
+    elif a.stage in ('reference','restore'):restore(a)
     elif a.stage=='collect':
         import sys
         asyncio.run(collect(a,execution_context=sys.modules[__name__]))

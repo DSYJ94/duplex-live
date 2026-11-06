@@ -16,5 +16,41 @@
     "Complete frozen pairednative64 speech/behavior test of turn_eos fix and Britishreference",
     "Continue training from actualsavedmainstep60, never repeatupdates. Choose bounded completeepoch schedule and data/recipe adjustment from actual failures; preserve all304/240TRAIN64DEV/folds/originalwords/KLhidden/objectives/AdamRNGOPAL, saveimmutableepochs/fullreceipts and evaluate beforeadoption."
   ],
-  "adoption_gates_unchanged": true
+  "adoption_gates_unchanged": true,
+  "execution_plan": {
+    "native_evaluation": {
+      "complete_cases": 64,
+      "conditions": [
+        "saved-main60",
+        "saved-control60"
+      ],
+      "maximum_single_job_seconds": 7200,
+      "reference": "RP Ben",
+      "new_optimizer_updates": 0
+    },
+    "training": {
+      "parent_checkpoint_sha256": "a89a39b7dd1e2a08f06ee2776d92adcd41e285245d6a91fd1d36d85297a42e81",
+      "parent_global_updates": 526,
+      "initial_complete_epochs": 2,
+      "maximum_complete_epochs": 4,
+      "initial_new_updates": 120,
+      "maximum_new_updates": 240,
+      "learning_rate": 5e-06,
+      "warmup_updates": 16,
+      "effective_batch": 4,
+      "microbatch": 1,
+      "ordinary_KL_weight": 0.1,
+      "ordinary_hidden_weight": 0.01,
+      "action_aux_weight": 0.25,
+      "full_native_BPTT": true,
+      "all_TRAIN_per_epoch": 240,
+      "full_DEV_each_epoch": 64,
+      "maximum_single_job_seconds": 86400,
+      "optimizer_owner": "native OPAL; exact inherited updater/Adam moments; explicit new phase-local schedule",
+      "agent_executor": "LOCAL assistant reviews diagnosis/data-versus-recipe evidence; no external agent API calls",
+      "new_phase_schema": "native-capacity-continuation-v1",
+      "checkpoint_policy": "immutable init and epochs; rolling every8; complete independent final restore; no adoption without full native gates"
+    }
+  },
+  "updated_utc": "2026-11-06T19:24:16.197815+00:00"
 }
