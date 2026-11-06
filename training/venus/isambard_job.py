@@ -35,7 +35,7 @@ def main(a):
         env=dict(CUDA_VISIBLE_DEVICES=visible,SLURM_JOB_ID=job_id,SLURM_JOB_ACCOUNT=g.ACCOUNT,
                  DUPLEX_LIVE_LEASE_FILE=str(lease_path),DUPLEX_LIVE_GUARD_FILE=str(guard_path),DUPLEX_WAV_IO='soundfile-wav-v1',
                  HF_HOME=str(BASE/'hf-cache'),HF_HUB_OFFLINE='1',PYTHONDONTWRITEBYTECODE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8',
-                 TMPDIR=str(BASE/'tmp/native-'+job_id))
+                 TMPDIR=str(BASE/('tmp/native-'+job_id)))
         Path(env['TMPDIR']).mkdir(parents=True,exist_ok=True)
         for key,value in env.items():common+=['--env',key+'='+value]
         common += [str(ART/'runtime/pytorch-new.sif'),str(BASE/'envs/venus-arm64-v1/bin/python'),'-u','-m']

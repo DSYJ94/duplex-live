@@ -1,3 +1,17 @@
+# LOCAL — ARM runtime READY; native evaluation wrapper fix ready
+
+6Nov2026 19:32UTC. LOCAL sole executor; continue through actual Isambard training, no GCP GPU/model restart. Latest model remains main698,351,616 trainable adapter parameters /60 new updates vs control851,968 /60, both parent466→526. Main held-out family CE improved20–46%, but original native words only13/32 vs control11/32; all32 peaks passed per arm. Candidate remains experimental/unadopted.
+
+Runtime preparation:8146222 failed41s (/tmp64MB);8148579 failed40s (missingTorchAudio);8148961 COMPLETED0:0/41s/source04f1433530c89e57b93862c2f762cef6929feabc. Actual ARM64Torch2.9/NVIDIA GH200120GB/Transformers4.51.3/model-class import/WAV sample-exact loader/pinned Whisper snapshot PASS. Runtime venv /projects/u6ada/duplex-live/envs/venus-arm64-v1; immutable SIF and304cache/publicweights unchanged. No modelweights or optimizer executed in those runtime jobs.
+
+Evaluation attempt8149291/sourcec7b484477a116a9dfd96d4449814394e7e0beea4 FAILED before container/model launch: host wrapper Path+str TMPDIR bug. Actual trace preserved under runs/isambard-native-20261106/native-v1 and remote native-evaluation-v1/execution-8149291. Independent guard cleanup executed; zero native updates. Corrected parentheses plus complete mocked serial8-stage wrapper regression now10 tests PASS. Next verify actual Slurm terminal/emptyqueue, deploy NEW Git source/worktree, then same full paired64 with new GH200 native Adam/RNG/OPAL proofs and British RPBen composition. Do not rerun existing submission claim or fabricate old source proofs.
+
+New committed execution code includes exact saved60 continuation: initial2complete240TRAIN epochs/120NEWupdates from global526, LR5e-6/warm16/eff4/micro1, full native BPTT/KL.1/hidden.01/action.25, full64DEV each epoch, preserved Adam/OPAL/RNG/old histories, checkpoint every8 and immutableepochs, distinct fresh final restore. No external API agent: OPAL backendKEEP/API0; LOCAL reviews measured data-vs-recipe evidence. Training starts only after actual complete native comparison/new-runtime restore, no repeated saved120 updates and no adoption from loss. All GPU runs Isambard/brics.u6ada; short checks interactive reservation alone, sustained workq. Certificate7Nov00:10:16UTC; running batch jobs do not require an open Mac connection.
+
+All2640 staged artifacts/13,530,922,139B+6links and public35 files/current3checkpoints independently hash verified; critical Mac backups safe, broad source backupPARTIAL. Eight ORIGINAL training proof JSONs copied unchanged to native-evaluation-v1/main/control, checkpoint symlinks reuse existing verified8.54GB states. All GCP computeOFF; same original retention7Nov12UTC, costs/caps unchanged. Preserve unrelated PYC/probes/roadmap. HeartbeatPAUSED/no other chats/agents. Next: one versioned evaluation submit, observe actual stage, then train complete epochs and copy immutable evidence/checkpoints.
+
+---
+
 # LOCAL — Native rescue and Isambard artifact migration COMPLETE
 
 Recorded: 2026-11-06T17:17:58.525480+00:00. LOCAL remains the sole executor; no execution handoff to cloud.
