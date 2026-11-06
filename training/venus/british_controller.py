@@ -245,7 +245,7 @@ def execute():
             while not (R/'file-guard.json').exists():
                 if file_watch.poll() is not None or time.time()>until:raise RuntimeError('Files-first guard not ready')
                 time.sleep(1)
-        prepare_ssh(vm,ZONE,'83british',require_gpu=True);ssh_ready=True
+        prepare_ssh(vm,ZONE,'83british',require_gpu=True,readiness_timeout=240);ssh_ready=True
         if c.ssh('nvidia-smi --query-compute-apps=pid --format=csv,noheader,nounits').strip():raise ValueError('Model already active')
         if needs_recovery:
             from .british_files_first import recover

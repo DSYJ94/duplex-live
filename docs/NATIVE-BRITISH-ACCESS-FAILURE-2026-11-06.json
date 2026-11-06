@@ -1,0 +1,46 @@
+{
+  "status": "ACCESS_FAILURE_DIAGNOSED_NOT_YET_LIVE_REPAIRED",
+  "recorded_utc": "2026-11-06T10:00:22.494273+00:00",
+  "actual_source": "45b0aefd7c69d0b753d5cd82e60e419a2a45789d",
+  "actual_interval": 13,
+  "vm_id": "7521667153519853425",
+  "disk_id": "2297341858915206463",
+  "start_utc": "2026-11-06T09:42:16.068Z",
+  "stop_utc": "2026-11-06T09:44:33.791Z",
+  "actual_GPU_seconds": 137.72299981117249,
+  "conservative_GPU_seconds": 140,
+  "all13_GPU_upper_seconds": 45640,
+  "compute_status": "TERMINATED",
+  "new_optimizer_updates": 0,
+  "files_downloaded": 0,
+  "models_loaded": 0,
+  "critical_checkpoints_Mac_hash_verified": true,
+  "missing_prior_results_bytes": 204312087,
+  "observed_errors": [
+    "IAP4003 failed to connect to backend port22",
+    "IAP reconnect error",
+    "IAP4010 destination read failed"
+  ],
+  "ruled_out": [
+    "ProxyUseFdpass already no",
+    "Allow IAP TCP22 priority800 precedes denyall900 on same VM tag",
+    "Fileguard clock exact; secondary failure followed parent STOPPING"
+  ],
+  "unresolved": [
+    "Guest boot/SSH service readiness",
+    "Transient IAP backend failure"
+  ],
+  "controller_problem": "Old readiness helper hid all errors behind a generic failure and exhausted20 retries rather than the full bounded boot window.",
+  "source_change": "Optional240-second total readiness deadline with recorded failures, process-group cleanup on SSH timeout, fail-fast permanent key/auth errors, separate successful SSH vs guest filesystem/GPU check. Original paths retain defaults.",
+  "verification": {
+    "focused_tests_passed": 17,
+    "actual_live_SSH_after_patch": false,
+    "native_behavioral_qualification": false
+  },
+  "official_sources": [
+    "https://docs.cloud.google.com/iap/docs/faq",
+    "https://docs.cloud.google.com/compute/docs/troubleshooting/troubleshooting-ssh-errors"
+  ],
+  "unused_SDK_key_cleanup": "SDK dry-run unexpectedly generated unused default key; exact unintended public registration removed, new local pair quarantined mode0600 in ignored private directory; original approved native key unchanged.",
+  "automatic_approval_review_rejection": false
+}

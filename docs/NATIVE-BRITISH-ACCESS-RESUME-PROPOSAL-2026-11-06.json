@@ -1,0 +1,38 @@
+{
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_utc": "2026-11-06T10:00:22.494273+00:00",
+  "purpose": "One bounded access recovery on SAME stopped A100 and disk, then missing-results recovery and full British native evaluation if access succeeds. No new training.",
+  "supersedes_only": "One-actual-GPU-interval count in approved British recovery scope; that interval consumed137.723s before SSH. All other gates and spending caps retained.",
+  "phase_ceiling_USD": 175,
+  "project_ceiling_USD": 350,
+  "same_GPU_id": "7521667153519853425",
+  "same_disk_id": "2297341858915206463",
+  "zone": "europe-west4-a",
+  "storage_deadline_utc": "2026-11-07T12:00:00Z",
+  "maximum_new_actual_GPU_intervals": 1,
+  "prior_all13_GPU_upper_seconds": 45640,
+  "maximum_native_GPU_seconds": 3360,
+  "shutdown_reserve_seconds": 100,
+  "all14_GPU_upper_seconds_maximum": 49100,
+  "remaining_original_aggregate_seconds_limit": 73600,
+  "new_CPU_intervals": 0,
+  "new_disks_snapshots": 0,
+  "new_purchases": 0,
+  "new_external_model_API_calls": 0,
+  "new_optimizer_updates": 0,
+  "price_hourly_USD_maximum": 5.9,
+  "maximum_remaining_GPU_usage_USD": 5.670555555555556,
+  "capacity_only_requests": {
+    "maximum": 3,
+    "minimum_spacing_seconds": 600,
+    "condition": "Only terminal DONE stockout with unchanged lastStart and exact stopped provider identity; never repeat an actual running interval or unknown/partial response."
+  },
+  "execution": [
+    "Critical final checkpoints verified locally before start; one GPU only; Git-deployed clean source; actual prior13 clocks/time/cost carried.",
+    "Same native STOP3360 plus independent Mac/guest guards; no model lease or loading before full1856-file hash inventory and1link preserved.",
+    "Use240second bounded SSH readiness, preserve actual IAP errors. If access still fails, collect serial boot evidence read-only while VM remains RUNNING if available, stop early, no second actual interval.",
+    "If ready: recover missing204MB first; independently verify all1856 original files, then separate9-case matched RP/Alice/George-comparator audition and full paired64 main/control speech/behavior cohort, unchanged thresholds.",
+    "Complete full hashed copyback and stop; partial output stays failed/unqualified. No production adoption without full required behavior/speech/latency/owner accent acceptance."
+  ],
+  "approval_reason": "Original owner-approved proposal explicitly permitted only ONE actual GPU running interval. Unused seconds do not authorize an additional interval. This replaces that count with one recovery interval while keeping the exact original49100-second overall phase upper bound."
+}
