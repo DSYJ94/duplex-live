@@ -80,7 +80,7 @@ def test_nonspoken_actions_preserve_every_ordinary_condition_and_original_histor
     tokenizer=SimpleNamespace(convert_tokens_to_ids=names.__getitem__,decode=lambda ids,**kw:{1:'<delegate>',2:'</delegate>'}[ids[0]],all_special_ids=[1,2,3])
     def convert(rows):return torch.tensor([[[float(r[0]),float(r[0])+1] for r in rows]]) if rows else torch.zeros(1,1,2)
     def generate(**kw):calls.append(kw);return 'original',kw.get('past_key_values')
-    tts=SimpleNamespace(generate_chunk=generate);duplex=SimpleNamespace(tokenizer=tokenizer,model=SimpleNamespace(tts=tts),_convert_results_to_tts_input=convert)
+    tts=SimpleNamespace(generate_chunk=generate);duplex=SimpleNamespace(tokenizer=tokenizer,model=SimpleNamespace(tts=tts),_convert_results_to_tts_input=convert,turn_terminator_token_ids={3})
     channel=install(duplex);ordinary=[[10,None,False],[11,None,False],[3,None,True]]
     assert torch.equal(duplex._convert_results_to_tts_input(ordinary),convert(ordinary))
     cache=object();kwargs=dict(inputs_embeds=convert(ordinary),past_key_values=cache,temperature=.8)

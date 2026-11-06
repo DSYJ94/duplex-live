@@ -32,7 +32,11 @@ def install(duplex):
     tokenizer=duplex.tokenizer
     open_id=tokenizer.convert_tokens_to_ids('<delegate>');close_id=tokenizer.convert_tokens_to_ids('</delegate>')
     assert open_id!=close_id and tokenizer.decode([open_id],skip_special_tokens=False)=='<delegate>' and tokenizer.decode([close_id],skip_special_tokens=False)=='</delegate>'
-    channel=ActionChannel(open_id,close_id,tokenizer.all_special_ids)
+    # Native turn_eos is an added special token, but the pinned tokenizer's
+    # all_special_ids omits it. It must not make a delegate-only unit appear
+    # to contain words and seed acoustic sampling from an end-of-turn marker.
+    control_ids=set(tokenizer.all_special_ids)|set(duplex.turn_terminator_token_ids)
+    channel=ActionChannel(open_id,close_id,control_ids)
     convert=duplex._convert_results_to_tts_input;generate=duplex.model.tts.generate_chunk
     def speech_condition(results):
         visible,action_only=channel.visible(results)

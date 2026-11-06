@@ -8,13 +8,13 @@
   "allocation_GPU_hours_from_owner_screenshot": 20000,
   "used_GPU_hours_from_owner_screenshot": 0,
   "end_date_from_owner_screenshot": "2027-01-31",
-  "cluster_access_verified": false,
+  "cluster_access_verified": true,
   "local_expired_certificate_until_UTC": "2026-11-04T12:01:47Z",
   "bounded_actual_SSH_exit": 255,
   "renewal": {
     "tool_session": 88436,
     "process": "clifton auth --open-browser true --show-qr false --write-config false",
-    "status": "Awaiting institutional sign-in; no passwords/codes requested in chat"
+    "status": "Completed successfully; both u6si and u6ada certificates downloaded."
   },
   "current_GCP_interval": {
     "ordinal": 15,
@@ -22,7 +22,7 @@
     "PID": 5939,
     "execution_source": "bb3ecaafe4d245cedb0b67e8dcda13a4f867c153",
     "native_STOP_UTC": "2026-11-06T12:50:51.505Z",
-    "action": "Finish valid current recovery/evaluation, preserve full results and stop. No further GCP interval."
+    "action": "Controller exited after transport loss; native STOP deadline passed. Fresh actual provider verification in progress; no new GCP start. Full old1856 backup and all9 new audition hashes safe locally; full64 comparison did not obtain successful terminal proof."
   },
   "next_steps": [
     "Observe same Clifton renewal; verify new signed project principal and exact alias before bounded actual SSH. Preserve unrelated SSH config.",
@@ -37,5 +37,32 @@
     "https://docs.isambard.ac.uk/user-documentation/guides/file_transfer/between-projects/"
   ],
   "new_GPU_jobs_submitted_to_Isambard": 0,
-  "new_external_model_API_calls": 0
+  "new_external_model_API_calls": 0,
+  "verified_utc": "2026-11-06T14:58:00.520919+00:00",
+  "actual_host": "login46",
+  "actual_user": "dsyj94.u6ada",
+  "actual_Slurm_account": "brics.u6ada",
+  "actual_Slurm_QoS": [
+    "normal"
+  ],
+  "actual_current_jobs": [],
+  "actual_architecture": "aarch64",
+  "actual_renewal_exit": 0,
+  "actual_renewal_session": 13257,
+  "certificate_valid_until_utc": "2026-11-07T00:10:16Z",
+  "main_SSH_config_preserved": true,
+  "official_Clifton_alias_installed": "u6ada.aip2.isambard",
+  "actual_Slurm_partition": "workq",
+  "actual_project_path": "/projects/u6ada",
+  "checkpoints_staged_and_hash_verified": {
+    "all_hashes_verified": true,
+    "files": 3,
+    "bytes": 8543216554,
+    "new_GPU_jobs": 0,
+    "new_optimizer_updates": 0
+  },
+  "staging_root": "/projects/u6ada/duplex-live/artifacts/native-v75",
+  "training_cache_complete": false,
+  "training_cache_issue": "268old entries are preserved absolute symlinks to GCP paced-prefix-cache-v24; their targets are missing locally. Original v8 cache version exists but SHA differs, so no substitution/partial acceptance.",
+  "native_speech_source_fix": "NATIVE-VENUS-ACTION-TURN-DELIMITER-FIX-2026-11-06.json"
 }

@@ -1,0 +1,41 @@
+{
+  "status": "SOURCE_FIXED_NATIVE_VALIDATION_PENDING",
+  "recorded_utc": "2026-11-06T15:22:06.291998+00:00",
+  "actual_failed_source": "bb3ecaafe4d245cedb0b67e8dcda13a4f867c153",
+  "native_evidence": "All three voices failed pause0097 with delegate-only text yet nonzero garbled acoustic output; sourceWAV+204chunkhashes verified locally.",
+  "cause": "Pinned tokenizer decodes151717 turn_eos as special but excludes it from all_special_ids. ActionChannel therefore mistook the retained native turn delimiter for spoken words and sampled acoustics from control-only conditioning.",
+  "real_pinned_tokenizer_replay": {
+    "tokenizer": "pinned MiniCPMOTokenizerFast/public revision4681004",
+    "transformers": "4.51.3",
+    "actual_trace_tokens": [
+      151748,
+      17814,
+      279,
+      67271,
+      13,
+      151749,
+      151717
+    ],
+    "kept_ids": [
+      151717
+    ],
+    "action_only": false,
+    "expected_action_only": true,
+    "turn_eos_in_all_special_ids": false,
+    "no_model_weights_loaded": true
+  },
+  "fix": "Union the native duplex turn_terminator_token_ids into action-only control classification. Ordinary speech conversion unchanged. No words, data, checkpoints, folds, losses or thresholds altered.",
+  "regression_before": {
+    "failed": 1,
+    "unexpected_acoustic_tokens": 25
+  },
+  "regression_after": {
+    "related_tests_passed": 69,
+    "seconds": 1.02,
+    "ordinary_waveform_and_RNG_equivalence_test_passes": true
+  },
+  "new_GPU_validation_completed": false,
+  "new_optimizer_updates": 0,
+  "source_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "tokenizer_wrapper": "https://huggingface.co/inclusionAI/Realtime-Venus/blob/4681004131ea1f1fb9aca9f0db76be322657cc79/Realtime-Venus-Audio/tokenization_minicpmo_fast.py"
+}

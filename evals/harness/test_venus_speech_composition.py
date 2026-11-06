@@ -49,6 +49,23 @@ def test_action_only_unit_never_samples_acoustics_or_rng(monkeypatch, terminal):
     assert d.total_ids == ids + [5], 'Internal task tokens must remain in native history'
 
 
+def test_native_turn_eos_missing_from_hf_special_map_never_becomes_spoken_content(monkeypatch):
+    # The pinned public tokenizer hides turn_eos when decoding, but omits it
+    # from all_special_ids. Observed delegate-only native units retain this ID.
+    d, state, frame, conditions = setup(monkeypatch)
+    d.tokenizer.all_special_ids.remove(3)
+    completion.install(d)
+    install_channel(d)
+    ids = [2, 8, 20, 21, 9, 3, 4]
+    torch.manual_seed(42)
+    before = torch.get_rng_state()
+    result = frame(ids)
+    assert result['n_tts_tokens'] == 0, 'Native turn delimiter must not trigger speech from an action-only unit'
+    assert not np.any(result['audio_waveform'])
+    assert torch.equal(torch.get_rng_state(), before)
+    assert d.total_ids == ids + [5]
+
+
 def test_ordinary_terminal_completion_is_unchanged_by_action_filter(monkeypatch):
     base, bs, bf, _ = setup(monkeypatch)
     completion.install(base)
