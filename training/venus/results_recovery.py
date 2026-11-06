@@ -308,7 +308,7 @@ def execute():
     # Existing OSLogin public key must be valid; credentials never leave Mac.
     run([GCLOUD, 'auth', 'print-access-token'])  # Keep output in memory, never log it.
     source = run(['git', 'rev-parse', 'HEAD']).strip()
-    if run(['git', 'status', '--porcelain', '--', __file__, str(PROPOSAL)]).strip():
+    if run(['git', '-c', 'core.filemode=false', 'status', '--porcelain', '--', __file__, str(PROPOSAL)]).strip():
         raise ValueError('Recovery source/proposal must be committed')
     with (R / 'claim.json').open('x') as f:
         json.dump(dict(controller_pid=os.getpid(), source=source, authorization_sha256=sha(AUTH)), f)
