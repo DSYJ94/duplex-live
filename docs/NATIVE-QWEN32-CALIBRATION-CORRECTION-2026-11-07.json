@@ -1,0 +1,838 @@
+{
+  "recorded_at": "2026-11-07T15:06:54.380962+00:00",
+  "status": "DIAGNOSED_CALIBRATION_STRUCTURE_REPAIR_NOT_PASS",
+  "original_job": "8174229",
+  "original_source": "09df93a3415524f396cd76dad21393b9ef475362",
+  "original_terminal": [
+    "FAILED",
+    "1:0"
+  ],
+  "original_outputs": 27,
+  "all_copyback_hashes": true,
+  "original_calibration_correct": 15,
+  "original_required": 16,
+  "original_calibration_sha256": "98057e5e02ebcd738bf163045bc806552b86bf62ddfe1f7a46333946a445e72c",
+  "original_report_sha256": "bfaab9c162c3aaa3a288b4b4df9aa121ee9457cdb5aaad23201d774d2e33144e",
+  "actual_failure": [
+    {
+      "id": "cal-58eca3a1a1ff5df6",
+      "payload_sha256": "58eca3a1a1ff5df6ccf60c22e8657a3469d1da5b1e998d932c24c5da6c8fffcb",
+      "raw_response": "{\"passed\":false,\"reason\":\"output_interval_seconds exceeds one second without split into native chunks\"}",
+      "parsed": {
+        "passed": false,
+        "reason": "output_interval_seconds exceeds one second without split into native chunks"
+      },
+      "input_tokens": 439,
+      "output_tokens": 460,
+      "seconds": 56.247389835014474,
+      "closing_think": true,
+      "thinking_tokens": 439,
+      "expected": true
+    }
+  ],
+  "reproduced_bug": "Original positive control schedules one native unit at frame3 but declares output interval[3,7).",
+  "repair": "Version2 explicitly represents hypothetical one-second units. All16 original facts, answers, expected verdicts, action start frames and backend feedback stay identical. These controls are not recordings or measured teacher timing.",
+  "control_version": "v2",
+  "controls": [
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Two identical watering cans differ only because one is full of water. Which is heavier?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "The full can is heavier because it also contains water.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The full",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "can is heavier",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "because it",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "also contains water.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-b7d13be1f462aacb"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Two identical watering cans differ only because one is full of water. Which is heavier?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "The empty can is heavier because it contains no water.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The empty",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "can is heavier",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "because it",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "contains no water.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-46da59169e8a3fdd"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Does an optional task have to be done?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "No. Optional means it is not required.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "No.",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "Optional means",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "it is",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "not required.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-688c1dbdd3f514cb"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Does an optional task have to be done?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "Yes. Optional means it is always required.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "Yes.",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "Optional means",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "it is",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "always required.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-cbe8da2668237a8b"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What is the usual removal order of a queue in programming?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "The earliest added item is handled first.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "earliest added",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "item is",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "handled first.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-a98996df3da5eb06"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What is the usual removal order of a queue in programming?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "The most recently added item is handled first.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The most",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "recently added",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "item is",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "handled first.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-651399c329183dd9"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What can a database transaction provide for related changes?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "They can succeed together or be rolled back together.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "They can",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "succeed together",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "or be",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "rolled back together.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-6bf2702029b2ce00"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What can a database transaction provide for related changes?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "It guarantees the changes can never be rolled back.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "It guarantees",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "the changes",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "can never",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "be rolled back.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-800d5088b9770bab"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Why keep a backup as well as the working copy?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "The extra copy can help recover data if the working copy is lost.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The extra copy",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "can help recover",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "data if the",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "working copy is lost.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-7739f867bdb909ea"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Why keep a backup as well as the working copy?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "A backup provides no additional copy and cannot help recover lost data.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "A backup provides",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "no additional copy",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "and cannot help",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "recover lost data.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-0b54d3daed90730b"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What does gradient accumulation combine?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "Gradients from several smaller batches before an optimizer update.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "Gradients from",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "several smaller",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "batches before",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "an optimizer update.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": true,
+      "id": "cal-v2-91428ef663c09d8e"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "What does gradient accumulation combine?",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "speak",
+            "text": "It combines file names instead of gradients before an optimizer update.",
+            "final": true,
+            "output_interval_seconds": [
+              3,
+              7
+            ],
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "It combines",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "file names instead",
+                "final": false
+              },
+              {
+                "offset": 2,
+                "text": "of gradients before",
+                "final": false
+              },
+              {
+                "offset": 3,
+                "text": "an optimizer update.",
+                "final": true
+              }
+            ]
+          }
+        ],
+        "actual_feedback": []
+      },
+      "expected": false,
+      "id": "cal-v2-292948351e272499"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Look up the marker in lantern.",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "delegate",
+            "text": "lookup lantern",
+            "final": true
+          },
+          {
+            "frame": 9,
+            "kind": "speak",
+            "text": "The marker is green triangle.",
+            "final": true,
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The marker",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "is green triangle.",
+                "final": true
+              }
+            ],
+            "output_interval_seconds": [
+              9,
+              11
+            ]
+          }
+        ],
+        "actual_feedback": [
+          {
+            "frame": 8,
+            "text": "<backend>[{\"work_id\":\"task\",\"result\":\"Lookup lantern: green triangle\"}]</backend>"
+          }
+        ]
+      },
+      "expected": true,
+      "id": "cal-v2-818498d68e911650"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Look up the marker in lantern.",
+            "start": 0,
+            "end": 2
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "delegate",
+            "text": "lookup lantern",
+            "final": true
+          },
+          {
+            "frame": 4,
+            "kind": "speak",
+            "text": "The marker is green triangle.",
+            "final": true,
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The marker",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "is green triangle.",
+                "final": true
+              }
+            ],
+            "output_interval_seconds": [
+              4,
+              6
+            ]
+          }
+        ],
+        "actual_feedback": [
+          {
+            "frame": 8,
+            "text": "<backend>[{\"work_id\":\"task\",\"result\":\"Lookup lantern: green triangle\"}]</backend>"
+          }
+        ]
+      },
+      "expected": false,
+      "id": "cal-v2-e735d3efab2bd5ca"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Start the lantern lookup.",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "Cancel the pending task now.",
+            "start": 5,
+            "end": 7
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "delegate",
+            "text": "lookup lantern",
+            "final": true
+          },
+          {
+            "frame": 7,
+            "kind": "delegate",
+            "text": "cancel pending",
+            "final": true
+          },
+          {
+            "frame": 9,
+            "kind": "speak",
+            "text": "The pending task has been cancelled.",
+            "final": true,
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The pending task",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "has been cancelled.",
+                "final": true
+              }
+            ],
+            "output_interval_seconds": [
+              9,
+              11
+            ]
+          }
+        ],
+        "actual_feedback": [
+          {
+            "frame": 8,
+            "text": "<backend>[{\"work_id\":\"cancel\",\"cancelled_work_ids\":[\"task\"],\"result\":\"The pending work has been cancelled.\"}]</backend>"
+          }
+        ]
+      },
+      "expected": true,
+      "id": "cal-v2-c99ea7a691fcac49"
+    },
+    {
+      "payload": {
+        "user": [
+          {
+            "text": "Start the lantern lookup.",
+            "start": 0,
+            "end": 2
+          },
+          {
+            "text": "Cancel the pending task now.",
+            "start": 5,
+            "end": 7
+          }
+        ],
+        "actions": [
+          {
+            "frame": 3,
+            "kind": "delegate",
+            "text": "lookup lantern",
+            "final": true
+          },
+          {
+            "frame": 7,
+            "kind": "delegate",
+            "text": "cancel pending",
+            "final": true
+          },
+          {
+            "frame": 7,
+            "kind": "speak",
+            "text": "The pending task has been cancelled.",
+            "final": true,
+            "native_speech_units": [
+              {
+                "offset": 0,
+                "text": "The pending task",
+                "final": false
+              },
+              {
+                "offset": 1,
+                "text": "has been cancelled.",
+                "final": true
+              }
+            ],
+            "output_interval_seconds": [
+              7,
+              9
+            ]
+          }
+        ],
+        "actual_feedback": [
+          {
+            "frame": 8,
+            "text": "<backend>[{\"work_id\":\"cancel\",\"cancelled_work_ids\":[\"task\"],\"result\":\"The pending work has been cancelled.\"}]</backend>"
+          }
+        ]
+      },
+      "expected": false,
+      "id": "cal-v2-6112cf7c6d1c247a"
+    }
+  ],
+  "original_controls_preserved": true,
+  "all96_teacher_payloads_unchanged": true,
+  "pass_threshold_unchanged": "All16 calibration AND all96 teachers",
+  "native_optimizer_updates": 0,
+  "training_approved": false,
+  "next": "One review using corrected fixtures, same frozen public reviewer/prompt/sampling; no blind retry of original fixture or accepting15/16."
+}

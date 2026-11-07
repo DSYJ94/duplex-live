@@ -3,12 +3,12 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False)])
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False),('retention-qwen-v2',1,False),('retention-cache',1,False)])
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
     monkeypatch.setattr(job,'BASE',base);monkeypatch.setattr(job,'ART',base/'artifacts')
-    if stage=='retention-qwen':
+    if stage in ('retention-qwen','retention-qwen-v2'):
         folder=base/'reviewer-models/qwen3-32b-v1';folder.mkdir(parents=True)
         (folder/'download.json').write_text(json.dumps({'download_directory':'/public/reviewer'}))
     monkeypatch.setenv('SLURM_JOB_ID','123');monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
@@ -26,13 +26,13 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         def terminate(self):self.returncode=0
         def wait(self,timeout=None):return self.returncode
     monkeypatch.setattr(job.subprocess,'Popen',Process)
-    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2,merge_lora=fold))
+    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2,merge_lora=fold,semantic_sha='a'*64))
     native=[args for args in calls if args[0]=='apptainer']
     assert len(native)==expected
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
     assert len(set(invocations))==expected
-    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen'}[stage]
+    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen','retention-qwen-v2':'retention-qwen','retention-cache':'retention-cache'}[stage]
     last=json.loads((root/('execution-123/'+last_name+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
@@ -51,9 +51,14 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     elif stage=='retention-semantic':
         assert native[0][native[0].index('-m')+1]=='data.venus.retention_semantics'
         assert '--checkpoint' not in native[0] and '--opal-source' not in native[0]
-    elif stage=='retention-qwen':
+    elif stage=='retention-cache':
+        assert native[0][native[0].index('-m')+1]=='training.venus.retention_cache'
+        assert native[0][native[0].index('--semantic-sha')+1]=='a'*64
+        assert '--checkpoint' not in native[0]
+    elif stage in ('retention-qwen','retention-qwen-v2'):
         assert native[0][native[0].index('-m')+1]=='data.venus.retention_semantics_qwen'
         assert native[0][native[0].index('--model')+1]=='/public/reviewer'
+        assert native[0][native[0].index('--calibration-version')+1]==('v2' if stage=='retention-qwen-v2' else 'v1')
         assert '--checkpoint' not in native[0] and '--opal-source' not in native[0]
     else:
         assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])

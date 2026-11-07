@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-11-07T15:03:10.931562+00:00",
+  "status": "OWNER_INSTRUCTED_EXECUTE_RECOMMENDATIONS",
+  "owner_verbatim": "Proceed with those recommendations. For isambard, the access is 20k hours in total limited by time. So use it as much as possible where it makes sense. More usage means i am able to reapply for it again",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "total_award_GPU_hours": 20000,
+  "official_remaining_balance_not_assumed": true,
+  "plan": "docs/NATIVE-REASONING-TRAINING-AND-CAPACITY-STRATEGY-2026-11-07.md",
+  "priorities": [
+    "Complete current independent96 review and original-preserving native cache",
+    "Complete new-data learning comparison from actual646, no saved update replay",
+    "Fresh native reasoning/routing evaluation and verified broader data",
+    "Measured single-node multi-GPU scaling; extend and test one-job guards before use",
+    "Conditional midtraining, structural growth or foundation replacement from actual evidence"
+  ],
+  "next_native_cache": {
+    "maximum_job_seconds": 7200,
+    "new_optimizer_updates": 0,
+    "required_semantic_cases": 96,
+    "required_controls": 16,
+    "old304_unchanged": true
+  },
+  "no_overlapping_independent_GPU_jobs": true,
+  "new_GCP_resources": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "monetary_limits_unchanged": true,
+  "all_original_gates_and_states_preserved": true,
+  "goal_note": "Owner resumed execution in this message. App goal tool still reports paused; tool cannot change it to active. Continue authorized work here without claiming automatic goal status changed."
+}

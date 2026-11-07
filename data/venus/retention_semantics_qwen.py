@@ -4,7 +4,7 @@ import hashlib
 import json
 import time
 from pathlib import Path
-from .retention_semantics import PROMPT,collect_review,teachers,verdict
+from .retention_semantics import PROMPT,collect_review,teachers,verdict,calibration,calibration_v2
 from .reviewer_model import REPO,REVISION,verify_ready,sha
 
 
@@ -46,7 +46,9 @@ def main(a):
         (a.output/(row['id']+'.json')).write_text(json.dumps(result,indent=2)+'\n');return result
     report=collect_review(a,rows,manifest_sha,judge,dict(repo=REPO,revision=REVISION,
         download_receipt_sha256=sha(a.download_receipt),independent_of_native_foundation_and_GPT_author=True,
-        thinking=True,seed=42,temperature=.6,top_p=.95,top_k=20,maximum_new_tokens=2048))
+        thinking=True,seed=42,temperature=.6,top_p=.95,top_k=20,maximum_new_tokens=2048),
+        controls_factory=calibration_v2 if a.calibration_version=='v2' else calibration,
+        calibration_version=a.calibration_version)
     if any(p._version!=versions[n] for n,p in llm.named_parameters()):raise ValueError('Reviewer weights changed')
     report.update(frozen_model_weights_unchanged=True,public_weights_all_hashes=ready['all_hashes'])
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
@@ -55,5 +57,6 @@ def main(a):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',required=True)
+    p.add_argument('--calibration-version',choices=('v1','v2'),default='v1')
     for name in ('model','download-receipt','timelines','output','lease'):p.add_argument('--'+name,type=Path,required=True)
     main(p.parse_args())
