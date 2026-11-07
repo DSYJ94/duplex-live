@@ -81,8 +81,19 @@ def main(a):
             stages=[('training.venus.retention_cache',[
                 '--model',model,'--source',source,
                 '--timelines',str(BASE/'native-retention96-timelines-v3'),
-                '--semantic',str(BASE/'native-retention96-qwen-v3/semantic-v1'),
+                '--semantic',getattr(a,'semantic_root',None) or str(BASE/'native-retention96-qwen-v3/semantic-v1'),
                 '--semantic-sha',digest,'--output',str(root/'cache-v1')],'retention-cache')]
+        elif a.stage=='retention-train':
+            if not a.new_manifest_sha or not a.new_cache or not a.semantic_root:
+                raise ValueError('Pinned full96 cache and actual semantic root required')
+            argv=['--root',str(root),'--source',source,'--lease',str(lease_path),
+                  '--model',model,'--opal-source',str(BASE/'opal-upstream-v1'),
+                  '--new-cache',a.new_cache,'--new-manifest-sha',a.new_manifest_sha,
+                  '--semantic-root',a.semantic_root]
+            stages=[]
+            for arm in ('expanded-data','rehearsal'):
+                stages.append(('training.venus.retention_train',argv+['--arm',arm],arm+'-training'))
+                stages.append(('training.venus.retention_train',argv+['--arm',arm,'--final-restore'],arm+'-restore'))
         elif a.stage in ('retention-qwen','retention-qwen-v2','retention-qwen-measured'):
             receipt=BASE/'reviewer-models/qwen3-32b-v1/download.json'
             identity=json.loads(receipt.read_text())
@@ -126,8 +137,8 @@ def main(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
-    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-cache'),required=True);p.add_argument('--epochs',type=int,default=1)
-    p.add_argument('--semantic-sha')
+    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-cache','retention-train'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--semantic-sha');p.add_argument('--semantic-root');p.add_argument('--new-cache');p.add_argument('--new-manifest-sha')
     p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
     main(p.parse_args())
