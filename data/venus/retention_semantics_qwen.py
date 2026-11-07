@@ -22,7 +22,7 @@ def main(a):
     from portable.venus.native_app import ensure_guard
     from training.venus.isambard_native import guarded
     ensure_guard();guarded(a.lease,900);ready=verify_ready(a.model,a.download_receipt)
-    rows,manifest_sha=teachers(a.timelines)
+    rows,manifest_sha=teachers(a.timelines,getattr(a,'alignment',None))
     if a.output.exists():raise ValueError('Preserve original failed reviews')
     a.output.mkdir(parents=True,exist_ok=False)
     tokenizer=AutoTokenizer.from_pretrained(a.model,local_files_only=True,trust_remote_code=False)
@@ -51,12 +51,14 @@ def main(a):
         calibration_version=a.calibration_version)
     if any(p._version!=versions[n] for n,p in llm.named_parameters()):raise ValueError('Reviewer weights changed')
     report.update(frozen_model_weights_unchanged=True,public_weights_all_hashes=ready['all_hashes'])
+    if getattr(a,'alignment',None):report['measured_alignment_sha256']=sha(a.alignment)
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     if not report['all96_semantic_pass']:raise RuntimeError('Complete calibrated review failed; preserve all verdicts')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',required=True)
+    p.add_argument('--alignment',type=Path)
     p.add_argument('--calibration-version',choices=('v1','v2'),default='v1')
     for name in ('model','download-receipt','timelines','output','lease'):p.add_argument('--'+name,type=Path,required=True)
     main(p.parse_args())

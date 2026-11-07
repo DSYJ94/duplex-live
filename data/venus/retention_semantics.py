@@ -80,7 +80,7 @@ def calibration_v2():
     return rows
 
 
-def teachers(root):
+def teachers(root, alignment=None):
     root=Path(root);manifest=json.loads((root/'manifest.json').read_text());plan=json.loads(PLAN.read_text())
     if not manifest['complete96'] or manifest['train']!=96 or manifest['dev']!=0 or len(manifest['scenes'])!=96 or manifest['source_plan_sha256']!=sha(PLAN):
         raise ValueError('Whole96 original TRAIN teachers required')
@@ -97,6 +97,19 @@ def teachers(root):
         for a in payload['actions']:
             if a['kind']=='speak':a['output_interval_seconds']=[a['frame'],a['frame']+len(a['native_speech_units'])]
         rows.append(dict(id=row['id'],payload=payload))
+    if alignment is not None:
+        from .retention_timing_audit import audit
+        measured_sha='2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36'
+        audit(root,alignment,manifest_sha=sha(root/'manifest.json'),alignment_sha=measured_sha)
+        records=json.loads(Path(alignment).read_text())['rows']
+        aligned={r['text']:r for r in records}
+        for row in rows:
+            for action in row['payload']['actions']:
+                if action['kind']!='speak':continue
+                source=aligned[action['text']]
+                action['source_audio_sha256']=source['source_sha256']
+                action['measured_word_intervals']=[{k:w[k] for k in ('text','start','end')} for w in source['measured_words'] if w['text'].strip()]
+            row['payload']['timing_evidence_protocol']='Word text is emitted in its onset unit. If its measured end crosses into the next second, that following unit may contain empty text and final=True to finish the word. This is valid native continuation, not an omitted answer or premature final. Reject inconsistent measured intervals or speech before required feedback.'
     return rows,sha(root/'manifest.json')
 
 

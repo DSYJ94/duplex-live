@@ -46,11 +46,14 @@ def validate_review(report,controls,rows,manifest_sha,read_record):
     return True
 
 
-def admit(timelines,semantic,expected_sha):
+def admit(timelines,semantic,expected_sha,alignment=None):
     semantic=Path(semantic)
     if sha(semantic/'report.json')!=expected_sha:raise ValueError('Pinned actual semantic report hash required')
-    rows,manifest_sha=teachers(timelines)
     report=json.loads((semantic/'report.json').read_text())
+    if report.get('measured_alignment_sha256'):
+        if report['measured_alignment_sha256']!='2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36':raise ValueError('Original measured timing evidence required')
+        alignment=alignment or '/projects/u6ada/duplex-live/native-retention96-sources-v1/teacher-inputs-v1/alignment/report.json'
+    rows,manifest_sha=teachers(timelines,alignment)
     controls=json.loads((semantic/'calibration.json').read_text())
     validate_review(report,controls,rows,manifest_sha,
                     lambda name:json.loads((semantic/(name+'.json')).read_text()))

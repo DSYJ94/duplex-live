@@ -1,3 +1,9 @@
+# LOCAL — Measured-evidence review correction prepared;8174573 still active
+
+7Nov15:32UTC: owner explicitly instructs resolveflags throughtraining/autonomously. Same8174573 actualRUNNING20of96 at15:30; controller15474/PID88558 remains solewriter. No duplicate/newoptimizer submitted. Added original73alignment evidence to whole96 reviewer payload, after all96source/timing/hash audit; same16calibration/96requirement/model/sampling/wordtargets preserved. Empty continuation explicitly tied to realwordends. Newstage retention-qwen-measured uses samepublic32B/nativeguard and exactalignmentSHA2c85c0...; report/admission bindevidence to preventrelabelled approval. Oldreports/inputs retained. Newsource deployment/actualARMtests and serial measuredreview queued next; no overlap with8174573. Trainingrunnerfrom646/composite400/nativecache stillpending. Isambardauthority/caps/cert/backup/unrelatedfiles unchanged. Do not interpret correctedreviewer astrainingstarted. Next obtain full96oldreport/hashcopyback, thenactualmeasuredreview andnativecache, thencomplete84updates/arm from646.
+
+---
+
 # LOCAL — Owner prioritises productive20kGPUh; reviewer8174573 live; matched data sampler/public maths ready
 
 Recorded 2026-11-07T15:26:16.256311+00:00. Owner latest message explicitly resumes recommendations and productive use of time-limited20kGPUh; authority docs/NATIVE-ISAMBARD-RECOMMENDATIONS-EXECUTION-2026-11-07.json. App goal tool still PAUSED and cannot be resumed by available status tool; current LOCAL execution is owner-authorised. Do not claim app automatic goal active. Research/strategy is DONE; do not start another literature loop.
