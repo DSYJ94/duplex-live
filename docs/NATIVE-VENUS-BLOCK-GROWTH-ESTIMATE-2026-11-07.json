@@ -18,5 +18,7 @@
     "implementation-specific additions"
   ],
   "new_blocks_instantiated": false,
-  "new_training_updates": 0
+  "new_training_updates": 0,
+  "config_sha256": "98edf44576907c9d175df9d21d7ca54ef4e4766b390daa0b6e8a56ee04545ea7",
+  "config_hash_verified_at": "2026-11-07T14:52:15Z"
 }
