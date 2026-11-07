@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-11-07T12:36:34.610638+00:00",
+  "payload_sha256": "d4c32c03199bdca8032885349c017fe7263bba9ca8737520cc4bbe4dfcfabda8",
+  "scenes": 96,
+  "complete_requests": 182,
+  "original_attempts": 135,
+  "new_never_attempted_requests": 47,
+  "repeat_synthesis_calls": 0,
+  "original_source_hashes_verified": true,
+  "raw_peak_pass": 182,
+  "duration_seconds": 805.04,
+  "original_failed_receipt_retained": true,
+  "independent_words": "PENDING",
+  "teacher_alignment": "PENDING",
+  "qualified": false,
+  "training_approved": false,
+  "inventory_sha256": "773e45fb2f82bc74ce79b57217fa955899d131e2c03e2413aae9659bf6f1c0e7",
+  "maximum_additional_cash_charge_usd": 0,
+  "conservative_prepaid_usage_value_upper_usd": 6.373
+}
