@@ -1,0 +1,54 @@
+{
+  "recorded_utc": "2026-11-07T10:37:15.648749+00:00",
+  "job": "8156150",
+  "source": "d8161fd40c80b814242f93c8d205cf33a83c4c54",
+  "status": "RUNNING observed 10:35UTC",
+  "restored_saved_updates": 8,
+  "logged_new_updates_this_job": 94,
+  "latest_logged_local": 102,
+  "latest_logged_global": 628,
+  "latest_saved": {
+    "event": "live_state_saved",
+    "step": 102,
+    "sha256": "50992b5bf10d0de037d7140cc6430d90fe472c779bc784cd73588b23fad0680a"
+  },
+  "all_logged_updates_have_atomic_save": true,
+  "DEV_scenes": 64,
+  "epoch1_family_CE": {
+    "quiet": {
+      "before": 0.7104937160121543,
+      "epoch1": 0.6908249296247959,
+      "change_percent": -2.7683265796853096
+    },
+    "delegate": {
+      "before": 0.19130896334536374,
+      "epoch1": 0.1360957797151059,
+      "change_percent": -28.860740586724788
+    },
+    "cancel": {
+      "before": 0.5359839200973511,
+      "epoch1": 0.48533869683742525,
+      "change_percent": -9.44901915168035
+    },
+    "pause": {
+      "before": 0.722149853905042,
+      "epoch1": 0.5874518702427546,
+      "change_percent": -18.652359054551493
+    },
+    "pending": {
+      "before": 0.4647174874941508,
+      "epoch1": 0.37700139979521435,
+      "change_percent": -18.87514243802596
+    },
+    "ordinary": {
+      "before": 0.7473323519031206,
+      "epoch1": 0.5933270851771036,
+      "change_percent": -20.607333047182365
+    }
+  },
+  "ordinary_KL_before": 0.558662086725235,
+  "ordinary_KL_epoch1": 0.7113023946682612,
+  "interpretation": "All six teacher-forced DEV family losses decreased. This is not behavioral/speech or ordinary factual correctness approval; ordinary drift and next full native tests still matter.",
+  "qualified": false,
+  "adopted": false
+}

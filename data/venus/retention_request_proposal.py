@@ -56,19 +56,21 @@ KEYS='lantern cushion coaster hamper dresser rack crate pouch packet tray bench 
 COLOURS='amber purple blue green ivory orange silver yellow'.split()
 SHAPES='triangle stripe diamond square oval circle star crescent'.split()
 
-def build():
+def build(version=1):
+    if version not in (1,2):raise ValueError('Explicit proposal version1 or2 required')
+    keys=KEYS if version==1 else [('helmet' if k=='mantel' else 'parcel' if k=='caddy' else k) for k in KEYS]
     scenes=[]
     def add(family,turns,program,world=None):
-        index=len(scenes);scenes.append(dict(id=f'venus-retention-request-v1-train-{family}-{index:04d}',fold='TRAIN',family=family,split_group=f'TRAIN:retention-request-v1:{family}:{index}',user_turns=turns,teacher_program=program,synthetic_private_world=world,source='authored_synthetic',owner_conversations=False,proposal_only=True))
+        index=len(scenes);scenes.append(dict(id=f'venus-retention-request-v{version}-train-{family}-{index:04d}',fold='TRAIN',family=family,split_group=f'TRAIN:retention-request-v{version}:{family}:{index}',user_turns=turns,teacher_program=program,synthetic_private_world=world,source='authored_synthetic',owner_conversations=False,proposal_only=True))
     for question,answer in ORDINARY:add('ordinary',[question],dict(kind='ordinary_answer',answer=answer,delegate_forbidden=True))
-    for i,key in enumerate(KEYS):
+    for i,key in enumerate(keys):
         value=COLOURS[i%8]+' '+SHAPES[(i//8+i)%8];query='lookup '+key;world={key:value}
         question=f'Please ask the background worker to retrieve the marker in the {key}. Tell me the confirmed result rather than guessing.'
         if i<12:add('delegate',[question],dict(kind='lookup',query=query,worker_delay_seconds=12,result_answer='The marker is '+value+'.',result_must_follow_receipt=True),world)
         else:
             follow,answer=ORDINARY[i]
             add('pending',[question,'While that task is running, '+follow],dict(kind='lookup_with_followup',query=query,worker_delay_seconds=35,followup_answer=answer,result_answer='The marker is '+value+'.',answer_followup_while_pending=True,result_must_follow_receipt=True),world)
-    for i,key in enumerate(KEYS):
+    for i,key in enumerate(keys):
         follow,answer=ORDINARY[24+i];value=COLOURS[(i+3)%8]+' '+SHAPES[(i+2)%8]
         add('cancel',[f'Please start a background lookup for the marker in the {key}.','Cancel the pending task now.',follow],dict(kind='cancel_lookup',query='lookup '+key,cancel_query='cancel pending',worker_delay_seconds=35,cancel_acknowledgment='I have cancelled the pending task.',ordinary_answer=answer,no_cancelled_value_delivery=True),{key:value})
     assert len(ORDINARY)==48 and len(scenes)==96
@@ -76,5 +78,10 @@ def build():
     return dict(schema='venus-control-source-proposal-v1',status='AUTHORED_PROPOSAL_NOT_AUDIO_APPROVED_NOT_TRAINED',scenes=scenes,counts=dict(TRAIN=96,DEV=0,HOLDOUT=0),original240TRAIN64DEV_unchanged=True,original_sources_and_receipts_unchanged=True,external_API_calls=0,optimizer_updates=0,heldout_answers_used=False,source_audio_generated=False,teacher_receipts_generated=False,native_cache_generated=False,approval_required_before_training=['Source semantic review','Applicable synthetic audio payload authorization','Complete source word/peak audit','Genuine worker receipts including pending cancellation','Native teacher/history alignment and original retention preservation','Versioned composite corpus approval','Independent complete-state restore and native evaluation'],purpose='MiRL-inspired supervised coverage/retention and valid-request repair, not native RL or evidence of success',fresh_evaluation='Separate fresh cohort still needs independent authorship/sealing; this file is TRAIN proposals only')
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--output',required=True);a=p.parse_args();out=Path(a.output);assert not out.exists()
-    data=build();out.write_text(json.dumps(data,indent=2)+'\n');print(json.dumps(dict(path=str(out),scenes=len(data['scenes']),sha256=hashlib.sha256(out.read_bytes()).hexdigest(),status=data['status'])))
+    p=argparse.ArgumentParser();p.add_argument('--output',required=True);p.add_argument('--version',type=int,default=1);a=p.parse_args();out=Path(a.output);assert not out.exists()
+    data=build(a.version)
+    if a.version==2:
+        parent=Path('evals/fixtures/venus-retention-request-source-proposal-v1-20261107.json')
+        data.update(parent_source_sha256=hashlib.sha256(parent.read_bytes()).hexdigest(),revision_reason='Pre-audio curation: replace mantel/mantle and caddy/caddie homophone risks with helmet/parcel; no claim that audio failed, no original scene or recording changed.')
+        data['approval_required_before_training'].append('Every recognized user-source lookup key must match its exact authored key even if whole-utterance WER is within0.05; no homophone equivalence.')
+    out.write_text(json.dumps(data,indent=2)+'\n');print(json.dumps(dict(path=str(out),scenes=len(data['scenes']),sha256=hashlib.sha256(out.read_bytes()).hexdigest(),status=data['status'])))

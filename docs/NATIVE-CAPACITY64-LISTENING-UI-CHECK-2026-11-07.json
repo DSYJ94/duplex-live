@@ -1,0 +1,26 @@
+{
+  "recorded_utc": "2026-11-07T10:36:56.782286+00:00",
+  "cases": 32,
+  "original_outputs": 64,
+  "original_synthetic_inputs": 32,
+  "all96_file_hashes_pass": true,
+  "http_input_and_AB_hashes_pass": [
+    "media/venus-control-v1-holdout-ordinary-0216-input.wav",
+    "media/venus-control-v1-holdout-ordinary-0216-A.wav",
+    "media/venus-control-v1-holdout-ordinary-0216-B.wav"
+  ],
+  "outside_root_checks_404": true,
+  "UI_filter_quiet_count": 4,
+  "UI_filter_all_count": 32,
+  "UI_rating_survived_reload": true,
+  "UI_test_rating_cleared": true,
+  "export_download_verified": true,
+  "export_is_agent_test_not_owner_rating": true,
+  "server": "http://127.0.0.1:8040/",
+  "model_inference": false,
+  "microphone": false,
+  "qualified": false,
+  "source_report_sha256": "5c261b30046f5c90f2a05ac04f15631cb521a25a1f2283ebbcce37c1b0391a81",
+  "agent_test_export_archived_as": "runs/isambard-native-20261107/listening64-v1-agent-UI-test-ratings.json",
+  "owner_preference_rating_claimed": false
+}

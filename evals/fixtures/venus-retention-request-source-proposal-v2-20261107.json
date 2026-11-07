@@ -1,0 +1,2085 @@
+{
+  "schema": "venus-control-source-proposal-v1",
+  "status": "AUTHORED_PROPOSAL_NOT_AUDIO_APPROVED_NOT_TRAINED",
+  "scenes": [
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0000",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:0",
+      "user_turns": [
+        "I have two identical watering cans. One is full and one is empty. Which should feel heavier?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The full can should feel heavier because it also contains water.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0001",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:1",
+      "user_turns": [
+        "We left an ice cube on a warm plate. What change would you expect?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The ice should melt as heat passes into it from the warmer surroundings.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0002",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:2",
+      "user_turns": [
+        "The map says this path goes uphill. What should I expect as I walk along it?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "You should expect to gain height as you walk along the path.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0003",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:3",
+      "user_turns": [
+        "Why does a backpack often have padded shoulder straps?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The padding spreads the pressure and can make the backpack more comfortable to carry.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0004",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:4",
+      "user_turns": [
+        "A cardboard box is marked fragile. What is that telling me?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Its contents may break easily, so the box needs careful handling.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0005",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:5",
+      "user_turns": [
+        "Why might I put a lid on a jar before carrying it across the room?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A lid can help keep the contents inside and reduce the chance of a spill.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0006",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:6",
+      "user_turns": [
+        "I need to mark a page without folding it. What simple object could I use?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "You could use a bookmark or a clean strip of paper.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0007",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:7",
+      "user_turns": [
+        "Why does a sponge become heavier after soaking up water?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It holds water in its small spaces, adding to its weight.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0008",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:8",
+      "user_turns": [
+        "When people say a task is optional, do they mean it is required?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "No. Optional means you can choose whether to do it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0009",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:9",
+      "user_turns": [
+        "My book is upside down. What simple movement would make it easier to read?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Turn the book around so the writing is the right way up.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0010",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:10",
+      "user_turns": [
+        "What does a kitchen timer help me keep track of?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps you keep track of how much time has passed or remains.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0011",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:11",
+      "user_turns": [
+        "Why can a reusable bottle be convenient on a long walk?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It lets you carry a drink and refill the bottle when suitable water is available.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0012",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:12",
+      "user_turns": [
+        "What is the difference between borrowing a book and keeping it as a gift?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A borrowed book is meant to be returned. A gift is yours to keep.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0013",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:13",
+      "user_turns": [
+        "If I want to sort shirts by colour, what should I compare?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Compare their colours and put shirts with matching colours together.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0014",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:14",
+      "user_turns": [
+        "A parcel is too wide for a narrow slot. What is the straightforward problem?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The opening is narrower than the parcel, so the parcel will not fit through it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0015",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:15",
+      "user_turns": [
+        "Why would someone label two identical storage boxes?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Labels help show what is inside without opening each box.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0016",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:16",
+      "user_turns": [
+        "If one train arrives before another, which arrival happens earlier?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The first train to arrive has the earlier arrival.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0017",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:17",
+      "user_turns": [
+        "What does it mean to fold a sheet of paper in half?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Bring two opposite sides together so the paper forms two matching parts.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0018",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:18",
+      "user_turns": [
+        "Why do we use oven gloves when handling a hot tray?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "They provide insulation that helps protect our hands from the heat.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0019",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:19",
+      "user_turns": [
+        "I want to keep a stack of papers together temporarily. What could help?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A paper clip can hold the papers together and is easy to remove.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0020",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:20",
+      "user_turns": [
+        "What is the purpose of an address on a parcel?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It tells the delivery service where the parcel is meant to go.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0021",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:21",
+      "user_turns": [
+        "What changes when a room becomes brighter?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "More light reaches the room, making things easier to see.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0022",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:22",
+      "user_turns": [
+        "If a shop is closed for the day, can I assume its normal counter is serving customers?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "No. Closed for the day means normal service has ended until it opens again.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0023",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:23",
+      "user_turns": [
+        "Why would I check the size of a picture before buying a frame?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The frame needs to fit the picture, so their dimensions must be compatible.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0024",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:24",
+      "user_turns": [
+        "Can you explain what a cache does in a computer in one short sentence?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A cache keeps reusable data nearby so it can often be accessed more quickly.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0025",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:25",
+      "user_turns": [
+        "What is a queue in programming, explained without code?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A queue stores items in order and usually handles the earliest added item first.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0026",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:26",
+      "user_turns": [
+        "How is a stack different from a queue in a simple programming example?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A stack handles the most recently added item first; a queue usually handles the earliest added item first.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0027",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:27",
+      "user_turns": [
+        "Why might a program put a repeated operation inside a function?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A function lets the program reuse that operation without copying the same instructions everywhere.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0028",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:28",
+      "user_turns": [
+        "What is a variable in a computer program?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It is a name associated with a value that the program can use.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0029",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:29",
+      "user_turns": [
+        "What does a unit test usually check?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It checks a small part of a program against an expected result or behaviour.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0030",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:30",
+      "user_turns": [
+        "How is finding a bug different from fixing it?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Finding a bug identifies a problem. Fixing it changes the program to address that problem.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0031",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:31",
+      "user_turns": [
+        "What is a software dependency?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It is another component or package that the software needs in order to work.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0032",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:32",
+      "user_turns": [
+        "What does a database index help with?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It can help the database find relevant records without checking every record in turn.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0033",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:33",
+      "user_turns": [
+        "Why might a database use a transaction for several related changes?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A transaction groups the changes so they can succeed together or be rolled back together.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0034",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:34",
+      "user_turns": [
+        "What does a backup provide that the only working copy does not?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It provides another copy that may help restore the data if the working copy is lost or damaged.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0035",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:35",
+      "user_turns": [
+        "What is the difference between a file name and the contents of a file?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The name helps identify the file. The contents are the data stored inside it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0036",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:36",
+      "user_turns": [
+        "How is network delay different from network bandwidth?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Delay describes how long communication takes; bandwidth describes how much data can be carried over time.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0037",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:37",
+      "user_turns": [
+        "What is the purpose of resolving a website name to a network address?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps the computer locate the server associated with that name.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0038",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:38",
+      "user_turns": [
+        "Why can retrying a failed network request sometimes help?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "A temporary connection problem may have cleared, allowing a later attempt to succeed.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0039",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:39",
+      "user_turns": [
+        "Why should a program avoid retrying a permanent error forever?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "Repeating the same request will not fix a permanent problem and can waste resources.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0040",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:40",
+      "user_turns": [
+        "How would you explain an overfit model to a beginner?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It has learned its training examples too closely and may perform poorly on new examples.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0041",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:41",
+      "user_turns": [
+        "Does a low training loss prove that a model behaves well on new examples?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "No. New examples need separate evaluation because training performance does not guarantee generalisation.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0042",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:42",
+      "user_turns": [
+        "What does a loss function do during machine learning?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It measures an aspect of prediction error so training can work towards reducing it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0043",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:43",
+      "user_turns": [
+        "What does gradient accumulation combine before an optimizer update?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It combines gradients from several smaller batches before making one update.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0044",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:44",
+      "user_turns": [
+        "What does setting a random seed help with when running an experiment?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps make random choices repeatable, although other computations may still be nondeterministic.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0045",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:45",
+      "user_turns": [
+        "Why keep evaluation examples separate from examples used for training?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "They help measure how the model handles examples it has not been trained on.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0046",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:46",
+      "user_turns": [
+        "Why is it useful to save optimizer state as well as model weights?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "The optimizer has its own history, which is needed to continue the same training process accurately.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0047",
+      "fold": "TRAIN",
+      "family": "ordinary",
+      "split_group": "TRAIN:retention-request-v2:ordinary:47",
+      "user_turns": [
+        "What is the difference between a model answering correctly and its speech being clear?"
+      ],
+      "teacher_program": {
+        "kind": "ordinary_answer",
+        "answer": "One concerns the meaning of the answer; the other concerns how well the spoken audio conveys it.",
+        "delegate_forbidden": true
+      },
+      "synthetic_private_world": null,
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0048",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:48",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the lantern. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup lantern",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is amber triangle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "lantern": "amber triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0049",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:49",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the cushion. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup cushion",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is purple stripe.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "cushion": "purple stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0050",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:50",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the coaster. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup coaster",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is blue diamond.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "coaster": "blue diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0051",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:51",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the hamper. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup hamper",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is green square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "hamper": "green square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0052",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:52",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the dresser. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup dresser",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is ivory oval.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "dresser": "ivory oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0053",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:53",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the rack. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup rack",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is orange circle.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "rack": "orange circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0054",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:54",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the crate. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup crate",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is silver star.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "crate": "silver star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0055",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:55",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the pouch. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup pouch",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is yellow crescent.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pouch": "yellow crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0056",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:56",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the packet. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup packet",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is amber stripe.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "packet": "amber stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0057",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:57",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the tray. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup tray",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is purple diamond.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "tray": "purple diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0058",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:58",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the bench. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup bench",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is blue square.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "bench": "blue square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0059",
+      "fold": "TRAIN",
+      "family": "delegate",
+      "split_group": "TRAIN:retention-request-v2:delegate:59",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the curtain. Tell me the confirmed result rather than guessing."
+      ],
+      "teacher_program": {
+        "kind": "lookup",
+        "query": "lookup curtain",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is green oval.",
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "curtain": "green oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0060",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:60",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the helmet. Tell me the confirmed result rather than guessing.",
+        "While that task is running, What is the difference between borrowing a book and keeping it as a gift?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup helmet",
+        "worker_delay_seconds": 35,
+        "followup_answer": "A borrowed book is meant to be returned. A gift is yours to keep.",
+        "result_answer": "The marker is ivory circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "helmet": "ivory circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0061",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:61",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the pantry. Tell me the confirmed result rather than guessing.",
+        "While that task is running, If I want to sort shirts by colour, what should I compare?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup pantry",
+        "worker_delay_seconds": 35,
+        "followup_answer": "Compare their colours and put shirts with matching colours together.",
+        "result_answer": "The marker is orange star.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "pantry": "orange star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0062",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:62",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the counter. Tell me the confirmed result rather than guessing.",
+        "While that task is running, A parcel is too wide for a narrow slot. What is the straightforward problem?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup counter",
+        "worker_delay_seconds": 35,
+        "followup_answer": "The opening is narrower than the parcel, so the parcel will not fit through it.",
+        "result_answer": "The marker is silver crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "counter": "silver crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0063",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:63",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the locker. Tell me the confirmed result rather than guessing.",
+        "While that task is running, Why would someone label two identical storage boxes?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup locker",
+        "worker_delay_seconds": 35,
+        "followup_answer": "Labels help show what is inside without opening each box.",
+        "result_answer": "The marker is yellow triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "locker": "yellow triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0064",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:64",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the parcel. Tell me the confirmed result rather than guessing.",
+        "While that task is running, If one train arrives before another, which arrival happens earlier?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup parcel",
+        "worker_delay_seconds": 35,
+        "followup_answer": "The first train to arrive has the earlier arrival.",
+        "result_answer": "The marker is amber diamond.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "parcel": "amber diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0065",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:65",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the satchel. Tell me the confirmed result rather than guessing.",
+        "While that task is running, What does it mean to fold a sheet of paper in half?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup satchel",
+        "worker_delay_seconds": 35,
+        "followup_answer": "Bring two opposite sides together so the paper forms two matching parts.",
+        "result_answer": "The marker is purple square.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "satchel": "purple square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0066",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:66",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the case. Tell me the confirmed result rather than guessing.",
+        "While that task is running, Why do we use oven gloves when handling a hot tray?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup case",
+        "worker_delay_seconds": 35,
+        "followup_answer": "They provide insulation that helps protect our hands from the heat.",
+        "result_answer": "The marker is blue oval.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "case": "blue oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0067",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:67",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the bin. Tell me the confirmed result rather than guessing.",
+        "While that task is running, I want to keep a stack of papers together temporarily. What could help?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup bin",
+        "worker_delay_seconds": 35,
+        "followup_answer": "A paper clip can hold the papers together and is easy to remove.",
+        "result_answer": "The marker is green circle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "bin": "green circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0068",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:68",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the jug. Tell me the confirmed result rather than guessing.",
+        "While that task is running, What is the purpose of an address on a parcel?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup jug",
+        "worker_delay_seconds": 35,
+        "followup_answer": "It tells the delivery service where the parcel is meant to go.",
+        "result_answer": "The marker is ivory star.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "jug": "ivory star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0069",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:69",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the bowl. Tell me the confirmed result rather than guessing.",
+        "While that task is running, What changes when a room becomes brighter?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup bowl",
+        "worker_delay_seconds": 35,
+        "followup_answer": "More light reaches the room, making things easier to see.",
+        "result_answer": "The marker is orange crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "bowl": "orange crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0070",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:70",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the apron. Tell me the confirmed result rather than guessing.",
+        "While that task is running, If a shop is closed for the day, can I assume its normal counter is serving customers?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup apron",
+        "worker_delay_seconds": 35,
+        "followup_answer": "No. Closed for the day means normal service has ended until it opens again.",
+        "result_answer": "The marker is silver triangle.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "apron": "silver triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0071",
+      "fold": "TRAIN",
+      "family": "pending",
+      "split_group": "TRAIN:retention-request-v2:pending:71",
+      "user_turns": [
+        "Please ask the background worker to retrieve the marker in the tent. Tell me the confirmed result rather than guessing.",
+        "While that task is running, Why would I check the size of a picture before buying a frame?"
+      ],
+      "teacher_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup tent",
+        "worker_delay_seconds": 35,
+        "followup_answer": "The frame needs to fit the picture, so their dimensions must be compatible.",
+        "result_answer": "The marker is yellow stripe.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "synthetic_private_world": {
+        "tent": "yellow stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0072",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:72",
+      "user_turns": [
+        "Please start a background lookup for the marker in the lantern.",
+        "Cancel the pending task now.",
+        "Can you explain what a cache does in a computer in one short sentence?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup lantern",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A cache keeps reusable data nearby so it can often be accessed more quickly.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "lantern": "green diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0073",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:73",
+      "user_turns": [
+        "Please start a background lookup for the marker in the cushion.",
+        "Cancel the pending task now.",
+        "What is a queue in programming, explained without code?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cushion",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A queue stores items in order and usually handles the earliest added item first.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "cushion": "ivory square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0074",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:74",
+      "user_turns": [
+        "Please start a background lookup for the marker in the coaster.",
+        "Cancel the pending task now.",
+        "How is a stack different from a queue in a simple programming example?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup coaster",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A stack handles the most recently added item first; a queue usually handles the earliest added item first.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "coaster": "orange oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0075",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:75",
+      "user_turns": [
+        "Please start a background lookup for the marker in the hamper.",
+        "Cancel the pending task now.",
+        "Why might a program put a repeated operation inside a function?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup hamper",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A function lets the program reuse that operation without copying the same instructions everywhere.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "hamper": "silver circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0076",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:76",
+      "user_turns": [
+        "Please start a background lookup for the marker in the dresser.",
+        "Cancel the pending task now.",
+        "What is a variable in a computer program?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup dresser",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It is a name associated with a value that the program can use.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "dresser": "yellow star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0077",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:77",
+      "user_turns": [
+        "Please start a background lookup for the marker in the rack.",
+        "Cancel the pending task now.",
+        "What does a unit test usually check?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup rack",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It checks a small part of a program against an expected result or behaviour.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "rack": "amber crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0078",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:78",
+      "user_turns": [
+        "Please start a background lookup for the marker in the crate.",
+        "Cancel the pending task now.",
+        "How is finding a bug different from fixing it?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup crate",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "Finding a bug identifies a problem. Fixing it changes the program to address that problem.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "crate": "purple triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0079",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:79",
+      "user_turns": [
+        "Please start a background lookup for the marker in the pouch.",
+        "Cancel the pending task now.",
+        "What is a software dependency?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup pouch",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It is another component or package that the software needs in order to work.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "pouch": "blue stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0080",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:80",
+      "user_turns": [
+        "Please start a background lookup for the marker in the packet.",
+        "Cancel the pending task now.",
+        "What does a database index help with?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup packet",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It can help the database find relevant records without checking every record in turn.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "packet": "green diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0081",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:81",
+      "user_turns": [
+        "Please start a background lookup for the marker in the tray.",
+        "Cancel the pending task now.",
+        "Why might a database use a transaction for several related changes?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup tray",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A transaction groups the changes so they can succeed together or be rolled back together.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "tray": "ivory square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0082",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:82",
+      "user_turns": [
+        "Please start a background lookup for the marker in the bench.",
+        "Cancel the pending task now.",
+        "What does a backup provide that the only working copy does not?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup bench",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It provides another copy that may help restore the data if the working copy is lost or damaged.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "bench": "orange oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0083",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:83",
+      "user_turns": [
+        "Please start a background lookup for the marker in the curtain.",
+        "Cancel the pending task now.",
+        "What is the difference between a file name and the contents of a file?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup curtain",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "The name helps identify the file. The contents are the data stored inside it.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "curtain": "silver circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0084",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:84",
+      "user_turns": [
+        "Please start a background lookup for the marker in the helmet.",
+        "Cancel the pending task now.",
+        "How is network delay different from network bandwidth?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup helmet",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "Delay describes how long communication takes; bandwidth describes how much data can be carried over time.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "helmet": "yellow star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0085",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:85",
+      "user_turns": [
+        "Please start a background lookup for the marker in the pantry.",
+        "Cancel the pending task now.",
+        "What is the purpose of resolving a website name to a network address?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup pantry",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It helps the computer locate the server associated with that name.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "pantry": "amber crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0086",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:86",
+      "user_turns": [
+        "Please start a background lookup for the marker in the counter.",
+        "Cancel the pending task now.",
+        "Why can retrying a failed network request sometimes help?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup counter",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "A temporary connection problem may have cleared, allowing a later attempt to succeed.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "counter": "purple triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0087",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:87",
+      "user_turns": [
+        "Please start a background lookup for the marker in the locker.",
+        "Cancel the pending task now.",
+        "Why should a program avoid retrying a permanent error forever?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup locker",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "Repeating the same request will not fix a permanent problem and can waste resources.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "locker": "blue stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0088",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:88",
+      "user_turns": [
+        "Please start a background lookup for the marker in the parcel.",
+        "Cancel the pending task now.",
+        "How would you explain an overfit model to a beginner?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup parcel",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It has learned its training examples too closely and may perform poorly on new examples.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "parcel": "green diamond"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0089",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:89",
+      "user_turns": [
+        "Please start a background lookup for the marker in the satchel.",
+        "Cancel the pending task now.",
+        "Does a low training loss prove that a model behaves well on new examples?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup satchel",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "No. New examples need separate evaluation because training performance does not guarantee generalisation.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "satchel": "ivory square"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0090",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:90",
+      "user_turns": [
+        "Please start a background lookup for the marker in the case.",
+        "Cancel the pending task now.",
+        "What does a loss function do during machine learning?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup case",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It measures an aspect of prediction error so training can work towards reducing it.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "case": "orange oval"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0091",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:91",
+      "user_turns": [
+        "Please start a background lookup for the marker in the bin.",
+        "Cancel the pending task now.",
+        "What does gradient accumulation combine before an optimizer update?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup bin",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It combines gradients from several smaller batches before making one update.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "bin": "silver circle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0092",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:92",
+      "user_turns": [
+        "Please start a background lookup for the marker in the jug.",
+        "Cancel the pending task now.",
+        "What does setting a random seed help with when running an experiment?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup jug",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "It helps make random choices repeatable, although other computations may still be nondeterministic.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "jug": "yellow star"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0093",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:93",
+      "user_turns": [
+        "Please start a background lookup for the marker in the bowl.",
+        "Cancel the pending task now.",
+        "Why keep evaluation examples separate from examples used for training?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup bowl",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "They help measure how the model handles examples it has not been trained on.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "bowl": "amber crescent"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0094",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:94",
+      "user_turns": [
+        "Please start a background lookup for the marker in the apron.",
+        "Cancel the pending task now.",
+        "Why is it useful to save optimizer state as well as model weights?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup apron",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "The optimizer has its own history, which is needed to continue the same training process accurately.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "apron": "purple triangle"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0095",
+      "fold": "TRAIN",
+      "family": "cancel",
+      "split_group": "TRAIN:retention-request-v2:cancel:95",
+      "user_turns": [
+        "Please start a background lookup for the marker in the tent.",
+        "Cancel the pending task now.",
+        "What is the difference between a model answering correctly and its speech being clear?"
+      ],
+      "teacher_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup tent",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 35,
+        "cancel_acknowledgment": "I have cancelled the pending task.",
+        "ordinary_answer": "One concerns the meaning of the answer; the other concerns how well the spoken audio conveys it.",
+        "no_cancelled_value_delivery": true
+      },
+      "synthetic_private_world": {
+        "tent": "blue stripe"
+      },
+      "source": "authored_synthetic",
+      "owner_conversations": false,
+      "proposal_only": true
+    }
+  ],
+  "counts": {
+    "TRAIN": 96,
+    "DEV": 0,
+    "HOLDOUT": 0
+  },
+  "original240TRAIN64DEV_unchanged": true,
+  "original_sources_and_receipts_unchanged": true,
+  "external_API_calls": 0,
+  "optimizer_updates": 0,
+  "heldout_answers_used": false,
+  "source_audio_generated": false,
+  "teacher_receipts_generated": false,
+  "native_cache_generated": false,
+  "approval_required_before_training": [
+    "Source semantic review",
+    "Applicable synthetic audio payload authorization",
+    "Complete source word/peak audit",
+    "Genuine worker receipts including pending cancellation",
+    "Native teacher/history alignment and original retention preservation",
+    "Versioned composite corpus approval",
+    "Independent complete-state restore and native evaluation",
+    "Every recognized user-source lookup key must match its exact authored key even if whole-utterance WER is within0.05; no homophone equivalence."
+  ],
+  "purpose": "MiRL-inspired supervised coverage/retention and valid-request repair, not native RL or evidence of success",
+  "fresh_evaluation": "Separate fresh cohort still needs independent authorship/sealing; this file is TRAIN proposals only",
+  "parent_source_sha256": "4c85c4fd30610d652316779d464f16428662821623e8f87f7198ad2e86917758",
+  "revision_reason": "Pre-audio curation: replace mantel/mantle and caddy/caddie homophone risks with helmet/parcel; no claim that audio failed, no original scene or recording changed."
+}

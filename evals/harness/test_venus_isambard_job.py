@@ -1,8 +1,10 @@
 """Exercise the complete scheduler wrapper without a model or allocation."""
 import argparse,json,time
+import pytest
 from training.venus import isambard_job as job
 
-def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch):
+@pytest.mark.parametrize('stage,expected', [('evaluate',8),('posttrain-evaluate',2)])
+def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
     monkeypatch.setattr(job,'BASE',base);monkeypatch.setattr(job,'ART',base/'artifacts')
@@ -21,17 +23,17 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         def terminate(self):self.returncode=0
         def wait(self,timeout=None):return self.returncode
     monkeypatch.setattr(job.subprocess,'Popen',Process)
-    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage='evaluate',epochs=2))
+    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2))
     native=[args for args in calls if args[0]=='apptainer']
-    assert len(native)==8
+    assert len(native)==expected
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
-    assert len(set(invocations))==8
-    last=json.loads((root/'execution-123/combine-terminal.json').read_text())
+    assert len(set(invocations))==expected
+    last=json.loads((root/('execution-123/'+('combine' if stage=='evaluate' else 'compare')+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
     assert all(str(real)+':'+str(real) in args for args in native)
     assert all('SLURM_JOB_ID=123' in args and 'CUDA_VISIBLE_DEVICES=0' in args for args in native)
-    assert [args[args.index('--stage')+1] for args in native]==['schema-selftest','reference','restore','reference','restore','collect','collect','combine']
+    assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])
     terminal=json.loads((root/'execution-123/terminal.json').read_text())
     assert terminal['actual_exit_code']==0 and terminal['new_optimizer_updates']==0

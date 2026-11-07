@@ -1,0 +1,13 @@
+{
+  "source_version": 2,
+  "source_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+  "scenes": 96,
+  "valid_complete_worker_queries": 48,
+  "original_v1_generator_and_bytes_preserved": true,
+  "new_scene_ids_disjoint": true,
+  "homophone_key_risks_removed_before_audio": true,
+  "audio_generated": false,
+  "training_approved": false,
+  "external_API_calls": 0,
+  "original240TRAIN64DEV_unchanged": true
+}

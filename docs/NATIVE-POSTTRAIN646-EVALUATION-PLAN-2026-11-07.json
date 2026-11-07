@@ -1,0 +1,43 @@
+{
+  "recorded_utc": "2026-11-07T10:41:33.924654+00:00",
+  "status": "PREPARED_NOT_SUBMITTED",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "training_job": "8156150",
+  "training_source": "d8161fd40c80b814242f93c8d205cf33a83c4c54",
+  "training_completion_required": {
+    "phase_updates": 120,
+    "restored_saved": 8,
+    "new_this_job": 112,
+    "global_updates": 646,
+    "complete_epochs": 2,
+    "actual_successful_host_terminal": true,
+    "actual_distinct_final_restore": true,
+    "full_checkpoint_sha_match": true
+  },
+  "evaluation": {
+    "new_candidate_cases": 32,
+    "source_audio": "unchanged original24 plus8 ordinary",
+    "voice_reference": "RP Ben",
+    "baseline": "reuse exact actual native32 main526 from8149544; no recomputation or relabelled reports",
+    "baseline_source": "35d40392b641d31023723d87edb72bb224af37b8",
+    "paired_outputs": 64,
+    "new_optimizer_updates": 0,
+    "external_API_calls": 0,
+    "word_WER_maximum": 0.05,
+    "raw_peak_maximum": 0.995,
+    "normalizer": "existing unchanged normalizer; no homophones",
+    "complete_all_cases": true,
+    "latency_and_worker_trace_preserved": true
+  },
+  "placement": {
+    "single_GPU": 1,
+    "maximum_seconds": 7200,
+    "reservation": "interactive alone",
+    "no_GPU_job_overlap": true,
+    "new_GCP": false
+  },
+  "adopted": false,
+  "qualified": false,
+  "caveat": "Inspected regression cohort. Semantic correctness, genuine pending cancellation, British listening, fresh evaluation and live route remain product gates."
+}
