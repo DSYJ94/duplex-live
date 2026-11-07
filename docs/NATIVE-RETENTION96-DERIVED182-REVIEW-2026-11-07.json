@@ -1,0 +1,26 @@
+{
+  "schema": "dl-retention96-orthographic-derived182-v1",
+  "complete": true,
+  "required": 182,
+  "passed": 182,
+  "all_sources_pass": true,
+  "parent_report_sha256": "f9f6337846aa929f347697ff32a741c9042822933cb0960129922ed264dd3b6c",
+  "original_failed_report_preserved": true,
+  "original_audio_preserved": true,
+  "recognition_not_rerun": true,
+  "rules": {
+    "programme": "program",
+    "optimiser": "optimizer",
+    "paperclip": "paper clip",
+    "non-deterministic / non deterministic": "nondeterministic"
+  },
+  "wer_threshold": 0.05,
+  "raw_peak_threshold": 0.995,
+  "no_homophone_equivalence": true,
+  "all_lookup_keys_exact": true,
+  "no_timestamp_interpolation": true,
+  "complete_assistant_alignment_pending": true,
+  "independent_semantic_review_pending": true,
+  "training_approved": false,
+  "derived_report_sha256": "4a57ef7152711fd8e6d253ad06ad45e62abca97e55ff4ccbae4f22860711e2a6"
+}

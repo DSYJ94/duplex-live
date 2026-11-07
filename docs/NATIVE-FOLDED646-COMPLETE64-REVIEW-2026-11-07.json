@@ -1,0 +1,64 @@
+{
+  "recorded_utc": "2026-11-07T13:42:14.123343+00:00",
+  "job": "8172244",
+  "source": "eada4944b896828f75ceb3aca9c25b51afee331e",
+  "complete32_plus_reused32": true,
+  "all829_output_hashes_verified": true,
+  "checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "same_voice_reference": {
+    "path": "/projects/u6ada/duplex-live/artifacts/native-v75/recovered-data-v1/venus-british-native-v85/references/rp-ben-16k.wav",
+    "sha256": "552adfe446367b04b29cdc0c715822fee95c45e485046ae50ff0a06b7afc61d0",
+    "seconds": 14.72,
+    "peak": 0.9485847353935242,
+    "mode": "custom-native-reference",
+    "qualified": false,
+    "hosted_tts": false
+  },
+  "new_optimizer_updates": 0,
+  "summaries": {
+    "unmerged646": {
+      "cases": 32,
+      "word_pass": 15,
+      "peak_pass": 30,
+      "both_pass": 15,
+      "speak_frame_step_seconds": {
+        "count": 97,
+        "median": 2.0389627479889896,
+        "p95": 2.648374493001029,
+        "maximum": 2.992619044991443
+      },
+      "listen_frame_step_seconds": {
+        "count": 589,
+        "median": 0.47989749800763093,
+        "p95": 0.6169226840138435,
+        "maximum": 1.7853556819900405
+      }
+    },
+    "folded646": {
+      "cases": 32,
+      "word_pass": 14,
+      "peak_pass": 28,
+      "both_pass": 13,
+      "speak_frame_step_seconds": {
+        "count": 123,
+        "median": 1.56091958397883,
+        "p95": 2.311561492999317,
+        "maximum": 2.58678409201093
+      },
+      "listen_frame_step_seconds": {
+        "count": 563,
+        "median": 0.3013633310038131,
+        "p95": 0.42648403998464346,
+        "maximum": 1.5598136860062368
+      }
+    }
+  },
+  "observed_speak_median_change_percent": -23.44540941131217,
+  "speed_caveat": "Different generated words and speaking-frame counts confound a pure kernel-speed attribution. These are measured native-frame walls, not browser latency.",
+  "decision": "REJECT_FOLDED_SERVING_VARIANT",
+  "reason": "Word/peak agreement and actual generated output changed adversely; do not trade quality for observed speed.",
+  "original_checkpoint_untouched": true,
+  "adopted": false,
+  "qualified": false,
+  "next": "Existing sourceaudit then matched untouched-foundation/current-runtime collection; do not reopen precision/kernel sweep."
+}

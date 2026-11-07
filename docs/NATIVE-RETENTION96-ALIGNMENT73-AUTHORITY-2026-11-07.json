@@ -1,0 +1,25 @@
+{
+  "status": "OWNER_AUTHORIZED_ELEVENLABS_TRAINING_DATA_PROCESSING",
+  "owner_authority": [
+    "For training, feel free to use eleven labs to get the training data/improve it.",
+    "Use the existing ElevenLabs key",
+    "If we need more training data go for it."
+  ],
+  "provenance": "decisions/0003-provenance-classes.md Amendment A; synthetic closed-content data processing, no owner conversations",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/forced-alignment",
+  "payload_sha256": "569d799211217fc8f9728fcdba018aa3a03ccb1c07ba23f754d2a2f7d63355c1",
+  "payload_local_path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261107/retention96-alignment73-v1/payload.json",
+  "maximum_calls": 73,
+  "maximum_fee_reserve_usd": 2.5,
+  "no_purchase_or_overage": true,
+  "existing_phase_reserve_unchanged_usd": 175,
+  "prior_project_carry_unchanged_usd": 165.7900361111111,
+  "prior_new_data_usage_reserve_unchanged_usd": 6.373,
+  "combined_conservative_project_envelope_usd": 349.6630361111111,
+  "project_ceiling_usd": 350,
+  "scope": "Complete73 original synthetic TRAIN assistant WAVs plus exact authored text, for measured word timing only. No owner audio/ratings/conversations, credentials, HOLDOUT answers or scoring metadata in payloads.",
+  "independent_recognition": "Complete original182 recognition preserved; derived true English written-form review complete182 with exact48 lookup keys. Alignment cannot substitute for this independent recognition.",
+  "native_training_or_adoption_authorized_by_this_receipt": false,
+  "automatic_retries": 0
+}
