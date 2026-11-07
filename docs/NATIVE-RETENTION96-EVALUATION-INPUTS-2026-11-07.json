@@ -1,0 +1,14 @@
+{
+  "schema": "dl-retention96-evaluation-inputs-v1",
+  "parent_native_source": "98db2c68c30376910c02b6ee54f84d6907f25249",
+  "parent_checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "baseline_files": {
+    "native-report.json": "d1fa6e40878b635ec8331a4b1fd1dbd3b8b1eecd97f62a587a2ad222df3d8af1",
+    "results.json": "7a65f75c3d43f01271f9c3e6b32ebe695b59fa4031a7b130108262b7e40fd75d",
+    "profile.json": "e6811bb1b1a899c78a44c59deeec2a15c663469f416a61ab75e04b27205e62b0"
+  },
+  "parent_DEV_sha256": "fdc4804ffe7de6faf8fdd4fcc350969badd9c555bd91f08d77984b1238689375",
+  "reasoning_plan_sha256": "e124dd24d739d3f0d89b86918f9a8ab28c8f7dc482a218adedb9c2382852072e",
+  "new_optimizer_updates": 0,
+  "new_external_API_calls": 0
+}

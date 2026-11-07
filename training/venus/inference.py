@@ -16,6 +16,9 @@ def load_candidate(llm, checkpoint):
     metadata = state['metadata']; recipe = metadata['recipe']; step = state['step']
     if metadata['model_revision'] != MODEL_REVISION:
         raise ValueError('Candidate belongs to a different published model revision')
+    if metadata.get('capacity_schema')=='native-retention96-data-v1':
+        from .large_inference import load_data_phase
+        return load_data_phase(llm,state,hashlib.sha256(path.read_bytes()).hexdigest())
     if metadata.get('capacity_schema')=='native-capacity-continuation-v1':
         from .large_inference import load_continuation
         return load_continuation(llm,state,hashlib.sha256(path.read_bytes()).hexdigest())

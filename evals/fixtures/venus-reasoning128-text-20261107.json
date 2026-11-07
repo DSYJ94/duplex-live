@@ -1,0 +1,1544 @@
+{
+  "schema": "dl-authored-text-reasoning128-v1",
+  "created_date": "2026-11-07",
+  "not_audio_or_end_to_end_delegation": true,
+  "system": "Choose the best answer or action. Return exactly one capital letter A, B, C, or D. Use the supplied facts; do not invent missing information. A live voice assistant should handle basic reasoning directly, delegate live external lookups or substantial research, ask for essential missing information, and ignore cancelled or superseded results.",
+  "cases": [
+    {
+      "id": "reasoning128-000",
+      "category": "everyday",
+      "question": "A box has 19 screws. We use 7, then add 5. How many screws remain?",
+      "options": [
+        "21",
+        "17",
+        "18",
+        "15"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-001",
+      "category": "everyday",
+      "question": "A recipe uses 3 grams per portion. We make 5 portions and spill 2 grams. How many grams must we start with?",
+      "options": [
+        "17",
+        "15",
+        "21",
+        "18"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-002",
+      "category": "everyday",
+      "question": "A timer starts at minute 12 on a clock and runs 18 minutes. At which minute on the same hour does it stop?",
+      "options": [
+        "28",
+        "34",
+        "30",
+        "31"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-003",
+      "category": "everyday",
+      "question": "A rectangle is 6 metres long and 4 metres wide. What is its perimeter in metres?",
+      "options": [
+        "21",
+        "18",
+        "20",
+        "24"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-004",
+      "category": "everyday",
+      "question": "We save one quarter of 48 pounds, then spend 3 pounds from those savings. How many saved pounds remain?",
+      "options": [
+        "13",
+        "9",
+        "7",
+        "10"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-005",
+      "category": "everyday",
+      "question": "A ribbon is 3 metres long. We cut off 40 centimetres. How many centimetres remain?",
+      "options": [
+        "258",
+        "261",
+        "260",
+        "264"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-006",
+      "category": "everyday",
+      "question": "A bag contains 6 red counters and 4 blue counters. After removing 2 red counters, how many counters are left in total?",
+      "options": [
+        "6",
+        "8",
+        "12",
+        "9"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-007",
+      "category": "everyday",
+      "question": "We pack 17 items into boxes holding at most 5 items each. What is the minimum number of boxes?",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "8"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-008",
+      "category": "everyday",
+      "question": "A box has 20 screws. We use 7, then add 5. How many screws remain?",
+      "options": [
+        "19",
+        "18",
+        "22",
+        "16"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-009",
+      "category": "everyday",
+      "question": "A recipe uses 3 grams per portion. We make 6 portions and spill 2 grams. How many grams must we start with?",
+      "options": [
+        "21",
+        "18",
+        "24",
+        "20"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-010",
+      "category": "everyday",
+      "question": "A timer starts at minute 13 on a clock and runs 18 minutes. At which minute on the same hour does it stop?",
+      "options": [
+        "35",
+        "29",
+        "31",
+        "32"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-011",
+      "category": "everyday",
+      "question": "A rectangle is 7 metres long and 4 metres wide. What is its perimeter in metres?",
+      "options": [
+        "26",
+        "20",
+        "23",
+        "22"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-012",
+      "category": "everyday",
+      "question": "We save one quarter of 52 pounds, then spend 3 pounds from those savings. How many saved pounds remain?",
+      "options": [
+        "8",
+        "14",
+        "10",
+        "11"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-013",
+      "category": "everyday",
+      "question": "A ribbon is 4 metres long. We cut off 40 centimetres. How many centimetres remain?",
+      "options": [
+        "360",
+        "361",
+        "364",
+        "358"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-014",
+      "category": "everyday",
+      "question": "A bag contains 7 red counters and 4 blue counters. After removing 2 red counters, how many counters are left in total?",
+      "options": [
+        "7",
+        "13",
+        "10",
+        "9"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-015",
+      "category": "everyday",
+      "question": "We pack 20 items into boxes holding at most 5 items each. What is the minimum number of boxes?",
+      "options": [
+        "2",
+        "8",
+        "4",
+        "5"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-016",
+      "category": "everyday",
+      "question": "A box has 21 screws. We use 7, then add 5. How many screws remain?",
+      "options": [
+        "20",
+        "23",
+        "19",
+        "17"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-017",
+      "category": "everyday",
+      "question": "A recipe uses 3 grams per portion. We make 7 portions and spill 2 grams. How many grams must we start with?",
+      "options": [
+        "21",
+        "27",
+        "24",
+        "23"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-018",
+      "category": "everyday",
+      "question": "A timer starts at minute 14 on a clock and runs 18 minutes. At which minute on the same hour does it stop?",
+      "options": [
+        "32",
+        "33",
+        "30",
+        "36"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-019",
+      "category": "everyday",
+      "question": "A rectangle is 8 metres long and 4 metres wide. What is its perimeter in metres?",
+      "options": [
+        "25",
+        "24",
+        "28",
+        "22"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-020",
+      "category": "everyday",
+      "question": "We save one quarter of 56 pounds, then spend 3 pounds from those savings. How many saved pounds remain?",
+      "options": [
+        "11",
+        "9",
+        "12",
+        "15"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-021",
+      "category": "everyday",
+      "question": "A ribbon is 5 metres long. We cut off 40 centimetres. How many centimetres remain?",
+      "options": [
+        "461",
+        "464",
+        "458",
+        "460"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-022",
+      "category": "everyday",
+      "question": "A bag contains 8 red counters and 4 blue counters. After removing 2 red counters, how many counters are left in total?",
+      "options": [
+        "8",
+        "10",
+        "14",
+        "11"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-023",
+      "category": "everyday",
+      "question": "We pack 23 items into boxes holding at most 5 items each. What is the minimum number of boxes?",
+      "options": [
+        "5",
+        "9",
+        "3",
+        "6"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-024",
+      "category": "everyday",
+      "question": "A box has 22 screws. We use 7, then add 5. How many screws remain?",
+      "options": [
+        "24",
+        "20",
+        "18",
+        "21"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-025",
+      "category": "everyday",
+      "question": "A recipe uses 3 grams per portion. We make 8 portions and spill 2 grams. How many grams must we start with?",
+      "options": [
+        "27",
+        "30",
+        "26",
+        "24"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-026",
+      "category": "everyday",
+      "question": "A timer starts at minute 15 on a clock and runs 18 minutes. At which minute on the same hour does it stop?",
+      "options": [
+        "31",
+        "34",
+        "37",
+        "33"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-027",
+      "category": "everyday",
+      "question": "A rectangle is 9 metres long and 4 metres wide. What is its perimeter in metres?",
+      "options": [
+        "24",
+        "26",
+        "27",
+        "30"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-028",
+      "category": "everyday",
+      "question": "We save one quarter of 60 pounds, then spend 3 pounds from those savings. How many saved pounds remain?",
+      "options": [
+        "12",
+        "16",
+        "13",
+        "10"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-029",
+      "category": "everyday",
+      "question": "A ribbon is 6 metres long. We cut off 40 centimetres. How many centimetres remain?",
+      "options": [
+        "558",
+        "560",
+        "564",
+        "561"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-030",
+      "category": "everyday",
+      "question": "A bag contains 9 red counters and 4 blue counters. After removing 2 red counters, how many counters are left in total?",
+      "options": [
+        "15",
+        "12",
+        "9",
+        "11"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-031",
+      "category": "everyday",
+      "question": "We pack 26 items into boxes holding at most 5 items each. What is the minimum number of boxes?",
+      "options": [
+        "7",
+        "6",
+        "4",
+        "10"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-032",
+      "category": "technical",
+      "question": "A queue receives Cedar, then Elm, then Pine. It removes two items in FIFO order. Which item remains?",
+      "options": [
+        "Cedar",
+        "Pine",
+        "No item",
+        "Elm"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-033",
+      "category": "technical",
+      "question": "A stack receives Cedar, Elm, then Pine. It pops twice. Which item remains?",
+      "options": [
+        "No item",
+        "Cedar",
+        "Elm",
+        "Pine"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-034",
+      "category": "technical",
+      "question": "An algorithm repeatedly halves a sorted search interval. Which growth rate describes its search comparisons?",
+      "options": [
+        "Logarithmic",
+        "Linear",
+        "Quadratic",
+        "Factorial"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-035",
+      "category": "technical",
+      "question": "A hash table reports that two different keys share a bucket. What happened?",
+      "options": [
+        "The keys became equal",
+        "A collision",
+        "The values were encrypted",
+        "The table was sorted"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-036",
+      "category": "technical",
+      "question": "A function changes no external state and always returns the same value for the same input. What property is described?",
+      "options": [
+        "Randomness",
+        "Mutability",
+        "Concurrency",
+        "Purity"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-037",
+      "category": "technical",
+      "question": "A program must allow only one thread at a time to modify a shared counter. Which mechanism directly provides that exclusion?",
+      "options": [
+        "A floating point cast",
+        "A mutex",
+        "A filename extension",
+        "A checksum"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-038",
+      "category": "technical",
+      "question": "A procedure calls itself on a smaller instance until it reaches a base case. What technique is used?",
+      "options": [
+        "Caching",
+        "Hashing",
+        "Encryption",
+        "Recursion"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-039",
+      "category": "technical",
+      "question": "A cache stores a previous expensive computation. Why can a later request finish faster?",
+      "options": [
+        "It can reuse the stored result",
+        "It increases the mathematical answer",
+        "It changes the input into a password",
+        "It removes every possible error"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-040",
+      "category": "technical",
+      "question": "A transaction updates two related balances. If the second update fails, what does atomicity require?",
+      "options": [
+        "Both balances become zero",
+        "The failure is ignored",
+        "Both updates are rolled back",
+        "Only the first update remains"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-041",
+      "category": "technical",
+      "question": "A test set has influenced repeated parameter choices. Which new evidence best measures generalisation?",
+      "options": [
+        "The same test set again",
+        "An untouched evaluation set",
+        "Training accuracy alone",
+        "The filename of the checkpoint"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-042",
+      "category": "technical",
+      "question": "A model fits training examples well but performs poorly on new examples. What is the central concern?",
+      "options": [
+        "Perfect generalisation",
+        "Insufficient disk compression",
+        "Overfitting",
+        "A larger sample rate"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-043",
+      "category": "technical",
+      "question": "A gradient points in the direction of steepest local increase of a scalar loss. Which direction does basic gradient descent take?",
+      "options": [
+        "The negative gradient",
+        "An unrelated filename",
+        "Only the largest weight",
+        "The positive gradient"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-044",
+      "category": "technical",
+      "question": "Several small batches contribute gradients before one optimiser step. What does this directly emulate?",
+      "options": [
+        "An extra audio channel",
+        "A new vocabulary",
+        "A larger effective batch",
+        "A held-out test set"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-045",
+      "category": "technical",
+      "question": "A training loss is NaN. Which is the appropriate immediate interpretation?",
+      "options": [
+        "The loss must equal zero",
+        "The numerical result is invalid",
+        "The data has been encrypted",
+        "The model is perfectly trained"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-046",
+      "category": "technical",
+      "question": "A probability distribution assigns probabilities to three mutually exclusive exhaustive events. What must their probabilities sum to?",
+      "options": [
+        "Any negative number",
+        "Zero",
+        "Three",
+        "One"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-047",
+      "category": "technical",
+      "question": "Independent fair coin tosses produced five heads. What is the probability of heads on the next toss?",
+      "options": [
+        "One",
+        "One half",
+        "Zero",
+        "One sixth"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-048",
+      "category": "technical",
+      "question": "A vector has entries 3 and 4. What is its Euclidean length?",
+      "options": [
+        "12",
+        "7",
+        "5",
+        "25"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-049",
+      "category": "technical",
+      "question": "Two vectors have dot product zero and both have positive length. What relation does this establish?",
+      "options": [
+        "They are orthogonal",
+        "They are parallel",
+        "They are identical",
+        "They have equal lengths"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-050",
+      "category": "technical",
+      "question": "A positive number is multiplied by 0.5 twice. What fraction of the original remains?",
+      "options": [
+        "One quarter",
+        "Two",
+        "Four",
+        "One half"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-051",
+      "category": "technical",
+      "question": "A derivative at a point describes which local quantity?",
+      "options": [
+        "Rate of change",
+        "The total file size",
+        "The number of rows in every matrix",
+        "A random sample"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-052",
+      "category": "technical",
+      "question": "What does a 95 percent confidence interval procedure guarantee over repeated samples under its assumptions?",
+      "options": [
+        "95 percent of observations equal the mean",
+        "About 95 percent of its intervals cover the fixed parameter",
+        "Every reported interval is certainly correct",
+        "The fixed parameter changes with each sample"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-053",
+      "category": "technical",
+      "question": "Why should preprocessing learned from data be fitted on the training split before evaluating on a test split?",
+      "options": [
+        "To avoid information leakage",
+        "To make every variable categorical",
+        "To guarantee perfect test accuracy",
+        "To increase test labels"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-054",
+      "category": "technical",
+      "question": "A private result arrives for a request that was already cancelled. What should an asynchronous assistant do?",
+      "options": [
+        "Pretend the cancellation never happened",
+        "Ignore that cancelled result",
+        "Read it aloud immediately",
+        "Attach it to an unrelated new task"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-055",
+      "category": "technical",
+      "question": "An answer sounds fluent but contradicts the supplied evidence. How should its correctness be scored?",
+      "options": [
+        "Correct because long",
+        "Impossible to evaluate any evidence",
+        "Correct because fluent",
+        "Incorrect"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-056",
+      "category": "context",
+      "question": "The register starts at 8. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "22",
+        "21",
+        "25",
+        "19"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-057",
+      "category": "context",
+      "question": "Mina has 14 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "23",
+        "26",
+        "22",
+        "20"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-058",
+      "category": "context",
+      "question": "A delivery was planned for day 9. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "11",
+        "12",
+        "9",
+        "15"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-059",
+      "category": "context",
+      "question": "Tank A holds 22 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "31",
+        "34",
+        "28",
+        "30"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-060",
+      "category": "context",
+      "question": "The register starts at 9. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "23",
+        "21",
+        "27",
+        "24"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-061",
+      "category": "context",
+      "question": "Mina has 15 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "24",
+        "25",
+        "22",
+        "28"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-062",
+      "category": "context",
+      "question": "A delivery was planned for day 10. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "12",
+        "16",
+        "13",
+        "10"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-063",
+      "category": "context",
+      "question": "Tank A holds 23 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "29",
+        "35",
+        "32",
+        "31"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-064",
+      "category": "context",
+      "question": "The register starts at 10. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "23",
+        "29",
+        "25",
+        "26"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-065",
+      "category": "context",
+      "question": "Mina has 16 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "30",
+        "24",
+        "27",
+        "26"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-066",
+      "category": "context",
+      "question": "A delivery was planned for day 11. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "17",
+        "14",
+        "11",
+        "13"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-067",
+      "category": "context",
+      "question": "Tank A holds 24 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "33",
+        "36",
+        "32",
+        "30"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-068",
+      "category": "context",
+      "question": "The register starts at 11. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "31",
+        "28",
+        "25",
+        "27"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-069",
+      "category": "context",
+      "question": "Mina has 17 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "26",
+        "29",
+        "32",
+        "28"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-070",
+      "category": "context",
+      "question": "A delivery was planned for day 12. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "15",
+        "18",
+        "12",
+        "14"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-071",
+      "category": "context",
+      "question": "Tank A holds 25 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "31",
+        "37",
+        "33",
+        "34"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-072",
+      "category": "context",
+      "question": "The register starts at 12. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "33",
+        "30",
+        "29",
+        "27"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-073",
+      "category": "context",
+      "question": "Mina has 18 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "31",
+        "28",
+        "34",
+        "30"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-074",
+      "category": "context",
+      "question": "A delivery was planned for day 13. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "19",
+        "16",
+        "15",
+        "13"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-075",
+      "category": "context",
+      "question": "Tank A holds 26 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "35",
+        "34",
+        "32",
+        "38"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-076",
+      "category": "context",
+      "question": "The register starts at 13. Instruction one adds 4. Instruction two doubles the new value. Instruction three subtracts 3. What is the final value?",
+      "options": [
+        "31",
+        "35",
+        "32",
+        "29"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-077",
+      "category": "context",
+      "question": "Mina has 19 tokens. Sol has 3 fewer than Mina. Ren has twice as many as Sol. How many tokens does Ren have?",
+      "options": [
+        "33",
+        "32",
+        "30",
+        "36"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-078",
+      "category": "context",
+      "question": "A delivery was planned for day 14. It is delayed by 3 days and then brought forward by 1 day. Which day is the revised delivery?",
+      "options": [
+        "17",
+        "14",
+        "20",
+        "16"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-079",
+      "category": "context",
+      "question": "Tank A holds 27 litres and tank B holds 8 litres. We move 5 litres from A to B without losing any. What is their combined volume?",
+      "options": [
+        "33",
+        "35",
+        "36",
+        "39"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-080",
+      "category": "ambiguity",
+      "question": "Convert the total into another currency, but no target currency is specified. What should the assistant do first?",
+      "options": [
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-081",
+      "category": "ambiguity",
+      "question": "Compare two measurements, but their units are omitted. What should the assistant do first?",
+      "options": [
+        "Invent a plausible value",
+        "State a definite result without the information",
+        "Ignore the request and announce completion",
+        "Ask for the essential missing information"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-082",
+      "category": "ambiguity",
+      "question": "Book a meeting tomorrow, but the timezone is unspecified and the participants are in different zones. What should the assistant do first?",
+      "options": [
+        "Ask for the essential missing information",
+        "Invent a plausible value",
+        "State a definite result without the information",
+        "Ignore the request and announce completion"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-083",
+      "category": "ambiguity",
+      "question": "Calculate a rectangle area, but only its width is provided. What should the assistant do first?",
+      "options": [
+        "Ask for the essential missing information",
+        "State a definite result without the information",
+        "Invent a plausible value",
+        "Ignore the request and announce completion"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-084",
+      "category": "ambiguity",
+      "question": "Estimate journey time, but the starting location is missing. What should the assistant do first?",
+      "options": [
+        "Invent a plausible value",
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-085",
+      "category": "ambiguity",
+      "question": "Choose the cheaper offer, but neither offer has a price. What should the assistant do first?",
+      "options": [
+        "Invent a plausible value",
+        "Ignore the request and announce completion",
+        "State a definite result without the information",
+        "Ask for the essential missing information"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-086",
+      "category": "ambiguity",
+      "question": "Compute average speed, but the distance is absent. What should the assistant do first?",
+      "options": [
+        "Ask for the essential missing information",
+        "State a definite result without the information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-087",
+      "category": "ambiguity",
+      "question": "Summarise the attached document, but no document is present. What should the assistant do first?",
+      "options": [
+        "Ask for the essential missing information",
+        "Invent a plausible value",
+        "State a definite result without the information",
+        "Ignore the request and announce completion"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-088",
+      "category": "ambiguity",
+      "question": "Tell whether the room is larger than the other room, but neither room has dimensions. What should the assistant do first?",
+      "options": [
+        "Invent a plausible value",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "State a definite result without the information"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-089",
+      "category": "ambiguity",
+      "question": "Calculate a percentage change, but the initial value is absent. What should the assistant do first?",
+      "options": [
+        "Ignore the request and announce completion",
+        "Invent a plausible value",
+        "Ask for the essential missing information",
+        "State a definite result without the information"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-090",
+      "category": "ambiguity",
+      "question": "Compare two dates, but the year is missing and changes the ordering. What should the assistant do first?",
+      "options": [
+        "Ignore the request and announce completion",
+        "State a definite result without the information",
+        "Invent a plausible value",
+        "Ask for the essential missing information"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-091",
+      "category": "ambiguity",
+      "question": "Schedule the task for next Friday, but two users mean different local dates. What should the assistant do first?",
+      "options": [
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-092",
+      "category": "ambiguity",
+      "question": "Pick a suitable cable, but neither device connector is specified. What should the assistant do first?",
+      "options": [
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value",
+        "State a definite result without the information"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-093",
+      "category": "ambiguity",
+      "question": "Calculate a weighted mean, but no weights are supplied. What should the assistant do first?",
+      "options": [
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-094",
+      "category": "ambiguity",
+      "question": "Find the volume of a cylinder, but its height is missing. What should the assistant do first?",
+      "options": [
+        "Ignore the request and announce completion",
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Invent a plausible value"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-095",
+      "category": "ambiguity",
+      "question": "Explain why this program failed, but no code or error message is available. What should the assistant do first?",
+      "options": [
+        "State a definite result without the information",
+        "Ask for the essential missing information",
+        "Ignore the request and announce completion",
+        "Invent a plausible value"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-096",
+      "category": "delegation",
+      "question": "Find the current train departures for a specified station using live data. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled",
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-097",
+      "category": "delegation",
+      "question": "Check whether a named flight is delayed right now. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ignore the request as if cancelled",
+        "Delegate the research or analysis with the supplied context",
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-098",
+      "category": "delegation",
+      "question": "Research and compare the most recent releases of three specified software packages. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-099",
+      "category": "delegation",
+      "question": "Review a supplied fifty-page technical report and cross-check its references. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled",
+        "Invent the answer immediately",
+        "Ask for an identifier already supplied"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-100",
+      "category": "delegation",
+      "question": "Investigate an intermittent distributed-system failure across a large supplied log archive. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Delegate the research or analysis with the supplied context",
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-101",
+      "category": "delegation",
+      "question": "Check the current opening hours of a named museum for a specified date. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-102",
+      "category": "delegation",
+      "question": "Retrieve the latest weather warning for a specified region. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-103",
+      "category": "delegation",
+      "question": "Compare current prices and stock of a specified component at several vendors. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-104",
+      "category": "delegation",
+      "question": "Check the newest official documentation for a recently changed API. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-105",
+      "category": "delegation",
+      "question": "Research a detailed multi-source account of a scientific controversy. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context",
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-106",
+      "category": "delegation",
+      "question": "Analyse a supplied large code repository for several interacting security bugs. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-107",
+      "category": "delegation",
+      "question": "Reconcile a large supplied set of inconsistent experimental results. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-108",
+      "category": "delegation",
+      "question": "Find current accessibility arrangements at a named venue. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-109",
+      "category": "delegation",
+      "question": "Research a complete installation migration using the latest official compatibility matrix. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-110",
+      "category": "delegation",
+      "question": "Find whether a named public service is reporting an outage now. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-111",
+      "category": "delegation",
+      "question": "Compare the latest published versions of three technical standards. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-112",
+      "category": "delegation",
+      "question": "Trace the causes of a complex performance regression across a supplied multi-service trace. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-113",
+      "category": "delegation",
+      "question": "Review a long mathematical proof and verify each nontrivial step. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled",
+        "Invent the answer immediately",
+        "Ask for an identifier already supplied"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-114",
+      "category": "delegation",
+      "question": "Research a detailed literature comparison with primary-source citations. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-115",
+      "category": "delegation",
+      "question": "Check the current status of a specified software issue in its public tracker. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Invent the answer immediately",
+        "Delegate the research or analysis with the supplied context",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-116",
+      "category": "delegation",
+      "question": "Retrieve a newly published dataset and examine its documented limitations. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately",
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled"
+      ],
+      "expected": "A"
+    },
+    {
+      "id": "reasoning128-117",
+      "category": "delegation",
+      "question": "Investigate several competing explanations for a supplied complex simulation failure. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Ask for an identifier already supplied",
+        "Ignore the request as if cancelled",
+        "Delegate the research or analysis with the supplied context",
+        "Invent the answer immediately"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-118",
+      "category": "delegation",
+      "question": "Check a specified live event timetable against its official source. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled",
+        "Delegate the research or analysis with the supplied context",
+        "Ask for an identifier already supplied"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-119",
+      "category": "delegation",
+      "question": "Compare a large supplied configuration set and produce a tested migration plan. All essential identifiers and inputs are supplied. Which action fits the live-voice policy?",
+      "options": [
+        "Invent the answer immediately",
+        "Ignore the request as if cancelled",
+        "Ask for an identifier already supplied",
+        "Delegate the research or analysis with the supplied context"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-120",
+      "category": "stale",
+      "question": "Request R0 was cancelled and cancellation was confirmed. Its result arrives afterwards. What should happen?",
+      "options": [
+        "Claim the cancellation failed without evidence",
+        "Ignore the cancelled result",
+        "Speak the result immediately",
+        "Attach it to a new unrelated request"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-121",
+      "category": "stale",
+      "question": "The required lookup backend for request S0 is unavailable. No cached answer is available. What should the assistant say?",
+      "options": [
+        "Claim a successful lookup",
+        "Invent a lookup result",
+        "Explain that the lookup is unavailable and offer an appropriate next step",
+        "Use a result from a cancelled unrelated task"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-122",
+      "category": "stale",
+      "question": "Request R1 was cancelled and cancellation was confirmed. Its result arrives afterwards. What should happen?",
+      "options": [
+        "Speak the result immediately",
+        "Attach it to a new unrelated request",
+        "Claim the cancellation failed without evidence",
+        "Ignore the cancelled result"
+      ],
+      "expected": "D"
+    },
+    {
+      "id": "reasoning128-123",
+      "category": "stale",
+      "question": "The required lookup backend for request S1 is unavailable. No cached answer is available. What should the assistant say?",
+      "options": [
+        "Claim a successful lookup",
+        "Invent a lookup result",
+        "Explain that the lookup is unavailable and offer an appropriate next step",
+        "Use a result from a cancelled unrelated task"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-124",
+      "category": "stale",
+      "question": "Request R2 was cancelled and cancellation was confirmed. Its result arrives afterwards. What should happen?",
+      "options": [
+        "Speak the result immediately",
+        "Ignore the cancelled result",
+        "Attach it to a new unrelated request",
+        "Claim the cancellation failed without evidence"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-125",
+      "category": "stale",
+      "question": "The required lookup backend for request S2 is unavailable. No cached answer is available. What should the assistant say?",
+      "options": [
+        "Claim a successful lookup",
+        "Explain that the lookup is unavailable and offer an appropriate next step",
+        "Use a result from a cancelled unrelated task",
+        "Invent a lookup result"
+      ],
+      "expected": "B"
+    },
+    {
+      "id": "reasoning128-126",
+      "category": "stale",
+      "question": "Request R3 was cancelled and cancellation was confirmed. Its result arrives afterwards. What should happen?",
+      "options": [
+        "Attach it to a new unrelated request",
+        "Speak the result immediately",
+        "Ignore the cancelled result",
+        "Claim the cancellation failed without evidence"
+      ],
+      "expected": "C"
+    },
+    {
+      "id": "reasoning128-127",
+      "category": "stale",
+      "question": "The required lookup backend for request S3 is unavailable. No cached answer is available. What should the assistant say?",
+      "options": [
+        "Explain that the lookup is unavailable and offer an appropriate next step",
+        "Use a result from a cancelled unrelated task",
+        "Claim a successful lookup",
+        "Invent a lookup result"
+      ],
+      "expected": "A"
+    }
+  ]
+}
