@@ -1,0 +1,12 @@
+{
+  "source_sha256": "4c85c4fd30610d652316779d464f16428662821623e8f87f7198ad2e86917758",
+  "scenes": 96,
+  "ordinary_questions_not_exact_copies_of_old_plans": 48,
+  "complete_queries_valid_under_unchanged_worker_grammar": 48,
+  "worker_keys_disjoint_from_old_plans": true,
+  "original_folds_and_data_unchanged": true,
+  "source_audio_or_teacher_approved": false,
+  "semantic_review_pending": true,
+  "trained": false,
+  "external_API_calls": 0
+}
