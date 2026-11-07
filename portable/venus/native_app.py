@@ -183,7 +183,7 @@ class DelegateParser:
 
 class NativeEngine:
     def __init__(self, model_dir, system_prompt='Streaming Omni Conversation.', adapter_checkpoint=None,
-                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released',speech_completion=False):
+                 voice_reference=None,voice_reference_sha256=None,nonspoken_actions=False,tts_attention='released',speech_completion=False,merge_lora=False):
         ensure_guard()
         if speech_completion and nonspoken_actions:
             from .speech_composition import require_authorization
@@ -215,6 +215,11 @@ class NativeEngine:
         if adapter_checkpoint:
             from training.venus.inference import load_candidate
             candidate = load_candidate(self.model.llm, adapter_checkpoint)
+        inference_fold=dict(enabled=False)
+        if merge_lora:
+            if not candidate:raise ValueError('Inference folding requires an explicit experimental checkpoint')
+            from training.venus.merged_inference import merge_for_inference
+            inference_fold=merge_for_inference(self.model.llm)
         self.duplex = self.model.as_duplex(generate_audio=True)
         self.speech_completion=None
         if speech_completion:
@@ -225,7 +230,7 @@ class NativeEngine:
             from .speech_channel import install
             self.action_channel=install(self.duplex)
         self.profile = dict(model='Realtime-Venus-Audio', seed=42,
-            torch=torch.__version__, cuda=torch.version.cuda,tts_attention=tts_backend,
+            torch=torch.__version__, cuda=torch.version.cuda,tts_attention=tts_backend,inference_lora_fold=inference_fold,
             gpu=torch.cuda.get_device_name(), precision='bfloat16', attention='sdpa',
             input_sample_rate=16000, output_sample_rate=24000,
             system_prompt=system_prompt, decode_mode='sampling',

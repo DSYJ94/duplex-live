@@ -38,6 +38,7 @@ async def collect(a,*,british_composition=False,execution_context=None):
         admit(a);check=british_guarded
         training_source='b39ce3ebe167b059b67fa3d131978e5da7c41ac1'
         engine_options=dict(nonspoken_actions=True,speech_completion=True)
+    if getattr(a,'merge_lora',False):engine_options['merge_lora']=True
     check(a.lease,600)
     root=Path(a.root);arm=root/a.arm
     terminal=json.loads((arm/'training-terminal.json').read_text())
@@ -119,7 +120,7 @@ def combine(a):
 
 
 def parser():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--combine',action='store_true')
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--combine',action='store_true');p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--root',required=True);p.add_argument('--source',required=True)
     p.add_argument('--arm',choices=('main','control'))
     for name in ('model','lease','plan','timelines','approval','word-quality','old-plan','old-timelines','old-approval','voice-reference','voice-reference-sha256'):
