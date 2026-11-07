@@ -1,0 +1,16 @@
+{
+  "status": "QUOTA_WRITE_RECOVERED",
+  "failed_native_cache_job": "8177652",
+  "actual_error": "OSError errno122 Disk quota exceeded",
+  "complete_native_artifacts": 17,
+  "completed_native_artifacts_preserved": true,
+  "reclaimed_bytes": 65524328560,
+  "reclaimed_only": "17 verified immutable public Qwen3-32B reviewer cache shards, after complete semantic review",
+  "public_reviewer_revision": "9216db5781bf21249d130ec9da846c4624c16137",
+  "public_reviewer_receipt_and_pin_preserved": true,
+  "public_reviewer_weights_currently_cached": false,
+  "public_weights_can_be_rehydrated": true,
+  "all_native_weights_optimizer_RNG_data_receipts_preserved": true,
+  "small_write_pass": true,
+  "new_optimizer_updates": 0
+}

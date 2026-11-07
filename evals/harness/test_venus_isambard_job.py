@@ -26,7 +26,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         def terminate(self):self.returncode=0
         def wait(self,timeout=None):return self.returncode
     monkeypatch.setattr(job.subprocess,'Popen',Process)
-    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2,merge_lora=fold,semantic_sha='a'*64,semantic_root=None if stage!='retention-train' else '/review',new_cache='/new-cache',new_manifest_sha='b'*64))
+    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2,merge_lora=fold,semantic_sha='a'*64,semantic_root=None if stage!='retention-train' else '/review',new_cache='/new-cache',new_manifest_sha='b'*64,resume_cache='/prior-cache' if stage=='retention-cache' else None))
     native=[args for args in calls if args[0]=='apptainer']
     assert len(native)==expected
     assert all('--containall' in args and '--cleanenv' in args for args in native)
@@ -55,6 +55,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         assert native[0][native[0].index('-m')+1]=='training.venus.retention_cache'
         assert native[0][native[0].index('--semantic-sha')+1]=='a'*64
         assert '--checkpoint' not in native[0]
+        assert native[0][native[0].index('--resume-cache')+1]=='/prior-cache'
     elif stage in ('retention-qwen','retention-qwen-v2','retention-qwen-measured'):
         assert native[0][native[0].index('-m')+1]=='data.venus.retention_semantics_qwen'
         assert native[0][native[0].index('--model')+1]=='/public/reviewer'
