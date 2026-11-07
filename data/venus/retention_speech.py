@@ -52,9 +52,36 @@ def prepare():
                 outputs_require_complete_source_ASR_peak_and_teacher_alignment=True,training_approved=False)
 
 
-def execute(prepared,output):
+def inherited_sources(prepared,prior):
+    """Recover original bytes/receipts, never infer that a missing call finished."""
+    prior=Path(prior);ledger=prior/'ledger.json';old=json.loads(ledger.read_text())
+    rows=prepared['requests'];attempts=old['attempts'];verified=[]
+    if old['payload_sha256']!=canonical_file_payload(prepared) or not 0<len(attempts)<len(rows):
+        raise ValueError('Exact interrupted prefix required')
+    for index,a in enumerate(attempts):
+        row=rows[index];folder=prior/a['id'];raw=folder/'original.pcm';wav=folder/'original.wav'
+        if (a['id']!=row['id'] or a['payload_sha256']!=row['payload_sha256']
+                or a['voice_id']!=row['voice_id'] or a['model_id']!=MODEL or not a.get('request_id')
+                or sha(raw)!=a.get('original_pcm_sha256') or sha(wav)!=a.get('original_wav_sha256')):
+            raise ValueError('Ambiguous or incomplete original attempt; never repeat it')
+        with wave.open(str(wav)) as w:
+            if (w.getframerate(),w.getnchannels(),w.getsampwidth())!=(24000,1,2) or w.readframes(w.getnframes())!=raw.read_bytes():
+                raise ValueError('Original PCM/WAV differs')
+        verified.append(dict(original_attempt=dict(a),original_wav=str(wav.resolve()),
+            original_ledger_sha256=sha(ledger),original_bytes_verified=True,
+            recovered_after_local_bookkeeping_failure=a['status']!='COMPLETE',training_approved=False))
+    return verified,rows[len(attempts):]
+
+
+def canonical_file_payload(prepared):
+    # The frozen file uses this exact whitespace/encoding; no source relabelling.
+    return hashlib.sha256((json.dumps(prepared,indent=2)+'\n').encode()).hexdigest()
+
+
+def execute(prepared,output,prior=None):
     prepared=Path(prepared);p=json.loads(prepared.read_text());output=Path(output)
     if p!=prepare():raise ValueError('Exact committed prepared batch required')
+    inherited,rows=(inherited_sources(p,prior) if prior else ([],p['requests']))
     auth=json.loads(AUTH.read_text())
     if (auth['status']!='OWNER_INSTRUCTED_MORE_TRAINING_DATA' or auth['payload_sha256']!=sha(prepared)
             or auth['maximum_synthesis_calls']!=182 or auth['maximum_prepaid_character_debit']!=12746
@@ -75,7 +102,7 @@ def execute(prepared,output):
     subscription=json.loads(request('user/subscription')[0]);models=json.loads(request('models')[0])
     model=next(m for m in models if m['model_id']==MODEL and m['can_do_text_to_speech'])
     factor=model.get('token_cost_factor',1) or 1
-    required=math.ceil(p['characters']*factor)
+    required=math.ceil(sum(len(r['body']['text']) for r in rows)*factor)
     if factor!=1 or subscription.get('can_extend_character_limit') is not False or subscription['character_limit']-subscription['character_count']<required:
         raise ValueError('Entire batch must fit existing prepaid quota with overages disabled; no purchase')
     for voice in sorted({r['voice_id'] for r in p['requests']}):
@@ -83,17 +110,19 @@ def execute(prepared,output):
         if v['voice_id']!=voice or v.get('category') not in ('premade','professional') or sharing.get('rate',1)!=1:
             raise ValueError('Existing authorized stock/library voice required; no clone, addition or multiplier')
     claim_root=Path('runs/isambard-native-20261107/retention96-speech-claims');claim_root.mkdir(parents=True,exist_ok=True)
-    with (claim_root/(sha(prepared)+'.json')).open('x') as f:
+    suffix='' if not prior else '-unattempted-after-'+sha(Path(prior)/'ledger.json')
+    with (claim_root/(sha(prepared)+suffix+'.json')).open('x') as f:
         json.dump(dict(payload_sha256=sha(prepared),output=str(output.resolve()),at=datetime.now(timezone.utc).isoformat()),f)
     output.mkdir(parents=True,exist_ok=False)
-    ledger=dict(payload_sha256=sha(prepared),required=182,attempts=[],complete=False,
+    ledger=dict(payload_sha256=sha(prepared),required=182,new_requests_required=len(rows),
+                inherited_verified_sources=inherited,attempts=[],complete=False,
                 automatic_retries=0,training_approved=False,source_model=MODEL,
                 external_API_scope='New owner-authorized synthetic data production; active trainer/optimizer remain API0',
                 maximum_additional_cash_charge_usd=0,prepaid_characters_reserved=required)
     def save():
         tmp=output/'ledger.tmp';tmp.write_text(json.dumps(ledger,indent=2)+'\n');tmp.replace(output/'ledger.json')
     save()
-    for row in p['requests']:
+    for row in rows:
         attempt=dict(id=row['id'],status='RESERVED_OUTCOME_PENDING',payload_sha256=row['payload_sha256'],
                      voice_id=row['voice_id'],model_id=MODEL,characters=len(row['body']['text']),
                      conservative_usage_value_upper_usd=len(row['body']['text'])*RATE_UPPER)
@@ -109,19 +138,23 @@ def execute(prepared,output):
                 original_wav_sha256=sha(wav),seconds=len(values)/24000,peak=peak,peak_pass=peak<=.995,
                 independent_words='PENDING_ISAMBARD_ASR',naturalness='PENDING',provenance_class='closed-content',
                 provenance_authority='ADR0003 Amendment A; owner explicit new data instruction7Nov',training_approved=False)
-            save();print(json.dumps(dict(completed=len(ledger['attempts']),required=182,id=row['id'],peak_pass=peak<=.995)),flush=True)
+            (folder/'receipt.json').write_text(json.dumps(attempt,indent=2)+'\n')
+            save()
+            try:print(json.dumps(dict(completed=len(inherited)+len(ledger['attempts']),required=182,id=row['id'],peak_pass=peak<=.995)),flush=True)
+            except OSError:pass  # A progress-console failure must not repeat a completed paid request.
         except Exception as error:
             attempt.update(status='FAILED_OR_UNKNOWN_NO_RETRY',error_type=type(error).__name__);save()
             raise RuntimeError('Attempt preserved; never retry blindly or accept a subset') from None
+    if len(inherited)+len(ledger['attempts'])!=182:raise ValueError('Whole182 required, never a subset')
     ledger.update(complete=True,conservative_cost_upper_usd=p['conservative_cost_upper_usd'],qualified=False)
     save()
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=('prepare','execute'));p.add_argument('--prepared',required=True);p.add_argument('--output');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=('prepare','execute'));p.add_argument('--prepared',required=True);p.add_argument('--output');p.add_argument('--prior');a=p.parse_args()
     if a.stage=='prepare':
         out=Path(a.prepared)
         if out.exists():raise ValueError('Preserve previous prepared batches')
         result=prepare();out.write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps({k:result[k] for k in ('required_scenes','required_requests','characters','conservative_cost_upper_usd','maximum_additional_cash_charge_usd')}))
-    else:execute(a.prepared,a.output)
+    else:execute(a.prepared,a.output,a.prior)
