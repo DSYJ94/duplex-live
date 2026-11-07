@@ -1,0 +1,103 @@
+{
+  "status": "DIAGNOSTIC_NOT_SEMANTIC_APPROVAL",
+  "job": "8174573",
+  "alignment_report_sha256": "2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36",
+  "rows": [
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0001",
+      "timeline_sha256": "89d600e965957527ba392fee57bffd9acdff525624cd93cfd8e061f5dcd837c0",
+      "source_audio_sha256": "450ced9529d7cfc474ea4c7c994bf6c9c3cfac2a0b21771b5457abe999dcce59",
+      "word_end_evidence": [
+        {
+          "text": " ",
+          "start": 3.32,
+          "end": 3.4,
+          "loss": 0.6462554931640625
+        },
+        {
+          "text": "surroundings.",
+          "start": 3.4,
+          "end": 4.16,
+          "loss": 0.6665812272291917
+        }
+      ],
+      "original_native_speech_units": [
+        {
+          "offset": 0,
+          "text": "The ice should melt",
+          "final": false
+        },
+        {
+          "offset": 1,
+          "text": "as heat passes",
+          "final": false
+        },
+        {
+          "offset": 2,
+          "text": "into it from the",
+          "final": false
+        },
+        {
+          "offset": 3,
+          "text": "warmer surroundings.",
+          "final": false
+        },
+        {
+          "offset": 4,
+          "text": "",
+          "final": true
+        }
+      ],
+      "exact_reconstruction": true,
+      "empty_final": true,
+      "conclusion": "Empty final unit follows measured last word across the integer-second boundary; no word/timing edits justified by this flag alone."
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0002",
+      "timeline_sha256": "6e3e89cce7021b38667407a61035f15928a131a1f917a8192427c0a133f92b82",
+      "source_audio_sha256": "ed9bbc0f4bffe98e90c5589f2dc929bb2cf2f4edec5167c129384808a80cee88",
+      "word_end_evidence": [
+        {
+          "text": " ",
+          "start": 2.64,
+          "end": 2.7,
+          "loss": 0.43427276611328125
+        },
+        {
+          "text": "path.",
+          "start": 2.7,
+          "end": 3.12,
+          "loss": 0.9903884887695312
+        }
+      ],
+      "original_native_speech_units": [
+        {
+          "offset": 0,
+          "text": "You should expect to gain",
+          "final": false
+        },
+        {
+          "offset": 1,
+          "text": "height as you",
+          "final": false
+        },
+        {
+          "offset": 2,
+          "text": "walk along the path.",
+          "final": false
+        },
+        {
+          "offset": 3,
+          "text": "",
+          "final": true
+        }
+      ],
+      "exact_reconstruction": true,
+      "empty_final": true,
+      "conclusion": "Empty final unit follows measured last word across the integer-second boundary; no word/timing edits justified by this flag alone."
+    }
+  ],
+  "all96_review_still_running": true,
+  "originals_unchanged": true,
+  "gate_override": false
+}

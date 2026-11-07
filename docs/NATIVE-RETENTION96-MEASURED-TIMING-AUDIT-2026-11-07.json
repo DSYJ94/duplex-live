@@ -1,0 +1,2306 @@
+{
+  "status": "ALL96_TIMING_RECONSTRUCTION_PASS_NOT_SEMANTIC_APPROVAL",
+  "manifest_sha256": "240bd10edc04ea569c37a727f347bb27b3a854739e8805242e3911f87659e208",
+  "alignment_sha256": "2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36",
+  "scenes": 96,
+  "speak_actions": 132,
+  "empty_final_actions": 42,
+  "scenes_with_empty_final": 40,
+  "all_original_audio_words_timings_unchanged": true,
+  "independent_semantic_review_pending": true,
+  "training_approved": false,
+  "rows": [
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0000",
+      "timeline_sha256": "02a31929c204fde2882aaf1863048ef6a7b3ee3d244dee1005c26e6f6984af3f",
+      "speak_actions": [
+        {
+          "source_sha256": "c05c4176f5f826487e67bc9c11fac4f7e1e1cd7e031d14b7f7858a789a5c8e21",
+          "frame": 7,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "water.",
+            "start": 3.4,
+            "end": 3.8,
+            "loss": 0.7926718393961588
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0001",
+      "timeline_sha256": "89d600e965957527ba392fee57bffd9acdff525624cd93cfd8e061f5dcd837c0",
+      "speak_actions": [
+        {
+          "source_sha256": "450ced9529d7cfc474ea4c7c994bf6c9c3cfac2a0b21771b5457abe999dcce59",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "surroundings.",
+            "start": 3.4,
+            "end": 4.16,
+            "loss": 0.6665812272291917
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0002",
+      "timeline_sha256": "6e3e89cce7021b38667407a61035f15928a131a1f917a8192427c0a133f92b82",
+      "speak_actions": [
+        {
+          "source_sha256": "ed9bbc0f4bffe98e90c5589f2dc929bb2cf2f4edec5167c129384808a80cee88",
+          "frame": 6,
+          "unit_count": 4,
+          "empty_final": true,
+          "last_word": {
+            "text": "path.",
+            "start": 2.7,
+            "end": 3.12,
+            "loss": 0.9903884887695312
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0003",
+      "timeline_sha256": "87f838415346beee392398fe4bdacd17f210090cdd6e43e83c84162ac4b797b8",
+      "speak_actions": [
+        {
+          "source_sha256": "39dfd220f91b36dcfcd73eef2da37c4e56beffd22454b7876bbeec40075aa392",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "carry.",
+            "start": 4.14,
+            "end": 4.54,
+            "loss": 0.6898097991943359
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0004",
+      "timeline_sha256": "c86a5e46d87f726bf81925b3729cc678a33c39f8eb11ef56927e97ac1ba25ce5",
+      "speak_actions": [
+        {
+          "source_sha256": "245fdfcfe8335974ab9f35e12ca767731b0c306ae8e552382bb126b71f5ed734",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "handling.",
+            "start": 3.84,
+            "end": 4.32,
+            "loss": 0.5089622073703342
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0005",
+      "timeline_sha256": "01a3a2df041232b9c13dbf40fe30cf5c5806aeb737bc0ffafb0faaa79ceaa2f5",
+      "speak_actions": [
+        {
+          "source_sha256": "17c33db2994f0866f58032a50643ab7f888641f53cc00fea0ba2661e5bd75b94",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "spill.",
+            "start": 4.14,
+            "end": 4.52,
+            "loss": 0.654876708984375
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0006",
+      "timeline_sha256": "e7d41e73bd631d1c952bb5278202e2b1a6cb206980bbc1d81a466765d289b203",
+      "speak_actions": [
+        {
+          "source_sha256": "6cccd3db02ce4d03cc82cdacc112a467f4c97109c907baf16a0ec954c49573c3",
+          "frame": 6,
+          "unit_count": 4,
+          "empty_final": true,
+          "last_word": {
+            "text": "paper.",
+            "start": 2.66,
+            "end": 3.04,
+            "loss": 0.7221978505452474
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0007",
+      "timeline_sha256": "3c47e4a7046ae5aa14c4c591036a275274ab8c4dbd6eee240032e14bc294d1d8",
+      "speak_actions": [
+        {
+          "source_sha256": "67e9793504c5cd61718fed78304ee556911f4b4b213d915f3492690c2d02fe01",
+          "frame": 4,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "weight.",
+            "start": 3.4,
+            "end": 3.72,
+            "loss": 0.6122774396623883
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0008",
+      "timeline_sha256": "5b132c235370d997cd99d1b61dd9444e248150b34453de7b216be9ed605195fc",
+      "speak_actions": [
+        {
+          "source_sha256": "76063504ee18315288a76a620a43b06cd1f1f3df1f277fbc293979ae0ef4fd62",
+          "frame": 5,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 3.32,
+            "end": 3.48,
+            "loss": 0.5077075958251953
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0009",
+      "timeline_sha256": "827b5221cefed287f7b949685fe35c2bbb8252d5d21bd2325db8eeb4bef14843",
+      "speak_actions": [
+        {
+          "source_sha256": "4b181083540c591a7b69d7dd8eac65932df230618837c7086d6c49a807759752",
+          "frame": 6,
+          "unit_count": 3,
+          "empty_final": false,
+          "last_word": {
+            "text": "up.",
+            "start": 2.82,
+            "end": 3.0,
+            "loss": 0.883764902750651
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0010",
+      "timeline_sha256": "e1de1f64191a5b911928a7108a8efb19c473f87f70d9c3b986dc47a1ecc03ed4",
+      "speak_actions": [
+        {
+          "source_sha256": "7fe1c5b3aa3c9bbb6084ca661594eb43373ca197bf8aef929f69e39cfdf0e8dd",
+          "frame": 4,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "remains.",
+            "start": 3.3,
+            "end": 3.92,
+            "loss": 0.7589168548583984
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0011",
+      "timeline_sha256": "0f89fc4314b80b8ac470d0b402bec12db68dbbc4e8f1815edf4967565d6fc2ab",
+      "speak_actions": [
+        {
+          "source_sha256": "7c88824963943df1d0eaea420ef1903d23355e60e817631dcb8ee17123a11ba0",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "available.",
+            "start": 3.98,
+            "end": 4.52,
+            "loss": 0.6489427566528321
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0012",
+      "timeline_sha256": "2de56dc4fcf9f6c2a8b094dac90c376067ac3141b29feb227597dd366280b1d2",
+      "speak_actions": [
+        {
+          "source_sha256": "9185386d35202b6095944de5232e7536a6997ac1ac5482670f72836c4bfd87a0",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "keep.",
+            "start": 4.2,
+            "end": 4.5,
+            "loss": 0.605801010131836
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0013",
+      "timeline_sha256": "73b81c86aa73f10a6af73a108e47ab5bdbc14ee3bfb82059eea5d3ff10d7e4ed",
+      "speak_actions": [
+        {
+          "source_sha256": "4d7a75e091235259dcef1908345867a972dd39e8546ae210316d7ab1a0a3dd5a",
+          "frame": 4,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "together.",
+            "start": 3.14,
+            "end": 3.6,
+            "loss": 0.6100446912977431
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0014",
+      "timeline_sha256": "12c23235722265d068fe38333e3c694c537396b93e0efb6cdd437133daae7609",
+      "speak_actions": [
+        {
+          "source_sha256": "4e56604b5d1cbac5c5175283e1069e6409486e9f4a8845e40b2059624dfe369e",
+          "frame": 6,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 4.62,
+            "end": 4.8,
+            "loss": 0.5045979817708334
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0015",
+      "timeline_sha256": "56400790b10300ecdbee50669792f839a2358cb61bf69b64e5e795900da1a70f",
+      "speak_actions": [
+        {
+          "source_sha256": "f818ca9419304a6fe951bdc2f1131270a9df6a59487df5dac8edad2848d24195",
+          "frame": 4,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "box.",
+            "start": 3.48,
+            "end": 3.9,
+            "loss": 0.7772164344787598
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0016",
+      "timeline_sha256": "cb918bc1719a3a0de41c30f4482364063e3faeb843f6105942e79e4cd954d6c3",
+      "speak_actions": [
+        {
+          "source_sha256": "036eeb05951e0946f6c46930a4d48ff884868c77e28adf920c3d49838b493f1a",
+          "frame": 5,
+          "unit_count": 4,
+          "empty_final": true,
+          "last_word": {
+            "text": "arrival.",
+            "start": 2.54,
+            "end": 3.06,
+            "loss": 0.772526741027832
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0017",
+      "timeline_sha256": "725ff948c858aaa49170d079e65e1cb5942c55b2bebf28cf78d6d524176045c5",
+      "speak_actions": [
+        {
+          "source_sha256": "d9abcfc63c05dc721eea8febb9961a2a04fa41c0cdf0d91f7844255abec153b4",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "parts.",
+            "start": 4.22,
+            "end": 4.68,
+            "loss": 0.6785090764363607
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0018",
+      "timeline_sha256": "81e48701c966da6f5642c961f8161cedf99cd9544f383296326fc91464d33305",
+      "speak_actions": [
+        {
+          "source_sha256": "21d2393bb786fd549d21086fb3a53f4f273be7cd8ac1fa66e007a23429cc9dee",
+          "frame": 4,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "heat.",
+            "start": 3.44,
+            "end": 3.76,
+            "loss": 0.5673248291015625
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0019",
+      "timeline_sha256": "fd17a64edfb4e243cf6d0bf107c2ea5718047c4b93df55f9f38e34abc22ed215",
+      "speak_actions": [
+        {
+          "source_sha256": "62c2638efdcc9364854d27269c6a0f3671ee29e65162ebdded0f8cadcc1eeb68",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "remove.",
+            "start": 3.54,
+            "end": 4.019,
+            "loss": 0.6530118669782367
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0020",
+      "timeline_sha256": "ac48de5fc9f68c041e97d3033204f01ed130ec210f96e5a3b24ed290847bef13",
+      "speak_actions": [
+        {
+          "source_sha256": "502b14be0c2b95ae1c1115a80e9dd88eb7f3f865d1606f68714181b867731784",
+          "frame": 3,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "go.",
+            "start": 3.02,
+            "end": 3.3,
+            "loss": 0.8118387858072916
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0021",
+      "timeline_sha256": "33fb3632b77f15d1a0c3b88b2dcbd9b68fdf965c49868d522b05c76083f0cc1a",
+      "speak_actions": [
+        {
+          "source_sha256": "92098bda10c1adc53805c9f62f9a260eb21e80c5a4ef91bf507d214e1ae2f978",
+          "frame": 3,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "see.",
+            "start": 3.28,
+            "end": 3.56,
+            "loss": 0.6090703010559082
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0022",
+      "timeline_sha256": "7cffa7a3db70a866cb5ef4d984dfaba5dfa0154a0b9a84be88f446956b50246d",
+      "speak_actions": [
+        {
+          "source_sha256": "60f4b96f3d16727745814805cb7b562ff3005eb6a9806b4d35aed10db785b66c",
+          "frame": 6,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "again.",
+            "start": 5.0,
+            "end": 5.34,
+            "loss": 0.4575490951538086
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0023",
+      "timeline_sha256": "b651265f1a1bba5ad07fae6e776b7c14c9a349493d06a341fe4fd45d4dd8db9b",
+      "speak_actions": [
+        {
+          "source_sha256": "e9e7305d4b3559bfe35dacd64d161f1f4867e9f93a2a2f512a4a5af7bc31a77f",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "compatible.",
+            "start": 3.92,
+            "end": 4.52,
+            "loss": 0.5506182583895597
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0024",
+      "timeline_sha256": "3ebaae502251fc813e22be5bf6e7fb96ad3b56f71528cfd87f7d72bf15d6defb",
+      "speak_actions": [
+        {
+          "source_sha256": "e619ec3e2906f2da56f8ff95c8e667e74d8401606b6fd4a1aea22418842ff2bf",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "quickly.",
+            "start": 4.64,
+            "end": 5.08,
+            "loss": 0.5546762943267822
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0025",
+      "timeline_sha256": "98b06943c324f0b18dd3e3ba10247112d935b665e10c642e063ca82e35afe08d",
+      "speak_actions": [
+        {
+          "source_sha256": "3d9ced39ebb21b2c995cf1a2672f750da851488589398c7178c8d61f1acdc2bf",
+          "frame": 4,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "first.",
+            "start": 4.86,
+            "end": 5.32,
+            "loss": 0.6893440882364908
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0026",
+      "timeline_sha256": "737a1a5916084d146dc0d7dae3da074d942feac89b3ebe2b86c2a676d41e0df9",
+      "speak_actions": [
+        {
+          "source_sha256": "f1a1f0b6754978424c68cd9fe9281d61fc3f997edd5001351761f4d6e223073f",
+          "frame": 5,
+          "unit_count": 8,
+          "empty_final": true,
+          "last_word": {
+            "text": "first.",
+            "start": 6.88,
+            "end": 7.3,
+            "loss": 0.526519775390625
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0027",
+      "timeline_sha256": "41c18f185fdce1240380b9e059348d7a4fd8047e6e4cc96da89065efaabbad59",
+      "speak_actions": [
+        {
+          "source_sha256": "896c821b97794b853e915b500d6997bc571ff81141122ffcfe7558c68e17cf14",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "everywhere.",
+            "start": 5.32,
+            "end": 5.84,
+            "loss": 0.6836518374356356
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0028",
+      "timeline_sha256": "6d8b0873863b5bfce7d419b96e17fe155f690133813a8c40fb76ea714e134e05",
+      "speak_actions": [
+        {
+          "source_sha256": "0b509ea01d5c72a7cd85763c9d6f6ee4bc96952ef6bc54e8fba1b2d022bd4f0a",
+          "frame": 3,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "use.",
+            "start": 3.5,
+            "end": 3.84,
+            "loss": 0.7970504760742188
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0029",
+      "timeline_sha256": "05d2e71409aa4e07a37b178882bdb302291af8f89c4c325ed332c7d0de09e22c",
+      "speak_actions": [
+        {
+          "source_sha256": "46a9f3ade2b0aae1ccd59fdaa2d052d94481ce7878b580bdac8c93b29961540a",
+          "frame": 3,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "behaviour.",
+            "start": 4.04,
+            "end": 4.58,
+            "loss": 0.6390687942504882
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0030",
+      "timeline_sha256": "a948b7c03b862d81241da720e5b32746ddc7ef56b07267cfd96ec0368e52e717",
+      "speak_actions": [
+        {
+          "source_sha256": "afdbcedbfd2212b05c125ad65c6404de389a22939538affb3e3a6bdd9984c983",
+          "frame": 4,
+          "unit_count": 7,
+          "empty_final": true,
+          "last_word": {
+            "text": "problem.",
+            "start": 5.72,
+            "end": 6.12,
+            "loss": 0.7143919467926025
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0031",
+      "timeline_sha256": "0a6471ee4bb7bd5a5c2b6092c8b32e95d9aa4414ea3eba5d2607b33919b6a123",
+      "speak_actions": [
+        {
+          "source_sha256": "281fc80ff5509bbc5601ac8eb8b3a5d2a0bd82b50dfb4d5e73c20b43436498fc",
+          "frame": 3,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "work.",
+            "start": 4.24,
+            "end": 4.6,
+            "loss": 0.6213813781738281
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0032",
+      "timeline_sha256": "9fcf76830fa742f1c745385ced071ddda74c731bba00335511d0572d7539a4d4",
+      "speak_actions": [
+        {
+          "source_sha256": "d69be2ea46b7feda0cf2c242999b5fb26d1c6af67d7270132b65b2a0745e5635",
+          "frame": 3,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "turn.",
+            "start": 4.58,
+            "end": 4.96,
+            "loss": 0.7768955230712891
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0033",
+      "timeline_sha256": "57e9f5cacff4568f147767560144590b5da22ba3eab614a2e0c9735df2b76674",
+      "speak_actions": [
+        {
+          "source_sha256": "925eba39ae6946d5849528d44f125c9d7b666465bf0d8d97a6d26b1f19fb5716",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "together.",
+            "start": 5.04,
+            "end": 5.48,
+            "loss": 0.5082530975341797
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0034",
+      "timeline_sha256": "3c0cb9bc04607f3469e920b46002ac5c6c6d1a2644414f552a4992152d350811",
+      "speak_actions": [
+        {
+          "source_sha256": "991446f8e46ac6f52e77acff3704b63fed7c947d541b6c69ac679ad7d81f1670",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "damaged.",
+            "start": 5.12,
+            "end": 5.64,
+            "loss": 0.5839352607727051
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0035",
+      "timeline_sha256": "9f7e941d73009e7e0cbbc9702b6cc2ec48373d1988e1b02090e98fefaaf404a6",
+      "speak_actions": [
+        {
+          "source_sha256": "ae52b90d2581cd72e6ffd0da7e8f0304df091c932cf7378fbda93c26c83e41ba",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 5.06,
+            "end": 5.2,
+            "loss": 0.6159000396728516
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0036",
+      "timeline_sha256": "02206e9c843a69ae54782a1036bdaf5155a4b6fe26df9dc630cc0aa148d62062",
+      "speak_actions": [
+        {
+          "source_sha256": "1325f254d0acf9f7630544730ec49d48e0b27de4125465759e5775138d6d5083",
+          "frame": 4,
+          "unit_count": 8,
+          "empty_final": true,
+          "last_word": {
+            "text": "time.",
+            "start": 6.72,
+            "end": 7.12,
+            "loss": 0.7541290283203125
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0037",
+      "timeline_sha256": "1a5d1c709ba18d09349d236c30c27190bdcce73cea4e08043ef540c25b6974f5",
+      "speak_actions": [
+        {
+          "source_sha256": "14b273aabaa31d3618622642d3768d46a5dc6a6084e332bf4f4e5c42b2419802",
+          "frame": 5,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "name.",
+            "start": 3.58,
+            "end": 3.92,
+            "loss": 0.6863471984863281
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0038",
+      "timeline_sha256": "23b1cf7bbc3345a02a6a17f4394bf48232ff0cbcdfb9298947a358360ea89ffc",
+      "speak_actions": [
+        {
+          "source_sha256": "2c74f6d15184eb946c501d6570c6e024b7ef7678f5e124caff1f845d71c17224",
+          "frame": 4,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "succeed.",
+            "start": 4.48,
+            "end": 5.06,
+            "loss": 0.4515230655670166
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0039",
+      "timeline_sha256": "b857b49e3e2f2eac41d68a8a41519c02bd2050c9276eb2ed764f250a1002f614",
+      "speak_actions": [
+        {
+          "source_sha256": "0efb7add83c900a8b94395d49c96b47a618aca904e2033fef7d7122c6826e218",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "resources.",
+            "start": 4.62,
+            "end": 5.28,
+            "loss": 0.5065027236938476
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0040",
+      "timeline_sha256": "1bfdb39bc1852ed14cf30cf7817dc32eaf68765a274c92618f36d4fd6666dd23",
+      "speak_actions": [
+        {
+          "source_sha256": "0624d2eef0cfb126ea9a377742c174f260cfea426cf35866ef8fd0e970495164",
+          "frame": 4,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "examples.",
+            "start": 4.88,
+            "end": 5.56,
+            "loss": 0.5978675418429904
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0041",
+      "timeline_sha256": "ac7201a0fb88035607c74f25a3f553dc99eb71a82d8422c0411ddfef24b78a7a",
+      "speak_actions": [
+        {
+          "source_sha256": "f73581451fc971b5f923161217b55992e4cc428267ec8329fe1b2f22e3c1a990",
+          "frame": 5,
+          "unit_count": 7,
+          "empty_final": false,
+          "last_word": {
+            "text": "generalisation.",
+            "start": 6.0,
+            "end": 6.92,
+            "loss": 0.5469839731852214
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0042",
+      "timeline_sha256": "13052d530eb6ecb7893accdeb596428172c39d936d1630d7234ae8dd4d516ae0",
+      "speak_actions": [
+        {
+          "source_sha256": "4428b5318f9ff3d74dbb22ec4d903f8f2180b91cbb67d9fd14c33f7c90444b59",
+          "frame": 4,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 4.76,
+            "end": 4.92,
+            "loss": 0.6289990743001302
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0043",
+      "timeline_sha256": "3e008688f6fece8f620e2e89c9363b0a3c79ca48170bd1c56fe7ebed62acaf93",
+      "speak_actions": [
+        {
+          "source_sha256": "4477326839bef078cc01df5dee4e233f9b455887ffc35b0be0e24f6e763c70ec",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "update.",
+            "start": 4.22,
+            "end": 4.68,
+            "loss": 0.5893094199044364
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0044",
+      "timeline_sha256": "73df02c0190eccaf6a0783816d057bdbaa8c04fa981683c156692df27ca5591a",
+      "speak_actions": [
+        {
+          "source_sha256": "6b3b2354988069f567ec6502cd03602c04ded2e05ffbd7d0a28db65104bdc5eb",
+          "frame": 5,
+          "unit_count": 7,
+          "empty_final": true,
+          "last_word": {
+            "text": "nondeterministic.",
+            "start": 5.02,
+            "end": 6.06,
+            "loss": 0.6244211757884306
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0045",
+      "timeline_sha256": "d8c9fb271b14026b0549d60deaf542ab8fbf5d5698e9adc48e5e1b71a0369303",
+      "speak_actions": [
+        {
+          "source_sha256": "9014cb69618db2483071efc6288ac15a051c1464fbef681fb82b1ad9fa5fc8b4",
+          "frame": 5,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "on.",
+            "start": 4.04,
+            "end": 4.22,
+            "loss": 0.6203460693359375
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0046",
+      "timeline_sha256": "3386bd68c2970ca6bf24cf3815ef3df9e6060e9bd0d7fa9f4395e23528f97183",
+      "speak_actions": [
+        {
+          "source_sha256": "57b26b89352fee92ef9c7fb580e5fa79a21bbd986427976286642055fdf81ab0",
+          "frame": 5,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "accurately.",
+            "start": 5.28,
+            "end": 5.9,
+            "loss": 0.6014501398259943
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0047",
+      "timeline_sha256": "891de82f688e266ec94d12730f1744e2e19259e862959569ab8fd09e8e1cd081",
+      "speak_actions": [
+        {
+          "source_sha256": "cef2fc68986fdcc950891ee64fc892b95f3b4192f55909c38bcc3bd7fe4fbbf0",
+          "frame": 6,
+          "unit_count": 7,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 6.02,
+            "end": 6.18,
+            "loss": 0.6014900207519531
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0048",
+      "timeline_sha256": "f4e31966df0e3e83e5d38692c2e4d7c916d747193339de30cea1166a56a050dd",
+      "speak_actions": [
+        {
+          "source_sha256": "2449740847cfddd6cd786d0c49353c2c7b3dde7a4dae4c3d3fe007a8850098df",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "triangle.",
+            "start": 1.58,
+            "end": 2.18,
+            "loss": 0.7281477186414931
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0049",
+      "timeline_sha256": "257019f27efdde5ca4e4d71ae29f32f7eed0547fd10ba43d47c7de68a4ded81e",
+      "speak_actions": [
+        {
+          "source_sha256": "1a23a922d10bd3367a7d10f8392a10733020682fd8d82c5cd5b792bf8a014038",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "stripe.",
+            "start": 1.6,
+            "end": 2.0,
+            "loss": 0.665114266531808
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0050",
+      "timeline_sha256": "e48c3ef4b47aa05507f34dd71f6be2dbd4f7d1780fde2a95069d0307192441d1",
+      "speak_actions": [
+        {
+          "source_sha256": "58305e7f5cd152a3bbe7f6e5e406f65bc055b1b95e4626f46aa9cf5e07066102",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "diamond.",
+            "start": 1.4,
+            "end": 1.94,
+            "loss": 0.7575807571411133
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0051",
+      "timeline_sha256": "b260b7aa97e41ccfd8aa0186632ca052cf46e8ad07a89979a954677c2b463a1f",
+      "speak_actions": [
+        {
+          "source_sha256": "ddb444b0431c8d29984b8db7e8d15a94b06fe11ae5444792906dec8d37b5392c",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "square.",
+            "start": 1.48,
+            "end": 1.96,
+            "loss": 0.854142325265067
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0052",
+      "timeline_sha256": "0ae0a0fa0f99b3ca3257418bb7459a84b0bf4c07613fc5b69f5060ecb5a8e3be",
+      "speak_actions": [
+        {
+          "source_sha256": "322b29aca14eda14c07d4e8b72d3fd698dbf413fb1d9dd89ae1eddae5002d8ce",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "oval.",
+            "start": 1.86,
+            "end": 2.24,
+            "loss": 0.9338973999023438
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0053",
+      "timeline_sha256": "88eac9a7efdbe48ce9af02612f555a3a3dc27a977cf1c796a1a819b3c0eb2138",
+      "speak_actions": [
+        {
+          "source_sha256": "7ad6d71eb5fefe1e282778830aec9fb627b9903db9d01d8c7db76bffc9c9898f",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "circle.",
+            "start": 1.58,
+            "end": 2.02,
+            "loss": 0.8798670087541852
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0054",
+      "timeline_sha256": "9af87ce1524d98aee5a63cbd316de925475cad07efe822b39919b89e06c05618",
+      "speak_actions": [
+        {
+          "source_sha256": "b183d6cfaa0376802c01904617f0df979838aacaf50ae49dece75021e568387c",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "star.",
+            "start": 1.56,
+            "end": 1.96,
+            "loss": 0.9067241668701171
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0055",
+      "timeline_sha256": "eb444c852200590f9dcb224f8258f9cdfa7b4568819e1f0130c7b13556019251",
+      "speak_actions": [
+        {
+          "source_sha256": "fab6cca52ac13c8c55f9f1b28f7a65e5a61d32d36b3393f60ab4085da56b636c",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "crescent.",
+            "start": 1.5,
+            "end": 2.0,
+            "loss": 0.5478483835856119
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0056",
+      "timeline_sha256": "7ac0909c2ece69b831a64fce67e300991c798d6777ea5c1528be4965134a842b",
+      "speak_actions": [
+        {
+          "source_sha256": "924bd00e91a2744df94488a1a64851398d2cd2fbf9a42677e4be2f4844ae054b",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "stripe.",
+            "start": 1.78,
+            "end": 2.18,
+            "loss": 0.6057158878871373
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0057",
+      "timeline_sha256": "0e44e090ec885e4a7a980b658909ae861be9aa9e99e5742aa87430ce86f40849",
+      "speak_actions": [
+        {
+          "source_sha256": "72c3c75b8c394b6703aeb2ef2b55bd0c6200178c9a32b541fcc7511b55249cff",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "diamond.",
+            "start": 1.5,
+            "end": 2.02,
+            "loss": 0.9237747192382812
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0058",
+      "timeline_sha256": "5be0ab497757fd91de286ccbd9685f4958182607ba70f1cfc70fafcd6398761e",
+      "speak_actions": [
+        {
+          "source_sha256": "6bcca76901bffd3c1898f3119a8d06aecad6afd8b6b34e3081b54f647d71ddc3",
+          "frame": 20,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "square.",
+            "start": 1.42,
+            "end": 1.86,
+            "loss": 0.9512672424316406
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0059",
+      "timeline_sha256": "4f9417c7095ba6f351b1db4f8d8cd95538ffc339b7c0a41ca1e92bdb9c40828b",
+      "speak_actions": [
+        {
+          "source_sha256": "dc5a4873ed14090c8bdf68c5d7d72897c51d69dc1e651931453cf277d76e9f56",
+          "frame": 20,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "oval.",
+            "start": 1.64,
+            "end": 2.02,
+            "loss": 1.0589962005615234
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0060",
+      "timeline_sha256": "09c45a4d07d4a7210513a069a31298219a1c224a7d817ba6abf235fe4186558b",
+      "speak_actions": [
+        {
+          "source_sha256": "9185386d35202b6095944de5232e7536a6997ac1ac5482670f72836c4bfd87a0",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "keep.",
+            "start": 4.2,
+            "end": 4.5,
+            "loss": 0.605801010131836
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "70c1ab03c74ec66d5d6f2f1f49f0e4bce5189dcd1e28abc27dee78efcbea0f53",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": false,
+          "last_word": {
+            "text": "circle.",
+            "start": 2.04,
+            "end": 2.48,
+            "loss": 0.7793565477643695
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0061",
+      "timeline_sha256": "3d0a8e1699ca3519e78c31199c833f3b10d18998ccd51e315c041d35e467a654",
+      "speak_actions": [
+        {
+          "source_sha256": "4d7a75e091235259dcef1908345867a972dd39e8546ae210316d7ab1a0a3dd5a",
+          "frame": 14,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "together.",
+            "start": 3.14,
+            "end": 3.6,
+            "loss": 0.6100446912977431
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "9dc587eabd3ae3cf6df9385e73b23377cafb04af991284e38ce82f2a964e50be",
+          "frame": 43,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "star.",
+            "start": 1.6,
+            "end": 1.98,
+            "loss": 0.9515819549560547
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0062",
+      "timeline_sha256": "84f544f0299e95f52ed3cdbc8db4bd58a7d03a210c33afed1eeca55b48fb3d85",
+      "speak_actions": [
+        {
+          "source_sha256": "4e56604b5d1cbac5c5175283e1069e6409486e9f4a8845e40b2059624dfe369e",
+          "frame": 16,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 4.62,
+            "end": 4.8,
+            "loss": 0.5045979817708334
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "1a8e0cf32cc779430e31014da9a01c2f0b8463dfcef30aa1d7ef6f8bd66182aa",
+          "frame": 43,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "crescent.",
+            "start": 1.46,
+            "end": 1.98,
+            "loss": 0.6090848710801866
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0063",
+      "timeline_sha256": "f670d571b6275ab928735f5faa2e1c53cb9329d91d9f654f8ef4627354b26f43",
+      "speak_actions": [
+        {
+          "source_sha256": "f818ca9419304a6fe951bdc2f1131270a9df6a59487df5dac8edad2848d24195",
+          "frame": 14,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "box.",
+            "start": 3.48,
+            "end": 3.9,
+            "loss": 0.7772164344787598
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "ef09e2f79dee1cb294633b3eebe1d0e88fb2498cf05930a0124295051364ad6a",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "triangle.",
+            "start": 1.5,
+            "end": 2.06,
+            "loss": 0.7781795925564237
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0064",
+      "timeline_sha256": "e8dce542b37568bc7216a622cd3e9688253bfdb4bbcc4f1e4be6ac9c715dfb96",
+      "speak_actions": [
+        {
+          "source_sha256": "036eeb05951e0946f6c46930a4d48ff884868c77e28adf920c3d49838b493f1a",
+          "frame": 15,
+          "unit_count": 4,
+          "empty_final": true,
+          "last_word": {
+            "text": "arrival.",
+            "start": 2.54,
+            "end": 3.06,
+            "loss": 0.772526741027832
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "8c4437381fb35b1d724a9ead4c20720c5d9cb022f4003d579afa758241b192e6",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "diamond.",
+            "start": 1.5,
+            "end": 2.04,
+            "loss": 0.6860935688018799
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0065",
+      "timeline_sha256": "f59d7a8bda6433ebc073e9987dd3264254fa953e716bc7978cd7db28d2d52ded",
+      "speak_actions": [
+        {
+          "source_sha256": "d9abcfc63c05dc721eea8febb9961a2a04fa41c0cdf0d91f7844255abec153b4",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "parts.",
+            "start": 4.22,
+            "end": 4.68,
+            "loss": 0.6785090764363607
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "25625733b44803453515d706565c20d37ba5713d5672413184292e888e6b9829",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "square.",
+            "start": 1.58,
+            "end": 2.04,
+            "loss": 0.7913311549595424
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0066",
+      "timeline_sha256": "70814fffe53ba501baa62077aa96fb4cfcba99a93725c349fabebb711d3c6972",
+      "speak_actions": [
+        {
+          "source_sha256": "21d2393bb786fd549d21086fb3a53f4f273be7cd8ac1fa66e007a23429cc9dee",
+          "frame": 14,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "heat.",
+            "start": 3.44,
+            "end": 3.76,
+            "loss": 0.5673248291015625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "18e124d4d5ee7222e1024ab78fd1e3d7adb374b06a3851a17812fdeaf1346c89",
+          "frame": 43,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "oval.",
+            "start": 1.56,
+            "end": 1.94,
+            "loss": 0.9453960418701172
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0067",
+      "timeline_sha256": "f2f6348e2a92d5416491ac3d715ec7cdb4af2d55a475ec5770b1da8323e9b12f",
+      "speak_actions": [
+        {
+          "source_sha256": "62c2638efdcc9364854d27269c6a0f3671ee29e65162ebdded0f8cadcc1eeb68",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "remove.",
+            "start": 3.54,
+            "end": 4.019,
+            "loss": 0.6530118669782367
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "0d907b1c3483ce8f2f32036b630d07b20592290b8e96d533cc31445aed821030",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "circle.",
+            "start": 1.52,
+            "end": 2.02,
+            "loss": 0.941474369594029
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0068",
+      "timeline_sha256": "ae69a5c4ce9c4c52bd35dab10f98f917ca59c1a57a207f0cce95ec158fa08b64",
+      "speak_actions": [
+        {
+          "source_sha256": "502b14be0c2b95ae1c1115a80e9dd88eb7f3f865d1606f68714181b867731784",
+          "frame": 13,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "go.",
+            "start": 3.02,
+            "end": 3.3,
+            "loss": 0.8118387858072916
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "1be4adfa6093a114bc9aba3beff97e3746cc8e071574d93f66a694db77acc9b7",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "star.",
+            "start": 1.88,
+            "end": 2.24,
+            "loss": 0.8957313537597656
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0069",
+      "timeline_sha256": "442aab7dc003d56c01f00dad9f148ee2035ef1199876b80378fbee6270372d34",
+      "speak_actions": [
+        {
+          "source_sha256": "92098bda10c1adc53805c9f62f9a260eb21e80c5a4ef91bf507d214e1ae2f978",
+          "frame": 13,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "see.",
+            "start": 3.28,
+            "end": 3.56,
+            "loss": 0.6090703010559082
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "f5a7211b4323b18f16978ea2bffd201accf1c08ea15590da742b92927f238532",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "crescent.",
+            "start": 1.56,
+            "end": 2.06,
+            "loss": 0.6012484232584635
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0070",
+      "timeline_sha256": "85d0b284325c562ca6fe2e17aaf888fd348e5cfb91a7309829b0de0f92068a03",
+      "speak_actions": [
+        {
+          "source_sha256": "60f4b96f3d16727745814805cb7b562ff3005eb6a9806b4d35aed10db785b66c",
+          "frame": 15,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "again.",
+            "start": 5.0,
+            "end": 5.34,
+            "loss": 0.4575490951538086
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "b96e51ea40e33e511513bd582827c7469c1faecda702a5766f80e8b1b3e3cb54",
+          "frame": 43,
+          "unit_count": 3,
+          "empty_final": true,
+          "last_word": {
+            "text": "triangle.",
+            "start": 1.5,
+            "end": 2.04,
+            "loss": 0.8780159420437283
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0071",
+      "timeline_sha256": "056ae80b5e2b462878308f2101cab43660fe909097d93a90f29457c9771983b0",
+      "speak_actions": [
+        {
+          "source_sha256": "e9e7305d4b3559bfe35dacd64d161f1f4867e9f93a2a2f512a4a5af7bc31a77f",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": true,
+          "last_word": {
+            "text": "compatible.",
+            "start": 3.92,
+            "end": 4.52,
+            "loss": 0.5506182583895597
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "47eb6e676f815d08a276f3da1129a7e733d10ecab3caeae23599275d3dfd072e",
+          "frame": 43,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "stripe.",
+            "start": 1.54,
+            "end": 1.92,
+            "loss": 0.639906474522182
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0072",
+      "timeline_sha256": "693648258f6720b4402595fa3d3da600bd7aa8ad6ce982cebc899efb3f929462",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "e619ec3e2906f2da56f8ff95c8e667e74d8401606b6fd4a1aea22418842ff2bf",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "quickly.",
+            "start": 4.64,
+            "end": 5.08,
+            "loss": 0.5546762943267822
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0073",
+      "timeline_sha256": "893ff2959c4d8e06e580deca0ac33b970de9e503b70f8b0e4dd147cb7ad8fd73",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "3d9ced39ebb21b2c995cf1a2672f750da851488589398c7178c8d61f1acdc2bf",
+          "frame": 15,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "first.",
+            "start": 4.86,
+            "end": 5.32,
+            "loss": 0.6893440882364908
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0074",
+      "timeline_sha256": "6aa5c03215b7ebe3720e394e62d1379552e4b90df99a9ed3e2ec5f3b16aee861",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "f1a1f0b6754978424c68cd9fe9281d61fc3f997edd5001351761f4d6e223073f",
+          "frame": 16,
+          "unit_count": 8,
+          "empty_final": true,
+          "last_word": {
+            "text": "first.",
+            "start": 6.88,
+            "end": 7.3,
+            "loss": 0.526519775390625
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0075",
+      "timeline_sha256": "bca9eb42392256fc92cf9205ee15b62858c3abb2e3e5ba24b095f387c89d14b5",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "896c821b97794b853e915b500d6997bc571ff81141122ffcfe7558c68e17cf14",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "everywhere.",
+            "start": 5.32,
+            "end": 5.84,
+            "loss": 0.6836518374356356
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0076",
+      "timeline_sha256": "e0e4e198ba58d82ce56ceda043c73d8323e2f9fce24d0664c4150c8c80bfda4a",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "0b509ea01d5c72a7cd85763c9d6f6ee4bc96952ef6bc54e8fba1b2d022bd4f0a",
+          "frame": 14,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "use.",
+            "start": 3.5,
+            "end": 3.84,
+            "loss": 0.7970504760742188
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0077",
+      "timeline_sha256": "9da89cfdcf23c55fb20a452b1a575b3f334e4b7a5c95ca376e9194f9f2f9e641",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "46a9f3ade2b0aae1ccd59fdaa2d052d94481ce7878b580bdac8c93b29961540a",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "behaviour.",
+            "start": 4.04,
+            "end": 4.58,
+            "loss": 0.6390687942504882
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0078",
+      "timeline_sha256": "c91c6986ca41fd35faf71480736cc37cc393237380fe8055ef3ca204e4af69c3",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "afdbcedbfd2212b05c125ad65c6404de389a22939538affb3e3a6bdd9984c983",
+          "frame": 15,
+          "unit_count": 7,
+          "empty_final": true,
+          "last_word": {
+            "text": "problem.",
+            "start": 5.72,
+            "end": 6.12,
+            "loss": 0.7143919467926025
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0079",
+      "timeline_sha256": "508541d074bbadcc65d303399c9c01bde9668ad1e1c3381134ccced7e868fc58",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "281fc80ff5509bbc5601ac8eb8b3a5d2a0bd82b50dfb4d5e73c20b43436498fc",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "work.",
+            "start": 4.24,
+            "end": 4.6,
+            "loss": 0.6213813781738281
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0080",
+      "timeline_sha256": "cdfa68eebc2f462da24d421171e73cf2f405f084f2fd5c98736ccc4da1fb519c",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "d69be2ea46b7feda0cf2c242999b5fb26d1c6af67d7270132b65b2a0745e5635",
+          "frame": 14,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "turn.",
+            "start": 4.58,
+            "end": 4.96,
+            "loss": 0.7768955230712891
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0081",
+      "timeline_sha256": "a657206ab5161afd59002ec45883a21d8000753e79c5dbf22059795e2f9260e4",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "925eba39ae6946d5849528d44f125c9d7b666465bf0d8d97a6d26b1f19fb5716",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "together.",
+            "start": 5.04,
+            "end": 5.48,
+            "loss": 0.5082530975341797
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0082",
+      "timeline_sha256": "cea6012d0d6a54050ab1ad7f2fa09326fdb42ee8856337045282756f79f59f05",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "991446f8e46ac6f52e77acff3704b63fed7c947d541b6c69ac679ad7d81f1670",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "damaged.",
+            "start": 5.12,
+            "end": 5.64,
+            "loss": 0.5839352607727051
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0083",
+      "timeline_sha256": "4bccc8dec1abd08fd87e26441455513d47418830bb028b71105d5178bf0720ec",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "ae52b90d2581cd72e6ffd0da7e8f0304df091c932cf7378fbda93c26c83e41ba",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 5.06,
+            "end": 5.2,
+            "loss": 0.6159000396728516
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0084",
+      "timeline_sha256": "6d07010ee8adb2c2496e023e2014c174fb728d8452b36b34f4b5854703e64621",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "1325f254d0acf9f7630544730ec49d48e0b27de4125465759e5775138d6d5083",
+          "frame": 15,
+          "unit_count": 8,
+          "empty_final": true,
+          "last_word": {
+            "text": "time.",
+            "start": 6.72,
+            "end": 7.12,
+            "loss": 0.7541290283203125
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0085",
+      "timeline_sha256": "eeb571450dd4d3a12620f2cc5dea08d63284ce470925d38a89ec0f647c9c9e08",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "14b273aabaa31d3618622642d3768d46a5dc6a6084e332bf4f4e5c42b2419802",
+          "frame": 16,
+          "unit_count": 4,
+          "empty_final": false,
+          "last_word": {
+            "text": "name.",
+            "start": 3.58,
+            "end": 3.92,
+            "loss": 0.6863471984863281
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0086",
+      "timeline_sha256": "573d85a6e0e8784b56aeb25c1dffe71b2306d72ba9842c57941adeceb28403a0",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "2c74f6d15184eb946c501d6570c6e024b7ef7678f5e124caff1f845d71c17224",
+          "frame": 15,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "succeed.",
+            "start": 4.48,
+            "end": 5.06,
+            "loss": 0.4515230655670166
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0087",
+      "timeline_sha256": "46c75ac7fe021c22b5d5e986b072dee2363e27306d830e99d52ec70a74b5900c",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "0efb7add83c900a8b94395d49c96b47a618aca904e2033fef7d7122c6826e218",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "resources.",
+            "start": 4.62,
+            "end": 5.28,
+            "loss": 0.5065027236938476
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0088",
+      "timeline_sha256": "1c5988dfd0d1d4add4d189b9ed3879108b8f90ea3f294d9e3f63f7cee1b5bc17",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "0624d2eef0cfb126ea9a377742c174f260cfea426cf35866ef8fd0e970495164",
+          "frame": 15,
+          "unit_count": 6,
+          "empty_final": true,
+          "last_word": {
+            "text": "examples.",
+            "start": 4.88,
+            "end": 5.56,
+            "loss": 0.5978675418429904
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0089",
+      "timeline_sha256": "c81ae39b5a9b769a4b2efce3c98abd2500f108fe0fdd7b785834663e6543b9ed",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "f73581451fc971b5f923161217b55992e4cc428267ec8329fe1b2f22e3c1a990",
+          "frame": 16,
+          "unit_count": 7,
+          "empty_final": false,
+          "last_word": {
+            "text": "generalisation.",
+            "start": 6.0,
+            "end": 6.92,
+            "loss": 0.5469839731852214
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0090",
+      "timeline_sha256": "a086121c9548b4842ee5a67481feb47f76e7b0cda43ddfd2a67de74d29d068ed",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "4428b5318f9ff3d74dbb22ec4d903f8f2180b91cbb67d9fd14c33f7c90444b59",
+          "frame": 15,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 4.76,
+            "end": 4.92,
+            "loss": 0.6289990743001302
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0091",
+      "timeline_sha256": "44c09664305e98c4d5152a1e4321f818144ad6243529b9896ddc2fe6a6ccdc5f",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "4477326839bef078cc01df5dee4e233f9b455887ffc35b0be0e24f6e763c70ec",
+          "frame": 16,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "update.",
+            "start": 4.22,
+            "end": 4.68,
+            "loss": 0.5893094199044364
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0092",
+      "timeline_sha256": "7eb23ce5ba0754187ddaec21a7c484c1caf0eb609754fe5b14ecf04c1b14cae4",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "6b3b2354988069f567ec6502cd03602c04ded2e05ffbd7d0a28db65104bdc5eb",
+          "frame": 16,
+          "unit_count": 7,
+          "empty_final": true,
+          "last_word": {
+            "text": "nondeterministic.",
+            "start": 5.02,
+            "end": 6.06,
+            "loss": 0.6244211757884306
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0093",
+      "timeline_sha256": "c2f17e171766a7cd464bb4eab14e89882247fe302d10314934e446ac20318007",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "9014cb69618db2483071efc6288ac15a051c1464fbef681fb82b1ad9fa5fc8b4",
+          "frame": 16,
+          "unit_count": 5,
+          "empty_final": false,
+          "last_word": {
+            "text": "on.",
+            "start": 4.04,
+            "end": 4.22,
+            "loss": 0.6203460693359375
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0094",
+      "timeline_sha256": "b30d8132520ca17fdf982f9240d2afc64a090de2cbd4bb53e822409e5f6d5919",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "57b26b89352fee92ef9c7fb580e5fa79a21bbd986427976286642055fdf81ab0",
+          "frame": 16,
+          "unit_count": 6,
+          "empty_final": false,
+          "last_word": {
+            "text": "accurately.",
+            "start": 5.28,
+            "end": 5.9,
+            "loss": 0.6014501398259943
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0095",
+      "timeline_sha256": "465ee7a8af3eb533db5ee4b7565c9b4d119f91a5093841c4016ebbc54b4c1581",
+      "speak_actions": [
+        {
+          "source_sha256": "69dafc4aed26885c4f476252b77d3cbf9b4f7eb097a867e88174c85e57aba115",
+          "frame": 9,
+          "unit_count": 2,
+          "empty_final": false,
+          "last_word": {
+            "text": "task.",
+            "start": 1.5,
+            "end": 1.94,
+            "loss": 0.997369384765625
+          },
+          "exact_measured_reconstruction": true
+        },
+        {
+          "source_sha256": "cef2fc68986fdcc950891ee64fc892b95f3b4192f55909c38bcc3bd7fe4fbbf0",
+          "frame": 17,
+          "unit_count": 7,
+          "empty_final": false,
+          "last_word": {
+            "text": "it.",
+            "start": 6.02,
+            "end": 6.18,
+            "loss": 0.6014900207519531
+          },
+          "exact_measured_reconstruction": true
+        }
+      ]
+    }
+  ]
+}

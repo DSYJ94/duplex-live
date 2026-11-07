@@ -1,0 +1,33 @@
+{
+  "schema": "dl-public-reasoning-source-pool-v1",
+  "repo": "openai/grade-school-math",
+  "revision": "3101c7d5072418e28b9008a6636bde82a006892c",
+  "source_path": "grade_school_math/data/train.jsonl",
+  "source_split": "train",
+  "source_sha256": "17f347dc51477c50d4efb83959dbb7c56297aba886e5544ee2aaed3024813465",
+  "license": "MIT",
+  "license_file_sha256": "86bbb73e855821d7c401912fd4bf82e34313e6e3b6fd6f909f2b6cc9e209a53b",
+  "pool_sha256": "201840725b7dca1d76348d669cbaca1fe34083e41dd5aa4edf23d76284894b8e",
+  "rows": 7473,
+  "all_annotations_exact": 7376,
+  "annotation_check_not_full_semantic_verification": true,
+  "official_test_split_downloaded": false,
+  "fresh_eval_decontamination_pending": true,
+  "native_audio_created": false,
+  "training_approved": false,
+  "recorded_utc": "2026-11-07T15:23:01.366697+00:00",
+  "local_manifest": "runs/isambard-native-20261107/gsm8k-pool-v2/manifest.json",
+  "source_download_receipt": "runs/isambard-native-20261107/gsm8k-source-v1/download.json",
+  "source_url": "https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c",
+  "source_files_unchanged": true,
+  "non_exact_or_missing_annotation_rows": 97,
+  "flagged_rows_not_necessarily_factually_wrong": true,
+  "next_steps": [
+    "Freeze separate problem-family reasoning evaluation before selecting data",
+    "Inspect the97 flagged/unsupported/rounded annotation cases; do not silently drop source rows",
+    "Select varied basic math and short reasoning with independent answer checks and concise spoken explanations",
+    "Add matched direct/clarify/delegate routing tasks and native rehearsal; preserve official held-out test split"
+  ],
+  "no_external_model_API_calls": true,
+  "no_audio_generation": true
+}

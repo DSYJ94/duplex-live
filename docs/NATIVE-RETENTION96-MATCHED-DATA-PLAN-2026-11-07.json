@@ -1,0 +1,53 @@
+{
+  "status": "PREPARED_SAMPLER_NOT_NATIVE_TRAINING_ADMISSION",
+  "recorded_utc": "2026-11-07T15:23:01.366987+00:00",
+  "parent_total_updates": 646,
+  "parent_checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "parent_source": "d8161fd40c80b814242f93c8d205cf33a83c4c54",
+  "trainable_parameters": 698351616,
+  "arms": [
+    "rehearsal",
+    "expanded-data"
+  ],
+  "exposures_per_arm": 336,
+  "updates_per_arm": 84,
+  "total_new_updates_if_both_admitted": 168,
+  "global_batch": 4,
+  "microbatch": 1,
+  "accumulation": 4,
+  "original_TRAIN": 240,
+  "original_DEV": 64,
+  "new_TRAIN": 96,
+  "new_DEV": 0,
+  "new_family_counts": {
+    "ordinary": 48,
+    "delegate": 12,
+    "pending": 12,
+    "cancel": 24
+  },
+  "same_family_sequence_per_batch": true,
+  "original_all304_unchanged": true,
+  "rehearsal_extra96": "Repeat original TRAIN in the same family sequence; explicitly not336unique examples",
+  "expanded_data_extra96": "All96new approved teachers;336uniqueTRAIN",
+  "nominal_peak_lr": 5e-06,
+  "inherited_updater_rate_multiplier": 0.5,
+  "effective_peak_lr": 2.5e-06,
+  "warmup_updates": 16,
+  "ordinary_KL_weight": 0.1,
+  "ordinary_hidden_weight": 0.01,
+  "action_aux_weight": 0.25,
+  "forward_path": "native-segmented-bptt-v1",
+  "optimizer_state": "Each arm independently starts from identical saved646AdamRNGOPAL; no replay of earlier updates",
+  "OPAL": "Keep inherited updater fixed during matched data comparison; log diagnostics, do not claim autonomous rewrites. Explicit Git-mediated adaptive decisions follow the comparison.",
+  "pending": [
+    "Complete all96 independent semantic review; resolve documented flags without changing original audio or thresholds",
+    "Actual all96 native replay/numerical proof and immutablecache hashes",
+    "Whole400 composite loader integration and source-bound646 phase runner",
+    "Measured complete schedule and atomiccheckpoint/copyback admission; compare new maximum shape with prior proof",
+    "Fresh independent finalstate restores/full64DEV/native speech and behavior, plus distinct reasoning cohort"
+  ],
+  "training_started": false,
+  "no_external_API_calls": true,
+  "no_GCP_launch": true,
+  "owner_authority": "docs/NATIVE-ISAMBARD-RECOMMENDATIONS-EXECUTION-2026-11-07.json"
+}
