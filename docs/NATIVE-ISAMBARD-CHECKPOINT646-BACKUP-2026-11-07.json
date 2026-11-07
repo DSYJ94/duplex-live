@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "job": "8156150",
+  "source": "/projects/u6ada/duplex-live/native-training-resume8-v1/main/step-0120.pt",
+  "target": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-resume8-epochs-v1/step-0120.pt",
+  "bytes": 8512630561,
+  "sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "verified_utc": "2026-11-07T13:15:20.003906+00:00",
+  "rsync_actual_exit": 0,
+  "saved_updates_repeated": 0,
+  "source_hash_reused_from_actual_final_native_proof": true,
+  "native_product_qualified": false,
+  "original_epoch60_preserved": true
+}
