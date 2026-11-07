@@ -1,0 +1,97 @@
+{
+  "recorded_utc": "2026-11-07T13:01:10.628303+00:00",
+  "actual_training_job": "8156150",
+  "actual_training_source": "d8161fd40c80b814242f93c8d205cf33a83c4c54",
+  "actual_exit_code": 0,
+  "training_terminal": {
+    "completed": true,
+    "actual_new_updates": 120,
+    "restored_saved_updates": 8,
+    "new_updates_this_job": 112,
+    "total_optimizer_updates": 646,
+    "complete_epochs": 2,
+    "TRAIN": 240,
+    "DEV": 64,
+    "adopted": false
+  },
+  "checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "independent_fresh_native_restore": {
+    "passed": true,
+    "source": "d8161fd40c80b814242f93c8d205cf33a83c4c54",
+    "checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+    "training_pid": 49,
+    "restore_pid": 49,
+    "training_execution_id": "6d74731a39a5408b920130bd7926b20a",
+    "restore_execution_id": "6d857c85cac14ab3839f7beb059c5843",
+    "host_pid_evidence": "execution Slurm stage-terminal receipts",
+    "actual_CUDA": true,
+    "Adam_RNG_OPAL_exact": true,
+    "native_logits_exact": true,
+    "new_optimizer_updates": 0,
+    "derived_format_defaults": [],
+    "adopted": false
+  },
+  "distinct_host_execution_ids": true,
+  "rows": [
+    {
+      "family": "quiet",
+      "baseline_CE": 0.7104937160121543,
+      "epoch1_CE": 0.6908249296247959,
+      "epoch2_CE": 0.6828813664615154,
+      "change_percent": -3.8863608401240923,
+      "baseline_KL": 0.0,
+      "epoch2_KL": 0.0
+    },
+    {
+      "family": "delegate",
+      "baseline_CE": 0.19130896334536374,
+      "epoch1_CE": 0.1360957797151059,
+      "epoch2_CE": 0.12661405140534043,
+      "change_percent": -33.81697898975686,
+      "baseline_KL": 0.0,
+      "epoch2_KL": 0.0
+    },
+    {
+      "family": "cancel",
+      "baseline_CE": 0.5359839200973511,
+      "epoch1_CE": 0.48533869683742525,
+      "epoch2_CE": 0.4808775633573532,
+      "change_percent": -10.28134514371044,
+      "baseline_KL": 0.0,
+      "epoch2_KL": 0.0
+    },
+    {
+      "family": "pause",
+      "baseline_CE": 0.722149853905042,
+      "epoch1_CE": 0.5874518702427546,
+      "epoch2_CE": 0.5712472647428513,
+      "change_percent": -20.89629851009199,
+      "baseline_KL": 0.0,
+      "epoch2_KL": 0.0
+    },
+    {
+      "family": "pending",
+      "baseline_CE": 0.4647174874941508,
+      "epoch1_CE": 0.37700139979521435,
+      "epoch2_CE": 0.3596131553252538,
+      "change_percent": -22.616823123149622,
+      "baseline_KL": 0.0,
+      "epoch2_KL": 0.0
+    },
+    {
+      "family": "ordinary",
+      "baseline_CE": 0.7473323519031206,
+      "epoch1_CE": 0.5933270851771036,
+      "epoch2_CE": 0.5638027389844259,
+      "change_percent": -24.557964398480415,
+      "baseline_KL": 0.558662086725235,
+      "epoch2_KL": 0.7224942321578661
+    }
+  ],
+  "all64DEV": true,
+  "native_speech_behavior_job": "8172093",
+  "native_results_complete": false,
+  "ordinary_KL_drift_is_warning_not_automatic_cause": true,
+  "qualified": false,
+  "adopted": false
+}
