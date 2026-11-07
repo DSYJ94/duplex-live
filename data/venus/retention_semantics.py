@@ -76,6 +76,26 @@ def teachers(root):
     return rows,sha(root/'manifest.json')
 
 
+def collect_review(a,rows,manifest_sha,judge,reviewer):
+    """Same complete controls and teacher gate for either frozen reviewer."""
+    controls=[dict(judge(row),expected=row['expected']) for row in calibration()]
+    passed=calibration_passed(controls)
+    (a.output/'calibration.json').write_text(json.dumps(dict(controls=controls,all16_pass=passed,authored_calibration_only_not_training_audio=True),indent=2)+'\n')
+    results=[]
+    if passed:
+        for row in rows:
+            result=judge(row);results.append(result)
+            print(json.dumps(dict(completed=len(results),required=96,id=row['id'],passed=result['parsed']['passed'] if result['parsed'] else None)),flush=True)
+    return dict(schema='dl-retention96-independent-local-semantic-v1',source=a.source,
+        reviewer=reviewer,calibration16_complete=True,calibration16_all_pass=passed,
+        required=96,complete96=len(results)==96,
+        all96_semantic_pass=len(results)==96 and all(r['parsed'] and r['parsed']['passed'] for r in results),
+        results=results,manifest_sha256=manifest_sha,new_optimizer_updates=0,
+        external_API_calls=0,human_expert_review=False,
+        caveat='A calibrated model review is evidence, not guaranteed truth or native product qualification.',
+        native_replay_approval_pending=True,training_approved=False)
+
+
 def main(a):
     import torch
     from transformers import AutoTokenizer
@@ -97,21 +117,9 @@ def main(a):
         raw=tokenizer.decode(tokens[0,encoded['input_ids'].shape[-1]:],skip_special_tokens=True)
         result=dict(id=row['id'],payload_sha256=hashlib.sha256(json.dumps(row['payload'],sort_keys=True).encode()).hexdigest(),raw_response=raw,parsed=verdict(raw),input_tokens=int(encoded['input_ids'].shape[-1]),output_tokens=int(tokens.shape[-1]-encoded['input_ids'].shape[-1]))
         (a.output/(row['id']+'.json')).write_text(json.dumps(result,indent=2)+'\n');return result
-    controls=[dict(judge(row),expected=row['expected']) for row in calibration()]
-    passed=calibration_passed(controls);(a.output/'calibration.json').write_text(json.dumps(dict(controls=controls,all16_pass=passed,authored_calibration_only_not_training_audio=True),indent=2)+'\n')
-    results=[]
-    if passed:
-        for row in rows:
-            result=judge(row);results.append(result);print(json.dumps(dict(completed=len(results),required=96,id=row['id'],passed=result['parsed']['passed'] if result['parsed'] else None)),flush=True)
+    report=collect_review(a,rows,manifest_sha,judge,'Untouched released native LLM, no trained adapters; independent of GPT author')
     if any(p._version!=versions[name] for name,p in llm.named_parameters()):raise ValueError('Frozen reviewer weights changed')
-    report=dict(schema='dl-retention96-independent-local-semantic-v1',source=a.source,
-        reviewer='Untouched released native LLM, no trained adapters; independent of GPT author',
-        calibration16_complete=True,calibration16_all_pass=passed,required=96,complete96=len(results)==96,
-        all96_semantic_pass=len(results)==96 and all(r['parsed'] and r['parsed']['passed'] for r in results),
-        results=results,manifest_sha256=manifest_sha,frozen_model_weights_unchanged=True,
-        new_optimizer_updates=0,external_API_calls=0,human_expert_review=False,
-        caveat='A calibrated model review is evidence, not guaranteed truth or native product qualification.',
-        native_replay_approval_pending=True,training_approved=False)
+    report['frozen_model_weights_unchanged']=True
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     if not report['all96_semantic_pass']:raise RuntimeError('Independent complete96 review did not approve; preserve all failures')
 

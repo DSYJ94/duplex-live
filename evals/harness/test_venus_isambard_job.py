@@ -3,11 +3,14 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False)])
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False)])
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
     monkeypatch.setattr(job,'BASE',base);monkeypatch.setattr(job,'ART',base/'artifacts')
+    if stage=='retention-qwen':
+        folder=base/'reviewer-models/qwen3-32b-v1';folder.mkdir(parents=True)
+        (folder/'download.json').write_text(json.dumps({'download_directory':'/public/reviewer'}))
     monkeypatch.setenv('SLURM_JOB_ID','123');monkeypatch.setenv('CUDA_VISIBLE_DEVICES','0')
     monkeypatch.setattr(job.subprocess,'check_output',lambda argv,**kwargs: 'source' if argv[0]=='git' else 'NodeList=nid1 StartTime=start EndTime=end')
     monkeypatch.setattr(job.g,'sha',lambda p:'auth');monkeypatch.setattr(job.g,'stamp',lambda s:time.time()+(7200 if s=='end' else -1))
@@ -29,7 +32,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
     assert len(set(invocations))==expected
-    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic'}[stage]
+    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen'}[stage]
     last=json.loads((root/('execution-123/'+last_name+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
@@ -47,6 +50,10 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         assert '--candidate-checkpoint' not in native[0] and '--private-action-repair' not in native[0]
     elif stage=='retention-semantic':
         assert native[0][native[0].index('-m')+1]=='data.venus.retention_semantics'
+        assert '--checkpoint' not in native[0] and '--opal-source' not in native[0]
+    elif stage=='retention-qwen':
+        assert native[0][native[0].index('-m')+1]=='data.venus.retention_semantics_qwen'
+        assert native[0][native[0].index('--model')+1]=='/public/reviewer'
         assert '--checkpoint' not in native[0] and '--opal-source' not in native[0]
     else:
         assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])

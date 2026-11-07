@@ -1,0 +1,21 @@
+{
+  "job": "8173621",
+  "source": "eec9fb4531c9b94528376ad09c454a6730050fc5",
+  "actual_terminal": "FAILED1:0",
+  "files": 25,
+  "all_hashes": true,
+  "calibration_complete": 16,
+  "calibration_correct": 13,
+  "teachers_reviewed": 0,
+  "training_approved": false,
+  "failed_control_ids": [
+    "cal-29482ade210f7182",
+    "cal-3c760bceef42a4fe",
+    "cal-ba293e0f164993f6"
+  ],
+  "calibration_sha256": "6ecaaf6ed1a64510ddbaa8d2c20c02442a9af6de21b2b516a5c3589582cd3553",
+  "report_sha256": "352e7336a4ecd157a609125330791371ffe72a84934277e2c3a5e5b1fa7d1e57",
+  "old_controller_missing_handle_and_pid_confirmed": true,
+  "copyback_recovery_only": true,
+  "new_GPU_submissions": 0
+}
