@@ -1,0 +1,46 @@
+{
+  "recorded_utc": "2026-11-07T12:13:56.350619+00:00",
+  "source_report_sha256": "5c261b30046f5c90f2a05ac04f15631cb521a25a1f2283ebbcce37c1b0391a81",
+  "checkpoint_global_updates": 526,
+  "selected_recordings": 12,
+  "distinct_scenes": 7,
+  "rating_values": 36,
+  "metrics": {
+    "naturalness": {
+      "count": 12,
+      "mean": 1.1666666666666667
+    },
+    "clarity": {
+      "count": 12,
+      "mean": 3.5
+    },
+    "british_fit": {
+      "count": 12,
+      "mean": 2.6666666666666665
+    }
+  },
+  "raw_feedback_kept_mac": true,
+  "raw_feedback_sent_to_services": false,
+  "scope": "Partial owner preference feedback, not whole-cohort qualification or blind statistical superiority.",
+  "gibberish_feedback": {
+    "scene_id": "venus-repair-v2-holdout-cancel-0084",
+    "owner_verbatim": "Some of the venus-repair-v2-holdout-cancel-0084 outputs are pure gibberish",
+    "bindings": [
+      {
+        "id": "venus-repair-v2-holdout-cancel-0084",
+        "label": "A",
+        "condition": "control",
+        "sha256": "6eeb81e20ef05c687fcb51b16317bec987bfec531bba97101774bb6c1dca2ac7"
+      },
+      {
+        "id": "venus-repair-v2-holdout-cancel-0084",
+        "label": "B",
+        "condition": "main",
+        "sha256": "3d68ae0ce17fb3d845b791b573561c76281b9e3c2b7ddc6920787bb8e44987c6"
+      }
+    ],
+    "failure_preserved": true
+  },
+  "qualified": false,
+  "adopted": false
+}

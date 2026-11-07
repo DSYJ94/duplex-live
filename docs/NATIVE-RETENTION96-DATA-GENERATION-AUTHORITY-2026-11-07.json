@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-11-07T12:17:56.284154+00:00",
+  "status": "OWNER_INSTRUCTED_MORE_TRAINING_DATA",
+  "owner_verbatim": "If we need more training data go for it.",
+  "standing_owner_authority": [
+    "For training, feel free to use eleven labs to get the training data/improve it.",
+    "Use the existing ElevenLabs key"
+  ],
+  "provenance_authority": "decisions/0003-provenance-classes.md Amendment A: closed-content cleared generally, no per-stream sign-off needed",
+  "payload_sha256": "d4c32c03199bdca8032885349c017fe7263bba9ca8737520cc4bbe4dfcfabda8",
+  "source_plan_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+  "provider": "ElevenLabs",
+  "model": "eleven_v4",
+  "maximum_synthesis_calls": 182,
+  "maximum_prepaid_character_debit": 12746,
+  "existing_creator_quota_verified_remaining": 209798,
+  "overages_verified_disabled": true,
+  "maximum_additional_cash_charge_usd": 0,
+  "new_purchase_or_overage_allowed": false,
+  "conservative_new_usage_value_reserve_usd": 6.373,
+  "prior_project_carry_unchanged_usd": 165.7900361111111,
+  "existing_phase_reserve_unchanged_usd": 175,
+  "combined_conservative_envelope_usd": 347.1630361111111,
+  "project_ceiling_unchanged_usd": 350,
+  "scope": "Separate new synthetic data production requested7Nov; does not change the active frozen trainer or its KEEP/API0 optimizer mode.",
+  "payload": "Exact synthetic authored USER questions and TRAIN assistant target words only. No owner conversations, owner ratings, credentials, held-out answers, scoring annotations or source worker-world dictionaries sent.",
+  "new_voice_cloning_or_collection_changes": false,
+  "independent_source_ASR_teacher_causal_alignment_and_native_admission_required": true,
+  "training_approved": false
+}

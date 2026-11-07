@@ -1,0 +1,4569 @@
+{
+  "schema": "dl-retention96-speech-payload-v1",
+  "source_plan_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+  "requests": [
+    {
+      "id": "caf1a395d1e2547be13e24199d8b5ac45d8def5f00187fe69a9c78e754a3c4c6",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "I have two identical watering cans. One is full and one is empty. Which should feel heavier?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d9309fcf4a2cf1dad6f065b3499cc8d966354735924d6c77935ccab39da32f96"
+    },
+    {
+      "id": "321e3a51c73752a92efdab8e1dfd8436b8c15be50731f35e6fadc008ff321a2f",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The full can should feel heavier because it also contains water.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9b2694bcc1b98147c18876f518e5428016a0f101b7561449c2e4b849f533b918"
+    },
+    {
+      "id": "28ae01cd073b996c9804b98bbe090e1df254bbb2ca85aff1644bf2de563e7154",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "We left an ice cube on a warm plate. What change would you expect?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e49e6ab061e25da0bff66b40524bea7ce2adb4714c33810e81a0d9a6fe39a399"
+    },
+    {
+      "id": "a33aaf332c6aadb39babedf38b05b86c45da1cb344a0e1139b4aa4baff984819",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The ice should melt as heat passes into it from the warmer surroundings.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8a9456aae343d573b8b9ba38a5ac5c31f722a2fe0ea5170d97bbd1076fdd17c3"
+    },
+    {
+      "id": "917df67727295e1d8d90827747c55167882f5eeb38fef95cf0a968f91b6e60fa",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "The map says this path goes uphill. What should I expect as I walk along it?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "6bdee70a6420f72bd047945e9026d23b3d814bdea1e1b06ca06029be7330f590"
+    },
+    {
+      "id": "9e46994e929f76dacb0f440523d2b3053d2130fedced99d2ad033e57e8c6e117",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "You should expect to gain height as you walk along the path.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "6b0762335c5c4fbf35cf5bab4d6d154c17b6b14c12b08fe18897124402a61fc6"
+    },
+    {
+      "id": "0da4615b76931b38139be298dbc03953617f67af9722462ae43f2d6058744cb3",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why does a backpack often have padded shoulder straps?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "41afbef4d29d02e726189213a85b26654fa60222b390c54e12fe4b2b639db517"
+    },
+    {
+      "id": "fa0da57cc6e9ca0d44269bb75ebc2bce83b53124f03decc479e3a584907abe81",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The padding spreads the pressure and can make the backpack more comfortable to carry.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c3438686e644fc10e7fd3423a38919ffba2f6bb8d4c0792641e6b08920486609"
+    },
+    {
+      "id": "49f1456e94c3b3576e663e63a215fcb61e7d6ec44901defb38e8bfb7efa118ab",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "A cardboard box is marked fragile. What is that telling me?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f5a58102e2a4401d5be69f42d4c4a9ac4aa89d0e4f41b51d023ae20fae5c915a"
+    },
+    {
+      "id": "011f89d531f2decb4e0396376eb7ab74cd526a5fe73e12f570365fe31d626a48",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Its contents may break easily, so the box needs careful handling.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e996351df44cc382dd5e0190a6f4e5c20d2680ad5d5d2ac5b5b422d9fca53848"
+    },
+    {
+      "id": "12ef650339ab2488330f0315d845b263994fbe2784440ad0336bcd3662ae16d9",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why might I put a lid on a jar before carrying it across the room?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "59dc6f2730790095fda17f724d58cb853d4b6c5ff74d7ff9382583daaf361977"
+    },
+    {
+      "id": "bf6f72ff71e7602430b54290d48574d6f38d651296f299d2064d6c51c7e89102",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A lid can help keep the contents inside and reduce the chance of a spill.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ef3d05c41e5a9e15b7fdfba0647c8eac3b1b6a2e811d011b747c6da8fea9b5be"
+    },
+    {
+      "id": "ae0661ba451423d701fb1e6642f30d07c8a8cd5ae1b194f018a2d9d852da841b",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "I need to mark a page without folding it. What simple object could I use?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fa1a8df0af5bef6329c0eea0ee18810d8bc8c9971787214b1f9cd38294f3d42b"
+    },
+    {
+      "id": "f1554f9d6f76bc69ce8680b599b19a89494f1f2edc643e0a47d99458a28c06ea",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "You could use a bookmark or a clean strip of paper.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d49af919dfd3d008251cbf7f289c3e903ec15a6191cecae2c9adc86ac81ca055"
+    },
+    {
+      "id": "1abc74d23f8275fa49bcd4fcb70b8d7c2b28c2d89c02394e31381c76b40e3027",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why does a sponge become heavier after soaking up water?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7614d7348caaad6dc358bfe05487d12078780a01b577effdf8d590e073987726"
+    },
+    {
+      "id": "99859efa7c513889bbf17bc209b55556814775682e9c8c9cf102ef451dfcd248",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It holds water in its small spaces, adding to its weight.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fbacec48c51807b63832c04f47a26302a1f7446132be06ab77583bc7db8d4174"
+    },
+    {
+      "id": "d3d92a2a8df6eef9f32d5eacea80452997a0f859b13aec0b32cc8835c2500fa3",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "When people say a task is optional, do they mean it is required?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3c83dd28682ea032837fc0ea07661a51176c8257ee0ace6f219b783f0162414f"
+    },
+    {
+      "id": "a25ad18833e5ed94276965dc041a3b9950caa27c61123c9ea8371c9012e95c60",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "No. Optional means you can choose whether to do it.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "27c574e3cffe1de6487f949d2b8854952be373a5a423e64a0eff5b34eaadee54"
+    },
+    {
+      "id": "8bf1949969980b94347ad467e4ffe92ff6fc088ce07e1f2b64bf96511a876d91",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "My book is upside down. What simple movement would make it easier to read?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "16c09c76d31ccfc7aa9a1008d44e72f6c8ce82540a36fbf75b8e6f6b39b1c4d1"
+    },
+    {
+      "id": "030a2d7e1f26f7d87a7b0836172f4173bca4b3f6145390ea76a5473686e37a15",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Turn the book around so the writing is the right way up.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "50cbbef3b9e66bf9eac5ff8eb31a0d2590c173167e0da7f77f3282bd83bb0fc2"
+    },
+    {
+      "id": "feb00b4cd31fd1e0aff0a0c0ed45b773a84bdabc7f4d2f7792f98eede035efa2",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does a kitchen timer help me keep track of?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9471b0bb86b8ca5f10534197eb8bf66f6a8d7a842832cdc168d3d33a10b633fb"
+    },
+    {
+      "id": "9c370773f501ab94bb6e842744bc1e826de8071c54b2de5c9b9325223b74e31e",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It helps you keep track of how much time has passed or remains.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5bdf83730803c6ab42ec2fda1e91a35471bb06501dc731c6ca9fee168830b703"
+    },
+    {
+      "id": "b48fa6ad1fddd6c094115a42cba0902cacb263cc3b22d9ec3442876136321840",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why can a reusable bottle be convenient on a long walk?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e203850f6135b65918af1513233fd3ccb8ff646005393551fadcf22d83250eea"
+    },
+    {
+      "id": "df01db27a92577d81ba69c3572a4c9f2ff1bb763ccaad5a34eb706111cafab02",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It lets you carry a drink and refill the bottle when suitable water is available.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d25d6369ac90828c0c509a142e458e8750bbac18c7214ba7aa15214aba7685ba"
+    },
+    {
+      "id": "64d1a3e2c4ebe19aa233b3fac0063335523b7a7380dd2051586975a7cc99a61b",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is the difference between borrowing a book and keeping it as a gift?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f817f23aabbcdf3bd681f1ad9c9ff1877deabaf0e1cc6bbf7ef4aa2cff22ba4b"
+    },
+    {
+      "id": "a3426aa1f670294c7742e68e72d03ddc03fbdb3f97df85e4148c02a49fabeed8",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A borrowed book is meant to be returned. A gift is yours to keep.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7c1128dadc97c504bcfa184a9f2ec718e6710f725aa332af5892e3cbb039e97e"
+    },
+    {
+      "id": "7ea511585ec7b7873f9ab61ce2328338d86e3882b10414f8878a59f6da402609",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "If I want to sort shirts by colour, what should I compare?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "92f204f62a49c751c180e98e31a617153e6b72eaf4d428efe61757d176519ff6"
+    },
+    {
+      "id": "2a7f05fc55c3df9abe6b4385994f87c46491964d328cce68ce2f94a798eacac9",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Compare their colours and put shirts with matching colours together.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8822b2a9fee1ef193790730b30f4e13495bca75d5d9b599e4e97ccf687e9b77b"
+    },
+    {
+      "id": "6128a916f86619d7dfcc1b7b3223ce877459e899cb27922a497d1d9163fe755b",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "A parcel is too wide for a narrow slot. What is the straightforward problem?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "df43c111ebd06fa38a5e537d7b36a967dff0f12f30a3fa890917f4ef6af1cd27"
+    },
+    {
+      "id": "a520ea176c0cf70a915a28e4086f5d03565ba5077465e7827e3836b44b13842b",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The opening is narrower than the parcel, so the parcel will not fit through it.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c713e380f14d965c892510a48fae4e873b301fafefe96bba55d684abab19aea5"
+    },
+    {
+      "id": "3c47cbcb5986c1a565dd7553cb98843da3185ac860b420867150f582938d56a4",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why would someone label two identical storage boxes?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "4f7ff524e7bd2e6ca87f7b4b5c40e472a67488d00ce84ad2c8e1f465c4e1acdc"
+    },
+    {
+      "id": "5daabe5a9aec9d02e9e3fff3a4c01605e137dbcfd5bebc05224ae9e51fd5e4bb",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Labels help show what is inside without opening each box.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c8b3603dd08890027fafa3803d3d43ec1a351f67b2f2aeb36b8407807ba85444"
+    },
+    {
+      "id": "0db3112675da55ca6f7c58cadd8236c578115d59127343409a57a7ff2c4d5b5b",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "If one train arrives before another, which arrival happens earlier?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8440326255e4f87a828f8acc7373e0b2ee3e430b0d9ac5f905600d153c2ee41b"
+    },
+    {
+      "id": "d76be709b6e2f8b5583ebb580f5e4bbbda081bb6e64addb10f8d7a102297d367",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The first train to arrive has the earlier arrival.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9decc8cbdd1b45eb1e9059f3969a259298c8fdc26288de2d72dbfcb94de770b9"
+    },
+    {
+      "id": "377b16077e97bf5c7614eced115a554ff88c0446f6c3e679089f7fdd87993d44",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does it mean to fold a sheet of paper in half?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ad750cfd8a14b9a4353a0242aae5712e679a4a81bb5bf9da40abea87561067cf"
+    },
+    {
+      "id": "12f78e6bb13a3095fcd3233b83cf76c2ca707b0e0f1e833a9c3fd9eb304da4df",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Bring two opposite sides together so the paper forms two matching parts.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "4596ef6612a62ee5d9562aa494de05935bc508741e1086d149177b4b4d019531"
+    },
+    {
+      "id": "59356a36628d5f212280edadc7262e7f6a06892d63519ea51f3e3ac6628a39b7",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why do we use oven gloves when handling a hot tray?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f557838013d290ca5ed5c5f11ee2b5a81026e30b6c3698d1aacd1c87aa7466b8"
+    },
+    {
+      "id": "7f2357ffc6a3dbad1b3ffb269a5160521d98e51037f3be7cc5c2ae87274ada07",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "They provide insulation that helps protect our hands from the heat.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b1baeb851fc35f791db0bcd4d87cc4a074348144d8a49173c67590703ec03850"
+    },
+    {
+      "id": "7abba786a556cf3661308dc56b049edf6c9c58bf3da74d995764526b8253caad",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "I want to keep a stack of papers together temporarily. What could help?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5092c72c776e50d90b76a650e2fc72a89ce419f124b00eb355ee770393b00077"
+    },
+    {
+      "id": "13ae510e4bbbc7930d411557d94f783df51b88d6991e243997211ce3b5e2a16f",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A paper clip can hold the papers together and is easy to remove.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b0819947650368ea21f1869205e5166dcdf7803136cd281c2ee49eb9d4b54753"
+    },
+    {
+      "id": "612d6dd97fdb6674bf113275dddc7abf59e16a96385a4e5997110a4fbac54334",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is the purpose of an address on a parcel?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "dfa0b49b548178a53998e10d5c65d924cca704de400e04f72c2d4cca5a4f5249"
+    },
+    {
+      "id": "4549dab4668d9301fafe7f9fc527c7b5c5fd0fa53beb0b00e2f76dabc194fefa",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It tells the delivery service where the parcel is meant to go.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f6e42b6b86f11d2b4965a71b23734db7850dcc06d8b783b3839347b1d973d82a"
+    },
+    {
+      "id": "79f54e8128c390220f907c74ba286f82a6fbca63c718a6aa475a559f22a6e08c",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What changes when a room becomes brighter?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "813f80d9333184f94a46a5863edbfdf1a99aecdb9010981f4abcc112255d8a28"
+    },
+    {
+      "id": "412b72e34359ed7d5fbb646ea3f2b222ae03521588775b39a84ae8b23e8c7883",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "More light reaches the room, making things easier to see.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "691409e193a8e5b247d4a5b1d16b7a40e501d418ecded91fe58b59971a44c0be"
+    },
+    {
+      "id": "059988798a529d194f94c0abd274aeac42736a88b6ab1f8fb7c9814924e61e8c",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "If a shop is closed for the day, can I assume its normal counter is serving customers?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "817659669cdd61c57ea291e8a10e2651b7604d817a2cf381b1de277e3aa1e687"
+    },
+    {
+      "id": "edfa9d17a7a1c4b39eecd55ada99df82b4e382b1a6cf535b449a4681c5bd6e1e",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "No. Closed for the day means normal service has ended until it opens again.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "858f47baf8b40a1849c520a8274824588042d50ffb0ff2c31c09f4e3ca8c6545"
+    },
+    {
+      "id": "9006e3176f58f979ec2edd97201298fedcfceb67809dc14d07d53fd27c00f844",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why would I check the size of a picture before buying a frame?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "40deb19016dfcf7e6abd8c0802cfe38a1ab2f8863a88e4f298829a9e32d8b77c"
+    },
+    {
+      "id": "805fcf4b35bdfdabf795568c3d1e97ed77b5622f00a1559c72ede78732f76d83",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The frame needs to fit the picture, so their dimensions must be compatible.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fc5c1fcb36fe0a8093faf3182fa61fcd7e73d2df5dc5542a2a0b9696aea29c8e"
+    },
+    {
+      "id": "82f74297c06330846cfc4493c20a0d4e504959d8a7177eb51a359ddb18aab0ad",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Can you explain what a cache does in a computer in one short sentence?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d978a50896940ec0764b368a78ac18351691f74cdbc201648a241852dac835de"
+    },
+    {
+      "id": "fed04831d4b0da9af18cf623ac39b4a698828422b9b0d1a8e80f76f6d1045982",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A cache keeps reusable data nearby so it can often be accessed more quickly.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "1d94beeec402380986dacfe2d54ff31a57aa0322937d36dcaacac8953b235a74"
+    },
+    {
+      "id": "15bb7fd8179ad945f3d1915c7d24d1412535b83ff80328cd387b47b05b3c89fd",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is a queue in programming, explained without code?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b404afa7c749c2db2a1482b3b465fdf43a01271e4b704d59a871832d0b026789"
+    },
+    {
+      "id": "dc4a3b748808c1d41e6172704bedc59b3a22f29abe7326ea3f919143a77f93cd",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A queue stores items in order and usually handles the earliest added item first.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0911215b681e9192ad8fa0cab9724201c5a4581729080083f23d2edc64c636d8"
+    },
+    {
+      "id": "6a9b55f66982aaa439f9202e908b62df459b0881a251af2b1ac5257172c9a34f",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "How is a stack different from a queue in a simple programming example?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c90fe8cf534506f84955cc1e0b43d64f0fe89e30d64600179cfa3985773e8bdf"
+    },
+    {
+      "id": "f58a95601adc1f69db92fd10d45b4bd1f4beb33e8884b247020e37f8b9287334",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A stack handles the most recently added item first; a queue usually handles the earliest added item first.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "27a2a3c679c035ab107c370f00068363ea32c02957d7aeda4b5ce363d4d9445a"
+    },
+    {
+      "id": "291e3dcfafda22640dbcfca9a7c4bfa2e229041930d58745a3e6706f0e9cded9",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why might a program put a repeated operation inside a function?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "1b49d1b5f54c023096c69673e6bc9619aafa37b36f95948b36a01bb88db6d9bc"
+    },
+    {
+      "id": "b5a4b89b1bf53af6d8291f0c027be05e39e90cebeeb5e0e3604a6e46bf8e1db9",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A function lets the program reuse that operation without copying the same instructions everywhere.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7214cda482245dc57c13dded1610c51dd443d581cd4471451816477024fdf8f3"
+    },
+    {
+      "id": "41fdb1d43b973718ff037723f8bc10dc60908f93b255fa93858a105e83d9b429",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is a variable in a computer program?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ce3dd58677c8dd8363a6081059818f1c8650957a1e7aa450c6681aa482a7c5c2"
+    },
+    {
+      "id": "9b7706785d128a3b876366b2da27c559694629a62c66780368f3fce6de7a68f8",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It is a name associated with a value that the program can use.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "dbc5393154ae364c63e079e4df6a5dc57cb0c739d9212a5f3e232baea5ce5b93"
+    },
+    {
+      "id": "9033fb33ddb051fda7f8f7f460d10f99e0d7903206311cd9d6ff662056124991",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does a unit test usually check?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d35608affcad82e0dfe6035aab4acc4e28ea3a3abb219ba2699fe58af7a0a8bb"
+    },
+    {
+      "id": "c0f04c068f3da9b4d38e7b86dc558fec3d1e5b8d55f1f1fdb657e0e1451ac213",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It checks a small part of a program against an expected result or behaviour.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "772e528a82f68fa236a5c4cf0647a51b54757b8dc52b9842454a5e828029bc6a"
+    },
+    {
+      "id": "a77eb4185ef54412a1f6901611c7ba53cdc64e41e69e7ab26dcdec804cfd5b28",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "How is finding a bug different from fixing it?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "362d52b5ae20c4d1195c4b0ce7b880cb5c3e0cc2dfed57a00840627fa1a68e4c"
+    },
+    {
+      "id": "77ebc46fb0e859b2a9ac99bf51bbc04a9c7359988ea743f0576cb18c810b4752",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Finding a bug identifies a problem. Fixing it changes the program to address that problem.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "755903c6d010862d5a464849b44a7ed83a2d513ec4873d76a7e177a0d59216e6"
+    },
+    {
+      "id": "70f4fdff7b236370b53058294bab150bf2156aef719e1fec8073865603844cdc",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is a software dependency?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "065ec9f3192c27fc65090e4e1fff7b1aff8f38377977eeb3b2958818e3c93b10"
+    },
+    {
+      "id": "289552bd21f935825aa19da49341e4e77b52e1d5d7835ffdd6e5ef44829790cd",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It is another component or package that the software needs in order to work.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3cb3cc1b1d3ed98e804686e719e4a5d89ccc68dcebeb403bef763d82d2c1b2d1"
+    },
+    {
+      "id": "38ab083a914dbb4bedd452bfedd65411062c89fae34f4bbf6bdec0bac958ca7f",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does a database index help with?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "dcdaead303d75bc8c07b8130491fdcba874b58cf66d046a14d2d77dc3975ee11"
+    },
+    {
+      "id": "6cab99a9d1257d0559928351349fefbe0e3ee372f2d49bf7d13d5b757e6da666",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It can help the database find relevant records without checking every record in turn.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c838df9f719e68e77122ecd0bfbb9770090ab2d0af9a99c6764fe6195e22e362"
+    },
+    {
+      "id": "75c667c126517c5c92ebd66a19bbc83a14c1858518bdc1d8e17ba11b99f6a791",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why might a database use a transaction for several related changes?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "80ab8d087c4443abf6a8e8478b3a30985978d0c8eb5060c981833ab91932017d"
+    },
+    {
+      "id": "19839dfd2117d6255a87222df0270928abe8983e645d21ae4404701ca5220120",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A transaction groups the changes so they can succeed together or be rolled back together.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ba1ffe5647ca4aac846a4f77d183ff9d9ea368bcee2a6782521c5ee93661d989"
+    },
+    {
+      "id": "5779fcd14e5d93a97c1ff793312f3bca153689dd55d6ac2a8d6b83cf0c8643fe",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does a backup provide that the only working copy does not?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "baa518346b3b8501be71d150825a18c1223cdd630df307ace6d33af7fd293fb5"
+    },
+    {
+      "id": "3734e681adf80337d6d46f4154e163493634f893a084314ef002554ca008e26f",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It provides another copy that may help restore the data if the working copy is lost or damaged.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e1bc5b7a730daaf332370f960920a191f7b427720e35932f50037b2e436d6d70"
+    },
+    {
+      "id": "e23a32f400d952640024d226fdd731272605fa52f27323eb4b34888b67e5bbe0",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is the difference between a file name and the contents of a file?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "475eb62cc38d29246cbed1caacfcda34fc597f78b457c4b917b4c509d093c8c4"
+    },
+    {
+      "id": "43e99c7ac8816fced2376037f601e15c71bb5e158bd0b74deeb4d37110d6fee2",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The name helps identify the file. The contents are the data stored inside it.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "a237ee0111f6bdda49d301462adca372de74150ad0dfa072b9bb00e0d621325a"
+    },
+    {
+      "id": "f874a0060b8725c5a2da25e4bcbb44f5080f72158b799575266524213ac4ac36",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "How is network delay different from network bandwidth?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7aa6c67cb909d944e62f9e92093f915b5aeb5ba4469a6c6c876088443395db6f"
+    },
+    {
+      "id": "097991a6752e83b844e602e421ab0bf63cf9165830814383c706a1f419a3bc42",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Delay describes how long communication takes; bandwidth describes how much data can be carried over time.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d1b4a95bc486265faacc85881fe3b8116738a5f0924ce3976c447d36734f49e8"
+    },
+    {
+      "id": "1898bfc7037bd372bf8bfa1c165edf15446877f4a01f1dacb7a2fad772d7ef4c",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is the purpose of resolving a website name to a network address?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b6d15385b3c00885da118634d8071ee1070abad5a1e4efb978ddbd2d09dc505f"
+    },
+    {
+      "id": "93e5fe005d9340b026c1ec383256fd20e693296816f78d3178a881aa232160a9",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It helps the computer locate the server associated with that name.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "6b7bde6ecb6c56ff0c8643d2873e79d3d12c07c3d46de47d1ad21552fb39e355"
+    },
+    {
+      "id": "fa2faaff5c27921aa54544b86a8aeaf23679507d5aca49d25b15d0c9b19d9fdf",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why can retrying a failed network request sometimes help?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "2d17ad5788ae0a11ba3cd54d8c570e6fc243cf750abdcc0db8fcf740ba15d3ae"
+    },
+    {
+      "id": "1e5c8f110586f1b7f25885e12ea988ad7bb26c05c07c8e722038dedf6befe9cb",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "A temporary connection problem may have cleared, allowing a later attempt to succeed.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b0c00779548d0d81c87c96d3173d714e2868253f7389856d3e2e23204ae0afa1"
+    },
+    {
+      "id": "1247d4fb7d4581822ecdcf9a2d721fd61fff026585a1ce6fd7c9ba409c8e945f",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why should a program avoid retrying a permanent error forever?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b58201aec26a26089fbe5c4231c0f3fa67d8e72a8680b3963b891847dd891e70"
+    },
+    {
+      "id": "c599cd612e4baa1c329b9876d75603bad96f3d1775904f7f07a8f81abe7bf1eb",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "Repeating the same request will not fix a permanent problem and can waste resources.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0cde57f0bed18ccc6a99e481a44cc2f240f45abdc40e64179132e4ad9cfb156d"
+    },
+    {
+      "id": "cc1abdfb467de0e05330c0b05e5707d0db1f8dcffde80fd7ddb8eea0e395dfb6",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "How would you explain an overfit model to a beginner?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "78590d59633e5e99e59d0f78cd224d698c9879494e22282faf58fe71b2b5d760"
+    },
+    {
+      "id": "2cac224dbd7e5d2c6e2fdcce40ae7910893663a24b31aac3e021395b84707e02",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It has learned its training examples too closely and may perform poorly on new examples.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c1d725cc0a96186f0a06169dc57a77f4963d0aa197eeacf672afc879400b2bca"
+    },
+    {
+      "id": "75895371c0a9e7b7d3c96f3ccff65bfc73a3b84576f64a3aeaafa165a70207b8",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Does a low training loss prove that a model behaves well on new examples?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f876ed6a7bc94b5956f1db69e3c8f81b47c52f0267fd7e8e194564124611f138"
+    },
+    {
+      "id": "e1ccac874776cf7d2cf404a44ad84d534d17c0965842a313066ce89fe0e54328",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "No. New examples need separate evaluation because training performance does not guarantee generalisation.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9735e9a39d040cdb2438f7d6f432c78193a2776d18430a1c00dec921bc1056d8"
+    },
+    {
+      "id": "52bc9c12132656695ecf4e41f2ab8fd87ea1ad8b30d1368e805918a1db82d5d9",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does a loss function do during machine learning?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ab15088b9cb7fcada0283752ddd0277fc2ffc840a7934970335c138a4b96fe2a"
+    },
+    {
+      "id": "d79fcd6d235e6f7a56073bf4293dbbbd2745bdbe282133b4095daa2b04907188",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It measures an aspect of prediction error so training can work towards reducing it.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0a191a93b4be6d7dfde54df7e3918e322e8273e57533a2e828d00177df5693aa"
+    },
+    {
+      "id": "8cf45b8af0dced32265c203ca0bf685e453e57e0a524eff8337c740446f150c8",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does gradient accumulation combine before an optimizer update?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "497aae03ed693a836b19b54d2c1369d078d8a5dcf2dc0a63ebc43a768a648d23"
+    },
+    {
+      "id": "d31b9bdc86576efd0b0a713dc4dcb887b17559cb59ad6ac3a42e9598b9f3ef9d",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It combines gradients from several smaller batches before making one update.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b91e9964802ee069a63a228e905aa35c377fc6af36079dc7aaef286dbf55b74a"
+    },
+    {
+      "id": "8f5eeee6da4cf8171fc6dee9f3edf8648123cb11881e50735a8d33779aa23c4c",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What does setting a random seed help with when running an experiment?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f77fd10f0fe8a654a38b8c4308f3a87781d39ee2bbae364633d83f844475b380"
+    },
+    {
+      "id": "e145e49ae37591143b90560b6d97d595546da6d9f4583835579de2d311ab52ad",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "It helps make random choices repeatable, although other computations may still be nondeterministic.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f99ab99b8ef9f86221849f54b17a4041590d11e3be969e9037bdb46b8e3b0bd4"
+    },
+    {
+      "id": "68e8412dd5b541e31fd7f7e29e719ba3f1576c66c44775285ae44c775159a7cd",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why keep evaluation examples separate from examples used for training?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ced7db88041c9bd5d03827a918dccf2f6b9b4b4d5e2089a87ef1f2713a7b28c6"
+    },
+    {
+      "id": "adbd613b11c151ce6ec667379f5c82d7d2b7d4ddc0f7a388c7f3c3e009c35c47",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "They help measure how the model handles examples it has not been trained on.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "4cb0f93f39f1f82a8c902b37071923bc5592dacd8a5b914baec92fe9f3f94f88"
+    },
+    {
+      "id": "25659d44001d5c1780c98c9d7a2b2699a92edbc8c639aac999cc900b84f8ad04",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Why is it useful to save optimizer state as well as model weights?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7c823c260f98a7967f17347fe65e6d319fe5d42f798adf8370808cd746c72bee"
+    },
+    {
+      "id": "204e6892df1d7e725dfa5e3f4f6f738dc7b4aaa2fd9f2dd9db1b0c14cabd1541",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The optimizer has its own history, which is needed to continue the same training process accurately.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "303d765fbfa00b5a0e6a1ac879ba997337cc6f897fbe95aa84151ea441f1e6d3"
+    },
+    {
+      "id": "480f93095e2d31c0cbf007e4202f250a3ba6039e9f7631311ecbbf580f7817b5",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "What is the difference between a model answering correctly and its speech being clear?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9357982c7f606c61289bda85e73a0141fbc93e25ebdbf2a53672443c018243e1"
+    },
+    {
+      "id": "72cdeb9f58bf3ae25350aa5058b26221a6573141bb58fcb8c47ba82ac9167385",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "One concerns the meaning of the answer; the other concerns how well the spoken audio conveys it.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b25d6bf36ac866484651a812891a5b19e2a04ed9b4517570e62c936926b44f53"
+    },
+    {
+      "id": "f5b12a48dbdc1ec66376ecfdbf107f0b152c6a857a0b3b2f6b2eb9e1aaa653a3",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the lantern. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3b719de5e980beffb1c7aeebc37d45cda0580e676b3c7889c07624b5e93eb3cc"
+    },
+    {
+      "id": "32403e3cf557a21fedd456f1e07873948ff89319b3212f88721fa2f3a9f91938",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is amber triangle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3e62e8e209a874ddee3087b59cb722d54a1e0e90a3cec739a64d84c8c896dfe4"
+    },
+    {
+      "id": "ea995b8f26dd9836b75b9029415fbc309470bc823d0fb9f31f10e51414c7f2bf",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the cushion. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d4b129e208464161024304c778a16540c14192bf28715193998bf51891698295"
+    },
+    {
+      "id": "76d5fe36c403c9b98b74bdb51a6cf60276b69410d2d911d6923f7b22708866eb",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is purple stripe.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f5609d0b8710e9c326bafbc8a85140e1a38791aba1a211581451c997cadb0e35"
+    },
+    {
+      "id": "3f41b20d6b97265a8e714831b19d97afa8d3d89d43990f3bbb73311137a74932",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the coaster. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "274bd133376e2fdfc09aa92f8b1066f0cc80cab2f6de4175b1dfbf595d5a1a4d"
+    },
+    {
+      "id": "62d441dc42ff9e51c7833536a8e0d02b0045c762ed0e8ae317e31f8dd3f60d21",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is blue diamond.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3fcea0a9f05f77a3d003b3308942acf14c6af3c2c2791ada0febb78aa535ef5b"
+    },
+    {
+      "id": "25d89039c7910c10aebd9b9a036dcbd39fd895efe1630c699856235755964d2e",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the hamper. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fd4e34424feea21783fdac15fa2c888c899a4c999d8a1b64a6b9e61550b04bac"
+    },
+    {
+      "id": "0d93bda7d61a4fdd80f12244b87d0499104fe402d22dd33b41c3fe94220f9896",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is green square.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "9db368cbb2174aa7c4ce60c8b431a25746098f024c88451a2b666e9608aeac7f"
+    },
+    {
+      "id": "e507c04ac49c4623b8334cb02bbecdd2cea410511e73a7d0453e7fca25dd17dc",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the dresser. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f1feee6d4c4842228d5d4511919b45797f777972496f08a10d442d03dfb649ea"
+    },
+    {
+      "id": "192a5dddc2615c7880b5483bbc6230cca028cebe5a4295fe823db8f6652a7441",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is ivory oval.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7bc73f73661dd04060f3b9e9e38038bf9c7d45154be9b1bbb5b55dc07518a6dc"
+    },
+    {
+      "id": "b59cba6ffe3e154f2266ab73aaeee363f8ea0883b48e24cfb0a220508a554bd8",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the rack. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "183dde955aac2aa68076a9f7a7bfcaf940f4987cd0ecb30d820caef240dadac1"
+    },
+    {
+      "id": "cd4d47721707a346f707b5e28e69ee3cfe145c3e443093b7c6707cd44e774370",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is orange circle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "a69abf13e4cf78d95d8e679cf57c52fe6d2ecea1e8a814c7f59fc94e194cd442"
+    },
+    {
+      "id": "d84e022b5f9fba35053ca9fda98c59a6deeaf9cc72f0c810280e6553f34615b9",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the crate. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e4ad8dcc4a96c16d8567c64919d0da4282af3c5c02e3328dbbb0f82877933a72"
+    },
+    {
+      "id": "bb25136270b65c80f54f8c6ac8a4c6e35317996524b5090dbe3199e96822023b",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is silver star.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "c7e1664427b3a289497282e57b98f847ccd2cf6529247f42ece018ab736b601c"
+    },
+    {
+      "id": "ba9d5ca4a84eb6922ad66ac286ba3f63e650f77dfbada5ec4f436151ab561cb1",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the pouch. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "14f284c26b4af1401ce9f9d0856516f8cd98558067058b20a1fd616d9f742a5c"
+    },
+    {
+      "id": "0362cd57fa110035178248e0e9aa5b2800bab3d735bc801d31d7aaa7c3cc88cd",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is yellow crescent.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "729315457c80b9ff83549af8ca8b9e1d2e722e8d07dd703d943e6a5f93e2394a"
+    },
+    {
+      "id": "28cab0a42ddcb52c13103ed8d0caf7dab7924c7e5b7058dfa6fb9e0083d4430f",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the packet. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5803d893e423522a181e04e30e2d38e41e200dc1d8580eb48a97820835770041"
+    },
+    {
+      "id": "8e8e6bc8fda3e661e96c5cf9ed094406db77897f56ca2276d172ad44f37a2641",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is amber stripe.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fe16d93f3ae849679e641ebb6a26eb65531737645f21b59d9549165019876465"
+    },
+    {
+      "id": "e34e7dea310ebb71e3f94fa67e8cbde1a2db6de649174be1d2e88329c4827850",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the tray. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "edbcf1914e2e22910b4125d91cad8e8867ea22d35cd924274a021c9d7d6e739b"
+    },
+    {
+      "id": "e0ef001949d8f3962bbf749a29be5aa7cdd880e706a10845500bfe88d99347fe",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is purple diamond.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "6e4afa5864f98f982c57f6fdb9ee3a5a114a87084c760d90de376987d531df8c"
+    },
+    {
+      "id": "d2a985ffa2518bd1f8f6d8fde7275eb39d93791822b6b9f5def16aeb1ae494be",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the bench. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "53d593462059cbc0dfadb3e96ec8d3fabe1304e30bfddf0affe6ea8249fd32e3"
+    },
+    {
+      "id": "6822158fd2edcacff5fafc36f61472360b4329a3d1636401f1aa5aef853bc771",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is blue square.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "00754ecefd03038bd7074a77aa2d0588c98252d0c09dd29df7907d760518fea0"
+    },
+    {
+      "id": "7ba9ec38a3b4ed8d7b6d08fbd009d46d870ec00fc0589236afcb70b26269b98e",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the curtain. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b97914da9253e56aa5c293b7051f19d45f7360acad9cc35c1ffb94cf437b99a3"
+    },
+    {
+      "id": "dcc198f354add13ce32c22359775914fa8f36bdde3a11684ad4d0d9e54feddc0",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is green oval.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3a6f17104a3392b00f120851ba649cd4b5ac9bbcdf4a9b8f3291f750dce97ca6"
+    },
+    {
+      "id": "70149690e0913dadd721ddc8acaf3f6c389c4ef543896b2367805939fbec3e4d",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the helmet. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "df9bb030a29ea0669cc7eaeb8951ba6a730a33335fd650246fdd6549b99b4e25"
+    },
+    {
+      "id": "e7c81d34a917622e40f8bd6bf9da9c8cbb41ec06721b4feb6cad5f30fd802ed5",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, What is the difference between borrowing a book and keeping it as a gift?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d02b7d270ffb9b71fa4a209a0770feed08ed3751e0d2f9d41d80968e70fbc9f9"
+    },
+    {
+      "id": "a7b8ef852e57cfa395bfb02473ada4f2e907d6d9b5220d8361301c3701c89f96",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is ivory circle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3d556c5c18bbfde2273994deb0c2ec13f0d7a577f239d61b2823fb235bd1a8e9"
+    },
+    {
+      "id": "dd272162af239726530667815982debc27fcab018303db9817148f84e56d387e",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the pantry. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b63fce150239a0872a55c2936af907ae37d476a4eff62ca700872c09b020cfaf"
+    },
+    {
+      "id": "878294c56791333c324d9152e29d3f4a003d84f45475660dc238b4e2c9e0e67b",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, If I want to sort shirts by colour, what should I compare?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "3dfcb43fcb23748645569903bf46f992a16cfa0336f9533a57a985437b57ccee"
+    },
+    {
+      "id": "ad6030742e10e5518996e8df7e5f7493395ddf508b596fa2f6b05d3cf7035a6f",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is orange star.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "bc2e17f44be2236d60cb10b95a1cb2c575f92089f69cbcbf8e29a49018b7ee8c"
+    },
+    {
+      "id": "566da75d72d090f33e52038b5bdacd9a42cfc220bb79256f66db0d64711df000",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the counter. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d7ff9d7a2e77c7e850298e8c30cb6a81ed5bae2b65014a7760be10f026f99323"
+    },
+    {
+      "id": "e939a1270705d5d696d538b8398497146640dc656513856968b185d63889614a",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, A parcel is too wide for a narrow slot. What is the straightforward problem?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "2f0bb0868804eaabff0b3ae9a92f7f308276d63c288134233944129e8b7f0e4d"
+    },
+    {
+      "id": "5485dcaa6013e0d573194401de791c30a39fb0180ace067711c6c5b985cb1a59",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is silver crescent.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "702bc12e1c1b1ecc4c3ceb264db91b7d964e1932c0239241dfb1f30a35371390"
+    },
+    {
+      "id": "095eabd1aa79a4ecdd1f6d0a999999430ab4f53ddfe62b6ea9a4760b629e4a9b",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the locker. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7ad9459150bec844e477dc4409c1de83b8ff84256543c00dc6e67d2681ed63bd"
+    },
+    {
+      "id": "4d0a2278c33fe68642d4a296f9243f4ec4ab7766263aa8ca8066b1271a4882d1",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, Why would someone label two identical storage boxes?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "4e947474da3c552c85d6e94658959312c9e7f388e099f7089a744ad4fbb79606"
+    },
+    {
+      "id": "d212e77dc214b8beb08ce0529b596b9cdb719e78720e96c4d9b23556daf0c355",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is yellow triangle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "65e2df9904509dbb5963be31b2aa71010d0e5938944c7c0707f49d0bbf1d6811"
+    },
+    {
+      "id": "824759498776e1cb2119df8344d8a7c54aa03b025b146327ef0a80ae3c3d8254",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the parcel. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "2e94e28ee69addd40ef3af64c71c2f6bdc0871da6b69df6be2fb06911116525b"
+    },
+    {
+      "id": "f17b3165199de3008031b9dc7b2495bddf05e4be23ccf5d2bbb6c40fdf196550",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, If one train arrives before another, which arrival happens earlier?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5dd8fc39584f6bbb98864da84d4f5c654f272cff7553926365e15e39826014f5"
+    },
+    {
+      "id": "5ae84b98fdc4ad7153b03c770cf15d743747d6e46e402bcc391de54e876ec23e",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is amber diamond.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "03ae36295e65c05040a0bb10eca6f2a5ab8513ca2b0efce8fc9d83c692126862"
+    },
+    {
+      "id": "5cd82771dba00869de9ad7587397752c76ab2f39ceb19a749fa3673a427e91af",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the satchel. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "e3f13971f850d24c8e616f26fde45256ea6b0fe1a994307fe5ca14850f0ba150"
+    },
+    {
+      "id": "25ab3f7c5b2294783a285dc597c62a040e878958c2c49f7527f92970f97d6063",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, What does it mean to fold a sheet of paper in half?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "92424d3ebf987b176a38d209fb02a7c9e391f348a31700e6aa42d68781c6fd0e"
+    },
+    {
+      "id": "9c8aecdb8dabf7c98492fa1cd356e4d80aa250b3e8e6f51867da4d17ddd86e39",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is purple square.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8ab16c26da5a10399bc3b97a22d83097e51a247166bc47964f7c43ab5d051901"
+    },
+    {
+      "id": "78c7c17632ff5d4e0ff5a9613e359955446d23654cd417408b3a8942a7faec8f",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the case. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0c635f1b43048a502facabf06469173fdfb49327f9056a498730b15d45cfae14"
+    },
+    {
+      "id": "6f4e6ed981056be3b467c0ca28de1da60dd9c5f98eb041676a7a437cf371882f",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, Why do we use oven gloves when handling a hot tray?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "43c480b973639324558faf816689ae685527caeeea8cb0547a17448bfbcb5866"
+    },
+    {
+      "id": "927dc297c3dcf200c553e8e664fc5748130db830e20b8f583fec2ab9bc30f7ae",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is blue oval.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "35168fb5f9e246e6a65dd91e5aa4ad05569fdb654060affb5010aee3c80e4945"
+    },
+    {
+      "id": "db4030634e8e53cbcc8f5559bf21cf4b19d6bc755909a5087e4407ab01d4b436",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the bin. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ae2a49ebdbda5c60bad6f68a7975494ae27e6af557b3b226a5256dc2bcf826be"
+    },
+    {
+      "id": "fef58c3d3ea5f5144f12d3fed64a0e415c72d3d3e102d7c9b8ccd7e031f3cace",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, I want to keep a stack of papers together temporarily. What could help?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b6d3647144e10a269331bc9f65d20d593db8cfa281e625a18f7e5a09c44e9489"
+    },
+    {
+      "id": "38bc5e89347cabbc2f3953e4ca1e764939d488f61c98925efefec3da9b82ac70",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is green circle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0fc57ba98657d18672c88a68dade41312d20c2b12b952e61ddaa3767172dd68a"
+    },
+    {
+      "id": "409985ec4f7948e151f995e22c2cf4fa314dc218ad2e8c93e09374d058f49afa",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the jug. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5bf67040dc3a281b48abc690850dae64309f758473581af78b3ea493d5e978d9"
+    },
+    {
+      "id": "e83a88e3a6bd3e59c2a2fa57411576af5de99fd234e830e1393f643e5aab83ea",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, What is the purpose of an address on a parcel?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "fabe6118a54651190bfa4e3baa2f1c81444238d5711b837c9a2552f16a30deb2"
+    },
+    {
+      "id": "749221b813aaa727d9029c1c8ee370537177684432932d50053c19ebe77d4cfd",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is ivory star.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "80e222cbffe0c76b423edf92527ffdb385cc7248a47cc9f6b2d8649d8e5999e3"
+    },
+    {
+      "id": "6d0932dceb17e5e3687357c60c3eb92eabf21d927c92e694131c7f3fee2f6937",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the bowl. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "411edd13c24ecec96db2b4bd355422da6837b109299675ef504b423eaa269fff"
+    },
+    {
+      "id": "a6dfca4b40973fe02e67f3c5ee9408ea8cd3306d3da2d376e8f3bcff71747331",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, What changes when a room becomes brighter?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ba42cede373510cda0678b4696d540463b7dcb5f5e276b63b348c252a0f2329a"
+    },
+    {
+      "id": "77bcb3001e048d399f9f6df211ec16598098ce4181fc08184b5725659654764a",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is orange crescent.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f7320bd7e859c7ed4c2e2c8b9c10a87f837c941b831b561004e49533e813867f"
+    },
+    {
+      "id": "439778b2ad8ca0a4ee450310a30625645bb314bee0e7a200b3ca8ceec0fb887b",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the apron. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8189cab62a1642329d1f3d22afa09179a6da212508dc589141f78f87d5c8b807"
+    },
+    {
+      "id": "0a0c6a7853934875afd3a991485a3bcd35e4352d2ad0264042b49186cf1ea012",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, If a shop is closed for the day, can I assume its normal counter is serving customers?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "180d4f8b7223d53bbfcfb48ad33caea332d81cb598798d12b0eb3ce15fa1107d"
+    },
+    {
+      "id": "bced914beb883709774f858104b119cedb9619a1590d86990cf4af0954fef1a3",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is silver triangle.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "25198aadb3f419d1570baf378415b6500a14197fde23b24d04a27d3e5c51fba6"
+    },
+    {
+      "id": "82f00d59c79892620bbc06b2e64aaa0370a07180ab1e7549dfcb2aa8823ca8ba",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "Please ask the background worker to retrieve the marker in the tent. Tell me the confirmed result rather than guessing.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "582cc93c899652873fe08422a85c68befaf44500095b1a774f4567d2a9ab9986"
+    },
+    {
+      "id": "d92b085330f7c728686096a73fe8cb5ec4caee2d56bf0e01c05e7be716eff779",
+      "fold": "TRAIN",
+      "profile": "user-scottish",
+      "voice_id": "eh9GHWIaYsZB3Alk8wrY",
+      "body": {
+        "text": "While that task is running, Why would I check the size of a picture before buying a frame?",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "1f763f206119cdaf3fbbe5ac7a970a93558f446c5deba3292db3620724d34d41"
+    },
+    {
+      "id": "7b199181648f88e63b94dea1300eccc7106d0e28572a2cae1448e37fc36126db",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "The marker is yellow stripe.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "67835ea614a83d90a985af7875fcd554430b17d94e4addb50502362cee62299e"
+    },
+    {
+      "id": "6041f0fd277c8581f83bc2bf8664b354da66b81f2d733cbfa80b27ad235c6986",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the lantern.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "42ee3062021758ea5f432617fada095db37bbe57156cfe8372ba733e7fce1c14"
+    },
+    {
+      "id": "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Cancel the pending task now.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0cab1af697463deb72b5859bb8c1cc21a8097483fbb3be6ec636e0fcf22ba442"
+    },
+    {
+      "id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4",
+      "fold": "TRAIN",
+      "profile": "assistant-british",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "body": {
+        "text": "I have cancelled the pending task.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "87ae680890f95cf9500a1a624e0cc8e0a4c5a350ef4cc36b60519c55c6d6f9d6"
+    },
+    {
+      "id": "b3e41f8269f24dc6030b41dbece2bd185a0ddcb7ec7f410b81f624a1fc721ab9",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the cushion.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "2c48b39a83d9c2b8dbb402a9a4d214b939ac5564a6d6e6264952b49f35310c86"
+    },
+    {
+      "id": "4d5fb550570f46bd458babf2a00c9269757100a7e8fec7e28c92ca5fc5322cff",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the coaster.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5e2d5d273a10662590781e0322b75ab87ab1c02636ccee3f77b820164e28f782"
+    },
+    {
+      "id": "048a781e58909c4f1a57009bd1a8824452eb91cd6aee5bb78dbdf609a78a4cc4",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the hamper.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7893fd16d7565fd7e7b272a17e4765d46cd08ba84db63d642dff71edd9bc0b0d"
+    },
+    {
+      "id": "20c5fa64a28ff97729bb00c3584832a8e7e3a9c6b8e3253c501d71cac7e0407e",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the dresser.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "5e5fa9ee3acdd5711960ec38a3408f21824b45c6700abe1af457a0e490afe8e4"
+    },
+    {
+      "id": "4ce5d1992eb8c02666c3dd131af736514743e46170c8ca585beef0dfb165b2be",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the rack.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "1f3d709a5ce7939e5e444d07655e1bf39982ec7c70bec14152e1144abaf83ec1"
+    },
+    {
+      "id": "f78c00bb08cbf0a2c4f1fcd0c4b278f32579848a4ac708375865854ac13d30a1",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the crate.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "212657a9e9aa2ec20b1db7a9268fa9b7f40a7f948d6ae369a5a5bb3d860233c5"
+    },
+    {
+      "id": "6850ceeccfd52340cddb0e163f79cffa09ee7c85d081c70ae3f824fe2a2c6109",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the pouch.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "11709cee2924a98312a4dc92038514e14a5ad0e5f9aaad50ccf72a5172f4d0ec"
+    },
+    {
+      "id": "1697c259d39bb9523693d804718d98a4a2df1463ac9336c299d30bd04c2fea09",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the packet.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f0cdad73ff38c09b4a7af95dfcd96f92edad4f0e64f364def5036a3bfc916fbe"
+    },
+    {
+      "id": "c48975746d1ae0626bdd8af5042450365a4233c39f1acea9e4d2faabc62504af",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the tray.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "79b789ac3781dd8b5ec1775812cb10c1329f4d487d1fa36f030eda226ebad752"
+    },
+    {
+      "id": "7941ec004050affa4c136b5a025a57ddac3c4182167ece1ddf25917eb1b5aee0",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the bench.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "d8b7a654ea9b01f80d3ea2b0f5eaaf6439dccb9a0f743b591855d97c941639db"
+    },
+    {
+      "id": "3a7719cea93b900546f41e60f0a281bf7c4c644dec693e41b818cc8f1200a94b",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the curtain.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "f04c1016b57f89d13470ff840c4cde8d71f1422a42e41174729a5a0ed69fd695"
+    },
+    {
+      "id": "96429e49304e4803fcd37e00eec98b5f2fef50424b20661a6990b614ccb29883",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the helmet.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "7e866536ab369ad382c1ec3133fc6d938d5d5a821a4585161b6d7bad20c4e536"
+    },
+    {
+      "id": "e07aa9148ba46e36ad615fd3724a76322b5c4d007071d7097640462aebb28013",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the pantry.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ba8ae1cb81b410cba648acab310608b8c00946b3fd295a2b2018b499bc1d4c9c"
+    },
+    {
+      "id": "58d3b95375a7dc7f8eaf2219a706b86924054987e344fe18fd4c908915dc84f8",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the counter.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "8d56a826f2200b2ee503e22d321769d91e04499515226ba707cfa457c710ff2e"
+    },
+    {
+      "id": "8fdc65b8d8f071523a225c55723a069d5a1a48a5f1796fa975ff81fc34063d89",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the locker.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "0f3fbccde1f6adcdfbb93d0d18def3cf4a6be560dec34068e27dba5e98e61d1d"
+    },
+    {
+      "id": "e16579933726b699346521a694766a259f3e0a6d30ef98640db4d34ed8e2c105",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the parcel.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "ada02a1c0ff5a5bf5068d0faf92544784703b7a5b46a9943408481319b13a6e8"
+    },
+    {
+      "id": "fa5f51b6d8add3c79689714a72cdd809584e57e4fbb88f9822546771cd30afc9",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the satchel.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b1f987e19182908dc483acea4db5e35570dec148f26948778daea1ba7d57d059"
+    },
+    {
+      "id": "de3d09abbb3f717ca3fd39b87391e8dd644c5da3e3270c00a1d941001bba19ac",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the case.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "1a67e0ceab3c08121fb688695b61fdc7eb0457f11f312ca2209b6a14771a79f8"
+    },
+    {
+      "id": "494e5fbb3160c4aa61478eaac1c666d693155d747a779a2d0f7e309c9508b4d6",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the bin.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "597db1bfdeca17ec42bf61f858166bc2d7c89ec19f59ab423ad95a57b668b90f"
+    },
+    {
+      "id": "c8c66d02d68514c122bf7bf5297d21b87419813ddff59e16ede9c7b92c88f7b4",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the jug.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "4c796a088e27b4111c30bbe72cbe56e3926c69e1dcc87e04d4425d6f88485023"
+    },
+    {
+      "id": "67ee05e5c03beac997b41a49c931d5fcabf586a90da774a798696161e3b5105f",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the bowl.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "97231b0624f3c178ecb8d549054f82fc594588b56055f2fd5fc2914621f3d759"
+    },
+    {
+      "id": "330e4ef99a217b89bba81a54cbc2c59ec851d53cc75e877c00700dd512277d35",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the apron.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "2006e227248adf3d2a58378f945011bbdd038bbbbc394d2fc709e00d463008dd"
+    },
+    {
+      "id": "79902744f53523ad8bd1a63331dfc84b8e60cbb74561a46b8adf1876ce644600",
+      "fold": "TRAIN",
+      "profile": "user-british",
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "body": {
+        "text": "Please start a background lookup for the marker in the tent.",
+        "model_id": "eleven_v4",
+        "language_code": "en",
+        "seed": 20261107,
+        "voice_settings": {
+          "stability": 0.5,
+          "similarity_boost": 0.75
+        }
+      },
+      "payload_sha256": "b6805b53ff33af2829154c6485a8acdc7f19a8cddea08c77de543b9999a79e06"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0000",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "caf1a395d1e2547be13e24199d8b5ac45d8def5f00187fe69a9c78e754a3c4c6"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "321e3a51c73752a92efdab8e1dfd8436b8c15be50731f35e6fadc008ff321a2f"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0001",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "28ae01cd073b996c9804b98bbe090e1df254bbb2ca85aff1644bf2de563e7154"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "a33aaf332c6aadb39babedf38b05b86c45da1cb344a0e1139b4aa4baff984819"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0002",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "917df67727295e1d8d90827747c55167882f5eeb38fef95cf0a968f91b6e60fa"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "9e46994e929f76dacb0f440523d2b3053d2130fedced99d2ad033e57e8c6e117"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0003",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "0da4615b76931b38139be298dbc03953617f67af9722462ae43f2d6058744cb3"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "fa0da57cc6e9ca0d44269bb75ebc2bce83b53124f03decc479e3a584907abe81"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0004",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "49f1456e94c3b3576e663e63a215fcb61e7d6ec44901defb38e8bfb7efa118ab"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "011f89d531f2decb4e0396376eb7ab74cd526a5fe73e12f570365fe31d626a48"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0005",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "12ef650339ab2488330f0315d845b263994fbe2784440ad0336bcd3662ae16d9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "bf6f72ff71e7602430b54290d48574d6f38d651296f299d2064d6c51c7e89102"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0006",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "ae0661ba451423d701fb1e6642f30d07c8a8cd5ae1b194f018a2d9d852da841b"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "f1554f9d6f76bc69ce8680b599b19a89494f1f2edc643e0a47d99458a28c06ea"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0007",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "1abc74d23f8275fa49bcd4fcb70b8d7c2b28c2d89c02394e31381c76b40e3027"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "99859efa7c513889bbf17bc209b55556814775682e9c8c9cf102ef451dfcd248"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0008",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "d3d92a2a8df6eef9f32d5eacea80452997a0f859b13aec0b32cc8835c2500fa3"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "a25ad18833e5ed94276965dc041a3b9950caa27c61123c9ea8371c9012e95c60"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0009",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "8bf1949969980b94347ad467e4ffe92ff6fc088ce07e1f2b64bf96511a876d91"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "030a2d7e1f26f7d87a7b0836172f4173bca4b3f6145390ea76a5473686e37a15"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0010",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "feb00b4cd31fd1e0aff0a0c0ed45b773a84bdabc7f4d2f7792f98eede035efa2"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "9c370773f501ab94bb6e842744bc1e826de8071c54b2de5c9b9325223b74e31e"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0011",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "b48fa6ad1fddd6c094115a42cba0902cacb263cc3b22d9ec3442876136321840"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "df01db27a92577d81ba69c3572a4c9f2ff1bb763ccaad5a34eb706111cafab02"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0012",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "64d1a3e2c4ebe19aa233b3fac0063335523b7a7380dd2051586975a7cc99a61b"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "a3426aa1f670294c7742e68e72d03ddc03fbdb3f97df85e4148c02a49fabeed8"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0013",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "7ea511585ec7b7873f9ab61ce2328338d86e3882b10414f8878a59f6da402609"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "2a7f05fc55c3df9abe6b4385994f87c46491964d328cce68ce2f94a798eacac9"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0014",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "6128a916f86619d7dfcc1b7b3223ce877459e899cb27922a497d1d9163fe755b"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "a520ea176c0cf70a915a28e4086f5d03565ba5077465e7827e3836b44b13842b"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0015",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "3c47cbcb5986c1a565dd7553cb98843da3185ac860b420867150f582938d56a4"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "5daabe5a9aec9d02e9e3fff3a4c01605e137dbcfd5bebc05224ae9e51fd5e4bb"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0016",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "0db3112675da55ca6f7c58cadd8236c578115d59127343409a57a7ff2c4d5b5b"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "d76be709b6e2f8b5583ebb580f5e4bbbda081bb6e64addb10f8d7a102297d367"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0017",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "377b16077e97bf5c7614eced115a554ff88c0446f6c3e679089f7fdd87993d44"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "12f78e6bb13a3095fcd3233b83cf76c2ca707b0e0f1e833a9c3fd9eb304da4df"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0018",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "59356a36628d5f212280edadc7262e7f6a06892d63519ea51f3e3ac6628a39b7"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "7f2357ffc6a3dbad1b3ffb269a5160521d98e51037f3be7cc5c2ae87274ada07"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0019",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "7abba786a556cf3661308dc56b049edf6c9c58bf3da74d995764526b8253caad"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "13ae510e4bbbc7930d411557d94f783df51b88d6991e243997211ce3b5e2a16f"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0020",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "612d6dd97fdb6674bf113275dddc7abf59e16a96385a4e5997110a4fbac54334"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "4549dab4668d9301fafe7f9fc527c7b5c5fd0fa53beb0b00e2f76dabc194fefa"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0021",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "79f54e8128c390220f907c74ba286f82a6fbca63c718a6aa475a559f22a6e08c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "412b72e34359ed7d5fbb646ea3f2b222ae03521588775b39a84ae8b23e8c7883"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0022",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "059988798a529d194f94c0abd274aeac42736a88b6ab1f8fb7c9814924e61e8c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "edfa9d17a7a1c4b39eecd55ada99df82b4e382b1a6cf535b449a4681c5bd6e1e"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0023",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "9006e3176f58f979ec2edd97201298fedcfceb67809dc14d07d53fd27c00f844"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "805fcf4b35bdfdabf795568c3d1e97ed77b5622f00a1559c72ede78732f76d83"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0024",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "82f74297c06330846cfc4493c20a0d4e504959d8a7177eb51a359ddb18aab0ad"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "fed04831d4b0da9af18cf623ac39b4a698828422b9b0d1a8e80f76f6d1045982"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0025",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "15bb7fd8179ad945f3d1915c7d24d1412535b83ff80328cd387b47b05b3c89fd"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "dc4a3b748808c1d41e6172704bedc59b3a22f29abe7326ea3f919143a77f93cd"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0026",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "6a9b55f66982aaa439f9202e908b62df459b0881a251af2b1ac5257172c9a34f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "f58a95601adc1f69db92fd10d45b4bd1f4beb33e8884b247020e37f8b9287334"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0027",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "291e3dcfafda22640dbcfca9a7c4bfa2e229041930d58745a3e6706f0e9cded9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "b5a4b89b1bf53af6d8291f0c027be05e39e90cebeeb5e0e3604a6e46bf8e1db9"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0028",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "41fdb1d43b973718ff037723f8bc10dc60908f93b255fa93858a105e83d9b429"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "9b7706785d128a3b876366b2da27c559694629a62c66780368f3fce6de7a68f8"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0029",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "9033fb33ddb051fda7f8f7f460d10f99e0d7903206311cd9d6ff662056124991"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "c0f04c068f3da9b4d38e7b86dc558fec3d1e5b8d55f1f1fdb657e0e1451ac213"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0030",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "a77eb4185ef54412a1f6901611c7ba53cdc64e41e69e7ab26dcdec804cfd5b28"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "77ebc46fb0e859b2a9ac99bf51bbc04a9c7359988ea743f0576cb18c810b4752"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0031",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "70f4fdff7b236370b53058294bab150bf2156aef719e1fec8073865603844cdc"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "289552bd21f935825aa19da49341e4e77b52e1d5d7835ffdd6e5ef44829790cd"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0032",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "38ab083a914dbb4bedd452bfedd65411062c89fae34f4bbf6bdec0bac958ca7f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "6cab99a9d1257d0559928351349fefbe0e3ee372f2d49bf7d13d5b757e6da666"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0033",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "75c667c126517c5c92ebd66a19bbc83a14c1858518bdc1d8e17ba11b99f6a791"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "19839dfd2117d6255a87222df0270928abe8983e645d21ae4404701ca5220120"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0034",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "5779fcd14e5d93a97c1ff793312f3bca153689dd55d6ac2a8d6b83cf0c8643fe"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "3734e681adf80337d6d46f4154e163493634f893a084314ef002554ca008e26f"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0035",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "e23a32f400d952640024d226fdd731272605fa52f27323eb4b34888b67e5bbe0"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "43e99c7ac8816fced2376037f601e15c71bb5e158bd0b74deeb4d37110d6fee2"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0036",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "f874a0060b8725c5a2da25e4bcbb44f5080f72158b799575266524213ac4ac36"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "097991a6752e83b844e602e421ab0bf63cf9165830814383c706a1f419a3bc42"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0037",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "1898bfc7037bd372bf8bfa1c165edf15446877f4a01f1dacb7a2fad772d7ef4c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "93e5fe005d9340b026c1ec383256fd20e693296816f78d3178a881aa232160a9"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0038",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "fa2faaff5c27921aa54544b86a8aeaf23679507d5aca49d25b15d0c9b19d9fdf"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "1e5c8f110586f1b7f25885e12ea988ad7bb26c05c07c8e722038dedf6befe9cb"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0039",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "1247d4fb7d4581822ecdcf9a2d721fd61fff026585a1ce6fd7c9ba409c8e945f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "c599cd612e4baa1c329b9876d75603bad96f3d1775904f7f07a8f81abe7bf1eb"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0040",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "cc1abdfb467de0e05330c0b05e5707d0db1f8dcffde80fd7ddb8eea0e395dfb6"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "2cac224dbd7e5d2c6e2fdcce40ae7910893663a24b31aac3e021395b84707e02"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0041",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "75895371c0a9e7b7d3c96f3ccff65bfc73a3b84576f64a3aeaafa165a70207b8"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "e1ccac874776cf7d2cf404a44ad84d534d17c0965842a313066ce89fe0e54328"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0042",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "52bc9c12132656695ecf4e41f2ab8fd87ea1ad8b30d1368e805918a1db82d5d9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "d79fcd6d235e6f7a56073bf4293dbbbd2745bdbe282133b4095daa2b04907188"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0043",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "8cf45b8af0dced32265c203ca0bf685e453e57e0a524eff8337c740446f150c8"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "d31b9bdc86576efd0b0a713dc4dcb887b17559cb59ad6ac3a42e9598b9f3ef9d"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0044",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "8f5eeee6da4cf8171fc6dee9f3edf8648123cb11881e50735a8d33779aa23c4c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "e145e49ae37591143b90560b6d97d595546da6d9f4583835579de2d311ab52ad"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0045",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "68e8412dd5b541e31fd7f7e29e719ba3f1576c66c44775285ae44c775159a7cd"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "adbd613b11c151ce6ec667379f5c82d7d2b7d4ddc0f7a388c7f3c3e009c35c47"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0046",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "25659d44001d5c1780c98c9d7a2b2699a92edbc8c639aac999cc900b84f8ad04"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "204e6892df1d7e725dfa5e3f4f6f738dc7b4aaa2fd9f2dd9db1b0c14cabd1541"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0047",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "480f93095e2d31c0cbf007e4202f250a3ba6039e9f7631311ecbbf580f7817b5"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "answer",
+          "utterance_id": "72cdeb9f58bf3ae25350aa5058b26221a6573141bb58fcb8c47ba82ac9167385"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0048",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "f5b12a48dbdc1ec66376ecfdbf107f0b152c6a857a0b3b2f6b2eb9e1aaa653a3"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "32403e3cf557a21fedd456f1e07873948ff89319b3212f88721fa2f3a9f91938"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0049",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "ea995b8f26dd9836b75b9029415fbc309470bc823d0fb9f31f10e51414c7f2bf"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "76d5fe36c403c9b98b74bdb51a6cf60276b69410d2d911d6923f7b22708866eb"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0050",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "3f41b20d6b97265a8e714831b19d97afa8d3d89d43990f3bbb73311137a74932"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "62d441dc42ff9e51c7833536a8e0d02b0045c762ed0e8ae317e31f8dd3f60d21"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0051",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "25d89039c7910c10aebd9b9a036dcbd39fd895efe1630c699856235755964d2e"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "0d93bda7d61a4fdd80f12244b87d0499104fe402d22dd33b41c3fe94220f9896"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0052",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "e507c04ac49c4623b8334cb02bbecdd2cea410511e73a7d0453e7fca25dd17dc"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "192a5dddc2615c7880b5483bbc6230cca028cebe5a4295fe823db8f6652a7441"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0053",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "b59cba6ffe3e154f2266ab73aaeee363f8ea0883b48e24cfb0a220508a554bd8"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "cd4d47721707a346f707b5e28e69ee3cfe145c3e443093b7c6707cd44e774370"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0054",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "d84e022b5f9fba35053ca9fda98c59a6deeaf9cc72f0c810280e6553f34615b9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "bb25136270b65c80f54f8c6ac8a4c6e35317996524b5090dbe3199e96822023b"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0055",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "ba9d5ca4a84eb6922ad66ac286ba3f63e650f77dfbada5ec4f436151ab561cb1"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "0362cd57fa110035178248e0e9aa5b2800bab3d735bc801d31d7aaa7c3cc88cd"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0056",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "28cab0a42ddcb52c13103ed8d0caf7dab7924c7e5b7058dfa6fb9e0083d4430f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "8e8e6bc8fda3e661e96c5cf9ed094406db77897f56ca2276d172ad44f37a2641"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0057",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "e34e7dea310ebb71e3f94fa67e8cbde1a2db6de649174be1d2e88329c4827850"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "e0ef001949d8f3962bbf749a29be5aa7cdd880e706a10845500bfe88d99347fe"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0058",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "d2a985ffa2518bd1f8f6d8fde7275eb39d93791822b6b9f5def16aeb1ae494be"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "6822158fd2edcacff5fafc36f61472360b4329a3d1636401f1aa5aef853bc771"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0059",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "7ba9ec38a3b4ed8d7b6d08fbd009d46d870ec00fc0589236afcb70b26269b98e"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "dcc198f354add13ce32c22359775914fa8f36bdde3a11684ad4d0d9e54feddc0"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0060",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "70149690e0913dadd721ddc8acaf3f6c389c4ef543896b2367805939fbec3e4d",
+        "e7c81d34a917622e40f8bd6bf9da9c8cbb41ec06721b4feb6cad5f30fd802ed5"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "a7b8ef852e57cfa395bfb02473ada4f2e907d6d9b5220d8361301c3701c89f96"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "a3426aa1f670294c7742e68e72d03ddc03fbdb3f97df85e4148c02a49fabeed8"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0061",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "dd272162af239726530667815982debc27fcab018303db9817148f84e56d387e",
+        "878294c56791333c324d9152e29d3f4a003d84f45475660dc238b4e2c9e0e67b"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "ad6030742e10e5518996e8df7e5f7493395ddf508b596fa2f6b05d3cf7035a6f"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "2a7f05fc55c3df9abe6b4385994f87c46491964d328cce68ce2f94a798eacac9"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0062",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "566da75d72d090f33e52038b5bdacd9a42cfc220bb79256f66db0d64711df000",
+        "e939a1270705d5d696d538b8398497146640dc656513856968b185d63889614a"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "5485dcaa6013e0d573194401de791c30a39fb0180ace067711c6c5b985cb1a59"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "a520ea176c0cf70a915a28e4086f5d03565ba5077465e7827e3836b44b13842b"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0063",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "095eabd1aa79a4ecdd1f6d0a999999430ab4f53ddfe62b6ea9a4760b629e4a9b",
+        "4d0a2278c33fe68642d4a296f9243f4ec4ab7766263aa8ca8066b1271a4882d1"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "d212e77dc214b8beb08ce0529b596b9cdb719e78720e96c4d9b23556daf0c355"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "5daabe5a9aec9d02e9e3fff3a4c01605e137dbcfd5bebc05224ae9e51fd5e4bb"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0064",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "824759498776e1cb2119df8344d8a7c54aa03b025b146327ef0a80ae3c3d8254",
+        "f17b3165199de3008031b9dc7b2495bddf05e4be23ccf5d2bbb6c40fdf196550"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "5ae84b98fdc4ad7153b03c770cf15d743747d6e46e402bcc391de54e876ec23e"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "d76be709b6e2f8b5583ebb580f5e4bbbda081bb6e64addb10f8d7a102297d367"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0065",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "5cd82771dba00869de9ad7587397752c76ab2f39ceb19a749fa3673a427e91af",
+        "25ab3f7c5b2294783a285dc597c62a040e878958c2c49f7527f92970f97d6063"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "9c8aecdb8dabf7c98492fa1cd356e4d80aa250b3e8e6f51867da4d17ddd86e39"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "12f78e6bb13a3095fcd3233b83cf76c2ca707b0e0f1e833a9c3fd9eb304da4df"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0066",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "78c7c17632ff5d4e0ff5a9613e359955446d23654cd417408b3a8942a7faec8f",
+        "6f4e6ed981056be3b467c0ca28de1da60dd9c5f98eb041676a7a437cf371882f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "927dc297c3dcf200c553e8e664fc5748130db830e20b8f583fec2ab9bc30f7ae"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "7f2357ffc6a3dbad1b3ffb269a5160521d98e51037f3be7cc5c2ae87274ada07"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0067",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "db4030634e8e53cbcc8f5559bf21cf4b19d6bc755909a5087e4407ab01d4b436",
+        "fef58c3d3ea5f5144f12d3fed64a0e415c72d3d3e102d7c9b8ccd7e031f3cace"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "38bc5e89347cabbc2f3953e4ca1e764939d488f61c98925efefec3da9b82ac70"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "13ae510e4bbbc7930d411557d94f783df51b88d6991e243997211ce3b5e2a16f"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0068",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "409985ec4f7948e151f995e22c2cf4fa314dc218ad2e8c93e09374d058f49afa",
+        "e83a88e3a6bd3e59c2a2fa57411576af5de99fd234e830e1393f643e5aab83ea"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "749221b813aaa727d9029c1c8ee370537177684432932d50053c19ebe77d4cfd"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "4549dab4668d9301fafe7f9fc527c7b5c5fd0fa53beb0b00e2f76dabc194fefa"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0069",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "6d0932dceb17e5e3687357c60c3eb92eabf21d927c92e694131c7f3fee2f6937",
+        "a6dfca4b40973fe02e67f3c5ee9408ea8cd3306d3da2d376e8f3bcff71747331"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "77bcb3001e048d399f9f6df211ec16598098ce4181fc08184b5725659654764a"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "412b72e34359ed7d5fbb646ea3f2b222ae03521588775b39a84ae8b23e8c7883"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0070",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "439778b2ad8ca0a4ee450310a30625645bb314bee0e7a200b3ca8ceec0fb887b",
+        "0a0c6a7853934875afd3a991485a3bcd35e4352d2ad0264042b49186cf1ea012"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "bced914beb883709774f858104b119cedb9619a1590d86990cf4af0954fef1a3"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "edfa9d17a7a1c4b39eecd55ada99df82b4e382b1a6cf535b449a4681c5bd6e1e"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0071",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "82f00d59c79892620bbc06b2e64aaa0370a07180ab1e7549dfcb2aa8823ca8ba",
+        "d92b085330f7c728686096a73fe8cb5ec4caee2d56bf0e01c05e7be716eff779"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "result_answer",
+          "utterance_id": "7b199181648f88e63b94dea1300eccc7106d0e28572a2cae1448e37fc36126db"
+        },
+        {
+          "program_field": "followup_answer",
+          "utterance_id": "805fcf4b35bdfdabf795568c3d1e97ed77b5622f00a1559c72ede78732f76d83"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0072",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "6041f0fd277c8581f83bc2bf8664b354da66b81f2d733cbfa80b27ad235c6986",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "82f74297c06330846cfc4493c20a0d4e504959d8a7177eb51a359ddb18aab0ad"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "fed04831d4b0da9af18cf623ac39b4a698828422b9b0d1a8e80f76f6d1045982"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0073",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "b3e41f8269f24dc6030b41dbece2bd185a0ddcb7ec7f410b81f624a1fc721ab9",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "15bb7fd8179ad945f3d1915c7d24d1412535b83ff80328cd387b47b05b3c89fd"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "dc4a3b748808c1d41e6172704bedc59b3a22f29abe7326ea3f919143a77f93cd"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0074",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "4d5fb550570f46bd458babf2a00c9269757100a7e8fec7e28c92ca5fc5322cff",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "6a9b55f66982aaa439f9202e908b62df459b0881a251af2b1ac5257172c9a34f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "f58a95601adc1f69db92fd10d45b4bd1f4beb33e8884b247020e37f8b9287334"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0075",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "048a781e58909c4f1a57009bd1a8824452eb91cd6aee5bb78dbdf609a78a4cc4",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "291e3dcfafda22640dbcfca9a7c4bfa2e229041930d58745a3e6706f0e9cded9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "b5a4b89b1bf53af6d8291f0c027be05e39e90cebeeb5e0e3604a6e46bf8e1db9"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0076",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "20c5fa64a28ff97729bb00c3584832a8e7e3a9c6b8e3253c501d71cac7e0407e",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "41fdb1d43b973718ff037723f8bc10dc60908f93b255fa93858a105e83d9b429"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "9b7706785d128a3b876366b2da27c559694629a62c66780368f3fce6de7a68f8"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0077",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "4ce5d1992eb8c02666c3dd131af736514743e46170c8ca585beef0dfb165b2be",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "9033fb33ddb051fda7f8f7f460d10f99e0d7903206311cd9d6ff662056124991"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "c0f04c068f3da9b4d38e7b86dc558fec3d1e5b8d55f1f1fdb657e0e1451ac213"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0078",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "f78c00bb08cbf0a2c4f1fcd0c4b278f32579848a4ac708375865854ac13d30a1",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "a77eb4185ef54412a1f6901611c7ba53cdc64e41e69e7ab26dcdec804cfd5b28"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "77ebc46fb0e859b2a9ac99bf51bbc04a9c7359988ea743f0576cb18c810b4752"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0079",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "6850ceeccfd52340cddb0e163f79cffa09ee7c85d081c70ae3f824fe2a2c6109",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "70f4fdff7b236370b53058294bab150bf2156aef719e1fec8073865603844cdc"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "289552bd21f935825aa19da49341e4e77b52e1d5d7835ffdd6e5ef44829790cd"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0080",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "1697c259d39bb9523693d804718d98a4a2df1463ac9336c299d30bd04c2fea09",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "38ab083a914dbb4bedd452bfedd65411062c89fae34f4bbf6bdec0bac958ca7f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "6cab99a9d1257d0559928351349fefbe0e3ee372f2d49bf7d13d5b757e6da666"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0081",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "c48975746d1ae0626bdd8af5042450365a4233c39f1acea9e4d2faabc62504af",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "75c667c126517c5c92ebd66a19bbc83a14c1858518bdc1d8e17ba11b99f6a791"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "19839dfd2117d6255a87222df0270928abe8983e645d21ae4404701ca5220120"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0082",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "7941ec004050affa4c136b5a025a57ddac3c4182167ece1ddf25917eb1b5aee0",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "5779fcd14e5d93a97c1ff793312f3bca153689dd55d6ac2a8d6b83cf0c8643fe"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "3734e681adf80337d6d46f4154e163493634f893a084314ef002554ca008e26f"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0083",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "3a7719cea93b900546f41e60f0a281bf7c4c644dec693e41b818cc8f1200a94b",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "e23a32f400d952640024d226fdd731272605fa52f27323eb4b34888b67e5bbe0"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "43e99c7ac8816fced2376037f601e15c71bb5e158bd0b74deeb4d37110d6fee2"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0084",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "96429e49304e4803fcd37e00eec98b5f2fef50424b20661a6990b614ccb29883",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "f874a0060b8725c5a2da25e4bcbb44f5080f72158b799575266524213ac4ac36"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "097991a6752e83b844e602e421ab0bf63cf9165830814383c706a1f419a3bc42"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0085",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "e07aa9148ba46e36ad615fd3724a76322b5c4d007071d7097640462aebb28013",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "1898bfc7037bd372bf8bfa1c165edf15446877f4a01f1dacb7a2fad772d7ef4c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "93e5fe005d9340b026c1ec383256fd20e693296816f78d3178a881aa232160a9"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0086",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "58d3b95375a7dc7f8eaf2219a706b86924054987e344fe18fd4c908915dc84f8",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "fa2faaff5c27921aa54544b86a8aeaf23679507d5aca49d25b15d0c9b19d9fdf"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "1e5c8f110586f1b7f25885e12ea988ad7bb26c05c07c8e722038dedf6befe9cb"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0087",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "8fdc65b8d8f071523a225c55723a069d5a1a48a5f1796fa975ff81fc34063d89",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "1247d4fb7d4581822ecdcf9a2d721fd61fff026585a1ce6fd7c9ba409c8e945f"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "c599cd612e4baa1c329b9876d75603bad96f3d1775904f7f07a8f81abe7bf1eb"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0088",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "e16579933726b699346521a694766a259f3e0a6d30ef98640db4d34ed8e2c105",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "cc1abdfb467de0e05330c0b05e5707d0db1f8dcffde80fd7ddb8eea0e395dfb6"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "2cac224dbd7e5d2c6e2fdcce40ae7910893663a24b31aac3e021395b84707e02"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0089",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "fa5f51b6d8add3c79689714a72cdd809584e57e4fbb88f9822546771cd30afc9",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "75895371c0a9e7b7d3c96f3ccff65bfc73a3b84576f64a3aeaafa165a70207b8"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "e1ccac874776cf7d2cf404a44ad84d534d17c0965842a313066ce89fe0e54328"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0090",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "de3d09abbb3f717ca3fd39b87391e8dd644c5da3e3270c00a1d941001bba19ac",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "52bc9c12132656695ecf4e41f2ab8fd87ea1ad8b30d1368e805918a1db82d5d9"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "d79fcd6d235e6f7a56073bf4293dbbbd2745bdbe282133b4095daa2b04907188"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0091",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "494e5fbb3160c4aa61478eaac1c666d693155d747a779a2d0f7e309c9508b4d6",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "8cf45b8af0dced32265c203ca0bf685e453e57e0a524eff8337c740446f150c8"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "d31b9bdc86576efd0b0a713dc4dcb887b17559cb59ad6ac3a42e9598b9f3ef9d"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0092",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "c8c66d02d68514c122bf7bf5297d21b87419813ddff59e16ede9c7b92c88f7b4",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "8f5eeee6da4cf8171fc6dee9f3edf8648123cb11881e50735a8d33779aa23c4c"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "e145e49ae37591143b90560b6d97d595546da6d9f4583835579de2d311ab52ad"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0093",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "67ee05e5c03beac997b41a49c931d5fcabf586a90da774a798696161e3b5105f",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "68e8412dd5b541e31fd7f7e29e719ba3f1576c66c44775285ae44c775159a7cd"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "adbd613b11c151ce6ec667379f5c82d7d2b7d4ddc0f7a388c7f3c3e009c35c47"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0094",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "330e4ef99a217b89bba81a54cbc2c59ec851d53cc75e877c00700dd512277d35",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "25659d44001d5c1780c98c9d7a2b2699a92edbc8c639aac999cc900b84f8ad04"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "204e6892df1d7e725dfa5e3f4f6f738dc7b4aaa2fd9f2dd9db1b0c14cabd1541"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0095",
+      "fold": "TRAIN",
+      "user_utterance_ids": [
+        "79902744f53523ad8bd1a63331dfc84b8e60cbb74561a46b8adf1876ce644600",
+        "782b3d3a0ea9488cf7a07a712f889bc06469ace9262791696f384bcba185ddd4",
+        "480f93095e2d31c0cbf007e4202f250a3ba6039e9f7631311ecbbf580f7817b5"
+      ],
+      "assistant_spoken_targets": [
+        {
+          "program_field": "ordinary_answer",
+          "utterance_id": "72cdeb9f58bf3ae25350aa5058b26221a6573141bb58fcb8c47ba82ac9167385"
+        },
+        {
+          "program_field": "cancel_acknowledgment",
+          "utterance_id": "b71ae45e7048af22a2733b1818a34735fdbbb3d524b3778b0a736c1d1017c3b4"
+        }
+      ]
+    }
+  ],
+  "required_scenes": 96,
+  "required_requests": 182,
+  "characters": 12746,
+  "conservative_cost_upper_usd": 6.373,
+  "maximum_prepaid_character_debit": 12746,
+  "maximum_additional_cash_charge_usd": 0,
+  "no_overages_or_purchase": true,
+  "model_id": "eleven_v4",
+  "original_sources_unchanged": true,
+  "owner_conversations": false,
+  "human_ratings_sent": false,
+  "score_annotations_sent": false,
+  "payload_scope": "Exact authored user words and synthetic TRAIN assistant target words only; no scene metadata or worker-world dictionaries uploaded.",
+  "outputs_require_complete_source_ASR_peak_and_teacher_alignment": true,
+  "training_approved": false
+}
