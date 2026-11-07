@@ -25,7 +25,8 @@ def gradient_norm(parameters):
 
 class NativeOpal:
     def __init__(self, base, model, *, source, run_dir, recipe, backend='keep', agent_budget=0.,
-                 goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance', initial_program=None):
+                 goal='Improve native duplex control and ordinary retention; full native speech and behavior decide acceptance', initial_program=None,
+                 local_git_repo='',decision_timeout_seconds=120):
         if recipe['updates'] <= recipe['warmup_updates']:
             raise ValueError('Native OPAL requires the admitted full schedule beyond warmup')
         self.run_dir=Path(run_dir)
@@ -36,7 +37,8 @@ class NativeOpal:
         self.scheduler=torch.optim.lr_scheduler.LambdaLR(base,
             lambda step:lr_multiplier(step,warmup=recipe['warmup_updates'],updates=recipe['updates']))
         self.options=Options(total_steps=recipe['updates'],goal=goal,backend=backend,
-            maximum_agent_cost_usd=agent_budget,decision_updates=tuple(s for s in (16,32,64,128,256) if s<=recipe['updates']))
+            maximum_agent_cost_usd=agent_budget,decision_updates=tuple(s for s in (16,32,64,128,256) if s<=recipe['updates']),
+            local_git_repo=local_git_repo,decision_timeout_seconds=decision_timeout_seconds)
         self.optimizer=wrap(base,model,source=source,run_dir=run_dir,options=self.options,
             scheduler=self.scheduler,clip_grad_norm=recipe['gradient_clip'],initial_program=initial_program)
         self._closed=False

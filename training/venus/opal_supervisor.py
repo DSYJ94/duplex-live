@@ -144,6 +144,31 @@ class GitSupervisor:
         return programs, source
 
 
+def local_backend(root,repo,timeout=120):
+    """Pinned OPAL backend on the training host; current agent authors via Git.
+
+    No paid coding CLI or API is launched. A new exact request is written for
+    the LOCAL executor, which can commit/deploy its own code edits or keep.
+    This removes the IAP/mailbox transport requirement on Isambard, not the
+    request, source, deadline, checkpoint or native quality checks.
+    """
+    from opal.backends.base import Backend
+    supervisor=GitSupervisor(root,repo,timeout=timeout)
+    class LocalGitBackend(Backend):
+        name='current-agent-git-zero-api'
+        def __init__(self):self.timeout=timeout
+        def preflight(self):supervisor.preflight()
+        def decide(self,workspace,message,system,record_dir):
+            result=supervisor.decide(workspace,message,system,record_dir)
+            if result['cost_usd']!=0:raise ValueError('LOCAL Git backend cannot report paid API usage')
+            return result
+        def cancel(self):supervisor.cancel()
+        def finish(self,interrupted=False):supervisor.cancel()
+        def restore(self,state):
+            if state:raise ValueError('Zero-API Git transport has no hidden persistent agent state')
+    return LocalGitBackend()
+
+
 @contextmanager
 def existing_ssh(mailbox, argv):
     """Use the existing strict IAP argv; do not create a home-directory SSH alias.

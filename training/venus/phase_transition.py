@@ -14,7 +14,7 @@ from .state import exact_state, rng_state, restore_rng
 
 
 def begin(parent, restored, model, *, source, run_dir, program_dir, recipe,
-          backend='keep', agent_budget=0.):
+          backend='keep', agent_budget=0.,local_git_repo='',decision_timeout_seconds=120):
     expected = parent['optimizer']
     assert_optimizer_equal(expected, restored.optimizer.state_dict())
     if restored._closed:
@@ -42,7 +42,8 @@ def begin(parent, restored, model, *, source, run_dir, program_dir, recipe,
     restored.close()
     runtime = NativeOpal(restored.base, model, source=source, run_dir=run_dir,
                          recipe=recipe, backend=backend, agent_budget=agent_budget,
-                         initial_program=program_dir)
+                         initial_program=program_dir,local_git_repo=local_git_repo,
+                         decision_timeout_seconds=decision_timeout_seconds)
     try:
         new_scheduler = copy.deepcopy(runtime.scheduler.state_dict())
         # Restore all custom updater fields too, not only its underlying Adam.
