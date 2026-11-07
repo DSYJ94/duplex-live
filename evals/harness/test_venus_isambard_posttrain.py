@@ -85,3 +85,22 @@ def test_comparison_requires_all32_and_original_audio_without_rerunning_baseline
     (baseline / 'case-00/joined-emitted.wav').write_bytes(b'changed')
     with pytest.raises(ValueError):
         post.compare(root, 'new-source')
+
+
+def test_fold_comparison_reuses_same646_and_rejects_checkpoint_or_reference_changes(tmp_path, monkeypatch):
+    baseline=tmp_path/'unmerged646';root=tmp_path/'folded646'
+    monkeypatch.setattr(post,'UNMERGED646_ROOT',baseline)
+    for collection,source,fold in ((baseline,post.UNMERGED646_SOURCE,False),(root/'native/main','fold-source',True)):
+        rows=[];cases=[]
+        for i in range(32):
+            ident='case-%02d'%i;wav=collection/ident/'joined-emitted.wav';wav.parent.mkdir(parents=True)
+            wav.write_bytes(('unchanged-fixture:'+str(i)).encode());rows.append(dict(id=ident,joined_wav_sha256=post.sha(wav)));cases.append(dict(id=ident,input_sha256=str(i)))
+        write(collection/'native-report.json',dict(complete=True,source=source,cases=rows))
+        write(collection/'results.json',dict(cases=cases))
+        write(collection/'profile.json',dict(checkpoint_sha256='actual-same646',voice_reference=dict(sha256='same-rp-reference'),inference_lora_fold=dict(enabled=fold)))
+    post.compare(root,'fold-source','unmerged646')
+    receipt=json.loads((root/'native/continuation-comparison.json').read_text())
+    assert receipt['baseline_global_update']==receipt['candidate_global_update']==646
+    assert receipt['baseline_source']==post.UNMERGED646_SOURCE and not receipt['qualified']
+    p=root/'native/main/profile.json';row=json.loads(p.read_text());row['checkpoint_sha256']='different';write(p,row)
+    with pytest.raises(ValueError):post.compare(root,'fold-source','unmerged646')

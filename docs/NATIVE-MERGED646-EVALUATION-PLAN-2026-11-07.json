@@ -1,0 +1,43 @@
+{
+  "recorded_utc": "2026-11-07T11:04:41.524112+00:00",
+  "status": "PREPARED_NO_GPU_SUBMISSION",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "objective": "Reduce measured native inference latency with conventional disposable LoRA folding; no training-state transformation.",
+  "gate_before_submit": "Actual successful training8156150/full120/final independent restore AND actual unmerged646 evaluation0/complete32/full hash copyback AND empty project queue.",
+  "checkpoint": "native-training-resume8-v1/main/step-0120.pt; actual final SHA required",
+  "baseline": {
+    "global_update": 646,
+    "source": "98db2c68c30376910c02b6ee54f84d6907f25249",
+    "root": "/projects/u6ada/duplex-live/native-posttrain646-v1/native/main",
+    "reused": true,
+    "unmerged": true
+  },
+  "candidate": {
+    "global_update": 646,
+    "disposable_weight_accumulation": "float32 then native BF16 storage",
+    "base_and_adapter_checkpoint_modified": false,
+    "training_state_modified": false,
+    "BF16_bit_equivalence_claimed": false,
+    "voice_reference": "same exact RP Ben",
+    "full_cases": 32,
+    "raw_word_WER_maximum": 0.05,
+    "raw_peak_maximum": 0.995,
+    "scoring_thresholds_unchanged": true
+  },
+  "resource": {
+    "GPU_jobs_at_once": 1,
+    "GPUs": 1,
+    "maximum_seconds": 7200,
+    "reservation": "interactive alone",
+    "new_GCP": false,
+    "new_purchase": false,
+    "external_API_calls": 0,
+    "new_optimizer_updates": 0
+  },
+  "CPU_tiny_tensor_tests_actual_container": 7,
+  "native_qualification": false,
+  "adopted": false,
+  "acceptance": "Report all32 paired original inputs, actual text/worker events/unaltered audio and native wall timings versus actual unmerged646. Speed alone never approves a candidate; live latency, fresh semantic tests and owner British naturalness remain required.",
+  "stopping_rule": "One full readout; no blind repeated or weakened tests."
+}

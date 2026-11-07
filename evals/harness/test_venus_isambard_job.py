@@ -3,8 +3,8 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected', [('evaluate',8),('posttrain-evaluate',2)])
-def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected):
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True)])
+def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
     monkeypatch.setattr(job,'BASE',base);monkeypatch.setattr(job,'ART',base/'artifacts')
@@ -23,7 +23,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         def terminate(self):self.returncode=0
         def wait(self,timeout=None):return self.returncode
     monkeypatch.setattr(job.subprocess,'Popen',Process)
-    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2))
+    job.main(argparse.Namespace(source='source',root=str(root),worktree='source-native',stage=stage,epochs=2,merge_lora=fold))
     native=[args for args in calls if args[0]=='apptainer']
     assert len(native)==expected
     assert all('--containall' in args and '--cleanenv' in args for args in native)
@@ -34,6 +34,12 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
     assert all(str(real)+':'+str(real) in args for args in native)
     assert all('SLURM_JOB_ID=123' in args and 'CUDA_VISIBLE_DEVICES=0' in args for args in native)
+    assert all(('--merge-lora' in args)==fold for args in native)
+    if fold:assert all(args[args.index('--baseline-profile')+1]=='unmerged646' for args in native)
     assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])
     terminal=json.loads((root/'execution-123/terminal.json').read_text())
     assert terminal['actual_exit_code']==0 and terminal['new_optimizer_updates']==0
+
+def test_inference_fold_cannot_be_used_in_training():
+    with pytest.raises(ValueError,match='separate post-training'):
+        job.main(argparse.Namespace(stage='train',merge_lora=True))

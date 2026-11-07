@@ -16,6 +16,8 @@ TRAINING_SOURCE = 'd8161fd40c80b814242f93c8d205cf33a83c4c54'
 TRAINING_JOB = '8156150'
 BASELINE_ROOT = BASE / 'native-evaluation-v5/native/main'
 BASELINE_SOURCE = '35d40392b641d31023723d87edb72bb224af37b8'
+UNMERGED646_ROOT = BASE / 'native-posttrain646-v1/native/main'
+UNMERGED646_SOURCE = '98db2c68c30376910c02b6ee54f84d6907f25249'
 original_training_source = TRAINING_SOURCE
 
 
@@ -65,31 +67,44 @@ def admit(a):
     return completed_training(TRAINING_ROOT)
 
 
-def compare(root, source):
+def compare(root, source, baseline_profile='main526'):
     root = Path(root)
-    old = json.loads((BASELINE_ROOT / 'native-report.json').read_text())
+    if baseline_profile not in ('main526','unmerged646'):
+        raise ValueError('Explicit original baseline required')
+    baseline = BASELINE_ROOT if baseline_profile=='main526' else UNMERGED646_ROOT
+    baseline_source = BASELINE_SOURCE if baseline_profile=='main526' else UNMERGED646_SOURCE
+    old = json.loads((baseline / 'native-report.json').read_text())
     new = json.loads((root / 'native/main/native-report.json').read_text())
-    old_cases = json.loads((BASELINE_ROOT / 'results.json').read_text())['cases']
+    old_cases = json.loads((baseline / 'results.json').read_text())['cases']
     new_cases = json.loads((root / 'native/main/results.json').read_text())['cases']
-    if (not old['complete'] or not new['complete'] or old['source'] != BASELINE_SOURCE
+    if (not old['complete'] or not new['complete'] or old['source'] != baseline_source
             or new['source'] != source or len(old['cases']) != 32 or len(new['cases']) != 32
             or len(old_cases) != 32 or len(new_cases) != 32):
         raise ValueError('Complete original526 and new646 cohorts required')
     identity = lambda rows: {r['id']: r['input_sha256'] for r in rows}
     if len(identity(old_cases)) != 32 or identity(old_cases) != identity(new_cases):
         raise ValueError('All32 paired input identities must match')
-    for collection, report in ((BASELINE_ROOT, old), (root / 'native/main', new)):
+    if baseline_profile=='unmerged646':
+        prior=json.loads((baseline/'profile.json').read_text())
+        current=json.loads((root/'native/main/profile.json').read_text())
+        if (prior.get('inference_lora_fold',{}).get('enabled',False)
+                or not current.get('inference_lora_fold',{}).get('enabled',False)
+                or prior['checkpoint_sha256']!=current['checkpoint_sha256']
+                or prior['voice_reference']!=current['voice_reference']):
+            raise ValueError('Same immutable646 checkpoint/reference, unmerged versus folded required')
+    for collection, report in ((baseline, old), (root / 'native/main', new)):
         if {r['id'] for r in report['cases']} != set(identity(old_cases)):
             raise ValueError('All32 speech reviews must match')
         for row in report['cases']:
             if sha(collection / row['id'] / 'joined-emitted.wav') != row['joined_wav_sha256']:
                 raise ValueError('Original raw audio differs')
     result = dict(complete=True, paired_scenes=32, outputs=64,
-                  baseline_reused=True, baseline_global_update=526, candidate_global_update=646,
-                  baseline_source=BASELINE_SOURCE, source=source,
-                  baseline_report_sha256=sha(BASELINE_ROOT / 'native-report.json'),
+                  baseline_reused=True, baseline_profile=baseline_profile,
+                  baseline_global_update=526 if baseline_profile=='main526' else 646, candidate_global_update=646,
+                  baseline_source=baseline_source, source=source,
+                  baseline_report_sha256=sha(baseline / 'native-report.json'),
                   candidate_report_sha256=sha(root / 'native/main/native-report.json'),
-                  baseline_results_sha256=sha(BASELINE_ROOT / 'results.json'),
+                  baseline_results_sha256=sha(baseline / 'results.json'),
                   candidate_results_sha256=sha(root / 'native/main/results.json'),
                   matched_all32_input_hashes=True, baseline_rerun=False,
                   baseline_rows=old['cases'], candidate_rows=new['cases'],
@@ -103,6 +118,7 @@ def main():
     p = parser()
     p.add_argument('--stage', choices=('collect', 'compare'), required=True)
     p.add_argument('--opal-source', required=True)
+    p.add_argument('--baseline-profile',choices=('main526','unmerged646'),default='main526')
     a = p.parse_args()
     proof = admit(a)
     (Path(a.root) / 'completion-admission.json').write_text(json.dumps(proof, indent=2) + '\n')
@@ -110,7 +126,7 @@ def main():
         import sys
         asyncio.run(collect(a, execution_context=sys.modules[__name__]))
     else:
-        compare(a.root, a.source)
+        compare(a.root, a.source, a.baseline_profile)
 
 
 if __name__ == '__main__':

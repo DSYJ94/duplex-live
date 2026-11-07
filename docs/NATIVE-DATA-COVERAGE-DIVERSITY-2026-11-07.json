@@ -1,0 +1,173 @@
+{
+  "recorded_utc": "2026-11-07T10:59:41.221005+00:00",
+  "cache_manifest_sha256": "1bf09867b5d1ce78ed4c3504057773d20e0025bb0662e7442311fd79b08a4807",
+  "source_plans": {
+    "evals/fixtures/venus-control-repair-source-v2-20261027.json": "0315beac785a4dbfc8e128628380dd19fe9f8dc9387ea81ba96d0c6b9af5158b",
+    "evals/fixtures/venus-context-repair-authoring-v2-20261101.json": "c19f3dfd2760a9e6679f46fadf0440dae38c716dcc21eed3990a64a4afcfeba8"
+  },
+  "complete304_source_identity_match": true,
+  "folds": {
+    "TRAIN": {
+      "scenes": 240,
+      "families": {
+        "cancel": {
+          "scenes": 40,
+          "user_turns": 120,
+          "unique_exact_user_utterances": 16,
+          "unique_synthetic_world_or_worker_contracts": 40
+        },
+        "correction": {
+          "scenes": 4,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 9,
+          "unique_synthetic_world_or_worker_contracts": 4
+        },
+        "delegate": {
+          "scenes": 48,
+          "user_turns": 48,
+          "unique_exact_user_utterances": 12,
+          "unique_synthetic_world_or_worker_contracts": 48
+        },
+        "ordinary": {
+          "scenes": 32,
+          "user_turns": 32,
+          "unique_exact_user_utterances": 32,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pause": {
+          "scenes": 24,
+          "user_turns": 72,
+          "unique_exact_user_utterances": 26,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pause_resume": {
+          "scenes": 4,
+          "user_turns": 16,
+          "unique_exact_user_utterances": 7,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pending": {
+          "scenes": 16,
+          "user_turns": 32,
+          "unique_exact_user_utterances": 5,
+          "unique_synthetic_world_or_worker_contracts": 16
+        },
+        "quiet": {
+          "scenes": 56,
+          "user_turns": 168,
+          "unique_exact_user_utterances": 74,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "quiet_scope": {
+          "scenes": 4,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 9,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "result_delivery": {
+          "scenes": 4,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 6,
+          "unique_synthetic_world_or_worker_contracts": 4
+        },
+        "selective_cancel": {
+          "scenes": 4,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 6,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "simple_or_delegate": {
+          "scenes": 4,
+          "user_turns": 8,
+          "unique_exact_user_utterances": 8,
+          "unique_synthetic_world_or_worker_contracts": 4
+        }
+      },
+      "unique_exact_user_utterances": 201
+    },
+    "DEV": {
+      "scenes": 64,
+      "families": {
+        "cancel": {
+          "scenes": 8,
+          "user_turns": 24,
+          "unique_exact_user_utterances": 7,
+          "unique_synthetic_world_or_worker_contracts": 8
+        },
+        "correction": {
+          "scenes": 2,
+          "user_turns": 6,
+          "unique_exact_user_utterances": 5,
+          "unique_synthetic_world_or_worker_contracts": 2
+        },
+        "delegate": {
+          "scenes": 12,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 4,
+          "unique_synthetic_world_or_worker_contracts": 12
+        },
+        "ordinary": {
+          "scenes": 12,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 12,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pause": {
+          "scenes": 4,
+          "user_turns": 12,
+          "unique_exact_user_utterances": 6,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pause_resume": {
+          "scenes": 2,
+          "user_turns": 8,
+          "unique_exact_user_utterances": 5,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "pending": {
+          "scenes": 4,
+          "user_turns": 8,
+          "unique_exact_user_utterances": 2,
+          "unique_synthetic_world_or_worker_contracts": 4
+        },
+        "quiet": {
+          "scenes": 12,
+          "user_turns": 36,
+          "unique_exact_user_utterances": 20,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "quiet_scope": {
+          "scenes": 2,
+          "user_turns": 6,
+          "unique_exact_user_utterances": 5,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "result_delivery": {
+          "scenes": 2,
+          "user_turns": 6,
+          "unique_exact_user_utterances": 4,
+          "unique_synthetic_world_or_worker_contracts": 2
+        },
+        "selective_cancel": {
+          "scenes": 2,
+          "user_turns": 6,
+          "unique_exact_user_utterances": 4,
+          "unique_synthetic_world_or_worker_contracts": 1
+        },
+        "simple_or_delegate": {
+          "scenes": 2,
+          "user_turns": 4,
+          "unique_exact_user_utterances": 4,
+          "unique_synthetic_world_or_worker_contracts": 2
+        }
+      },
+      "unique_exact_user_utterances": 74
+    }
+  },
+  "proposal96_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+  "proposed_ordinary48_are_exact_text_new_to_old_TRAIN": true,
+  "interpretation": "The existing 240 TRAIN scenes contain repeated spoken request templates, particularly pending/delegation/cancellation; synthetic worlds vary. Exact lexical diversity is not a semantic generalisation or causality measure. The new96 proposal adds48 ordinary/basic/technical answers, but broader implicit complexity routing and multi-task context remain priorities beyond this lookup tranche.",
+  "audio_generated": false,
+  "current_training_dataset_changed": false,
+  "qualified": false
+}

@@ -9,6 +9,8 @@ BASE=Path('/projects/u6ada/duplex-live')
 ART=BASE/'artifacts/native-v75'
 
 def main(a):
+    if getattr(a,'merge_lora',False) and a.stage!='posttrain-evaluate':
+        raise ValueError('Inference folding is a separate post-training evaluation only')
     source=subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()
     if source!=a.source:raise ValueError('Exact Git execution source required')
     job_id=os.environ['SLURM_JOB_ID']
@@ -53,6 +55,7 @@ def main(a):
             stages += [('training.venus.isambard_native',args+['--arm',arm,'--stage','collect'],arm+'-native') for arm in ('main','control')]
             stages += [('training.venus.isambard_native',args+['--stage','combine'],'combine')]
         elif a.stage=='posttrain-evaluate':
+            if getattr(a,'merge_lora',False):args+=['--merge-lora','--baseline-profile','unmerged646']
             stages=[('training.venus.isambard_posttrain',args+['--arm','main','--stage',stage],name)
                     for stage,name in (('collect','main-native'),('compare','compare'))]
         else:
@@ -88,5 +91,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
     p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
     main(p.parse_args())
