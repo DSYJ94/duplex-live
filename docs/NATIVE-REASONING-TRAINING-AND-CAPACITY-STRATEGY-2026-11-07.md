@@ -134,6 +134,8 @@ Recommended escalation order:
 3. If capacity remains the plausible limit, create a disposable identity-initialised two-block branch. Preserve input/output dimensions, tokenizer, audio interfaces, KV-cache layer indexing and conditioning. Verify initial native equivalence, useful gradients and complete state restore, then train on enough new data to test the hypothesis.
 4. Consider six blocks/>1B only if the smaller growth branch improves held-out capability without unacceptable voice latency. Additional parameters start without additional learned knowledge and increase inference work. Reject growth that merely reduces TRAIN loss.
 
+Keep foundation replacement as an explicit competing option: if fresh matched tests show poor native reasoning or speech that persists after the targeted repair, compare an available pretrained native-duplex alternative against further Venus training on the same product tests and total adaptation cost. A stronger text backbone alone is not a drop-in replacement for the audio interfaces, streaming state and learned duplex alignment. Do not switch on a parameter count or model-card benchmark alone, and preserve the current checkpoints/data so the comparison is reversible.
+
 Full-weight tuning may fit with sharding, but also changes the largest amount of inherited behaviour. Compare it deliberately; it is not an automatic next stage after LoRA. From-scratch pretraining would additionally recreate language, listening, speech and duplex alignment and is not the economical route to this product.
 
 ## Isambard first; GCP is a fallback, not a required distributed partner
