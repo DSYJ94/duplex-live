@@ -4,7 +4,7 @@ import json
 import wave
 import pytest
 from data.venus.retention_speech import prepare, inherited_sources, canonical_file_payload, MODEL
-from data.venus.retention_quality import inventory, complete_timestamps
+from data.venus.retention_quality import inventory, complete_timestamps, critical_keys_match, lookup_targets
 
 
 def make_sources(tmp_path):
@@ -53,3 +53,16 @@ def test_complete_word_alignment_rejects_missing_final_end_and_invalid_clocks():
     for chunks in ([],[dict(text='word',timestamp=(.1,None))],[dict(text='word',timestamp=(.2,.1))],
                    [dict(text='word',timestamp=(0.,float('nan')))],[dict(text='word',timestamp=(0.,2.))]):
         assert not complete_timestamps(chunks,1.)
+
+
+def test_wrong_key_cannot_pass_under_whole_sentence_word_error_allowance():
+    from data.venus.context_source_quality import wer
+    p=prepare();targets=lookup_targets(p)
+    assert len(targets)==48 and all(len(v)==1 for v in targets.values())
+    row=next(r for r in p['requests'] if r['id'] in targets)
+    key=targets[row['id']][0];reference=row['body']['text']
+    wrong=reference.replace(key,'wardrobe')
+    assert wer(reference,wrong)<=.05
+    assert not critical_keys_match(reference,wrong,[key])
+    assert not critical_keys_match(reference,reference+' '+key,[key])
+    assert critical_keys_match(reference,reference,[key])

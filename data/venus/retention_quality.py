@@ -5,8 +5,32 @@ import json
 import math
 import wave
 from pathlib import Path
-from .retention_speech import prepare, inherited_sources, canonical_file_payload, sha, MODEL
-from .context_source_quality import wer
+from .retention_speech import prepare, inherited_sources, canonical_file_payload, sha, MODEL, PLAN
+from .context_source_quality import wer, words
+
+
+def lookup_targets(prepared):
+    scenes = {s['id']: s for s in json.loads(PLAN.read_text())['scenes']}
+    targets = {}
+    for binding in prepared['scenes']:
+        scene = scenes[binding['id']]
+        world = scene['synthetic_private_world']
+        if not world:
+            continue
+        if len(world) != 1 or len(scene['user_turns']) != len(binding['user_utterance_ids']):
+            raise ValueError('Exact authored single-key lookup binding required')
+        key = next(iter(world))
+        for ident, text in zip(binding['user_utterance_ids'], scene['user_turns']):
+            if key in words(text):
+                targets.setdefault(ident, set()).add(key)
+    if len(targets) != 48:
+        raise ValueError('Every48 authored key-bearing user source required')
+    return {ident: sorted(keys) for ident, keys in targets.items()}
+
+
+def critical_keys_match(authored, recognized, keys):
+    expected, actual = words(authored), words(recognized)
+    return all(expected.count(key) > 0 and actual.count(key) == expected.count(key) for key in keys)
 
 
 def inventory(original, resumed, payload):
@@ -14,6 +38,7 @@ def inventory(original, resumed, payload):
     prepared = json.loads(payload.read_text())
     if prepared != prepare() or sha(payload) != canonical_file_payload(prepared):
         raise ValueError('Exact complete committed speech payload required')
+    keys = lookup_targets(prepared)
     inherited, remaining = inherited_sources(prepared, original)
     ledger = json.loads((resumed/'ledger.json').read_text())
     # Absolute source paths can change across machines; immutable receipts cannot.
@@ -49,7 +74,7 @@ def inventory(original, resumed, payload):
         rows.append(dict(id=request['id'], fold=request['fold'], text=request['body']['text'],
             profile=request['profile'], wav=str(wav), source_sha256=sha(wav),
             seconds=seconds, original_peak=peak, peak_pass=peak <= .995,
-            original_attempt_status=attempt['status']))
+            original_attempt_status=attempt['status'], expected_lookup_keys=keys.get(request['id'], [])))
     if len(rows) != 182 or len({r['id'] for r in rows}) != 182:
         raise ValueError('Exact distinct182 required')
     return rows
@@ -103,9 +128,10 @@ def main(a):
             generate_kwargs=dict(language='en', task='transcribe', do_sample=False))
         error = wer(row['text'], recognized['text'])
         timing = complete_timestamps(recognized.get('chunks'), row['seconds'])
+        key_pass = critical_keys_match(row['text'], recognized['text'], row['expected_lookup_keys'])
         row.update(recognized=recognized['text'], word_error_rate=error, words=recognized.get('chunks'),
             word_timestamps_complete=timing, recognizer_resample_peak=float(np.abs(converted).max()),
-            passed=row['peak_pass'] and error <= .05 and timing)
+            critical_lookup_keys_pass=key_pass, passed=row['peak_pass'] and error <= .05 and timing and key_pass)
         (a.output/(row['id']+'.json')).write_text(json.dumps(row, indent=2)+'\n')
         print(json.dumps(dict(completed=count, required=182, id=row['id'], passed=row['passed'], wer=error)), flush=True)
     report = dict(schema='dl-retention96-complete182-quality-v1', source=a.source,
@@ -113,6 +139,7 @@ def main(a):
         resumed_ledger_sha256=sha(a.resumed/'ledger.json'), complete=len(rows) == 182,
         required=182, passed=sum(r['passed'] for r in rows), all_passed=all(r['passed'] for r in rows),
         rows=rows, recognizer=name, recognizer_revision=revision,
+        all_critical_lookup_keys_pass=all(r['critical_lookup_keys_pass'] for r in rows),
         normalizer_module_sha256=sha(Path(__file__).with_name('context_source_quality.py')),
         wer_threshold=.05, original_peak_threshold=.995, no_audio_changes=True,
         transcript_hints=False, subset_acceptance=False, external_api_calls=0,

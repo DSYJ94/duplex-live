@@ -27,5 +27,8 @@
   "training_approved": false,
   "new_GCP_resources": false,
   "owner_conversations": false,
-  "credentials_transferred": false
+  "credentials_transferred": false,
+  "all48_key_bearing_user_sources_require_exact_lookup_key": true,
+  "wrong_or_duplicate_key_cannot_pass_on_sentence_WER": true,
+  "source_audio_unchanged": true
 }

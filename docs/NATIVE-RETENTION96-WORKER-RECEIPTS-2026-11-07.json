@@ -1,0 +1,369 @@
+{
+  "recorded_utc": "2026-11-07T12:58:29.497992+00:00",
+  "complete48": true,
+  "actual_read_only_synthetic_worker_receipts": 48,
+  "lookup_results": 24,
+  "genuine_pending_cancellations": 24,
+  "empty_target_cancellations": 0,
+  "source_plan_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+  "worker_implementation_sha256": "32814337bc97879ff01cb72e58685ff086b05437bfbf1e6a847bdb69a2ea1f72",
+  "actual_collection_exit": 0,
+  "native_model_dispatch": false,
+  "teacher_forced_requests": true,
+  "dialogue_clock_is_authored": true,
+  "actual_worker_clock_is_monotonic": true,
+  "independent_source_word_audit_pending": true,
+  "native_teacher_history_pending": true,
+  "training_approved": false,
+  "external_API_calls": 0,
+  "rows": [
+    {
+      "id": "venus-retention-request-v2-train-delegate-0048",
+      "family": "delegate",
+      "receipt_sha256": "5f4d51cc00ae3a26d1969b80c5e851d284e177e3061c537942e20b38c739c2ad"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0049",
+      "family": "delegate",
+      "receipt_sha256": "6cf9ced3cd9d61f94ece49dd47139721c68a4940d700568366cbb5f069fb3fe6"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0050",
+      "family": "delegate",
+      "receipt_sha256": "c9328dfd371f4c52c47b722ca61cb8a65b39aea7d7d6a959525cd8382551bfca"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0051",
+      "family": "delegate",
+      "receipt_sha256": "1dfa30486db6fe3506fdc2364f3305936898798518039dc1be47fefe21917d8e"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0052",
+      "family": "delegate",
+      "receipt_sha256": "ed81747a269e0397acc3814437410fe4b82a3ac67558b40b8700bf8cc71392f2"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0053",
+      "family": "delegate",
+      "receipt_sha256": "cf3f860a8c90c154095ab2724bf9153b796fb57cca79738df8bceaae62dc8c12"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0054",
+      "family": "delegate",
+      "receipt_sha256": "c20af288274d544ffc86a4342bc02cf810893217b9a3826f0913389d1744d9b7"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0055",
+      "family": "delegate",
+      "receipt_sha256": "279f5b646f762fb0f4c833cb0e40df3d130a148e044eb30db098f028780895e7"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0056",
+      "family": "delegate",
+      "receipt_sha256": "b0ef27a363a1291ab76e6b7961fc23f953518b4a10713da4a14bd89f643408e5"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0057",
+      "family": "delegate",
+      "receipt_sha256": "523d2e5bababd5de6dee8b694c76f338883c7384cdb401fd7b25dd45d0f8510c"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0058",
+      "family": "delegate",
+      "receipt_sha256": "6edccc9e04ae0b16cb14ac15e8933c60db8a10d23c3096030cea83020a47c475"
+    },
+    {
+      "id": "venus-retention-request-v2-train-delegate-0059",
+      "family": "delegate",
+      "receipt_sha256": "386cd63185ba940cfee1681d28f6bbba4edd67f5471681e755cc6ba0699a8ea5"
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0060",
+      "family": "pending",
+      "receipt_sha256": "a2141758c8c2c20d2e654340cf83c8fc9a724f4043af737a1f04acdf765d50f4",
+      "authored_followup_source_end_seconds": 11.64,
+      "actual_worker_receipt_after_seconds": 35.00172470905818,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0061",
+      "family": "pending",
+      "receipt_sha256": "83a7bfe291e115479b9af9f6b95a37f083d6ad2e6390a1285b6aa35e5372c54e",
+      "authored_followup_source_end_seconds": 10.76,
+      "actual_worker_receipt_after_seconds": 35.00173741695471,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0062",
+      "family": "pending",
+      "receipt_sha256": "253d2f9f5070466b33b276a285b74ca0cf5eaf2bc564a71c0f69cf23d7e36f77",
+      "authored_followup_source_end_seconds": 13.96,
+      "actual_worker_receipt_after_seconds": 35.00173783302307,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0063",
+      "family": "pending",
+      "receipt_sha256": "80ac4bf147aef6f9c73d733c2ad078a7d9af20a6ca049ba874269255d686bd77",
+      "authored_followup_source_end_seconds": 11.16,
+      "actual_worker_receipt_after_seconds": 35.001746666035615,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0064",
+      "family": "pending",
+      "receipt_sha256": "485dfef236a8e23ca7d1b28a0b504d833d489d6dac964240c7c02a3582fd4e82",
+      "authored_followup_source_end_seconds": 11.28,
+      "actual_worker_receipt_after_seconds": 35.00148362503387,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0065",
+      "family": "pending",
+      "receipt_sha256": "f77e31732aee366822ea4955db5eccfa7e8dfc58f00bddb6450e722d14a48b8a",
+      "authored_followup_source_end_seconds": 11.879999999999999,
+      "actual_worker_receipt_after_seconds": 35.001383666996844,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0066",
+      "family": "pending",
+      "receipt_sha256": "f44bf16c44e1def601103b91a2397af2dfa9ded59e08754825ae9c7969e9c6d7",
+      "authored_followup_source_end_seconds": 10.92,
+      "actual_worker_receipt_after_seconds": 35.001379708060995,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0067",
+      "family": "pending",
+      "receipt_sha256": "9aefe498a2183de07b76e126f716983378067f9412548e47edc601cd7004aae0",
+      "authored_followup_source_end_seconds": 11.24,
+      "actual_worker_receipt_after_seconds": 35.00137670803815,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0068",
+      "family": "pending",
+      "receipt_sha256": "fa6de3d653b5c27440b4b65dcb1622c885f3e141db7504aaea9803ecfda3b857",
+      "authored_followup_source_end_seconds": 9.52,
+      "actual_worker_receipt_after_seconds": 35.00095187500119,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0069",
+      "family": "pending",
+      "receipt_sha256": "823cc802cb73addbebc7878efa24e70cb2e3cfaef7b7fde2227cdf40fa9f382d",
+      "authored_followup_source_end_seconds": 9.76,
+      "actual_worker_receipt_after_seconds": 35.00088787509594,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0070",
+      "family": "pending",
+      "receipt_sha256": "230ad4619c2d6bcb76f62265c9130ccfd4e77f226530e72e29d21e185c1657b3",
+      "authored_followup_source_end_seconds": 13.52,
+      "actual_worker_receipt_after_seconds": 35.00088487495668,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0071",
+      "family": "pending",
+      "receipt_sha256": "878b5abb0387a13878f69842452d80a30b1836b0b549e19d239a735317834da1",
+      "authored_followup_source_end_seconds": 11.719999999999999,
+      "actual_worker_receipt_after_seconds": 35.00088429194875,
+      "dialogue_and_worker_clocks_separate": true
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0072",
+      "family": "cancel",
+      "receipt_sha256": "0bc0d44c3a4b93aa5d90025c965dadf3ed7bfab6a896d7b948ba88a3ef7b1fde",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0073",
+      "family": "cancel",
+      "receipt_sha256": "dbb0c5dd02f30b83d87e8e3b6eaba9ec2e3a3948ddb6fcc1a2f69068daa22865",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0074",
+      "family": "cancel",
+      "receipt_sha256": "5cb1ebd2a0537858e3263ddbee23c1d2762d928e9418f520a67f006aacfd12ee",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0075",
+      "family": "cancel",
+      "receipt_sha256": "b5c633a8527582564833d681a03686248c809367e5abd213df6a020be3fb88e1",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0076",
+      "family": "cancel",
+      "receipt_sha256": "625649b49f122e3a150bf06fc4ad43b2416958504f75179deea1f8477b81be41",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0077",
+      "family": "cancel",
+      "receipt_sha256": "8dac8916d7976c4a174b31f1d829e6f2d96289dc4f748bfe11d465840ecf8e20",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0078",
+      "family": "cancel",
+      "receipt_sha256": "5a8d7c6afb6aca5b75b7f4290246a8fd2b591dc4df96ab6c48f9fd865a47a30e",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0079",
+      "family": "cancel",
+      "receipt_sha256": "b23f73129787d9ef839479d22aa5edc73496a9c13ddf7f4b9199527ab0a9da45",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0080",
+      "family": "cancel",
+      "receipt_sha256": "5d640970d8a812e9864c15b243567353e5dbd30d0b458447548c45b441c5dc1c",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0081",
+      "family": "cancel",
+      "receipt_sha256": "c81d65a21341d4f9953c07b459fb59f01d0d946d26eddd1180f717a81fc87e86",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0082",
+      "family": "cancel",
+      "receipt_sha256": "23a6fc1e042dbb2f78eebae36b35d6ac9e6fcbc3a336b50304070248ce93d013",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0083",
+      "family": "cancel",
+      "receipt_sha256": "2d3161fb3b64efa66fc135bafb3c91681d74233e485eceddb7deb735bd02a41e",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0084",
+      "family": "cancel",
+      "receipt_sha256": "c640e3cc8c8461547efb4ba49eb143ca9fee560984a5473a1ba191a6dfb05af5",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0085",
+      "family": "cancel",
+      "receipt_sha256": "e8c0aff37c3bfea098cb4c13ac903697455a9dc1c23cd0ed48244c73a018b76b",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0086",
+      "family": "cancel",
+      "receipt_sha256": "1b4afa1a210f18ef1585c6611ada72408b5cb6e6b69525028adcb5d06f5f9977",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0087",
+      "family": "cancel",
+      "receipt_sha256": "fee3408cba253e6b0d7e694afaff2b9fee7c96689f3beb829c3a45097f808ac3",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0088",
+      "family": "cancel",
+      "receipt_sha256": "71643e80484e88d6ac1414a7660005c41ad4cb26ac1305b8648852b32dd3006f",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0089",
+      "family": "cancel",
+      "receipt_sha256": "2488c6c9b894981bc1c97318f510bfe5921e8db1693468400f69b324eb66e29b",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0090",
+      "family": "cancel",
+      "receipt_sha256": "2b00ce64bc267c9e8916d319f69b42c1ebdbbe7cf13d5aef8cc318427d74ddc7",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0091",
+      "family": "cancel",
+      "receipt_sha256": "bddd51b192a7f40f754dbc8238fdcd2e16e111f2ad7dcf39bb7913f0d31c08ac",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0092",
+      "family": "cancel",
+      "receipt_sha256": "a96c4d515f1126dd31830b18c8089ba2653537e976c99f05c562fae8b4fa3b48",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0093",
+      "family": "cancel",
+      "receipt_sha256": "a59ae61ad697ff88771d7928742f86cf40b3945e96476e878c0081cca7bb9fc1",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0094",
+      "family": "cancel",
+      "receipt_sha256": "44f1f356c6f935d11094d74e2eb373b2de6f684047fd79f7466500aedc7687a4",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    },
+    {
+      "id": "venus-retention-request-v2-train-cancel-0095",
+      "family": "cancel",
+      "receipt_sha256": "329d0f46358bac93602df6e2e51cb66c3f8a07f2198f3152e0709f5df98e565c",
+      "genuinely_pending_task_cancelled": true,
+      "empty_target_cancel": false,
+      "cancelled_value_delivered": false
+    }
+  ]
+}
