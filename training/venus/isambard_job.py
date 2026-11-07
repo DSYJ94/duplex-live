@@ -19,7 +19,7 @@ def main(a):
     execution=root/('execution-'+job_id);execution.mkdir(parents=True,exist_ok=False)
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
                job_id=job_id,node=job['NodeList'],source=source,start_unix=g.stamp(job['StartTime']),
-               stop_unix=g.stamp(job['EndTime']),maximum_seconds=7200 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-cache') else 86400,GPU_count=1)
+               stop_unix=g.stamp(job['EndTime']),maximum_seconds=7200 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache') else 86400,GPU_count=1)
     g.validate_job(job,lease,time.time());lease_path=execution/'lease.json';lease_path.write_text(json.dumps(lease,indent=2)+'\n')
     guard_path=execution/'guard.json'
     watcher=subprocess.Popen([sys.executable,'-B','-u','-m','training.venus.isambard_guard','--lease',str(lease_path),'--output',str(guard_path)],stdout=(execution/'guard.log').open('x'),stderr=subprocess.STDOUT)
@@ -94,12 +94,12 @@ def main(a):
             for arm in ('expanded-data','rehearsal'):
                 stages.append(('training.venus.retention_train',argv+['--arm',arm],arm+'-training'))
                 stages.append(('training.venus.retention_train',argv+['--arm',arm,'--final-restore'],arm+'-restore'))
-        elif a.stage in ('retention-qwen','retention-qwen-v2','retention-qwen-measured'):
+        elif a.stage in ('retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair'):
             receipt=BASE/'reviewer-models/qwen3-32b-v1/download.json'
             identity=json.loads(receipt.read_text())
             stages=[('data.venus.retention_semantics_qwen',[
                 '--model',identity['download_directory'],'--download-receipt',str(receipt),
-                '--calibration-version','v2' if a.stage in ('retention-qwen-v2','retention-qwen-measured') else 'v1',
+                '--calibration-version','v2' if a.stage in ('retention-qwen-v2','retention-qwen-measured','retention-qwen-repair') else 'v1',
                 '--lease',str(lease_path),'--source',source,
                 '--timelines',str(BASE/'native-retention96-timelines-v3'),
                 '--output',str(root/'semantic-v1')],'retention-qwen')]
@@ -109,8 +109,12 @@ def main(a):
             if a.resume_checkpoint:
                 extra=['--resume-checkpoint',a.resume_checkpoint,'--resume-sha',a.resume_sha,'--resume-step',str(a.resume_step),'--resume-prior-root',a.resume_prior_root]
                 stages=[('training.venus.isambard_resume',args+extra+['--stage',stage],'resume-'+stage) for stage in ('reference','restore')]+[(stages[0][0],stages[0][1]+extra,'training'),stages[1]]
-        if a.stage=='retention-qwen-measured':
+        if a.stage in ('retention-qwen-measured','retention-qwen-repair'):
             stages[0][1].extend(['--alignment',str(BASE/'native-retention96-sources-v1/teacher-inputs-v1/alignment/report.json')])
+        if a.stage=='retention-qwen-repair':
+            if not a.repair_origin_sha:raise ValueError('Pinned original complete review required')
+            stages[0][1].extend(['--repair-origin',str(BASE/'native-retention96-qwen-v4/semantic-v1'),
+                                  '--repair-origin-sha',a.repair_origin_sha])
         for module,argv,name in stages:
             g.ensure(lease,json.loads(guard_path.read_text()))
             started=time.time();log=(execution/(name+'.log')).open('x')
@@ -132,13 +136,13 @@ def main(a):
         watcher.terminate()
         try:watcher.wait(timeout=10)
         except subprocess.TimeoutExpired:watcher.kill();watcher.wait()
-        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-cache') else None),indent=2)+'\n')
+        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache') else None),indent=2)+'\n')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
-    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-cache','retention-train'),required=True);p.add_argument('--epochs',type=int,default=1)
-    p.add_argument('--semantic-sha');p.add_argument('--semantic-root');p.add_argument('--new-cache');p.add_argument('--new-manifest-sha')
+    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache','retention-train'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--repair-origin-sha');p.add_argument('--semantic-sha');p.add_argument('--semantic-root');p.add_argument('--new-cache');p.add_argument('--new-manifest-sha')
     p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
     main(p.parse_args())

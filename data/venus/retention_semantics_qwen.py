@@ -23,6 +23,10 @@ def main(a):
     from training.venus.isambard_native import guarded
     ensure_guard();guarded(a.lease,900);ready=verify_ready(a.model,a.download_receipt)
     rows,manifest_sha=teachers(a.timelines,getattr(a,'alignment',None))
+    reused={};lineage=None
+    if getattr(a,'repair_origin',None):
+        from .retention_review_lineage import origin
+        rows,reused,lineage=origin(a.repair_origin,a.repair_origin_sha,rows,manifest_sha)
     if a.output.exists():raise ValueError('Preserve original failed reviews')
     a.output.mkdir(parents=True,exist_ok=False)
     tokenizer=AutoTokenizer.from_pretrained(a.model,local_files_only=True,trust_remote_code=False)
@@ -30,6 +34,10 @@ def main(a):
         torch_dtype=torch.bfloat16,attn_implementation='sdpa').eval().cuda()
     llm.requires_grad_(False);versions={n:p._version for n,p in llm.named_parameters()}
     def judge(row):
+        if row['id'] in reused:
+            saved=reused[row['id']]
+            (a.output/(row['id']+'.json')).write_bytes((a.repair_origin/(row['id']+'.json')).read_bytes())
+            return saved
         ensure_guard();guarded(a.lease,180);set_seed(42)
         messages=[dict(role='system',content=PROMPT),dict(role='user',content=json.dumps(row['payload'],separators=(',',':')))]
         prompt=tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True,enable_thinking=True)
@@ -52,13 +60,14 @@ def main(a):
     if any(p._version!=versions[n] for n,p in llm.named_parameters()):raise ValueError('Reviewer weights changed')
     report.update(frozen_model_weights_unchanged=True,public_weights_all_hashes=ready['all_hashes'])
     if getattr(a,'alignment',None):report['measured_alignment_sha256']=sha(a.alignment)
+    if lineage:report['review_lineage']=lineage
     (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
     if not report['all96_semantic_pass']:raise RuntimeError('Complete calibrated review failed; preserve all verdicts')
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--source',required=True)
-    p.add_argument('--alignment',type=Path)
+    p.add_argument('--alignment',type=Path);p.add_argument('--repair-origin',type=Path);p.add_argument('--repair-origin-sha')
     p.add_argument('--calibration-version',choices=('v1','v2'),default='v1')
     for name in ('model','download-receipt','timelines','output','lease'):p.add_argument('--'+name,type=Path,required=True)
     main(p.parse_args())

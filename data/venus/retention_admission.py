@@ -54,6 +54,13 @@ def admit(timelines,semantic,expected_sha,alignment=None):
         if report['measured_alignment_sha256']!='2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36':raise ValueError('Original measured timing evidence required')
         alignment=alignment or '/projects/u6ada/duplex-live/native-retention96-sources-v1/teacher-inputs-v1/alignment/report.json'
     rows,manifest_sha=teachers(timelines,alignment)
+    if report.get('review_lineage'):
+        from .retention_review_lineage import origin
+        lineage=report['review_lineage']
+        rows,reused,actual=origin(lineage['original_directory'],lineage['report_sha256'],rows,manifest_sha)
+        if actual!=lineage:raise ValueError('Actual complete origin/reused provenance differs')
+        for name in reused:
+            if sha(semantic/(name+'.json'))!=actual['reused_record_hashes'][name]:raise ValueError('Reused actual approval bytes changed')
     controls=json.loads((semantic/'calibration.json').read_text())
     validate_review(report,controls,rows,manifest_sha,
                     lambda name:json.loads((semantic/(name+'.json')).read_text()))
