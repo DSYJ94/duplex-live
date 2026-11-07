@@ -19,7 +19,7 @@ def main(a):
     execution=root/('execution-'+job_id);execution.mkdir(parents=True,exist_ok=False)
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
                job_id=job_id,node=job['NodeList'],source=source,start_unix=g.stamp(job['StartTime']),
-               stop_unix=g.stamp(job['EndTime']),maximum_seconds=7200 if a.stage in ('evaluate','posttrain-evaluate') else 86400,GPU_count=1)
+               stop_unix=g.stamp(job['EndTime']),maximum_seconds=7200 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit') else 86400,GPU_count=1)
     g.validate_job(job,lease,time.time());lease_path=execution/'lease.json';lease_path.write_text(json.dumps(lease,indent=2)+'\n')
     guard_path=execution/'guard.json'
     watcher=subprocess.Popen([sys.executable,'-B','-u','-m','training.venus.isambard_guard','--lease',str(lease_path),'--output',str(guard_path)],stdout=(execution/'guard.log').open('x'),stderr=subprocess.STDOUT)
@@ -58,6 +58,11 @@ def main(a):
             if getattr(a,'merge_lora',False):args+=['--merge-lora','--baseline-profile','unmerged646']
             stages=[('training.venus.isambard_posttrain',args+['--arm','main','--stage',stage],name)
                     for stage,name in (('collect','main-native'),('compare','compare'))]
+        elif a.stage=='retention-source-audit':
+            stages=[('data.venus.retention_quality',[
+                '--original',str(root/'original'),'--resumed',str(root/'resumed'),
+                '--payload',work+'/docs/NATIVE-RETENTION96-SPEECH-PAYLOAD-2026-11-07.json',
+                '--output',str(root/'quality-v1'),'--source',source,'--lease',str(lease_path)],'source-audit')]
         else:
             stages=[('training.venus.isambard_train',args+['--epochs',str(a.epochs)],'training'),
                     ('training.venus.isambard_train',args+['--epochs',str(a.epochs),'--final-restore'],'final-restore')]
@@ -85,12 +90,12 @@ def main(a):
         watcher.terminate()
         try:watcher.wait(timeout=10)
         except subprocess.TimeoutExpired:watcher.kill();watcher.wait()
-        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('evaluate','posttrain-evaluate') else None),indent=2)+'\n')
+        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('evaluate','posttrain-evaluate','retention-source-audit') else None),indent=2)+'\n')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
-    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--stage',choices=('evaluate','posttrain-evaluate','train','retention-source-audit'),required=True);p.add_argument('--epochs',type=int,default=1)
     p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
     main(p.parse_args())

@@ -3,7 +3,7 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True)])
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False)])
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
@@ -29,14 +29,20 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
     assert len(set(invocations))==expected
-    last=json.loads((root/('execution-123/'+('combine' if stage=='evaluate' else 'compare')+'-terminal.json')).read_text())
+    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit'}[stage]
+    last=json.loads((root/('execution-123/'+last_name+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
     assert all(str(real)+':'+str(real) in args for args in native)
     assert all('SLURM_JOB_ID=123' in args and 'CUDA_VISIBLE_DEVICES=0' in args for args in native)
     assert all(('--merge-lora' in args)==fold for args in native)
     if fold:assert all(args[args.index('--baseline-profile')+1]=='unmerged646' for args in native)
-    assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])
+    if stage=='retention-source-audit':
+        assert native[0][native[0].index('-m')+1]=='data.venus.retention_quality'
+        assert '--merge-lora' not in native[0] and '--model' not in native[0]
+        assert native[0][native[0].index('--original')+1]==str(root/'original')
+    else:
+        assert [args[args.index('--stage')+1] for args in native]==(['schema-selftest','reference','restore','reference','restore','collect','collect','combine'] if stage=='evaluate' else ['collect','compare'])
     terminal=json.loads((root/'execution-123/terminal.json').read_text())
     assert terminal['actual_exit_code']==0 and terminal['new_optimizer_updates']==0
 

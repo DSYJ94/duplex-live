@@ -1,0 +1,21 @@
+{
+  "source": "4469436f0204882080ac98c890a249b1bd48513e",
+  "native_model_loading": false,
+  "native_optimizer_updates": 0,
+  "external_api_calls": 0,
+  "CUDA_VISIBLE_DEVICES": "",
+  "test_output": "..............                                                           [100%]\n14 passed in 7.57s\n",
+  "worktree": "/projects/u6ada/duplex-live/source-opal-local-git-v1",
+  "protocol_fixture": true,
+  "native_behavior_qualified": false,
+  "at": "2026-11-07T12:39:37.724888+00:00",
+  "schema": "dl-opal-local-git-real-cpu-proof-v1",
+  "test_result_sha256": "7e25c30e9383400e11c718ac7ecda5ac4fbb56e6ebeb9170f00504c78a4207c4",
+  "test_module": "evals/harness/test_venus_local_git_opal.py",
+  "upstream_pin": "8b16759a3e9930916ed582e28068267859f935f8",
+  "actual_code_version_applied": 1,
+  "training_continued_while_decision_pending": true,
+  "fresh_process_Adam_RNG_program_and_next_update_exact": true,
+  "fixture_not_optimizer_efficacy": true,
+  "current_native_trainer_changed": false
+}
