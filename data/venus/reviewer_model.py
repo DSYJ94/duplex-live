@@ -2,6 +2,8 @@
 import argparse
 import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
 
 PIN=Path('docs/NATIVE-QWEN32-REVIEWER-PUBLIC-FILES-2026-11-07.json')
@@ -49,8 +51,18 @@ def verify_ready(directory,receipt):
 
 
 def main(a):
-    from huggingface_hub import snapshot_download
+    from huggingface_hub import snapshot_download,constants
     pin=check_pin(json.loads(PIN.read_text()))
+    checked=[]
+    for value in (constants.HF_HOME,constants.HF_XET_CACHE,os.environ['TMPDIR']):
+        path=Path(value).resolve();path.relative_to(a.cache.resolve())
+        path.mkdir(parents=True,exist_ok=True)
+        with tempfile.TemporaryFile(dir=path) as f:
+            f.write(b'cache-preflight');f.seek(0)
+            if f.read()!=b'cache-preflight':raise ValueError('Public cache is not writable')
+        checked.append(str(path))
+    print(json.dumps(dict(cache_write_preflight=True,paths=checked)),flush=True)
+    if a.cache_preflight_only:return
     if a.receipt.exists():raise ValueError('Preserve existing download receipts')
     directory=snapshot_download(repo_id=REPO,revision=REVISION,token=False,
         cache_dir=str(a.cache),allow_patterns=[r['path'] for r in pin['files']],max_workers=4)
@@ -69,4 +81,5 @@ def main(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--cache',type=Path,required=True);p.add_argument('--receipt',type=Path,required=True)
+    p.add_argument('--cache-preflight-only',action='store_true')
     main(p.parse_args())
