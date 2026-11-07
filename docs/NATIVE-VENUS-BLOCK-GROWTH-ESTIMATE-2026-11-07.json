@@ -1,0 +1,22 @@
+{
+  "status": "DESIGN_ESTIMATE_NOT_INSTANTIATED",
+  "observed_at": "2026-11-07T14:39:57Z",
+  "host": "u6ada.aip2.isambard",
+  "source_config": "/projects/u6ada/duplex-live/public-model-slurm-v1/Realtime-Venus-Audio/config.json",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "hidden_size": 4096,
+  "intermediate_size": 12288,
+  "num_hidden_layers": 36,
+  "num_attention_heads": 32,
+  "num_key_value_heads": 8,
+  "matrix_parameters_per_added_block": 192937984,
+  "two_added_blocks_matrix_parameters": 385875968,
+  "six_added_blocks_matrix_parameters": 1157627904,
+  "excludes": [
+    "biases",
+    "normalisation weights",
+    "implementation-specific additions"
+  ],
+  "new_blocks_instantiated": false,
+  "new_training_updates": 0
+}
