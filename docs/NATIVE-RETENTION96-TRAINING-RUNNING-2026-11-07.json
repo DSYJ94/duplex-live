@@ -1,0 +1,118 @@
+{
+  "status": "ACTUAL_TRAINING_RUNNING_FIRST_NEW_FULL_STATE_HASH_BACKED_UP",
+  "observed_utc": "2026-11-07T18:30:08.945533+00:00",
+  "job_id": "8179044",
+  "source": "017578a72cbd8f8008a8c574436625633413597c",
+  "live": {
+    "actual_updates": 4,
+    "last_global": 650,
+    "last_saved": {
+      "event": "live_state_saved",
+      "step": 4,
+      "sha256": "8359a153649a4ac7de05e979e53083944ca39ccd7d413324be646122262c1008"
+    },
+    "job": {
+      "JobId": "8179044",
+      "JobState": "RUNNING",
+      "NodeList": "nid010052",
+      "StartTime": "2026-11-07T18:00:35",
+      "EndTime": "2026-11-08T18:00:35"
+    },
+    "process": {
+      "stage": "expanded-data-training",
+      "pid": 222315,
+      "execution_id": "3b6ae876d9f4475bb6eb801a886257b4",
+      "module": "training.venus.retention_train",
+      "source": "017578a72cbd8f8008a8c574436625633413597c",
+      "started_unix": 1794074440.3219821
+    }
+  },
+  "parent_total_updates": 646,
+  "parent_checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "trainable_parameters": 698351616,
+  "original_TRAIN": 240,
+  "new_TRAIN": 96,
+  "DEV": 64,
+  "global_batch": 4,
+  "main_new_updates": 84,
+  "rehearsal_control_new_updates": 84,
+  "each_arm_independently_starts_at646": true,
+  "each_arm_final_global_if_complete": 730,
+  "first_optimizer_update": {
+    "step": 1,
+    "global_optimizer_updates": 647,
+    "seconds": 440.70966247998876,
+    "gradient_norm": 2.717348337173462,
+    "peak_gpu_bytes": 37705654784,
+    "lr": 3.125e-07,
+    "lr_report_scope": "before OPAL step; updater program is authoritative if it changes LR",
+    "ce": 0.671578923240304,
+    "kl": 0.3884860426187515,
+    "hidden": 1.0741533041000366,
+    "objective": 0.8308708667755127,
+    "source": "017578a72cbd8f8008a8c574436625633413597c",
+    "arm": "expanded-data"
+  },
+  "first_update_observed_utc": "2026-11-07T18:09:00.886128+00:00",
+  "parent_Adam_RNG_OPAL_native_logits_exact": true,
+  "atomic_full_checkpoint_every_update": true,
+  "first_state_backup": {
+    "source": "017578a72cbd8f8008a8c574436625633413597c",
+    "job": "8179044",
+    "step": 1,
+    "global_update": 647,
+    "bytes": 8380968831,
+    "sha256": "59cc4e78d247ecdfb81ac8fb9efdaae3ce8a27ddb43ecb679e4f08e0c8bd69bd",
+    "remote_snapshot": "/projects/u6ada/duplex-live/native-retention96-learning-v1/preservation-first-update-v1/state.pt",
+    "actual_atomic_save": {
+      "event": "live_state_saved",
+      "step": 1,
+      "sha256": "59cc4e78d247ecdfb81ac8fb9efdaae3ce8a27ddb43ecb679e4f08e0c8bd69bd"
+    },
+    "training_continues": true,
+    "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-first-update-v1/state.pt",
+    "all_hashes": true,
+    "rsync_exit_code": 0
+  },
+  "native_cache": {
+    "job": "8178030",
+    "actual_terminal": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "manifest_sha256": "c33f520d1fddc8778e8e8fb9e0f9f2cb7c978df4cdb194a78f48e49dafef6cd8",
+    "native_cache_remains_durable": true,
+    "pt_files_copied_to_Mac": false,
+    "training_started": false
+  },
+  "native_input_checks": {
+    "all96_pass": true,
+    "actual_compared_positions": 3042,
+    "maximum_native_replay_error": 0,
+    "maximum_relative_l2": 0,
+    "minimum_cosine": 0.9999069571495056,
+    "minimum_argmax_agreement": 1.0,
+    "maximum32positions_per_scene": true,
+    "all_full_histories_labels_preserved": true,
+    "reused_exact17": true,
+    "actual_new_captures": 79
+  },
+  "OPAL_backend": "keep",
+  "external_model_API_calls": 0,
+  "acoustic_loss_trained": false,
+  "full_native_speech_behavior_reasoning_evaluation_pending": true,
+  "adopted": false,
+  "usage_snapshot": {
+    "top_level_jobs": 28,
+    "allocated_gpu_hours": 19.439166666666665,
+    "failed_or_cancelled_gpu_hours": 4.102777777777778,
+    "official_portal_charged_node_hours": null,
+    "allocation_remaining_not_inferred": true,
+    "scope": "Actual sacct account/user/date filters recorded by caller; running rows are snapshots",
+    "observed_at": "2026-11-07T18:28:28.178774+00:00",
+    "since": "2026-10-30",
+    "account": "brics.u6ada",
+    "user": "dsyj94.u6ada"
+  },
+  "working_goal_for_this_task": "Achieved actual new optimizer updates; broader native product goal remains unfinished"
+}
