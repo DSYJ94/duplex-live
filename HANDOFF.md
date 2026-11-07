@@ -1,3 +1,11 @@
+# LOCAL — Failed-protocol8174573 early stopped/HASHsafe; corrected8175426 ACTUALLY RUNNING
+
+7Nov15:45UTC: owner says stayuntilactualtrainingupdate. Toavoid45moreminutesofknowninvalidreview, stoppedONLY8174573 afteridentifiedfalseempty-tailjudgments. CANCELLEDbyactualUID0:0; ALL62outputs copied/hashverified, originalpartialteacherrecords retained/noapproval. Originalcontroller15474exit1 expected. Waitingunsubmittedv5controller4055/PID1830 identityverifiedthenSIGTERM before anysubmission; receiptwaiter-stopped-before-submission.json. NewSAMEroot/source controller continue-v2.py tool84968 bindsactualoldterminal/all62hashes+accountEMPTYqueue; no oldall96completion requirement sincecancelledpassisnotapproval. This removes a self-imposed wait, NOT finalall96gate.
+
+ONE corrected8175426 ACTUALLYsubmitted15:43:45UTC/RUNNING15:43:47UTC. Sourcebfca37c21277152430def8dcbd1b30ace7d1a5b9/rootnative-retention96-qwen-v4/worksource-retention96-v5/2h. All16controls thenALL96 measured-evidence teachers; no words/timing/threshold edits. Newcontroller84968/claimcontroller-claim-v2.json live. Pipeline57338/PID6454/sourcea9f460a actualwaiting remainsarmed: waitthisactualv5 full96PASS/copyback thennativecache2h then24hworkqwholematchedtraining/allserialrestores. Otherjobsnone, nooptimizerupdatesyet. Reviewearlystoprecord NATIVE-RETENTION96-EARLY-FAILED-REVIEW-2026-11-07.json. DoNOTrestartoldcontroller/duplicatecorrectedjob. Currenttargettrainingrootnative-retention96-learning-v1 andallstates/caps/backupconstraints asbelow. Continuecurrenttask untilfirstactualoptimizerupdateorhumanaccessblocker; donotfinaljustbecausecontrollerarmed.
+
+---
+
 # LOCAL — Direct conversion-to-training pipeline57338 armed; saved646 runner deployed
 
 7Nov15:40UTC: owner requires remainautonomous UNTIL ACTUAL optimizerupdate onIsambard. Goal for this execution: complete qualified96→nativecache→actualsaved646 newupdate; no moreliterature/diagnosticloop. Existingappgoalstatuspausedcannotbechangedbytool, butownerexecutionauthorityexplicit.

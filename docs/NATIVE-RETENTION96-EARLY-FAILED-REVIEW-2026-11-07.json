@@ -1,0 +1,27 @@
+{
+  "status": "EARLY_STOP_KNOWN_FAILED_PROTOCOL_REVIEW_NO_APPROVAL",
+  "reason": "Source-measured word tails repeatedly rejected; avoid completing a known invalid pass before whole96 evidence-corrected review",
+  "original_job": "8174573",
+  "receipt": {
+    "job_id": "8174573",
+    "source": "f2bed79a6a009ea17ffcfdd7c67b27fe0a2fb7a7",
+    "actual_terminal": [
+      "CANCELLED by 1483809154",
+      "0:0"
+    ],
+    "files": 62,
+    "all_hashes": true,
+    "complete96_approved": false,
+    "qualified": false,
+    "adopted": false
+  },
+  "completed_teacher_records": 40,
+  "flagged_teacher_records": 8,
+  "all_original_raw_records_preserved": true,
+  "partial_old_review_not_approval": true,
+  "corrected_complete96_job": "8175426",
+  "corrected_source": "bfca37c21277152430def8dcbd1b30ace7d1a5b9",
+  "controls_required": 16,
+  "teachers_required": 96,
+  "thresholds_unchanged": true
+}
