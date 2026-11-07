@@ -1,0 +1,28 @@
+{
+  "recorded_utc": "2026-11-07T19:05:10.450850+00:00",
+  "initialization_backup": {
+    "original_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73/expanded-init.pt",
+    "archive_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73/expanded-init.pt.zst",
+    "uncompressed_sha256": "b7bdd5ba68b1b13bdc3318e6870d8f3a0dd8aba66c762c48d07c54e0e3df0b99",
+    "archive_sha256": "29e039beb329cbf8322dee1e266348dc12621a6efd160c8ec614f5a276ed1f5c",
+    "uncompressed_bytes": 8386227230,
+    "archive_bytes": 1254518394,
+    "exact_lossless_roundtrip": true,
+    "original_still_present": false,
+    "checkpoint_preserved_losslessly": true,
+    "restore_command": [
+      "/opt/homebrew/bin/zstd",
+      "-d",
+      "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73/expanded-init.pt.zst",
+      "-o",
+      "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73/expanded-init.pt"
+    ]
+  },
+  "checkpoint_contents_lost": false,
+  "lossless_archive_replaces_only_duplicate_representation": true,
+  "first_trained_full_state_still_raw_on_Mac": true,
+  "Mac_free_GiB_after_recovery": 21,
+  "completed_epoch_backups_planned": 2,
+  "minimum_free_bytes_reserved_during_copy": 3000000000,
+  "training_paused": false
+}
