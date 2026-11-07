@@ -1,0 +1,35 @@
+{
+  "source": "250b66609f561d82065bc116fd211c3a454a0c9e",
+  "input_files": 76,
+  "all_input_hashes": true,
+  "capacity": {
+    "assistant_sources": 73,
+    "over_capacity": []
+  },
+  "compiled": {
+    "schema": "dl-retention96-measured-timelines-v1",
+    "complete96": true,
+    "train": 96,
+    "dev": 0,
+    "source_plan_sha256": "d44b7567eda131b9d38447ce9323f487143dfeb0b4c37b1856bb1bcced730821",
+    "payload_sha256": "d4c32c03199bdca8032885349c017fe7263bba9ca8737520cc4bbe4dfcfabda8",
+    "independent_word_quality_sha256": "4a57ef7152711fd8e6d253ad06ad45e62abca97e55ff4ccbae4f22860711e2a6",
+    "alignment73_sha256": "2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36",
+    "tokenizer_sha256": "6d694bbb227bd59984fcad14c7d807ad74507019c9a1a8013d325c9d87977432",
+    "native_speech_timing_schema": "word-aligned-native-v1",
+    "actual_worker_review_sha256": "162044463fe8ec72f7ed2399231dfc05b743971a823660582f1b95bc24084079",
+    "teacher_forced_requests": true,
+    "native_student_dispatch": false,
+    "original_recordings_preserved": true,
+    "no_per_word_timestamp_interpolation": true,
+    "independent_semantic_review": "PENDING",
+    "native_cache_and_replay_approval": "PENDING",
+    "training_approved": false
+  },
+  "output": "/projects/u6ada/duplex-live/native-retention96-timelines-v3",
+  "GPU_model": false,
+  "native_optimizer_updates": 0,
+  "actual_CPU_tests_reused_same_source": "retention96-teacher-v1/actual-container-tests.txt:3passed1.18s",
+  "CPU_only_container_mode": "--cleanenv --no-home, CUDA hidden; no --nv. Native GPU containment unchanged.",
+  "original_failed_CPU_containment_attempt_preserved": true
+}
