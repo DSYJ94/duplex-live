@@ -30,6 +30,16 @@ def test_whole_original_review_is_required_and_only_failed_payload_is_changed(tm
     assert lineage['failed_ids']==['teacher-0'] and len(reused)==111
     assert changed[1:]==rows[1:] and changed[0]!=rows[0]
     assert 'teacher-0' not in reused
+    # The final cohort still needs96 actual passing verdicts with exact inputs.
+    from data.venus.retention_admission import validate_review
+    final=copy.deepcopy(report);final['all96_semantic_pass']=True
+    corrected=copy.deepcopy(record);corrected['payload_sha256']=payload_sha(changed[0]['payload'])
+    corrected['raw_response']='{"passed":true,"reason":"Explicit clock resolves ambiguity"}'
+    corrected['parsed']=json.loads(corrected['raw_response']);final['results'][0]=corrected
+    finalfiles=copy.deepcopy(files);finalfiles['teacher-0']=corrected
+    assert validate_review(final,controls,changed,'original-manifest',finalfiles.__getitem__)
+    final['results'][0]=record
+    with pytest.raises(ValueError):validate_review(final,controls,changed,'original-manifest',finalfiles.__getitem__)
     bad=dict(files['teacher-1']);bad['parsed']={'passed':False,'reason':'Tampered'}
     (tmp_path/'teacher-1.json').write_text(json.dumps(bad))
     with pytest.raises(ValueError):origin(tmp_path,digest,rows,'original-manifest')

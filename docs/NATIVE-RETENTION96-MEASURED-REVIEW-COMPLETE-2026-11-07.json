@@ -1,0 +1,62 @@
+{
+  "status": "COMPLETE96_REVIEW90PASS6FLAGGED_NOT_APPROVED",
+  "job": "8175426",
+  "source": "bfca37c21277152430def8dcbd1b30ace7d1a5b9",
+  "report_sha256": "f9320945e12bd6d20b09b9c585501c714a5ab904dd1c5339e86f568f3cac85e0",
+  "all121_output_hashes": true,
+  "actual_terminal": [
+    "FAILED",
+    "1:0"
+  ],
+  "complete96": true,
+  "calibration16_all_pass": true,
+  "passing": 90,
+  "flagged": [
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0027",
+      "verdict": {
+        "passed": false,
+        "reason": "Output interval [5,11] exceeds actual speech duration (5.84s) and misaligns with native speech units"
+      }
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0031",
+      "verdict": {
+        "passed": false,
+        "reason": "output_interval_seconds [3,8] exceeds actual speech duration (measured word ends at 4.6s) and conflicts with native_speech_units timing"
+      }
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0032",
+      "verdict": {
+        "passed": false,
+        "reason": "Measured word intervals and speech unit timing are misaligned; final=True is incorrectly placed at offset 4 while the last word ends at 4.96s (within offset 1 unit)."
+      }
+    },
+    {
+      "id": "venus-retention-request-v2-train-ordinary-0035",
+      "verdict": {
+        "passed": false,
+        "reason": "Measured word intervals are misaligned with the teacher's output timing, referencing the user's input instead of the response's output interval [5,11]."
+      }
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0065",
+      "verdict": {
+        "passed": false,
+        "reason": "The teacher answered the folding question at frame 14 (14s), which is after the user's second question ended at 13.04s, violating the requirement to answer follow-ups while work is pending."
+      }
+    },
+    {
+      "id": "venus-retention-request-v2-train-pending-0070",
+      "verdict": {
+        "passed": false,
+        "reason": "Answered the shop closure question before receiving the delegate's result, violating the requirement to wait for confirmed results."
+      }
+    }
+  ],
+  "originals_preserved": true,
+  "followup_job": "8177573",
+  "followup_scope": "Recheck all6 flagged records; retain90 actual passing records with exact original source/hash provenance; requireALL96 actualpasses",
+  "training_approved": false
+}

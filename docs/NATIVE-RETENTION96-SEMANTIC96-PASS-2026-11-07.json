@@ -1,0 +1,36 @@
+{
+  "status": "ALL96_INDEPENDENT_SEMANTIC_PASS_NATIVE_REPLAY_PENDING",
+  "job": "8177573",
+  "source": "219613a9da1747b36f7c8d2e249b54ca5646d8ba",
+  "actual_terminal": [
+    "COMPLETED",
+    "0:0"
+  ],
+  "report_sha256": "86cba68f2bdc2ad4ba1cc608656e04b0442602f6341abcc1666994197b202e14",
+  "calibration_sha256": "38ba6487f84543d484573d632289f25b05716e9fad03ae5dfc02f367feded38c",
+  "all121_output_hashes": true,
+  "required": 96,
+  "passed": 96,
+  "controls_required": 16,
+  "controls_all_pass": true,
+  "original_full96_job": "8175426",
+  "original_report_sha256": "f9320945e12bd6d20b09b9c585501c714a5ab904dd1c5339e86f568f3cac85e0",
+  "original_source": "bfca37c21277152430def8dcbd1b30ace7d1a5b9",
+  "reused_teacher_passes": 90,
+  "actual_rechecked_passes": 6,
+  "rechecked_ids": [
+    "venus-retention-request-v2-train-ordinary-0027",
+    "venus-retention-request-v2-train-ordinary-0031",
+    "venus-retention-request-v2-train-ordinary-0032",
+    "venus-retention-request-v2-train-ordinary-0035",
+    "venus-retention-request-v2-train-pending-0065",
+    "venus-retention-request-v2-train-pending-0070"
+  ],
+  "all_reused_raw_bytes_pinned": true,
+  "all_words_audio_source_timings_unchanged": true,
+  "clock_change": "Explicit absolute scene times plus preserved recording-relative coordinates",
+  "thresholds_unchanged": true,
+  "optimizer_updates": 0,
+  "training_approved": false,
+  "native_cache_job": "8177652"
+}
