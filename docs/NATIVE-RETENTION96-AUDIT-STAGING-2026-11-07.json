@@ -1,0 +1,19 @@
+{
+  "source": "c0eba766de93bac4cf9ffe82f9b66a524d8d69a5",
+  "worktree": "/projects/u6ada/duplex-live/source-retention96-audit-v1",
+  "root": "/projects/u6ada/duplex-live/native-retention96-sources-v1",
+  "actual_CPU_test_output": "...........                                                              [100%]\n11 passed in 0.54s\n",
+  "source_recordings": 182,
+  "all_destination_hashes": true,
+  "input_inventory_sha256": "20eaae55ff6983e2ac32c4434b8753e76e5612b86a1772d4ad6aa64f7502f680",
+  "files": 413,
+  "bytes": 77704298,
+  "all_hashes": true,
+  "new_GPU_job": false,
+  "new_optimizer_updates": 0,
+  "external_API_calls": 0,
+  "at": "2026-11-07T12:44:49.291765+00:00",
+  "independent_word_audit_complete": false,
+  "GPU_submission": false,
+  "training_approved": false
+}
