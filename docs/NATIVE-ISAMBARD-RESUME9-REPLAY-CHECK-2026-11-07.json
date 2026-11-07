@@ -1,0 +1,22 @@
+{
+  "saved_parent_local_step": 8,
+  "recomputed_unsaved_step": 9,
+  "all_compared_fields_exact": true,
+  "compared_fields": [
+    "ids",
+    "families",
+    "objective",
+    "ce",
+    "kl",
+    "hidden",
+    "gradient_norm",
+    "lr",
+    "lr_after_scheduler",
+    "effective_updater_rates"
+  ],
+  "actual_Adam_update_executed": true,
+  "new_full_checkpoint_saved": true,
+  "checkpoint_sha256": "8631afc41fa288c275c7bcd80f48dcb85f2b6741fa238569f56e970e00072888",
+  "limitation": "Reported training values and ordered examples match exactly; this is not a claim that lost original update9 tensor bytes are available for direct comparison.",
+  "adopted": false
+}
