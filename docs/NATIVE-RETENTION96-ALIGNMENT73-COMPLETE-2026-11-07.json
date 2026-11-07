@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "all73_exact_authored_word_alignments": true,
+  "payload_sha256": "569d799211217fc8f9728fcdba018aa3a03ccb1c07ba23f754d2a2f7d63355c1",
+  "independent_source_review_sha256": "4a57ef7152711fd8e6d253ad06ad45e62abca97e55ff4ccbae4f22860711e2a6",
+  "no_audio_changes": true,
+  "no_timestamp_interpolation": true,
+  "independent_semantic_review_pending": true,
+  "native_replay_and_cache_approval_pending": true,
+  "training_approved": false,
+  "actual_calls": 73,
+  "actual_billed_cost_not_verified": true,
+  "maximum_fee_reserve_usd": 2.5,
+  "completed_utc": "2026-11-07T13:43:20.405361+00:00",
+  "actual_report_sha256": "2c85c0aa25f7dc570e515c43b81f9e92a92869e004d979e7275abf8261efac36",
+  "native_token_capacity_check_pending": true
+}

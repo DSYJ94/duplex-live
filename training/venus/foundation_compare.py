@@ -41,6 +41,38 @@ def validate_reference(manifest, root, cases):
     return read(root/'paced-continuation/profile.json')
 
 
+def validate_current_reference(manifest, root, cases):
+    """Current32 reference is explicit; never manufacture a legacy64 report."""
+    root=Path(root)
+    if manifest['schema']!='dl-current-runtime-foundation32-inputs-v1' or manifest['required_cases']!=32:
+        raise ValueError('Explicit current-runtime reference manifest required')
+    for name,key in [('results.json','reference_collection_sha256'),
+                     ('native-report.json','reference_speech_report_sha256'),
+                     ('profile.json','reference_profile_sha256')]:
+        if sha(root/name)!=manifest[key]:raise ValueError('Current reference artifact changed')
+    profile=read(root/'profile.json');report=read(root/'native-report.json');results=read(root/'results.json')['cases']
+    if (not report['complete'] or len(report['cases'])!=len(results) or len(results)!=32
+            or report['source']!=manifest['reference_source'] or profile['optimizer_updates']!=646
+            or profile['checkpoint_sha256']!=manifest['reference_checkpoint_sha256']
+            or report['word_limit']!=.05 or report['peak_limit']!=.995
+            or not profile['nonspoken_action_channel'] or not profile['speech_completion']['enabled']
+            or profile.get('inference_lora_fold',{}).get('enabled',False)):
+        raise ValueError('Complete unmerged646 reference under current speech runtime required')
+    expected={r['id']:r for r in results};audits={r['id']:r for r in report['cases']}
+    if len(cases)!=32 or len(expected)!=32 or set(expected)!=set(audits) or set(expected)!={r['id'] for r in cases}:
+        raise ValueError('All32 identical input identities required')
+    for case in cases:
+        prior=expected[case['id']];speech=audits[case['id']];folder=root/case['id']
+        if any(case[k]!=prior[{'frames':'input_frames'}.get(k,k)] for k in ('input_sha256','family','frames')):
+            raise ValueError('Current reference input differs')
+        if sha(folder/'joined-emitted.wav')!=speech['joined_wav_sha256']:
+            raise ValueError('Original reference waveform changed')
+        for chunk in speech['source_chunks']:
+            if Path(chunk['file']).name!=chunk['file'] or sha(folder/chunk['file'])!=chunk['sha256']:
+                raise ValueError('Original emitted chunk changed')
+    return profile
+
+
 async def main(a):
     import numpy as np
     import soundfile as sf
@@ -63,25 +95,28 @@ async def main(a):
     assert len(cases) == 24 and len(retained) == 8
     for case in retained: case['evaluation_set'] = 'old8ordinary-retention'
     cases += retained
-    profile = validate_reference(manifest, a.reference_collection, cases)
+    current = getattr(a,'current_runtime_reference',False)
+    profile = (validate_current_reference if current else validate_reference)(manifest, a.reference_collection, cases)
     stop = read(a.lease)['stop_unix']
     assert stop-time.time() > sum(x['frames'] for x in cases)*1.5+600
     quality = read(a.word_quality)
     assert quality['all_passed'] and quality['passed'] == quality['requested'] == 218
     recognized = {x['source_sha256']: x for x in quality['rows']}
-    out = Path(a.output); out.mkdir(exist_ok=False)
+    out = Path(a.output); out.mkdir(parents=True,exist_ok=False)
     voice = profile['voice_reference']
     repair = getattr(a, 'private_action_repair', False)
+    if current and repair:raise ValueError('Untouched current-runtime reference cannot load adapters')
     checkpoint = getattr(a, 'candidate_checkpoint', None)
     assert bool(checkpoint) == repair, 'Only the declared406 runtime comparison may load an adapter'
     if repair: assert sha(checkpoint) == manifest['reference_checkpoint_sha256']
-    engine = NativeEngine(a.model, adapter_checkpoint=checkpoint, voice_reference=voice['path'], voice_reference_sha256=voice['sha256'], tts_attention='released', nonspoken_actions=repair)
+    engine = NativeEngine(a.model, adapter_checkpoint=checkpoint, voice_reference=voice['path'], voice_reference_sha256=voice['sha256'], tts_attention='released', nonspoken_actions=repair or current, **({'speech_completion':True} if current else {}))
     fields = ('seed','torch','cuda','precision','attention','input_sample_rate','output_sample_rate','system_prompt','decode_mode','max_new_speak_tokens_per_chunk','temperature','top_k','top_p','listen_prob_scale','tts_attention','voice_reference','nonspoken_action_channel')
+    if current:fields+=('speech_completion','force_listen_count','listen_speak_mode')
     assert all(engine.profile[k] == profile[k] for k in fields if not (repair and k=='nonspoken_action_channel')), 'Comparison profile changed'
-    assert engine.profile['nonspoken_action_channel'] == repair
+    assert engine.profile['nonspoken_action_channel'] == (repair or current)
     assert engine.profile['optimizer_updates'] == (406 if repair else 0)
     if not repair: assert not any(type(m).__name__ == 'LoRALinear' for m in engine.model.modules())
-    condition='private-action-repair406' if repair else 'untouched-release'
+    condition='untouched-current-runtime' if current else 'private-action-repair406' if repair else 'untouched-release'
     (out/'profile.json').write_text(json.dumps(dict(engine.profile, condition=condition, source=a.source, model_revision=manifest['model_revision'], qualified=False), indent=2)+'\n')
     results = []
     for case in cases:
@@ -117,5 +152,6 @@ if __name__ == '__main__':
     for name in ('model','manifest','reference-collection','plan','timelines','approval','old-plan','old-timelines','old-approval','word-quality','output','lease','source'):
         p.add_argument('--'+name, required=True)
     p.add_argument('--private-action-repair',action='store_true')
+    p.add_argument('--current-runtime-reference',action='store_true')
     p.add_argument('--candidate-checkpoint')
     asyncio.run(main(p.parse_args()))
