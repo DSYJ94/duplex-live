@@ -1,0 +1,31 @@
+{
+  "status": "ALL48_SOURCE_EXPORT_COMPLETE_NATIVE_TRAINING_APPROVAL_PENDING",
+  "source": "4e4cf424eaee1c5a93e54626eb6adee38b37670b",
+  "HPC_root": "/projects/u6ada/duplex-live/native-personaplex-source48-v1",
+  "backup": {
+    "files": 98,
+    "bytes": 88738308,
+    "all_hashes": true,
+    "source": "4e4cf424eaee1c5a93e54626eb6adee38b37670b",
+    "target": "/Users/daryl/Documents/duplex-native-recovery-20261102/personaplex-source48-20261108-v1",
+    "training_approved": false,
+    "whole48_source_export": true,
+    "prior_OneDrive_copy_partial_preserved": true,
+    "manifest_sha256": "74e7e406443830da4765eb4a5ad1df45b04a59f4e9b321aeb1e89801872ba9b2"
+  },
+  "CPU_tests_passed": 4,
+  "all182_original_source_and73_alignment_approval_hashes_verified": true,
+  "original_samples_exact": true,
+  "source_resampling": false,
+  "gain_change": false,
+  "source_trimming": false,
+  "maximum_source_peak": 0.85687255859375,
+  "new_optimizer_updates": 0,
+  "external_API_calls": 0,
+  "requires_before_training": [
+    "Native token/codec inputs and loss masks",
+    "All original teacher/history/objective bindings",
+    "New capacity actual gradients and independent state restore",
+    "Complete declared training/evaluation recipe"
+  ]
+}
