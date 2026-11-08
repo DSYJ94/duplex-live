@@ -1,0 +1,669 @@
+{
+  "recorded_at": "2026-11-08T13:40:17.411194+00:00",
+  "training_job": "8179044",
+  "evaluation_job": "8180579",
+  "training_source": "017578a72cbd8f8008a8c574436625633413597c",
+  "evaluation_source": "70d39618bceb5155e4a554c679b7039a9c2a7f8e",
+  "source_reports_sha256": {
+    "native-raw-small.json": "2da8fadb51991231544aa58aeb5f19efa19ed3429fdd9cb4517db1f3e5c971fb",
+    "reasoning-all-cases.json": "b3f67638637776b7855fa2098fb06d9c8d14c525601def531b9ad6c7db5c6d64",
+    "reasoning-comparison.json": "59400c336cfa2a54861fa7cd24ea8da14ba9a448feb2cca760bcca8e881fd472",
+    "native-comparison.json": "fca4588ac80252156484d0ca6ca0ac9dc13ad9b21d9bd90ad314942f99debb08",
+    "whole-run-inventory.json": "1489b138e69d80832d3d34b4f06fb85d22258b71a32f4c4008e7ed599366b9e6",
+    "pause-review.json": "e54b005b3e55495e08b9b6f452741de1ff3e8769ca47d17e067c99af233fbab1",
+    "tts-conditioning-source.json": "765bfff5a42598d6aec60571d7ce3fd7026e95d5210fb42cf6ca9de431adef93",
+    "whole-run-copyback-verified.json": "0a85e46a7b7eef1318a4b968bd4f3836858d821e75c953f33d1f6d3e192da505"
+  },
+  "decision": "Neither new checkpoint is adopted; expanded data did not deliver the required native improvement.",
+  "raw_gates_unchanged": true,
+  "speech_joint_metric_scope": "Intended generated user-facing words versus recognized output plus raw peak; not a full semantic task-success score.",
+  "conditions": {
+    "parent646": {
+      "speech_words": 15,
+      "raw_peaks": 30,
+      "words_and_peaks": 15,
+      "native_cases": 32,
+      "text_reasoning": {
+        "cases": 128,
+        "format_valid": 128,
+        "free_correct": 92,
+        "constrained_correct": 92,
+        "per_category": {
+          "ambiguity": {
+            "cases": 16,
+            "free_correct": 16,
+            "constrained_correct": 16
+          },
+          "context": {
+            "cases": 24,
+            "free_correct": 10,
+            "constrained_correct": 10
+          },
+          "delegation": {
+            "cases": 24,
+            "free_correct": 24,
+            "constrained_correct": 24
+          },
+          "everyday": {
+            "cases": 32,
+            "free_correct": 11,
+            "constrained_correct": 11
+          },
+          "stale": {
+            "cases": 8,
+            "free_correct": 8,
+            "constrained_correct": 8
+          },
+          "technical": {
+            "cases": 24,
+            "free_correct": 23,
+            "constrained_correct": 23
+          }
+        }
+      }
+    },
+    "expanded-data": {
+      "speech_words": 12,
+      "raw_peaks": 27,
+      "words_and_peaks": 11,
+      "native_cases": 32,
+      "text_reasoning": {
+        "cases": 128,
+        "format_valid": 128,
+        "free_correct": 92,
+        "constrained_correct": 92,
+        "per_category": {
+          "ambiguity": {
+            "cases": 16,
+            "free_correct": 16,
+            "constrained_correct": 16
+          },
+          "context": {
+            "cases": 24,
+            "free_correct": 10,
+            "constrained_correct": 10
+          },
+          "delegation": {
+            "cases": 24,
+            "free_correct": 24,
+            "constrained_correct": 24
+          },
+          "everyday": {
+            "cases": 32,
+            "free_correct": 11,
+            "constrained_correct": 11
+          },
+          "stale": {
+            "cases": 8,
+            "free_correct": 8,
+            "constrained_correct": 8
+          },
+          "technical": {
+            "cases": 24,
+            "free_correct": 23,
+            "constrained_correct": 23
+          }
+        }
+      },
+      "DEV_ce_change_fraction": {
+        "quiet": -0.0007894100123899067,
+        "delegate": -0.08030140995306004,
+        "cancel": -0.16144215450414576,
+        "pause": -0.11076608508166853,
+        "pending": -0.16977111822203772,
+        "ordinary": -0.010762582072719911
+      },
+      "runtime": {
+        "count": 119,
+        "median": 2.008293650986161,
+        "p95": 2.515836310980376,
+        "maximum": 3.002526877040509
+      },
+      "native_runtime_is_not_browser_latency": true,
+      "joint_gains_vs_parent": [
+        "venus-repair-v2-holdout-ordinary-0094",
+        "venus-repair-v2-holdout-quiet-0083"
+      ],
+      "joint_losses_vs_parent": [
+        "venus-repair-v2-holdout-quiet-0082",
+        "venus-repair-v2-holdout-pending-0100",
+        "venus-repair-v2-holdout-ordinary-0095",
+        "venus-repair-v2-holdout-pause-0096",
+        "venus-repair-v2-holdout-pause-0099",
+        "venus-control-v1-holdout-ordinary-0223"
+      ],
+      "restoration": {
+        "passed": true,
+        "source": "017578a72cbd8f8008a8c574436625633413597c",
+        "arm": "expanded-data",
+        "checkpoint_sha256": "3e2fd918af20b92337e100712e1d5f4ce52158f13a3791e459fbe42a5060c8f5",
+        "training_execution_id": "3b6ae876d9f4475bb6eb801a886257b4",
+        "restore_execution_id": "c4b92a20fc8449dea1275e58b25a0f4e",
+        "Adam_RNG_OPAL_exact": true,
+        "native_logits_exact": true,
+        "actual_CUDA": true,
+        "new_optimizer_updates": 0,
+        "adopted": false
+      },
+      "reasoning_same_actual_prompts": true,
+      "changed_reasoning_choices": []
+    },
+    "rehearsal": {
+      "speech_words": 12,
+      "raw_peaks": 28,
+      "words_and_peaks": 11,
+      "native_cases": 32,
+      "text_reasoning": {
+        "cases": 128,
+        "format_valid": 128,
+        "free_correct": 93,
+        "constrained_correct": 93,
+        "per_category": {
+          "ambiguity": {
+            "cases": 16,
+            "free_correct": 16,
+            "constrained_correct": 16
+          },
+          "context": {
+            "cases": 24,
+            "free_correct": 11,
+            "constrained_correct": 11
+          },
+          "delegation": {
+            "cases": 24,
+            "free_correct": 24,
+            "constrained_correct": 24
+          },
+          "everyday": {
+            "cases": 32,
+            "free_correct": 11,
+            "constrained_correct": 11
+          },
+          "stale": {
+            "cases": 8,
+            "free_correct": 8,
+            "constrained_correct": 8
+          },
+          "technical": {
+            "cases": 24,
+            "free_correct": 23,
+            "constrained_correct": 23
+          }
+        }
+      },
+      "DEV_ce_change_fraction": {
+        "quiet": -0.0018301576338002475,
+        "delegate": -0.1426878934752886,
+        "cancel": -0.07005837133709564,
+        "pause": -0.09983081829656582,
+        "pending": -0.10959869980660543,
+        "ordinary": 0.046579313401806974
+      },
+      "runtime": {
+        "count": 109,
+        "median": 1.9583890159847215,
+        "p95": 2.579483017034363,
+        "maximum": 2.8736931350431405
+      },
+      "native_runtime_is_not_browser_latency": true,
+      "joint_gains_vs_parent": [
+        "venus-repair-v2-holdout-ordinary-0094",
+        "venus-control-v1-holdout-ordinary-0222"
+      ],
+      "joint_losses_vs_parent": [
+        "venus-repair-v2-holdout-pending-0100",
+        "venus-repair-v2-holdout-ordinary-0095",
+        "venus-repair-v2-holdout-delegate-0091",
+        "venus-repair-v2-holdout-pause-0096",
+        "venus-repair-v2-holdout-pause-0099",
+        "venus-control-v1-holdout-ordinary-0223"
+      ],
+      "restoration": {
+        "passed": true,
+        "source": "017578a72cbd8f8008a8c574436625633413597c",
+        "arm": "rehearsal",
+        "checkpoint_sha256": "a57721bfb9dc3471b407b76b069f1f125fb90dea817ffa787b81d09689d73a52",
+        "training_execution_id": "fe98543df72a43589032e38e0513257a",
+        "restore_execution_id": "57fee34236424a0294f985450429d1a7",
+        "Adam_RNG_OPAL_exact": true,
+        "native_logits_exact": true,
+        "actual_CUDA": true,
+        "new_optimizer_updates": 0,
+        "adopted": false
+      },
+      "reasoning_same_actual_prompts": true,
+      "changed_reasoning_choices": [
+        "reasoning128-062"
+      ]
+    }
+  },
+  "complete_ordinary_text_and_transcript_review": {
+    "parent646": [
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0093",
+        "generated_text": "Tight.",
+        "recognized_text": " tight",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0095",
+        "generated_text": "It is used to measure length.",
+        "recognized_text": " It is used to measure length",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0094",
+        "generated_text": "There are sixty minutes in an hour.",
+        "recognized_text": " There are 60 minutes an hour.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0092",
+        "generated_text": "They help it fly.",
+        "recognized_text": " They help it fly.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0220",
+        "generated_text": "Deep.",
+        "recognized_text": " Deep",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0219",
+        "generated_text": "Glass allows light to enter while blocking the outside.",
+        "recognized_text": " Glaze allows light to enter while blocking the output.",
+        "inspection_note": "Generated explanation is broadly plausible; review speech separately because recognized words/ending differ. No listening-based naturalness score assigned.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0223",
+        "generated_text": "It creates a loop.",
+        "recognized_text": " it creates a loop",
+        "inspection_note": "Loop/bend describes a shape but omits the requested fastening/holding function; treat as partial, not a demonstrated reasoning repair.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0217",
+        "generated_text": "There are twelve months.",
+        "recognized_text": " They are 12 months.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0222",
+        "generated_text": "It is used to guide liquids or fine particles into a narrow opening.",
+        "recognized_text": " It is used to guide liquids or fine particles into a narrow",
+        "inspection_note": "Generated funnel answer is directionally correct; parent/expanded transcript loses the narrow-opening ending. Rehearsal transcript conveys pouring. Original failures retained.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0221",
+        "generated_text": "Three.",
+        "recognized_text": " 3.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0216",
+        "generated_text": "It helps us see things that are far away.",
+        "recognized_text": " Here, it helps us see in things, huh?",
+        "inspection_note": "Generated telescope answer is broadly correct; parent transcript is degraded, expanded is complete, rehearsal ending is truncated.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0218",
+        "generated_text": "It allows us to apply force with less effort.",
+        "recognized_text": " It allows us to apply force with less effort.",
+        "inspection_note": "Mechanical advantage/force explanation is reasonable; old keyword screen misses the parent answer. Do not change original screen retrospectively.",
+        "human_audio_rating_assigned": false
+      }
+    ],
+    "expanded-data": [
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0093",
+        "generated_text": "Tight.",
+        "recognized_text": " tight",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0095",
+        "generated_text": "It is used to measure length.",
+        "recognized_text": " It is used to measure measure length",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0094",
+        "generated_text": "There are sixty minutes in an hour.",
+        "recognized_text": " There are 60 minutes in an hour.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0092",
+        "generated_text": "They help it fly.",
+        "recognized_text": " They help it fly.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0220",
+        "generated_text": "Deep.",
+        "recognized_text": " Deep",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0219",
+        "generated_text": "Glass allows light to enter a room while keeping the inside warm.",
+        "recognized_text": " Glaze allows light to enter a room while keeping the inside.",
+        "inspection_note": "Generated explanation is broadly plausible; review speech separately because recognized words/ending differ. No listening-based naturalness score assigned.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0223",
+        "generated_text": "It creates a loop or bend.",
+        "recognized_text": " It creates a looper bend.",
+        "inspection_note": "Loop/bend describes a shape but omits the requested fastening/holding function; treat as partial, not a demonstrated reasoning repair.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0217",
+        "generated_text": "There are twelve months.",
+        "recognized_text": " They are 12 months.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0222",
+        "generated_text": "It is used to guide liquids or fine particles into a narrow opening.",
+        "recognized_text": " It is used to guide liquids or fine particles into a",
+        "inspection_note": "Generated funnel answer is directionally correct; parent/expanded transcript loses the narrow-opening ending. Rehearsal transcript conveys pouring. Original failures retained.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0221",
+        "generated_text": "Three.",
+        "recognized_text": " 3.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0216",
+        "generated_text": "It helps us see objects in space that are too far away for the naked eye.",
+        "recognized_text": " It helps us see objects in space that are too far away for the naked eye.",
+        "inspection_note": "Generated telescope answer is broadly correct; parent transcript is degraded, expanded is complete, rehearsal ending is truncated.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0218",
+        "generated_text": "It allows us to apply a small force over a long distance, and trade force for distance.",
+        "recognized_text": " It allows us to apply a small force over a long distance and trade force for distance.",
+        "inspection_note": "Mechanical advantage/force explanation is reasonable; old keyword screen misses the parent answer. Do not change original screen retrospectively.",
+        "human_audio_rating_assigned": false
+      }
+    ],
+    "rehearsal": [
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0093",
+        "generated_text": "Tight.",
+        "recognized_text": " Tight",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0095",
+        "generated_text": "It is used to measure length.",
+        "recognized_text": " It is used to measure lengths.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0094",
+        "generated_text": "Sixty.",
+        "recognized_text": " 60",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-repair-v2-holdout-ordinary-0092",
+        "generated_text": "Birds use their wings to fly.",
+        "recognized_text": " Birds use their wings to fly.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0220",
+        "generated_text": "Deep.",
+        "recognized_text": " Deep",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0219",
+        "generated_text": "Glass allows light to enter while blocking the outside.",
+        "recognized_text": " Glass allows light to enter while blocking.",
+        "inspection_note": "Generated explanation is broadly plausible; review speech separately because recognized words/ending differ. No listening-based naturalness score assigned.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0223",
+        "generated_text": "It creates a loop or bend.",
+        "recognized_text": " It creates a loop at bend.",
+        "inspection_note": "Loop/bend describes a shape but omits the requested fastening/holding function; treat as partial, not a demonstrated reasoning repair.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0217",
+        "generated_text": "There are twelve months.",
+        "recognized_text": " They are twelve months.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0222",
+        "generated_text": "It is used to pour liquids or loose materials.",
+        "recognized_text": " It is used to pour liquids or loose materials.",
+        "inspection_note": "Generated funnel answer is directionally correct; parent/expanded transcript loses the narrow-opening ending. Rehearsal transcript conveys pouring. Original failures retained.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0221",
+        "generated_text": "Three.",
+        "recognized_text": " 3.",
+        "inspection_note": "Generated text is consistent with the basic question; transcript and original word/peak gates remain separate.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0216",
+        "generated_text": "It lets us look far away and see things that are too small or too distant for our eyes.",
+        "recognized_text": " It lets us look far away and see things that are too small or too distant for.",
+        "inspection_note": "Generated telescope answer is broadly correct; parent transcript is degraded, expanded is complete, rehearsal ending is truncated.",
+        "human_audio_rating_assigned": false
+      },
+      {
+        "id": "venus-control-v1-holdout-ordinary-0218",
+        "generated_text": "It allows us to lift heavy objects with less force.",
+        "recognized_text": " It allows us to lift heavy objects with less force.",
+        "inspection_note": "Mechanical advantage/force explanation is reasonable; old keyword screen misses the parent answer. Do not change original screen retrospectively.",
+        "human_audio_rating_assigned": false
+      }
+    ]
+  },
+  "diagnoses": [
+    {
+      "factor": "Additional data",
+      "evidence": "New336 uniqueTRAIN versus matched-family336 exposures/240 unique control; same parent, architecture and recipe. Expanded all128 choices unchanged; joint speech falls15 to11 in both arms.",
+      "inference": "These96 additions at this schedule are insufficient. They do not establish that all data expansion is ineffective."
+    },
+    {
+      "factor": "Native request fidelity",
+      "evidence": "The bookcase cases still request bokeh/Borgian/markerinborg; cupboard cases request the correct key.",
+      "inference": "Audio-to-exact-request fidelity remains a concrete blocker. Do not equate these names or relax correctness."
+    },
+    {
+      "factor": "Basic reasoning",
+      "evidence": "Everyday11/32 and context10/24 on parent and expanded; rehearsal gains one context item only.",
+      "inference": "Explicit verified arithmetic/context data and a raw-foundation comparison are justified; current evidence does not isolate damage from adapters versus foundation."
+    },
+    {
+      "factor": "Acoustic delivery",
+      "evidence": "Both new arms have20/32 word failures; all20 have a closed linguistic turn and some recorded acoustic EOS. TTS/audioencoder frozen and no acoustic loss trained.",
+      "inference": "EOS completion is insufficient for faithful speech. More unchanged language-only updates cannot be assumed to teach voice naturalness/accent."
+    },
+    {
+      "factor": "Runtime",
+      "evidence": "Native speak-frame p95 2.516/2.579seconds for expanded/rehearsal, measured offline.",
+      "inference": "This does not establish usable live latency; do not call it GPT-live level or browser latency."
+    }
+  ],
+  "limits": [
+    "Native32 regression previously inspected; no new broad spoken-reasoning benchmark.",
+    "Text128 authored multiple choice, only128 items, related templates; 24/24 delegation choices do not establish native audio routing or actual reasoning-backend execution.",
+    "No naturalness/accent listening score assigned; no owner audio captured.",
+    "No multi-seed significance, full pretrained-foundation text baseline or acoustic adaptation tested in this comparison."
+  ],
+  "speech_conditioning_evidence": {
+    "source_sha256": "b7b4070cead9b88347f6e39d8333706ec007e2a832d6bcde5755063bf1453774",
+    "source_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+    "interface": "TTS input = text-token embedding + normalized projector_semantic(LLM hidden states).",
+    "previous_diagnosis_reused": "docs/NATIVE-BRITISH-REFERENCE-CACHE-DIAGNOSIS-2026-11-06.json",
+    "ordinary_retention_scope": "training/venus/lora.py applies reference KL and hidden MSE only when family is ordinary; control rows report zero KL/hidden by design.",
+    "interpretation": "Hidden-state shift into a frozen TTS semantic projector is a plausible adaptation-related contributor, not an established sole cause. Untouched foundation also has speech failures. No new cache-omission fix or parameter edit is made.",
+    "next_use": "Use this existing interface evidence to target speech-space alignment/acoustic adaptation, instead of reopening reference-cache omission or kernel sweeps."
+  },
+  "backup": {
+    "completed_at_UTC": "2026-11-08T13:55:37Z",
+    "final_states": [
+      {
+        "arm": "expanded-data",
+        "source": "017578a72cbd8f8008a8c574436625633413597c",
+        "path": "/projects/u6ada/duplex-live/native-retention96-learning-v1/expanded-data/step-0084.pt",
+        "bytes": 8512081633,
+        "sha256": "3e2fd918af20b92337e100712e1d5f4ce52158f13a3791e459fbe42a5060c8f5",
+        "optimizer_updates": 730,
+        "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-epochs-v1/expanded-data-step-0084.pt",
+        "all_hashes": true,
+        "rsync_exit_code": 0,
+        "verified_at": "2026-11-08T13:46:55.776696+00:00"
+      },
+      {
+        "arm": "rehearsal",
+        "source": "017578a72cbd8f8008a8c574436625633413597c",
+        "path": "/projects/u6ada/duplex-live/native-retention96-learning-v1/rehearsal/step-0084.pt",
+        "bytes": 8512071073,
+        "sha256": "a57721bfb9dc3471b407b76b069f1f125fb90dea817ffa787b81d09689d73a52",
+        "optimizer_updates": 730,
+        "local_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-epochs-v1/rehearsal-step-0084.pt",
+        "all_hashes": true,
+        "rsync_exit_code": 0,
+        "verified_at": "2026-11-08T13:54:53.570822+00:00"
+      }
+    ],
+    "evaluation_copyback": {
+      "training_terminal": [
+        "COMPLETED",
+        "0:0"
+      ],
+      "evaluation_terminal": [
+        "COMPLETED",
+        "0:0"
+      ],
+      "all_evaluation_hashes": true,
+      "files": 1646,
+      "both_epoch_backups_verified": true,
+      "adopted": false
+    },
+    "whole_run_copyback": {
+      "at": "2026-11-08T13:55:37.337668+00:00",
+      "all_hashes": true,
+      "files": 1816,
+      "links": 0,
+      "bytes": 271119681,
+      "inventory_sha256": "1489b138e69d80832d3d34b4f06fb85d22258b71a32f4c4008e7ed599366b9e6",
+      "local_root": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261107/retention96-monitor-v1/evaluation-copyback",
+      "excluded_raw_states": "Both final raw states separately SHA/size verified; existing first-update state preserved.",
+      "adopted": false
+    },
+    "prior_parent_and_first_updated_state": "Previously full SHA/size verified; not deleted or rehashed in this phase.",
+    "broad_Mac_source_backup": "partial"
+  },
+  "necessary_pause_control_review": {
+    "expanded-data": [
+      {
+        "id": "venus-repair-v2-holdout-pause-0097",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 3,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0096",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 5,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0098",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 3,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0099",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 5,
+        "semantic_instruction_correctness_not_established": true
+      }
+    ],
+    "rehearsal": [
+      {
+        "id": "venus-repair-v2-holdout-pause-0097",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 2,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0096",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 4,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0098",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 4,
+        "semantic_instruction_correctness_not_established": true
+      },
+      {
+        "id": "venus-repair-v2-holdout-pause-0099",
+        "pause_preceded_by_voice": true,
+        "voiced_frames_while_paused": 0,
+        "voiced_frames_after_resume": 4,
+        "semantic_instruction_correctness_not_established": true
+      }
+    ]
+  },
+  "allocation": {
+    "account": "brics.u6ada",
+    "training_seconds": 64223,
+    "evaluation_seconds": 1832,
+    "GPU_per_job": 1,
+    "allocated_GPU_hours": 18.34861111111111,
+    "scope": "Two completed jobs only, not project remaining balance or official NHR billing.",
+    "queue_empty_verified": true
+  }
+}

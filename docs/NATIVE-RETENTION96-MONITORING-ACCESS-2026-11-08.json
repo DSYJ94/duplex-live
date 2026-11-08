@@ -1,6 +1,6 @@
 {
   "recorded_at": "2026-11-08T11:20:10.144199+00:00",
-  "status": "human_institutional_signin_required",
+  "status": "access_restored_completed_training_evaluation_and_verified_backups",
   "training_job": "8179044",
   "evaluation_job": "8180579",
   "training_source": "017578a72cbd8f8008a8c574436625633413597c",
@@ -36,12 +36,43 @@
   "remote_job_action": "NONE; no pause, cancellation, restart, duplicate submission or saved update replay",
   "new_auth": "Official Clifton browser flow started; human completion pending. Private output excluded from Git.",
   "backup_status": "Parent646 and first new647 full states already verified on Mac. Final expanded-data/rehearsal epoch backups NOT YET verified; retrieve from durable Isambard root after access returns. Old initialization preserved as verified lossless zstd archive. Broad Mac source backup partial.",
-  "next": "After same auth flow actually succeeds, inspect certificate and bounded actual SSH; query SAME8179044/8180579 and real terminal/state/restore evidence. Recover immutable final checkpoints with full SHA/size verification, then complete native/reasoning evaluation and copyback. Never infer completed training from elapsed time or restart valid jobs.",
+  "next": "Both730 candidates rejected; retain complete states and results. Follow outcome/readout next intervention; do not repeat unchanged training.",
   "blocked_audit": {
     "at": "2026-11-08T11:23:56.687023+00:00",
     "consecutive_goal_turns_same_blocker": 3,
     "same_auth_session_65189": "confirmed live now; human institutional sign-in incomplete",
     "meaningful_dependent_work": "Current training/evaluation status and final backups require renewed access; no safe duplicate job or fresh result claim.",
     "goal_status_action": "blocked, not complete or paused; resume after institutional sign-in"
+  },
+  "resolution": {
+    "at": "2026-11-08T13:43:35.958827+00:00",
+    "official_auth_session": "64751",
+    "actual_exit_code": 0,
+    "certificate_valid_from_UTC": "2026-11-08T13:34:11Z",
+    "certificate_valid_until_UTC": "2026-11-09T01:34:11Z",
+    "actual_bounded_ssh_exit": 0,
+    "training": {
+      "job": "8179044",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "end_UTC": "2026-11-08T11:50:58Z",
+      "allocated_GPU": 1,
+      "elapsed_seconds": 64223
+    },
+    "evaluation": {
+      "job": "8180579",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "start_UTC": "2026-11-08T11:51:00Z",
+      "end_UTC": "2026-11-08T12:21:32Z",
+      "allocated_GPU": 1,
+      "elapsed_seconds": 1832
+    },
+    "account_queue_empty_at_UTC": "2026-11-08T13:34:38Z",
+    "actual_total_allocated_GPU_hours": 18.34861111111111,
+    "usage_scope": "These two jobs only; not whole-project remaining balance or official NHR billing.",
+    "checkpoint_copyback_watcher": "watch-v3.py / PID8624 / tool90521, new claim preserving old observer; no GPU submission",
+    "final_backup_complete": true,
+    "full_copyback_evidence": "docs/NATIVE-RETENTION96-OUTCOME-2026-11-08.json"
   }
 }
