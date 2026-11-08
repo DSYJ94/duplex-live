@@ -17,6 +17,24 @@ VARIANTS=('personaplex-context-interface','context-spanning-release')
 PERSONA='You are a wise and friendly teacher. Answer questions or provide advice in a clear and engaging way.'
 
 
+def raw_model(weights,device='meta'):
+    """Identical vendor geometry, with strict loading instead of its fill policy."""
+    import torch
+    kwargs=dict(weights.loaders._lm_kwargs)
+    kwargs['dep_q']=weights.loaders._infer_dep_q(str(PP/weights.loaders.MOSHI_NAME),default=16)
+    model=weights.loaders.LMModel(device='meta',dtype=torch.bfloat16,**kwargs)
+    if device=='meta':return model
+    state=weights.loaders.load_file(str(PP/weights.loaders.MOSHI_NAME),device=torch.device(device).type)
+    model.load_state_dict(state,strict=True,assign=True)
+    return model.to(device=device,dtype=torch.bfloat16).eval()
+
+
+def check_raw_shapes(model,shapes):
+    actual={k:tuple(v.shape) for k,v in model.state_dict().items()}
+    if actual!={k:tuple(v) for k,v in shapes.items()}:raise ValueError('Exact raw checkpoint keys and every native shape required')
+    return dict(full_key_and_shape_coverage=True,tensors=len(actual),native_depth_heads=model.dep_q)
+
+
 def preflight(work):
     if subprocess.check_output(['git','-C',str(VENDOR),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(VENDOR),'status','--porcelain'],text=True).strip():raise ValueError('Exact clean Context Spanning source required')
     manifest=json.loads((WEIGHTS/'original-manifest.json').read_text())
@@ -33,7 +51,12 @@ def preflight(work):
     os.environ.update(CS_BASE_DIR=str(PP),CS_WEIGHTS_DIR=str(WEIGHTS),CS_VOICES_DIR=str(WEIGHTS/'voices'))
     sys.path.insert(0,str(VENDOR))
     from contextspan.model.engine import Engine
+    from contextspan.model import weights
+    from safetensors import safe_open
     if Path(inspect.getfile(Engine)).resolve()!=(VENDOR/'contextspan/model/engine.py').resolve():raise ValueError('Wrong released engine imported')
+    with safe_open(str(PP/weights.loaders.MOSHI_NAME),framework='pt',device='cpu') as f:
+        shapes={k:f.get_slice(k).get_shape() for k in f.keys()}
+    check_raw_shapes(raw_model(weights),shapes)
     return rows
 
 
@@ -49,7 +72,8 @@ def collect(a,rows):
     os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-B','-m','evals.cuda_linker_path','--out',str(root/'driver')],text=True).strip()
     records=[];original=engine_module.load_model
     def base_only(checkpoint=None,device='cuda',cpu_offload=False):
-        return (weights.loaders.get_moshi_lm(str(PP/weights.loaders.MOSHI_NAME),device=device,cpu_offload=cpu_offload),weights.load_mimi(device),weights.load_tokenizer())
+        if cpu_offload:raise ValueError('No offload in this matched comparison')
+        return raw_model(weights,device),weights.load_mimi(device),weights.load_tokenizer()
     if a.variant=='personaplex-context-interface':engine_module.load_model=base_only
     seed_all(42)
     try:

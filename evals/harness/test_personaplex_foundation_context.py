@@ -6,6 +6,16 @@ from training.venus import foundation_native as native
 from training.personaplex.foundation_context import VARIANTS
 
 
+def test_raw_keys_and_shapes_are_complete_not_permissive():
+    from training.personaplex.foundation_context import check_raw_shapes
+    class Model:
+        dep_q=16
+        def state_dict(self):return {'head':np.zeros((4,3)), 'depth':np.zeros((16,2))}
+    assert check_raw_shapes(Model(),{'head':(4,3),'depth':(16,2)})['native_depth_heads']==16
+    for shapes in ({'head':(4,3)}, {'head':(4,3),'depth':(8,2)}, {'head':(4,3),'depth':(16,2),'extra':(1,)}):
+        with pytest.raises(ValueError,match='Exact raw checkpoint'):check_raw_shapes(Model(),shapes)
+
+
 def test_all32_moshi_outputs_keep_original_peak_and_no_worker(tmp_path,monkeypatch):
     sf=pytest.importorskip('soundfile');pytest.importorskip('scipy.signal')
     cases=[dict(id=str(i),family='ordinary',input_sha256=str(i),generated_text='hello') for i in range(32)]
