@@ -1,0 +1,38 @@
+{
+  "status": "PREPARED_NOT_SUBMITTED",
+  "purpose": "Resolve native foundation versus runtime/adaptation before selecting next learning branch",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "maximum_seconds": 7200,
+  "GPU_count": 1,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "conditions": [
+    "untouched Venus released generation with bundled reference",
+    "untouched Venus released generation with RP Ben reference",
+    "untouched PersonaPlex official native offline inference with NATF2"
+  ],
+  "cases_per_condition": 32,
+  "inputs": "Exact frozen same32 user WAVs, source approvals and parent646 reference hashes",
+  "PersonaPlex_assets": {
+    "revision": "fdaf4090a61cb315c138a1faee287ffd6c716309",
+    "upstream": "16419a2ef7b98611f58c9df07477d00e5ad61d5f",
+    "all7_destination_hashes_verified": true,
+    "bytes": 17134598059
+  },
+  "raw_audio": "FLOAT before export clipping or quantization; raw concatenation and input-clock overlap assembly retained",
+  "speech_gates": {
+    "WER_max": 0.05,
+    "raw_peak_max": 0.995,
+    "all_cases_required": true
+  },
+  "limits": [
+    "PersonaPlex no asynchronous worker attached; no backend execution qualification",
+    "Reference voices not British-accent qualified",
+    "Whole native interface differs by architecture; no cross-architecture logits equivalence claimed",
+    "Native text-to-speech agreement is separate from answer semantics and naturalness",
+    "Paced synthetic replay does not establish browser microphone latency"
+  ],
+  "next_decision": "Use complete results plus previous PersonaPlex evidence to select foundation, data/objectives and broader adapters/full native-LM tuning; structural growth only if a measured capacity bottleneck remains",
+  "adopted": false
+}
