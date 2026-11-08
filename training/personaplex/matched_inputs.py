@@ -23,6 +23,26 @@ ASSETS=OLD/'runs/context-spanning-assets-7454205/manifest.json'
 PARENT=OLD/'runs/context-training-proof-7510331'
 
 
+def component_teacher_caches(audits):
+    """Older compact audits omit teacher metadata; read their pinned manifests.
+
+    Some action-only components have no teacher. Their original validators still
+    run below; omitting a nonexistent teacher field never omits a component.
+    """
+    from evals.context_component_kind import manifest_name
+    caches=set()
+    for row in audits:
+        folder=Path(row['component']);path=folder/manifest_name(folder,mixed=True)
+        if sha(path)!=row['manifest_sha256']:raise ValueError('Original component manifest changed')
+        teacher=json.loads(path.read_text()).get('teacher')
+        if isinstance(teacher,dict) and 'cache' in teacher:
+            cache=teacher['cache']
+            if not isinstance(cache,str) or not cache.startswith(str(OLD/'runs')+'/') or '..' in Path(cache).parts:
+                raise ValueError('Unexpected original teacher cache path')
+            caches.add(cache)
+    return caches
+
+
 def component_inputs(spm,voice,examples,audits):
     import torch
     from evals.context_component_kind import manifest_name
@@ -148,7 +168,7 @@ def prepare(a):
         MIG/'native-original-runs-local-stage-v1.json',ASSETS,voice_file,spm)
     identity,parent=verify_checkpoint(PARENT)
     cache_paths={r['cache'] for r in parent['retention_examples']}
-    cache_paths.update(r['teacher']['cache'] for r in data['original28_actual_components'])
+    cache_paths.update(component_teacher_caches(data['original28_actual_components']))
     prefix=persona_prefix(BASE_INSTRUCTIONS,voice,spm)
     examples,_=load_training([Path(p) for p in sorted(cache_paths)],spm,prefix,
         text_padding='legacy-epad0',request_policy='native-prelead-epad')
