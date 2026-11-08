@@ -88,5 +88,17 @@
   },
   "not_structural_growth": true,
   "new_parameters_initialized": false,
-  "optimizer_updates": 0
+  "optimizer_updates": 0,
+  "selected_dense_temporal_layers_plus_text_head": {
+    "existing_weight_elements_by_last_layer_count": {
+      "4": 953188352,
+      "5": 1158717440,
+      "8": 1775304704,
+      "16": 3419537408,
+      "32": 6708002816
+    },
+    "adds_new_model_weights": false,
+    "requires_declared_new_optimizer": true,
+    "not_training_admitted": true
+  }
 }
