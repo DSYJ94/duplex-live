@@ -19,7 +19,7 @@ def main(a):
     execution=root/('execution-'+job_id);execution.mkdir(parents=True,exist_ok=False)
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
                job_id=job_id,node=job['NodeList'],source=source,start_unix=g.stamp(job['StartTime']),
-               stop_unix=g.stamp(job['EndTime']),maximum_seconds=1800 if a.stage=='personaplex-codec' else 3600 if a.stage=='foundation-reasoning' else 14400 if a.stage=='retention-evaluate' else 7200 if a.stage in ('foundation-context','personaplex-codec','foundation-native','evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache') else 86400,GPU_count=1)
+               stop_unix=g.stamp(job['EndTime']),maximum_seconds=1800 if a.stage in ('personaplex-codec','personaplex-capture48') else 3600 if a.stage=='foundation-reasoning' else 14400 if a.stage=='retention-evaluate' else 7200 if a.stage in ('foundation-context','personaplex-codec','foundation-native','evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache') else 86400,GPU_count=1)
     g.validate_job(job,lease,time.time());lease_path=execution/'lease.json';lease_path.write_text(json.dumps(lease,indent=2)+'\n')
     guard_path=execution/'guard.json'
     watcher=subprocess.Popen([sys.executable,'-B','-u','-m','training.venus.isambard_guard','--lease',str(lease_path),'--output',str(guard_path)],stdout=(execution/'guard.log').open('x'),stderr=subprocess.STDOUT)
@@ -40,7 +40,7 @@ def main(a):
                  HF_HOME=str(BASE/'hf-cache'),HF_HUB_OFFLINE='1',PYTHONDONTWRITEBYTECODE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8',
                  TMPDIR=str(BASE/('tmp/native-'+job_id)))
         Path(env['TMPDIR']).mkdir(parents=True,exist_ok=True)
-        if a.stage in ('foundation-native','foundation-context','personaplex-codec'):
+        if a.stage in ('foundation-native','foundation-context','personaplex-codec','personaplex-capture48'):
             env['PYTHONPATH']=':'.join((*([str(BASE/'vendor/personaplex-16419a-v1/moshi')] if a.stage=='foundation-native' else []),str(BASE/'artifacts/personaplex-runtime-v1/pylibs'),work))
         for key,value in env.items():common+=['--env',key+'='+value]
         runtime=[str(ART/'runtime/pytorch-new.sif'),str(BASE/'envs/venus-arm64-v1/bin/python'),'-u','-m']
@@ -86,6 +86,13 @@ def main(a):
                 '--semantic',getattr(a,'semantic_root',None) or str(BASE/'native-retention96-qwen-v3/semantic-v1'),
                 '--semantic-sha',digest,'--output',str(root/'cache-v1')],'retention-cache')]
             if getattr(a,'resume_cache',None):stages[0][1].extend(['--resume-cache',a.resume_cache])
+        elif a.stage=='personaplex-capture48':
+            argv=['--root',str(root),'--source',source,'--lease',str(lease_path),
+                '--data',str(BASE/'native-personaplex-source48-v1'),
+                '--cache',str(BASE/'native-personaplex-codec48-v2'),
+                '--sources',str(BASE/'native-retention96-sources-v1')]
+            stages=[('training.personaplex.native_capture48',argv,'capture48'),
+                    ('training.personaplex.native_capture48',argv+['--verify-only'],'verify48')]
         elif a.stage=='personaplex-codec':
             stages=[('training.personaplex.codec_cache',['--root',str(root),'--source',source,'--lease',str(lease_path),
                 '--data',str(BASE/'native-personaplex-source48-v1'),'--model',str(BASE/'public-models/personaplex-fdaf-v1'),
@@ -168,12 +175,12 @@ def main(a):
         watcher.terminate()
         try:watcher.wait(timeout=10)
         except subprocess.TimeoutExpired:watcher.kill();watcher.wait()
-        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('foundation-context','personaplex-codec','foundation-native','evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache','retention-evaluate','foundation-reasoning') else None),indent=2)+'\n')
+        (execution/'terminal.json').write_text(json.dumps(dict(actual_exit_code=code,source=source,job_id=job_id,stage=a.stage,ended_utc=datetime.now(timezone.utc).isoformat(),new_optimizer_updates=0 if a.stage in ('foundation-context','personaplex-codec','personaplex-capture48','foundation-native','evaluate','posttrain-evaluate','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache','retention-evaluate','foundation-reasoning') else None),indent=2)+'\n')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('source','root','worktree'):p.add_argument('--'+name,required=True)
-    p.add_argument('--stage',choices=('foundation-context','personaplex-codec','foundation-native','evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache','retention-train','retention-evaluate','foundation-reasoning'),required=True);p.add_argument('--epochs',type=int,default=1)
+    p.add_argument('--stage',choices=('foundation-context','personaplex-codec','personaplex-capture48','foundation-native','evaluate','posttrain-evaluate','train','retention-source-audit','release-evaluate','retention-semantic','retention-qwen','retention-qwen-v2','retention-qwen-measured','retention-qwen-repair','retention-cache','retention-train','retention-evaluate','foundation-reasoning'),required=True);p.add_argument('--epochs',type=int,default=1)
     p.add_argument('--resume-cache');p.add_argument('--repair-origin-sha');p.add_argument('--semantic-sha');p.add_argument('--semantic-root');p.add_argument('--new-cache');p.add_argument('--new-manifest-sha')
     p.add_argument('--merge-lora',action='store_true')
     p.add_argument('--resume-checkpoint');p.add_argument('--resume-sha');p.add_argument('--resume-step',type=int);p.add_argument('--resume-prior-root')
