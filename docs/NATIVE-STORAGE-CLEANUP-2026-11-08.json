@@ -1,0 +1,159 @@
+{
+  "at": "2026-11-08T22:37:52.600996+00:00",
+  "owner_requested": "Move needed Documents recovery files into the repo OneDrive folder; clear unused /private files",
+  "archive": {
+    "archive": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/archives/duplex-native-recovery-20261102.tar.zst",
+    "archive_bytes": 14396182152,
+    "archive_sha256": "4646a788d7d928977aa0dcbabf44355504c6b4308675958e7165df60d232ffdd",
+    "files": 18044,
+    "symlinks": 355,
+    "directories": 3224,
+    "logical_bytes": 31669110009,
+    "manifest": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/archives/duplex-native-recovery-20261102.tar.zst.manifest.json",
+    "manifest_sha256": "d6776508061af15e435ed7da5044cd708377a6fa802f21e6d385ccf81a7050b5",
+    "independent_all_member_hash_and_link_verification": true,
+    "source_deleted": true,
+    "source_folder_absent": true
+  },
+  "archive_location": "runs/archives/duplex-native-recovery-20261102.tar.zst",
+  "restore_instructions": "runs/archives/duplex-native-recovery-20261102.tar.zst.README.txt",
+  "no_unique_training_data_or_original_receipts_discarded": true,
+  "discarded_Finder_metadata_only": [
+    ".DS_Store"
+  ],
+  "private_cleanup": {
+    "at": "2026-11-08T22:35:04.227487+00:00",
+    "deleted": [
+      {
+        "path": "/private/var/folders/51/tfst43cn7hggy7wy5w3c3t280000gn/C/clang/ModuleCache",
+        "files": 533,
+        "allocated_bytes": 586326016,
+        "fresh_open_handles": 0
+      },
+      {
+        "path": "/private/var/folders/51/tfst43cn7hggy7wy5w3c3t280000gn/C/org.blenderfoundation.blender",
+        "files": 709,
+        "allocated_bytes": 268431360,
+        "fresh_open_handles": 0
+      },
+      {
+        "path": "/private/tmp/duplex-reasoning-checks-20261108",
+        "files": 4130,
+        "allocated_bytes": 75665408,
+        "fresh_open_handles": 0
+      }
+    ],
+    "allocated_bytes_removed": 930422784,
+    "free_before": 174722703360,
+    "free_after": 175653818368,
+    "preserved": [
+      "/private/etc",
+      "/private/var/db",
+      "/private/var/vm",
+      "active SSH/browser/app sockets and sessions",
+      "/private/tmp/aurium-research-release: eight uncommitted review artifacts"
+    ],
+    "archive_temporary_directory_removed": true
+  },
+  "private_tmp_after_bytes": 2301022208,
+  "private_tmp_primary_retained_checkout": {
+    "path": "/private/tmp/aurium-research-release",
+    "allocated_bytes": 2295627776,
+    "reason": "Eight uncommitted review artifacts; preserved instead of deleting unique work"
+  },
+  "remaining_system_state_preserved": [
+    "/private/etc",
+    "/private/var/db",
+    "/private/var/vm",
+    "protected OS/application data",
+    "active sockets/sessions"
+  ],
+  "cloud_metadata": {
+    "at": "2026-11-08T22:36:28.060250+00:00",
+    "files": [
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/archives/duplex-native-recovery-20261102.tar.zst",
+        "allocated_bytes": 14396182528,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      },
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/checkpoints-retained-20261108/venus-baseline-526.pt",
+        "allocated_bytes": 8380948480,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      },
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/checkpoints-retained-20261108/venus-expanded-730.pt",
+        "allocated_bytes": 8512081920,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      },
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/checkpoints-retained-20261108/venus-baseline-646.pt",
+        "allocated_bytes": 8512630784,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      },
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/checkpoints-retained-20261108/venus-rehearsal-730.pt",
+        "allocated_bytes": 8512073728,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      },
+      {
+        "path": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/checkpoints-retained-20261108/venus-expanded-initialization.pt.zst",
+        "allocated_bytes": 1254518784,
+        "dataless": false,
+        "actual_provider_exit": 0,
+        "isUploaded": 1,
+        "isUploading": 0,
+        "isDownloaded": 1,
+        "isDownloading": 0,
+        "isKeepDownloaded": 0,
+        "isExcludedFromSync": 0,
+        "isSyncPaused": 0
+      }
+    ],
+    "all_cloud_only": false
+  },
+  "cloud_only_complete": false,
+  "latest_free_bytes": 175308800000,
+  "detailed_local_receipts": "runs/isambard-native-20261108/local-checkpoint-cleanup-v1",
+  "training_state": "No new GPU submission or optimizer updates; matched coverage sampler implemented, four CPU tests passed; integrated native trainer/admission remains pending."
+}
