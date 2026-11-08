@@ -41,7 +41,7 @@ def main(a):
                  TMPDIR=str(BASE/('tmp/native-'+job_id)))
         Path(env['TMPDIR']).mkdir(parents=True,exist_ok=True)
         if a.stage=='foundation-native':
-            env['PYTHONPATH']=':'.join((str(BASE/'vendor/personaplex-16419a-v1/moshi'),str(ART/'personaplex-runtime-v1/pylibs'),work))
+            env['PYTHONPATH']=':'.join((str(BASE/'vendor/personaplex-16419a-v1/moshi'),str(BASE/'artifacts/personaplex-runtime-v1/pylibs'),work))
         for key,value in env.items():common+=['--env',key+'='+value]
         runtime=[str(ART/'runtime/pytorch-new.sif'),str(BASE/'envs/venus-arm64-v1/bin/python'),'-u','-m']
         model=str(BASE/'public-model-slurm-v1/Realtime-Venus-Audio');data=str(ART/'recovered-data-v1/venus-training-v1')
