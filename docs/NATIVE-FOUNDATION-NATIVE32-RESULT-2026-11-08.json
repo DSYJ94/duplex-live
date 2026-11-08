@@ -1,0 +1,120 @@
+{
+  "status": "COMPLETE_ALL96_NOT_ADOPTED",
+  "job": "8203137",
+  "source": "605ff79ad37d5bfbaf808c700a69f06526c0f2a2",
+  "actual_scheduler": {
+    "start_UTC": "2026-11-08T15:29:37Z",
+    "end_UTC": "2026-11-08T16:11:39Z",
+    "elapsed_seconds": 2522,
+    "GPU_count": 1,
+    "allocated_GPU_hours": 0.7005555555555556,
+    "exit_code": "0:0"
+  },
+  "conditions": {
+    "venus-released-reference": {
+      "cases": 32,
+      "word_pass": 10,
+      "raw_peak_pass": 32,
+      "joint_pass": 10,
+      "without_voiced_output": 0,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0
+    },
+    "venus-rp-reference": {
+      "cases": 32,
+      "word_pass": 10,
+      "raw_peak_pass": 23,
+      "joint_pass": 9,
+      "without_voiced_output": 0,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0
+    },
+    "personaplex-release": {
+      "cases": 32,
+      "word_pass": 15,
+      "raw_peak_pass": 32,
+      "joint_pass": 15,
+      "without_voiced_output": 0,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0
+    }
+  },
+  "native_step_timings": {
+    "venus-released-reference": {
+      "native_frame_seconds": 1.0,
+      "frames": 686,
+      "mean_step_seconds": 0.8178325416413326,
+      "p95_step_seconds": 1.8278487990028225,
+      "maximum_step_seconds": 2.9178785659605637,
+      "frames_over_native_budget": 268,
+      "browser_network_and_setup_latency_measured": false
+    },
+    "venus-rp-reference": {
+      "native_frame_seconds": 1.0,
+      "frames": 686,
+      "mean_step_seconds": 0.7546736813316145,
+      "p95_step_seconds": 1.6736723039648496,
+      "maximum_step_seconds": 2.4767520659952424,
+      "frames_over_native_budget": 254,
+      "browser_network_and_setup_latency_measured": false
+    },
+    "personaplex-release": {
+      "native_frame_seconds": 0.08,
+      "frames": 8582,
+      "mean_step_seconds": 0.03086032695543916,
+      "p95_step_seconds": 0.03112234000582248,
+      "maximum_step_seconds": 0.03255370201077312,
+      "frames_over_native_budget": 0,
+      "browser_network_and_setup_latency_measured": false
+    }
+  },
+  "backup": {
+    "state": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "files": 10527,
+    "bytes": 694578784,
+    "all_hashes": true,
+    "new_optimizer_updates": 0
+  },
+  "symlinks": {
+    "links": [
+      {
+        "path": "personaplex-release/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex-release/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      }
+    ],
+    "all_targets_exact": true
+  },
+  "comparison_sha256": "1a07b1cc56b0f70631733055e9928f7ee31fb5cdf77329b1ac2d50d6362fb988",
+  "no_worker_requests_in_any_condition": true,
+  "PersonaPlex_has_no_worker_adapter": true,
+  "ordinary_review": {
+    "Venus_correct_core_generated_answers": 12,
+    "required": 12,
+    "PersonaPlex_clear_failure_examples": [
+      "Minutes/hour answered 3600 minutes/day",
+      "Months/year adds false leap-year qualification",
+      "Telescope question becomes an off-question telescope-at-sea explanation"
+    ],
+    "PersonaPlex_funnel_alternate_marketing_sense_is_ambiguous_not_proven_false": true
+  },
+  "audit_limits": [
+    "Word/peak score is not task correctness or naturalness",
+    "Venus unit-boundary reference spill age versus spillage is retained as a reference-construction concern",
+    "PP3600 versus ASR3,600 adds a numeric punctuation mismatch; underlying hour/day answer is independently wrong",
+    "Original full96 word and peak thresholds and failed records unchanged",
+    "Stock reference accents not qualified as British"
+  ],
+  "decision": "Prioritize a PersonaPlex native voice training branch for measured frame speed and cleaner peaks, retaining Venus as language/control comparator; no product foundation switch or adoption yet",
+  "next_data": "Reuse existing native joint-loss/history machinery; derive pre-existing48 ordinary TRAIN audio scenes in explicit native stereo format; retain all old25/24 teachers and28 actual-history/KL/hidden components; text1008/64 curriculum remains separate",
+  "capacity": "Broad97-matrix rank64 LoRA105070592 versus selected dense last5+text head1158717440 existing exported weight elements; no random1B structural growth or assumed capacity diagnosis",
+  "training_updates": 0,
+  "external_API_calls": 0,
+  "adopted": false
+}
