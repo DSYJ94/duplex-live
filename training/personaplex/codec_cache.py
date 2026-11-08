@@ -3,7 +3,7 @@
 Reuses the original pinned Mimi/interleaver and200ms measured-word check.
 This is not a native recorded-call, gradient or training-state approval.
 """
-import argparse,json,subprocess
+import argparse,json,subprocess,os,sys
 from pathlib import Path
 from data.personaplex.source_export import sha
 from evals import native_control_cache as native
@@ -59,6 +59,8 @@ def main(a):
     ensure_guard();guarded(a.lease,180)
     pre=json.loads((a.root/'preflight.json').read_text())
     if pre['source']!=a.source or pre['pins']!=pins or not pre['complete48'] or sha(a.root/'text48.pt')!=pre['text48_sha256']:raise ValueError('Exact completed source/text preflight required')
+    driver=subprocess.check_output([sys.executable,'-B','-m','evals.cuda_linker_path','--out',str(a.root/'driver')],text=True).strip()
+    os.environ['TRITON_LIBCUDA_PATH']=driver
     codes_root=a.root/'codes';codes_root.mkdir(exist_ok=False)
     mimi,tokenizer,builder=native.runtime(a.codec_source,a.interleaver_source,a.model);records=[]
     for row,expected in zip(rows,texts):
