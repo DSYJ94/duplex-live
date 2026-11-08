@@ -1,0 +1,95 @@
+{
+  "status": "ONE_OF_THREE_CONDITIONS_ONLY_NOT_FULL_COMPARISON",
+  "job": "8203137",
+  "source": "605ff79ad37d5bfbaf808c700a69f06526c0f2a2",
+  "variant": "venus-released-reference",
+  "cases_complete": 32,
+  "actual_terminal_exit_code": 0,
+  "actual_seconds": 795.6673657894135,
+  "results_sha256": "b1997ea0b0d33454b1be8a145ba0f1f0e7956b0462de82aed4cdf13b06727b70",
+  "ordinary_generated_text_review": [
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "text": "The opposite of loose is tight",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "3b55f11d2600240e86b43ea2deb164c5dba4033994360d66b97d46623514ffaf"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "text": "A ruler is used to measure length. It usually measures in centimeters or inches. Which unit are you using",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "afc0c746ed03fa896ecc250e837d00913643835b9e74bf94194217aab789fc18"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "text": "One hour has sixty minutes",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "07ed80b6384a7f73c35ad74ddb2f2c8075f42755804adb20580855be2f7b449f"
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "text": "Birds wings help them fly",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "64b40734cebf6867fdb980e625df80f17971b815d36f5e0971cc1e99851ebed3"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "text": "The opposite of shallow is deep",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "280f8cd0d20f4913ba2a896c2a85a654348da5c5f2bc35e05563d5455fca2109"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "text": "The glass allows light to enter while keeping out rain. Would you like to know more about windows or something else",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "dd90fcbe4a36e744227607be87b565e52d654964c040eaf2de98aa4c86261709"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "text": "A knot tightens, secures, or joins ropes. It can also prevent slipping or unraveling",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "636f56ced55ef86858f7a6baa130fc3c3697a51fe0b8bad146344fb3cd4d00c3"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "text": "A year has twelve months.",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "799067615af87fc13edc7b5090a3ae2e36982b6f9c9436e1db2a806a67829206"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "text": "A funnel is used for pouring liquid or powder into a small opening. It helps to avoid spill age and makes transfer smoother",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "a2d2a80ec299afd69898d87ce601dfcd68d79f77e0db684df5b56f65a096168c"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "text": "Five minus two is three",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "d7f1410b5d0bdc8aa0328293dae33d4aa51b3ff8c07be7a6d3c2325b0072f735"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "text": "It helps us see things in space.",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "563757245ba79739e3daa47c5401c57c250a9d24eff23ad6ea218cb3d7cd38a2"
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "text": "A lever helps us apply a force to move things. It's a simple machine that makes work easier.",
+      "manual_basic_answer_correct": true,
+      "trace_sha256": "adfce5d5f1415398a168e99ce53c567b132dfe5ffc2a9c1d33b4c7664449a1dc"
+    }
+  ],
+  "basic_text_correct": 12,
+  "basic_required": 12,
+  "necessary_silence_and_resume": 0,
+  "silence_cases": 4,
+  "pause_cases_with_voiced_output": 4,
+  "pause_cases": 4,
+  "independent_ASR_pending": true,
+  "whole_waveform_hash_backup_pending": true,
+  "full_comparison_pending": true,
+  "caveat": "Previously inspected basic regression cases; generated text correctness is not faithful speech or broad reasoning qualification.",
+  "adopted": false
+}
