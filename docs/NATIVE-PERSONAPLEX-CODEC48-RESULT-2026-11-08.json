@@ -1,0 +1,42 @@
+{
+  "schema": "native-personaplex-source48-codec-result-v1",
+  "recorded_utc": "2026-11-08T17:59:08.722823+00:00",
+  "actual_job": "8207334",
+  "actual_terminal": "COMPLETED0:0",
+  "actual_GPU_seconds": 29,
+  "failed_prior_job": "8207016",
+  "failed_prior_GPU_seconds": 20,
+  "backup": {
+    "job": "8207334",
+    "source": "4c025ad3ff8c1d64c735b3a4b861ce76ec4803a7",
+    "files": 60,
+    "bytes": 1013408,
+    "links": 2,
+    "all_hashes": true,
+    "at": "2026-11-08T17:53:07.698486+00:00",
+    "optimizer_updates": 0,
+    "training_approved": false
+  },
+  "source_export_sha256": "74e7e406443830da4765eb4a5ad1df45b04a59f4e9b321aeb1e89801872ba9b2",
+  "pins": {
+    "codec": {
+      "source": "/projects/u6ada/duplex-live/vendor/moshi-rag-8c6df-v1",
+      "commit": "8c6dfc101b7871baa428424bcdc583b74fb561d9",
+      "implementation_sha256": "4d6f25014af5d457e34965a028cc31f77e43139fb4edd866f43a04c61ca9be10"
+    },
+    "interleaver": {
+      "source": "/projects/u6ada/duplex-live/vendor/moshi-finetune-2acc-v1",
+      "commit": "2acc879fe7c48f885a18f6cc9548bccb2674d87b",
+      "implementation_sha256": "f5820a925c50568d255e212ef54674cf82722543deb22d76a1779a5c998a2798"
+    },
+    "assets": {
+      "tokenizer-e351c8d8-checkpoint125.safetensors": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+      "tokenizer_spm_32k_3.model": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d"
+    }
+  },
+  "complete_all48": true,
+  "native_word_timing_maximum_ms": 80.00000000000007,
+  "new_optimizer_updates": 0,
+  "training_approved": false,
+  "next": "Finish old-data staging; resolve exact Context Spanning initialization; native capture and meaningful broad-capacity training admission."
+}

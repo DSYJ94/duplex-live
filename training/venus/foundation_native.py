@@ -130,7 +130,7 @@ def collect_personaplex(a,rows):
         print(json.dumps(dict(condition=a.variant,completed=len(results),required=32)),flush=True);gc.collect();torch.cuda.empty_cache()
 
 
-def audit(a):
+def audit_conditions(a, variants):
     import numpy as np,soundfile as sf
     from scipy.signal import resample_poly
     from .voice_compare import recognizer
@@ -138,7 +138,7 @@ def audit(a):
     from data.venus.pacing import words
     from data.venus.repair import wer
     pipe=recognizer();conditions={};expected={r['id']:r['input_sha256'] for r in cases(Path.cwd())}
-    for variant in ('venus-released-reference','venus-rp-reference','personaplex-release'):
+    for variant in variants:
         root=Path(a.root)/variant;collected=json.loads((root/'results.json').read_text())['cases']
         if len(collected)!=32 or {c['id']:c['input_sha256'] for c in collected}!=expected:raise ValueError('All32 exact native inputs per condition required')
         audits=[]
@@ -147,17 +147,23 @@ def audit(a):
             arrays=[sf.read(folder/t['chunk_file'],dtype='float32')[0] for t in traces];raw=np.concatenate(arrays)
             if not np.isfinite(raw).all():raise ValueError('Nonfinite original audio')
             wav=folder/'joined-emitted-raw.wav';sf.write(wav,raw,24000,subtype='FLOAT')
-            timed=timed_assembly(traces,arrays,24000,frame_seconds=.08 if variant=='personaplex-release' else 1.)
+            moshi=variant in ('personaplex-release','context-spanning-release','personaplex-context-interface')
+            timed=timed_assembly(traces,arrays,24000,frame_seconds=.08 if moshi else 1.)
             sf.write(folder/'timed-emitted-raw.wav',timed,24000,subtype='FLOAT')
-            ref=dict(literal_generated=case['generated_text'],intended_user_facing=case['generated_text']) if variant=='personaplex-release' else references(traces)
+            ref=dict(literal_generated=case['generated_text'],intended_user_facing=case['generated_text']) if moshi else references(traces)
             recognized=pipe(dict(array=resample_poly(raw,2,3).astype(np.float32),sampling_rate=16000),generate_kwargs=dict(language='en',task='transcribe',do_sample=False))['text'] if len(raw) and np.any(raw) else ''
             error=wer(' '.join(words(ref['intended_user_facing'])),' '.join(words(recognized)));peak=float(np.abs(raw).max()) if len(raw) else 0.
-            audits.append(dict(id=case['id'],family=case['family'],input_sha256=case['input_sha256'],references=ref,asr_text=recognized,word_error_rate=error,word_pass=error<=.05,raw_peak=peak,raw_peak_pass=peak<=.995,has_voiced_output=bool(np.any(np.abs(raw)>.001)),timed_raw_peak=float(np.abs(timed).max()),raw_wav_sha256=sha(wav),timed_raw_wav_sha256=sha(folder/'timed-emitted-raw.wav'),source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in traces],native_worker_interface=variant!='personaplex-release',semantic_or_naturalness_pass_claimed=False))
+            audits.append(dict(id=case['id'],family=case['family'],input_sha256=case['input_sha256'],references=ref,asr_text=recognized,word_error_rate=error,word_pass=error<=.05,raw_peak=peak,raw_peak_pass=peak<=.995,has_voiced_output=bool(np.any(np.abs(raw)>.001)),timed_raw_peak=float(np.abs(timed).max()),raw_wav_sha256=sha(wav),timed_raw_wav_sha256=sha(folder/'timed-emitted-raw.wav'),source_chunks=[dict(file=t['chunk_file'],sha256=sha(folder/t['chunk_file'])) for t in traces],native_worker_interface=not moshi,semantic_or_naturalness_pass_claimed=False))
             (root/'audit-progress.json').write_text(json.dumps(dict(required=32,cases=audits),indent=2)+'\n')
         quiet=[r for r in collected if r['family']=='quiet'];pause=[r for r in collected if r['family']=='pause']
         summary=dict(cases=32,word_pass=sum(r['word_pass'] for r in audits),raw_peak_pass=sum(r['raw_peak_pass'] for r in audits),joint_pass=sum(r['word_pass'] and r['raw_peak_pass'] for r in audits),without_voiced_output=sum(not r['has_voiced_output'] for r in audits),necessary_silence_and_resume=sum(r['voiced_frames_before_cue_word']==0 and r['voiced_frames_after_cue_word']>0 for r in quiet),silent_while_paused=sum(r['voiced_frames_while_paused']==0 for r in pause))
         report=dict(complete=True,source=a.source,summary=summary,cases=audits,word_limit=.05,peak_limit=.995,adopted=False)
         (root/'report.json').write_text(json.dumps(report,indent=2)+'\n');conditions[variant]=summary
+    return conditions
+
+
+def audit(a):
+    conditions=audit_conditions(a,('venus-released-reference','venus-rp-reference','personaplex-release'))
     (Path(a.root)/'comparison.json').write_text(json.dumps(dict(complete_all3_times32=True,source=a.source,conditions=conditions,optimizer_updates=0,external_API_calls=0,PersonaPlex_backend_execution_not_tested=True,naturalness_and_semantics_require_review=True,adopted=False),indent=2)+'\n')
     print(json.dumps(conditions),flush=True)
 

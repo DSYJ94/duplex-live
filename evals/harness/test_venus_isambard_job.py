@@ -3,7 +3,7 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False),('retention-qwen-v2',1,False),('retention-cache',1,False),('retention-train',4,False),('retention-qwen-measured',1,False),('retention-evaluate',4,False),('foundation-reasoning',1,False),('foundation-native',4,False),('personaplex-codec',1,False)])
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False),('retention-qwen-v2',1,False),('retention-cache',1,False),('retention-train',4,False),('retention-qwen-measured',1,False),('retention-evaluate',4,False),('foundation-reasoning',1,False),('foundation-native',4,False),('foundation-context',3,False),('personaplex-codec',1,False)])
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
@@ -32,7 +32,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
     assert len(set(invocations))==expected
-    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen','retention-qwen-v2':'retention-qwen','retention-cache':'retention-cache','retention-train':'rehearsal-restore','retention-qwen-measured':'retention-qwen','retention-evaluate':'comparison','foundation-reasoning':'foundation-reasoning','foundation-native':'audit','personaplex-codec':'codec48'}[stage]
+    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen','retention-qwen-v2':'retention-qwen','retention-cache':'retention-cache','retention-train':'rehearsal-restore','retention-qwen-measured':'retention-qwen','retention-evaluate':'comparison','foundation-reasoning':'foundation-reasoning','foundation-native':'audit','foundation-context':'audit','personaplex-codec':'codec48'}[stage]
     last=json.loads((root/('execution-123/'+last_name+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
@@ -65,6 +65,11 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         assert native[0][native[0].index('-m')+1]=='training.personaplex.codec_cache'
         assert '--checkpoint' not in native[0] and '--epochs' not in native[0]
         assert native[0][native[0].index('--data')+1]==str(base/'native-personaplex-source48-v1')
+    elif stage=='foundation-context':
+        assert [x[x.index('--variant')+1] for x in native]==['personaplex-context-interface','context-spanning-release','audit']
+        assert all(x[x.index('-m')+1]=='training.personaplex.foundation_context' for x in native)
+        assert all('--epochs' not in x and '--checkpoint' not in x for x in native)
+        assert all(not any('personaplex-16419a-v1/moshi' in v for v in x) for x in native)
     elif stage=='foundation-native':
         assert [x[x.index('--variant')+1] for x in native]==['venus-released-reference','venus-rp-reference','personaplex-release','audit']
         assert all(x[x.index('-m')+1]=='training.venus.foundation_native' for x in native)
