@@ -1,0 +1,92 @@
+{
+  "status": "EXACT_HEADER_ARITHMETIC_NOT_TRAINING_ADMISSION",
+  "revision": "fdaf4090a61cb315c138a1faee287ffd6c716309",
+  "verified_model_sha256": "db1290db583cdaa6cb4de444ed279e0b586ca2a372b41434b07a7461c8c0e2f4",
+  "header_sha256": "97e0373d9c9bd07cd9e98b25cda5aae7d729abd74564d672e0848c291c45506c",
+  "header_bytes": 56200,
+  "total_exported_tensor_elements": 8371408896,
+  "not_claimed_unique_model_parameters": true,
+  "old_adapter": {
+    "rank": 8,
+    "matrices": 13,
+    "trainable_parameters": 1894400,
+    "targets": {
+      "text_linear.weight": [
+        32000,
+        4096
+      ],
+      "transformer.layers.28.gating.linear_in.weight": [
+        22528,
+        4096
+      ],
+      "transformer.layers.28.gating.linear_out.weight": [
+        4096,
+        11264
+      ],
+      "transformer.layers.28.self_attn.out_proj.weight": [
+        4096,
+        4096
+      ],
+      "transformer.layers.29.gating.linear_in.weight": [
+        22528,
+        4096
+      ],
+      "transformer.layers.29.gating.linear_out.weight": [
+        4096,
+        11264
+      ],
+      "transformer.layers.29.self_attn.out_proj.weight": [
+        4096,
+        4096
+      ],
+      "transformer.layers.30.gating.linear_in.weight": [
+        22528,
+        4096
+      ],
+      "transformer.layers.30.gating.linear_out.weight": [
+        4096,
+        11264
+      ],
+      "transformer.layers.30.self_attn.out_proj.weight": [
+        4096,
+        4096
+      ],
+      "transformer.layers.31.gating.linear_in.weight": [
+        22528,
+        4096
+      ],
+      "transformer.layers.31.gating.linear_out.weight": [
+        4096,
+        11264
+      ],
+      "transformer.layers.31.self_attn.out_proj.weight": [
+        4096,
+        4096
+      ]
+    }
+  },
+  "broad_temporal_projection_and_feedforward": {
+    "matrices": 97,
+    "parameters_by_rank": {
+      "32": 52535296,
+      "64": 105070592,
+      "128": 210141184
+    }
+  },
+  "plus_packed_QKV": {
+    "matrices": 129,
+    "parameters_by_rank": {
+      "32": 69312512,
+      "64": 138625024,
+      "128": 277250048
+    },
+    "needs_native_packed_projection_integration": true
+  },
+  "component_elements": {
+    "transformer.": 6576930816,
+    "depformer.": 1233137664
+  },
+  "not_structural_growth": true,
+  "new_parameters_initialized": false,
+  "optimizer_updates": 0
+}
