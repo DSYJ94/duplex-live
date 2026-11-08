@@ -1,6 +1,6 @@
 """Small native PersonaPlex temporal adapters, without changing frozen key names.
 
-Adapt attention outputs and feed-forward linears in the final eight language
+Adapt attention outputs and feed-forward linears in selected final language
 layers, plus the text head. NVIDIA uses a raw QKV parameter; do not silently
 pretend a Linear replacement adapts it. Acoustic model parameters stay frozen.
 """
@@ -30,7 +30,9 @@ class AdapterLinear(nn.Linear):
         return base + update.to(base.dtype) * self.scaling
 
 
-def install_adapters(model, last_layers=8):
+def install_adapters(model, last_layers=8, *, rank=8, scaling=2.):
+    if type(rank) is not int or rank<1 or not math.isfinite(scaling) or scaling<=0:
+        raise ValueError('Positive adapter rank and finite scaling required')
     if not 1 <= last_layers <= len(model.transformer.layers):
         raise ValueError("Invalid native layer count")
     replaced = []
@@ -41,7 +43,7 @@ def install_adapters(model, last_layers=8):
             if isinstance(child, AdapterLinear):
                 raise RuntimeError("Adapters already installed")
             if isinstance(child, nn.Linear):
-                setattr(module, name, AdapterLinear(child))
+                setattr(module, name, AdapterLinear(child,rank=rank,scaling=scaling))
                 replaced.append(path)
             else:
                 visit(child, path)
@@ -61,7 +63,7 @@ def install_adapters(model, last_layers=8):
         visit(model.transformer.layers[index], f"transformer.layers.{index}")
     if isinstance(model.text_linear, AdapterLinear):
         raise RuntimeError("Text head already adapted")
-    model.text_linear = AdapterLinear(model.text_linear)
+    model.text_linear = AdapterLinear(model.text_linear,rank=rank,scaling=scaling)
     replaced.append("text_linear")
     return replaced
 
