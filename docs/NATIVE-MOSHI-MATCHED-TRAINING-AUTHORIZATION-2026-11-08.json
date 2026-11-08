@@ -1,0 +1,41 @@
+{
+  "recorded_utc": "2026-11-08T19:54:39.609230+00:00",
+  "status": "OWNER_SELECTED_MATCHED_TRAINING_COMPARISON",
+  "owner_answer": "Matched training comparison (Recommended)",
+  "proposal_commit": "c1c67fbb0a1f24709a8999599375b750c4b07cf3",
+  "proposal": "docs/NATIVE-MOSHI-MATCHED-TRAINING-DECISION-2026-11-08.md",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "sole_executor": "LOCAL",
+  "initializations": [
+    "raw-personaplex-fdaf",
+    "released-context-spanning-e62a"
+  ],
+  "configurations": {
+    "narrow": 1894400,
+    "broad": 105070592
+  },
+  "simultaneous_GPUs": 2,
+  "capacity_stages_serial_per_GPU": true,
+  "complete_coverage_epochs": 4,
+  "steps_per_coverage_epoch": 49,
+  "updates_per_arm": 196,
+  "maximum_aggregate_GPU_hours": 96,
+  "maximum_single_job_seconds": 86400,
+  "restore_only_actual_verified_states_on_resume": true,
+  "new_purchases": false,
+  "new_GCP_compute": false,
+  "new_external_model_API_calls": 0,
+  "all_old_states_receipts_sources_and_folds_preserved": false,
+  "actual_native_admission_pending": true,
+  "adopted": false,
+  "owner_storage_amendment": {
+    "instruction": "Delete old local checkpoints; keep latest/most useful in the OneDrive-backed repo, cloud not Documents",
+    "cleanup_active": false,
+    "do_not_auto_rehydrate_cloud_checkpoints": true,
+    "cleanup_result": "15 obsolete paths deleted; 108725284864 unique allocated bytes freed; five useful states moved/hash-verified in repo",
+    "cloud_only_pending": true,
+    "inventory": "docs/NATIVE-CHECKPOINT-CLOUD-STORAGE-2026-11-08.json"
+  },
+  "preservation_clarification": "Original source/data/receipts/native histories remain; owner explicitly authorized removal of obsolete local Venus checkpoint copies. Five useful Venus states retained with exact hashes inside OneDrive repo. See cloud-storage inventory."
+}

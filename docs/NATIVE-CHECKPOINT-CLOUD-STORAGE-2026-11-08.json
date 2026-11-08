@@ -1,0 +1,100 @@
+{
+  "recorded_utc": "2026-11-08T21:27:21.171227+00:00",
+  "owner_instruction": "Keep only latest/most useful checkpoints in cloud inside Shared GitHub Repos/duplex-live, not Documents",
+  "destination": "runs/checkpoints-retained-20261108",
+  "git_ignored": true,
+  "all_retained_bytes_hash_verified_after_relocation": true,
+  "retained_bytes": 35172246691,
+  "retained": [
+    {
+      "name": "venus-rehearsal-730.pt",
+      "path": "runs/checkpoints-retained-20261108/venus-rehearsal-730.pt",
+      "bytes": 8512071073,
+      "sha256": "a57721bfb9dc3471b407b76b069f1f125fb90dea817ffa787b81d09689d73a52",
+      "reason": "Latest matched rehearsal comparison endpoint",
+      "old_document_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-epochs-v1/rehearsal-step-0084.pt",
+      "old_document_path_absent": true,
+      "allocated_bytes": 8512073728,
+      "dataless": false
+    },
+    {
+      "name": "venus-expanded-730.pt",
+      "path": "runs/checkpoints-retained-20261108/venus-expanded-730.pt",
+      "bytes": 8512081633,
+      "sha256": "3e2fd918af20b92337e100712e1d5f4ce52158f13a3791e459fbe42a5060c8f5",
+      "reason": "Latest expanded-data comparison endpoint",
+      "old_document_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-epochs-v1/expanded-data-step-0084.pt",
+      "old_document_path_absent": true,
+      "allocated_bytes": 8512081920,
+      "dataless": false
+    },
+    {
+      "name": "venus-expanded-initialization.pt.zst",
+      "path": "runs/checkpoints-retained-20261108/venus-expanded-initialization.pt.zst",
+      "bytes": 1254518394,
+      "sha256": "29e039beb329cbf8322dee1e266348dc12621a6efd160c8ec614f5a276ed1f5c",
+      "reason": "Compressed original expansion initialization for reproducibility",
+      "old_document_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v73/expanded-init.pt.zst",
+      "old_document_path_absent": true,
+      "allocated_bytes": 1254518784,
+      "dataless": false
+    },
+    {
+      "name": "venus-baseline-646.pt",
+      "path": "runs/checkpoints-retained-20261108/venus-baseline-646.pt",
+      "bytes": 8512630561,
+      "sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+      "reason": "Strongest measured native baseline",
+      "old_document_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-resume8-epochs-v1/step-0120.pt",
+      "old_document_path_absent": true,
+      "allocated_bytes": 8512630784,
+      "dataless": false
+    },
+    {
+      "name": "venus-baseline-526.pt",
+      "path": "runs/checkpoints-retained-20261108/venus-baseline-526.pt",
+      "bytes": 8380945030,
+      "sha256": "180c6f33e125e26fdf24f5f882ae38754df00e441aee7be8da799a2079b3c9ed",
+      "reason": "Original pre-continuation baseline; supports historical regression comparisons",
+      "old_document_path": "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-v1/phase-init.pt",
+      "old_document_path_absent": true,
+      "allocated_bytes": 8380948480,
+      "dataless": false
+    }
+  ],
+  "deleted_obsolete_local_checkpoint_paths": 15,
+  "unique_allocated_bytes_freed": 108725284864,
+  "deleted_paths": [
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-retention96-first-update-v1/state.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0040.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0024.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0056.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0016.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0032.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0048.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0008.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/main/live-resume.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/main/step-0060.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/resume12/main/.rsync-partial/live-resume.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-resume8-epochs-v1/step-0060.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-v1/resumed-step-0009.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/isambard-training-v1/live-resume-0008.pt",
+    "/Users/daryl/Documents/duplex-native-recovery-20261102/large-capacity-v75/recovery/main-step-0024-pieces-v1/part-0000.bin"
+  ],
+  "free_before_bytes": 49973231616,
+  "free_after_cleanup_bytes": 158695792640,
+  "latest_free_bytes": 160153600000,
+  "OneDrive_provider_metadata_at": "2026-11-08T21:19:53.606920+00:00",
+  "OneDrive_all_five_report_uploaded": true,
+  "OneDrive_all_five_unpinned": true,
+  "cloud_only_confirmed": false,
+  "cloud_only_pending_reason": "Finder Free Up Space requested; OneDrive metadata reports uploaded/unpinned but Finder shows Syncing and macOS still has allocated contents. No unsafe deletion or private metadata mutation. Do not claim eviction complete.",
+  "official_free_up_space_reference": "https://support.microsoft.com/en-us/onedrive/save-disk-space-with-onedrive-files-on-demand-for-mac",
+  "future_backup_policy": "Retain latest useful initialization/baseline/comparison states inside this ignored OneDrive-backed repo; verify hashes before cloud-only eviction. Never read checkpoint contents merely to poll sync, which can rehydrate them. No additional Documents checkpoint duplicates.",
+  "unchanged": [
+    "All native Moshi states and data",
+    "Source audio, folds, teacher histories, manifests and original receipts",
+    "Unrelated local edits and files"
+  ],
+  "detailed_local_receipts": "runs/isambard-native-20261108/local-checkpoint-cleanup-v1"
+}
