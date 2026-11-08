@@ -1,0 +1,272 @@
+{
+  "schema": "native-context-initialization-result-v1",
+  "recorded_utc": "2026-11-08T19:20:36.361627+00:00",
+  "job": "8208453",
+  "producer": "436f686037361b79c55ac72f5da2ffd3adf55d7a",
+  "actual_status": "COMPLETED0:0",
+  "actual_GPU_seconds": 1583,
+  "prior_failed_job": {
+    "job": "8207943",
+    "GPU_seconds": 51,
+    "reason": "Audit expected strict load from vendor helper using strict=False; replaced by strict raw loading, all475 real shapes checked on CPU before retry"
+  },
+  "complete64": true,
+  "profiles": {
+    "personaplex-context-interface": {
+      "summary": {
+        "cases": 32,
+        "word_pass": 11,
+        "raw_peak_pass": 32,
+        "joint_pass": 11,
+        "without_voiced_output": 0,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "results_sha256": "cc12497b36d75bfd6bb61a7d8cae5ff2ac2379497044de1338e816f87165f0b8",
+      "report_sha256": "76fa6d9c447f1bca560b0a69aa484b27bf594ad34a016a9e3b4558b9b76d612c",
+      "profile_sha256": "f7ecfbc2fc9bb3cd7b39b448f36965822c053a1296ea55e4db6bfedda2e47782",
+      "frames": 8582,
+      "mean_step_ms": 31.98770669588477,
+      "p95_step_ms": 33.48452822829131,
+      "over80ms": 64,
+      "RET_cases": 0,
+      "RET_events": 0,
+      "ordinary_RET_cases": 0,
+      "supplemental_generated_core_matches": 10,
+      "ordinary_generated_review": [
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0093",
+          "generated_text": "Hey, The opposite of loose is tight, so something that's tight is the exact opposite.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0095",
+          "generated_text": "Hey, Hmm, a ruler is just a straight piece of metal or plastic with markings on it that you can use to measure length, you know, it' basically a measuring tool.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0094",
+          "generated_text": "Hey, Yeah, there are 60 minutes in an hour, that's the usual count.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0092",
+          "generated_text": "Hey, Birds wings help them fly, they generate lift as they flap, they also give balance and help them see and hear, so they basically fly and navigate with their wings.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": true
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0220",
+          "generated_text": "Hey, I guess the opposite of shallow is deeper, you know, like going further into something.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0219",
+          "generated_text": "Hey, Well the reason a window has glass is because it lets light in, it protects the inside from the weather, and it gives a clear view of the outside, you know, that' basically it.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0223",
+          "generated_text": "Hey, Yeah, so a knot that doesn't require a rope is called a loop, you know, something like a shoelace loop or a bend in a cord, basically just a connection without the actual rope",
+          "core_answer_matches": false,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0217",
+          "generated_text": "Hey, let me know. Yeah, there are 12 months in a year.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0222",
+          "generated_text": "Hey, Well a funnel is basically a shape that concentrates narrow at the top and gets wider at the bottom. It' used to guide water down a storm drain or to help aeroplanes move",
+          "core_answer_matches": false,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0221",
+          "generated_text": "Hey, let me 5 minus 2 is 3, that's right.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0216",
+          "generated_text": "Hey, let me A telescope helps you see things far away by gathering more light, so it makes objects look brighter and clearer, kind of like a big magnifying glass for the sky.",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0218",
+          "generated_text": "Hey, A lever basically lets you lift a heavy load by applying force on one side closer to the pivot and balancing it with a lighter force on the other side, right?",
+          "core_answer_matches": true,
+          "RET_events": 0,
+          "false_or_questionable_extra_explanation": true
+        }
+      ]
+    },
+    "context-spanning-release": {
+      "summary": {
+        "cases": 32,
+        "word_pass": 18,
+        "raw_peak_pass": 32,
+        "joint_pass": 18,
+        "without_voiced_output": 0,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "results_sha256": "e90cf1c5e174d35867709d3b13a050470a3985426859e03e8b150c2da07535ea",
+      "report_sha256": "a6eaab014b2951d201ff759914f8cbbd5859e6656bb2b4067ec6dd41bae287e5",
+      "profile_sha256": "a08a6e4a2ab31072eae0ec2ad29d74e2010c595c8626e367b3b2a43809617c5e",
+      "frames": 8582,
+      "mean_step_ms": 31.97709218003749,
+      "p95_step_ms": 34.00678921607323,
+      "over80ms": 65,
+      "RET_cases": 32,
+      "RET_events": 59,
+      "ordinary_RET_cases": 12,
+      "supplemental_generated_core_matches": 4,
+      "ordinary_generated_review": [
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0093",
+          "generated_text": "Let me see. It is lust. Are you asking",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0095",
+          "generated_text": "Let me see. It is ruler. Are you",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0094",
+          "generated_text": "Let me see. It is One hundred and twelve.",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0092",
+          "generated_text": "Let me see. It is wings. Are we looking at birds",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0220",
+          "generated_text": "Let me see. It is deep. Would you like",
+          "core_answer_matches": true,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0219",
+          "generated_text": "Let me see. It is to keep out the sun. Is",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0223",
+          "generated_text": "Let me see. It is A N O T",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0217",
+          "generated_text": "Let me see. It is twelve. Are we looking",
+          "core_answer_matches": true,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0222",
+          "generated_text": "Let me see. It is to help plants reach the light. Are you",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0221",
+          "generated_text": "Let me see. It is two. Are you looking",
+          "core_answer_matches": false,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0216",
+          "generated_text": "Let me see. It is the stars. Are we talking about the stars",
+          "core_answer_matches": true,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0218",
+          "generated_text": "Let me see. It is lift. Are you looking",
+          "core_answer_matches": true,
+          "RET_events": 1,
+          "false_or_questionable_extra_explanation": false
+        }
+      ]
+    }
+  },
+  "comparison_sha256": "d18f36c725182f7fbe60a3d8423bf2d1b83a6b9dd5649a3a07eb10c6b799ad8f",
+  "backup": {
+    "state": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "files": 17506,
+    "bytes": 537470958,
+    "all_hashes": true,
+    "new_optimizer_updates": 0,
+    "driver_links": 4,
+    "all_driver_link_targets_exact": true
+  },
+  "legacy_data": {
+    "runs": {
+      "files": 10390,
+      "bytes": 24661548106,
+      "all_hashes": true,
+      "root": "/projects/u6ada/duplex-live/legacy-native-v1",
+      "at": "2026-11-08T18:51:25.772977+00:00"
+    },
+    "migration": {
+      "files": 3862,
+      "bytes": 5378220223,
+      "all_hashes": true,
+      "root": "/projects/u6ada/duplex-live/legacy-native-v1",
+      "at": "2026-11-08T18:13:25.291903+00:00"
+    }
+  },
+  "limitations": [
+    "No reasoning backend or returned context in either weight-isolation condition; post-RET CS answers do not measure the working connected stack or prove irreversible loss of knowledge.",
+    "Generated core answers are a supplemental manual review of twelve previously inspected simple questions, not an independent broad reasoning benchmark or official semantic approval.",
+    "Correct core clauses do not excuse false added explanations.",
+    "Word agreement is with generated words, not answer correctness; original WER0.05/peak0.995 reports remain unchanged.",
+    "Voice is matched released main, not certified British; elapsed step timing is not browser/network latency.",
+    "Neither model passes silence/pause or full product acceptance."
+  ],
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "adopted": false
+}
