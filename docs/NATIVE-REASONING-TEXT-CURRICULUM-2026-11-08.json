@@ -1,0 +1,36 @@
+{
+  "status": "PREPARED_TEXT_ONLY_NOT_NATIVE_AUDIO_QUALIFIED",
+  "recorded_UTC": "2026-11-08T15:14:25.696980+00:00",
+  "curriculum_file": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261108/reasoning-speech-data-v1/curriculum.json",
+  "curriculum_sha256": "882ddfa593a7caa5abca9140cd263cde767198d40f439d945fe75cf65b81ffa2",
+  "manifest_sha256": "44058153ca4c9df7cf6d6b038859eae76da9be07878f94e6315dcd83a7afd385",
+  "TRAIN": 1008,
+  "DEV": 64,
+  "TRAIN_sources": {
+    "authored_verified_arithmetic": 512,
+    "gsm8k_official_train": 496
+  },
+  "DEV_sources": {
+    "authored_verified_arithmetic": 32,
+    "gsm8k_official_train": 32
+  },
+  "public_repo": "openai/grade-school-math",
+  "public_revision": "3101c7d5072418e28b9008a6636bde82a006892c",
+  "official_split_used": "train",
+  "official_test_split_used": false,
+  "source_pool_all7473_preserved": true,
+  "source_gold_not_full_independent_semantic_verification": true,
+  "generated_arithmetic_exact": true,
+  "questions_unique": 1072,
+  "exact_evaluation_question_overlap": 0,
+  "new_external_API_calls": 0,
+  "new_audio_created": false,
+  "portable_to_selected_foundation": true,
+  "required_before_native_training": [
+    "selected foundation data/timing/token protocol",
+    "actual tokenizer maximum lengths",
+    "authorised source audio with complete existing qualification if audio examples are created",
+    "all original native histories/retention/objectives retained",
+    "complete phase recipe and checkpoint/restore/evaluation"
+  ]
+}

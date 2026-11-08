@@ -1,0 +1,794 @@
+{
+  "job": "8200720",
+  "source": "f87fae027e69479ba20656353c48bc4180c99eb8",
+  "completed": true,
+  "new_optimizer_updates": 0,
+  "raw_report_sha256": "b6b9b6b6a674521fd6de44281210a734002c8e9b525985b572afeda3097177b8",
+  "copyback": {
+    "state": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "files": 18,
+    "bytes": 724617,
+    "all_hashes": true,
+    "new_optimizer_updates": 0
+  },
+  "multiple_choice": {
+    "foundation": {
+      "cases": 128,
+      "format_valid": 128,
+      "free_correct": 94,
+      "constrained_correct": 94,
+      "per_category": {
+        "ambiguity": {
+          "cases": 16,
+          "free_correct": 16,
+          "constrained_correct": 16
+        },
+        "context": {
+          "cases": 24,
+          "free_correct": 11,
+          "constrained_correct": 11
+        },
+        "delegation": {
+          "cases": 24,
+          "free_correct": 24,
+          "constrained_correct": 24
+        },
+        "everyday": {
+          "cases": 32,
+          "free_correct": 12,
+          "constrained_correct": 12
+        },
+        "stale": {
+          "cases": 8,
+          "free_correct": 8,
+          "constrained_correct": 8
+        },
+        "technical": {
+          "cases": 24,
+          "free_correct": 23,
+          "constrained_correct": 23
+        }
+      }
+    },
+    "parent646": {
+      "cases": 128,
+      "format_valid": 128,
+      "free_correct": 92,
+      "constrained_correct": 92,
+      "per_category": {
+        "ambiguity": {
+          "cases": 16,
+          "free_correct": 16,
+          "constrained_correct": 16
+        },
+        "context": {
+          "cases": 24,
+          "free_correct": 10,
+          "constrained_correct": 10
+        },
+        "delegation": {
+          "cases": 24,
+          "free_correct": 24,
+          "constrained_correct": 24
+        },
+        "everyday": {
+          "cases": 32,
+          "free_correct": 11,
+          "constrained_correct": 11
+        },
+        "stale": {
+          "cases": 8,
+          "free_correct": 8,
+          "constrained_correct": 8
+        },
+        "technical": {
+          "cases": 24,
+          "free_correct": 23,
+          "constrained_correct": 23
+        }
+      }
+    },
+    "expanded-data": {
+      "cases": 128,
+      "format_valid": 128,
+      "free_correct": 92,
+      "constrained_correct": 92,
+      "per_category": {
+        "ambiguity": {
+          "cases": 16,
+          "free_correct": 16,
+          "constrained_correct": 16
+        },
+        "context": {
+          "cases": 24,
+          "free_correct": 10,
+          "constrained_correct": 10
+        },
+        "delegation": {
+          "cases": 24,
+          "free_correct": 24,
+          "constrained_correct": 24
+        },
+        "everyday": {
+          "cases": 32,
+          "free_correct": 11,
+          "constrained_correct": 11
+        },
+        "stale": {
+          "cases": 8,
+          "free_correct": 8,
+          "constrained_correct": 8
+        },
+        "technical": {
+          "cases": 24,
+          "free_correct": 23,
+          "constrained_correct": 23
+        }
+      }
+    },
+    "rehearsal": {
+      "cases": 128,
+      "format_valid": 128,
+      "free_correct": 93,
+      "constrained_correct": 93,
+      "per_category": {
+        "ambiguity": {
+          "cases": 16,
+          "free_correct": 16,
+          "constrained_correct": 16
+        },
+        "context": {
+          "cases": 24,
+          "free_correct": 11,
+          "constrained_correct": 11
+        },
+        "delegation": {
+          "cases": 24,
+          "free_correct": 24,
+          "constrained_correct": 24
+        },
+        "everyday": {
+          "cases": 32,
+          "free_correct": 11,
+          "constrained_correct": 11
+        },
+        "stale": {
+          "cases": 8,
+          "free_correct": 8,
+          "constrained_correct": 8
+        },
+        "technical": {
+          "cases": 24,
+          "free_correct": 23,
+          "constrained_correct": 23
+        }
+      }
+    }
+  },
+  "numeric_manual_review": {
+    "foundation": {
+      "original": {
+        "cases": 16,
+        "correct": 9,
+        "single_numeric_result": 11
+      },
+      "supplemental_correct_final": 13,
+      "cases": [
+        {
+          "id": "numeric16-00",
+          "raw_response": "29 - 11 + 4 = 22",
+          "reference": "22",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-01",
+          "raw_response": "41 - (4 * 6) = 25",
+          "reference": "17",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-02",
+          "raw_response": "225",
+          "reference": "225",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-03",
+          "raw_response": "9 + 22 = 31",
+          "reference": "31",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-04",
+          "raw_response": "32",
+          "reference": "32",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-05",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-06",
+          "raw_response": "31",
+          "reference": "31",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-07",
+          "raw_response": "24",
+          "reference": "24",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-08",
+          "raw_response": "24",
+          "reference": "20",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-09",
+          "raw_response": "28",
+          "reference": "28",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-10",
+          "raw_response": "41",
+          "reference": "39",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-11",
+          "raw_response": "16 + 5 - 2 = 19",
+          "reference": "19",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-12",
+          "raw_response": "5",
+          "reference": "5",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-13",
+          "raw_response": "90 / 6 = 15",
+          "reference": "15",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-14",
+          "raw_response": "7",
+          "reference": "7",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-15",
+          "raw_response": "4",
+          "reference": "4",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        }
+      ]
+    },
+    "parent646": {
+      "original": {
+        "cases": 16,
+        "correct": 9,
+        "single_numeric_result": 11
+      },
+      "supplemental_correct_final": 13,
+      "cases": [
+        {
+          "id": "numeric16-00",
+          "raw_response": "29 - 11 + 4 = 22",
+          "reference": "22",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-01",
+          "raw_response": "41 - (4 * 6) = 25",
+          "reference": "17",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-02",
+          "raw_response": "225",
+          "reference": "225",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-03",
+          "raw_response": "9 + 22 = 31",
+          "reference": "31",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-04",
+          "raw_response": "32",
+          "reference": "32",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-05",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-06",
+          "raw_response": "31",
+          "reference": "31",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-07",
+          "raw_response": "24",
+          "reference": "24",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-08",
+          "raw_response": "24",
+          "reference": "20",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-09",
+          "raw_response": "28",
+          "reference": "28",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-10",
+          "raw_response": "41",
+          "reference": "39",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-11",
+          "raw_response": "16 + 5 - 2 = 19",
+          "reference": "19",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-12",
+          "raw_response": "R = V / I = 15 / 3 = 5",
+          "reference": "5",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-13",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-14",
+          "raw_response": "7",
+          "reference": "7",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-15",
+          "raw_response": "4",
+          "reference": "4",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        }
+      ]
+    },
+    "expanded-data": {
+      "original": {
+        "cases": 16,
+        "correct": 9,
+        "single_numeric_result": 11
+      },
+      "supplemental_correct_final": 13,
+      "cases": [
+        {
+          "id": "numeric16-00",
+          "raw_response": "29 - 11 + 4 = 22",
+          "reference": "22",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-01",
+          "raw_response": "41 - (4 * 6) = 25",
+          "reference": "17",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-02",
+          "raw_response": "225",
+          "reference": "225",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-03",
+          "raw_response": "9 + 22 = 31",
+          "reference": "31",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-04",
+          "raw_response": "32",
+          "reference": "32",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-05",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-06",
+          "raw_response": "31",
+          "reference": "31",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-07",
+          "raw_response": "24",
+          "reference": "24",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-08",
+          "raw_response": "24",
+          "reference": "20",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-09",
+          "raw_response": "28",
+          "reference": "28",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-10",
+          "raw_response": "41",
+          "reference": "39",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-11",
+          "raw_response": "16 + 5 - 2 = 19",
+          "reference": "19",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-12",
+          "raw_response": "R = V / I = 15 / 3 = 5",
+          "reference": "5",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-13",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-14",
+          "raw_response": "7",
+          "reference": "7",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-15",
+          "raw_response": "4",
+          "reference": "4",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        }
+      ]
+    },
+    "rehearsal": {
+      "original": {
+        "cases": 16,
+        "correct": 10,
+        "single_numeric_result": 12
+      },
+      "supplemental_correct_final": 13,
+      "cases": [
+        {
+          "id": "numeric16-00",
+          "raw_response": "29 - 11 + 4 = 22",
+          "reference": "22",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-01",
+          "raw_response": "41 - (4 * 6) = 25",
+          "reference": "17",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-02",
+          "raw_response": "225",
+          "reference": "225",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-03",
+          "raw_response": "31",
+          "reference": "31",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-04",
+          "raw_response": "32",
+          "reference": "32",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-05",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-06",
+          "raw_response": "31",
+          "reference": "31",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-07",
+          "raw_response": "24",
+          "reference": "24",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-08",
+          "raw_response": "24",
+          "reference": "20",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-09",
+          "raw_response": "28",
+          "reference": "28",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-10",
+          "raw_response": "41",
+          "reference": "39",
+          "original_strict_correct": false,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": false,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-11",
+          "raw_response": "16 + 5 - 2 = 19",
+          "reference": "19",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-12",
+          "raw_response": "R = V / I = 15 / 3 = 5",
+          "reference": "5",
+          "original_strict_correct": false,
+          "original_format_valid": false,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-13",
+          "raw_response": "15",
+          "reference": "15",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-14",
+          "raw_response": "7",
+          "reference": "7",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        },
+        {
+          "id": "numeric16-15",
+          "raw_response": "4",
+          "reference": "4",
+          "original_strict_correct": true,
+          "original_format_valid": true,
+          "supplemental_final_value_correct": true,
+          "inspection_note": "All raw responses inspected; final result distinguished from original single-number formatting score."
+        }
+      ]
+    }
+  },
+  "decision": "Shared base-level numeric errors and modest adaptation differences; formatting understates numeric final-value accuracy. No model accepted; compare native foundations/runtime before large new branch.",
+  "limitations": [
+    "Text probes are small and templated; no statistical equivalence or frontier reasoning claim.",
+    "Supplemental final-value inspection does not overwrite original strict scores or weaken native gates."
+  ]
+}
