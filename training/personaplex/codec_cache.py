@@ -23,13 +23,19 @@ def inputs(data):
     return d,rows
 
 
+def native_sidecar(row,side):
+    if row['fold']!='TRAIN' or '-ordinary-' not in row['id'] or set(side)!={'alignments'}:
+        raise ValueError('Only original single-turn ordinary TRAIN source sidecars')
+    return dict(side,reference_arrivals=[],timeline=dict(meta=dict(split='train'),events=[]))
+
+
 def text_rows(a,rows,tokenizer,builder):
     import soundfile as sf
     from data.venus.retention_orthography import words
     plan={r['id']:r for r in json.loads(Path('evals/fixtures/venus-retention-request-source-proposal-v2-20261107.json').read_text())['scenes']}
     result=[]
     for r in rows:
-        p=a.data/r['path'];info=sf.info(p);side=json.loads(p.with_suffix('.json').read_text());frames=info.frames//1920
+        p=a.data/r['path'];info=sf.info(p);side=native_sidecar(r,json.loads(p.with_suffix('.json').read_text()));frames=info.frames//1920
         if info.samplerate!=24000 or info.channels!=2 or info.frames%1920 or abs(info.duration-r['duration'])>1e-9:raise ValueError('Complete original stereo native frames required')
         text=builder.prepare_item(side['alignments'],native.frame_duration(frames))
         if tuple(text.shape)!=(1,1,frames) or (text==4).any():raise ValueError('No lost frames or spurious native action tokens')
@@ -65,7 +71,7 @@ def main(a):
     mimi,tokenizer,builder=native.runtime(a.codec_source,a.interleaver_source,a.model);records=[]
     for row,expected in zip(rows,texts):
         ensure_guard();guarded(a.lease,90);p=a.data/row['path'];audio,sr=sf.read(p,dtype='float32')
-        codes,timing=native.encode_item(audio,json.loads(p.with_suffix('.json').read_text()),mimi,builder,tokenizer)
+        codes,timing=native.encode_item(audio,native_sidecar(row,json.loads(p.with_suffix('.json').read_text())),mimi,builder,tokenizer)
         if sr!=24000 or not torch.equal(codes[:,:1],expected['text_codes']):raise ValueError('Native encoded text differs from complete CPU preflight')
         dest=codes_root/(row['id']+'.pt');torch.save(dict(codes=codes,fold='TRAIN',source_record=row),dest)
         records.append(dict(id=row['id'],fold='TRAIN',file=dest.name,sha256=sha(dest),frames=codes.shape[-1],native_word_timing=timing))
