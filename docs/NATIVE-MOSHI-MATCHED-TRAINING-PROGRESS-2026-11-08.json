@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-08T23:01:13.461827+00:00",
+  "authorization": "docs/NATIVE-MOSHI-MATCHED-TRAINING-AUTHORIZATION-2026-11-08.json",
+  "approved_initializations": [
+    "raw-personaplex-fdaf",
+    "released-context-spanning-e62a"
+  ],
+  "approved_trainable_scopes": [
+    1894400,
+    105070592
+  ],
+  "coverage_epochs_per_arm": 4,
+  "updates_per_arm": 196,
+  "maximum_aggregate_GPU_hours": 96,
+  "actual_phase_GPU_seconds_to_date": 327,
+  "remaining_phase_GPU_seconds": 345273,
+  "saved_updates_replayed": 0,
+  "new_optimizer_updates": 0,
+  "capture48_result": "docs/NATIVE-PERSONAPLEX-CAPTURE48-RESULT-2026-11-08.json",
+  "control40_engine_additional_stage": {
+    "files": 82,
+    "bytes": 234689568,
+    "all_source_and_destination_hashes_exact": true,
+    "whole40": true,
+    "target": "/projects/u6ada/duplex-live/legacy-control40-engine-v1",
+    "at": "2026-11-08T22:57:51.559179+00:00",
+    "actual_rsync_exit": 0,
+    "original_inventory_sha256": "d406ade8ed6000599bcf16ee2065a865bbddab66454496315af67584737bf247"
+  },
+  "protected_stream49_sampling_correction": "Original stream49 auxiliary balances all four verified kinds, like its legacy policy. matched_schedule.BALANCED includes stream49; new uneven-kind regression catches accidental uniform-member weighting. No training had used the earlier helper.",
+  "actual_CPU_unit_tests_passed": 8,
+  "integrated_native_trainer_ready": false,
+  "pending": [
+    "Complete original323-row input/loss bindings and read-only legacy path mounts",
+    "Two-GPU native scheduler/phase guard",
+    "Actual 1.89M/105M gradient, Adam/RNG/OPAL restore and full measured schedule",
+    "Four complete epochs per arm and complete native behavioral/speech/backend evaluation"
+  ],
+  "adopted": false
+}

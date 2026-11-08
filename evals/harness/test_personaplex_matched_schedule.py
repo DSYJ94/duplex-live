@@ -72,6 +72,17 @@ class MatchedSchedule(unittest.TestCase):
     test_corrupted_exposure_rejected = check_corruption
     test_paired_exposure_and_no_extra_epoch = check_pairing
 
+    def test_stream49_keeps_original_four_kind_balance_not_uniform_members(self):
+        data=groups()
+        kinds=['private']*25+['simple']*10+['clarify']*8+['cancel']*6
+        for row,kind in zip(data['stream49'],kinds):row['kind']=kind
+        for number in range(4):
+            mass=Counter()
+            for step in s.epoch(data,number):
+                row=next(r for r in step if r['group']=='stream49')
+                mass[data['stream49'][row['index']]['kind']]+=row['weight']/49
+            for kind in set(kinds):self.assertAlmostEqual(mass[kind],.25)
+
 
 if __name__ == '__main__':
     unittest.main()

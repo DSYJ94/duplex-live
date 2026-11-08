@@ -11,7 +11,7 @@ SIZES = dict(actual=28, reference=4, old25=25, new24=24, word=10,
              reasoning32=32, ordinary48=48)
 STEPS = 49
 EPOCHS = 4
-BALANCED = frozenset(('actual', 'old25', 'new24'))
+BALANCED = frozenset(('actual', 'old25', 'new24', 'stream49'))
 
 
 def validate(groups):
