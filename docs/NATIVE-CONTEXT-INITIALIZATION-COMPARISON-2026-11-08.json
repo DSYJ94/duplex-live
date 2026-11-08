@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-11-08T18:28:01.676440+00:00",
+  "source": "436f686037361b79c55ac72f5da2ffd3adf55d7a",
+  "job": "8208453",
+  "actual_status": "RUNNING",
+  "actual_start_UTC": "2026-11-08T18:20:01Z",
+  "maximum_actual_GPU_seconds": 3600,
+  "condition_pair": [
+    "personaplex-context-interface",
+    "context-spanning-release"
+  ],
+  "same": {
+    "source": "79df302fa2820cae10c61bb2b7f302c52edb6ed2",
+    "voice_sha256": "83aa916e3ad1b4a8edb38626d2697f6c6c12b25c7ca104bddb36e74e176d442c",
+    "seed": 42,
+    "audio_temperature": 0.8,
+    "text_temperature": 0.7,
+    "frame_seconds": 0.08,
+    "all32_original_inputs": true
+  },
+  "raw_strict_actual_load": {
+    "tensors": 475,
+    "missing": [],
+    "unexpected": [],
+    "native_depth_heads": 16
+  },
+  "complete_result_pending": true,
+  "backend_execution": false,
+  "British_voice_certified": false,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "adopted": false
+}
