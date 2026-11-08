@@ -1,0 +1,19 @@
+{
+  "schema": "dl-foundation-reasoning-control-v1",
+  "model_revision": "4681004131ea1f1fb9aca9f0db76be322657cc79",
+  "prior_evaluation_source": "70d39618bceb5155e4a554c679b7039a9c2a7f8e",
+  "reused_files": {
+    "parent646.json": "8117d11ee835482a3596ab5cc3563d916559a48bc098f54762d03f3e670a2195",
+    "expanded-data.json": "3bb39ea5ab57803264d4bf81d1f2aca8384dbe06b2f6ab0608fe7c7bef68a085",
+    "rehearsal.json": "e172e0941b41182443053223f7db6439910747792ed45a6ee0a25ee7ab0bbfa5",
+    "comparison.json": "59400c336cfa2a54861fa7cd24ea8da14ba9a448feb2cca760bcca8e881fd472"
+  },
+  "parent_checkpoint_sha256": "46e84c6d7b1d02ec16563c1d0e666230f8644963d3406b0f095bab97938950aa",
+  "numeric_plan_sha256": "091e04c5c24173627451d1ef24fef42fe8984b4ea1284f88d0c3e23836b84eb2",
+  "new_optimizer_updates": 0,
+  "new_API_calls": 0,
+  "maximum_GPU_seconds": 3600,
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "repeated_candidate_MC_generations": 0
+}

@@ -1,0 +1,36 @@
+{
+  "recorded_UTC": "2026-11-08T14:28:51.298990+00:00",
+  "status": "OWNER_INSTRUCTED_BASE_VS_TRAINING_AND_ACT",
+  "owner_verbatim": "Proceed with those next steps on Isambard. Find out whether the base model or our training is causing the failures, then act on the results. Keep going autonomously and don't get bogged down in diagnostics.",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "new_optimizer_updates": 0,
+  "new_external_API_calls": 0,
+  "new_purchases": false,
+  "maximum_single_GPU_seconds": 3600,
+  "inputs": "docs/NATIVE-FOUNDATION-REASONING-INPUTS-2026-11-08.json",
+  "new_inference": {
+    "foundation_multiple_choice": 128,
+    "numeric_control": 16,
+    "conditions": [
+      "foundation",
+      "parent646",
+      "expanded-data",
+      "rehearsal"
+    ]
+  },
+  "reused_candidate_multiple_choice_outputs": 384,
+  "no_overlap": true,
+  "preserve_all_original_states_and_reports": true,
+  "decision_rules": [
+    "If released Venus is stronger than adapted models in matched numeric/free control, prioritize retention/mixture/recipe correction before more capacity.",
+    "If all models share numeric failures, target verified reasoning curriculum and delegation/calculator allocation; do not call adapter damage established.",
+    "If the multiple-choice deficit disappears on numeric answers, distinguish format effects from reasoning before changing the model.",
+    "Speech failures remain a separate acoustic/hidden-conditioning task; reuse existing frozen-TTS evidence, preserve original gates and undertake a targeted intervention rather than unchanged language-only extension."
+  ],
+  "limits": [
+    "No new speech/audio corpus or owner conversation payload is sent externally.",
+    "Do not repeat the completed384 candidate multiple-choice outputs or prior optimizer updates.",
+    "Bound the diagnostic hypothesis; follow the measured outcome with data/recipe/speech work rather than another unbounded sweep."
+  ]
+}

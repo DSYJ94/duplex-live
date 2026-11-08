@@ -1,0 +1,102 @@
+{
+  "schema": "dl-authored-numeric16-v1",
+  "system": "Answer the question briefly. Give the final numeric result, without working or a list of alternatives.",
+  "cases": [
+    {
+      "id": "numeric16-00",
+      "question": "There are 29 components. We use 11 and then receive 4. How many are there now?",
+      "expected": "22",
+      "reference_derivation": "29 - 11 + 4"
+    },
+    {
+      "id": "numeric16-01",
+      "question": "A kit contains 41 screws. Four assemblies each use 6 screws. How many screws remain?",
+      "expected": "17",
+      "reference_derivation": "41 - 4 * 6"
+    },
+    {
+      "id": "numeric16-02",
+      "question": "A cable is 2.7 metres long. We cut off 45 centimetres. How many centimetres remain?",
+      "expected": "225",
+      "reference_derivation": "270 - 45"
+    },
+    {
+      "id": "numeric16-03",
+      "question": "A timer starts at minute 9 and runs for 22 minutes within the same hour. At which minute does it stop?",
+      "expected": "31",
+      "reference_derivation": "9 + 22"
+    },
+    {
+      "id": "numeric16-04",
+      "question": "A triangle has sides of 8, 11 and 13 metres. What is its perimeter in metres?",
+      "expected": "32",
+      "reference_derivation": "8 + 11 + 13"
+    },
+    {
+      "id": "numeric16-05",
+      "question": "A pump supplies 2.5 litres per minute for 6 minutes. How many litres does it supply?",
+      "expected": "15",
+      "reference_derivation": "2.5 * 6"
+    },
+    {
+      "id": "numeric16-06",
+      "question": "Seven tickets cost 4 pounds each and there is one additional booking fee of 3 pounds. What is the total in pounds?",
+      "expected": "31",
+      "reference_derivation": "7 * 4 + 3"
+    },
+    {
+      "id": "numeric16-07",
+      "question": "What is three eighths of 64?",
+      "expected": "24",
+      "reference_derivation": "3 * 64 / 8"
+    },
+    {
+      "id": "numeric16-08",
+      "question": "A register starts at 8. Add 5, double the new value, then subtract 6. What is the final value?",
+      "expected": "20",
+      "reference_derivation": "(8 + 5) * 2 - 6"
+    },
+    {
+      "id": "numeric16-09",
+      "question": "Container A has 17 litres and container B has 11 litres. Transfer 4 litres from A to B without loss. What is their combined volume in litres?",
+      "expected": "28",
+      "reference_derivation": "17 + 11"
+    },
+    {
+      "id": "numeric16-10",
+      "question": "Mina has 18 tokens. Sol has 5 fewer. Ren has three times as many as Sol. How many tokens does Ren have?",
+      "expected": "39",
+      "reference_derivation": "(18 - 5) * 3"
+    },
+    {
+      "id": "numeric16-11",
+      "question": "A delivery was scheduled for day 16. It is delayed by 5 days, then brought forward by 2 days. On which day will it arrive?",
+      "expected": "19",
+      "reference_derivation": "16 + 5 - 2"
+    },
+    {
+      "id": "numeric16-12",
+      "question": "A resistor has 15 volts across it and carries 3 amperes. Using V = I times R, what is its resistance in ohms?",
+      "expected": "5",
+      "reference_derivation": "15 / 3"
+    },
+    {
+      "id": "numeric16-13",
+      "question": "An object moves 90 metres in 6 seconds at constant speed. What is its speed in metres per second?",
+      "expected": "15",
+      "reference_derivation": "90 / 6"
+    },
+    {
+      "id": "numeric16-14",
+      "question": "A stack receives 7, then 12, then 19. Two last-in-first-out pops occur. Which number remains?",
+      "expected": "7",
+      "reference_derivation": "[7, 12, 19] -> pop 19 -> pop 12 -> 7"
+    },
+    {
+      "id": "numeric16-15",
+      "question": "What is the bitwise AND of the nonnegative integers 13 and 6, expressed in decimal?",
+      "expected": "4",
+      "reference_derivation": "0b1101 & 0b0110 = 0b0100"
+    }
+  ]
+}

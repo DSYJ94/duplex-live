@@ -3,7 +3,7 @@ import argparse,json,time
 import pytest
 from training.venus import isambard_job as job
 
-@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False),('retention-qwen-v2',1,False),('retention-cache',1,False),('retention-train',4,False),('retention-qwen-measured',1,False),('retention-evaluate',4,False)])
+@pytest.mark.parametrize('stage,expected,fold', [('evaluate',8,False),('posttrain-evaluate',2,False),('posttrain-evaluate',2,True),('retention-source-audit',1,False),('release-evaluate',1,False),('retention-semantic',1,False),('retention-qwen',1,False),('retention-qwen-v2',1,False),('retention-cache',1,False),('retention-train',4,False),('retention-qwen-measured',1,False),('retention-evaluate',4,False),('foundation-reasoning',1,False)])
 def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,monkeypatch,stage,expected,fold):
     real=tmp_path/'physical-project';real.mkdir()
     base=tmp_path/'base';base.symlink_to(real,target_is_directory=True);root=base/'evaluation';root.mkdir()
@@ -32,7 +32,7 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
     assert all('--containall' in args and '--cleanenv' in args for args in native)
     invocations=[next(x for x in args if x.startswith('DUPLEX_NATIVE_EXECUTION_ID=')) for args in native]
     assert len(set(invocations))==expected
-    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen','retention-qwen-v2':'retention-qwen','retention-cache':'retention-cache','retention-train':'rehearsal-restore','retention-qwen-measured':'retention-qwen','retention-evaluate':'comparison'}[stage]
+    last_name={'evaluate':'combine','posttrain-evaluate':'compare','retention-source-audit':'source-audit','release-evaluate':'release-reference','retention-semantic':'retention-semantic','retention-qwen':'retention-qwen','retention-qwen-v2':'retention-qwen','retention-cache':'retention-cache','retention-train':'rehearsal-restore','retention-qwen-measured':'retention-qwen','retention-evaluate':'comparison','foundation-reasoning':'foundation-reasoning'}[stage]
     last=json.loads((root/('execution-123/'+last_name+'-terminal.json')).read_text())
     assert last['execution_id']==invocations[-1].split('=',1)[1] and last['pid']>=100
     assert all('TMPDIR='+str(base/'tmp/native-123') in args for args in native)
@@ -61,6 +61,10 @@ def test_complete_serial_evaluation_preserves_scheduler_environment(tmp_path,mon
         assert native[0][native[0].index('--model')+1]=='/public/reviewer'
         assert native[0][native[0].index('--calibration-version')+1]==('v2' if stage in ('retention-qwen-v2','retention-qwen-measured') else 'v1')
         assert '--checkpoint' not in native[0] and '--opal-source' not in native[0]
+    elif stage=='foundation-reasoning':
+        assert native[0][native[0].index('-m')+1]=='training.venus.foundation_reasoning'
+        assert '--candidate-checkpoint' not in native[0] and '--epochs' not in native[0]
+        assert native[0][native[0].index('--numeric-plan')+1].endswith('venus-numeric16-text-20261108.json')
     elif stage=='retention-evaluate':
         assert [args[args.index('-m')+1] for args in native]==['training.venus.retention_evaluate','training.venus.retention_evaluate','training.venus.reasoning128','training.venus.retention_comparison']
         assert [args[args.index('--arm')+1] for args in native[:2]]==['expanded-data','rehearsal']
