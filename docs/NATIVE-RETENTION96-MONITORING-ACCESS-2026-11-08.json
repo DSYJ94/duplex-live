@@ -36,5 +36,12 @@
   "remote_job_action": "NONE; no pause, cancellation, restart, duplicate submission or saved update replay",
   "new_auth": "Official Clifton browser flow started; human completion pending. Private output excluded from Git.",
   "backup_status": "Parent646 and first new647 full states already verified on Mac. Final expanded-data/rehearsal epoch backups NOT YET verified; retrieve from durable Isambard root after access returns. Old initialization preserved as verified lossless zstd archive. Broad Mac source backup partial.",
-  "next": "After same auth flow actually succeeds, inspect certificate and bounded actual SSH; query SAME8179044/8180579 and real terminal/state/restore evidence. Recover immutable final checkpoints with full SHA/size verification, then complete native/reasoning evaluation and copyback. Never infer completed training from elapsed time or restart valid jobs."
+  "next": "After same auth flow actually succeeds, inspect certificate and bounded actual SSH; query SAME8179044/8180579 and real terminal/state/restore evidence. Recover immutable final checkpoints with full SHA/size verification, then complete native/reasoning evaluation and copyback. Never infer completed training from elapsed time or restart valid jobs.",
+  "blocked_audit": {
+    "at": "2026-11-08T11:23:56.687023+00:00",
+    "consecutive_goal_turns_same_blocker": 3,
+    "same_auth_session_65189": "confirmed live now; human institutional sign-in incomplete",
+    "meaningful_dependent_work": "Current training/evaluation status and final backups require renewed access; no safe duplicate job or fresh result claim.",
+    "goal_status_action": "blocked, not complete or paused; resume after institutional sign-in"
+  }
 }
