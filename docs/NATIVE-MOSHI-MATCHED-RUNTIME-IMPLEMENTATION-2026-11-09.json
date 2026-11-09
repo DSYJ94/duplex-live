@@ -208,5 +208,30 @@
     "five_regular_copy_trees": "Reuse portable/context/native_gcp_inputs.py exact byte-copy and independent verification functions; bind at original /tmp/duplex-reasoning32-verifier-v1",
     "new_data_or_judgments_generated": false,
     "actual_full32_verification_pending": true
-  }
+  },
+  "CPU_v10": {
+    "job": "8229711",
+    "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "actual_state": "OUT_OF_MEMORY",
+    "Slurm_exit": "0:125",
+    "elapsed_seconds": 91,
+    "GPU_count": 0,
+    "actual_ARM_CPU_tests_passed": 55,
+    "temporary_five_regular_copies_and_semantic33_passed": true,
+    "original_control40_complete": true,
+    "full323_artifact_written": false,
+    "reason": "Original reasoning_source.sha uses whole-file read_bytes; a16.74GB weight hash exceeds16G CPU job. Preserve original verifier; request64G CPU RAM."
+  },
+  "CPU_v11": {
+    "job": "8229866",
+    "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "actual_observed_state": "RUNNING",
+    "observed_UTC": "2026-11-09T12:40:07.267649+00:00",
+    "CPU_memory": "64G",
+    "GPU_count": 0,
+    "tracker": "/projects/u6ada/duplex-live/native-moshi-matched-cpu-v11",
+    "submission_claim": "/projects/u6ada/duplex-live/matched-cpu-slurm-v11-submission",
+    "new_optimizer_updates": 0
+  },
+  "updated_UTC": "2026-11-09T12:40:07.267649+00:00"
 }
