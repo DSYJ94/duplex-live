@@ -1,0 +1,62 @@
+{
+  "status": "EVICTION_REQUESTS_APPLIED_PROVIDER_NOT_YET_EVICTED",
+  "recorded_UTC": "2026-11-09T15:42:30.952641+00:00",
+  "scope": [
+    "runs/checkpoints-retained-20261108",
+    "runs/archives",
+    "runs/local-migration-20261021/s3-native-archive-v3",
+    "runs/cloud-export-20261016"
+  ],
+  "Finder_selected_items_in_scope": [
+    7,
+    4,
+    36,
+    21
+  ],
+  "content_read_or_rehashed": false,
+  "local_or_cloud_files_deleted": false,
+  "cloud_sharing_changed": false,
+  "supported_CLI_actual_exit": -6,
+  "client_relaunched_and_live_verified": true,
+  "baseline526_uploaded": true,
+  "recovery_archive_uploaded": true,
+  "baseline526_keep_downloaded": false,
+  "recovery_archive_keep_downloaded": false,
+  "sampled_files_still_downloaded": true,
+  "provider_still_displays_Syncing": true,
+  "cold_group_metadata_inventory": {
+    "UTC": "2026-11-09T15:39:36.958501+00:00",
+    "metadata_only": true,
+    "Finder_Free_Up_Space_requested_all_four_groups": true,
+    "items": {
+      "runs/checkpoints-retained-20261108": {
+        "regular_paths": 7,
+        "unique_allocated_bytes": 35172261888,
+        "dataless_paths": 0,
+        "metadata_errors": 0
+      },
+      "runs/archives": {
+        "regular_paths": 4,
+        "unique_allocated_bytes": 14404288512,
+        "dataless_paths": 0,
+        "metadata_errors": 0
+      },
+      "runs/local-migration-20261021/s3-native-archive-v3": {
+        "regular_paths": 36,
+        "unique_allocated_bytes": 67818803200,
+        "dataless_paths": 0,
+        "metadata_errors": 0
+      },
+      "runs/cloud-export-20261016": {
+        "regular_paths": 53431,
+        "unique_allocated_bytes": 108694163456,
+        "dataless_paths": 10,
+        "metadata_errors": 0
+      }
+    },
+    "data_deleted": false
+  },
+  "confirmed_space_freed_bytes": null,
+  "reason_unconfirmed": "Requests applied, but file allocation and downloaded status remain. Sync/eviction has not completed.",
+  "avoid": "Do not delete cloud-synced originals, reset provider databases, repeat crashing CLI, hash/read cold archives, or pin entire runs tree."
+}
