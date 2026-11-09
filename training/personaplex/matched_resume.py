@@ -122,12 +122,15 @@ def resume_plan(previous,original,root,execution,source):
                 restore=str(folder/'final-restore/restore.json'),restore_sha256=g.sha(folder/'final-restore/restore.json'),
                 restore_terminal=entry['final_restore_terminal'],previous_training_terminal=str(terminal),
                 previous_training_child_terminal=entry['training_child_terminal'])
+            selected.pop('quota_interrupted_state',None)
         step=restored_entry(selected,source,DATA_SHA,origins[key])
         if step<before:raise ValueError('A saved optimizer step was discarded')
         if g.sha(selected['checkpoint'])!=selected['checkpoint_sha256']:raise ValueError('Actual resume checkpoint bytes changed')
         progress+=step-before
         row.update(checkpoint=selected['checkpoint'],checkpoint_sha256=selected['checkpoint_sha256'],restored_step=step)
-        if step:
+        if selected.get('quota_interrupted_state'):
+            row['quota_interrupted_state']=selected['quota_interrupted_state']
+        elif step:
             for name in ('previous_training_terminal','previous_training_child_terminal'):row[name]=selected[name]
     if progress<=0:raise ValueError('No new actual updates: zero-update retries are forbidden')
     return fresh

@@ -35,6 +35,25 @@ class ResumeSelection(unittest.TestCase):
         (previous/'joint-admission.json').write_text(json.dumps(dict(source='worker-A',data_report_sha256=DATA_SHA,original_joint_packet_sha256=r.PACKET_SHA,entries=entries)))
         return previous,dict(lineages=original)
 
+    def test_successful_postquota_window_uses_new_terminal_not_old_interruption(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);previous,original=self.fixture(root)
+            packet=previous/'joint-admission.json';value=json.loads(packet.read_text())
+            value['entries'][0]['quota_interrupted_state']='dl-moshi-quota-interrupted-v1';packet.write_text(json.dumps(value))
+            folder=previous/'personaplex/narrow';(folder/'train').mkdir(parents=True);(folder/'final-restore').mkdir()
+            leaf=folder/'train/window.pt';leaf.write_bytes(b'fixture trained98 state')
+            (folder/'train/training-window-terminal.json').write_text(json.dumps(dict(checkpoint=str(leaf),checkpoint_sha256=g.sha(leaf))))
+            (folder/'final-restore/restore.json').write_text('{"fixture":true}')
+            def actual_step(entry,*args):
+                if entry['checkpoint']==str(leaf):
+                    self.assertNotIn('quota_interrupted_state',entry);return 98
+                return 3 if entry.get('quota_interrupted_state') else 0
+            with patch.object(r,'restored_entry',side_effect=actual_step):
+                plan=r.resume_plan(previous,original,root/'next',root/'execution','worker-A')
+            chosen=next(row for row in plan if row['restored_step']==98)
+            self.assertNotIn('quota_interrupted_state',chosen)
+            self.assertIn('previous_training_terminal',chosen)
+
     def test_positive_real_window_selected_and_other_arms_kept(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);previous,original=self.fixture(root)
