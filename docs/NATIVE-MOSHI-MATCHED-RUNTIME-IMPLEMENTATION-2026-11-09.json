@@ -47,9 +47,9 @@
     "safe original-snapshot resume preserves failed partial copies and never rewrites valid original files"
   ],
   "pending": [
-    "actual four-scope native gradients/materializedAdam/independent RNG OPAL restore",
-    "measured full paired schedule then four196-update lineages",
-    "full native speech/reasoning/delegation/backend/live qualification"
+    "Owner decision on112GPUh training-only continuation: existing explicit96GPUh scope too small for full conservative forecast",
+    "Source-compatible training-only reuse of exact proven init states, no repeated native calibration",
+    "Four196-update lineages and full native speech/reasoning/delegation/backend/live evaluation"
   ],
   "access": {
     "local_certificate_from_UTC": "2026-11-09T11:03:19Z",
@@ -70,8 +70,8 @@
   },
   "budget": {
     "maximum_aggregate_GPU_hours": 96,
-    "allocated_phase_GPU_seconds": 327,
-    "remaining_GPU_seconds": 345273,
+    "allocated_phase_GPU_seconds": 2229,
+    "remaining_GPU_seconds": 343371,
     "maximum_simultaneous_GPUs": 2,
     "maximum_single_job_seconds": 86400,
     "new_GCP": false,
@@ -248,7 +248,7 @@
       "data_only_no_credentials": true
     }
   },
-  "updated_UTC": "2026-11-09T12:46:22.294341+00:00",
+  "updated_UTC": "2026-11-09T13:06:37.272266+00:00",
   "training_job": {
     "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
     "work": "/projects/u6ada/duplex-live/source-matched-runtime-v5",
@@ -271,7 +271,7 @@
     "new_model_API_calls": 0,
     "job_id": "8229989",
     "submitted_UTC": "2026-11-09T12:44:46.492209+00:00",
-    "actual_observed_state": "RUNNING",
+    "actual_observed_state": "FAILED",
     "node": "nid010373",
     "actual_start_UTC": "2026-11-09T12:44:47Z",
     "native_stop_UTC": "2026-11-10T12:44:47Z",
@@ -279,7 +279,7 @@
     "actual_allocated_GPUs": 2,
     "observed_UTC": "2026-11-09T12:46:22.294341+00:00",
     "actual_new_optimizer_updates": 0,
-    "stage": "native admission: narrow capacities in parallel",
+    "stage": "All4 native admissions/restores PASS, conservative complete schedule forecast106.9GPUh exceeded96GPUh cap before learning",
     "children": {
       "personaplex": {
         "pid": 171576,
@@ -289,6 +289,13 @@
         "pid": 171577,
         "execution_id": "ce1011daf53640cfb51e68289d458122"
       }
-    }
-  }
+    },
+    "actual_end_UTC": "2026-11-09T13:00:38Z",
+    "actual_elapsed_seconds": 951,
+    "actual_GPU_seconds": 1902,
+    "training_running": false,
+    "all4_native_admissions_passed": true,
+    "all4_distinct_restores_passed": true
+  },
+  "native_failure_count": 0
 }

@@ -1,0 +1,204 @@
+{
+  "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+  "job": "8229989",
+  "actual_state": "FAILED",
+  "actual_exit": "1:0",
+  "actual_start_UTC": "2026-11-09T12:44:47Z",
+  "actual_end_UTC": "2026-11-09T13:00:38Z",
+  "actual_GPU_seconds": 1902,
+  "total_phase_GPU_seconds": 2229,
+  "new_optimizer_updates": 0,
+  "all4_native_admissions_and_distinct_restores_passed": true,
+  "lineages": [
+    {
+      "base": "personaplex",
+      "capacity": "narrow",
+      "trainable_parameters": 1894400,
+      "total_parameters": 8373303296,
+      "worst_complete_update_seconds": 184.84059753501788,
+      "complete196_forecast_seconds": 45906.10427336069,
+      "peak_allocated_bytes": 22271143936,
+      "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/personaplex/narrow/admit/init.pt",
+      "checkpoint_sha256": "93171353eca86793fa0b782082c5c4268d69640272093de5c7e9f3680c57039b",
+      "actual_native_admission_passed": true,
+      "actual_distinct_process_restore_passed": true,
+      "actual_optimizer_updates": 0
+    },
+    {
+      "base": "personaplex",
+      "capacity": "broad",
+      "trainable_parameters": 105070592,
+      "total_parameters": 8476479488,
+      "worst_complete_update_seconds": 532.2750379439676,
+      "complete196_forecast_seconds": 131074.04156660673,
+      "peak_allocated_bytes": 27260941312,
+      "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/personaplex/broad/admit/init.pt",
+      "checkpoint_sha256": "66a11e5d6894cefc16da1b83d19d7eab876eca45d26a2e108f21a7167087a57d",
+      "actual_native_admission_passed": true,
+      "actual_distinct_process_restore_passed": true,
+      "actual_optimizer_updates": 0
+    },
+    {
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "trainable_parameters": 1894400,
+      "total_parameters": 8373303296,
+      "worst_complete_update_seconds": 212.67612689401722,
+      "complete196_forecast_seconds": 52726.75078442617,
+      "peak_allocated_bytes": 22271997952,
+      "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/context-spanning/narrow/admit/init.pt",
+      "checkpoint_sha256": "fc3322c41ab6b1b9d20b6d20ec50357af3cf10ab0c0e45ba5f5d8f585a9a56dc",
+      "actual_native_admission_passed": true,
+      "actual_distinct_process_restore_passed": true,
+      "actual_optimizer_updates": 0
+    },
+    {
+      "base": "context-spanning",
+      "capacity": "broad",
+      "trainable_parameters": 105070592,
+      "total_parameters": 8476479488,
+      "worst_complete_update_seconds": 518.7692215429852,
+      "complete196_forecast_seconds": 127765.83703387261,
+      "peak_allocated_bytes": 27260941312,
+      "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/context-spanning/broad/admit/init.pt",
+      "checkpoint_sha256": "79c594f204a3cd3c0967a67f43cf043d8bf2c2d69065e57ec3508a82b6824e18",
+      "actual_native_admission_passed": true,
+      "actual_distinct_process_restore_passed": true,
+      "actual_optimizer_updates": 0
+    }
+  ],
+  "forecast_total_phase_GPU_hours": 106.89282656572155,
+  "blocked_only_by_96GPUh_full_schedule_limit": true,
+  "native_failure_count": 0,
+  "adopted": false,
+  "queue_empty_fresh": true,
+  "training_running": false,
+  "copyback": "runs/isambard-native-20261109/matched-native-proofs-copyback-v1",
+  "proposed_next": "docs/NATIVE-MOSHI-MATCHED-TRAINING-ONLY-CONTINUATION-PROPOSAL-2026-11-09.json",
+  "backup_receipt": {
+    "complete": true,
+    "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "job": "8229989",
+    "regular_files": 136,
+    "total_bytes": 3620584191,
+    "fresh_small_files": 132,
+    "fresh_source_hashes_for_all_files": true,
+    "small_destination_hashes_exact": true,
+    "prior_independent_immutable_checkpoint_destination_receipts": [
+      {
+        "source": "context-spanning/broad/admit/init.pt",
+        "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261109/matched-train-v1/observer/checkpoints/context-spanning/broad/admit/init.pt",
+        "SHA_exact": true,
+        "verification_UTC": "2026-11-09T13:00:53.162118+00:00",
+        "no_duplicate_weight_download": true
+      },
+      {
+        "source": "context-spanning/narrow/admit/init.pt",
+        "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261109/matched-train-v1/observer/checkpoints/context-spanning/narrow/admit/init.pt",
+        "SHA_exact": true,
+        "verification_UTC": "2026-11-09T12:50:01.949808+00:00",
+        "no_duplicate_weight_download": true
+      },
+      {
+        "source": "personaplex/broad/admit/init.pt",
+        "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261109/matched-train-v1/observer/checkpoints/personaplex/broad/admit/init.pt",
+        "SHA_exact": true,
+        "verification_UTC": "2026-11-09T12:59:09.195837+00:00",
+        "no_duplicate_weight_download": true
+      },
+      {
+        "source": "personaplex/narrow/admit/init.pt",
+        "destination": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/isambard-native-20261109/matched-train-v1/observer/checkpoints/personaplex/narrow/admit/init.pt",
+        "SHA_exact": true,
+        "verification_UTC": "2026-11-09T12:48:50.679638+00:00",
+        "no_duplicate_weight_download": true
+      }
+    ],
+    "links_preserved_as_strings": [
+      {
+        "path": "context-spanning/broad/admit/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/broad/admit/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/broad/restore/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/broad/restore/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/admit/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/admit/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/restore/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/restore/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/train/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "context-spanning/narrow/train/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/broad/admit/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/broad/admit/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/broad/restore/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/broad/restore/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/admit/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/admit/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/restore/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/restore/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/train/driver/libcuda.so",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      },
+      {
+        "path": "personaplex/narrow/train/driver/libcuda.so.1",
+        "target": "/.singularity.d/libs/libcuda.so.1"
+      }
+    ],
+    "system_driver_link_target_bytes_not_copied": true,
+    "verified_UTC": "2026-11-09T13:04:23.312602+00:00",
+    "actual_rsync_exit": 0,
+    "new_optimizer_updates": 0
+  }
+}
