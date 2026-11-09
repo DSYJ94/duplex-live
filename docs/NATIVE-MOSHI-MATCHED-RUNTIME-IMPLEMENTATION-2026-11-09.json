@@ -309,5 +309,19 @@
     "accounting_expected_GPU_seconds": 2229,
     "training_authorized": false,
     "proposal_112_GPUh_still_pending": true
+  },
+  "CPU_training_only_lineage_identity": {
+    "checked_UTC": "2026-11-09T13:15:42.628471+00:00",
+    "tests_passed": 21,
+    "old_lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "actual_producer_separate": true,
+    "new_native_admission_forbidden_in_reuse_mode": true,
+    "math_and_state_functions_checked_against_original_AST": true,
+    "dependencies_byte_identical_to_origin_required": true,
+    "wrapper_edits": "Only explicit metadata lineage/source annotation, original-or-current native-reference identity, compatibility check/receipt before weights",
+    "actual_fresh_native_restore_still_required": true,
+    "host_training_only_controller_and_partial_remaining_schedule_still_pending": true,
+    "authorization_unchanged_96_GPUh": true,
+    "no_new_GPU_job": true
   }
 }

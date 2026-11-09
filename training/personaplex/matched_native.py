@@ -10,6 +10,7 @@ from pathlib import Path
 
 from evals.moshi_model_download import sha256 as sha
 from training.personaplex import matched_guard as guard
+from training.personaplex.matched_identity import lineage_source,reference_source_matches,validate_lineage
 from training.personaplex.matched_schedule import SIZES,STEPS,EPOCHS,validate,epoch
 
 BASE=Path('/projects/u6ada/duplex-live')
@@ -58,7 +59,7 @@ def worst_rows(groups):
 
 
 def metadata(a,report):
-    return dict(schema='dl-moshi-matched-lineage-v1',source=a.source,base=a.base,capacity=a.capacity,
+    return dict(schema='dl-moshi-matched-lineage-v1',source=lineage_source(a),base=a.base,capacity=a.capacity,
         data_report_sha256=a.inputs_sha,input_sha256=report['input_sha256'],recipe=RECIPE,
         trainable_parameters=CAPACITIES[a.capacity],old520_adapter_used_as_initialization=False,
         old520_word_clock_targets_preserved=True,own_public_base_four_reference_retention=True,adopted=False)
@@ -412,12 +413,13 @@ def restore(a,groups,report,folder,*,train=False):
     try:
         step=load_state(state,lm,active,metadata(a,report))
         original=json.loads(Path(str(path)+'.native-reference.json').read_text())
-        if (original['checkpoint_sha256']!=expected or original['source']!=a.source
+        if (original['checkpoint_sha256']!=expected or not reference_source_matches(a,original['source'])
                 or original['execution_id']==os.environ['DUPLEX_NATIVE_EXECUTION_ID']
                 or fingerprint(lm,groups)!=original['fingerprints']):
             raise ValueError('Distinct-process actual native restore differs')
         restore_rng(state['rng'])
-        write(folder,'restore.json',dict(passed=True,source=a.source,actual_CUDA=True,
+        write(folder,'restore.json',dict(passed=True,source=a.source,lineage_source=lineage_source(a),base=a.base,capacity=a.capacity,
+            data_report_sha256=a.inputs_sha,actual_CUDA=True,
             checkpoint_sha256=expected,reference_execution_id=original['execution_id'],
             execution_id=os.environ['DUPLEX_NATIVE_EXECUTION_ID'],pid=os.getpid(),
             all_Adam_RNG_OPAL_fields_exact=True,native_logits_exact=True,optimizer_updates=0,
@@ -428,12 +430,14 @@ def restore(a,groups,report,folder,*,train=False):
 
 
 def main(a):
+    compatibility=validate_lineage(a)
     import torch
     if (a.base not in BASES or a.capacity not in CAPACITIES
             or subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source
             or guard.check(a.lease)['source']!=a.source or torch.cuda.device_count()!=1):
         raise ValueError('Exact source-bound learner with one of the job two GPUs required')
     folder=Path(a.root);folder.mkdir(parents=True,exist_ok=False)
+    if compatibility:write(folder,'source-compatibility.json',compatibility)
     groups,report=corpus(Path(a.inputs),a.inputs_sha)
     weights_dir=BASE/'public-models/context-spanning-e62a-v1'
     os.environ.update(CS_BASE_DIR=str(BASE/'public-models/personaplex-fdaf-v1'),
@@ -448,6 +452,7 @@ def main(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('source','root','lease','base','capacity','inputs','inputs-sha'):p.add_argument('--'+n,required=True)
+    p.add_argument('--lineage-source',choices=('8b822b0d85ccea4f291255204cbc358fa85469c4',))
     p.add_argument('--stage',choices=('admit','restore','train'),required=True)
     for n in ('checkpoint','checkpoint-sha','restore-proof','restore-proof-sha','joint-admission','joint-admission-sha'):
         p.add_argument('--'+n)
