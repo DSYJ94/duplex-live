@@ -1,0 +1,84 @@
+{
+  "at": "2026-11-09T11:08:12.947990+00:00",
+  "status": "LEARNER_AND_TWO_GPU_GUARD_IMPLEMENTED_CPU_ONLY",
+  "authorization": "docs/NATIVE-MOSHI-MATCHED-TRAINING-AUTHORIZATION-2026-11-08.json",
+  "data_builder_source": "60416187f45efc4b6317ab54c5656874e7a98d12",
+  "actual_native_capture": {
+    "job": "8216374",
+    "producer": "96850d5029f98098d8144d534f44f0aefeabb57b",
+    "complete48": true,
+    "allocated_GPU_seconds": 327
+  },
+  "actual_new_optimizer_updates": 0,
+  "native_gradient_or_restore_approved": false,
+  "training_running": false,
+  "adopted": false,
+  "CPU_checks": {
+    "tests": 33,
+    "passed": true,
+    "torch": "2.9.0 Mac CPU",
+    "native_GPU_evidence": false,
+    "scope": [
+      "legacy recorded-stream loss values and gradients exact without auxiliary",
+      "TRAIN-only RET normalization and stable extreme-logit gradients",
+      "complete named PersonaPlex adapter states",
+      "zero-update Adam allocation equals lazy first update",
+      "separate two-GPU Slurm identity/deadline/budget guard",
+      "full four-arm actual-terminal and complete-schedule binding",
+      "existing48 capture/source/schedule/component-manifest regressions"
+    ],
+    "lint": "F821/F822/F823/F401 pass"
+  },
+  "implemented": [
+    "all11 native objective groups and original KL1/hidden10/word64/clock64",
+    "own public-base four-reference retention; protected native520 anchors remain separate",
+    "fresh1.8944M and105.070592M configurations with strict ownership",
+    "zero-B fingerprints/four worst native depth and acoustic gradient admission",
+    "Adam before upstream OPAL; complete adapter/optimizer/program/RNG states",
+    "fresh-process native restore and independent-proof requirement before learning",
+    "full196-update schedule and immutable epoch/rolling/interrupted states",
+    "common OPAL keep policy; zero external model API; no claim of full autonomous code rewriting",
+    "bounded CPU-only host/PID/child-terminal wrapper with original read-only mounts; no scheduler or GPU allocation"
+  ],
+  "pending": [
+    "actual complete323 CPU input artifact/result",
+    "two-GPU host coordinator and real-entrypoint checks",
+    "actual four-arm native admission/independent restores/measured complete schedule",
+    "actual four196-update training lineages",
+    "full native speech/reasoning/delegation/backend/live qualification"
+  ],
+  "access": {
+    "local_certificate_from_UTC": "2026-11-09T11:03:19Z",
+    "local_certificate_until_UTC": "2026-11-09T23:03:19Z",
+    "actual_Clifton_terminal": 0,
+    "bounded_SSH_exit": 0,
+    "account_queue_empty_at_UTC": "2026-11-09T11:03:32Z"
+  },
+  "CPU_v5": {
+    "source": "60416187f45efc4b6317ab54c5656874e7a98d12",
+    "first_transfer_exit": 255,
+    "first_transfer_before_remote_launch": true,
+    "subsequent_Git_deployment_complete": true,
+    "actual_ARM_CPU_unit_tests_passed": 11,
+    "full_data_result": "No successful terminal/artifact. Trusted endpoint observer63871 returned original login42 with no matching Python worker; local42042 missing. Safe to launch a new bounded CPU attempt, preserving all previous logs.",
+    "original_host_freshly_observed": "login42",
+    "original_worker_missing": true
+  },
+  "budget": {
+    "maximum_aggregate_GPU_hours": 96,
+    "allocated_phase_GPU_seconds": 327,
+    "remaining_GPU_seconds": 345273,
+    "maximum_simultaneous_GPUs": 2,
+    "maximum_single_job_seconds": 86400,
+    "new_GCP": false,
+    "new_purchases": false,
+    "new_external_model_API_calls": 0
+  },
+  "preservation": {
+    "unrelated_edits_untouched": true,
+    "original_receipts_unchanged": true,
+    "backup_location": "ignored OneDrive repo runs",
+    "new_Documents_backup": false
+  },
+  "remaining_limit": "CPU tests are implementation evidence only. No successful actual model admission, optimizer update, speech improvement or adoption is claimed."
+}
