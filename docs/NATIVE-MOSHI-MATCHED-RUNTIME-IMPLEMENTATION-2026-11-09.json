@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-09T11:08:12.947990+00:00",
-  "status": "LEARNER_AND_TWO_GPU_GUARD_IMPLEMENTED_CPU_ONLY",
+  "at": "2026-11-09T11:27:45.581477+00:00",
+  "status": "LEARNER_AND_TWO_GPU_COORDINATOR_IMPLEMENTED_CPU_ONLY_CONTROL40_SOURCE_RESTORATION",
   "authorization": "docs/NATIVE-MOSHI-MATCHED-TRAINING-AUTHORIZATION-2026-11-08.json",
   "data_builder_source": "60416187f45efc4b6317ab54c5656874e7a98d12",
   "actual_native_capture": {
@@ -14,7 +14,7 @@
   "training_running": false,
   "adopted": false,
   "CPU_checks": {
-    "tests": 33,
+    "tests": 41,
     "passed": true,
     "torch": "2.9.0 Mac CPU",
     "native_GPU_evidence": false,
@@ -38,13 +38,16 @@
     "fresh-process native restore and independent-proof requirement before learning",
     "full196-update schedule and immutable epoch/rolling/interrupted states",
     "common OPAL keep policy; zero external model API; no claim of full autonomous code rewriting",
-    "bounded CPU-only host/PID/child-terminal wrapper with original read-only mounts; no scheduler or GPU allocation"
+    "bounded CPU-only host/PID/child-terminal wrapper with original read-only mounts; no scheduler or GPU allocation",
+    "one two-GPU host coordinator: bases parallel, capacities serial; all four actual admissions/restores before learning",
+    "actual196-step completion with state hash reduces only remaining training estimate",
+    "separate initial/final restore terminals; source/actual PID/execution IDs preserved",
+    "original7797-file/8GB snapshot restoration with safe full-member extraction and independent destination hashes"
   ],
   "pending": [
-    "actual complete323 CPU input artifact/result",
-    "two-GPU host coordinator and real-entrypoint checks",
-    "actual four-arm native admission/independent restores/measured complete schedule",
-    "actual four196-update training lineages",
+    "verify/restore original frozen control40 source and complete323 CPU artifact",
+    "actual two-GPU native entrypoint/admission and independent restore of all four scopes",
+    "measured full paired schedule then actual four196-update lineages",
     "full native speech/reasoning/delegation/backend/live qualification"
   ],
   "access": {
@@ -80,5 +83,61 @@
     "backup_location": "ignored OneDrive repo runs",
     "new_Documents_backup": false
   },
-  "remaining_limit": "CPU tests are implementation evidence only. No successful actual model admission, optimizer update, speech improvement or adoption is claimed."
+  "remaining_limit": "CPU tests are implementation evidence only. No successful actual model admission, optimizer update, speech improvement or adoption is claimed.",
+  "actual_recipe": {
+    "updates": 196,
+    "epochs": 4,
+    "steps_per_epoch": 49,
+    "learning_rate": 2e-06,
+    "warmup_updates": 16,
+    "gradient_clip": 1.0,
+    "adam_betas": [
+      0.9,
+      0.999
+    ],
+    "adam_eps": 1e-08,
+    "weight_decay": 0.01,
+    "foreach": false,
+    "fused": false,
+    "amsgrad": false,
+    "source_precision": "BF16 frozen base; FP32 adapters and Adam",
+    "attention": "MATH",
+    "actual_response_first_word_weight": 16.0,
+    "reference_KL": 1.0,
+    "reference_hidden_MSE": 10.0,
+    "word_anchor": 64.0,
+    "clock_anchor": 64.0,
+    "RET_class_balanced_coefficient": 8.0,
+    "stream_autograd": "recorded call boundaries; unchanged native KV values",
+    "full_unstreamed_objectives_preserved": true,
+    "optimizer_owner": "upstream OPAL",
+    "adaptive_policy": "common keep for matched initial comparison; no model API",
+    "sampling": "all323 rows each complete49-step epoch; exact per-component inverse visits",
+    "seed": 42424242,
+    "external_model_API_calls": 0
+  },
+  "CPU_v6": {
+    "source": "4d1fb39ecbd18426202bb3c7782a2c78c13b4a10",
+    "host": "login46",
+    "manager_pid": 117393,
+    "child_pid": 120949,
+    "execution_id": "f0d44e0084ee4820a098172330b5aa4b",
+    "actual_ARM_CPU_tests": 33,
+    "actual_CPU_tests_passed": true,
+    "actual_prepare_exit": 1,
+    "stopped_at": "Original unchanged control40 verifier requires /workspace/control40-stage-e658c20/inventory.json; missing snapshot mount/source",
+    "full323_artifact_written": false,
+    "GPU_allocated": false,
+    "optimizer_updates": 0
+  },
+  "control40_snapshot": {
+    "source": "runs/local-migration-20261023/control40-complete-workset-v1",
+    "files": 7797,
+    "bytes": 8000842614,
+    "archive_bytes": 1023720756,
+    "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
+    "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
+    "status": "Original compressed Mac source hashes match; approved synthetic source transfer in progress, actual destination restore/recompute pending",
+    "original_verifier_thresholds_data_and_receipts_unchanged": true
+  }
 }

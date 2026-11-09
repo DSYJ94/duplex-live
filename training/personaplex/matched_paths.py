@@ -23,6 +23,11 @@ def command(work,*,gpu=None,environment=None):
     result+=['--no-home','--no-mount','cwd'] if gpu is None else ['--containall','--nv']
     for source,target,mode in legacy_mounts():
         result+=['--bind',source+':'+target+(':'+mode if mode else '')]
+    # The cache's original snapshot verifier intentionally uses cwd/runs.
+    # These aliases preserve its exact bytes/paths and all7797 source checks.
+    snapshot=BASE/'native-control40-workset-v1'
+    result+=['--bind',str(snapshot)+':/workspace/control40-stage-e658c20:ro',
+        '--bind',str(snapshot/'runs')+':'+str(Path(work)/'runs')+':ro']
     result+=['--pwd',str(work)]
     env=dict(CUDA_VISIBLE_DEVICES='-1' if gpu is None else str(gpu),
         PYTHONPATH=str(BASE/'artifacts/personaplex-runtime-v1/pylibs')+':'+str(work),

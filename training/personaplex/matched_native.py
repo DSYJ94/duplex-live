@@ -240,6 +240,8 @@ def admit(a,groups,report,folder):
             data_report_sha256=a.inputs_sha,pid=os.getpid(),execution_id=os.environ['DUPLEX_NATIVE_EXECUTION_ID'],
             actual_CUDA=True,zero_B_native_outputs_exact=True,baseline_fingerprints=baseline,
             strict_loads=loads,execution=snapshot(lm),trainable_parameters=CAPACITIES[a.capacity],
+            total_model_parameters=sum(p.numel() for p in lm.parameters()),
+            frozen_base_parameters=sum(p.numel() for p in lm.parameters() if not p.requires_grad),
             original_all323_input_rows=True,new_four_worst_depth_checks=parity,
             all_four_acoustic_gradients=rows,complete_worst_update=parts,
             original_TRAIN_RET_population=objective.ret,
@@ -295,6 +297,18 @@ def joint_schedule(a):
         seconds=admission['estimated_complete196_seconds']
         if not isinstance(seconds,(int,float)) or not __import__('math').isfinite(seconds) or seconds<=0:
             raise ValueError('Actual finite measured full-schedule estimate required')
+        complete=Path(row['training_terminal']) if row.get('training_terminal') else None
+        if complete is not None and complete.exists():
+            terminal=json.loads(complete.read_text())
+            saved=Path(terminal['final_checkpoint'])
+            reference=json.loads(Path(str(saved)+'.native-reference.json').read_text())
+            if (not terminal['completed'] or terminal['source']!=a.source
+                    or terminal['total_lineage_updates']!=196 or terminal['complete_epochs']!=4
+                    or sha(saved)!=terminal['checkpoint_sha256']
+                    or reference['checkpoint_sha256']!=terminal['checkpoint_sha256']
+                    or reference['step']!=196 or reference['source']!=a.source):
+                raise ValueError('Only actual complete checkpointed training can reduce remaining schedule')
+            seconds=0.
         estimates[row['base']]+=seconds
     lease=guard.check(a.lease)
     available=guard.LIMIT-lease['prior_GPU_seconds']-2*(time.time()-lease['start_unix'])

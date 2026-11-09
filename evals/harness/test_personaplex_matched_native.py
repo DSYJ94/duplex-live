@@ -77,6 +77,23 @@ class PairedAdmission(unittest.TestCase):
             args,entries,path=self.packet(Path(root))
             with self.assertRaisesRegex(RuntimeError,'complete paired schedule'):self.run_packet(args,now=1000+48*3600)
 
+    def test_completed_checkpointed_lineages_reduce_only_remaining_training_time(self):
+        with tempfile.TemporaryDirectory() as root:
+            root=Path(root);args,entries,path=self.packet(root)
+            for row in entries:
+                if row['capacity']!='narrow':continue
+                saved=root/(row['base']+'-completed.pt');saved.write_bytes(b'unit fixture, not an actual model')
+                reference=dict(source=args.source,checkpoint_sha256=m.sha(saved),step=196)
+                Path(str(saved)+'.native-reference.json').write_text(json.dumps(reference))
+                terminal=root/(row['base']+'-completed.json')
+                terminal.write_text(json.dumps(dict(completed=True,source=args.source,total_lineage_updates=196,
+                    complete_epochs=4,final_checkpoint=str(saved),checkpoint_sha256=m.sha(saved))))
+                row['training_terminal']=str(terminal)
+            packet=json.loads(path.read_text());packet['entries']=entries;self.replace(args,path,packet)
+            self.assertEqual(self.run_packet(args)['estimated_serial_seconds_per_base'],{b:3600. for b in m.BASES})
+            saved.write_bytes(b'changed state')
+            with self.assertRaisesRegex(ValueError,'actual complete checkpointed'):self.run_packet(args)
+
     def test_worst_probe_selection_considers_actual_geometry_in_every_group(self):
         class Shape:
             def __init__(self,n):self.shape=(1,17,n)
