@@ -39,7 +39,14 @@ def main(a):
                 active=subprocess.Popen(command(work)+args,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
                 phase=dict(record,stage=name,pid=active.pid,phase_started_unix=time.time())
                 write(tracker/'current.json',phase)
-                try:actual=active.wait(timeout=max(1,started+1200-time.time()))
+                try:
+                    while active.poll() is None:
+                        if time.time()>=started+1200:raise subprocess.TimeoutExpired(args,1200)
+                        # This is a fresh observation of the SAME actual Popen
+                        # child, not a claim based on an old lock or intent file.
+                        write(tracker/'current.json',dict(phase,checked_unix=time.time(),actual_child_returncode=None))
+                        time.sleep(5)
+                    actual=active.wait()
                 except subprocess.TimeoutExpired:
                     os.killpg(active.pid,signal.SIGTERM)
                     try:active.wait(timeout=20)
