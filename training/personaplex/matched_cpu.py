@@ -24,11 +24,13 @@ def stages(work,source,out):
         if snapshot.exists():args+=['--resume']
         result.append(('restore-source',args))
     result.append(('unit',command(work)+['unittest','-q','evals.harness.test_personaplex_matched_native',
+        'evals.harness.test_native_gcp_inputs',
         'evals.harness.test_personaplex_matched_losses','evals.harness.test_personaplex_matched_state',
         'evals.harness.test_personaplex_matched_job','evals.harness.test_personaplex_matched_snapshot',
         'evals.harness.test_personaplex_matched_guard','evals.harness.test_personaplex_matched_paths',
         'evals.harness.test_personaplex_native_capture48','evals.harness.test_personaplex_matched_schedule',
         'evals.harness.test_personaplex_matched_inputs']))
+    result.append(('temporary-inputs',command(work)+['training.personaplex.matched_temporary']))
     result.append(('legacy-inputs',command(work)[:-1]+[str(work/'training/personaplex/matched_legacy.py'),
         '--source',source,'--out',str(BASE/'native-moshi-legacy-inputs-v1')]))
     result.append(('prepare',command(work)+['training.personaplex.matched_inputs','--source',source,'--out',str(out),

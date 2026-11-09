@@ -29,7 +29,7 @@ class DeviceAndDataBoundary(unittest.TestCase):
         from training.personaplex import matched_cpu as c
         with tempfile.TemporaryDirectory() as root,patch.object(c,'BASE',Path(root)):
             stages=c.stages(Path(root)/'work','a'*40,Path(root)/'inputs')
-            self.assertEqual([name for name,_ in stages],['restore-source','unit','legacy-inputs','prepare'])
+            self.assertEqual([name for name,_ in stages],['restore-source','unit','temporary-inputs','legacy-inputs','prepare'])
             self.assertIn('training.personaplex.matched_snapshot',stages[0][1])
             self.assertNotIn('--nv',stages[0][1])
             self.assertTrue(all('CUDA_VISIBLE_DEVICES=-1' in args for _,args in stages[1:]))

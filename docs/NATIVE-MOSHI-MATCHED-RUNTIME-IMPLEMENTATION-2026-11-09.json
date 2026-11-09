@@ -14,7 +14,7 @@
   "training_running": false,
   "adopted": false,
   "CPU_checks": {
-    "tests": 46,
+    "tests": 55,
     "passed": true,
     "torch": "2.9.0 Mac CPU",
     "native_GPU_evidence": false,
@@ -182,5 +182,31 @@
     "method": "Separate fresh CPU process in original clean read-only Git revision. Preserve original receipts and all whole40/32 gates; bind every output input tensor/Engine/cache SHA back into current full323 loader. No monkeypatch or edited old approval.",
     "actual_execution_pending": true,
     "new_gradient_or_behavior_approval": false
+  },
+  "CPU_v9": {
+    "job": "8228809",
+    "source": "516fa754ce0a5cb5ffa020a757a4aff67d785595",
+    "GPU_count": 0,
+    "node": "nid010062",
+    "manager_pid": 273493,
+    "legacy_pid": 273762,
+    "actual_source_control40_complete": true,
+    "actual_CPU_exit": 1,
+    "reason": "Reasoning semantic argument was a directory/failed-v10 ancestor instead of original passed v11 file; historical temporary five-tree layout and semantic33 closure also required."
+  },
+  "reasoning_closure": {
+    "passed_original_semantic_sha256": "56d9ad2aee313edda063e28ffb00b26e59ebaf406499d005548a44f29952b46b",
+    "original_semantic_files": 33,
+    "actual_semantic_and_public_package_transfer_exit": 0,
+    "source": "runs/local-migration-20261023/native-reasoning32-timing-v11-semantic-v1",
+    "exact_original_packages": {
+      "openai-whisper": "20250625",
+      "whisper-timestamped": "1.15.9"
+    },
+    "Torch_or_Triton_replaced": false,
+    "ASR_or_API_executed": false,
+    "five_regular_copy_trees": "Reuse portable/context/native_gcp_inputs.py exact byte-copy and independent verification functions; bind at original /tmp/duplex-reasoning32-verifier-v1",
+    "new_data_or_judgments_generated": false,
+    "actual_full32_verification_pending": true
   }
 }

@@ -51,10 +51,13 @@ def main(a):
             original=json.loads((cache/'cache.json').read_text())
             args=SimpleNamespace(inputs=MIG/'native-reasoning32-timing-v11-inputs-v1.json',
                 version=MIG/'native-reasoning32-timing-v11-reapproval-v1',
-                semantic=MIG/'native-reasoning32-derived-v10-semantic-v1',data=MIG/'native-reasoning32-converted-v11',
+                semantic=MIG/'native-reasoning32-timing-v11-semantic-v1/semantic.json',data=MIG/'native-reasoning32-converted-v11',
                 model=Path(original['model']),codec_source=Path(original['codec_source']),
                 interleaver_source=Path(original['interleaver_source']),cache=cache,assets=assets,
                 proof=OLD/'runs/context-training-proof-7510331',out=engine)
+            ingestion=json.loads((args.data/'ingestion.json').read_text())
+            if not args.semantic.is_file() or sha(args.semantic)!=ingestion['semantic_approval_sha256']:
+                raise ValueError('Exact original PASSED v11 semantic file required; never the failed v10 ancestor')
             report=reasoning(args)
         rows=[]
         for row in report['cases']:

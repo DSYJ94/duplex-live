@@ -31,9 +31,11 @@ def command(work,*,gpu=None,environment=None):
     legacy=BASE/'source-original-input-verifier-v1'
     result+=['--bind',str(legacy)+':'+str(legacy)+':ro',
         '--bind',str(snapshot/'runs')+':'+str(legacy/'runs')+':ro']
+    result+=['--bind',str(BASE/'native-reasoning32-verifier-inputs-v1')+':/tmp/duplex-reasoning32-verifier-v1:ro',
+        '--bind',str(BASE/'native-reasoning32-timing-v11-semantic-v1')+':/workspace/migration/native-reasoning32-timing-v11-semantic-v1:ro']
     result+=['--pwd',str(work)]
     env=dict(CUDA_VISIBLE_DEVICES='-1' if gpu is None else str(gpu),
-        PYTHONPATH=str(BASE/'artifacts/personaplex-runtime-v1/pylibs')+':'+str(work),
+        PYTHONPATH=str(BASE/'artifacts/original-verifier-python-v1')+':'+str(BASE/'artifacts/personaplex-runtime-v1/pylibs')+':'+str(work),
         HF_HUB_OFFLINE='1',PYTHONDONTWRITEBYTECODE='1')
     if environment:
         if 'CUDA_VISIBLE_DEVICES' in environment:raise ValueError('Explicit selected GPU ownership cannot be overridden')
