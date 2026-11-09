@@ -248,7 +248,7 @@
       "data_only_no_credentials": true
     }
   },
-  "updated_UTC": "2026-11-09T13:06:37.272266+00:00",
+  "updated_UTC": "2026-11-09T13:30:23.208526+00:00",
   "training_job": {
     "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
     "work": "/projects/u6ada/duplex-live/source-matched-runtime-v5",
@@ -335,12 +335,29 @@
     "native_worker_lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
     "original_packet_sha256": "3a874ddc35de0b4c67bde8ce106e4c536a225ff9790be6276a729d4e3204621b",
     "tests_pure_CPU": 36,
-    "broader_CPU_checks_last_completed": 62,
-    "additional_test_since_broader_suite": 1,
+    "broader_CPU_checks_last_completed": 63,
+    "additional_test_since_broader_suite": 0,
     "host_Python36_syntax_pass": true,
     "extended_limit_disabled_without_approved_hashed_amendment": true,
     "authorization_file_exists": false,
     "GPU_submitted": false,
-    "postupdate_host_resume_controller_pending": true
+    "postupdate_host_resume_controller_pending": true,
+    "actual_ARM_CPU": {
+      "source": "e351f9826b316e1f090742a5dfcd6729f7a28611",
+      "worktree": "/projects/u6ada/duplex-live/source-matched-training-only-v1",
+      "host": "login44",
+      "proof_process_pid": 79675,
+      "pure_CPU_tests_passed": 36,
+      "original4proofs_revalidated": true,
+      "source_identity_compatibility_passed": true,
+      "actual_receipt_stage_exit": 0,
+      "initial_receipt_writer_stage_exit": 1,
+      "initial_receipt_writer_failure": "Nested one-off shell/Python string newline;36 actual ARMtests already passed; corrected receipt-only stage, no source/GPU/admission repeat",
+      "receipt_source_and_copyback_sha256": "9de6f40bff487178008a9ac85539bae0cb2c57675421847710e9b58e03f1f91a",
+      "local": "runs/isambard-native-20261109/training-only-cpu-v1/actual-preflight.json",
+      "fresh_account_queue_empty": true,
+      "GPU_allocated": false,
+      "training_authorized": false
+    }
   }
 }
