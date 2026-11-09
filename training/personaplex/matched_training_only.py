@@ -14,7 +14,24 @@ from .matched_continue_policy import PACKET_SHA
 
 ROOT=BASE/'native-moshi-matched-training-only-v1'
 HISTORY={'8216374':dict(state='COMPLETED',elapsed=327,GPUs=1),
-         '8229989':dict(state='FAILED',elapsed=951,GPUs=2)}
+         '8229989':dict(state='FAILED',elapsed=951,GPUs=2),
+         '8234444':dict(state='FAILED',elapsed=5,GPUs=2)}
+FIRST_INTERVAL=2  # The failed five-second host startup consumed interval one.
+STARTUP_AUTH=Path('docs/NATIVE-MOSHI-MATCHED-STARTUP-RECOVERY-AUTHORIZATION-2026-11-09.json')
+
+
+def startup_authority():
+    authority=json.loads(STARTUP_AUTH.read_text())
+    expected=dict(status='OWNER_APPROVED_MATCHED_STARTUP_RECOVERY',provider='Isambard',account=g.ACCOUNT,
+        failed_job_id='8234444',failed_worker_source='d9e6ac679cce5deb091183c89562c40ed163f73b',
+        failed_allocated_seconds=5,failed_GPUs=2,actual_prior_GPU_seconds=2239,
+        maximum_aggregate_GPU_hours=112,maximum_single_job_seconds=86400,
+        maximum_total_running_intervals=4,first_recovery_interval=2,
+        zero_update_startup_recovery_intervals=1,repeat_native_calibration=False,
+        new_external_model_API_calls=0,new_purchases=False,new_GCP_compute=False)
+    if any(authority.get(k)!=v for k,v in expected.items()):
+        raise ValueError('Exact owner-approved five-second startup exception required')
+    return g.sha(STARTUP_AUTH)
 
 
 def prior_usage(job_id):
@@ -88,8 +105,9 @@ def main(a):
     source=subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()
     if source!=a.source or a.inputs_sha!=DATA_SHA:raise ValueError('Exact deployed producer and qualified data required')
     # Refuse missing/pending authorization before any model stage or output root.
+    recovery=startup_authority()
     amendment=g.sha(g.EXTENSION)
-    if g.phase_limit({'continuation_authorization_sha256':amendment,'continuation_interval':1})!=112*3600:
+    if g.phase_limit({'continuation_authorization_sha256':amendment,'continuation_interval':FIRST_INTERVAL})!=112*3600:
         raise ValueError('Recorded owner approval required')
     original=preflight(ORIGINAL_ROOT,PACKET_SHA)
     job_id=os.environ['SLURM_JOB_ID'];prior=prior_usage(job_id)
@@ -97,7 +115,8 @@ def main(a):
     if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Accounted matched job name required')
     seconds=g.stamp(job['EndTime'])-g.stamp(job['StartTime'])
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,
-        authorization_sha256=g.sha(g.AUTH),continuation_authorization_sha256=amendment,continuation_interval=1,
+        authorization_sha256=g.sha(g.AUTH),continuation_authorization_sha256=amendment,continuation_interval=FIRST_INTERVAL,
+        startup_recovery_authorization_sha256=recovery,
         job_id=job_id,node=job['NodeList'],source=source,worker_worktree=str(Path.cwd()),controller_source=source,start_unix=g.stamp(job['StartTime']),
         stop_unix=g.stamp(job['EndTime']),maximum_seconds=int(seconds),GPU_count=2,prior_GPU_seconds=prior)
     g.validate_job(job,lease,time.time())

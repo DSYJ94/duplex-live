@@ -8,11 +8,11 @@ from training.personaplex.matched_reuse import DATA_SHA
 
 
 class ResumeAccounting(unittest.TestCase):
-    text='8216374|capture|brics.u6ada|COMPLETED|0:0|327|gres/gpu=1|\n8229989|duplex-matched-train|brics.u6ada|FAILED|1:0|951|gres/gpu=2|\n90000|duplex-matched-training-only|brics.u6ada|COMPLETED|0:0|7200|gres/gpu=2|\n'
-    ordered=[dict(lease=dict(job_id='90000',prior_GPU_seconds=2229,maximum_seconds=86400))]
+    text='8216374|capture|brics.u6ada|COMPLETED|0:0|327|gres/gpu=1|\n8229989|duplex-matched-train|brics.u6ada|FAILED|1:0|951|gres/gpu=2|\n8234444|duplex-matched-training-only|brics.u6ada|FAILED|1:0|5|gres/gpu=2|\n90000|duplex-matched-training-only|brics.u6ada|COMPLETED|0:0|7200|gres/gpu=2|\n'
+    ordered=[dict(lease=dict(job_id='90000',prior_GPU_seconds=2239,maximum_seconds=86400))]
 
     def test_actual_usage_includes_all_windows_and_prior_failed_admission(self):
-        self.assertEqual(r.allocation_carry(self.text,self.ordered,'90001'),2229+14400)
+        self.assertEqual(r.allocation_carry(self.text,self.ordered,'90001'),2239+14400)
 
     def test_missing_duplicate_unlisted_failed_and_reset_carry_rejected(self):
         for text in (self.text.replace('|7200|','|86401|'),self.text.replace('COMPLETED|0:0|7200','FAILED|1:0|7200'),
@@ -97,6 +97,21 @@ class WorkerAndChain(unittest.TestCase):
                 (execution/'lease.json').write_text(json.dumps(lease));(execution/'terminal.json').write_text(json.dumps(dict(source='worker-A',job_id='1',actual_exit_code=code)))
                 result=root/'phase-result.json';result.write_text(json.dumps(dict(source='worker-A',all_four_complete=completed,partial_lineages=[dict(step=8)])))
                 with patch.object(r,'BASE',base),patch.object(r,'INITIAL',root),self.assertRaisesRegex(ValueError,'successful incomplete'):
+                    r.chain(root,g.sha(result))
+
+
+class StartupIntervalSequence(unittest.TestCase):
+    def test_positive_windows_carry_the_consumed_startup_interval_without_reset(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);execution=root/'execution-90000';execution.mkdir()
+            result=root/'phase-result.json';result.write_text(json.dumps(dict(source='worker',all_four_complete=False,partial_lineages=[dict(step=8)])))
+            lease=execution/'lease.json';terminal=execution/'terminal.json'
+            terminal.write_text(json.dumps(dict(source='worker',job_id='90000',actual_exit_code=0)))
+            lease.write_text(json.dumps(dict(source='worker',job_id='90000',continuation_interval=2)))
+            with patch.object(r,'BASE',root),patch.object(r,'INITIAL',root):
+                self.assertEqual(r.chain(root,g.sha(result))[0]['lease']['continuation_interval'],2)
+                lease.write_text(json.dumps(dict(source='worker',job_id='90000',continuation_interval=1)))
+                with self.assertRaisesRegex(ValueError,'interval sequence'):
                     r.chain(root,g.sha(result))
 
 

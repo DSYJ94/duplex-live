@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 
@@ -14,6 +15,10 @@ MODELS = {
 
 
 def sha256(path):
+    # The Slurm host uses Python3.6; optional native hash sessions run only
+    # inside the modern container. Both paths hash all bytes on a first read.
+    if sys.version_info < (3, 7):
+        return _sha256_uncached(path)
     from evals.immutable_file_hashes import active
     session=active()
     return session.digest(path,_sha256_uncached) if session is not None else _sha256_uncached(path)

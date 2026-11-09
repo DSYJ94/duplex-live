@@ -10,9 +10,18 @@ from training.personaplex.matched_reuse import ORIGIN,DATA_SHA
 class TrainingOnlyHost(unittest.TestCase):
     def original(self):return dict(lineages=[dict(base=b,capacity=c,original_checkpoint='/old/'+b+'/'+c+'/init.pt',checkpoint_sha256=b+c) for b in ('personaplex','context-spanning') for c in ('narrow','broad')])
 
+    def test_unapproved_startup_recovery_stops_before_original_proofs_or_model(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as directory:
+            with patch.object(host, 'STARTUP_AUTH', Path(directory)/'absent.json'), patch.object(host.subprocess, 'check_output', return_value='new'), patch.object(host, 'preflight') as original:
+                with self.assertRaises(FileNotFoundError):
+                    host.main(SimpleNamespace(source='new', inputs_sha=DATA_SHA))
+                original.assert_not_called()
+        self.assertEqual(host.FIRST_INTERVAL, 2)
+
     def test_actual_allocation_carry_and_unlisted_gpu_job_fail_closed(self):
-        text='8216374|capture|brics.u6ada|COMPLETED|327|gres/gpu=1|\n8229989|duplex-matched-train-v1|brics.u6ada|FAILED|951|gres/gpu=2|\n90000|duplex-matched-training-only-v1|brics.u6ada|RUNNING|2|gres/gpu=2|\n'
-        with patch.object(host.subprocess,'check_output',return_value=text):self.assertEqual(host.prior_usage('90000'),2229)
+        text='8216374|capture|brics.u6ada|COMPLETED|327|gres/gpu=1|\n8229989|duplex-matched-train-v1|brics.u6ada|FAILED|951|gres/gpu=2|\n8234444|duplex-matched-training-only-v1|brics.u6ada|FAILED|5|gres/gpu=2|\n90000|duplex-matched-training-only-v1|brics.u6ada|RUNNING|2|gres/gpu=2|\n'
+        with patch.object(host.subprocess,'check_output',return_value=text):self.assertEqual(host.prior_usage('90000'),2239)
         with patch.object(host.subprocess,'check_output',return_value=text):
             with self.assertRaisesRegex(ValueError,'uncounted'):host.prior_usage('90001')
 

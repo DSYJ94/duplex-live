@@ -8,7 +8,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from . import matched_guard as g
 from .matched_job import BASE,visible_pair,write
-from .matched_training_only import ROOT as INITIAL,HISTORY,TrainingChildren,initial_plan,execute
+from .matched_training_only import ROOT as INITIAL,HISTORY,FIRST_INTERVAL,STARTUP_AUTH,TrainingChildren,initial_plan,execute
 from .matched_reuse import ORIGINAL_ROOT,DATA_SHA,preflight
 from .matched_continue_policy import PACKET_SHA,read_pinned,restored_entry
 from .matched_identity import DEPENDENCIES,NATIVE
@@ -16,7 +16,7 @@ from .matched_identity import DEPENDENCIES,NATIVE
 CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/matched_guard.py','training/personaplex/matched_continue_policy.py',
     'training/personaplex/matched_identity.py','training/personaplex/matched_reuse.py',
     'training/personaplex/matched_job.py','training/personaplex/matched_paths.py',
-    'training/personaplex/matched_training_only.py')+DEPENDENCIES
+    'training/personaplex/matched_training_only.py','evals/moshi_model_download.py',str(STARTUP_AUTH))+DEPENDENCIES
 
 
 def beneath(path):
@@ -41,7 +41,7 @@ def chain(previous,result_sha):
         if p.resolve()==INITIAL.resolve():break
         p=beneath(result['previous_root']);expected=result['previous_result_sha256']
     ordered=list(reversed(roots))
-    for number,row in enumerate(ordered,1):
+    for number,row in enumerate(ordered,FIRST_INTERVAL):
         if row['lease']['continuation_interval']!=number:raise ValueError('Actual continuation interval sequence differs')
         if row['lease']['source']!=ordered[0]['lease']['source']:raise ValueError('Native worker changed across windows')
     return ordered
@@ -121,7 +121,7 @@ def resume_plan(previous,original,root,execution,source):
 def main(a):
     controller=subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()
     if controller!=a.controller_source or a.inputs_sha!=DATA_SHA:raise ValueError('Exact controller/data required')
-    ordered=chain(a.previous_root,a.previous_result_sha);old=ordered[-1]['lease'];interval=len(ordered)+1
+    ordered=chain(a.previous_root,a.previous_result_sha);old=ordered[-1]['lease'];interval=old['continuation_interval']+1
     if interval>4:raise ValueError('Approved running interval count exhausted')
     amendment=g.sha(g.EXTENSION);g.phase_limit(dict(continuation_authorization_sha256=amendment,continuation_interval=interval))
     if any(item['lease']['continuation_authorization_sha256']!=amendment for item in ordered):raise ValueError('Original approval changed')
