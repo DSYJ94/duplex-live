@@ -27,7 +27,8 @@ def lineage_source(a):
 
 
 def reference_source_matches(a,producer):
-    return producer in {a.source,lineage_source(a)}
+    from .matched_interrupted import reference_allowed
+    return producer in {a.source,lineage_source(a)} or reference_allowed(a,producer)
 
 
 def function_sources(text):
@@ -69,6 +70,11 @@ def validate_lineage(a):
         raw=(root/file).read_bytes()
         if raw!=git_file(ORIGIN,file) or raw!=git_file(a.source,file):
             raise ValueError('Original native math/state dependency changed: '+file)
+        hashes[file]=hashlib.sha256(raw).hexdigest()
+    for file in ('training/personaplex/matched_interrupted.py','training/personaplex/matched_continue_policy.py',
+                 'docs/NATIVE-MOSHI-QUOTA-RECOVERY-AUTHORIZATION-2026-11-09.json'):
+        raw=(root/file).read_bytes()
+        if raw!=git_file(a.source,file):raise ValueError('Recovery policy differs from actual producer: '+file)
         hashes[file]=hashlib.sha256(raw).hexdigest()
     return dict(lineage_source=ORIGIN,actual_producer=a.source,checked_native_functions=checked,
         original_dependency_hashes=hashes,identity_checker_sha256=hashlib.sha256(identity_bytes).hexdigest(),only_declared_identity_wrapper_edits=True,

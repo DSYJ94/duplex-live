@@ -1,0 +1,20 @@
+{
+  "status": "OWNER_DIRECTED_QUOTA_FAILURE_RECOVERY",
+  "recorded_UTC": "2026-11-09T22:40:47.990353+00:00",
+  "owner_instruction": "Fix the Isambard quota issue and get training running again. Preserve the checkpoints, keep OneDrive editing paused, and tell me promptly if the run stops. Don\u2019t get bogged down in another diagnostics loop.",
+  "failed_job": "8235976",
+  "actual_prior_GPU_seconds": 3527,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 4,
+  "next_interval": 3,
+  "simultaneous_GPUs": 2,
+  "maximum_single_job_seconds": 86400,
+  "OneDrive_writes": false,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "preserve_saved_personaplex_step3": true,
+  "context_spanning_unsaved3": "Lost with failed process; use preserved independently verified init0, never claim restoration of unsaved weights",
+  "preserve_original_proofs_and_actual_failed_terminals": true,
+  "data_losses_recipe_and_acceptance_unchanged": true
+}

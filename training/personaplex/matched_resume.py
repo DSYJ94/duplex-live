@@ -12,15 +12,21 @@ from .matched_training_only import ROOT as INITIAL,HISTORY,FIRST_INTERVAL,STARTU
 from .matched_reuse import ORIGINAL_ROOT,DATA_SHA,preflight
 from .matched_continue_policy import PACKET_SHA,read_pinned,restored_entry
 from .matched_identity import DEPENDENCIES,NATIVE
+from .matched_interrupted import DURABLE,AUTH as QUOTA_AUTH,authority as quota_authority
+from .matched_quota_recovery import HISTORY as QUOTA_HISTORY
 
 CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/matched_guard.py','training/personaplex/matched_continue_policy.py',
     'training/personaplex/matched_identity.py','training/personaplex/matched_reuse.py',
     'training/personaplex/matched_job.py','training/personaplex/matched_paths.py',
-    'training/personaplex/matched_training_only.py','evals/moshi_model_download.py',str(STARTUP_AUTH))+DEPENDENCIES
+    'training/personaplex/matched_training_only.py','evals/moshi_model_download.py',str(STARTUP_AUTH),
+    'training/personaplex/matched_interrupted.py','training/personaplex/matched_quota_recovery.py',str(QUOTA_AUTH))+DEPENDENCIES
 
 
 def beneath(path):
-    p=Path(path);p.resolve().relative_to(BASE.resolve())
+    p=Path(path)
+    try:p.resolve().relative_to(BASE.resolve())
+    except ValueError:
+        quota_authority();p.resolve().relative_to(DURABLE.resolve())
     if p.is_symlink():raise ValueError('No aliased resume root')
     return p
 
@@ -38,10 +44,18 @@ def chain(previous,result_sha):
                 or result.get('all_four_complete') is not False or not result.get('partial_lineages')):
             raise ValueError('Only successful incomplete training windows may resume')
         roots.append(dict(root=p,result=result,lease=lease))
+        marker=p/'quota-recovery-initial.json'
+        if marker.is_file():
+            value=json.loads(marker.read_text());digest=quota_authority()
+            p.resolve().relative_to(DURABLE.resolve())
+            if value!={'source':lease['source'],'authorization_sha256':digest,'failed_job':'8235976'}:
+                raise ValueError('Exact actual quota recovery root required')
+            break
         if p.resolve()==INITIAL.resolve():break
         p=beneath(result['previous_root']);expected=result['previous_result_sha256']
     ordered=list(reversed(roots))
-    for number,row in enumerate(ordered,FIRST_INTERVAL):
+    first=3 if (ordered[0]['root']/'quota-recovery-initial.json').is_file() else FIRST_INTERVAL
+    for number,row in enumerate(ordered,first):
         if row['lease']['continuation_interval']!=number:raise ValueError('Actual continuation interval sequence differs')
         if row['lease']['source']!=ordered[0]['lease']['source']:raise ValueError('Native worker changed across windows')
     return ordered
@@ -49,7 +63,8 @@ def chain(previous,result_sha):
 
 def allocation_carry(text,ordered,current_job):
     """Live sacct rows: JobIDRaw,JobName,Account,State,ExitCode,ElapsedRaw,AllocTRES."""
-    wanted=set(HISTORY)|{r['lease']['job_id'] for r in ordered};rows={}
+    history=QUOTA_HISTORY if ordered[0]['lease'].get('quota_recovery_authorization_sha256') else HISTORY
+    wanted=set(history)|{r['lease']['job_id'] for r in ordered};rows={}
     for line in text.splitlines():
         f=line.split('|')
         if len(f)<7 or not f[0].isdigit():continue
@@ -64,7 +79,7 @@ def allocation_carry(text,ordered,current_job):
         rows[ident]=dict(state=state,exit=exit_code,elapsed=int(elapsed),GPUs=int(resources.get('gres/gpu','0')))
     if set(rows)!=wanted:raise ValueError('All actual phase allocations required')
     prior=0
-    for ident,expected in HISTORY.items():
+    for ident,expected in history.items():
         row=rows[ident]
         if any(row[k]!=v for k,v in expected.items()) or row['exit']!=('0:0' if ident=='8216374' else '1:0'):raise ValueError('Pinned original allocation changed')
         prior+=row['elapsed']*row['GPUs']
@@ -137,13 +152,18 @@ def main(a):
         source=source,controller_source=controller,worker_worktree=str(work),start_unix=g.stamp(job['StartTime']),
         stop_unix=g.stamp(job['EndTime']),maximum_seconds=int(g.stamp(job['EndTime'])-g.stamp(job['StartTime'])),
         GPU_count=2,prior_GPU_seconds=prior)
-    g.validate_job(job,lease,time.time());root=BASE/('native-moshi-matched-resume-'+job_id)
+    quota_mode=bool(old.get('quota_recovery_authorization_sha256'))
+    if quota_mode:
+        lease['quota_recovery_authorization_sha256']=quota_authority()
+        os.environ['APPTAINER_BINDPATH']=str(DURABLE)+':'+str(DURABLE)
+    g.validate_job(job,lease,time.time());root=(DURABLE/'runs' if quota_mode else BASE)/('native-moshi-matched-resume-'+job_id)
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+job_id);execution.mkdir()
     write(execution/'lease.json',lease);entries=resume_plan(Path(a.previous_root),original,root,execution,source)
     devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);watcher=None;code=1
     try:
-        watcher=subprocess.Popen([sys.executable,'-B','-u','-m','training.personaplex.matched_guard',
-            '--lease',str(execution/'lease.json'),'--output',str(execution/'guard.json')],
+        watcher=subprocess.Popen([sys.executable,'-B','-u','-m',
+            'training.personaplex.matched_quota_recovery' if quota_mode else 'training.personaplex.matched_guard']+
+            (['--watch'] if quota_mode else [])+['--lease',str(execution/'lease.json'),'--output',str(execution/'guard.json')],
             stdout=(execution/'guard.log').open('x'),stderr=subprocess.STDOUT)
         deadline=time.time()+40
         while not (execution/'guard.json').exists():
