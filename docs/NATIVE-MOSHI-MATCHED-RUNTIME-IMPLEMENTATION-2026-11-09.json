@@ -248,7 +248,7 @@
       "data_only_no_credentials": true
     }
   },
-  "updated_UTC": "2026-11-09T13:30:23.208526+00:00",
+  "updated_UTC": "2026-11-09T14:35:52.161596+00:00",
   "training_job": {
     "source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
     "work": "/projects/u6ada/duplex-live/source-matched-runtime-v5",
@@ -377,5 +377,38 @@
     "authorization_112_still_absent": true,
     "prepared_initial_launch_script": "runs/isambard-native-20261109/submit_training_only_after_approval.py",
     "prepared_script_executed": false
+  },
+  "owner_112_GPUh_decision": {
+    "status": "OWNER_APPROVED_MATCHED_TRAINING_ONLY_CONTINUATION",
+    "recorded_UTC": "2026-11-09T14:35:52.161596+00:00",
+    "owner_answer": "Approve 112 GPU-hours within Isambard award",
+    "question_call": "call_c98ba7cc0115464594e31e3c0c51073a",
+    "proposal_commit": "298521a76959a9d4f60c85180456944d37a27ca6",
+    "proposal": "docs/NATIVE-MOSHI-MATCHED-TRAINING-ONLY-CONTINUATION-PROPOSAL-2026-11-09.json",
+    "provider": "Isambard",
+    "account": "brics.u6ada",
+    "maximum_aggregate_GPU_hours": 112,
+    "maximum_single_job_seconds": 86400,
+    "simultaneous_GPUs": 2,
+    "original_admission_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "new_external_model_API_calls": 0,
+    "new_purchases": false,
+    "new_GCP_compute": false,
+    "repeat_native_calibration": false,
+    "maximum_future_running_intervals": 4,
+    "actual_phase_GPU_seconds_already_used": 2229,
+    "initial_exception": "One training-only restart from four already admitted zero-update states; distinct actual state/native restores before learning",
+    "later_windows": "Only actual positive-update successful checkpoint/native restore/source/RNG/OPAL continuation; all actual allocation time carried, no saved updates replayed",
+    "updates_per_lineage": 196,
+    "complete_coverage_epochs_per_lineage": 4,
+    "unchanged_lineages": [
+      "personaplex/narrow",
+      "personaplex/broad",
+      "context-spanning/narrow",
+      "context-spanning/broad"
+    ],
+    "old_data_losses_histories_KL_hidden_fit15_folds_and_failed_artifacts_preserved": true,
+    "all_behavior_reasoning_delegation_speech_fresh20_live_gates_before_adoption": true,
+    "sole_executor": "LOCAL"
   }
 }
