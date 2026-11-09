@@ -78,31 +78,42 @@ def component_inputs(spm,voice,examples,audits):
     return rows
 
 
-def engine_rows(cache,engine,reasoning=False):
-    """Use the old complete native input validators; never their old gradient gate."""
+def engine_rows(cache,engine,legacy,source,reasoning=False):
+    """Consume freshly executed ORIGINAL validators, not changed capture pins.
+
+    November's teacher-capture module differs from October's pinned receipts.
+    The separate clean original verifier checks every source/word/PCM/trace;
+    this consumer independently binds all current bytes and tensor digests.
+    """
     import torch
-    if reasoning:
-        from evals.native_reasoning_engine import verify
-        original=json.loads((cache/'cache.json').read_text())
-        args=SimpleNamespace(inputs=MIG/'native-reasoning32-timing-v11-inputs-v1.json',
-            version=MIG/'native-reasoning32-timing-v11-reapproval-v1',
-            semantic=MIG/'native-reasoning32-derived-v10-semantic-v1',
-            data=MIG/'native-reasoning32-converted-v11',model=Path(original['model']),
-            codec_source=Path(original['codec_source']),interleaver_source=Path(original['interleaver_source']),
-            cache=cache,assets=ASSETS,proof=PARENT,out=engine)
-        report=verify(args)
-    else:
-        from evals.native_control_engine import verify
-        report=verify(cache,engine)
-    result=[]
-    for entry in report['cases']:
-        p=engine/entry['id']/entry['file']
-        saved=torch.load(p,weights_only=True,map_location='cpu')
-        result.append(dict(id=entry['id'],kind=entry['family'],fold='TRAIN',
-            inputs=saved['inputs'],mask=saved['mask'],targets=saved['targets'],
-            codes=saved['codes'][None],audio_mask=saved['audio_mask'][None] if reasoning else saved['mask'][None],
-            calls=entry['calls'],source_sha256=sha(p)))
-    if len(result)!=(32 if reasoning else 40):raise ValueError('Complete native control/reasoning cohort required')
+    from evals.context_native_audio49_data import digest
+    from training.personaplex.matched_legacy import LEGACY_SOURCE,LEGACY_TEACHER_SHA
+    report=json.loads((legacy/'report.json').read_text());name='reasoning32' if reasoning else 'control40'
+    if (report['schema']!='dl-moshi-original-input-verifier-v1' or report['source']!=source
+            or report['legacy_source']!=LEGACY_SOURCE or report['legacy_teacher_sha256']!=LEGACY_TEACHER_SHA
+            or report['wrapper_sha256']!=sha(Path(__file__).with_name('matched_legacy.py'))
+            or not report['passed'] or not report['complete40_and32'] or not report['actual_CPU_only']
+            or report['pid']==os.getpid()
+            or not report['old_thresholds_audio_words_receipts_and_folds_unchanged']
+            or report['optimizer_updates']!=0 or report['native_gradient_restore_or_behavior_approved'] is not False
+            or sha(legacy/'inputs.pt')!=report['inputs_sha256']):
+        raise ValueError('Fresh complete original input-verifier process required')
+    binding=report['cases'][name]
+    if (str(engine)!=binding['engine'] or str(cache)!=binding['cache'] or not binding['complete']
+            or sha(engine/'engine-inputs.json')!=binding['engine_report_sha256']
+            or sha(cache/'cache.json')!=binding['cache_report_sha256']):
+        raise ValueError('Original full cache/Engine binding changed')
+    result=torch.load(legacy/'inputs.pt',weights_only=True,map_location='cpu')[name]
+    original=json.loads((engine/'engine-inputs.json').read_text())
+    if (len(result)!=(32 if reasoning else 40) or [r['id'] for r in result]!=[r['id'] for r in original['cases']]
+            or any(r['fold']!='TRAIN' for r in result)):
+        raise ValueError('Complete original TRAIN input cohort required')
+    fingerprints=[dict(id=r['id'],tensors={k:digest(v) for k,v in r.items() if isinstance(v,torch.Tensor)}) for r in result]
+    if fingerprints!=binding['tensor_fingerprints']:raise ValueError('Original full72 input tensor ownership differs')
+    for row,entry in zip(result,original['cases']):
+        if (row['source_sha256']!=sha(engine/entry['id']/entry['file'])
+                or row['kind']!=entry['family'] or row['calls']!=entry['calls']):
+            raise ValueError('Original trace, family or artifact changed')
     return result
 
 
@@ -208,8 +219,8 @@ def prepare(a):
                 anchor_file=str(file),anchor_sha256=audit['cache_sha256'],anchor_tensor_prefix=ident,
                 original_anchor_policy=audit['policy']))
         groups[group]=entries
-    groups['control40']=engine_rows(MIG/'native-control40-preflight-v2/codes',a.control_engine)
-    groups['reasoning32']=engine_rows(MIG/'native-reasoning32-codes-v11',MIG/'native-reasoning32-engine-v11',reasoning=True)
+    groups['control40']=engine_rows(MIG/'native-control40-preflight-v2/codes',a.control_engine,a.legacy,a.source)
+    groups['reasoning32']=engine_rows(MIG/'native-reasoning32-codes-v11',MIG/'native-reasoning32-engine-v11',a.legacy,a.source,reasoning=True)
     groups['ordinary48']=ordinary_rows(a.capture,BASE/'native-personaplex-source48-v1',BASE/'native-personaplex-codec48-v2',spm)
     matched_schedule.validate(groups)
     schedules=[matched_schedule.epoch(groups,n) for n in range(4)]
@@ -219,6 +230,7 @@ def prepare(a):
     report=dict(source=a.source,complete323=True,groups={k:len(v) for k,v in groups.items()},
         input_sha256=sha(artifact),input_tensor_fingerprints=fingerprints,prepared49_policy=policy,
         original_parent=identity,protected_word_clock_anchors_original=True,
+        original_input_verifier=json.loads((a.legacy/'report.json').read_text()),
         new_model_outputs_gradients_or_approval_decisions_cached=False,complete_four_epoch_schedules=schedules,
         native_gradient_restore_and_behavior_required=True,optimizer_updates=0,training_approved=False)
     (a.out/'inputs.json').write_text(json.dumps(report,indent=2)+'\n')
@@ -228,6 +240,7 @@ def prepare(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('out','capture','control-engine'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--legacy',type=Path,default=BASE/'native-moshi-legacy-inputs-v1')
     p.add_argument('--source',required=True);a=p.parse_args()
     assets=json.loads(ASSETS.read_text());os.environ.update(CS_BASE_DIR=str(PUBLIC),CS_WEIGHTS_DIR=assets['path'],CS_VOICES_DIR=str(Path(assets['path'])/'voices'))
     sys.path.insert(0,assets['source']);prepare(a)

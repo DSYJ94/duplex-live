@@ -29,6 +29,8 @@ def stages(work,source,out):
         'evals.harness.test_personaplex_matched_guard','evals.harness.test_personaplex_matched_paths',
         'evals.harness.test_personaplex_native_capture48','evals.harness.test_personaplex_matched_schedule',
         'evals.harness.test_personaplex_matched_inputs']))
+    result.append(('legacy-inputs',command(work)[:-1]+[str(work/'training/personaplex/matched_legacy.py'),
+        '--source',source,'--out',str(BASE/'native-moshi-legacy-inputs-v1')]))
     result.append(('prepare',command(work)+['training.personaplex.matched_inputs','--source',source,'--out',str(out),
         '--capture',str(BASE/'native-personaplex-capture48-v1'),
         '--control-engine',str(BASE/'legacy-control40-engine-v1')]))

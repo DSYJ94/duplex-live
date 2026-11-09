@@ -28,6 +28,9 @@ def command(work,*,gpu=None,environment=None):
     snapshot=BASE/'native-control40-workset-v1'
     result+=['--bind',str(snapshot)+':/workspace/control40-stage-e658c20:ro',
         '--bind',str(snapshot/'runs')+':'+str(Path(work)/'runs')+':ro']
+    legacy=BASE/'source-original-input-verifier-v1'
+    result+=['--bind',str(legacy)+':'+str(legacy)+':ro',
+        '--bind',str(snapshot/'runs')+':'+str(legacy/'runs')+':ro']
     result+=['--pwd',str(work)]
     env=dict(CUDA_VISIBLE_DEVICES='-1' if gpu is None else str(gpu),
         PYTHONPATH=str(BASE/'artifacts/personaplex-runtime-v1/pylibs')+':'+str(work),

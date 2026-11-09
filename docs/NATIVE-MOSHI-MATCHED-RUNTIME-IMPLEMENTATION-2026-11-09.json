@@ -14,7 +14,7 @@
   "training_running": false,
   "adopted": false,
   "CPU_checks": {
-    "tests": 44,
+    "tests": 46,
     "passed": true,
     "torch": "2.9.0 Mac CPU",
     "native_GPU_evidence": false,
@@ -139,7 +139,7 @@
     "archive_bytes": 1023720756,
     "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
     "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
-    "status": "Compressed transfer actual0. Original source restoration SSH ended255 without child terminal; partial5177files/3.821GB observed. New verified resume preserves partial bytes, reuses exact files and independently rehashes ALL7797. Moving heavy source work into bounded zero-GPU Slurm CPU job.",
+    "status": "ACTUAL complete destination restoration PASS: all7797files/8000842614B, every archive-member and independent destination hash exact; reused5176 good files, preserved/repaired1 partial file,49.692s, source030f.",
     "original_verifier_thresholds_data_and_receipts_unchanged": true
   },
   "CPU_v7": {
@@ -153,5 +153,34 @@
     },
     "GPU_allocated": false,
     "optimizer_updates": 0
+  },
+  "CPU_v8": {
+    "job": "8228278",
+    "source": "030f8f9804d3af177a68360275c2167546928763",
+    "actual_GPU_count": 0,
+    "requested_CPUs": 4,
+    "actual_allocated_CPUs": 72,
+    "node": "nid010035",
+    "manager_pid": 44423,
+    "prepare_pid": 45002,
+    "actual_ARM_CPU_tests": 44,
+    "actual_ARM_CPU_tests_passed": true,
+    "actual_prepare_exit": 1,
+    "reason": "Old whole40 quality receipt pins Oct21 native_control_teacher.py; Nov1 task-identity capture change altered that one file. Data/all7797 hashes exact. No numerical/model failure."
+  },
+  "legacy_verifier": {
+    "source": "37579ab3da8ca5307164e9d308f8277bd386ef7f",
+    "original_teacher_sha256": "4a41a9890dd24b7a68d37bcc41140016a0ace4797ebe185ee7563208bee9a0f0",
+    "current_teacher_sha256": "9c9ab08a23814e1f6d3ca3e8a75abee562571ab62e457402d2fb495a30a0b3e6",
+    "unchanged_core_verifiers": [
+      "native_control_snapshot.py",
+      "native_control_cache.py",
+      "native_control_engine.py",
+      "native_reasoning_cache.py",
+      "native_reasoning_engine.py"
+    ],
+    "method": "Separate fresh CPU process in original clean read-only Git revision. Preserve original receipts and all whole40/32 gates; bind every output input tensor/Engine/cache SHA back into current full323 loader. No monkeypatch or edited old approval.",
+    "actual_execution_pending": true,
+    "new_gradient_or_behavior_approval": false
   }
 }
