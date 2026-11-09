@@ -359,5 +359,23 @@
       "GPU_allocated": false,
       "training_authorized": false
     }
+  },
+  "postupdate_resume_controller": {
+    "implemented_UTC": "2026-11-09T13:44:01.531802+00:00",
+    "module": "training.personaplex.matched_resume",
+    "batch": "training/personaplex/matched_resume.slurm",
+    "trained_checkpoint_exists": false,
+    "executed_on_real_checkpoint": false,
+    "local_CPU_checks": 70,
+    "pure_orchestration_checks": 43,
+    "normal_resume_requires_successful_positive_update_window": true,
+    "all_actual_phase_allocations_counted": true,
+    "no_completed_steps_replayed": true,
+    "original_native_worker_immutable": true,
+    "controller_code_guard_policy_byte_equal_to_worker_required": true,
+    "maximum_future_intervals": 4,
+    "authorization_112_still_absent": true,
+    "prepared_initial_launch_script": "runs/isambard-native-20261109/submit_training_only_after_approval.py",
+    "prepared_script_executed": false
   }
 }

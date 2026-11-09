@@ -66,6 +66,7 @@ def execute(children,entries,root,packet,source):
     def train(base):
         for capacity in ('narrow','broad'):
             row=next(r for r in entries if (r['base'],r['capacity'])==(base,capacity));folder=root/base/capacity
+            if row.get('restored_step',0)==196:continue
             children.run(base,capacity,'train',folder/'train',[
                 '--checkpoint',row['checkpoint'],'--checkpoint-sha',row['checkpoint_sha256'],
                 '--restore-proof',row['restore'],'--restore-proof-sha',row['restore_sha256'],
@@ -76,7 +77,7 @@ def execute(children,entries,root,packet,source):
             children.run(base,capacity,'restore',folder/'final-restore',[
                 '--checkpoint',checkpoint,'--checkpoint-sha',final['checkpoint_sha256']],label='final-restore')
             if window.exists():
-                if final['total_lineage_updates']<=0:raise ValueError('No zero-update retry window allowed')
+                if final['total_lineage_updates']<=row.get('restored_step',0):raise ValueError('No zero-update retry window allowed')
                 with lock:partial.append(dict(base=base,capacity=capacity,**final))
                 return
     children.parallel(train)
@@ -93,10 +94,11 @@ def main(a):
     original=preflight(ORIGINAL_ROOT,PACKET_SHA)
     job_id=os.environ['SLURM_JOB_ID'];prior=prior_usage(job_id)
     job=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',job_id],universal_newlines=True,timeout=20))
+    if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Accounted matched job name required')
     seconds=g.stamp(job['EndTime'])-g.stamp(job['StartTime'])
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,
         authorization_sha256=g.sha(g.AUTH),continuation_authorization_sha256=amendment,continuation_interval=1,
-        job_id=job_id,node=job['NodeList'],source=source,start_unix=g.stamp(job['StartTime']),
+        job_id=job_id,node=job['NodeList'],source=source,worker_worktree=str(Path.cwd()),controller_source=source,start_unix=g.stamp(job['StartTime']),
         stop_unix=g.stamp(job['EndTime']),maximum_seconds=int(seconds),GPU_count=2,prior_GPU_seconds=prior)
     g.validate_job(job,lease,time.time())
     ROOT.mkdir(parents=True,exist_ok=False);execution=ROOT/('execution-'+job_id);execution.mkdir()
