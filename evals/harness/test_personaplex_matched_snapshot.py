@@ -37,5 +37,18 @@ class OriginalWorksetRestoration(unittest.TestCase):
         for name in ('/etc/passwd','runs/../private/key','runs/other/file','runs/native-control3-test/.private/key','runs/native-control3-test/session-token'):
             with self.subTest(name=name),self.assertRaises(ValueError):destination(Path('/tmp/fixture'),name)
 
+    def test_resume_reuses_valid_bytes_and_preserves_failed_partial_copy(self):
+        with tempfile.TemporaryDirectory() as root:
+            root=Path(root);archive=root/'test.tar.gz'
+            rows=self.archive(archive,[('runs/native-control3-test/one.json',b'original'),('runs/native-control3-test/two.wav',b'PCM')])
+            out=root/'out';one=out/rows[0]['path'];one.parent.mkdir(parents=True);one.write_bytes(b'original')
+            before=one.stat().st_mtime_ns;two=out/rows[1]['path'];two.write_bytes(b'P')
+            r=extract(archive,rows,out,resume=True)
+            self.assertEqual(r['existing_valid_files_reused'],1)
+            self.assertEqual(r['partial_files_preserved_and_repaired'],1)
+            self.assertEqual(one.stat().st_mtime_ns,before)
+            self.assertEqual(two.read_bytes(),b'PCM')
+            self.assertEqual((root/'out-partial-preserved-v1'/rows[1]['path']).read_bytes(),b'P')
+
 
 if __name__=='__main__':unittest.main()

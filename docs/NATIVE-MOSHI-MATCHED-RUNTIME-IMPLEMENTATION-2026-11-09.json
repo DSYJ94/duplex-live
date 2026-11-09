@@ -14,7 +14,7 @@
   "training_running": false,
   "adopted": false,
   "CPU_checks": {
-    "tests": 41,
+    "tests": 44,
     "passed": true,
     "torch": "2.9.0 Mac CPU",
     "native_GPU_evidence": false,
@@ -42,7 +42,9 @@
     "one two-GPU host coordinator: bases parallel, capacities serial; all four actual admissions/restores before learning",
     "actual196-step completion with state hash reduces only remaining training estimate",
     "separate initial/final restore terminals; source/actual PID/execution IDs preserved",
-    "original7797-file/8GB snapshot restoration with safe full-member extraction and independent destination hashes"
+    "original7797-file/8GB snapshot restoration with safe full-member extraction and independent destination hashes",
+    "zero-GPU/30-minute real Slurm CPU preparation guard and source-deployed preparation/train batch scripts",
+    "safe original-snapshot resume preserves failed partial copies and never rewrites valid original files"
   ],
   "pending": [
     "verify/restore original frozen control40 source and complete323 CPU artifact",
@@ -137,7 +139,19 @@
     "archive_bytes": 1023720756,
     "inventory_sha256": "79401e2c1051361d150da644250e8acf87814bda1c48b167af8a34345214fa8f",
     "archive_sha256": "87717cdf3e80977dbe78b18b0f1e75367411eab535d327dbee4679dcd9483616",
-    "status": "Original compressed Mac source hashes match; approved synthetic source transfer in progress, actual destination restore/recompute pending",
+    "status": "Compressed transfer actual0. Original source restoration SSH ended255 without child terminal; partial5177files/3.821GB observed. New verified resume preserves partial bytes, reuses exact files and independently rehashes ALL7797. Moving heavy source work into bounded zero-GPU Slurm CPU job.",
     "original_verifier_thresholds_data_and_receipts_unchanged": true
+  },
+  "CPU_v7": {
+    "source": "095c31574df3b1b3ca27161164eb0217d7eb45ba",
+    "actual_SSH_exit": 255,
+    "actual_source_child_exit": "UNKNOWN, not relabelled",
+    "full_CPU_preparation_launched": false,
+    "partial_restore_observed": {
+      "files": 5177,
+      "bytes": 3821046852
+    },
+    "GPU_allocated": false,
+    "optimizer_updates": 0
   }
 }
