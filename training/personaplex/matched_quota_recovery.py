@@ -30,7 +30,9 @@ def storage_check(root=DURABLE,home=None):
             for name in files:
                 p=Path(directory)/name
                 if p.is_symlink():continue
-                s=p.stat();key=(s.st_dev,s.st_ino)
+                try:s=p.stat()
+                except FileNotFoundError:continue  # Atomic heartbeat/checkpoint replacement may remove the old name.
+                key=(s.st_dev,s.st_ino)
                 if key not in seen:total+=max(s.st_size,s.st_blocks*512);seen.add(key)
         totals.append(total)
     if totals[0]>80*1024**3 or totals[1]>32*1024**3:
