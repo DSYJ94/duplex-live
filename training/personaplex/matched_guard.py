@@ -27,7 +27,28 @@ def stamp(value):
     return datetime.strptime(value,'%Y-%m-%dT%H:%M:%S').replace(tzinfo=timezone.utc).timestamp()
 
 
+EXTENSION=Path('docs/NATIVE-MOSHI-MATCHED-TRAINING-ONLY-AUTHORIZATION-2026-11-09.json')
+
+
+def phase_limit(lease):
+    digest=lease.get('continuation_authorization_sha256')
+    if digest is None:return LIMIT
+    authority=json.loads(EXTENSION.read_text())
+    required=dict(status='OWNER_APPROVED_MATCHED_TRAINING_ONLY_CONTINUATION',
+        proposal_commit='298521a76959a9d4f60c85180456944d37a27ca6',provider='Isambard',account=ACCOUNT,
+        maximum_aggregate_GPU_hours=112,maximum_single_job_seconds=86400,simultaneous_GPUs=2,
+        original_admission_source='8b822b0d85ccea4f291255204cbc358fa85469c4',
+        new_external_model_API_calls=0,new_purchases=False,new_GCP_compute=False,
+        repeat_native_calibration=False,maximum_future_running_intervals=4)
+    if type(lease.get('continuation_interval')) is not int or not 1<=lease['continuation_interval']<=4:
+        raise ValueError('Bounded actual continuation interval required')
+    if sha(EXTENSION)!=digest or any(authority.get(k)!=v for k,v in required.items()):
+        raise ValueError('Exact owner-approved training-only amendment required')
+    return 112*3600
+
+
 def resource(lease):
+    limit=phase_limit(lease)
     authority=json.loads(AUTH.read_text())
     if (authority.get('status')!='OWNER_SELECTED_MATCHED_TRAINING_COMPARISON'
             or authority.get('provider')!='Isambard' or authority.get('account')!=ACCOUNT
@@ -38,9 +59,9 @@ def resource(lease):
     if (lease.get('provider')!='Slurm' or lease.get('resource_key')!=KEY
             or lease.get('account')!=ACCOUNT or lease.get('authorization_sha256')!=sha(AUTH)
             or lease.get('GPU_count')!=2 or not str(lease.get('job_id','')).isdigit()
-            or type(lease.get('prior_GPU_seconds')) is not int or not 327<=lease['prior_GPU_seconds']<LIMIT
+            or type(lease.get('prior_GPU_seconds')) is not int or not 327<=lease['prior_GPU_seconds']<limit
             or type(lease.get('maximum_seconds')) is not int or not 0<lease['maximum_seconds']<=86400
-            or lease['prior_GPU_seconds']+2*lease['maximum_seconds']>LIMIT):
+            or lease['prior_GPU_seconds']+2*lease['maximum_seconds']>limit):
         raise ValueError('Bounded actual two-GPU lease with carried allocation time required')
     return lease
 
@@ -56,7 +77,7 @@ def validate_job(job,lease,now):
     start,end=stamp(job['StartTime']),stamp(job['EndTime'])
     if (start!=lease['start_unix'] or lease['stop_unix']!=end
             or end-start>lease['maximum_seconds'] or not start<=now<end-30
-            or lease['prior_GPU_seconds']+2*(end-start)>LIMIT):
+            or lease['prior_GPU_seconds']+2*(end-start)>phase_limit(lease)):
         raise ValueError('Original scheduler deadline or aggregate budget differs')
 
 
@@ -66,7 +87,7 @@ def ensure(lease,guard,now=None,environ=None,needed=0):
     env=os.environ if environ is None else environ
     if env.get('SLURM_JOB_ID')!=lease['job_id'] or env.get('SLURM_JOB_ACCOUNT')!=ACCOUNT:
         raise RuntimeError('Native learner must remain inside its scheduler allocation')
-    for key in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds'):
+    for key in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds','continuation_authorization_sha256','continuation_interval'):
         if guard.get(key)!=lease.get(key):raise RuntimeError('Independent matched guard identity differs: '+key)
     if (not 0<=now-guard['checked_unix']<=45
             or not now<min(guard['expires_unix'],guard['stop_unix']-30)
@@ -96,6 +117,9 @@ def refresh(lease,output,last_success=None):
         raise RuntimeError('Another project job is present; no overlapping submissions')
     now=time.time();validate_job(parse_job(job),lease,now)
     row=dict((k,lease[k]) for k in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds'))
+    if lease.get('continuation_authorization_sha256') is not None:
+        row['continuation_authorization_sha256']=lease['continuation_authorization_sha256']
+        row['continuation_interval']=lease['continuation_interval']
     row.update(checked_unix=now,expires_unix=min(now+45,lease['stop_unix']-30))
     path=Path(output);tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(row));os.replace(str(tmp),str(path))
     return now

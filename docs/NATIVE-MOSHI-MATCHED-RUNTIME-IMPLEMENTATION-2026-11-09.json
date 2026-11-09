@@ -323,5 +323,24 @@
     "host_training_only_controller_and_partial_remaining_schedule_still_pending": true,
     "authorization_unchanged_96_GPUh": true,
     "no_new_GPU_job": true
+  },
+  "training_only_initial_controller": {
+    "implemented_UTC": "2026-11-09T13:25:08.653969+00:00",
+    "module": "training.personaplex.matched_training_only",
+    "batch": "training/personaplex/matched_training_only.slurm",
+    "numerical_admission_stage": false,
+    "all_four_new_actual_restores_before_learning": true,
+    "actual_prior_GPU_seconds": 2229,
+    "initial_only_root": "/projects/u6ada/duplex-live/native-moshi-matched-training-only-v1",
+    "native_worker_lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "original_packet_sha256": "3a874ddc35de0b4c67bde8ce106e4c536a225ff9790be6276a729d4e3204621b",
+    "tests_pure_CPU": 36,
+    "broader_CPU_checks_last_completed": 62,
+    "additional_test_since_broader_suite": 1,
+    "host_Python36_syntax_pass": true,
+    "extended_limit_disabled_without_approved_hashed_amendment": true,
+    "authorization_file_exists": false,
+    "GPU_submitted": false,
+    "postupdate_host_resume_controller_pending": true
   }
 }

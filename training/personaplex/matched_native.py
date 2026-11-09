@@ -295,6 +295,9 @@ def verified_admission(row,source,inputs_sha,read_path=Path):
 
 def joint_schedule(a):
     """All four actual admissions/restores before either capacity starts learning."""
+    if getattr(a,'lineage_source',None):
+        from training.personaplex.matched_continue_policy import evaluate
+        return evaluate(a)
     path=Path(a.joint_admission)
     if sha(path)!=a.joint_admission_sha:raise ValueError('Pinned complete four-arm schedule required')
     packet=json.loads(path.read_text());entries=packet['entries']
