@@ -297,5 +297,17 @@
     "all4_native_admissions_passed": true,
     "all4_distinct_restores_passed": true
   },
-  "native_failure_count": 0
+  "native_failure_count": 0,
+  "CPU_training_only_reuse_preparation": {
+    "checked_UTC": "2026-11-09T13:11:45.056437+00:00",
+    "all_four_actual_original_proofs_reverified": true,
+    "old_producer": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+    "local_proof_report": "runs/isambard-native-20261109/matched-reuse-preflight-v1.json",
+    "source_equivalence_report": "runs/isambard-native-20261109/matched-reuse-source-equivalence-v1.json",
+    "tests_passed": 16,
+    "scope": "Original proof verification extracted unchanged from joint_schedule; all17other model/loss/gradient/state/runtime function ASTs unchanged. No GPU/code-source compatibility adoption or renewed native restore claim.",
+    "accounting_expected_GPU_seconds": 2229,
+    "training_authorized": false,
+    "proposal_112_GPUh_still_pending": true
+  }
 }

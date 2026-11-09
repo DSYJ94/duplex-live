@@ -254,6 +254,44 @@ def admit(a,groups,report,folder):
     finally:active.close()
 
 
+def verified_admission(row,source,inputs_sha,read_path=Path):
+    """Read original proofs without changing producer identity or executing a model."""
+    proofs=[]
+    for kind in ('admission','restore'):
+        p=read_path(row[kind]);terminal=json.loads(read_path(row[kind+'_terminal']).read_text())
+        value=json.loads(p.read_text())
+        if (sha(p)!=row[kind+'_sha256'] or value['source']!=source or not value['passed']
+                or not value['actual_CUDA'] or terminal['actual_exit_code']!=0
+                or terminal['execution_id']!=value['execution_id'] or terminal['source']!=source):
+            raise ValueError('Actual successful native stage terminal and full proof required')
+        proofs.append(value)
+    admission,restored=proofs
+    if (admission['schema']!='dl-moshi-matched-admission-v1'
+            or admission['trainable_parameters']!=CAPACITIES[row['capacity']]
+            or not admission['zero_B_native_outputs_exact'] or not admission['original_all323_input_rows']
+            or len(admission['all_four_acoustic_gradients'])!=4
+            or {r['kind'] for r in admission['all_four_acoustic_gradients']}!={'private','simple','clarify','cancel'}
+            or any(not r['all_trainable_gradients_present_finite'] for r in admission['all_four_acoustic_gradients'])
+            or len(admission['new_four_worst_depth_checks'])!=4
+            or any(not r['depth_parity']['passed'] for r in admission['new_four_worst_depth_checks'])
+            or len(admission['complete_worst_update'])!=len(SIZES)
+            or {r['group'] for r in admission['complete_worst_update']}!=set(SIZES)
+            or admission['materialized_Adam']['optimizer_updates']!=0
+            or admission['optimizer_updates']!=0
+            or admission['base']!=row['base'] or admission['capacity']!=row['capacity']
+            or admission['data_report_sha256']!=inputs_sha
+            or admission['checkpoint_sha256']!=restored['checkpoint_sha256']
+            or admission['execution_id']==restored['execution_id']
+            or restored['reference_execution_id']!=admission['execution_id']
+            or restored['restored_training_step']!=0 or not restored['all_Adam_RNG_OPAL_fields_exact']
+            or not restored['native_logits_exact']):
+        raise ValueError('Every fresh lineage needs its own exact independent zero-update restore')
+    seconds=admission['estimated_complete196_seconds']
+    if not isinstance(seconds,(int,float)) or not __import__('math').isfinite(seconds) or seconds<=0:
+        raise ValueError('Actual finite measured full-schedule estimate required')
+    return admission,restored,seconds
+
+
 def joint_schedule(a):
     """All four actual admissions/restores before either capacity starts learning."""
     path=Path(a.joint_admission)
@@ -264,39 +302,7 @@ def joint_schedule(a):
         raise ValueError('All four matched lineages required, not a passing subset')
     estimates={b:0. for b in BASES}
     for row in entries:
-        proofs=[]
-        for kind in ('admission','restore'):
-            p=Path(row[kind]);terminal=json.loads(Path(row[kind+'_terminal']).read_text())
-            value=json.loads(p.read_text())
-            if (sha(p)!=row[kind+'_sha256'] or value['source']!=a.source or not value['passed']
-                    or not value['actual_CUDA'] or terminal['actual_exit_code']!=0
-                    or terminal['execution_id']!=value['execution_id'] or terminal['source']!=a.source):
-                raise ValueError('Actual successful native stage terminal and full proof required')
-            proofs.append(value)
-        admission,restored=proofs
-        if (admission['schema']!='dl-moshi-matched-admission-v1'
-                or admission['trainable_parameters']!=CAPACITIES[row['capacity']]
-                or not admission['zero_B_native_outputs_exact'] or not admission['original_all323_input_rows']
-                or len(admission['all_four_acoustic_gradients'])!=4
-                or {r['kind'] for r in admission['all_four_acoustic_gradients']}!={'private','simple','clarify','cancel'}
-                or any(not r['all_trainable_gradients_present_finite'] for r in admission['all_four_acoustic_gradients'])
-                or len(admission['new_four_worst_depth_checks'])!=4
-                or any(not r['depth_parity']['passed'] for r in admission['new_four_worst_depth_checks'])
-                or len(admission['complete_worst_update'])!=len(SIZES)
-                or {r['group'] for r in admission['complete_worst_update']}!=set(SIZES)
-                or admission['materialized_Adam']['optimizer_updates']!=0
-                or admission['optimizer_updates']!=0
-                or admission['base']!=row['base'] or admission['capacity']!=row['capacity']
-                or admission['data_report_sha256']!=a.inputs_sha
-                or admission['checkpoint_sha256']!=restored['checkpoint_sha256']
-                or admission['execution_id']==restored['execution_id']
-                or restored['reference_execution_id']!=admission['execution_id']
-                or restored['restored_training_step']!=0 or not restored['all_Adam_RNG_OPAL_fields_exact']
-                or not restored['native_logits_exact']):
-            raise ValueError('Every fresh lineage needs its own exact independent zero-update restore')
-        seconds=admission['estimated_complete196_seconds']
-        if not isinstance(seconds,(int,float)) or not __import__('math').isfinite(seconds) or seconds<=0:
-            raise ValueError('Actual finite measured full-schedule estimate required')
+        admission,restored,seconds=verified_admission(row,a.source,a.inputs_sha)
         complete=Path(row['training_terminal']) if row.get('training_terminal') else None
         if complete is not None and complete.exists():
             terminal=json.loads(complete.read_text())
