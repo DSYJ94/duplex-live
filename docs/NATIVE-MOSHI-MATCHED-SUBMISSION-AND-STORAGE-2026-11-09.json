@@ -1,0 +1,28 @@
+{
+  "observed_UTC": "2026-11-09T15:10:54.526933+00:00",
+  "job_id": "8234444",
+  "native_worker_source": "d9e6ac679cce5deb091183c89562c40ed163f73b",
+  "submitted_UTC": "2026-11-09T14:45:07.577205+00:00",
+  "last_live_state": "PENDING",
+  "reason": "Resources",
+  "new_optimizer_updates_observed": 0,
+  "prior_actual_GPU_seconds": 2229,
+  "aggregate_GPU_hour_cap": 112,
+  "observer_tool_session": 18479,
+  "repository_du_KiB": 355126316,
+  "runs_du_KiB": 354677880,
+  "git_du_KiB": 28100,
+  "cold_groups_KiB": {
+    "cloud-export-20261016": 106146644,
+    "local-migration-20261021": 66534732,
+    "checkpoints-retained-20261108": 34347912,
+    "archives": 14066688
+  },
+  "baseline526_allocated_bytes_after_Free_Up_Space": 8380948480,
+  "Mac_cloud_only_eviction_confirmed": false,
+  "Mac_artifact_deletions_this_turn": 0,
+  "cluster_clean_source_worktrees_removed": 49,
+  "cluster_removed_file_count": 112463,
+  "cluster_checkpoints_data_receipts_deleted": false,
+  "policy": "docs/NATIVE-ONEDRIVE-STORAGE-POLICY-2026-11-09.md"
+}
