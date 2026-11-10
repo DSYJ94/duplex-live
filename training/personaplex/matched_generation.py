@@ -33,7 +33,7 @@ def completed_states(root,trainer_source):
                 restore=entry['final_restore'],restore_sha256=g.sha(entry['final_restore']),
                 restore_terminal=entry['final_restore_terminal'],previous_training_terminal=str(done),
                 previous_training_child_terminal=entry['training_child_terminal'])
-            for marker in ('normal88_recovery','postupdate_failure_recovery','quota_interrupted_state'):row.pop(marker,None)
+            for marker in ('normal88_recovery','postupdate_failure_recovery','quota_interrupted_state','storage_recovery'):row.pop(marker,None)
         step=restored_entry(row,trainer_source,DATA_SHA,originals[(row['base'],row['capacity'])])
         if step!=196 or g.sha(row['checkpoint'])!=row['checkpoint_sha256']:
             raise ValueError('Full196 and actual checkpoint bytes required')

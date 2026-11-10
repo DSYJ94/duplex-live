@@ -19,6 +19,8 @@ from .matched_failed_state import AUTH as POST_AUTH,authority as post_authority
 from . import matched_health
 from .matched_postupdate import NORMAL_HISTORY
 from .matched_normal88 import AUTH as NORMAL_AUTH,authority as normal_authority
+from .matched_storage_recovery import AUTH as STORAGE_AUTH,authority as storage_authority
+from .matched_storage_job import HISTORY as STORAGE_HISTORY
 
 CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/matched_guard.py','training/personaplex/matched_continue_policy.py',
     'training/personaplex/matched_identity.py','training/personaplex/matched_reuse.py',
@@ -28,7 +30,10 @@ CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/m
     'training/personaplex/matched_failed_state.py','training/personaplex/matched_postupdate.py',
     'training/personaplex/matched_health.py',str(POST_AUTH),
     'docs/NATIVE-MOSHI-HEARTBEAT-FAILURE-RESULT-2026-11-10.json',
-    'training/personaplex/matched_normal88.py',str(NORMAL_AUTH),'docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json')+DEPENDENCIES
+    'training/personaplex/matched_normal88.py',str(NORMAL_AUTH),'docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json',
+    'training/personaplex/matched_storage_recovery.py','training/personaplex/matched_storage_quota.py',
+    'training/personaplex/matched_storage_job.py',str(STORAGE_AUTH),
+    'docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json','docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json')+DEPENDENCIES
 
 
 def beneath(path):
@@ -53,6 +58,14 @@ def chain(previous,result_sha):
                 or result.get('all_four_complete') is not False or not result.get('partial_lineages')):
             raise ValueError('Only successful incomplete training windows may resume')
         roots.append(dict(root=p,result=result,lease=lease))
+        marker=p/'storage-recovery-initial.json'
+        if marker.is_file():
+            value=json.loads(marker.read_text());digest=storage_authority()
+            p.resolve().relative_to(DURABLE.resolve())
+            if (value!={'source':lease['source'],'authorization_sha256':digest,'failed_job':'8274714'}
+                    or lease.get('storage_recovery_authorization_sha256')!=digest):
+                raise ValueError('Exact approved storage recovery root and actual lease required')
+            break
         marker=p/'normal88-recovery-initial.json'
         if marker.is_file():
             value=json.loads(marker.read_text());digest=normal_authority()
@@ -80,7 +93,7 @@ def chain(previous,result_sha):
         if p.resolve()==INITIAL.resolve():break
         p=beneath(result['previous_root']);expected=result['previous_result_sha256']
     ordered=list(reversed(roots))
-    first=5 if (ordered[0]['root']/'normal88-recovery-initial.json').is_file() else 4 if (ordered[0]['root']/'postupdate-recovery-initial.json').is_file() else 3 if (ordered[0]['root']/'quota-recovery-initial.json').is_file() else FIRST_INTERVAL
+    first=6 if (ordered[0]['root']/'storage-recovery-initial.json').is_file() else 5 if (ordered[0]['root']/'normal88-recovery-initial.json').is_file() else 4 if (ordered[0]['root']/'postupdate-recovery-initial.json').is_file() else 3 if (ordered[0]['root']/'quota-recovery-initial.json').is_file() else FIRST_INTERVAL
     for number,row in enumerate(ordered,first):
         if row['lease']['continuation_interval']!=number:raise ValueError('Actual continuation interval sequence differs')
         if row['lease']['source']!=ordered[0]['lease']['source']:raise ValueError('Native worker changed across windows')
@@ -89,7 +102,7 @@ def chain(previous,result_sha):
 
 def allocation_carry(text,ordered,current_job):
     """Live sacct rows: JobIDRaw,JobName,Account,State,ExitCode,ElapsedRaw,AllocTRES."""
-    history=NORMAL_HISTORY if ordered[0]['lease'].get('normal88_authorization_sha256') else POST_HISTORY if ordered[0]['lease'].get('postupdate_recovery_authorization_sha256') else QUOTA_HISTORY if ordered[0]['lease'].get('quota_recovery_authorization_sha256') else HISTORY
+    history=STORAGE_HISTORY if ordered[0]['lease'].get('storage_recovery_authorization_sha256') else NORMAL_HISTORY if ordered[0]['lease'].get('normal88_authorization_sha256') else POST_HISTORY if ordered[0]['lease'].get('postupdate_recovery_authorization_sha256') else QUOTA_HISTORY if ordered[0]['lease'].get('quota_recovery_authorization_sha256') else HISTORY
     wanted=set(history)|{r['lease']['job_id'] for r in ordered};rows={}
     for line in text.splitlines():
         f=line.split('|')
@@ -151,13 +164,14 @@ def resume_plan(previous,original,root,execution,source):
             selected.pop('quota_interrupted_state',None)
             selected.pop('postupdate_failure_recovery',None)
             selected.pop('normal88_recovery',None)
+            selected.pop('storage_recovery',None)
         step=restored_entry(selected,source,DATA_SHA,origins[key])
         if step<before:raise ValueError('A saved optimizer step was discarded')
         if g.sha(selected['checkpoint'])!=selected['checkpoint_sha256']:raise ValueError('Actual resume checkpoint bytes changed')
         progress+=step-before
         row.update(checkpoint=selected['checkpoint'],checkpoint_sha256=selected['checkpoint_sha256'],restored_step=step)
-        if selected.get('quota_interrupted_state') or selected.get('postupdate_failure_recovery') or selected.get('normal88_recovery'):
-            for marker in ('quota_interrupted_state','postupdate_failure_recovery','normal88_recovery'):
+        if selected.get('quota_interrupted_state') or selected.get('postupdate_failure_recovery') or selected.get('normal88_recovery') or selected.get('storage_recovery'):
+            for marker in ('quota_interrupted_state','postupdate_failure_recovery','normal88_recovery','storage_recovery'):
                 if selected.get(marker):row[marker]=selected[marker]
         elif step:
             for name in ('previous_training_terminal','previous_training_child_terminal'):row[name]=selected[name]
@@ -170,11 +184,13 @@ def main(a):
     if controller!=a.controller_source or a.inputs_sha!=DATA_SHA:raise ValueError('Exact controller/data required')
     ordered=chain(a.previous_root,a.previous_result_sha);old=ordered[-1]['lease'];interval=old['continuation_interval']+1
     post_mode=bool(old.get('postupdate_recovery_authorization_sha256'))
-    if interval>(6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
+    storage_mode=bool(old.get('storage_recovery_authorization_sha256'))
+    if interval>(8 if storage_mode else 6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
     amendment=g.sha(g.EXTENSION)
     phase=dict(continuation_authorization_sha256=amendment,continuation_interval=interval)
     if post_mode:phase['postupdate_recovery_authorization_sha256']=post_authority()
     if old.get('normal88_authorization_sha256'):phase['normal88_authorization_sha256']=normal_authority()
+    if storage_mode:phase['storage_recovery_authorization_sha256']=storage_authority()
     g.phase_limit(phase)
     if any(item['lease']['continuation_authorization_sha256']!=amendment for item in ordered):raise ValueError('Original approval changed')
     source=old['source'];work=verify_worker(old['worker_worktree'],source,controller)
@@ -195,6 +211,7 @@ def main(a):
         os.environ['APPTAINER_BINDPATH']=str(DURABLE)+':'+str(DURABLE)
     if post_mode:lease['postupdate_recovery_authorization_sha256']=post_authority()
     if old.get('normal88_authorization_sha256'):lease['normal88_authorization_sha256']=normal_authority()
+    if storage_mode:lease['storage_recovery_authorization_sha256']=storage_authority()
     g.validate_job(job,lease,time.time());root=(DURABLE/'runs' if quota_mode else BASE)/('native-moshi-matched-resume-'+job_id)
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+job_id);execution.mkdir()
     write(execution/'lease.json',lease);entries=resume_plan(Path(a.previous_root),original,root,execution,source)

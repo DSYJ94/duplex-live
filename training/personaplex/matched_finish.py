@@ -8,14 +8,15 @@ from pathlib import Path
 from . import matched_guard as g
 from . import matched_health
 from .matched_job import visible_pair,write
-from .matched_paths import command
+from .matched_paths import command,BASE
 from .matched_interrupted import DURABLE
 from .matched_generation import completed_states
 
 
 def evaluation_lease(previous,source,job):
     """A source transition inside one interval cannot reset any budget clock."""
-    if previous['job_id']!=job or previous.get('continuation_interval')!=6:
+    allowed=(7,8) if previous.get('storage_recovery_authorization_sha256') else (6,)
+    if previous['job_id']!=job or previous.get('continuation_interval') not in allowed:
         raise ValueError('Only the last approved actual running window may evaluate here')
     lease=dict(previous,source=source,controller_source=source,trainer_source=previous['source'])
     g.resource(lease)
@@ -27,6 +28,7 @@ def evaluation_lease(previous,source,job):
 def run_evaluation(root,source,work):
     root=Path(root);job=os.environ['SLURM_JOB_ID']
     old=json.loads((root/('execution-'+job)/'lease.json').read_text())
+    if source==old['source']:raise ValueError('Separate immutable evaluation controller source required')
     selected=completed_states(root,old['source'])
     lease=evaluation_lease(old,source,job)
     actual=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=20))
@@ -52,7 +54,7 @@ def run_evaluation(root,source,work):
                         ensure();name=base+'-'+capacity+'-'+stage;ident=uuid.uuid4().hex;child=None;actual_exit=None;began=time.time()
                         env=dict(SLURM_JOB_ID=job,SLURM_JOB_ACCOUNT=g.ACCOUNT,
                             DUPLEX_LIVE_LEASE_FILE=str(execution/'lease.json'),DUPLEX_LIVE_GUARD_FILE=str(control/'guard.json'),
-                            DUPLEX_NATIVE_EXECUTION_ID=ident,CUBLAS_WORKSPACE_CONFIG=':4096:8')
+                            DUPLEX_NATIVE_EXECUTION_ID=ident,CUBLAS_WORKSPACE_CONFIG=':4096:8',HF_HOME=str(BASE/'hf-cache'))
                         cmd=command(work,gpu=devices[base],environment=env)+['training.personaplex.matched_evaluation',
                             '--source',source,'--trainer-source',old['source'],'--training-root',str(root),
                             '--root',str(evaluation),'--lease',str(execution/'lease.json'),

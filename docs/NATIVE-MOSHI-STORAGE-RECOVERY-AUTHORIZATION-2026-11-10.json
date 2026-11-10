@@ -1,0 +1,137 @@
+{
+  "status": "OWNER_APPROVED_STORAGE_RECOVERY",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "purpose": "Complete the already selected four-arm matched training comparison after storage-monitor failure; no new experiment or changed recipe",
+  "failed_job": "8274714",
+  "actual_native_producer": "15a0420d901a6462da4a18e93a93a59904098b27",
+  "actual_state": "FAILED",
+  "actual_exit": "1:0",
+  "actual_start_UTC": "2026-11-10T16:45:37Z",
+  "actual_end_UTC": "2026-11-10T18:14:22Z",
+  "failed_allocated_seconds": 5325,
+  "actual_prior_GPU_seconds": 44709,
+  "maximum_aggregate_GPU_hours": 112,
+  "additional_GPU_hours": 0,
+  "simultaneous_GPUs": 2,
+  "maximum_single_job_seconds": 86400,
+  "current_total_running_intervals": 5,
+  "previous_maximum_total_running_intervals": 6,
+  "proposed_maximum_total_running_intervals": 8,
+  "next_interval": 6,
+  "first_recovery_allowed_after_failed_window5": true,
+  "selected_normal_checkpoints": {
+    "personaplex": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/live.pt",
+      "step": 112,
+      "sha256": "2d2fe9a5b6a4efc160543c444912a4a3e7a3c2f81029f06d511d186e4d50d80c",
+      "bytes": 289947865,
+      "independent_backup": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/personaplex/narrow/normal-live-preservation/live.pt",
+      "both_hashes_verified": true
+    },
+    "context-spanning": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/live.pt",
+      "step": 104,
+      "sha256": "22cab2fbeccc42d1a361d6c45819e31a67a68b05e65e2b9439e053bb5ceafd3c",
+      "bytes": 290005017,
+      "independent_backup": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/context-spanning/narrow/normal-live-preservation/live.pt",
+      "both_hashes_verified": true
+    }
+  },
+  "rejected_for_this_recovery_interrupted_states": {
+    "personaplex": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/interrupted.pt",
+      "step": 117,
+      "sha256": "03e91309ae16be7ef77bd3a4fa3abc65318ca670fe7b043e870cf9c39d291c2f",
+      "bytes": 289953128,
+      "independent_backup": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/personaplex/narrow/interrupted-preservation/interrupted.pt",
+      "both_hashes_verified": true
+    },
+    "context-spanning": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/interrupted.pt",
+      "step": 109,
+      "sha256": "6246e9a15f98ac1ff9f5164b40b088138ecc3ed3d2b05f8fae60a46625195fa9",
+      "bytes": 290010280,
+      "independent_backup": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/context-spanning/narrow/interrupted-preservation/interrupted.pt",
+      "both_hashes_verified": true
+    }
+  },
+  "deliberate_saved_update_replay": {
+    "personaplex": [
+      113,
+      114,
+      115,
+      116,
+      117
+    ],
+    "context-spanning": [
+      105,
+      106,
+      107,
+      108,
+      109
+    ]
+  },
+  "reason_for_explicit_replay": "Use normally completed periodic checkpoints, avoiding interruption-time native-reference risk; preserve latest interrupted optimizer/RNG states unchanged",
+  "broad_arms": "Both original independently admitted and restored init0 states; no broad training has occurred",
+  "all_four_distinct_actual_native_restores_before_learning": true,
+  "stop_branch_if_either_selected_normal_checkpoint_fails_exact_restore": true,
+  "no_original_gradient_calibration_repeat": true,
+  "all_old_states_references_receipts_failed_logs_preserved": true,
+  "later_intervals_only_from_successful_positive_update_windows_and_actual_final_native_restores": true,
+  "remaining_complete196_seconds_original_measurements": {
+    "personaplex": 150748.08625518988,
+    "context-spanning": 152515.1282183992
+  },
+  "conservative_resume_overhead_seconds_per_base": 1200,
+  "evaluation_and_copyback_reserve_GPU_seconds": 21600,
+  "estimated_total_GPU_hours_with_carried_failures_resume_overhead_and_reserve": 103.81646012133288,
+  "storage_repair": {
+    "prepared_module": "training/personaplex/matched_storage_quota.py",
+    "old_failure": "storage receipt validity gate failed; scheduler independent service then exited; no nonfinite gradient or quota exhaustion reported",
+    "uncertainty": "The last node-local storage receipt was not mirrored before cleanup; full metadata walk stall is inferred, not independently proven",
+    "new_measurement": "Fresh bounded provider quota query, no repeated whole-HOME directory traversal",
+    "conservative_limit": "ENTIRE allocated HOME <=32GiB, stricter than old HOME<=80GiB plus run<=32GiB",
+    "storage_receipt_max_age_seconds": 120,
+    "scheduler_guard_max_age_seconds": 45,
+    "quota_command_timeout_seconds": 15,
+    "failed_or_ambiguous_quota_query_never_refreshes_storage": true,
+    "actual_provider_read_20261110T220457Z": {
+      "raw_used_KiB": 4455744,
+      "command_seconds": 0.015336012002080679,
+      "actual_exit": 0
+    }
+  },
+  "monitoring_repair": {
+    "prepared_module": "training/personaplex/matched_observer.py",
+    "fresh_bounded_SSH_per_probe": true,
+    "local_timeout_seconds": 35,
+    "remote_timeout_seconds": 25,
+    "surface_observation_timeout_or_access_failure_immediately": true,
+    "never_duplicate_or_submit_on_observation_timeout": true,
+    "limitation": "Mac/app sleep or disconnection still prevents immediate user notification; report any observation gap honestly"
+  },
+  "training_unchanged": {
+    "components": 323,
+    "groups": 11,
+    "complete_coverage_epochs_per_arm": 4,
+    "total_lineage_updates_per_arm": 196,
+    "all_old_objectives_KL_hidden_history_fit15_folds": true,
+    "LR": 2e-06,
+    "OPAL": "common KEEP/API0 for controlled comparison",
+    "trainable_parameters": {
+      "narrow": 1894400,
+      "broad": 105070592
+    }
+  },
+  "evaluation": "Every candidate versus its matched untouched base, full frozen32 per condition, actual native speech/reasoning/delegation review; unchanged full native64/fresh20/backend/live gates before adoption",
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "why_owner_decision_is_required": "Approved normal88 proposal fixes max6 starts, permits slot6 only after a successful positive window5, and permits replay only update89; actual window5 FAILED, these normal states require ten explicitly counted replays, and complete remaining training needs more than one24h window",
+  "owner_answer": "Approve recovery; keep 112 GPU-hours",
+  "proposal_commit": "203166171d3b64cc85333f2b1e365a382737539a",
+  "question_call": "call_dab9052dc8be4278904ff5e3262ce200"
+}

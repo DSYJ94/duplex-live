@@ -46,6 +46,8 @@ def watch(lease,output,storage):
 
 def probe_storage(lease,output):
     from .matched_quota_recovery import storage_check
+    if lease.get('storage_recovery_authorization_sha256'):
+        from .matched_storage_quota import storage_check
     while True:
         began=time.monotonic()
         try:
@@ -66,6 +68,8 @@ def mirror(lease,local,output):
                 raise ValueError('Wrong local heartbeat identity')
             # Monitoring copy only; workers read LOCAL, never this NFS mirror.
             write(output,value)
+            storage=Path(local).parent/'storage.json'
+            if storage.exists():write(Path(output).parent/'storage-last-observation.json',json.loads(storage.read_text()))
         time.sleep(10)
 
 
@@ -77,6 +81,8 @@ def stop(services,control,execution):
         except subprocess.TimeoutExpired:child.kill();child.wait()
     path=Path(control)/'guard.json'
     if path.exists():write(Path(execution)/'guard.json',json.loads(path.read_text()))
+    storage=Path(control)/'storage.json'
+    if storage.exists():write(Path(execution)/'storage-last-observation.json',json.loads(storage.read_text()))
 
 
 def start(lease,execution):

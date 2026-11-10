@@ -50,6 +50,11 @@ def phase_limit(lease):
         from .matched_normal88 import authority as normal_authority
         if lease['normal88_authorization_sha256']!=normal_authority() or intervals!=6:
             raise ValueError('Exact paired rollback and postupdate authorities required')
+    if lease.get('storage_recovery_authorization_sha256') is not None:
+        from .matched_storage_recovery import authority as storage_authority
+        if lease['storage_recovery_authorization_sha256']!=storage_authority() or intervals!=6:
+            raise ValueError('Exact storage recovery and all earlier authorities required')
+        intervals=8
     if type(lease.get('continuation_interval')) is not int or not 1<=lease['continuation_interval']<=intervals:
         raise ValueError('Bounded actual continuation interval required')
     if sha(EXTENSION)!=digest or any(authority.get(k)!=v for k,v in required.items()):
@@ -97,7 +102,7 @@ def ensure(lease,guard,now=None,environ=None,needed=0):
     env=os.environ if environ is None else environ
     if env.get('SLURM_JOB_ID')!=lease['job_id'] or env.get('SLURM_JOB_ACCOUNT')!=ACCOUNT:
         raise RuntimeError('Native learner must remain inside its scheduler allocation')
-    for key in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds','continuation_authorization_sha256','continuation_interval','postupdate_recovery_authorization_sha256','normal88_authorization_sha256'):
+    for key in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds','continuation_authorization_sha256','continuation_interval','postupdate_recovery_authorization_sha256','normal88_authorization_sha256','storage_recovery_authorization_sha256'):
         if guard.get(key)!=lease.get(key):raise RuntimeError('Independent matched guard identity differs: '+key)
     if (not 0<=now-guard['checked_unix']<=45
             or not now<min(guard['expires_unix'],guard['stop_unix']-30)
@@ -134,6 +139,8 @@ def refresh(lease,output,last_success=None):
         row['postupdate_recovery_authorization_sha256']=lease['postupdate_recovery_authorization_sha256']
     if lease.get('normal88_authorization_sha256') is not None:
         row['normal88_authorization_sha256']=lease['normal88_authorization_sha256']
+    if lease.get('storage_recovery_authorization_sha256') is not None:
+        row['storage_recovery_authorization_sha256']=lease['storage_recovery_authorization_sha256']
     row.update(checked_unix=now,expires_unix=min(now+45,lease['stop_unix']-30))
     path=Path(output);tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(row));os.replace(str(tmp),str(path))
     return now
