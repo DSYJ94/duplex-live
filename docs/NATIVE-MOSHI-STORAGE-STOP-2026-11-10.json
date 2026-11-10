@@ -1,0 +1,158 @@
+{
+  "actual_UTC": "2026-11-10T22:06:31Z",
+  "job": "8274714",
+  "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+  "actual_sacct": "8274714|FAILED|1:0|2026-11-10T16:45:37|2026-11-10T18:14:22|5325|billing=72,cpu=72,gres/gpu=2,mem=200G,node=1",
+  "queue": "",
+  "host_terminal": {
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "job_id": "8274714",
+    "actual_exit_code": 1,
+    "ended_UTC": "2026-11-10T18:14:22.567316+00:00",
+    "adopted": false
+  },
+  "health_logs": {
+    "health-mirror.log": "",
+    "health-storage.log": "",
+    "health-watch.log": "Traceback (most recent call last):\n  File \"/usr/lib64/python3.6/runpy.py\", line 193, in _run_module_as_main\n    \"__main__\", mod_spec)\n  File \"/usr/lib64/python3.6/runpy.py\", line 85, in _run_code\n    exec(code, run_globals)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-15a0420d901a/training/personaplex/matched_health.py\", line 122, in <module>\n    if a.mode=='watch':watch(lease,a.output,a.storage)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-15a0420d901a/training/personaplex/matched_health.py\", line 40, in watch\n    try:last,delay=heartbeat_once(lease,output,storage,last)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-15a0420d901a/training/personaplex/matched_health.py\", line 29, in heartbeat_once\n    storage_valid(lease,storage)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-15a0420d901a/training/personaplex/matched_health.py\", line 23, in storage_valid\n    raise RuntimeError('Independent storage admission failed, expired or changed identity')\nRuntimeError: Independent storage admission failed, expired or changed identity\n"
+  },
+  "last_guard": {
+    "job_id": "8274714",
+    "account": "brics.u6ada",
+    "node": "nid010186",
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "authorization_sha256": "09a94b32454098cb4830edd5ac858e78708f200682f8d5e5e0a3b01c8abee611",
+    "stop_unix": 1794415537.0,
+    "GPU_count": 2,
+    "prior_GPU_seconds": 34059,
+    "continuation_authorization_sha256": "7c2a1f8ec6057b06b3475fd775071d5b16cab9b6a4fb9c9b666fbb6262d63072",
+    "continuation_interval": 5,
+    "postupdate_recovery_authorization_sha256": "87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373",
+    "normal88_authorization_sha256": "e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad",
+    "checked_unix": 1794334426.2548604,
+    "expires_unix": 1794334471.2548604
+  },
+  "backup_records": [
+    {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/personaplex/narrow/normal-live-preservation/live.pt",
+      "step": 112,
+      "bytes": 289947865,
+      "sha256": "2d2fe9a5b6a4efc160543c444912a4a3e7a3c2f81029f06d511d186e4d50d80c",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-10T22:06:29Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+      "files": {
+        "live.pt": {
+          "bytes": 289947865,
+          "sha256": "2d2fe9a5b6a4efc160543c444912a4a3e7a3c2f81029f06d511d186e4d50d80c"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "9d14da6b9ce4d625a28ed7c47eb320f4dedc8b7b262ce75426136ef3b061af60"
+        },
+        "personaplex-normal-live-preservation.json": {
+          "bytes": 288,
+          "sha256": "e3737f1e3952af371916c0d6723be4e8d191df966b1f6f14380df3fedef2ee69"
+        }
+      }
+    },
+    {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/interrupted.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/personaplex/narrow/interrupted-preservation/interrupted.pt",
+      "step": 117,
+      "bytes": 289953128,
+      "sha256": "03e91309ae16be7ef77bd3a4fa3abc65318ca670fe7b043e870cf9c39d291c2f",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-10T22:02:41Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+      "files": {
+        "interrupted.pt": {
+          "bytes": 289953128,
+          "sha256": "03e91309ae16be7ef77bd3a4fa3abc65318ca670fe7b043e870cf9c39d291c2f"
+        },
+        "interrupted.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "0ec56dfc98bf7eada5649c10e4eb2750143e82f5eea73ee1a695a01e13b6c2f9"
+        },
+        "training-interrupted.json": {
+          "bytes": 232,
+          "sha256": "d334366d6efe9b6e9e3402e9761731c6cba912364bb217bb05e6cb1105c57617"
+        }
+      }
+    },
+    {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/context-spanning/narrow/normal-live-preservation/live.pt",
+      "step": 104,
+      "bytes": 290005017,
+      "sha256": "22cab2fbeccc42d1a361d6c45819e31a67a68b05e65e2b9439e053bb5ceafd3c",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-10T22:06:31Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+      "files": {
+        "live.pt": {
+          "bytes": 290005017,
+          "sha256": "22cab2fbeccc42d1a361d6c45819e31a67a68b05e65e2b9439e053bb5ceafd3c"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "b5396b57a0912ef9828514abda00847fa7ac2bcc62254d47613223ef17e95c60"
+        },
+        "context-spanning-normal-live-preservation.json": {
+          "bytes": 288,
+          "sha256": "3e9fce427e5db4c9e3153de937752fd6f41222d5b1b8721328b455bd22d64bd4"
+        }
+      }
+    },
+    {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/interrupted.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/context-spanning/narrow/interrupted-preservation/interrupted.pt",
+      "step": 109,
+      "bytes": 290010280,
+      "sha256": "6246e9a15f98ac1ff9f5164b40b088138ecc3ed3d2b05f8fae60a46625195fa9",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-10T22:02:43Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+      "files": {
+        "interrupted.pt": {
+          "bytes": 290010280,
+          "sha256": "6246e9a15f98ac1ff9f5164b40b088138ecc3ed3d2b05f8fae60a46625195fa9"
+        },
+        "interrupted.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "859d045b2a8ac66b8721cbb20f340971f83ef50439023953bfc970a62d18765e"
+        },
+        "training-interrupted.json": {
+          "bytes": 232,
+          "sha256": "536b53bbe8fb7e011a00749ecb7e7fbea81718d79179455e2b0609fdcb11149e"
+        }
+      }
+    }
+  ],
+  "prior_GPU_seconds": 34059,
+  "this_GPU_seconds": 10650,
+  "total_GPU_seconds": 44709,
+  "last_delivered_monitor_UTC": "2026-11-10T17:59:49Z",
+  "failure_discovered_UTC": "2026-11-10T22:00:42Z",
+  "full_training_completed": false,
+  "native_evaluation_completed": false,
+  "OneDrive_writes": false,
+  "adopted": false
+}
