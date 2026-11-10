@@ -2,10 +2,24 @@ import json,tempfile,unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
-from training.personaplex.matched_generation import construct_engine,completed_states,DATA_SHA,ORIGIN,g
+from training.personaplex.matched_generation import construct_engine,completed_states,load_inference_adapter,DATA_SHA,ORIGIN,g
 
 
 class NativeGenerationBoundary(unittest.TestCase):
+    def test_public_base_frozen_before_narrow_ownership_check_then_exact_state_loaded(self):
+        class PublicModel:
+            trainable=True
+            def requires_grad_(self,value):self.trainable=value;return self
+            def eval(self):return self
+        lm=PublicModel();saved={'named-adapter':'fixture-state'};events=[]
+        def configure(model,capacity):
+            if model.trainable:raise ValueError('Unexpected frozen-base gradient ownership')
+            self.assertEqual(capacity,'narrow');events.append('configured');model.trainable=True
+        def load(model,state):self.assertIs(state,saved);events.append('exact-state-loaded')
+        with patch('training.personaplex.matched_native.configure',side_effect=configure),patch('training.personaplex.matched_state.load_adapter',side_effect=load):
+            self.assertIs(load_inference_adapter(lm,'narrow',saved),lm)
+        self.assertEqual(events,['configured','exact-state-loaded']);self.assertFalse(lm.trainable)
+
     def test_adapter_loader_runs_before_constructor_graph_capture_and_is_restored(self):
         events=[];original=lambda:events.append('unadapted')
         module=SimpleNamespace(load_model=original)

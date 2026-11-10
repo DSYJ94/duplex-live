@@ -1,0 +1,12 @@
+{
+  "actual_UTC": "2026-11-10T17:46:59Z",
+  "source": "c4a229b564ae6ce2421572b75f7914650cbe4702",
+  "trainer_source": "15a0420d901a6462da4a18e93a93a59904098b27",
+  "host_python": "3.6.15 (default, Apr 27 2026, 16:53:54) [GCC]",
+  "actual_container_exit_code": 0,
+  "stdout": "",
+  "stderr": "INFO:    fuse2fs not found, will not be able to mount EXT3 filesystems\nINFO:    gocryptfs not found, will not be able to use gocryptfs\n.........\n----------------------------------------------------------------------\nRan 9 tests in 0.067s\n\nOK\n",
+  "all_training_CONTROL_bytes_unchanged": true,
+  "GPU_inference_executed": false,
+  "training_modified": false
+}

@@ -50,11 +50,20 @@ def construct_engine(module,loader,**kwargs):
     finally:module.load_model=original
 
 
+def load_inference_adapter(lm,capacity,state):
+    from .matched_native import configure
+    from .matched_state import load_adapter
+    # Public loaders return trainable Parameters. Narrow configure deliberately
+    # requires ONLY newly installed adapters to own gradients, as in training.
+    lm.requires_grad_(False)
+    configure(lm,capacity);load_adapter(lm,state)
+    return lm.requires_grad_(False).eval()
+
+
 def make_engine(a,selection):
     import torch
     from .foundation_context import raw_model,WEIGHTS
-    from .matched_native import configure,CAPACITIES
-    from .matched_state import load_adapter
+    from .matched_native import CAPACITIES
     from evals.personaplex_adapters import adapter_parameters
     from contextspan.model import engine as module,weights
     from evals.context_spanning_probe import audited_loads
@@ -75,7 +84,7 @@ def make_engine(a,selection):
         if a.base=='personaplex':lm,mimi,spm=raw_model(weights,device),weights.load_mimi(device),weights.load_tokenizer()
         else:lm,mimi,spm=original(checkpoint,device,cpu_offload)
         if state is not None:
-            configure(lm,a.capacity);load_adapter(lm,state['adapter'])
+            load_inference_adapter(lm,a.capacity,state['adapter'])
         lm.requires_grad_(False).eval();return lm,mimi,spm
     loads=[]
     with audited_loads(loads):
