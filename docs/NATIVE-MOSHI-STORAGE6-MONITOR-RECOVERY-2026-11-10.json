@@ -1,0 +1,133 @@
+{
+  "actual_probe": {
+    "actual_UTC": "2026-11-10T22:47:39Z",
+    "job": "8285192",
+    "queue": {
+      "actual_exit": 0,
+      "stdout": "8285192|RUNNING|18:52|nid010789",
+      "stderr": ""
+    },
+    "current": {
+      "personaplex": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "personaplex",
+        "capacity": "narrow",
+        "stage": "train",
+        "pid": 226404,
+        "execution_id": "518d539a905a43198fb6de9d38d27d4b",
+        "started_unix": 1794349812.6912537,
+        "module": "training.personaplex.matched_native"
+      },
+      "context-spanning": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "context-spanning",
+        "capacity": "narrow",
+        "stage": "train",
+        "pid": 226510,
+        "execution_id": "c8a52dde43ec45c9b97b8cdd3990340c",
+        "started_unix": 1794349813.1186666,
+        "module": "training.personaplex.matched_native"
+      }
+    },
+    "restore_terminals": {
+      "personaplex/narrow": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "personaplex",
+        "capacity": "narrow",
+        "stage": "restore",
+        "pid": 225000,
+        "execution_id": "13e68516e01d4eb0a9c5f01359c08f90",
+        "started_unix": 1794349768.0670485,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794349793.1960583,
+        "seconds": 25.129010438919067
+      },
+      "personaplex/broad": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "personaplex",
+        "capacity": "broad",
+        "stage": "restore",
+        "pid": 223661,
+        "execution_id": "9790a84ee7bf42f7aa6f71828ad19888",
+        "started_unix": 1794349732.8486054,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794349768.0361397,
+        "seconds": 35.187535524368286
+      },
+      "context-spanning/narrow": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "context-spanning",
+        "capacity": "narrow",
+        "stage": "restore",
+        "pid": 225286,
+        "execution_id": "b7cfad88e32c42bc9e242a9aad74d17e",
+        "started_unix": 1794349777.4722173,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794349812.6481693,
+        "seconds": 35.17595314979553
+      },
+      "context-spanning/broad": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "context-spanning",
+        "capacity": "broad",
+        "stage": "restore",
+        "pid": 223624,
+        "execution_id": "5be51b7270c34fbcbf079778aafb54ac",
+        "started_unix": 1794349732.194866,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794349777.4401164,
+        "seconds": 45.245251417160034
+      }
+    },
+    "training": {
+      "personaplex/narrow": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "step": 117,
+        "objective": 606.1568529543368,
+        "seconds": 150.80627689999528
+      },
+      "context-spanning/narrow": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "step": 110,
+        "objective": 270.8894017465113,
+        "seconds": 191.91760004893877
+      }
+    },
+    "epochs": {},
+    "archive_failure": null,
+    "archive_status": null,
+    "storage_observation": {
+      "home_bytes": 4637282304,
+      "run_bytes": 4637282304,
+      "home_limit_GiB": 100,
+      "run_limit_GiB": 32,
+      "separate_filesystem": true,
+      "measurement": "raw provider quota; entire HOME usage conservatively bounds this run",
+      "provider_filesystem": "data1.vastp2.isambard.ac.uk:/p2/home",
+      "provider_block_unit_bytes": 1024,
+      "provider_home_hard_bytes": 107999997952,
+      "provider_home_files": 28481,
+      "whole_HOME_limit_bytes": 34359738368,
+      "provider_query_seconds": 0.010431880014948547,
+      "job_id": "8285192",
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "passed": true,
+      "checked_unix": 1794350843.6667695,
+      "probe_seconds": 0.010857307934202254
+    }
+  },
+  "old_observer_tool": 74289,
+  "old_observer_exit": 1,
+  "cause": "Fresh SSH banner timeout; training was not restarted",
+  "local_timeout_seconds": 35,
+  "remote_timeout_seconds": 25,
+  "connect_timeout_seconds": 20,
+  "read_only_retry_count": 1,
+  "errors_surfaced_before_retry": true,
+  "poll_seconds": 60,
+  "training_or_checkpoint_changes": false
+}

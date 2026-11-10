@@ -53,7 +53,7 @@ def probe(job,root,runner=subprocess.run):
     if '..' in path.parts:raise ValueError('No aliased observation root')
     script='ROOT='+repr(str(path))+';JOB='+repr(str(job))+'\n'+REMOTE
     command=['ssh','-S','none','-o','ControlMaster=no','-o','ControlPath=none','-o','BatchMode=yes',
-        '-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=10','-o','ServerAliveInterval=5',
+        '-o','StrictHostKeyChecking=yes','-o','ConnectTimeout=20','-o','ServerAliveInterval=5',
         '-o','ServerAliveCountMax=2','u6ada.aip2.isambard','timeout','--kill-after=3s','25s','/usr/bin/python3','-B','-u','-']
     result=runner(command,input=script,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
         universal_newlines=True,timeout=35)
@@ -64,17 +64,24 @@ def probe(job,root,runner=subprocess.run):
 
 
 def main(a):
-    last=None
+    last=None;failed_probes=0
     while True:
         now=time.time()
         if last is not None and now-last>90:
             print(json.dumps(dict(event='monitoring_gap',job=a.job,seconds=now-last)),flush=True)
         try:value=probe(a.job,a.root)
         except Exception as exc:
-            print(json.dumps(dict(event='MONITORING_BLOCKED',job=a.job,error=type(exc).__name__+': '+str(exc))),flush=True);raise
+            failed_probes+=1
+            print(json.dumps(dict(event='MONITORING_BLOCKED',job=a.job,error=type(exc).__name__+': '+str(exc),
+                failed_probes=failed_probes,job_restart_requested=False)),flush=True)
+            if a.once or failed_probes>=2:raise
+            time.sleep(5);continue  # One bounded read-only retry; no stale success or model action.
+        if failed_probes:
+            print(json.dumps(dict(event='MONITORING_RESTORED',job=a.job,fresh_probe_UTC=value['actual_UTC'])),flush=True)
+        failed_probes=0
         print(json.dumps(value),flush=True);last=time.time()
         if a.once or value.get('host_terminal') or value['queue']['actual_exit'] or not value['queue']['stdout']:return
-        time.sleep(30)
+        time.sleep(60)
 
 
 if __name__=='__main__':
