@@ -15,6 +15,29 @@ def run(args):
  return dict(actual_exit=p.returncode,stdout=p.stdout.strip(),stderr=p.stderr.strip())
 value=dict(actual_UTC=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),job=job,
  queue=run(['squeue','-h','-j',job,'-o','%i|%T|%M|%N']))
+def read(path):return json.loads(path.read_text()) if path.exists() else None
+value['current']={base:read(ex/(base+'-current.json')) for base in ('personaplex','context-spanning')}
+value['restore_terminals']={base+'/'+cap:read(ex/(base+'-'+cap+'-restore-terminal.json'))
+ for base in ('personaplex','context-spanning') for cap in ('narrow','broad')}
+value['training']={};value['epochs']={}
+for base in ('personaplex','context-spanning'):
+ for cap in ('narrow','broad'):
+  folder=root/base/cap/'train';log=folder/'training.jsonl'
+  if log.exists():
+   with log.open() as f:
+    f.seek(max(0,log.stat().st_size-262144));lines=f.read().splitlines()
+   for line in reversed(lines):
+    try:r=json.loads(line)
+    except ValueError:continue
+    value['training'][base+'/'+cap]={k:r[k] for k in ('source','step','objective','seconds')};break
+  for epoch in range(1,5):
+   p=folder/('epoch-%02d.json'%epoch)
+   if p.exists():value['epochs'][base+'/'+cap+'/'+str(epoch)]=read(p)
+value['archive_failure']=read(root/'independent-archive-failure.json')
+archive=read(root/'independent-archive-status.json')
+value['archive_status']=None if archive is None else dict(passed=archive['passed'],copies=len(archive['copies']),
+ last_checkpoint={k:archive['copies'][-1][k] for k in ('step','sha256','destination','hash_verified')})
+value['storage_observation']=read(ex/'storage-last-observation.json')
 terminal=ex/'terminal.json'
 if terminal.exists():value['host_terminal']=json.loads(terminal.read_text())
 if value.get('host_terminal') or value['queue']['actual_exit'] or not value['queue']['stdout']:

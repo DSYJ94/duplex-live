@@ -9,6 +9,29 @@ from .matched_paths import BASE
 from .matched_job import write
 
 
+def start_helper(root,job,source):
+    import sys
+    execution=Path(root)/('execution-'+job)
+    with (execution/'independent-archive.log').open('x') as log:
+        child=subprocess.Popen([sys.executable,'-B','-u','-m','training.personaplex.matched_archive',
+            '--root',str(root),'--job',job,'--source',source],stdout=log,stderr=subprocess.STDOUT)
+    write(execution/'independent-archive-process.json',dict(source=source,job_id=job,pid=child.pid,
+        training_does_not_depend_on_archive_process=True,Mac_connection_required=False))
+    return child
+
+
+def finish_helper(child,root,job,source):
+    if child is None:return
+    timed_out=False
+    try:child.wait(timeout=330)
+    except subprocess.TimeoutExpired:
+        timed_out=True;child.terminate()
+        try:child.wait(timeout=10)
+        except subprocess.TimeoutExpired:child.kill();child.wait()
+    write(Path(root)/('execution-'+job)/'independent-archive-terminal.json',dict(source=source,job_id=job,
+        actual_exit_code=child.returncode,timed_out=timed_out,training_interrupted=False))
+
+
 def sha(path):
     value=hashlib.sha256()
     with Path(path).open('rb') as f:
@@ -83,4 +106,10 @@ def watch(root,job,source):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('root','job','source'):p.add_argument('--'+name,required=True)
-    a=p.parse_args();watch(a.root,a.job,a.source)
+    a=p.parse_args()
+    try:watch(a.root,a.job,a.source)
+    except BaseException as exc:
+        write(Path(a.root)/'independent-archive-failure.json',dict(job_id=a.job,source=a.source,
+            error=type(exc).__name__+': '+str(exc),passed=False,training_interrupted=False,
+            actual_UTC=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())))
+        raise

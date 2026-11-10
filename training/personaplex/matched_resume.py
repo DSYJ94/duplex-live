@@ -21,6 +21,7 @@ from .matched_postupdate import NORMAL_HISTORY
 from .matched_normal88 import AUTH as NORMAL_AUTH,authority as normal_authority
 from .matched_storage_recovery import AUTH as STORAGE_AUTH,authority as storage_authority
 from .matched_storage_job import HISTORY as STORAGE_HISTORY
+from .matched_archive import start_helper,finish_helper
 
 CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/matched_guard.py','training/personaplex/matched_continue_policy.py',
     'training/personaplex/matched_identity.py','training/personaplex/matched_reuse.py',
@@ -32,7 +33,7 @@ CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/m
     'docs/NATIVE-MOSHI-HEARTBEAT-FAILURE-RESULT-2026-11-10.json',
     'training/personaplex/matched_normal88.py',str(NORMAL_AUTH),'docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json',
     'training/personaplex/matched_storage_recovery.py','training/personaplex/matched_storage_quota.py',
-    'training/personaplex/matched_storage_job.py',str(STORAGE_AUTH),
+    'training/personaplex/matched_storage_job.py','training/personaplex/matched_archive.py',str(STORAGE_AUTH),
     'docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json','docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json')+DEPENDENCIES
 
 
@@ -215,7 +216,7 @@ def main(a):
     g.validate_job(job,lease,time.time());root=(DURABLE/'runs' if quota_mode else BASE)/('native-moshi-matched-resume-'+job_id)
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+job_id);execution.mkdir()
     write(execution/'lease.json',lease);entries=resume_plan(Path(a.previous_root),original,root,execution,source)
-    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);watcher=None;code=1;services=[];control=None
+    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);watcher=None;code=1;services=[];control=None;archiver=None
     try:
         if post_mode:watcher,services,control=matched_health.start(lease,execution)
         else:
@@ -227,6 +228,7 @@ def main(a):
             while not (execution/'guard.json').exists():
                 if watcher.poll() is not None or time.time()>deadline:raise RuntimeError('Independent resume guard did not start')
                 time.sleep(1)
+        if storage_mode:archiver=start_helper(root,job_id,source)
         children=TrainingChildren(work,source,execution,lease,watcher,
             dict(zip(('personaplex','context-spanning'),devices)),a.inputs,a.inputs_sha)
         if control is not None:children.guard_path=control/'guard.json'
@@ -242,6 +244,7 @@ def main(a):
             except subprocess.TimeoutExpired:watcher.kill();watcher.wait()
         write(execution/'terminal.json',dict(source=source,controller_source=controller,job_id=job_id,actual_exit_code=code,
             ended_UTC=datetime.now(timezone.utc).isoformat(),adopted=False))
+        finish_helper(archiver,root,job_id,source)
 
 
 if __name__=='__main__':

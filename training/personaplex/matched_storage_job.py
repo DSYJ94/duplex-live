@@ -17,6 +17,7 @@ from .matched_normal88 import authority as normal_authority
 from .matched_interrupted import DURABLE,AUTH as QUOTA_AUTH
 from .matched_storage_recovery import authority,STATES,FAILED_ROOT,MARKER,validate
 from .matched_storage_quota import storage_check
+from .matched_archive import start_helper,finish_helper
 
 HISTORY=dict(NORMAL_HISTORY,**{'8274714':dict(state='FAILED',elapsed=5325,GPUs=2)})
 
@@ -56,9 +57,12 @@ def main(a):
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+jobid);execution.mkdir()
     rows=initial_entries(original,root,execution);write(execution/'lease.json',lease);write(execution/'storage-admission.json',storage)
     write(root/'storage-recovery-initial.json',dict(source=source,authorization_sha256=grant,failed_job='8274714'))
-    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);services=[];control=None;code=1
+    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);services=[];control=None;code=1;archiver=None
     try:
         watcher,services,control=health.start(lease,execution)
+        # The checkpoint copy process belongs to the Slurm job, so it keeps
+        # preserving immutable epochs even when the Mac transport disappears.
+        archiver=start_helper(root,jobid,source)
         children=TrainingChildren(Path.cwd(),source,execution,lease,watcher,
             dict(zip(('personaplex','context-spanning'),devices)),a.inputs,a.inputs_sha)
         children.guard_path=control/'guard.json'
@@ -69,6 +73,7 @@ def main(a):
         if control is not None:health.stop(services,control,execution)
         write(execution/'terminal.json',dict(source=source,job_id=jobid,actual_exit_code=code,
             ended_UTC=datetime.now(timezone.utc).isoformat(),adopted=False))
+        finish_helper(archiver,root,jobid,source)
 
 
 if __name__=='__main__':
