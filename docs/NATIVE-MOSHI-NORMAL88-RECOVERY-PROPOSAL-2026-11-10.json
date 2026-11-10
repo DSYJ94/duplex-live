@@ -1,0 +1,70 @@
+{
+  "status": "PROPOSED_NOT_AUTHORIZED",
+  "recorded_UTC": "2026-11-10T16:21:48.396481+00:00",
+  "purpose": "Finish the same matched training comparison using a normal checkpoint boundary after interrupted89 failed exact native restore.",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "failed_job": "8273944",
+  "actual_state": "FAILED",
+  "actual_exit": "1:0",
+  "allocated_seconds": 119,
+  "GPUs": 2,
+  "actual_new_updates": 0,
+  "failed_actual_source": "2654e11168b8ea8a5c6206fe7c09561d398e4645",
+  "all_prior_GPU_seconds": 34059,
+  "evidence": "docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json",
+  "diagnosis": "Checkpoint SHA, producer authorization and distinct execution identity all match. Failure is exact native reference fingerprint equality by exclusion; actual mismatching tensors were not persisted. Full state loader returned before that check. The interrupted-save reference may reflect transient streaming state; cause is not conclusively proven. Do not weaken equality or regenerate/relabel a passing reference.",
+  "selected_personaplex_checkpoint": {
+    "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved/personaplex-normal-step88-v1/live.pt",
+    "sha256": "287d2f3159a340b1f17ae38e511119187a727a3e80e2bfc9c05c6485fdd796c9",
+    "step": 88,
+    "source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+    "execution_id": "e08c1aaf46844f54b30de02b6849d76d",
+    "second_filesystem_copy": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/personaplex/live.pt",
+    "both_hashes_verified": true
+  },
+  "selected_context_checkpoint": {
+    "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved/failure-8260542-v1/context-spanning/live.pt",
+    "sha256": "af6fab3b095ebd400290e182fc5ae0186872f1db8efcc2b7e26269eda356e76c",
+    "step": 80
+  },
+  "broad_initializations": "Both original independently admitted init0 states, unchanged.",
+  "deliberate_rollback": {
+    "from_rejected_saved_step": 89,
+    "to_normal_saved_step": 88,
+    "repeated_saved_updates": [
+      89
+    ],
+    "applies_only_to": "PersonaPlex/narrow selected continuation branch",
+    "old89_and_all_failed_artifacts_preserved": true,
+    "no_other_saved_updates_replayed": true,
+    "normal88_has_not_yet_passed_independent_native_restore": true
+  },
+  "maximum_aggregate_GPU_hours": 112,
+  "additional_GPU_hours": 0,
+  "maximum_total_running_intervals": 6,
+  "next_interval": 5,
+  "maximum_single_job_seconds": 86400,
+  "simultaneous_GPUs": 2,
+  "one_job_at_a_time": true,
+  "interval5": "One recovery from these exact saved states despite interval4 failing before new updates. Require ALL4 actual fresh-process full Adam/RNG/OPAL/native-output exact restores before immediate remaining training. Do not repeat numerical/gradient admission.",
+  "interval6": "Only a successful positive-update interval5 checkpoint/native final restore with full actual time/source/sampler/Adam/RNG/OPAL carry. No further zero-update recovery or checkpoint sweep.",
+  "stop": "If raw88 or CS80 also fails exact independent native restore, STOP the branch; preserve evidence and make a state-protocol decision. No changed references, weaker thresholds, automatic alternative checkpoints or blind retry.",
+  "conservative_remaining_serial_seconds_per_base": {
+    "personaplex": 156969.24188049935,
+    "context-spanning": 159571.46504914525
+  },
+  "forecast_total_GPU_hours_including6GPUh_reserve": 104.11164724952513,
+  "original_model_math_data_recipe_losses_folds_history_KL_hidden_fit15_unchanged": true,
+  "updates_per_selected_lineage": 196,
+  "full323_coverage_epochs": 4,
+  "heartbeat": "Keep approved node-local scheduler guard45s, separate storage probe and asynchronous NFS mirror. These services stayed healthy in8273944.",
+  "backup": "Raw88, rejected89 andCS80 remain hash-verified on BOTH independent NFS and Lustre filesystems. All original epoch/init states and failed logs retained. No OneDrive editing/downloads.",
+  "new_purchases": false,
+  "new_GCP_compute": false,
+  "new_external_model_API_calls": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "adoption": "Full native64/fresh20/reasoning/delegation/speech/backend/live requirements unchanged. No quality improvement established yet.",
+  "why_decision": "The explicit no-replay rule and last grant pin raw89/CS80, with later starts only from successful positive windows. Deliberate raw88 rollback/repeating one rejected savedupdate89 and recovery start5 after zero-update failed4 require this narrowly scoped amendment. No budget or start-count increase."
+}

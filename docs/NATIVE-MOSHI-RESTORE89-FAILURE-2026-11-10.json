@@ -1,0 +1,28 @@
+{
+  "actual_UTC": "2026-11-10T16:18:59Z",
+  "failed_job": "8273944",
+  "actual_exit": "1:0",
+  "allocated_seconds": 119,
+  "GPUs": 2,
+  "actual_updates": 0,
+  "all_prior_GPU_seconds": 34059,
+  "identity_conditions": {
+    "checkpoint_hash_identity_matches": true,
+    "reference_producer_allowed": true,
+    "execution_is_distinct": true
+  },
+  "failed_condition_by_exclusion": "Native fingerprint equality; the actual compared tensors were not persisted by the old error path.",
+  "all_four_restore_pass": false,
+  "heartbeat_failed": false,
+  "normal88": {
+    "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved/personaplex-normal-step88-v1/live.pt",
+    "sha256": "287d2f3159a340b1f17ae38e511119187a727a3e80e2bfc9c05c6485fdd796c9",
+    "step": 88,
+    "source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+    "execution_id": "e08c1aaf46844f54b30de02b6849d76d",
+    "second_filesystem_copy": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/personaplex/live.pt",
+    "both_hashes_verified": true
+  },
+  "protocol_hypothesis": "Interruption during streaming-context cleanup can leave transient KV state active when the reference fingerprint is recorded; not conclusively established for this saved state. Preserve89 as rejected by exact restore; do not rewrite its reference.",
+  "proposed_recovery": "Restore unchanged normal raw88 and original savedCS80, retain exact gates, intentionally redo only rejected savedupdate89 as an explicitly approved branch rollback. Existing grant does not authorize this yet."
+}
