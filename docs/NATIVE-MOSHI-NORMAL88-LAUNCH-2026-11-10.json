@@ -1,0 +1,108 @@
+{
+  "actual_UTC": "2026-11-10T16:47:55Z",
+  "job_id": "8274714",
+  "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+  "claim": {
+    "job_id": "8274714",
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714",
+    "interval": 5,
+    "prior_GPU_seconds": 34059
+  },
+  "preflight": {
+    "passed": true,
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "actual_UTC": "2026-11-10T16:44:38Z",
+    "host_Python": "3.6.15 (default, Apr 27 2026, 16:53:54) [GCC]",
+    "host_tests_actual_exit": 0,
+    "host_tests": 56,
+    "modern_container_actual_exit": 0,
+    "modern_result": "{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n{\"passed\": true, \"Python\": \"3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]\", \"native_functions\": 17, \"dependency_and_policy_files\": 19, \"node_local_bind\": true, \"model_loaded\": false, \"optimizer_updates\": 0}\n",
+    "prior_GPU_seconds": 34059,
+    "actual_restore_steps": [
+      88,
+      80,
+      0,
+      0
+    ],
+    "storage": {
+      "home_bytes": 2751203840,
+      "run_bytes": 2751200256,
+      "home_limit_GiB": 100,
+      "run_limit_GiB": 32,
+      "separate_filesystem": true
+    },
+    "normal88_authority_sha256": "e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad",
+    "all_old_math_proofs_reused": true,
+    "all_preserved_states_and_old_logs_verified": true,
+    "node_local_control_bound": true,
+    "model_loaded": false,
+    "optimizer_updates": 0
+  },
+  "lease": {
+    "provider": "Slurm",
+    "resource_key": "moshi-matched-two-gpu-v1",
+    "account": "brics.u6ada",
+    "authorization_sha256": "09a94b32454098cb4830edd5ac858e78708f200682f8d5e5e0a3b01c8abee611",
+    "continuation_authorization_sha256": "7c2a1f8ec6057b06b3475fd775071d5b16cab9b6a4fb9c9b666fbb6262d63072",
+    "continuation_interval": 5,
+    "quota_recovery_authorization_sha256": "02fde0e0797096e630cb45378cd7741fc48d8ea9972d44055e0f6378f73da7a2",
+    "postupdate_recovery_authorization_sha256": "87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373",
+    "job_id": "8274714",
+    "node": "nid010186",
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "controller_source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "worker_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-15a0420d901a",
+    "start_unix": 1794329137.0,
+    "stop_unix": 1794415537.0,
+    "maximum_seconds": 86400,
+    "GPU_count": 2,
+    "prior_GPU_seconds": 34059,
+    "normal88_authorization_sha256": "e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad"
+  },
+  "sacct": "8274714|RUNNING|0:0|138|billing=72,cpu=72,gres/gpu=2,mem=200G,node=1",
+  "restore_terminals": {
+    "context-spanning-broad-restore-terminal": {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "base": "context-spanning",
+      "capacity": "broad",
+      "stage": "restore",
+      "pid": 176394,
+      "execution_id": "04b8d1ea21e548969828aed0005dfa8f",
+      "started_unix": 1794329161.6512938,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794329242.1274943,
+      "seconds": 80.4762020111084
+    },
+    "personaplex-broad-restore-terminal": {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "base": "personaplex",
+      "capacity": "broad",
+      "stage": "restore",
+      "pid": 176430,
+      "execution_id": "ea57cac1c4ab4544b7afa5c5d68e13a4",
+      "started_unix": 1794329162.6204276,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794329233.0393932,
+      "seconds": 70.41896653175354
+    },
+    "personaplex-narrow-restore-terminal": {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "base": "personaplex",
+      "capacity": "narrow",
+      "stage": "restore",
+      "pid": 177612,
+      "execution_id": "ec91cd4f8e8049238b2b834c79d34982",
+      "started_unix": 1794329233.094375,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794329258.2593987,
+      "seconds": 25.165024518966675
+    }
+  },
+  "host_terminal": null,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false
+}
