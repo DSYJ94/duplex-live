@@ -32,15 +32,18 @@ def restored_entry(row,source,data_sha,original):
             or value['execution_id']==reference['execution_id']
             or value['reference_execution_id']!=reference['execution_id']
             or reference['checkpoint_sha256']!=row['checkpoint_sha256']
-            or (reference['source'] not in (ORIGIN,source) and not row.get('quota_interrupted_state'))):
+            or (reference['source'] not in (ORIGIN,source) and not (row.get('quota_interrupted_state') or row.get('postupdate_failure_recovery')))):
         raise ValueError('A distinct actual successful native restore is required')
     step=value['restored_training_step']
     if type(step) is not int or not 0<=step<=196 or reference['step']!=step:
         raise ValueError('Actual restored training step differs')
     if step==0:
-        if row.get('quota_interrupted_state'):raise ValueError('Interrupted recovery cannot claim zero-update state')
+        if row.get('quota_interrupted_state') or row.get('postupdate_failure_recovery'):raise ValueError('Interrupted recovery cannot claim zero-update state')
         if str(checkpoint)!=original['original_checkpoint'] or row['checkpoint_sha256']!=original['checkpoint_sha256']:
             raise ValueError('Only original independently admitted zero-update initialization allowed')
+    elif row.get('postupdate_failure_recovery'):
+        from .matched_failed_state import validate_failed
+        validate_failed(row,reference,step)
     elif row.get('quota_interrupted_state'):
         from .matched_interrupted import validate_interrupted
         validate_interrupted(row,reference,step)

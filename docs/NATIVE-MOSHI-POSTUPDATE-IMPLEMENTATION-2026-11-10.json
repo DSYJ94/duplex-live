@@ -1,0 +1,14 @@
+{
+  "actual_UTC": "2026-11-10T16:09:17.655841+00:00",
+  "owner_approval": "Approve recovery; keep 112 GPU-hours",
+  "authorization_sha256": "87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373",
+  "local_focused_checks_passed": 57,
+  "unchanged_native_functions": 17,
+  "unchanged_numerical_dependency_files": 9,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 6,
+  "next_interval": 4,
+  "actual_prior_GPU_seconds": 33821,
+  "OneDrive_writes": false,
+  "new_GPU_submitted": false
+}
