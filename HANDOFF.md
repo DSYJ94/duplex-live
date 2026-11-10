@@ -1,3 +1,11 @@
+# LOCAL — Final evaluation helper ready; no more preparatory diagnostics
+
+Actual10Nov17:49:56UTC: corrected evaluation/helper producer dddd82738cd4e1426d0dd7405c3b67dd0f055059 is Git-deployed to NFS source-dddd82738cd4; actual HOST3.6 and pinned modern native container each10focusedchecksPASS0. ALL active training CONTROL bytes exactly15a verified. Proof docs/NATIVE-MOSHI-MATCHED-EVALUATION-FROZEN-CPU-2026-11-10.json. The initial c4 proof and missing-CPU-bind failure stay preserved. No GPU inference/evaluation yet; no numerical calibration repeated. Stop evaluator preparation here; next evidence must come from actual completed training/restore and native generation, not more unit checks.
+
+SAME valid8274714/G15a train, observer55131/archive6073 continue. Both narrow98 checkpoints verified on NFS and independent Lustre; latest actual17:43:45 raw107/CS99, newer observer records authoritative. No interruption, new optimizer recipe or OneDrive work. Final6 uses unchanged workerG and approved successful positive-state resume; prepared host/evaluatorHdddd keeps original actual clocks/priorGPUcost, allfour196/restores/full192 regression then review/fresh20/backend/live acceptance. Before slot6 verify actual successful parent state/time/remaining complete schedule fits24h+112h, no duplicate or zero-update recovery; preserve all failed states. No additional model research/diagnostic loops while valid training runs. Current product goal unfinished.
+
+---
+
 # LOCAL — Native training unchanged; evaluation preparation CPU integration
 
 10Nov17:46UTC evaluation helper c4a229b564ae6ce2421572b75f7914650cbe4702 Gitdeployed to separate NFSworktree source-c4a229b564ae. Actual Isambard HOST3.6 nine focused testsPASS; actual pinned native container nine testsPASS0, all active training CONTROL bytes exactly15a verified. First CPU-only namespace check omitted the existing explicit NFSbind and could not import source; failed record retained, corrected declared bind gives actual0. No GPU allocated/loaded for this preparation, no model work repeated. Actual proof docs/NATIVE-MOSHI-MATCHED-EVALUATION-CPU-2026-11-10.json; this does not qualify native speech or inference.
