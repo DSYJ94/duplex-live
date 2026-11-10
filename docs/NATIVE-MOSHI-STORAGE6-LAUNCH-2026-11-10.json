@@ -1,0 +1,265 @@
+{
+  "actual_UTC": "2026-11-10T22:31:01Z",
+  "job": "8285192",
+  "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+  "actual_claim": {
+    "job_id": "8285192",
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192",
+    "interval": 6,
+    "prior_GPU_seconds": 44709
+  },
+  "preflight": {
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "actual_host": "3.6.15 (default, Apr 27 2026, 16:53:54) [GCC]",
+    "started_UTC": "2026-11-10T22:27:22Z",
+    "authority_sha256": "58723fa032be29cb639a02bc1ebb372b5b83faabf85ca723980a6ee346d8f7ab",
+    "storage": {
+      "home_bytes": 4630052864,
+      "run_bytes": 4630052864,
+      "home_limit_GiB": 100,
+      "run_limit_GiB": 32,
+      "separate_filesystem": true,
+      "measurement": "raw provider quota; entire HOME usage conservatively bounds this run",
+      "provider_filesystem": "data1.vastp2.isambard.ac.uk:/p2/home",
+      "provider_block_unit_bytes": 1024,
+      "provider_home_hard_bytes": 107999997952,
+      "provider_home_files": 27181,
+      "whole_HOME_limit_bytes": 34359738368,
+      "provider_query_seconds": 0.016897946945391595
+    },
+    "actual_prior_GPU_seconds": 44709,
+    "original_four_proofs_verified": true,
+    "selected_states": [
+      {
+        "base": "context-spanning",
+        "capacity": "broad",
+        "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/context-spanning/broad/admit/init.pt",
+        "checkpoint_sha256": "79c594f204a3cd3c0967a67f43cf043d8bf2c2d69065e57ec3508a82b6824e18"
+      },
+      {
+        "base": "context-spanning",
+        "capacity": "narrow",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/live.pt",
+        "checkpoint_sha256": "22cab2fbeccc42d1a361d6c45819e31a67a68b05e65e2b9439e053bb5ceafd3c"
+      },
+      {
+        "base": "personaplex",
+        "capacity": "broad",
+        "checkpoint": "/projects/u6ada/duplex-live/native-moshi-matched-train-v1/personaplex/broad/admit/init.pt",
+        "checkpoint_sha256": "66a11e5d6894cefc16da1b83d19d7eab876eca45d26a2e108f21a7167087a57d"
+      },
+      {
+        "base": "personaplex",
+        "capacity": "narrow",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/live.pt",
+        "checkpoint_sha256": "2d2fe9a5b6a4efc160543c444912a4a3e7a3c2f81029f06d511d186e4d50d80c"
+      }
+    ],
+    "host_tests": {
+      "actual_exit": 0,
+      "stdout": "{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n",
+      "stderr": "............................................\n----------------------------------------------------------------------\nRan 44 tests in 0.427s\n\nOK\n"
+    },
+    "modern_container_source_and_tests": {
+      "actual_exit": 0,
+      "stdout": "{\"lineage_source\": \"8b822b0d85ccea4f291255204cbc358fa85469c4\", \"actual_producer\": \"d9453cfaa09076b1c181723384da4c9cf49a9524\", \"checked_native_functions\": [\"write\", \"corpus\", \"worst_rows\", \"metadata\", \"fingerprint\", \"model\", \"configure\", \"runtime\", \"gradients\", \"frozen_versions\", \"check_frozen\", \"checkpoint\", \"numerical\", \"admit\", \"run_training\", \"restore\", \"main\"], \"original_dependency_hashes\": {\"training/personaplex/matched_losses.py\": \"5f3c71b659e3247d0457e8b1d523efbc65e5bf18ded690503b97246205a00597\", \"training/personaplex/matched_state.py\": \"41ca44d6a73cf298ed3d02c6d3317ae862321ecd3d48c6e21528ebe307b619f5\", \"training/personaplex/matched_schedule.py\": \"c87b7836f90d79af9b8aa72e837889f0569a1899483f620ee33eb4a97b154cde\", \"training/personaplex/capacity.py\": \"dfea90a87f4fbc469df4a3935cb019dde959615aafad49df731da10f228df9a2\", \"training/personaplex/matched_inputs.py\": \"d2c5c7b8a1ad5d7c5987fcec7bcaea6c71f8b39bc0cb07b51a653a6ab2ad8afd\", \"training/venus/native_optimizer.py\": \"84c9f574ae3d8bb977c41133909512df9ad6bf9d0a460d22d7e09ee7a5131b08\", \"training/venus/opal_adapter.py\": \"911debc0bc3853667d746591fa4918661ff85f7a73d75ae86d4e7ff39159d486\", \"training/venus/state.py\": \"7fad6cc43a048c671f609f38ea70952a37fc13aaadd6d4c132c4f4800ff8a2e3\", \"evals/personaplex_adapters.py\": \"f79d9cdb2c3e4923bd322da4441dbd2621994daf252e98b278134e55176b9036\", \"training/personaplex/matched_interrupted.py\": \"c3dbf201c799ff6a9bb5b92943530b17992a86d047ec5512258dc659659a4ec0\", \"training/personaplex/matched_continue_policy.py\": \"54685e8eae65bbd94ad7f731bbd0c1fdd1ae4f1de1f8c4a5284892ef8454507f\", \"docs/NATIVE-MOSHI-QUOTA-RECOVERY-AUTHORIZATION-2026-11-09.json\": \"02fde0e0797096e630cb45378cd7741fc48d8ea9972d44055e0f6378f73da7a2\", \"training/personaplex/matched_failed_state.py\": \"2fecf91750ceb393476accc5acf1ec632d77858bd63f6e57f905a3bcf951f1ad\", \"training/personaplex/matched_guard.py\": \"6ee0a5ec931c5a437ed62d9dfba7f1300270b76f579f70602d4f3225c46ea3d9\", \"docs/NATIVE-MOSHI-POSTUPDATE-RECOVERY-AUTHORIZATION-2026-11-10.json\": \"87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373\", \"docs/NATIVE-MOSHI-HEARTBEAT-FAILURE-RESULT-2026-11-10.json\": \"ecef76a3de0ef092686386d665b2a056a185e00c4943c3fac00ba11e4ee18b00\", \"training/personaplex/matched_normal88.py\": \"1015ececafedae75bbb7c76e7802d2ed29f62c0efb46e8fc9af9748ebbc0729c\", \"docs/NATIVE-MOSHI-NORMAL88-RECOVERY-AUTHORIZATION-2026-11-10.json\": \"e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad\", \"docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json\": \"b4918a55ff777292ed9419e1d1d16959ca25c0c5ea8762e0f76b6117ed3a2fba\", \"training/personaplex/matched_storage_recovery.py\": \"5516c3c2e77f80149d8acd44edd90aa5707d0463e69fad28f793b9bc51bab04e\", \"training/personaplex/matched_storage_quota.py\": \"2f1cb88f1c6d513e79e151fc4f464ada7c32a79a97b7ddff4871439bd0376293\", \"docs/NATIVE-MOSHI-STORAGE-RECOVERY-AUTHORIZATION-2026-11-10.json\": \"58723fa032be29cb639a02bc1ebb372b5b83faabf85ca723980a6ee346d8f7ab\", \"docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json\": \"5efa0aa85665fc77c869f1602916a2550eb1eb6b52be8508f4d538e941af186f\", \"docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json\": \"51499d72275b546b9d573a66a89686ed2010b78aff544e785c576c05849d56c7\"}, \"identity_checker_sha256\": \"1a4db5836f41b72447e05e98e7aad12c26b588249cda408dcdb84464d3d20e2b\", \"only_declared_identity_wrapper_edits\": true, \"new_native_restore_required\": true, \"training_authorized\": false}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n",
+      "stderr": "INFO:    fuse2fs not found, will not be able to mount EXT3 filesystems\nINFO:    gocryptfs not found, will not be able to use gocryptfs\n.................................................\n----------------------------------------------------------------------\nRan 49 tests in 0.784s\n\nOK\n"
+    },
+    "ended_UTC": "2026-11-10T22:27:27Z",
+    "passed": true,
+    "native_GPU_executed": false,
+    "original_gradient_calibration_repeated": false
+  },
+  "lease": {
+    "provider": "Slurm",
+    "resource_key": "moshi-matched-two-gpu-v1",
+    "account": "brics.u6ada",
+    "authorization_sha256": "09a94b32454098cb4830edd5ac858e78708f200682f8d5e5e0a3b01c8abee611",
+    "continuation_authorization_sha256": "7c2a1f8ec6057b06b3475fd775071d5b16cab9b6a4fb9c9b666fbb6262d63072",
+    "continuation_interval": 6,
+    "quota_recovery_authorization_sha256": "02fde0e0797096e630cb45378cd7741fc48d8ea9972d44055e0f6378f73da7a2",
+    "postupdate_recovery_authorization_sha256": "87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373",
+    "normal88_authorization_sha256": "e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad",
+    "storage_recovery_authorization_sha256": "58723fa032be29cb639a02bc1ebb372b5b83faabf85ca723980a6ee346d8f7ab",
+    "job_id": "8285192",
+    "node": "nid010789",
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "controller_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "worker_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-d9453cfaa090",
+    "start_unix": 1794349727.0,
+    "stop_unix": 1794436127.0,
+    "maximum_seconds": 86400,
+    "GPU_count": 2,
+    "prior_GPU_seconds": 44709
+  },
+  "health_services": {
+    "job_id": "8285192",
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "local_control_dir": "/tmp/duplex-matched-8285192-d9453cfaa090",
+    "local_guard": "/tmp/duplex-matched-8285192-d9453cfaa090/guard.json",
+    "service_PIDs": [
+      223613,
+      223616,
+      223620
+    ],
+    "NFS_mirror_is_not_native_authority": true
+  },
+  "actual_sacct": "8285192|RUNNING|0:0|2026-11-10T22:28:47|Unknown|134|billing=72,cpu=72,gres/gpu=2,mem=200G,node=1",
+  "restore_terminals": {
+    "context-spanning-broad-restore-terminal": {
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "base": "context-spanning",
+      "capacity": "broad",
+      "stage": "restore",
+      "pid": 223624,
+      "execution_id": "5be51b7270c34fbcbf079778aafb54ac",
+      "started_unix": 1794349732.194866,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794349777.4401164,
+      "seconds": 45.245251417160034
+    },
+    "context-spanning-narrow-restore-terminal": {
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "stage": "restore",
+      "pid": 225286,
+      "execution_id": "b7cfad88e32c42bc9e242a9aad74d17e",
+      "started_unix": 1794349777.4722173,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794349812.6481693,
+      "seconds": 35.17595314979553
+    },
+    "personaplex-broad-restore-terminal": {
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "base": "personaplex",
+      "capacity": "broad",
+      "stage": "restore",
+      "pid": 223661,
+      "execution_id": "9790a84ee7bf42f7aa6f71828ad19888",
+      "started_unix": 1794349732.8486054,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794349768.0361397,
+      "seconds": 35.187535524368286
+    },
+    "personaplex-narrow-restore-terminal": {
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "base": "personaplex",
+      "capacity": "narrow",
+      "stage": "restore",
+      "pid": 225000,
+      "execution_id": "13e68516e01d4eb0a9c5f01359c08f90",
+      "started_unix": 1794349768.0670485,
+      "module": "training.personaplex.matched_native",
+      "actual_exit_code": 0,
+      "ended_unix": 1794349793.1960583,
+      "seconds": 25.129010438919067
+    }
+  },
+  "native_restore_reports": {
+    "context-spanning/broad/restore/restore.json": {
+      "passed": true,
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "context-spanning",
+      "capacity": "broad",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "79c594f204a3cd3c0967a67f43cf043d8bf2c2d69065e57ec3508a82b6824e18",
+      "reference_execution_id": "7100c695b4b14d188b664496fe27250e",
+      "execution_id": "5be51b7270c34fbcbf079778aafb54ac",
+      "pid": 51,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 0,
+      "adopted": false
+    },
+    "context-spanning/narrow/restore/restore.json": {
+      "passed": true,
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "22cab2fbeccc42d1a361d6c45819e31a67a68b05e65e2b9439e053bb5ceafd3c",
+      "reference_execution_id": "0ca29e57bee34bad9de9562929afc411",
+      "execution_id": "b7cfad88e32c42bc9e242a9aad74d17e",
+      "pid": 49,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 104,
+      "adopted": false
+    },
+    "personaplex/broad/restore/restore.json": {
+      "passed": true,
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "personaplex",
+      "capacity": "broad",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "66a11e5d6894cefc16da1b83d19d7eab876eca45d26a2e108f21a7167087a57d",
+      "reference_execution_id": "de66448440d9401595e1c2f11f674fce",
+      "execution_id": "9790a84ee7bf42f7aa6f71828ad19888",
+      "pid": 50,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 0,
+      "adopted": false
+    },
+    "personaplex/narrow/restore/restore.json": {
+      "passed": true,
+      "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "personaplex",
+      "capacity": "narrow",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "2d2fe9a5b6a4efc160543c444912a4a3e7a3c2f81029f06d511d186e4d50d80c",
+      "reference_execution_id": "b8cd143e09ac4a0193a1530adc64c183",
+      "execution_id": "13e68516e01d4eb0a9c5f01359c08f90",
+      "pid": 50,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 112,
+      "adopted": false
+    }
+  },
+  "archive_process": {
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "job_id": "8285192",
+    "pid": 223621,
+    "training_does_not_depend_on_archive_process": true,
+    "Mac_connection_required": false
+  },
+  "storage_observation": {
+    "home_bytes": 4637196288,
+    "run_bytes": 4637196288,
+    "home_limit_GiB": 100,
+    "run_limit_GiB": 32,
+    "separate_filesystem": true,
+    "measurement": "raw provider quota; entire HOME usage conservatively bounds this run",
+    "provider_filesystem": "data1.vastp2.isambard.ac.uk:/p2/home",
+    "provider_block_unit_bytes": 1024,
+    "provider_home_hard_bytes": 107999997952,
+    "provider_home_files": 28476,
+    "whole_HOME_limit_bytes": 34359738368,
+    "provider_query_seconds": 0.01307407789863646,
+    "job_id": "8285192",
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "passed": true,
+    "checked_unix": 1794349852.0536313,
+    "probe_seconds": 0.013699213042855263
+  },
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false
+}
