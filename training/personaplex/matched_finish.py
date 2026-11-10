@@ -25,9 +25,9 @@ def evaluation_lease(previous,source,job):
     return lease
 
 
-def run_evaluation(root,source,work):
+def run_evaluation(root,source,work,allocation=None):
     root=Path(root);job=os.environ['SLURM_JOB_ID']
-    old=json.loads((root/('execution-'+job)/'lease.json').read_text())
+    old=allocation if allocation is not None else json.loads((root/('execution-'+job)/'lease.json').read_text())
     if source==old['source']:raise ValueError('Separate immutable evaluation controller source required')
     selected=completed_states(root,old['source'])
     lease=evaluation_lease(old,source,job)
