@@ -1,0 +1,15 @@
+{
+  "actual_UTC": "2026-11-10T15:32:40.349557+00:00",
+  "repair_source": "ed0285de1011703ffa8b07946cf485f8ccab1a01",
+  "actual_Isambard_host_Python": "3.6.15",
+  "actual_host_unittest_exit_code": 0,
+  "actual_host_tests_passed": 28,
+  "actual_native_functions_checked": 17,
+  "unchanged_numerical_dependencies": 9,
+  "full_native_Git_math_unchanged": true,
+  "new_GPU_job_submitted": false,
+  "actual_account_queue_empty": true,
+  "checkpoint_OneDrive_downloads": false,
+  "authorization_status": "PENDING_OWNER_POSTUPDATE_RECOVERY_DECISION",
+  "required_next": "Owner amendment of failed-window recovery and max6starts within unchanged112GPUh; then actual worker integration/local heartbeat bind/preflight/fresh native4restores before learning. No invented successful old window."
+}
