@@ -1,0 +1,20 @@
+{
+  "observed_UTC": "2026-11-10T22:12:30Z",
+  "actual_helper_source": "203166171d3b64cc85333f2b1e365a382737539a",
+  "actual_Git_deployment_exit": 0,
+  "actual_HOST_Python36_tests": 4,
+  "actual_HOST_test_exit": 0,
+  "actual_provider_helper_exit": 0,
+  "home_bytes": 4581285888,
+  "conservative_run_upper_bound_bytes": 4581285888,
+  "whole_HOME_limit_bytes": 34359738368,
+  "provider_query_seconds": 0.02924893598537892,
+  "provider_filesystem": "data1.vastp2.isambard.ac.uk:/p2/home",
+  "provider_home_hard_bytes": 107999997952,
+  "provider_home_files": 22233,
+  "separate_filesystem": true,
+  "native_training_started": false,
+  "active_learner_modified": false,
+  "new_GPU_allocations": 0,
+  "owner_scope_decision": "PENDING"
+}
