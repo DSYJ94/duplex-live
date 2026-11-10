@@ -1,0 +1,87 @@
+{
+  "actual_UTC": "2026-11-10T17:43:45Z",
+  "job": "8274714",
+  "trainer_source": "15a0420d901a6462da4a18e93a93a59904098b27",
+  "actual_squeue": "8274714|RUNNING|58:08|nid010186",
+  "checkpoint_archive": {
+    "job_id": "8274714",
+    "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+    "copies": [
+      {
+        "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/personaplex/narrow/train/epoch-02.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/personaplex/narrow/epoch-02/epoch-02.pt",
+        "step": 98,
+        "bytes": 289949117,
+        "sha256": "857dcc5e0098c5e68ca9963c0b6aa451c42f971d320d4f807900331b685e3dfe",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-10T17:15:35Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+        "files": {
+          "epoch-02.pt": {
+            "bytes": 289949117,
+            "sha256": "857dcc5e0098c5e68ca9963c0b6aa451c42f971d320d4f807900331b685e3dfe"
+          },
+          "epoch-02.pt.native-reference.json": {
+            "bytes": 1102,
+            "sha256": "790c1fac8f1af1b9bd6a63e6eca70a26ee81be8fbd04e120b1d051f976add013"
+          },
+          "epoch-02.json": {
+            "bytes": 342,
+            "sha256": "bd87eff38f73b9eb2997a2fb638c6e1d314f856b6c4f8c7c3288f4ee8f6add54"
+          }
+        }
+      },
+      {
+        "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/normal88-recovery-8274714/context-spanning/narrow/train/epoch-02.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8274714/context-spanning/narrow/epoch-02/epoch-02.pt",
+        "step": 98,
+        "bytes": 290003773,
+        "sha256": "9ac537ec25bdaaba15477a4377d34806601e336d69365fd30686911c6af13972",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-10T17:39:42Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "d41a7cca9bd8e7de267c57fa5c234163101655c7",
+        "files": {
+          "epoch-02.pt": {
+            "bytes": 290003773,
+            "sha256": "9ac537ec25bdaaba15477a4377d34806601e336d69365fd30686911c6af13972"
+          },
+          "epoch-02.pt.native-reference.json": {
+            "bytes": 1102,
+            "sha256": "e5dcdf03cb80b14d62ed9dbb72aa64af22b00448d4bc1f1f70f3c498d2ee928e"
+          },
+          "epoch-02.json": {
+            "bytes": 342,
+            "sha256": "5f86b63b6607a204509e684a435bd2a31a96b3128d7b6e6af474b8fecdd402d6"
+          }
+        }
+      }
+    ],
+    "passed": true,
+    "training_interrupted": false,
+    "OneDrive_writes": false
+  },
+  "actual_narrow_updates": {
+    "personaplex": {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "step": 107,
+      "objective": 709.6045605593164,
+      "seconds": 187.79785846895538
+    },
+    "context-spanning": {
+      "source": "15a0420d901a6462da4a18e93a93a59904098b27",
+      "step": 99,
+      "objective": 152.5457337385917,
+      "seconds": 200.7313734649797
+    }
+  },
+  "OneDrive_writes": false,
+  "quality_improvement_not_yet_evaluated": true
+}
