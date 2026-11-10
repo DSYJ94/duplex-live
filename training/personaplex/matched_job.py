@@ -44,19 +44,20 @@ def prior_usage():
 class Children:
     def __init__(self,work,source,execution,lease,watcher,devices,inputs,inputs_sha):
         self.work,self.source,self.execution,self.lease,self.watcher=work,source,execution,lease,watcher
+        self.guard_path=self.execution/'guard.json'
         self.devices,self.inputs,self.inputs_sha=devices,inputs,inputs_sha
         self.active={};self.lock=threading.Lock();self.failed=threading.Event()
 
     def ensure(self):
         if self.failed.is_set():raise RuntimeError('Another native stage failed; preserve without duplicating')
         if self.watcher.poll() is not None:raise RuntimeError('Independent matched scheduler guard exited')
-        g.ensure(self.lease,json.loads((self.execution/'guard.json').read_text()))
+        g.ensure(self.lease,json.loads(self.guard_path.read_text()))
 
     def run(self,base,capacity,stage,folder,extra=(),label=None):
         self.ensure();name=base+'-'+capacity+'-'+(label or stage);execution_id=uuid.uuid4().hex
         env=dict(SLURM_JOB_ID=self.lease['job_id'],SLURM_JOB_ACCOUNT=g.ACCOUNT,
             DUPLEX_LIVE_LEASE_FILE=str(self.execution/'lease.json'),
-            DUPLEX_LIVE_GUARD_FILE=str(self.execution/'guard.json'),
+            DUPLEX_LIVE_GUARD_FILE=str(self.guard_path),
             DUPLEX_NATIVE_EXECUTION_ID=execution_id,CUBLAS_WORKSPACE_CONFIG=':4096:8')
         cmd=command(self.work,gpu=self.devices[base],environment=env)+[
             'training.personaplex.matched_native','--source',self.source,'--root',str(folder),

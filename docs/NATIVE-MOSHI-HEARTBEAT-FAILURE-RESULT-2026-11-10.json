@@ -1,0 +1,87 @@
+{
+  "job_id": "8260542",
+  "actual_state": "FAILED",
+  "exit_code": "1:0",
+  "elapsed_seconds": 15147,
+  "GPUs": 2,
+  "source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+  "total_prior_GPU_seconds_including_failure": 33821,
+  "actual_UTC": "2026-11-10T15:21:20Z",
+  "lineages": [
+    {
+      "base": "personaplex",
+      "capacity": "narrow",
+      "preserved_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved/failure-8260542-v1/personaplex/interrupted.pt",
+      "checkpoint_sha256": "be5a6d21a18ed02da89e1a0ccf276efb24453157ab021e8276b6607f70f6d347",
+      "step": 89,
+      "reference_execution_id": "e08c1aaf46844f54b30de02b6849d76d",
+      "last_logged_update": 89,
+      "unsaved_updates_lost": 0,
+      "inventory": {
+        "interrupted.pt": {
+          "bytes": 289945960,
+          "sha256": "be5a6d21a18ed02da89e1a0ccf276efb24453157ab021e8276b6607f70f6d347"
+        },
+        "interrupted.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "3571ef369ce22a744422ed316e74e7bdf18d4b893ddfca469da01ced5931a008"
+        },
+        "training.jsonl": {
+          "bytes": 610208,
+          "sha256": "03a77150acf599b6a1b6f815839221287528e5a7ac776a92de6591fab6cfb81e"
+        },
+        "epoch-01.json": {
+          "bytes": 342,
+          "sha256": "f17a9c86000d1d13e8bc86ccd0edcc9dc400bee99cb0de25b28264d9477817ac"
+        },
+        "epoch-01.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "15cf2cb4ba847b7e6ae807283a48fc72b2aabbfc9c413100fcb6594ce366b36a"
+        },
+        "training-interrupted.json": {
+          "bytes": 231,
+          "sha256": "da12c353eafaad508a777a530a63b14f0049dd2f7dfc2ea9f8c3f2ce7f35c00c"
+        }
+      },
+      "epoch1_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/quota-recovery-8260542/personaplex/narrow/train/epoch-01.pt",
+      "epoch1_sha256": "a9a4e5991d53ee105f115e2effd8b1ed281a063416d76a205a4bd6d1b1a8eec2",
+      "epoch1_hash_verified": true
+    },
+    {
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "preserved_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved/failure-8260542-v1/context-spanning/live.pt",
+      "checkpoint_sha256": "af6fab3b095ebd400290e182fc5ae0186872f1db8efcc2b7e26269eda356e76c",
+      "step": 80,
+      "reference_execution_id": "3451944eab624bb98e19ac35bbfb1d79",
+      "last_logged_update": 87,
+      "unsaved_updates_lost": 7,
+      "inventory": {
+        "live.pt": {
+          "bytes": 289985305,
+          "sha256": "af6fab3b095ebd400290e182fc5ae0186872f1db8efcc2b7e26269eda356e76c"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "1b49a9918d9a9714e8a9d4b5b2e0b8da24a3b4f21f0667244297ef47cea7e945"
+        },
+        "training.jsonl": {
+          "bytes": 617870,
+          "sha256": "64af1afd000e914c71106ee0242cc9c8e8548cc05638ac77ce50720a98961d90"
+        },
+        "epoch-01.json": {
+          "bytes": 342,
+          "sha256": "119f1e6592003497fb1dab7b2365410abcc7b69df88bf09ed715222f47ff841f"
+        },
+        "epoch-01.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "b6b3eea4be1c5b500332fa8a22e68aadadb527a980b0fba24e78cc72e4d12341"
+        }
+      },
+      "epoch1_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/quota-recovery-8260542/context-spanning/narrow/train/epoch-01.pt",
+      "epoch1_sha256": "92b8b5ed1419e37934a3cded9af719caf58ee9c09186019db167b24ac4deb217",
+      "epoch1_hash_verified": true
+    }
+  ],
+  "no_Mac_checkpoint_download": true
+}
