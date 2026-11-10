@@ -1,0 +1,120 @@
+{
+  "schema": "actual-isambard-quota-recovery-status-v1",
+  "UTC": "2026-11-10T11:22:15Z",
+  "job_id": "8260542",
+  "source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+  "OneDrive_writes": false,
+  "checkpoint_downloads_to_Mac": false,
+  "adopted": false,
+  "lease": {
+    "provider": "Slurm",
+    "resource_key": "moshi-matched-two-gpu-v1",
+    "account": "brics.u6ada",
+    "authorization_sha256": "09a94b32454098cb4830edd5ac858e78708f200682f8d5e5e0a3b01c8abee611",
+    "continuation_authorization_sha256": "7c2a1f8ec6057b06b3475fd775071d5b16cab9b6a4fb9c9b666fbb6262d63072",
+    "continuation_interval": 3,
+    "quota_recovery_authorization_sha256": "02fde0e0797096e630cb45378cd7741fc48d8ea9972d44055e0f6378f73da7a2",
+    "job_id": "8260542",
+    "node": "nid010238",
+    "source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+    "controller_source": "65ea7b83d05450ca52df8ef9710dd35da7437bc3",
+    "worker_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-65ea7b83d054",
+    "start_unix": 1794305691.0,
+    "stop_unix": 1794392091.0,
+    "maximum_seconds": 86400,
+    "GPU_count": 2,
+    "prior_GPU_seconds": 3527
+  },
+  "training": {
+    "personaplex": {
+      "total_lineage_updates": 26,
+      "actual_new_updates_this_interval": 23,
+      "latest_update_seconds": 194.50714617100311,
+      "latest_weighted_objective": 1010.9536519245074,
+      "first_logged_update": 4
+    },
+    "context-spanning": {
+      "total_lineage_updates": 23,
+      "actual_new_updates_this_interval": 23,
+      "latest_update_seconds": 198.43371965101687,
+      "latest_weighted_objective": 164.7398047564975,
+      "first_logged_update": 1
+    }
+  },
+  "checkpoint_inventory": {
+    "personaplex": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/quota-recovery-8260542/personaplex/narrow/train/live.pt",
+      "bytes": 289931225,
+      "reference_step": 24,
+      "actual_sha256": "824785ac7f84bc923e1d3ef0e42aac43ae92ca14a7d57b6c5d47430e99080373",
+      "expected_sha256": "824785ac7f84bc923e1d3ef0e42aac43ae92ca14a7d57b6c5d47430e99080373",
+      "stable_read": true,
+      "hash_verified": true,
+      "independent_final_restore_still_required": true
+    },
+    "context-spanning": {
+      "path": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/quota-recovery-8260542/context-spanning/narrow/train/live.pt",
+      "bytes": 289914713,
+      "reference_step": 16,
+      "actual_sha256": "ef95263eca17feb2b7aef6f73cfc25d2692788189002a3b0dd833be5ff1fff41",
+      "expected_sha256": "ef95263eca17feb2b7aef6f73cfc25d2692788189002a3b0dd833be5ff1fff41",
+      "stable_read": true,
+      "hash_verified": true,
+      "independent_final_restore_still_required": true
+    }
+  },
+  "guard_age_seconds": 7.14838433265686,
+  "host_terminal": null,
+  "backups": "Old checkpoint remains on Lustre; interrupted state and current rolling states are on allocated NFS; no new off-machine checkpoint download during owner pause.",
+  "actual_Slurm_state": "RUNNING",
+  "actual_node": "nid010238",
+  "all_four_fresh_native_restores": [
+    {
+      "base": "context-spanning",
+      "capacity": "broad",
+      "passed": true,
+      "restored_training_step": 0,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "receipt_sha256": "04e2c8621ddfc6461488d1d76cb77975a42dccdd91f8aa98826b7b2a55941f18",
+      "native_execution_id": "f2231d140a4041deb655abc67baa8f25",
+      "actual_terminal_exit_code": 0
+    },
+    {
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "passed": true,
+      "restored_training_step": 0,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "receipt_sha256": "2f012883c5bb1d865081823489d76d45dec289d43e92dfccd1c1115b160f8c4a",
+      "native_execution_id": "5fa0752272d146028c58ef179968b935",
+      "actual_terminal_exit_code": 0
+    },
+    {
+      "base": "personaplex",
+      "capacity": "broad",
+      "passed": true,
+      "restored_training_step": 0,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "receipt_sha256": "95bc7d0cd86744b8d75ece376142a736431468e7da7e0dbd15c11d7f6b1c631f",
+      "native_execution_id": "a5ac0a3e3e6a482fa9e27b0458b495b8",
+      "actual_terminal_exit_code": 0
+    },
+    {
+      "base": "personaplex",
+      "capacity": "narrow",
+      "passed": true,
+      "restored_training_step": 3,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "receipt_sha256": "d4b4575842fd1caef02ddbc7eea14c5b7ee61b337b1a61a94ea9fd55057c8be9",
+      "native_execution_id": "fd64670370304cbc9f92269e6845745d",
+      "actual_terminal_exit_code": 0
+    }
+  ],
+  "certificate_valid_until_UTC": "2026-11-10T23:13:44Z",
+  "native_scheduled_stop_UTC": "2026-11-11T10:14:51Z",
+  "behavioral_improvement_established": false
+}
