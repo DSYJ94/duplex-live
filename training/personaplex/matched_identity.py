@@ -15,6 +15,7 @@ DEPENDENCIES=('training/personaplex/matched_losses.py','training/personaplex/mat
     'training/venus/opal_adapter.py','training/venus/state.py','evals/personaplex_adapters.py')
 META_EDIT=('source=a.source,base=a.base','source=lineage_source(a),base=a.base')
 RESTORE_EDITS=[("original['source']!=a.source", "not reference_source_matches(a,original['source'])"),
+    ("fingerprint(lm,groups)!=original['fingerprints']", "not compare_fingerprints(a,lm,groups,original,folder)"),
     ("dict(passed=True,source=a.source,actual_CUDA=True,", "dict(passed=True,source=a.source,lineage_source=lineage_source(a),base=a.base,capacity=a.capacity,\n            data_report_sha256=a.inputs_sha,actual_CUDA=True,")]
 MAIN_EDITS=[('def main(a):\n    import torch','def main(a):\n    compatibility=validate_lineage(a)\n    import torch'),
     ("    groups,report=corpus(Path(a.inputs),a.inputs_sha)", "    if compatibility:write(folder,'source-compatibility.json',compatibility)\n    groups,report=corpus(Path(a.inputs),a.inputs_sha)")]
@@ -29,7 +30,18 @@ def lineage_source(a):
 def reference_source_matches(a,producer):
     from .matched_interrupted import reference_allowed
     from .matched_failed_state import reference_allowed as failed_allowed
-    return producer in {a.source,lineage_source(a)} or reference_allowed(a,producer) or failed_allowed(a,producer)
+    from .matched_normal88 import reference_allowed as normal_allowed
+    return producer in {a.source,lineage_source(a)} or reference_allowed(a,producer) or failed_allowed(a,producer) or normal_allowed(a,producer)
+
+
+def compare_fingerprints(a,lm,groups,original,folder):
+    """Persist the actual comparison; same single forward and exact equality."""
+    from .matched_native import fingerprint,write
+    actual=fingerprint(lm,groups);expected=original['fingerprints'];passed=actual==expected
+    write(folder,'native-restore-comparison.json',dict(source=a.source,base=a.base,capacity=a.capacity,
+        checkpoint_sha256=a.checkpoint_sha,expected=expected,actual=actual,passed=passed,
+        criterion='unchanged exact native hidden/text-logit fingerprints',optimizer_updates=0))
+    return passed
 
 
 def function_sources(text):
@@ -76,7 +88,10 @@ def validate_lineage(a):
                  'docs/NATIVE-MOSHI-QUOTA-RECOVERY-AUTHORIZATION-2026-11-09.json',
                  'training/personaplex/matched_failed_state.py','training/personaplex/matched_guard.py',
                  'docs/NATIVE-MOSHI-POSTUPDATE-RECOVERY-AUTHORIZATION-2026-11-10.json',
-                 'docs/NATIVE-MOSHI-HEARTBEAT-FAILURE-RESULT-2026-11-10.json'):
+                 'docs/NATIVE-MOSHI-HEARTBEAT-FAILURE-RESULT-2026-11-10.json',
+                 'training/personaplex/matched_normal88.py',
+                 'docs/NATIVE-MOSHI-NORMAL88-RECOVERY-AUTHORIZATION-2026-11-10.json',
+                 'docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json'):
         raw=(root/file).read_bytes()
         if raw!=git_file(a.source,file):raise ValueError('Recovery policy differs from actual producer: '+file)
         hashes[file]=hashlib.sha256(raw).hexdigest()

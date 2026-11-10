@@ -20,6 +20,12 @@ class ResumeAccounting(unittest.TestCase):
         self.assertEqual(r.allocation_carry(text,ordered,'90001'),33821+14400)
         with self.assertRaises(ValueError):r.allocation_carry(text.replace('|15147|','|15146|'),ordered,'90001')
 
+    def test_normal88_recovery_includes_failed_restore_interval4(self):
+        text=self.text+'8235976|duplex-matched-prior|brics.u6ada|FAILED|1:0|644|gres/gpu=2|\n8260542|duplex-matched-quota|brics.u6ada|FAILED|1:0|15147|gres/gpu=2|\n8273944|duplex-matched-postupdate|brics.u6ada|FAILED|1:0|119|gres/gpu=2|\n'
+        ordered=[dict(lease=dict(self.ordered[0]['lease'],prior_GPU_seconds=34059,normal88_authorization_sha256='actual-rollback-grant'))]
+        self.assertEqual(r.allocation_carry(text,ordered,'90001'),34059+14400)
+        with self.assertRaises(ValueError):r.allocation_carry(text.replace('|119|','|118|'),ordered,'90001')
+
     def test_missing_duplicate_unlisted_failed_and_reset_carry_rejected(self):
         for text in (self.text.replace('|7200|','|86401|'),self.text.replace('COMPLETED|0:0|7200','FAILED|1:0|7200'),
                      self.text+self.text,self.text+'90002|duplex-matched-new|brics.u6ada|COMPLETED|0:0|20|gres/gpu=2|\n',

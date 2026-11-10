@@ -30,7 +30,7 @@ class LineageBoundary(unittest.TestCase):
     def test_math_optimizer_recipe_or_restore_fingerprint_change_rejected(self):
         current=Path(i.NATIVE).read_text()
         for old,new in [('learning_rate=2e-6','learning_rate=3e-6'),('weight_decay=RECIPE[\'weight_decay\']','weight_decay=0.'),
-                ("fingerprint(lm,groups)!=original['fingerprints']","False")]:
+                ("not compare_fingerprints(a,lm,groups,original,folder)","False")]:
             self.assertIn(old,current)
             with self.subTest(edit=old),self.assertRaises(ValueError):i.compare_native(self.original(),current.replace(old,new))
 

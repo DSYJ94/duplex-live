@@ -1,0 +1,32 @@
+{
+  "status": "OWNER_APPROVED_NORMAL88_ROLLBACK_RECOVERY",
+  "recorded_UTC": "2026-11-10T16:39:12.807452+00:00",
+  "owner_answer": "Approve rollback; keep existing caps",
+  "question_call": "call_752e4c227c88449cb263c3f0a9d290ad",
+  "proposal_commit": "a03453fe7ad8e168def8c93966b1ffef9b050492",
+  "proposal": "docs/NATIVE-MOSHI-NORMAL88-RECOVERY-PROPOSAL-2026-11-10.json",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "failed_job": "8273944",
+  "failed_allocated_seconds": 119,
+  "actual_prior_GPU_seconds": 34059,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 6,
+  "next_interval": 5,
+  "maximum_single_job_seconds": 86400,
+  "simultaneous_GPUs": 2,
+  "personaplex_step": 88,
+  "context_spanning_step": 80,
+  "deliberate_saved_update_replay": [
+    89
+  ],
+  "stop_if_either_narrow_restore_fails": true,
+  "slot6": "Only successful positive-update window5 with actual final independent restores and full source/state/time carry; no zero-update retries.",
+  "all_four_fresh_native_restores_before_learning": true,
+  "new_purchases": false,
+  "new_GCP_compute": false,
+  "new_external_model_API_calls": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "all_old_checkpoints_and_failed_artifacts_preserved": true
+}

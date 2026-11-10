@@ -10,7 +10,7 @@ from pathlib import Path
 
 from evals.moshi_model_download import sha256 as sha
 from training.personaplex import matched_guard as guard
-from training.personaplex.matched_identity import lineage_source,reference_source_matches,validate_lineage
+from training.personaplex.matched_identity import lineage_source,reference_source_matches,validate_lineage,compare_fingerprints
 from training.personaplex.matched_schedule import SIZES,STEPS,EPOCHS,validate,epoch
 
 BASE=Path('/projects/u6ada/duplex-live')
@@ -418,7 +418,7 @@ def restore(a,groups,report,folder,*,train=False):
         original=json.loads(Path(str(path)+'.native-reference.json').read_text())
         if (original['checkpoint_sha256']!=expected or not reference_source_matches(a,original['source'])
                 or original['execution_id']==os.environ['DUPLEX_NATIVE_EXECUTION_ID']
-                or fingerprint(lm,groups)!=original['fingerprints']):
+                or not compare_fingerprints(a,lm,groups,original,folder)):
             raise ValueError('Distinct-process actual native restore differs')
         restore_rng(state['rng'])
         write(folder,'restore.json',dict(passed=True,source=a.source,lineage_source=lineage_source(a),base=a.base,capacity=a.capacity,
