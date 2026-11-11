@@ -1,3 +1,32 @@
+# LOCAL — Same Isambard training continues; one current monitor
+
+The active objective is to finish the approved matched PersonaPlex / Context Spanning experiment, then compare reasoning, delegation and speech with the untouched bases. Keep valid training running. The application goal is active; its historical Venus244 wording does not replace this owner-approved experiment.
+
+Fresh check **11 November05:54:35UTC**: job **8285192** is RUNNING on **nid010789**, using the same two GPUs and native producer `d9453cfaa09076b1c181723384da4c9cf49a9524`.
+
+| Lineage | Actual completed updates | State |
+| --- | ---: | --- |
+| PersonaPlex,1,894,400 trainable parameters | 196/196 | Four epochs complete; final independent native restore passed |
+| Context Spanning,1,894,400 trainable parameters | 196/196 | Four epochs complete; final independent native restore passed |
+| PersonaPlex,105,070,592 trainable parameters | 24/196 | Training; PID26245, execution `cd104fd28ddd4f0691b86736defb1fbb` |
+| Context Spanning,105,070,592 trainable parameters | 23/196 | Training; PID34309, execution `053f64786fc542a2a9ad9ce9142c0a70` |
+
+Both narrow final restores prove exact Adam/RNG/OPAL/native outputs; their actual exit codes are0. This establishes saved-state integrity, not improved reasoning or speech. Full frozen32 per condition across four candidates and two matched untouched bases remains required. Keep the original data, retention losses, recipe, folds and common OPAL KEEP/API0 unchanged during this comparison. No new model API calls are authorized.
+
+**Monitoring:** old read-only observer84424 ended after two SSH banner timeouts. Its shell pipeline returned0 because `tee` succeeded; the Python traceback records actual observer failure, never a successful training terminal. An actual process check found no remaining observer. One bounded fresh probe then confirmed the training job healthy at05:54:35UTC. **Current replacement is tool38870**, appending the existing ignored `runs/isambard-normal88-20261110/storage6-monitor-8285192.jsonl`. The new shell uses `pipefail` so Python failure is reflected in the tool exit code. Python observer code,35s local/25s remote deadlines,60s polls and one bounded read retry are unchanged. Old31208/84424/25705 are not active handles. Never duplicate a model or observer on a timeout.
+
+**Checkpoints:** both narrow147 and196 states have full hash/reference/receipt verification on allocated NFS and existing independent Lustre. Exact proofs are in `docs/NATIVE-MOSHI-NARROW-COMPLETE-2026-11-11.json` and `docs/NATIVE-MOSHI-BACKUP-QUOTA-RECOVERY-2026-11-11.json`. The quota repair preserved all2425 files of an obsolete clean source checkout on NFS before replacing only its redundant Lustre working files with a symlink; no model, data, active source or checkpoint was deleted. Primary HOME usage is9.52GB, below the strict32GiB guard.
+
+No immutable broad epoch exists yet; rolling broad states are on NFS. Artifact watcher114294/login42 is still UNKNOWN after its SSH connection failed; no terminal has appeared. Do not start a competing persistent watcher or repeat random-host diagnostics. At the next immutable broad epoch, verify any existing original backup first; if absent, use the unchanged archive function for one synchronous, fully hashed copy into the disjoint allocated-Lustre recovery3 subtree described below. Preserve original failures and report new copies only after actual rsync0/hash proof. No new off-provider weights have been copied.
+
+**Execution limits remain unchanged:** ROOT `/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192`; start10Nov22:28:47UTC; original STOP11Nov22:28:47UTC. Current interval6 of maximum8;44,709 prior GPU seconds plus every actual current elapsed second×2 count against112 aggregate GPU-hours. One job/two GPUs, maximum24h per allocation. Later7/8 require actual positive successful windows, exact final native restores, real Slurm COMPLETED0 and complete accounting; a failed6 cannot be blindly resumed. Exact authorization SHA `58723fa032be29cb639a02bc1ebb372b5b83faabf85ca723980a6ee346d8f7ab`.
+
+**Workspace:** OneDrive editing, eviction and checkpoint downloads remain PAUSED. Work only in `/private/tmp/duplex-quota-recovery-20261109` on main. Do not recreate/read/edit the original OneDrive checkout. Commit/push only relevant temporary-checkout source/metadata. No GCP, purchases, external model calls, new agents, other chats or task-watching automations. Local certificate remains valid until11Nov10:33:07UTC; renew through official Clifton sign-in when needed. No human input is pending.
+
+**Next:** keep observing the same job through broad immutable epochs, backups, positive window completion and final restores. Resume only under the approved successful-checkpoint rules if the allocation limit is reached. Then run the prepared full native comparison and independent reasoning/delegation/speech review, followed by unchanged fresh20/backend/live requirements before adoption. Keep the product objective in view; no more preparatory diagnostics while valid training runs.
+
+---
+
 # LOCAL — SSH monitoring restored; NEW single read-only observer84424
 
 Oldobserver31208 ended1 after two SSHbannertimeouts at~04:44UTC11Nov; notifyowner of accessgap, no trainingstopassumption. Boundedfreshactualprobe **04:44:57UTC** succeeded: SAME8285192 RUNNING/nid010789, broadraw16/CS14, samePIDs26245/34309, narrow196bothfinalnativePASS/backedup. Actualcertvalid10Nov22:33:07→11Nov10:33:07UTC, no sign-inblocker. Read-only actualpgrep confirmed NO oldmatched_observer process before reconnect. **ONE new foreground observertool84424** now runs unchanged boundedfreshSSH/60spolls/one-read-retry and appends ignoredexisting storage6-monitor-8285192.jsonl. Do NOTreuse31208 orduplicate84424/modelontimeout.
