@@ -1,3 +1,11 @@
+# LOCAL — BOTH96 recovery states preserved; valid training continues
+
+Actual SAME8317068 RUNNING21:47:11UTC/nid010999, Plex96/CS98, same10e7source/workers/observer64733; no terminal/archivefailure. ContextSpanning98 completeepoch2 remains independently archived. PersonaPlex96 now full source/destination/reference/derivedreceipt hashPASS on independentLustre21:49:04UTC:1557215641bytes SHA1ef88102760622f17a39878deb86b554e38d2d2a43fa0a610f0882cffb7edb7f. Destination job-8317068-rolling-v1/personaplex/broad/step-0096/live.pt. Smallreceipt rsync0/tempLOCAL and SHA-boundexecutionJSON; native restore still required, no fabricated behavior approval. Original matched_archive code unchanged; allolderstates intact, noMacweights/OneDriveedits. Readerg2:430 completed; soleobserver64733 continues. HOME20619415552bytes passes32GiB.
+
+Next watch actualPlex98 completeepoch/automaticarchive and ongoingupdates; fullgenerated192evaluation is AFTERtraining, noteach epoch. Allcurrent112GPUh/max10/successfulparentfinal10/API0/unchangedmathdataretention maintained. Futurefinal10stillrequires scheduler-pacing contract reconciliation; draftCPUprototype94b74f4 is notdeployed/approved90sprovidersemantics. Do not hot-editliveworker orinterruptvalidtraining. Cliftonexpires22:55:48UTC; openofficialrenewalbeforeexpiration. GoalACTIVE, product/foundationdecisionunfinished. OneDrivePAUSED; tempmaincheckoutonly; no newresources/jobs/GCP/purchases/APIs/agents/chats.
+
+---
+
 # LOCAL — Context Spanning second epoch complete and independently preserved
 
 Actual same8317068 RUNNING21:42:53UTC4:24:03/nid010999, Plex95/CS98, no terminal/archivefailure, same10e7producer/workers and observer64733. ContextSpanning actualepoch2 receipt says98 lineageupdates/49updates thisepoch/complete323coverage. Existing archivehelper automatically preserved full1557323389byte epoch-02.pt on independentLustre, SHA15490a43397f3a61fd50e901dd59677887d6d8514c3cbd1553979ea8223c4323, source/destination/reference/epochreceipt hashesPASS21:42:25UTC. Destination job-8317068/context-spanning/broad/epoch-02/epoch-02.pt. Smallactualarchive-status JSONrsync0/tempLOCAL and SHA-bound in executionJSON. No duplicateepochwriter, no Macweights/OneDrivewrites. Allrolling96/88/olderstates retained; independentnative restore still required for laterresume/adoption.
