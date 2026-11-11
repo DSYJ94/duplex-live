@@ -1,0 +1,112 @@
+{
+  "actual_cpu_container_proof": {
+    "actual_UTC": "2026-11-11T16:09:52Z",
+    "source": "e074373a44e01c5920dc80687f191af277dcc53b",
+    "mode": "ACTUAL_HOST_CPU_PARALLEL_CONTAINED_MOUNT_PROOF_NOT_GPU_RESTORE",
+    "same_GPU_command_except_nv_removed_and_CUDA_minus1": true,
+    "target_precreated": true,
+    "rows": [
+      {
+        "child": 1,
+        "actual_exit": 0,
+        "stdout": "{\"pid\": 105, \"source_native_import\": true, \"models_loaded\": 0, \"optimizer_updates\": 0, \"cuda_visible\": \"-1\", \"mount_target_exists\": true}\n",
+        "stderr": "INFO:    fuse2fs not found, will not be able to mount EXT3 filesystems\nINFO:    gocryptfs not found, will not be able to use gocryptfs\n"
+      },
+      {
+        "child": 2,
+        "actual_exit": 0,
+        "stdout": "{\"pid\": 105, \"source_native_import\": true, \"models_loaded\": 0, \"optimizer_updates\": 0, \"cuda_visible\": \"-1\", \"mount_target_exists\": true}\n",
+        "stderr": "INFO:    fuse2fs not found, will not be able to mount EXT3 filesystems\nINFO:    gocryptfs not found, will not be able to use gocryptfs\n"
+      }
+    ],
+    "passed": true,
+    "GPU_jobs_submitted": 0,
+    "models_loaded": 0
+  },
+  "proof_sha256": "8a3c5059604a887103b7fd967c57bb2db1a67fdc354325e80e86c269937320c2",
+  "metadata_rsync_exit": 0,
+  "failed8_metadata_copy_inventory": {
+    "rpc-recovery-initial.json": {
+      "bytes": 180,
+      "sha256": "6aef56e6f0ed9ce286b66466abfad3394cafabfa41ce7906313116fb866de641"
+    },
+    "execution-8314862/context-spanning-current.json": {
+      "bytes": 294,
+      "sha256": "b892876a2a01835a560f52caff513798aa53d23b81485ed0c692df823803e764"
+    },
+    "execution-8314862/health-mirror.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-8314862/independent-archive.log": {
+      "bytes": 349,
+      "sha256": "b4d80ef5fd946ca0d3e57d76859488162f1812cb40b67ca192303cab2e2c0b3d"
+    },
+    "execution-8314862/guard.json": {
+      "bytes": 1059,
+      "sha256": "df6b531d8996e0a0f109c654d2c631c504112e2b9202a8507f9e0940972a8bcb"
+    },
+    "execution-8314862/storage-last-observation.json": {
+      "bytes": 672,
+      "sha256": "c402766dff6febb1cc8a508dee6e38c802437c979665f72b4bb8afe6bf32ba9f"
+    },
+    "execution-8314862/personaplex-current.json": {
+      "bytes": 289,
+      "sha256": "d206593516c00757ab71066ba395822c1fc198bc27641719a056b5b738f2d199"
+    },
+    "execution-8314862/context-spanning-broad-restore-terminal.json": {
+      "bytes": 390,
+      "sha256": "d3a0461675eb61319750d102d5d631e0e2c540033888cdca95ecbcc2733a4745"
+    },
+    "execution-8314862/health-storage.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-8314862/independent-archive-process.json": {
+      "bytes": 190,
+      "sha256": "89de5d397bb4cb384e9d18f110441deece2b3ff59b1623ca12c61e6290f237ee"
+    },
+    "execution-8314862/health-services.json": {
+      "bytes": 327,
+      "sha256": "393c85d0b3f1ee1398addc71c879d35ffb6f2fb3a2f5daefc369f08f53cae83e"
+    },
+    "execution-8314862/lease.json": {
+      "bytes": 1399,
+      "sha256": "ebc86f9c6b3e5534ed3da0557c56d5175bcf86b387b7a07c52d8f22ce39d55d0"
+    },
+    "execution-8314862/context-spanning-broad-restore.log": {
+      "bytes": 135,
+      "sha256": "13a8498ab8a3180e6c2a8daddb0db88bb69b026fbc7ad5bd835f9c5d0a745d35"
+    },
+    "execution-8314862/independent-archive-terminal.json": {
+      "bytes": 162,
+      "sha256": "92c0ec713fe333c1993c29c8e94c652d91b46416efaee3c20d9a7390c9377183"
+    },
+    "execution-8314862/terminal.json": {
+      "bytes": 178,
+      "sha256": "e5b868a688b83f955b46680875a2bca357653fd719eefc2d1ff8ee69618742bf"
+    },
+    "execution-8314862/personaplex-broad-restore-terminal.json": {
+      "bytes": 384,
+      "sha256": "e91f1736ad5e3275cae5e90a1d8d6f1aaeb71228b48d0d9b0e5a492131c5bcdf"
+    },
+    "execution-8314862/personaplex-broad-restore.log": {
+      "bytes": 478,
+      "sha256": "c5e34f81c0092b9e9eb7618836a3fdb06c0b21d8234f58b02450d8ee009a4639"
+    },
+    "execution-8314862/health-watch.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-8314862/storage-admission.json": {
+      "bytes": 497,
+      "sha256": "e9b16df827057e7644a27dd01e5b1432beb7c07d1d39f1e6940490e62c8817c7"
+    }
+  },
+  "failed8_metadata_files": 19,
+  "actual_HOST_Python36_unit_tests": 22,
+  "actual_HOST_unit_test_exit": 0,
+  "native_CUDA_restore_proven": false,
+  "model_loaded": false,
+  "GPU_job_submitted": false
+}
