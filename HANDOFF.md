@@ -1,3 +1,11 @@
+# LOCAL — Proposed paced monitor read adapters prepared
+
+Added paced_observations provider/local callbacks reusing original matched_guard.refresh/ensure and matched_health.storage_valid plus actual Linux process identity reader. Provider always passes last_success=None so old fast retry/fallback cannot bypass new engine spacing; original observation timestamp/receipt preserved and checked before normalization. Local process/storage errors propagate, storage timestamp is not relabelled as fresh. Combined local24testsPASS. This is still NOT a launched service, actual host proof, deployed change or owner90s-provider amendment. No original CONTROL/native files changed. Remaining focused work is parent-launcher binding/service lifecycle/native-guard output + explicit policy amendment and actual CPU host verification before final10. Do not substitute unit tests for this remaining integration.
+
+Actual same8317068 RUNNING22:17:53UTC/Plex99CS102/noarchivefailure. Both98epochstates safely preserved; current10e7producer/observer64733 unchanged. Training valid and continues. OneDrive stayspaused; temporarycheckoutonly. Userready pending for expired Clifton renewal; existingcert22:55:48UTC.112GPUh/max10/allnativegates preserved; no new model run, calibration, API, purchase, GCP or duplicatejob. BroadgoalACTIVE.
+
+---
+
 # LOCAL — Proposed paced heartbeat engine tested; current training untouched
 
 Added training/personaplex/paced_heartbeat.py, a CPU-only callback engine combining separate provider/local evidence clocks. Provider attempt spacing includes failed attempts; timeout can retain ONLY original unexpired evidence; cancellation/identity/other errors are terminal with no fallback or implicit restart. Actual query latency counts toward expiry. Combined engine/process-identity/clock-contract20testsPASS (local CPU). This engine cannot submit or write a native guard and is NOT wired into actual launcher/provider/local probes. No claim of actual host proof or complete service compliance. Original45s authority still requires explicit provider90/local45 reconciliation before final10. The future launcher integration must also preserve immutable CONTROL/source verification and actual accounting, not bypass it. No liveguard changed.
