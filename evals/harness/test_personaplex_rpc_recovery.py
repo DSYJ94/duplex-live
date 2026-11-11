@@ -9,6 +9,30 @@ from training.personaplex import matched_resume as resume
 from training.personaplex import matched_rpc_submit as submission
 
 
+class StartupSchedulerRead(unittest.TestCase):
+    def test_transient_timeout_recovers_original_provider_clocks(self):
+        timeout=job.subprocess.TimeoutExpired(['scontrol'],20)
+        text='JobId=8314042 StartTime=2026-11-11T15:20:00 EndTime=2026-11-12T15:20:00'
+        with patch.object(job.subprocess,'check_output',side_effect=[timeout,text]) as read:
+            result=job.startup_job('8314042')
+        self.assertEqual(read.call_count,2)
+        self.assertEqual(result['StartTime'],'2026-11-11T15:20:00')
+        self.assertEqual(result['EndTime'],'2026-11-12T15:20:00')
+        for call in read.call_args_list:
+            self.assertEqual(call[0][0],['scontrol','show','job','-o','8314042'])
+            self.assertEqual(call[1]['timeout'],20)
+
+    def test_permanent_timeout_stops_after_three_reads_without_submission(self):
+        with patch.object(job.subprocess,'check_output',side_effect=job.subprocess.TimeoutExpired(['scontrol'],20)) as read,patch.object(job.subprocess,'run') as submit:
+            with self.assertRaises(job.subprocess.TimeoutExpired):job.startup_job('8314042')
+            self.assertEqual(read.call_count,3);submit.assert_not_called()
+
+    def test_access_or_command_failure_is_not_retried(self):
+        with patch.object(job.subprocess,'check_output',side_effect=job.subprocess.CalledProcessError(1,['scontrol'])) as read:
+            with self.assertRaises(job.subprocess.CalledProcessError):job.startup_job('8314042')
+            self.assertEqual(read.call_count,1)
+
+
 class ExactFailureStates(unittest.TestCase):
     def test_pending_authority_cannot_query_or_submit_scheduler(self):
         with patch.object(r,'authority',side_effect=ValueError('pending')),patch.object(submission.subprocess,'check_output') as query,patch.object(submission.subprocess,'run') as mutate:

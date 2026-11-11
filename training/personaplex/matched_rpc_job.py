@@ -22,6 +22,24 @@ from . import matched_rpc_recovery as recovery
 HISTORY=dict(OLD_HISTORY,**{'8285192':dict(state='FAILED',elapsed=45141,GPUs=2)})
 
 
+
+def startup_job(jobid):
+    """Read-only retry BEFORE model/lease creation; never retries a submission.
+
+    Three 20s reads at most. No active training freshness deadline is extended.
+    Provider StartTime/EndTime remain authoritative and are never reset.
+    """
+    for attempt in range(3):
+        try:
+            value=subprocess.check_output(['scontrol','show','job','-o',jobid],
+                universal_newlines=True,timeout=20)
+            return g.parse_job(value)
+        except subprocess.TimeoutExpired:
+            print(json.dumps(dict(event='startup_scheduler_timeout',job_id=jobid,
+                attempt=attempt+1,maximum_attempts=3)),flush=True)
+            if attempt==2:raise
+
+
 def initial_entries(original,root,execution):
     recovery.authority();rows=initial_plan(original,root,execution)
     for row in rows:
@@ -45,7 +63,7 @@ def main(a):
         '--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocTRES'],universal_newlines=True,timeout=20).strip()
     if not actual.startswith('8285192|FAILED|1:0|45141|') or 'gres/gpu=2' not in actual:
         raise ValueError('Actual failed6 must stay failed; no manufactured successful parent')
-    job=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',jobid],universal_newlines=True,timeout=20))
+    job=startup_job(jobid)
     if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Exact matched allocation required')
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
         continuation_authorization_sha256=g.sha(g.EXTENSION),continuation_interval=7,
