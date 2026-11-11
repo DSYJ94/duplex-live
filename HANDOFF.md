@@ -1,3 +1,16 @@
+# LOCAL — Almost3h valid training; both rolling80 states independently hash-backed
+
+Previous goal turn made progress preserving both72 states. This turn verified SAME live job/observer throughout subsequent updates, then preserved new80 states. Latest fresh20:16:44UTC:8317068 RUNNING2:57:54/nid010999, PersonaPlex84 / Context Spanning86, same producer10e7e0664e47c1222e0492a8367b3c000ed5789d and train execution IDs. No terminal/archive failure or model/recipe change. HOME19061612544bytes remains below34359738368byte guard. Narrow196/196 remains complete and is not retrained. No convergence or behavioral improvement claim from these per-batch training objectives.
+
+Both new80 backups passed complete source/destination weight hash, native-reference and derived backup-input receipt checks on independent Lustre with actual rsync0:
+- PersonaPlex80:1557103513bytes, SHAc95bdbc13590bc00522b7fe5d319c1759fe5725f99e6ca7d57c18c46bb205cbb,20:16:46UTC.
+- Context Spanning80:1557162969bytes, SHA03e74de0a869e21a337f67cb3737881947148842be07d7b07c016895ac140d45,20:16:36UTC.
+Immutable destinations: `/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/<base>/broad/step-0080/live.pt`. These copies preserve full saved training state but still need native fresh-process restore before any future adoption/resume approval. Backup inputs explicitly derive from actual native save references and matching logged steps; they are NOT manufactured native reports. Prior64/72 and all historical states/data/receipts remain intact. Small80 receipts copied with rsync0 to temporary LOCAL and SHA-bound in docs/NATIVE-MOSHI-MOUNT9-EXECUTION-2026-11-11.json. No Mac weights or OneDrive writes.
+
+Only observer64733 remains live. Reader cells g2:350/g2:351 completed; no second observer/model/continuation job was started. Continue monitoring valid training and the epoch/window archive helper; preserve later useful saves. Official Clifton certificate currently valid until22:55:48UTC; arrange renewal before fresh monitoring expires, without pausing the independent remote job. Final10 controller at7cf4325993171f773e137dde72763b2fb4efb369 is already CPU-proved, and must be invoked ONLY after actual successful positive9/COMPLETED0/final native restores/verified selected backups with complete accounting and sufficient full remaining schedule. No failed9 retry/no11. Keep112aggregateGPUh/max10/twoGPU/max24h/135137priorGPU seconds and API0 unchanged. OneDrive editing/eviction/weight downloads remain PAUSED. Product goal ACTIVE/unfinished; Venus remains a preserved third track, and no foundation winner is established yet. No new purchases/GCP/resources/APIs/agents/chats/automations.
+
+---
+
 # LOCAL — Sustained valid training; BOTH rolling72 states fully hash-backed
 
 Previous goal turn made progress preparing the authorized final continuation. This turn maintained a verified wait on SAME actual observer64733/job8317068, then preserved new recovery states. Latest fresh18:38:06UTC: RUNNING1:19:16/nid010999, PersonaPlex72 / Context Spanning73, same producer10e7e0664e47c1222e0492a8367b3c000ed5789d and train execution IDs. No terminal or archive failure. Provider HOME usage19061207040bytes remains below34359738368byte guard. No model/code/recipe change or training interruption.
