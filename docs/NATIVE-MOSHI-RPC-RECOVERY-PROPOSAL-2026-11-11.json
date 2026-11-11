@@ -52,7 +52,7 @@
   "evaluation": "Full32 per condition, four candidates plus two untouched bases; complete192. Reasoning independent of ASR; no adoption before full fresh20/connected-backend/live/British listening qualification.",
   "new_scope": "Allows failed6 recovery7 using exact saved62/63, and new pinned producer identity with concurrent scheduler reads; no extra starts/hours/resources/replay or weaker freshness",
   "known_limit": "A genuine scheduler outage lasting45seconds still stops; historical outage avoidance is not proven",
-  "recovery_status": "INTEGRATED_LOCAL44_TESTS_HOST19_PASS_FINAL_WRAPPER_HOST_TEST_PENDING",
+  "recovery_status": "PREPARED_LOCAL44_HOST21_AND_ORIGINAL_EVIDENCE_PASS_AWAITING_OWNER",
   "original_evidence_sha256": {
     "personaplex/narrow": {
       "epoch-04.pt.native-reference.json": "d61e16fece57364d23450579ad6a2e1f30951dbc72e44b457b129a800abf4022",
@@ -75,5 +75,19 @@
       "training-interrupted.json": "0ab94aa7801aed5098245a5be46c7107214c0775872e6f0963c06c0033e00c4d"
     }
   },
-  "original_host_CPU_proof_source": "69cede4404dcf1f1520ed6b373f610971240dcd1"
+  "original_host_CPU_proof_source": "69cede4404dcf1f1520ed6b373f610971240dcd1",
+  "prepared_code_source": "52e4820aaa270a2f8400828a778998a0f6ff103e",
+  "host_proof": "docs/NATIVE-MOSHI-RPC-RECOVERY-HOST-PROOF-2026-11-11.json",
+  "local_CPU_tests": 44,
+  "actual_HOST_Python36_CPU_tests": 21,
+  "forecast_remaining_serial_seconds": {
+    "personaplex": 90211.84474451684,
+    "context_spanning": 87298.24655869926
+  },
+  "forecast_remaining_GPU_seconds_including_full_evaluation_reserve": 202023.68948903368,
+  "forecast_total_GPU_hours": 93.61519152473157,
+  "forecast_is_not_a_new_benchmark": true,
+  "submission_module": "training.personaplex.matched_rpc_submit",
+  "submission_safety": "Exclusive durable claim; any sbatch timeout stays UNKNOWN and is never automatically retried",
+  "no_owner_grant_file_exists": true
 }

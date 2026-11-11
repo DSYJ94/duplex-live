@@ -1,0 +1,103 @@
+{
+  "exported_UTC": "2026-11-11T11:30:43.919527+00:00",
+  "actual_metadata_rsync_exit": 0,
+  "records": {
+    "rpc-recovery-host-cpu-69cede4.json": {
+      "sha256": "f5ceac0d13f215aa30ae81adcdde923c11f17533180d8854cd6badd698aaeb90",
+      "value": {
+        "actual_UTC": "2026-11-11T11:22:01Z",
+        "source": "69cede4404dcf1f1520ed6b373f610971240dcd1",
+        "python": "3.6.15 (default, Apr 27 2026, 16:53:54) [GCC]",
+        "actual_cpu_test_exit": 0,
+        "output": "{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n----------------------------------------------------------------------\nRan 19 tests in 0.283s\n\nOK\n",
+        "native_and_nine_math_dependencies_byte_exact": true,
+        "model_loaded": false,
+        "GPU_job_submitted": false,
+        "owner_authorization_exists": false
+      }
+    },
+    "rpc-selected-state-cpu-evidence-69cede4.json": {
+      "sha256": "d446886b65edba092f61c12d1f7e746a6cf3a781f1dd4bdcb57a210e05890bc0",
+      "value": {
+        "actual_UTC": "2026-11-11T11:22:41Z",
+        "source": "69cede4404dcf1f1520ed6b373f610971240dcd1",
+        "actual_exit": 0,
+        "mode": "READ_ONLY_ARTIFACT_VALIDATION_NOT_AUTHORIZATION",
+        "records": [
+          {
+            "base": "context-spanning",
+            "capacity": "broad",
+            "step": 63,
+            "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+            "metadata_and_source_hash_valid": true
+          },
+          {
+            "base": "context-spanning",
+            "capacity": "narrow",
+            "step": 196,
+            "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+            "metadata_and_source_hash_valid": true
+          },
+          {
+            "base": "personaplex",
+            "capacity": "broad",
+            "step": 62,
+            "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+            "metadata_and_source_hash_valid": true
+          },
+          {
+            "base": "personaplex",
+            "capacity": "narrow",
+            "step": 196,
+            "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+            "metadata_and_source_hash_valid": true
+          }
+        ],
+        "torch_model_loaded": false,
+        "native_CUDA_restore_tested": false,
+        "owner_grant_created": false
+      }
+    },
+    "rpc-recovery-final-host-proof-52e4820.json": {
+      "sha256": "edbe204764001eccae7c11d5ef93ad2949f80f465cf74ed3bd545c9408d0a498",
+      "value": {
+        "actual_UTC": "2026-11-11T11:28:11Z",
+        "source": "52e4820aaa270a2f8400828a778998a0f6ff103e",
+        "python": "3.6.15 (default, Apr 27 2026, 16:53:54) [GCC]",
+        "actual_test_exit": 0,
+        "output": "{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794225605.0}\n----------------------------------------------------------------------\nRan 21 tests in 0.269s\n\nOK\n",
+        "selected_original_evidence": [
+          {
+            "base": "context-spanning",
+            "capacity": "broad",
+            "step": 63,
+            "pinned_original_evidence_valid": true
+          },
+          {
+            "base": "context-spanning",
+            "capacity": "narrow",
+            "step": 196,
+            "pinned_original_evidence_valid": true
+          },
+          {
+            "base": "personaplex",
+            "capacity": "broad",
+            "step": 62,
+            "pinned_original_evidence_valid": true
+          },
+          {
+            "base": "personaplex",
+            "capacity": "narrow",
+            "step": 196,
+            "pinned_original_evidence_valid": true
+          }
+        ],
+        "native_and_nine_math_dependencies_byte_exact": true,
+        "full_checkpoint_hash_read_evidence": "rpc-selected-state-cpu-evidence-69cede4.json",
+        "model_loaded": false,
+        "GPU_job_submitted": false,
+        "owner_grant_exists": false
+      }
+    }
+  }
+}
