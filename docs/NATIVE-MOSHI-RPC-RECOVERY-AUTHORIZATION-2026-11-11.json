@@ -1,0 +1,96 @@
+{
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "failed_job": "8285192",
+  "failed_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+  "actual_prior_GPU_seconds": 134991,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 8,
+  "next_interval": 7,
+  "maximum_single_job_seconds": 86400,
+  "simultaneous_GPUs": 2,
+  "saved_update_replay": false,
+  "native_guard_seconds": 45,
+  "storage_guard_seconds": 120,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "first_recovery_allowed_after_failed_window6": true,
+  "selected_states": {
+    "personaplex/narrow": {
+      "step": 196,
+      "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+      "name": "epoch-04.pt"
+    },
+    "context-spanning/narrow": {
+      "step": 196,
+      "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+      "name": "epoch-04.pt"
+    },
+    "personaplex/broad": {
+      "step": 62,
+      "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+      "name": "interrupted.pt"
+    },
+    "context-spanning/broad": {
+      "step": 63,
+      "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+      "name": "interrupted.pt"
+    }
+  },
+  "all_four_fresh_native_restores_before_learning": true,
+  "stop_on_any_restore_failure_no_automatic_rollback": true,
+  "repeat_gradient_calibration": false,
+  "training_target_per_arm": 196,
+  "complete_coverage_epochs": 4,
+  "unchanged_data_losses_precision_retention_and_folds": true,
+  "remaining_GPU_hours": 74.5025,
+  "interval8": "Only after actual successful positive7; full training completion permits evaluation-only8, otherwise remaining training plus full evaluation using matched_finish",
+  "evaluation": "Full32 per condition, four candidates plus two untouched bases; complete192. Reasoning independent of ASR; no adoption before full fresh20/connected-backend/live/British listening qualification.",
+  "new_scope": "Allows failed6 recovery7 using exact saved62/63, and new pinned producer identity with concurrent scheduler reads; no extra starts/hours/resources/replay or weaker freshness",
+  "known_limit": "A genuine scheduler outage lasting45seconds still stops; historical outage avoidance is not proven",
+  "original_evidence_sha256": {
+    "personaplex/narrow": {
+      "epoch-04.pt.native-reference.json": "d61e16fece57364d23450579ad6a2e1f30951dbc72e44b457b129a800abf4022",
+      "training.jsonl": "b328b5a514f30e83ecb814d984c8317d66f160817d64419fbb6c94cb0152c8c3",
+      "training-terminal.json": "47c9842866aa96cc2bcb5607eba83fd642cc47074f4cb9997daa22dceac5ca8d"
+    },
+    "context-spanning/narrow": {
+      "epoch-04.pt.native-reference.json": "02ab2efc2eae8acf3c7b3020c8698362f5b4d108f675f3a67028f28d35961731",
+      "training.jsonl": "5fce8d5fd021edcf063bd206c7ce1158677bea05de32e277f582a1c94130b8da",
+      "training-terminal.json": "29f8484a2299189b0f3da25d45ef283c3c68dac7bd422b631bbc9c2cc2ca11ab"
+    },
+    "personaplex/broad": {
+      "interrupted.pt.native-reference.json": "b4ed9806e32b2d675e8b01c5c2b57ef723d13269b1b6458eacccb0b7dfc5a595",
+      "training.jsonl": "a01f2fecf77b78c663ab7a9f48e685b91219e5945693a572b8f7f73d77f11a24",
+      "training-interrupted.json": "54f66a39fbcac01908ff3defd0771169bfeb811f9f54ecd6ee1396457abdcac5"
+    },
+    "context-spanning/broad": {
+      "interrupted.pt.native-reference.json": "5ad9c4c75911a53ce7c0cca62bd887b96e8f33eaa8eae47d2c9cfff62515f7a2",
+      "training.jsonl": "441e9980ac3be245dc3bbf8bf225d35e7b575de9cf39c4779956e61b4c9cf893",
+      "training-interrupted.json": "0ab94aa7801aed5098245a5be46c7107214c0775872e6f0963c06c0033e00c4d"
+    }
+  },
+  "original_host_CPU_proof_source": "69cede4404dcf1f1520ed6b373f610971240dcd1",
+  "prepared_code_source": "52e4820aaa270a2f8400828a778998a0f6ff103e",
+  "host_proof": "docs/NATIVE-MOSHI-RPC-RECOVERY-HOST-PROOF-2026-11-11.json",
+  "local_CPU_tests": 44,
+  "actual_HOST_Python36_CPU_tests": 21,
+  "forecast_remaining_serial_seconds": {
+    "personaplex": 90211.84474451684,
+    "context_spanning": 87298.24655869926
+  },
+  "forecast_remaining_GPU_seconds_including_full_evaluation_reserve": 202023.68948903368,
+  "forecast_total_GPU_hours": 93.61519152473157,
+  "forecast_is_not_a_new_benchmark": true,
+  "submission_module": "training.personaplex.matched_rpc_submit",
+  "submission_safety": "Exclusive durable claim; any sbatch timeout stays UNKNOWN and is never automatically retried",
+  "status": "OWNER_APPROVED_RPC_FAILURE6_RECOVERY",
+  "owner_answer": "Approve recovery7 within existing limits",
+  "proposal_sha256": "904a9e315fd5ab38622f5b34eff661d90ca5ca178598a8b6e2c9ba4c304d4918",
+  "proposal_commit": "5e692864fb771ab60328feebfe3818fc0db902f6",
+  "question_call": "call_5d6f917a3c2c4244933c4fbac15fe750",
+  "approved_UTC": "2026-11-11T15:18:40.373385+00:00"
+}

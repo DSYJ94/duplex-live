@@ -1,3 +1,13 @@
+# LOCAL — Owner APPROVED recovery7; deploy and submit ONCE now
+
+Owner answered exactly "Approve recovery7 within existing limits" to call_5d6f917a3c2c4244933c4fbac15fe750, proposal5e692864fb771ab60328feebfe3818fc0db902f6. NEWtracked authorization records actual answer/proposalSHA/commit/question, verified by runtimeauthority. This supersedes the missing-decision blocker. Same exact62/63 + carried196/196, all4NEWnative restores beforelearning, no replay/rollback/calibrationrepeat, same112GPUh/max8/current7/134991prior seconds/one2GPUjob/24h. All code bytes remain identical to actualHOSTCPU-tested52e4820; only grant/handoff metadata changed. No grantwasfabricated beforeowneranswer.
+
+Freshlocalcertificate valid11Nov10:55:48→22:55:48; realSSH/queue/submissionclaim check underway. Beforelaunch requireactualemptyqueue/failed6unchanged/noexistingexclusiveclaim. Gitdeploy approvedproducer to NEWallocatedNFSworktree, verifycodebytes/authority and shortactualHOSTCPUcheck, invoke `matched_rpc_submit` ONCE. Observeactualclaim/sbatch response/SlurmID and SAMErealprocess; neverrerun on timeout. No newjob yet atthisentry. Alloldbackup/evidence/source records remainoriginal.
+
+CurrentLOCALmain temporarycheckoutonly; OneDrivePAUSED. NoGCP/purchase/API/newresources/newagents/chats/automations. GoalappstillreportedBLOCKED on initialread despiteuserapproval; toolcannotsetACTIVE. Work is explicitly authorized by actualownerreply and mustcontinue; do notmarkgoalcompleteorcreate replacement goal to bypassappcontrols. No additionalexecutionapproval needed for exactscope.
+
+---
+
 # LOCAL — BLOCKED on owner recovery amendment; no GPU running
 
 The same required decision has remained absent across three consecutive goal turns, starting with the ready-proposal/approval request. Fresh audit: checkoutclean/main5e692864fb771ab60328feebfe3818fc0db902f6 beforethismetadataentry; ownergrantfile absent; proposal remainsPENDING. Fresh real Slurmaccountqueueempty and8285192FAILED/1:0/45141. This is an actual missing scope decision, not an observation timeout. All concrete preparation is ready (44local/21actualHOSTCPUchecks and exactevidence validation); no further diagnostics are necessary before the ownerdecision. Goal will be markedBLOCKED to prevent repeated unchanged continuations; it is NOTcomplete and no runningtraining is paused.
