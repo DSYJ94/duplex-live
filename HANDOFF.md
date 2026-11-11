@@ -1,3 +1,11 @@
+# LOCAL — Context Spanning104 independently preserved; same valid job continues
+
+Actual8317068 RUNNING22:30:55UTC/Plex101CS104/noarchivefailure, same10e7producer/observer64733. ContextSpanning104 full-state backup PASS22:31:44UTC:1557348377bytes SHA b75d8542ddf6587ed930b1d5f48d3f6005f54f58ae0159405d9f5db3fdc0c86c. Exact104native-save reference and actual104training log required; originalGit-deployed matched_archive verified complete source/destination/reference/derivedreceipt hashes, actualrsync0. Destination independentLustre job-8317068-rolling-v1/context-spanning/broad/step-0104/live.pt. Derivedreceipt is not native restore/adoption approval. Smallbackupreceipt copiedtempLOCAL actualrsync0 and SHA-bound executionJSON. No Macweightdownload, livechange or duplicateepochwriter; both98epochandallolderstatesintact. Next useful Plex104 backup whenactualsaved, thencontinue fulltraining.
+
+Final10 pacedpolicy amendment questionpending; preparedsource4381/actualHOSTCPU38/controlbyteidentityPASS, proposal+proofcommitee2d358. No ownerauthorityfile ornextsubmission. Existing112GPUh/max10/successfulparentfullrestore/full192/API0 boundariesunchanged. Officialrenewalexpired; readyrequestpending; certificate22:55:48UTC. Current training independent and continues. OneDrivepaused/tempcheckoutonly, goalACTIVE; no new jobs/GCP/purchases/API/data scope.
+
+---
+
 # LOCAL — Final10 paced integration prepared and actual HOSTCPU verified; owner amendment pending
 
 Concrete service4381fd6fdf24701e7d581a399768149ef6220cce Git-bundle deployed to source-paced-final10-4381fd6. Actual bounded SSH74792 exited0:38 actualHOSTCPU testsPASS, actualLinux/proc parent identityPASS, matched_resume.verify_worker confirms EVERY originalCONTROL/nativebyte unchanged against live10e7worktree. No GPUjob/model launched. New paced_finish explicitly composes controller-local health dependency, restoring it on exit; training/evaluation implementations remain original. Prepared submit now refuses missing paced authority BEFORE resourcequery/sbatch. Current running producer/workers neverchanged. HOSTproof is not actual GPUservice/modelbehavior evidence.
