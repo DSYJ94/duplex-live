@@ -1820,11 +1820,11 @@
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T21:11:35Z",
+  "last_observed_UTC": "2026-11-11T21:42:53Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 91,
-    "context-spanning/broad": 93
+    "personaplex/broad": 95,
+    "context-spanning/broad": 98
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
@@ -1846,5 +1846,44 @@
   },
   "rolling88_metadata_rsync_exit": 0,
   "context_spanning_rolling96_receipt_sha256": "eb00030fdcfd08656cf5b0d59994442ec4587479db1a3cbb28ecf9386d646c22",
-  "rolling96_metadata_rsync_exit": 0
+  "rolling96_metadata_rsync_exit": 0,
+  "actual_epoch_archive_status": {
+    "job_id": "8317068",
+    "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+    "copies": [
+      {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/context-spanning/broad/train/epoch-02.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068/context-spanning/broad/epoch-02/epoch-02.pt",
+        "step": 98,
+        "bytes": 1557323389,
+        "sha256": "15490a43397f3a61fd50e901dd59677887d6d8514c3cbd1553979ea8223c4323",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-11T21:42:25Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "files": {
+          "epoch-02.pt": {
+            "bytes": 1557323389,
+            "sha256": "15490a43397f3a61fd50e901dd59677887d6d8514c3cbd1553979ea8223c4323"
+          },
+          "epoch-02.pt.native-reference.json": {
+            "bytes": 1102,
+            "sha256": "233899fdcb408b2ef8eff16887f730cb4b8f643aeceab5eadba2162b6bf8fcc2"
+          },
+          "epoch-02.json": {
+            "bytes": 342,
+            "sha256": "3037ce45efad584abcd432f4a91237214678a60bb513593e369a6ad638c2ed9a"
+          }
+        }
+      }
+    ],
+    "passed": true,
+    "training_interrupted": false,
+    "OneDrive_writes": false
+  },
+  "epoch_archive_metadata_sha256": "798a15d4b5f50aa7529951db44b0c451b80c2bdbaee17618a920050efb883547",
+  "epoch_archive_metadata_rsync_exit": 0
 }

@@ -1,3 +1,13 @@
+# LOCAL — Context Spanning second epoch complete and independently preserved
+
+Actual same8317068 RUNNING21:42:53UTC4:24:03/nid010999, Plex95/CS98, no terminal/archivefailure, same10e7producer/workers and observer64733. ContextSpanning actualepoch2 receipt says98 lineageupdates/49updates thisepoch/complete323coverage. Existing archivehelper automatically preserved full1557323389byte epoch-02.pt on independentLustre, SHA15490a43397f3a61fd50e901dd59677887d6d8514c3cbd1553979ea8223c4323, source/destination/reference/epochreceipt hashesPASS21:42:25UTC. Destination job-8317068/context-spanning/broad/epoch-02/epoch-02.pt. Smallactualarchive-status JSONrsync0/tempLOCAL and SHA-bound in executionJSON. No duplicateepochwriter, no Macweights/OneDrivewrites. Allrolling96/88/olderstates retained; independentnative restore still required for laterresume/adoption.
+
+CORRECTION to earlier expectation: inspectedactualmatched_native.train archives each49-update epoch but does NOT run fullDEV at everyepoch. Fullgenerated192comparison is in matched_finish.run_evaluation aftertraining; do not invent pending/full64DEVresults at98 or claim behavioral improvement fromepoch/CE. Currenttraining proceeds unchanged toward196 each. Next preserveactualPlex96 and its epoch98; awaitactualfulltrainedstates and completeevaluation. Readerg2:424 completed; observer64733 soleliveobserver. HOME20619350016bytes passes32GiB.
+
+Operationallimits112GPUh/max10/successfulparentfinal10/API0 preserved. Futurefinal10 remains held for documented scheduler-pacing contract reconciliation/integration; CPUprototype94b74f4 is notdeployed. No silent45srelaxation/hotedit ornewmodeladmission. Activebroadergoal/threefoundations/SFT-RLscalingplan unchanged. Cliftonexpires22:55:48UTC; renewofficiallybeforefreshmonitoringexpires. OneDrivepaused; tempmaincheckout only. No newjobs/GCP/purchases/APIs/resources/agents/chats.
+
+---
+
 # LOCAL — Context Spanning96 independently backed up; training continues
 
 Verified wait on SAME observer64733/job8317068 advanced to actual Plex93/CS96 at21:27:48UTC; SlurmRUNNING4:08:58/nid010999, same10e7producer/workers, no terminal/archivefailure, HOME19061993472bytes passes32GiB. Prior local readercellg2:412 completed its bounded10polls; readerg2:413 completed. Only observer64733 remains; no duplicate/restart/model change.
