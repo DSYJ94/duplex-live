@@ -1,0 +1,68 @@
+{
+  "actual_UTC": "2026-11-11T00:38:32Z",
+  "archive": {
+    "job_id": "8285192",
+    "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+    "copies": [
+      {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-03.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/epoch-03/epoch-03.pt",
+        "step": 147,
+        "bytes": 289915773,
+        "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-11T00:15:30Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "files": {
+          "epoch-03.pt": {
+            "bytes": 289915773,
+            "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a"
+          },
+          "epoch-03.pt.native-reference.json": {
+            "bytes": 1103,
+            "sha256": "b1a91c873a3bff7ae026fc87dc16adf7b2500655334cb016e1968f1f0f9b697e"
+          },
+          "epoch-03.json": {
+            "bytes": 343,
+            "sha256": "6bafad02e19a1ef809abd5083046db33018b576bb0b9bc3713c9607a09a430b8"
+          }
+        }
+      },
+      {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/context-spanning/narrow/train/epoch-03.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/context-spanning/narrow/epoch-03/epoch-03.pt",
+        "step": 147,
+        "bytes": 289985405,
+        "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-11T00:37:03Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "files": {
+          "epoch-03.pt": {
+            "bytes": 289985405,
+            "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184"
+          },
+          "epoch-03.pt.native-reference.json": {
+            "bytes": 1103,
+            "sha256": "f8d11042a058beb0da1985467d9a238473d79171698eebb1f239879b58ce8190"
+          },
+          "epoch-03.json": {
+            "bytes": 343,
+            "sha256": "e3b6e67f8edf08317836944d78c92d77dee416dd55925d5374bfdd9718e30bd8"
+          }
+        }
+      }
+    ],
+    "passed": true,
+    "training_interrupted": false,
+    "OneDrive_writes": false
+  }
+}
