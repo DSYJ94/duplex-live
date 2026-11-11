@@ -15,6 +15,21 @@ STATES={
  ('personaplex','broad'):(62,'e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902','interrupted.pt'),
  ('context-spanning','broad'):(63,'93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4','interrupted.pt')}
 
+# Actual post-terminal reads; original reference/log/receipt bytes stay original.
+EVIDENCE_HASHES={
+ 'personaplex/narrow':{'epoch-04.pt.native-reference.json':'d61e16fece57364d23450579ad6a2e1f30951dbc72e44b457b129a800abf4022',
+  'training.jsonl':'b328b5a514f30e83ecb814d984c8317d66f160817d64419fbb6c94cb0152c8c3',
+  'training-terminal.json':'47c9842866aa96cc2bcb5607eba83fd642cc47074f4cb9997daa22dceac5ca8d'},
+ 'context-spanning/narrow':{'epoch-04.pt.native-reference.json':'02ab2efc2eae8acf3c7b3020c8698362f5b4d108f675f3a67028f28d35961731',
+  'training.jsonl':'5fce8d5fd021edcf063bd206c7ce1158677bea05de32e277f582a1c94130b8da',
+  'training-terminal.json':'29f8484a2299189b0f3da25d45ef283c3c68dac7bd422b631bbc9c2cc2ca11ab'},
+ 'personaplex/broad':{'interrupted.pt.native-reference.json':'b4ed9806e32b2d675e8b01c5c2b57ef723d13269b1b6458eacccb0b7dfc5a595',
+  'training.jsonl':'a01f2fecf77b78c663ab7a9f48e685b91219e5945693a572b8f7f73d77f11a24',
+  'training-interrupted.json':'54f66a39fbcac01908ff3defd0771169bfeb811f9f54ecd6ee1396457abdcac5'},
+ 'context-spanning/broad':{'interrupted.pt.native-reference.json':'5ad9c4c75911a53ce7c0cca62bd887b96e8f33eaa8eae47d2c9cfff62515f7a2',
+  'training.jsonl':'441e9980ac3be245dc3bbf8bf225d35e7b575de9cf39c4779956e61b4c9cf893',
+  'training-interrupted.json':'0ab94aa7801aed5098245a5be46c7107214c0775872e6f0963c06c0033e00c4d'}}
+
 
 def authority():
     proposal=json.loads(PROPOSAL.read_text());value=json.loads(AUTH.read_text())
@@ -28,6 +43,7 @@ def authority():
     expected['selected_states']={b+'/'+c:dict(step=n,sha256=d,name=f) for (b,c),(n,d,f) in STATES.items()}
     expected['all_four_fresh_native_restores_before_learning']=True
     expected['stop_on_any_restore_failure_no_automatic_rollback']=True
+    expected['original_evidence_sha256']=EVIDENCE_HASHES
     if any(value.get(k)!=v for k,v in expected.items()):raise ValueError('Exact owner failed6 recovery grant required')
     if value.get('proposal_sha256')!=g.sha(PROPOSAL) or not value.get('owner_answer'):
         raise ValueError('Actual owner answer and exact proposal binding required')
@@ -57,6 +73,8 @@ def validate(row,reference,step):
             or reference.get('source')!=PREDECESSOR):
         raise ValueError('Exact four preserved states required; no rollback or replay')
     folder=path.parent
+    for name,expected in EVIDENCE_HASHES['/'.join(key)].items():
+        if g.sha(folder/name)!=expected:raise ValueError('Original recovery evidence bytes changed: '+name)
     if key[1]=='broad':
         value=json.loads((folder/'training-interrupted.json').read_text())
         if (value.get('source')!=PREDECESSOR or value.get('completed') is not False

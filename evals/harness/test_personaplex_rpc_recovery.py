@@ -6,9 +6,20 @@ from training.personaplex import matched_rpc_recovery as r
 from training.personaplex import matched_rpc_job as job
 from training.personaplex import matched_continue_policy as policy
 from training.personaplex import matched_resume as resume
+from training.personaplex import matched_rpc_submit as submission
 
 
 class ExactFailureStates(unittest.TestCase):
+    def test_pending_authority_cannot_query_or_submit_scheduler(self):
+        with patch.object(r,'authority',side_effect=ValueError('pending')),patch.object(submission.subprocess,'check_output') as query,patch.object(submission.subprocess,'run') as mutate:
+            with self.assertRaisesRegex(ValueError,'pending'):submission.submit('candidate')
+            query.assert_not_called();mutate.assert_not_called()
+
+    def test_submission_disables_requeue_and_exports_no_owner_credentials(self):
+        cmd=submission.command(Path('/allocated/source'),'candidate')
+        for flag in ['--gpus=2','--time=24:00:00','--no-requeue','--export=NONE']:self.assertIn(flag,cmd)
+        self.assertIn('matched_rpc_job',cmd[-1]);self.assertNotIn('matched_native --stage admit',cmd[-1])
+
     def test_missing_amendment_stops_before_storage_or_model_preparation(self):
         args=SimpleNamespace(source='candidate',inputs_sha=job.DATA_SHA)
         with patch.object(job.subprocess,'check_output',return_value='candidate\n'),\
@@ -51,6 +62,8 @@ class ExactFailureStates(unittest.TestCase):
             original=dict(source=r.PREDECESSOR,total_lineage_updates=196,checkpoint_sha256=digest,
                 final_checkpoint=str(checkpoint),completed=True,complete_epochs=4)
             old_terminal=folder/'training-terminal.json';write(old_terminal,original)
+            (folder/'training.jsonl').write_text('synthetic prior training log\n')
+            evidence={p.name:job.g.sha(p) for p in folder.iterdir() if p.suffix!='.pt'}
             restore=root/'fresh-restore.json';write(restore,dict(source='new-producer',lineage_source=policy.ORIGIN,
                 base='personaplex',capacity='narrow',data_report_sha256=policy.DATA_SHA,checkpoint_sha256=digest,
                 passed=True,actual_CUDA=True,all_Adam_RNG_OPAL_fields_exact=True,native_logits_exact=True,
@@ -59,11 +72,14 @@ class ExactFailureStates(unittest.TestCase):
                 stage='restore',execution_id=fresh,actual_exit_code=0))
             row=dict(base='personaplex',capacity='narrow',checkpoint=str(checkpoint),checkpoint_sha256=digest,
                 restore=str(restore),restore_sha256=job.g.sha(restore),restore_terminal=str(terminal),rpc_failure_recovery=r.MARKER)
-            with patch.object(r,'FAILED_ROOT',root),patch.dict(r.STATES,{('personaplex','narrow'):(196,digest,'epoch-04.pt')}),patch.object(r,'authority',return_value='grant'):
+            with patch.object(r,'FAILED_ROOT',root),patch.dict(r.STATES,{('personaplex','narrow'):(196,digest,'epoch-04.pt')}),patch.dict(r.EVIDENCE_HASHES,{'personaplex/narrow':evidence}),patch.object(r,'authority',return_value='grant'):
                 self.assertEqual(policy.restored_entry(row,'new-producer',policy.DATA_SHA,{}),196)
                 self.assertEqual(json.loads(old_terminal.read_text()),original)
                 bad=dict(row);bad.pop('rpc_failure_recovery')
                 with self.assertRaises(ValueError):policy.restored_entry(bad,'new-producer',policy.DATA_SHA,{})
+                (folder/'training.jsonl').write_text('rewritten prior log\n')
+                with self.assertRaisesRegex(ValueError,'evidence bytes changed'):
+                    policy.restored_entry(row,'new-producer',policy.DATA_SHA,{})
 
     def test_proposal_does_not_itself_authorize_model_work(self):
         with tempfile.TemporaryDirectory() as directory:
