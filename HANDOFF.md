@@ -1,3 +1,11 @@
+# LOCAL — ALL4native fresh restores EXACTPASS; both actualtrainworkers live, firstupdatepending
+
+SAME8317068/source10e7: actualnewdistinctCUDA restorespassed allAdam/RNG/OPAL/hidden+textlogitfingerprints EXACT for Plexnarrow196/CSnarrow196/Plexbroad62/CSbroad63. Actualchild0 times26.19/40.47/35.39/45.56seconds. Fullnewreports/source/referenceexecutionIDs+metadatahashinventory copiedwithrsync0 tempLOCAL only; tracked docs/NATIVE-MOSHI-MOUNT9-EXECUTION-2026-11-11.json. No relicreport relabelled. BothactualbroadTRAINworkers started17:20:27UTC (Plex109154/6270c278cb7540619efa069966f870cd;CS109189/a4bcd826a05e4e9c8bdf134922b90349), SAMEobserver64733. ActualjointreusepacketrecordsALL4freshrestores andremainingfullschedulefitsaggregatebudget; no gradientcalibrationrepeat. Latest17:23:24UTC RUNNING4:34/no completedloggednewupdateyet; donotcallthisstalled/finishedorclaimweightupdatesfromworkerstart. Observefirstactualraw63+/CS64+. No duplicates/interrupts/newmodeljob.
+
+NewgoalACTUALACTIVE; currentoperationalmulti-trackstrategyinproductgoal preservesVenusoption whilematchedstudycontinues. OneDrivePAUSED; metadataonlytempcheckoutmain, nativeproducerstays10e7. Allstates/source/folds/KLhidden/history/fit15 intact.112h/max10/135137priorGPUseconds;10requiresACTUALsuccessfulpositive9/COMPLETED0/freshstate withactualremainingwalltime, failed9stopsbranch. NoGCP/resources/purchases/API/newagents/chats/automations. Preserveimmutableepochs/windowstateviaexistingLustrearchiver. Certvalidto22:55:48UTC; actualmodelrunindependentofMacsign-in.
+
+---
+
 # LOCAL — User goal ACTIVE and multi-track product plan recorded; SAME valid job continues
 
 OwnerupdatedappgoaltoaccountforPersonaPlex/ContextSpanning/Venusbranches andthen trainselectedfoundationtowardusablefull-duplexGPT-live-likeproduct. `get_goal` ACTUALLYreturnedACTIVE withthisnewobjective. DoNOTmarkcompleteorreplacegoal. Canonicaldocs/NATIVE-PRODUCT-GOAL-2026-11-07.md nowhas currentoperationalmulti-trackgoal/decisioncriteria/shareddata/runtime/adaptiveinterventions/anti-spiralpolicy. Venuspreservedcomparator/resumablecompatiblebranch, NOTdiscarded/notdirectadaptertransplant/notcurrent192cohort. No newcompute/API/resourcepermissions inferredfromgoal.

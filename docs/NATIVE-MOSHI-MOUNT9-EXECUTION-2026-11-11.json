@@ -16,5 +16,173 @@
   "actual_new_updates_at_first_observation": 0,
   "observer_tool_session": 64733,
   "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068",
-  "OneDrive_writes": false
+  "OneDrive_writes": false,
+  "actual_native_restores_all4_passed": true,
+  "actual_restore_reports": [
+    {
+      "passed": true,
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "context-spanning",
+      "capacity": "broad",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+      "reference_execution_id": "053f64786fc542a2a9ad9ce9142c0a70",
+      "execution_id": "020718d6f69e453680648280f7917349",
+      "pid": 50,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 63,
+      "adopted": false
+    },
+    {
+      "passed": true,
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+      "reference_execution_id": "c8a52dde43ec45c9b97b8cdd3990340c",
+      "execution_id": "46ef3c3f7c2e4116a4c72c494e4df604",
+      "pid": 49,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 196,
+      "adopted": false
+    },
+    {
+      "passed": true,
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "personaplex",
+      "capacity": "broad",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+      "reference_execution_id": "cd104fd28ddd4f0691b86736defb1fbb",
+      "execution_id": "8052fb90fe5045698dc666955a9d21ba",
+      "pid": 50,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 62,
+      "adopted": false
+    },
+    {
+      "passed": true,
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+      "base": "personaplex",
+      "capacity": "narrow",
+      "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+      "actual_CUDA": true,
+      "checkpoint_sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+      "reference_execution_id": "518d539a905a43198fb6de9d38d27d4b",
+      "execution_id": "37b543ea2c5f488a88d068db32657bd5",
+      "pid": 49,
+      "all_Adam_RNG_OPAL_fields_exact": true,
+      "native_logits_exact": true,
+      "optimizer_updates": 0,
+      "restored_training_step": 196,
+      "adopted": false
+    }
+  ],
+  "restore_metadata_copy_rsync_exit": 0,
+  "restore_copy_inventory": {
+    "rpc-recovery-initial.json": {
+      "bytes": 180,
+      "sha256": "316e8d840b995b46f17efc396b0b1bdd59d5f703dfaad4945ba74f6b1459d24c"
+    },
+    "joint-admission.json": {
+      "bytes": 6795,
+      "sha256": "645fe653713adef7f3fb8ea47d0f71322d34c102f91c3d1917ae58fea3338740"
+    },
+    "execution-8317068/personaplex-narrow-restore-terminal.json": {
+      "bytes": 383,
+      "sha256": "4a2661614bc04a6810f5e487d79966dcad0e0e8dca0f30ccc836282cab2249e4"
+    },
+    "execution-8317068/context-spanning-broad-restore-terminal.json": {
+      "bytes": 387,
+      "sha256": "a140a2f8dc9a04761985414828adc77d0b10c3af8aada990196918fd7d1017ff"
+    },
+    "execution-8317068/lease.json": {
+      "bytes": 1401,
+      "sha256": "b088edebcaa07bd22c0cd3cf1e1eff6a5cb5ea9a53190253b60c549f3852652d"
+    },
+    "execution-8317068/personaplex-broad-restore-terminal.json": {
+      "bytes": 382,
+      "sha256": "bd05a854c5ef3cbfa9e45b0c1492bba6bcf9f359f2855c488d3283dc0632bcda"
+    },
+    "execution-8317068/context-spanning-narrow-restore-terminal.json": {
+      "bytes": 388,
+      "sha256": "553d24eeb633064f0394caf8b78deeed21366e3fcb361aa186d34429b802f562"
+    },
+    "context-spanning/broad/train/restore.json": {
+      "bytes": 682,
+      "sha256": "1244d16f1932a54027f1f52127ea7a9cd395f808a259b449079a302fd66e0079"
+    },
+    "context-spanning/broad/train/native-restore-comparison.json": {
+      "bytes": 2077,
+      "sha256": "0a20ddcd87c49049aa8f387b369d26766c2c6982ecd13fe4a0c283d80962ad9c"
+    },
+    "context-spanning/broad/train/joint-admission.json": {
+      "bytes": 578,
+      "sha256": "89098615b0ec3b9b9f0645842e6eead5db59d121554386312f9382910f294bf4"
+    },
+    "context-spanning/broad/restore/restore.json": {
+      "bytes": 682,
+      "sha256": "936cc7f1131e8de7271d10023c0d0369f38c4ae88b97669531e616dcf204ef27"
+    },
+    "context-spanning/broad/restore/native-restore-comparison.json": {
+      "bytes": 2077,
+      "sha256": "0a20ddcd87c49049aa8f387b369d26766c2c6982ecd13fe4a0c283d80962ad9c"
+    },
+    "context-spanning/narrow/restore/restore.json": {
+      "bytes": 684,
+      "sha256": "d7b4eefa1656936d670f966a5890261fd8c14d60616196be8d4f513a8a6b3f53"
+    },
+    "context-spanning/narrow/restore/native-restore-comparison.json": {
+      "bytes": 2078,
+      "sha256": "3f3ea9a6ca7e5c95f144af8a2a9de225f57667586d33ab46fb6b3796528dd6f7"
+    },
+    "personaplex/broad/train/restore.json": {
+      "bytes": 677,
+      "sha256": "90da13126c28b8c5e8807dde2abcfa2704df1bdb59aeb0d94270e7e98745d762"
+    },
+    "personaplex/broad/train/native-restore-comparison.json": {
+      "bytes": 2072,
+      "sha256": "d1764ebed64d4a2b5c998dbcd078a850a81cf064e9575db18a569ec9b808addb"
+    },
+    "personaplex/broad/train/joint-admission.json": {
+      "bytes": 578,
+      "sha256": "f4308b470386f333ae80906eeb5c5041375f0a9e5ed0a7b668fe7827d51cca88"
+    },
+    "personaplex/broad/restore/restore.json": {
+      "bytes": 677,
+      "sha256": "93df11687fa6eb04e38a58d41f05abaf6fd158556dcdfc538dacf338a7ff1207"
+    },
+    "personaplex/broad/restore/native-restore-comparison.json": {
+      "bytes": 2072,
+      "sha256": "d1764ebed64d4a2b5c998dbcd078a850a81cf064e9575db18a569ec9b808addb"
+    },
+    "personaplex/narrow/restore/restore.json": {
+      "bytes": 679,
+      "sha256": "35e8b8d08ef064a40ba99c9e4911cdf839cec519c1a3f9db0cac388d69826155"
+    },
+    "personaplex/narrow/restore/native-restore-comparison.json": {
+      "bytes": 2073,
+      "sha256": "b0763a7de092d557fbb178fa3adc9f8dab20c1292e33c55305ecc52a5c127345"
+    }
+  },
+  "actual_train_workers_started_UTC": "2026-11-11T17:20:27Z",
+  "actual_train_execution_ids": {
+    "personaplex": "6270c278cb7540619efa069966f870cd",
+    "context-spanning": "a4bcd826a05e4e9c8bdf134922b90349"
+  },
+  "actual_new_logged_updates_at_172324UTC": 0
 }
