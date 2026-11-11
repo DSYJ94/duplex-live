@@ -1,3 +1,13 @@
+# LOCAL — BOTH broad second epochs complete and independently archived
+
+Actual same8317068 RUNNING22:04:30UTC/nid010999, Plex98/CS100. Both broad configurations now have complete epoch2/98-lineage-update receipts with all323components covered; target196/four epochs unchanged. No native behavioral improvement/adoption claimed. No interruption, new submission or live source edit; producer10e7e0664e47c1222e0492a8367b3c000ed5789d unchanged.
+
+Existing automatic archive helper preserved PersonaPlex epoch2 at22:03:01UTC:1557220989bytes, SHA c3397817a877ff98292f77814eee1ca506f9bf57efde9655cd7eaf87969f623e, independent Lustre job-8317068/personaplex/broad/epoch-02/epoch-02.pt. Actualrsync0/fullcheckpoint+native-reference+epochreceipt hashesPASS. ContextSpanning epoch2 remains preserved too. Both receipts copied via actualrsync0 to temporary LOCAL metadata; exact SHA-bound executionJSON updated. No duplicate archive writer or Mac weight download; all older states intact. Fresh native restore still required before resume/adoption.
+
+Observer64733 sole live monitor. Official sign-in87533 remains pending; do not duplicate. Read-only process inventory11596 finally exited0 (no preexisting Clifton process); it is now closed. Certificate renewal still needs completion/verification before22:55:48UTC. OneDrive stays paused. All112GPUh/max10/successful-parent-only final10/API0 limits remain. Final10 scheduler-pacing reconciliation still required; no CPU prototype claimed deployed. Next watch valid updates/next useful checkpoint, maintain backups, then full192native comparison. GoalACTIVE; no foundationwinner yet.
+
+---
+
 # LOCAL — Official access renewal opened; same training remains live
 
 Actual observer64733 confirmed job8317068 RUNNING21:55:50UTC, Plex97/CS99, no archive failure. No restart or live source change. Previous goal turn was a verified wait. Current native producer10e7 and all112GPUh/max10/backup/restore/product gates remain unchanged. OneDrive stays paused.

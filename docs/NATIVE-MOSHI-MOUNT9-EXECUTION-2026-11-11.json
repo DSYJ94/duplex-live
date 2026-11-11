@@ -1851,11 +1851,11 @@
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T21:47:11Z",
+  "last_observed_UTC": "2026-11-11T22:04:30Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 96,
-    "context-spanning/broad": 98
+    "personaplex/broad": 98,
+    "context-spanning/broad": 100
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
@@ -1909,13 +1909,41 @@
             "sha256": "3037ce45efad584abcd432f4a91237214678a60bb513593e369a6ad638c2ed9a"
           }
         }
+      },
+      {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/epoch-02.pt",
+        "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068/personaplex/broad/epoch-02/epoch-02.pt",
+        "step": 98,
+        "bytes": 1557220989,
+        "sha256": "c3397817a877ff98292f77814eee1ca506f9bf57efde9655cd7eaf87969f623e",
+        "actual_rsync_exit_code": 0,
+        "hash_verified": true,
+        "separate_filesystem": true,
+        "actual_UTC": "2026-11-11T22:03:01Z",
+        "native_restore_still_required": true,
+        "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "files": {
+          "epoch-02.pt": {
+            "bytes": 1557220989,
+            "sha256": "c3397817a877ff98292f77814eee1ca506f9bf57efde9655cd7eaf87969f623e"
+          },
+          "epoch-02.pt.native-reference.json": {
+            "bytes": 1102,
+            "sha256": "f8772c7e49e5498530c6a8ea680ffad31bf1d2a8c652e223b96373bae3752898"
+          },
+          "epoch-02.json": {
+            "bytes": 342,
+            "sha256": "97529b462f144f635e393b12c311a9d59046bf933139189c3c3e2404071b16c1"
+          }
+        }
       }
     ],
     "passed": true,
     "training_interrupted": false,
     "OneDrive_writes": false
   },
-  "epoch_archive_metadata_sha256": "798a15d4b5f50aa7529951db44b0c451b80c2bdbaee17618a920050efb883547",
+  "epoch_archive_metadata_sha256": "1e44e47ec6f22fb1332d511cd642b548c72b2ce76996216126a04a85089109ed",
   "epoch_archive_metadata_rsync_exit": 0,
   "personaplex_rolling96_receipt_sha256": "0277880d21a864172b46371278ffb01b87d209a46e4d6b433306d63fa1c3a10b"
 }
