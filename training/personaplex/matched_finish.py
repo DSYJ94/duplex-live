@@ -15,7 +15,7 @@ from .matched_generation import completed_states
 
 def evaluation_lease(previous,source,job):
     """A source transition inside one interval cannot reset any budget clock."""
-    allowed=(7,8) if previous.get('storage_recovery_authorization_sha256') else (6,)
+    allowed=(9,) if previous.get('rpc_startup_authorization_sha256') else (7,8) if previous.get('storage_recovery_authorization_sha256') else (6,)
     if previous['job_id']!=job or previous.get('continuation_interval') not in allowed:
         raise ValueError('Only the last approved actual running window may evaluate here')
     lease=dict(previous,source=source,controller_source=source,trainer_source=previous['source'])
@@ -31,7 +31,8 @@ def run_evaluation(root,source,work,allocation=None):
     if source==old['source']:raise ValueError('Separate immutable evaluation controller source required')
     selected=completed_states(root,old['source'])
     lease=evaluation_lease(old,source,job)
-    actual=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=20))
+    from .matched_rpc_job import startup_job
+    actual=startup_job(job)
     g.validate_job(actual,lease,time.time())
     # Six full32 collections plus local ASR, two bases in parallel. This reserve
     # is not a benchmark or permission to shorten any cohort.

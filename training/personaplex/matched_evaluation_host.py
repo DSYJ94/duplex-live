@@ -37,7 +37,7 @@ def completed_parent(root,digest):
     if (root/'rpc-recovery-initial.json').is_file():
         initial=json.loads((root/'rpc-recovery-initial.json').read_text());grant=r.rpc_authority()
         if (initial!={'source':lease['source'],'authorization_sha256':grant,'failed_job':'8285192'}
-                or lease.get('rpc_recovery_authorization_sha256')!=grant or lease['continuation_interval']!=7):
+                or lease.get('rpc_recovery_authorization_sha256')!=grant or lease['continuation_interval']!=r.startup.first_interval(lease)):
             raise ValueError('Exact approved failed6 recovery7 parent required')
         earlier=[]
     elif (root/'storage-recovery-initial.json').is_file():
@@ -55,7 +55,7 @@ def completed_parent(root,digest):
 
 
 def new_allocation(parent,source,job,prior):
-    if parent['continuation_interval'] not in (6,7):raise ValueError('Only unused authorized7/8 evaluation interval allowed')
+    if parent['continuation_interval'] not in ((8,) if parent.get(r.startup.KEY) else (6,7)):raise ValueError('Only unused authorized7/8 evaluation interval allowed')
     lease=dict(parent,job_id=job['JobId'],node=job['NodeList'],controller_source=source,
         continuation_interval=parent['continuation_interval']+1,prior_GPU_seconds=prior,
         start_unix=g.stamp(job['StartTime']),stop_unix=g.stamp(job['EndTime']),
@@ -73,7 +73,8 @@ def main(a):
     accounting=subprocess.check_output(['sacct','-n','-X','-P','-A',g.ACCOUNT,'--starttime=2026-11-08',
         '--format=JobIDRaw,JobName%100,Account,State,ExitCode,ElapsedRaw,AllocTRES'],universal_newlines=True,timeout=30)
     prior=r.allocation_carry(accounting,ordered,current)
-    job=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',current],universal_newlines=True,timeout=20))
+    from .matched_rpc_job import startup_job
+    job=startup_job(current)
     if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Accounted matched evaluation allocation required')
     allocation=new_allocation(parent,source,job,prior)
     # Keep the NEW allocation separate from the original successful parent.

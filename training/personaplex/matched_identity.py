@@ -98,7 +98,9 @@ def validate_lineage(a):
                  'docs/NATIVE-MOSHI-STORAGE-RECOVERY-AUTHORIZATION-2026-11-10.json',
                  'docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json',
                  'docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json',
-                 'training/personaplex/matched_rpc_recovery.py',
+                 'training/personaplex/matched_rpc_recovery.py','training/personaplex/matched_rpc_startup.py',
+    'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-PROPOSAL-2026-11-11.json',
+    'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-AUTHORIZATION-2026-11-11.json',
                  'docs/NATIVE-MOSHI-RPC-RECOVERY-PROPOSAL-2026-11-11.json',
                  'docs/NATIVE-MOSHI-RPC-RECOVERY-AUTHORIZATION-2026-11-11.json'):
         raw=(root/file).read_bytes()

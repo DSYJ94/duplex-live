@@ -52,13 +52,18 @@ def initial_entries(original,root,execution):
     return rows
 
 
-def main(a):
+def main(a,startup_recovery=False):
     source=subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()
     if source!=a.source or a.inputs_sha!=DATA_SHA:raise ValueError('Exact recovery producer/data required')
     grant=recovery.authority()  # Must remain before any model, lease or output directory.
+    from . import matched_rpc_startup as startup
+    startup_grant=startup.authority() if startup_recovery else None
+    history=startup.history(HISTORY) if startup_recovery else HISTORY
+    expected_prior=135051 if startup_recovery else 134991
+    interval=8 if startup_recovery else 7
     storage=storage_check();original=preflight(ORIGINAL_ROOT,PACKET_SHA)
-    jobid=os.environ['SLURM_JOB_ID'];prior=prior_usage(jobid,HISTORY)
-    if prior!=134991:raise ValueError('All six actual allocations must remain counted')
+    jobid=os.environ['SLURM_JOB_ID'];prior=prior_usage(jobid,history)
+    if prior!=expected_prior:raise ValueError('All six actual allocations must remain counted')
     actual=subprocess.check_output(['sacct','-n','-X','-P','-j','8285192',
         '--format=JobIDRaw,State,ExitCode,ElapsedRaw,AllocTRES'],universal_newlines=True,timeout=20).strip()
     if not actual.startswith('8285192|FAILED|1:0|45141|') or 'gres/gpu=2' not in actual:
@@ -66,7 +71,7 @@ def main(a):
     job=startup_job(jobid)
     if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Exact matched allocation required')
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
-        continuation_authorization_sha256=g.sha(g.EXTENSION),continuation_interval=7,
+        continuation_authorization_sha256=g.sha(g.EXTENSION),continuation_interval=interval,
         quota_recovery_authorization_sha256=g.sha(QUOTA_AUTH),
         postupdate_recovery_authorization_sha256=post_authority(),
         normal88_authorization_sha256=normal_authority(),storage_recovery_authorization_sha256=storage_authority(),
@@ -74,14 +79,18 @@ def main(a):
         controller_source=source,worker_worktree=str(Path.cwd()),start_unix=g.stamp(job['StartTime']),
         stop_unix=g.stamp(job['EndTime']),maximum_seconds=int(g.stamp(job['EndTime'])-g.stamp(job['StartTime'])),
         GPU_count=2,prior_GPU_seconds=prior)
+    if startup_grant is not None:lease[startup.KEY]=startup_grant
     g.validate_job(job,lease,time.time());root=DURABLE/'runs'/('rpc-recovery-'+jobid)
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+jobid);execution.mkdir()
     rows=initial_entries(original,root,execution)
     write(execution/'lease.json',lease);write(execution/'storage-admission.json',storage)
     write(root/'rpc-recovery-initial.json',dict(source=source,authorization_sha256=grant,failed_job='8285192'))
-    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);services=[];control=None;code=1
+    devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);services=[];control=None;code=1;archiver=None
     try:
         watcher,services,control=health.start(lease,execution)
+        if startup_recovery:
+            from .matched_archive import start_helper
+            archiver=start_helper(root,jobid,source)
         children=TrainingChildren(Path.cwd(),source,execution,lease,watcher,
             dict(zip(('personaplex','context-spanning'),devices)),a.inputs,a.inputs_sha)
         children.guard_path=control/'guard.json'
@@ -92,6 +101,9 @@ def main(a):
         if control is not None:health.stop(services,control,execution)
         write(execution/'terminal.json',dict(source=source,job_id=jobid,actual_exit_code=code,
             ended_UTC=datetime.now(timezone.utc).isoformat(),adopted=False))
+        if archiver is not None:
+            from .matched_archive import finish_helper
+            finish_helper(archiver,root,jobid,source)
 
 
 if __name__=='__main__':

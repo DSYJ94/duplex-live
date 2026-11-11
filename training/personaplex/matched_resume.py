@@ -24,6 +24,7 @@ from .matched_storage_job import HISTORY as STORAGE_HISTORY
 from .matched_archive import start_helper,finish_helper
 from .matched_rpc_recovery import authority as rpc_authority
 from .matched_rpc_job import HISTORY as RPC_HISTORY
+from . import matched_rpc_startup as startup
 
 CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/matched_guard.py','training/personaplex/matched_continue_policy.py',
     'training/personaplex/matched_identity.py','training/personaplex/matched_reuse.py',
@@ -36,7 +37,9 @@ CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/m
     'training/personaplex/matched_normal88.py',str(NORMAL_AUTH),'docs/NATIVE-MOSHI-RESTORE89-FAILURE-2026-11-10.json',
     'training/personaplex/matched_storage_recovery.py','training/personaplex/matched_storage_quota.py',
     'training/personaplex/matched_storage_job.py','training/personaplex/matched_archive.py',str(STORAGE_AUTH),
-    'training/personaplex/matched_rpc_recovery.py','training/personaplex/matched_rpc_job.py',
+    'training/personaplex/matched_rpc_recovery.py','training/personaplex/matched_rpc_startup.py',
+    'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-PROPOSAL-2026-11-11.json',
+    'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-AUTHORIZATION-2026-11-11.json','training/personaplex/matched_rpc_job.py',
     'docs/NATIVE-MOSHI-RPC-RECOVERY-PROPOSAL-2026-11-11.json',
     'docs/NATIVE-MOSHI-RPC-RECOVERY-AUTHORIZATION-2026-11-11.json',
     'docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json','docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json')+DEPENDENCIES
@@ -70,7 +73,7 @@ def chain(previous,result_sha):
             p.resolve().relative_to(DURABLE.resolve())
             if (value!={'source':lease['source'],'authorization_sha256':digest,'failed_job':'8285192'}
                     or lease.get('rpc_recovery_authorization_sha256')!=digest
-                    or lease.get('continuation_interval')!=7):
+                    or lease.get('continuation_interval')!=startup.first_interval(lease)):
                 raise ValueError('Exact approved failed6 recovery7 marker required')
             break
         marker=p/'storage-recovery-initial.json'
@@ -108,7 +111,7 @@ def chain(previous,result_sha):
         if p.resolve()==INITIAL.resolve():break
         p=beneath(result['previous_root']);expected=result['previous_result_sha256']
     ordered=list(reversed(roots))
-    first=7 if (ordered[0]['root']/'rpc-recovery-initial.json').is_file() else 6 if (ordered[0]['root']/'storage-recovery-initial.json').is_file() else 5 if (ordered[0]['root']/'normal88-recovery-initial.json').is_file() else 4 if (ordered[0]['root']/'postupdate-recovery-initial.json').is_file() else 3 if (ordered[0]['root']/'quota-recovery-initial.json').is_file() else FIRST_INTERVAL
+    first=startup.first_interval(ordered[0]['lease']) if (ordered[0]['root']/'rpc-recovery-initial.json').is_file() else 6 if (ordered[0]['root']/'storage-recovery-initial.json').is_file() else 5 if (ordered[0]['root']/'normal88-recovery-initial.json').is_file() else 4 if (ordered[0]['root']/'postupdate-recovery-initial.json').is_file() else 3 if (ordered[0]['root']/'quota-recovery-initial.json').is_file() else FIRST_INTERVAL
     for number,row in enumerate(ordered,first):
         if row['lease']['continuation_interval']!=number:raise ValueError('Actual continuation interval sequence differs')
         if row['lease']['source']!=ordered[0]['lease']['source']:raise ValueError('Native worker changed across windows')
@@ -117,7 +120,7 @@ def chain(previous,result_sha):
 
 def allocation_carry(text,ordered,current_job):
     """Live sacct rows: JobIDRaw,JobName,Account,State,ExitCode,ElapsedRaw,AllocTRES."""
-    history=RPC_HISTORY if ordered[0]['lease'].get('rpc_recovery_authorization_sha256') else STORAGE_HISTORY if ordered[0]['lease'].get('storage_recovery_authorization_sha256') else NORMAL_HISTORY if ordered[0]['lease'].get('normal88_authorization_sha256') else POST_HISTORY if ordered[0]['lease'].get('postupdate_recovery_authorization_sha256') else QUOTA_HISTORY if ordered[0]['lease'].get('quota_recovery_authorization_sha256') else HISTORY
+    history=startup.history(RPC_HISTORY) if ordered[0]['lease'].get(startup.KEY) else RPC_HISTORY if ordered[0]['lease'].get('rpc_recovery_authorization_sha256') else STORAGE_HISTORY if ordered[0]['lease'].get('storage_recovery_authorization_sha256') else NORMAL_HISTORY if ordered[0]['lease'].get('normal88_authorization_sha256') else POST_HISTORY if ordered[0]['lease'].get('postupdate_recovery_authorization_sha256') else QUOTA_HISTORY if ordered[0]['lease'].get('quota_recovery_authorization_sha256') else HISTORY
     wanted=set(history)|{r['lease']['job_id'] for r in ordered};rows={}
     for line in text.splitlines():
         f=line.split('|')
@@ -201,7 +204,7 @@ def main(a):
     ordered=chain(a.previous_root,a.previous_result_sha);old=ordered[-1]['lease'];interval=old['continuation_interval']+1
     post_mode=bool(old.get('postupdate_recovery_authorization_sha256'))
     storage_mode=bool(old.get('storage_recovery_authorization_sha256'))
-    if interval>(8 if storage_mode else 6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
+    if interval>(9 if old.get(startup.KEY) else 8 if storage_mode else 6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
     amendment=g.sha(g.EXTENSION)
     phase=dict(continuation_authorization_sha256=amendment,continuation_interval=interval)
     if post_mode:phase['postupdate_recovery_authorization_sha256']=post_authority()
@@ -209,6 +212,7 @@ def main(a):
     if storage_mode:phase['storage_recovery_authorization_sha256']=storage_authority()
     if old.get('rpc_recovery_authorization_sha256'):
         phase['rpc_recovery_authorization_sha256']=rpc_authority()
+    if old.get(startup.KEY):phase[startup.KEY]=startup.authority()
     g.phase_limit(phase)
     if any(item['lease']['continuation_authorization_sha256']!=amendment for item in ordered):raise ValueError('Original approval changed')
     source=old['source'];work=verify_worker(old['worker_worktree'],source,controller)
@@ -216,7 +220,8 @@ def main(a):
     accounting=subprocess.check_output(['sacct','-n','-X','-P','-A',g.ACCOUNT,'--starttime=2026-11-08',
         '--format=JobIDRaw,JobName%100,Account,State,ExitCode,ElapsedRaw,AllocTRES'],universal_newlines=True,timeout=30)
     prior=allocation_carry(accounting,ordered,job_id)
-    job=g.parse_job(subprocess.check_output(['scontrol','show','job','-o',job_id],universal_newlines=True,timeout=20))
+    from .matched_rpc_job import startup_job
+    job=startup_job(job_id)
     if not job.get('JobName','').startswith('duplex-matched-'):raise ValueError('Accounted matched job name required')
     lease=dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),
         continuation_authorization_sha256=amendment,continuation_interval=interval,job_id=job_id,node=job['NodeList'],
@@ -232,6 +237,7 @@ def main(a):
     if storage_mode:lease['storage_recovery_authorization_sha256']=storage_authority()
     if old.get('rpc_recovery_authorization_sha256'):
         lease['rpc_recovery_authorization_sha256']=rpc_authority()
+    if old.get(startup.KEY):lease[startup.KEY]=startup.authority()
     g.validate_job(job,lease,time.time());root=(DURABLE/'runs' if quota_mode else BASE)/('native-moshi-matched-resume-'+job_id)
     root.mkdir(parents=True,exist_ok=False);execution=root/('execution-'+job_id);execution.mkdir()
     write(execution/'lease.json',lease);entries=resume_plan(Path(a.previous_root),original,root,execution,source)
