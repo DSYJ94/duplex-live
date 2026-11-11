@@ -1,0 +1,17 @@
+{
+  "status": "ACTUAL_HOSTCPU_PASS_PENDING_OWNER_POLICY_AMENDMENT",
+  "source": "4381fd6fdf24701e7d581a399768149ef6220cce",
+  "actual_tool_session": 74792,
+  "actual_command_exit": 0,
+  "local_tests": 38,
+  "actual_HOSTCPU_tests": 38,
+  "actual_Linux_proc_identity_PASS": true,
+  "all_original_CONTROL_native_bytes_unchanged": true,
+  "git_deployed_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-paced-final10-4381fd6",
+  "new_GPU_jobs": 0,
+  "native_training_changed": false,
+  "service_running": false,
+  "owner_authorization_exists": false,
+  "proposal_sha256": "e44f78d8faa4d6e2722b3b025328475a5ce908a7e827c28846f8442acb7cc81d",
+  "scope_limit": "CPU contract/wiring/real process identity proof only; next authorized actual service must pass startup before any model launch."
+}

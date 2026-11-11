@@ -26,5 +26,5 @@
   "no_calibration_repeat": true,
   "all_native_quality_gates_unchanged": true,
   "implementation": "paced_health_service + paced_finish; final submit refuses missing authorization before any resource query or sbatch. Current live10e7 worker is untouched.",
-  "validation": "38 local CPU tests passed; actual Isambard host CPU verification and source deployment pending. No native training/evaluation run claimed by these tests."
+  "validation": "38 local CPU tests and38 actual Isambard HOSTCPU tests PASS on source4381fd6fdf24701e7d581a399768149ef6220cce; actual Linux process identity PASS; every original CONTROL/native byte unchanged. Actual SSH command exited0. Not a GPU/native model evaluation or a running service."
 }
