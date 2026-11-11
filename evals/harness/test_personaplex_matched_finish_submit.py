@@ -55,7 +55,7 @@ class ExclusiveFinalClaim(unittest.TestCase):
             with patch.object(s,'DURABLE',root),patch.object(s,'CLAIM',claim),patch.object(s.Path,'cwd',return_value=work),\
                  patch.object(s,'parent',return_value=([dict(lease=old)],'phase-sha',False)),\
                  patch.object(s.resume,'verify_worker'),patch.object(s.resume,'allocation_carry',return_value=307937),\
-                 patch.object(s,'storage_check',return_value={'passed':True}),patch.object(s,'backup_proofs',return_value={'both':'synthetic fixture'}),\
+                 patch.object(s,'storage_check',return_value={'passed':True}),patch.object(s,'forecast',return_value={'synthetic':'schedule'}),patch.object(s,'backup_proofs',return_value={'both':'synthetic fixture'}),\
                  patch.object(s.subprocess,'check_output',side_effect=query),\
                  patch.object(s.subprocess,'run',side_effect=subprocess.TimeoutExpired('sbatch',60)) as mutate:
                 with self.assertRaises(subprocess.TimeoutExpired):s.submit('controller')
@@ -99,5 +99,22 @@ class FullNewStateBackups(unittest.TestCase):
                 self.assertEqual(set(s.backup_proofs(root,'worker')),{'personaplex','context-spanning'})
                 (backups/'personaplex/window.pt').write_bytes(b'corrupt fixture')
                 with self.assertRaises(ValueError):s.backup_proofs(root,'worker')
+
+
+
+class FinalSchedule(unittest.TestCase):
+    def test_no_short_final_window_or_recalibration(self):
+        original={'lineages':[dict(base=b,capacity=c,estimated_complete196_seconds=120000.) for b in ('personaplex','context-spanning') for c in ('narrow','broad')]}
+        rows=[dict(base=b,capacity=c,restored_step=196 if c=='narrow' else 147) for b in ('personaplex','context-spanning') for c in ('narrow','broad')]
+        with patch.object(s.resume,'preflight',return_value=original),patch.object(s.resume,'resume_plan',return_value=rows):
+            result=s.forecast(Path('/synthetic-parent'),47520,False)
+            self.assertEqual(result['required_seconds'],42000.)
+            self.assertFalse(result['model_executed'])
+            with self.assertRaisesRegex(ValueError,'do not fit'):s.forecast(Path('/synthetic-parent'),41000,False)
+
+    def test_complete_parent_needs_no_training_forecast(self):
+        with patch.object(s.resume,'preflight') as original,patch.object(s.resume,'resume_plan') as restore:
+            self.assertEqual(s.forecast(Path('/synthetic-parent'),11400,True)['training_remaining_seconds'],0)
+            original.assert_not_called();restore.assert_not_called()
 
 if __name__=='__main__':unittest.main()

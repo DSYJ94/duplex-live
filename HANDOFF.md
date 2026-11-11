@@ -1,3 +1,11 @@
+# LOCAL — Final continuation helper CPU-tested; complete schedule gate added
+
+Actual HOSTPython3.6 tests23PASS at controllerb9628d735008811fdd7b3c3bea7787b4a7cc6f33; actual compare ALL original CONTROL and native-worker bytes against running10e7 PASS. No final submission invoked/claim created. Added a final CPU planning check: validate actual final restores via existing resume_plan, reuse original measured estimates without a model/calibration, and refuse GPU allocation unless remaining training PLUS full11400s comparison/startup reserve fits chosen walltime. Full-complete parent routes directly to evaluation; no optimizer forecast/replay. Local25testsPASS after this addition; actualHOST25check next. This helper is outside the running model/control files, so valid training is unchanged.
+
+Next deploy the small Git delta to the UNUSED final-controller worktree (not10e7), repeat HOST25 targeted checks for the changed code and identical CONTROL verification, and verify actual unfinished9 fails closed before any final claim. No sbatch invocation while9 live. No more engineering after readiness unless real new failure evidence requires it. Currentjob8317068/observer64733 continues; last fresh17:46:30UTC Plex65/CS66, both rolling64 backups fully hash-verified on independent Lustre. All112h/max10/successful-parent-only/API0/OneDrive-pause constraints unchanged. Product goal ACTIVE/unfinished.
+
+---
+
 # LOCAL — Final successful-window submission checks prepared; current run unchanged
 
 Current SAME8317068 freshly RUNNING17:46:30UTC/nid010999, actual Plex65/CS66; same10e7 workers/observer64733/no terminal/archive failure. Previous goal turn made progress by preserving both rolling64 states on independent Lustre. This turn prepares the already-authorized final continuation, without any new submission or model change.

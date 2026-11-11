@@ -89,6 +89,30 @@ def backup_proofs(root,source):
     return proofs
 
 
+
+def forecast(root,seconds,complete):
+    """Reuse original measured estimates plus actual final restores; no model."""
+    if complete:
+        if seconds<11400:raise ValueError('Full native comparison reserve unavailable')
+        return dict(training_remaining_seconds=0,required_seconds=11400,model_executed=False)
+    original=resume.preflight(resume.ORIGINAL_ROOT,resume.PACKET_SHA)
+    # resume_plan validates the actual final restore/state records. It constructs
+    # dictionaries only; these unused preview paths are never created or saved.
+    preview=root/'unused-CPU-plan-preview'
+    rows=resume.resume_plan(root,original,preview,preview/'execution',SOURCE)
+    estimates={base:0. for base in ('personaplex','context-spanning')}
+    origins={(v['base'],v['capacity']):v for v in original['lineages']}
+    for row in rows:
+        step=row['restored_step'];value=origins[(row['base'],row['capacity'])]
+        remaining=value['estimated_complete196_seconds']*(196-step)/196
+        if 0<step<196:remaining+=600
+        estimates[row['base']]+=remaining
+    needed=max(estimates.values())+11400
+    if needed>seconds:raise ValueError('Remaining complete training and full evaluation do not fit; no final partial run')
+    return dict(training_remaining_seconds_per_base=estimates,required_seconds=needed,
+        actual_final_restores_verified_by_resume_plan=True,model_executed=False)
+
+
 def command(work,source,digest,complete,seconds):
     module='training.personaplex.matched_evaluation_host' if complete else 'training.personaplex.matched_finish'
     native=['/usr/bin/python3','-B','-u','-m',module,'--controller-source',source]
@@ -116,14 +140,15 @@ def submit(source):
     accounting=subprocess.check_output(['sacct','-n','-X','-P','-A',g.ACCOUNT,'--starttime=2026-11-08',
         '--format=JobIDRaw,JobName%100,Account,State,ExitCode,ElapsedRaw,AllocTRES'],universal_newlines=True,timeout=30)
     prior=resume.allocation_carry(accounting,ordered,'0');seconds=walltime(prior)
-    storage=storage_check();backups=backup_proofs(ROOT,old['source'])
+    storage=storage_check();schedule=forecast(ROOT,seconds,complete)
+    backups=backup_proofs(ROOT,old['source'])
     from .matched_rpc_job import prepare_mount_target
     prepare_mount_target(work)
     cmd=command(work,source,digest,complete,seconds)
     CLAIM.mkdir(exist_ok=False)
     (CLAIM/'command.json').write_text(json.dumps(dict(source=source,authorization_sha256=grant,
         command=cmd,prior_GPU_seconds=prior,maximum_seconds=seconds,interval=10,
-        previous_result_sha256=digest,evaluation_only=complete,storage=storage,independent_backups=backups,started_unix=time.time()),indent=2)+'\n')
+        previous_result_sha256=digest,evaluation_only=complete,storage=storage,schedule=schedule,independent_backups=backups,started_unix=time.time()),indent=2)+'\n')
     try:
         result=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=60)
     except subprocess.TimeoutExpired:
