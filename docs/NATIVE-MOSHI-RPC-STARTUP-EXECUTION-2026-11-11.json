@@ -1,0 +1,21 @@
+{
+  "actual_producer": "f54da428a659dd45832509ffb4a802d04a022344",
+  "actual_HostCPU_tests": 45,
+  "actual_HostCPU_exit": 0,
+  "native_worker_and_nine_math_dependencies_byte_exact": true,
+  "owner_grant_sha256": "ff5c24d0bd3d42b0b06718fb6353bd78b7a309ada75782c20457fe8cc49ea6ff",
+  "job_id": "8314862",
+  "actual_sbatch_exit": 0,
+  "actual_first_observation_UTC": "2026-11-11T16:04:52Z",
+  "actual_first_queue": "8314862|RUNNING|0:07|nid010127",
+  "prior_GPU_seconds": 135051,
+  "interval": 8,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_running_intervals": 9,
+  "actual_native_restore_completions_at_first_observation": 0,
+  "actual_new_training_updates_at_first_observation": 0,
+  "observer_tool_session": 44121,
+  "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8314862",
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false
+}

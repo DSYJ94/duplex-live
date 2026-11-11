@@ -1,3 +1,13 @@
+# LOCAL — Recovery8 ACTUALLY submitted ONCE8314862; observe SAME job
+
+Approvedproducer f54da428a659dd45832509ffb4a802d04a022344 Git-deployed NFS `source-rpc8-approved-f54da42`. Actual HOSTPython3.6 full45CPUchecks exit0; actualnativeworker+all9mathdependency bytes exactoldD945. RealnewownergrantSHAff5c24d0bd3d42b0b06718fb6353bd78b7a309ada75782c20457fe8cc49ea6ff. Exclusive actualsubmission wrapper90394 exited0/Slurm8314862 (ONEinvocation; neverrepeat). Firstfreshobservation11Nov16:04:52UTC RUNNING0:07/nid010127, no restorescompleted/no loggedupdatesatthatobservation. Do notcallthisactuallearningyet.
+
+ONEread-only observer tool44121 monitors SAMEjob/root `/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8314862`, local log runs/isambard-normal88-20261110/rpc8-monitor-8314862.jsonl. SAMErootexecution8314862/leaseguard/actualterminals/hostlog slurm-rpc-recovery-8314862.log. Waitall4freshnative restoresactual0 thenactualNEWraw63+/CS64+ updates. No duplicate/restartonobservationtimeout. Submissionclaim rpc-recovery8-submission-v1 retained, no automaticretryif8fails. RequireindependentLustrehashbackups andexactactualpositive8 before9.135051priorGPUseconds/112h/one2GPUjob/24h/max9unchanged. Original7FAILED30secondsnotrelabelled.9onlysuccessfulcheckpointcontinuation/evaluation.
+
+Alloldstates/data/proofs preserved; new8archivehelper plannedbyactualrunner, verifyrealprocess/receipts ratherthanclaimingcopiesalreadycomplete. OneDriveediting/eviction/weightsdownloadsPAUSED. LOCALtempcheckoutmainonly. NoGCP/newresources/purchases/API/newagents/chats/automations. Actualproducerstillf54 afterthismetadataonlycommit; doNOTredeploy/restartvalidjob. Certvalidto11Nov22:55:48UTC; renewofficiallybeforemonitoringexpireswhenneeded. Fullproduct/evaluationunfinished; appgoalstatusstaleBLOCKEDbutexplicitownerinstructionauthorizesexecution.
+
+---
+
 # LOCAL — Owner approved recovery8 plus successful continuation9; deployment next
 
 Actual owner answer: "Approve recovery8 and successful continuation9; keep112 GPU-hours", call_a4b5104c33cb408ebd04c459a35196ba. NEWactual grant records exact proposal97bc119/SHA/rawanswer/question. Same112GPUh, nowmax9,8afterfailed7 and9ONLYafteractualsuccessfulpositive8/allfreshrestores/COMPLETED0. All135051priorGPU seconds carried. No replay/rollback/admissionrepeat/newresources/GCP/purchases/APIs/OneDrivework. FreshSSHqueueempty;8314042actualFAILED1:0/30 unchanged. Certvalidto11Nov22:55:48UTC.
