@@ -1,3 +1,15 @@
+# LOCAL — Valid broad training11/9; bounded backup fallback avoids more host diagnostics
+
+Actual11Nov04:07:28UTC fresh samejob8285192 RUNNING/nid010789, broadPersonaPlex11/ContextSpanning9 actualcompletedupdates; samePID26245/34309/sourceD945/one2GPUjob. Bothnarrow196/finalnativeexactrestores and fourimmutable147/196 second-filesystemcopies remainPASS. Nativelearning continues; no improved reasoning/speech/adoption claim. One transient observation timeout at03:38 recovered byONEfreshread; sameobserver31208 remainslive. No modelrestart or validtrainingpause.
+
+Original artifact-only watcher114294/login42 remains UNKNOWN after its SSH25705 transport failed; no terminal on sharedNFS. Two later bounded liveness reads landed login43/login46, not42, so they cannot prove death. Stop that host-diagnosis branch here; do NOT repeatedly probe random login nodes or start a competing persistent archive watcher. No new immutable broadepochyet; current rolling states remain primaryNFS. Latest consumedtime carries actualjobelapsed x2 plus44709prior, unchanged112GPUh/max8/originalSTOP11Nov22:28:47UTC.
+
+**Next backup action, when a NEW immutable broadepoch appears:** first read shared original backup receipt and verify full checkpoint/reference/receipt hashes. If alreadyPASS, keep it. If original destination absent and old watcherstillUNKNOWN, perform ONE synchronous artifact-only copy using unchangedD945 `matched_archive.archive` into DISJOINT existing allocated-Lustre subtree `/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192-independent-recovery3/<base>/<capacity>/<receipt-stem>`; the old watcher cannot write there. This creates no new provider resource, GPU/model/Slurm job or persistent watcher, and does not mutate/kill the unknown process. Same rsync-ar/noowner/nogroup/excludesession-token/fullhash/originalreferencebytes/immutable-target requirements. Preserve original failure/oldcopies and report any redundant original copy honestly; never overwrite a mismatched backup or count a planned copy ascomplete. This bounded destination fallback protects checkpoints without another SSH-host diagnostic loop. Keep allMacweightdownloads/OneDriveediting/eviction PAUSED; localmetadataonly in tempcheckoutmain.
+
+Continue foreground SAMEobserver until actualpositivewindow/finalnativeproof/SlurmCOMPLETED0/copyclosure, then allowed7/8 positive-checkpoint resume or complete-parent fullnativecomparison. No moreadmissions/data/recipe/OPAL/kernelchanges whilematchedcomparisonruns. NoGCP/purchase/API/newagents/chats/automations. Goalactive, nohumaninputpending; certto11Nov10:33:07UTC, renewofficiallywhenneededwithoutstoppingtraining.
+
+---
+
 # LOCAL — Training healthy; archive transport lost, no duplicate writer
 
 Actual11Nov03:18:31UTC SAME8285192 RUNNING, narrow196/196 both complete/native-final-restorePASS/backedup; broadPersonaPlex5 / ContextSpanning2 actual updates. SAME nativePIDs26245/34309 and all clocks/112h/max8/sourceD945/data/recipe remain unchanged. A single bounded training-observation timeout recovered on a fresh successful probe; observer31208 stilllive. Training was neither interrupted nor restarted.
