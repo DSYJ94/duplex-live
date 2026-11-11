@@ -32,7 +32,8 @@ def reference_source_matches(a,producer):
     from .matched_failed_state import reference_allowed as failed_allowed
     from .matched_normal88 import reference_allowed as normal_allowed
     from .matched_storage_recovery import reference_allowed as storage_allowed
-    return producer in {a.source,lineage_source(a)} or reference_allowed(a,producer) or failed_allowed(a,producer) or normal_allowed(a,producer) or storage_allowed(a,producer)
+    from .matched_rpc_recovery import reference_allowed as rpc_allowed
+    return producer in {a.source,lineage_source(a)} or reference_allowed(a,producer) or failed_allowed(a,producer) or normal_allowed(a,producer) or storage_allowed(a,producer) or rpc_allowed(a,producer)
 
 
 def compare_fingerprints(a,lm,groups,original,folder):
@@ -96,7 +97,10 @@ def validate_lineage(a):
                  'training/personaplex/matched_storage_recovery.py','training/personaplex/matched_storage_quota.py',
                  'docs/NATIVE-MOSHI-STORAGE-RECOVERY-AUTHORIZATION-2026-11-10.json',
                  'docs/NATIVE-MOSHI-STORAGE-RECOVERY-PROPOSAL-2026-11-10.json',
-                 'docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json'):
+                 'docs/NATIVE-MOSHI-STORAGE-STOP-2026-11-10.json',
+                 'training/personaplex/matched_rpc_recovery.py',
+                 'docs/NATIVE-MOSHI-RPC-RECOVERY-PROPOSAL-2026-11-11.json',
+                 'docs/NATIVE-MOSHI-RPC-RECOVERY-AUTHORIZATION-2026-11-11.json'):
         raw=(root/file).read_bytes()
         if raw!=git_file(a.source,file):raise ValueError('Recovery policy differs from actual producer: '+file)
         hashes[file]=hashlib.sha256(raw).hexdigest()

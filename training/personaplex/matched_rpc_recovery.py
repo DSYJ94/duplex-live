@@ -25,6 +25,9 @@ def authority():
         native_guard_seconds=45,storage_guard_seconds=120,new_GCP_compute=False,
         new_purchases=False,new_external_model_API_calls=0,OneDrive_writes=False,
         Mac_checkpoint_downloads=False,first_recovery_allowed_after_failed_window6=True)
+    expected['selected_states']={b+'/'+c:dict(step=n,sha256=d,name=f) for (b,c),(n,d,f) in STATES.items()}
+    expected['all_four_fresh_native_restores_before_learning']=True
+    expected['stop_on_any_restore_failure_no_automatic_rollback']=True
     if any(value.get(k)!=v for k,v in expected.items()):raise ValueError('Exact owner failed6 recovery grant required')
     if value.get('proposal_sha256')!=g.sha(PROPOSAL) or not value.get('owner_answer'):
         raise ValueError('Actual owner answer and exact proposal binding required')

@@ -34,7 +34,13 @@ def completed_parent(root,digest):
                 if type(updates) is not int or updates<=0:raise ValueError('Actual completed training must contain positive updates')
                 positive+=updates
     if positive<=0:raise ValueError('Evaluation continuation needs a genuinely positive completed training window')
-    if (root/'storage-recovery-initial.json').is_file():
+    if (root/'rpc-recovery-initial.json').is_file():
+        initial=json.loads((root/'rpc-recovery-initial.json').read_text());grant=r.rpc_authority()
+        if (initial!={'source':lease['source'],'authorization_sha256':grant,'failed_job':'8285192'}
+                or lease.get('rpc_recovery_authorization_sha256')!=grant or lease['continuation_interval']!=7):
+            raise ValueError('Exact approved failed6 recovery7 parent required')
+        earlier=[]
+    elif (root/'storage-recovery-initial.json').is_file():
         initial=json.loads((root/'storage-recovery-initial.json').read_text())
         if initial!={'source':lease['source'],'authorization_sha256':authority(),'failed_job':'8274714'} or lease['continuation_interval']!=6:
             raise ValueError('Exact approved initial recovery window6 required')

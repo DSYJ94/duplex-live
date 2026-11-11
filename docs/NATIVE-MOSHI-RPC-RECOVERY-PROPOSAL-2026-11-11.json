@@ -1,0 +1,56 @@
+{
+  "status": "PENDING_OWNER_SCOPE_AMENDMENT_NOT_EXECUTION_AUTHORIZATION",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "failed_job": "8285192",
+  "failed_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+  "actual_prior_GPU_seconds": 134991,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 8,
+  "next_interval": 7,
+  "maximum_single_job_seconds": 86400,
+  "simultaneous_GPUs": 2,
+  "saved_update_replay": false,
+  "native_guard_seconds": 45,
+  "storage_guard_seconds": 120,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "first_recovery_allowed_after_failed_window6": true,
+  "selected_states": {
+    "personaplex/narrow": {
+      "step": 196,
+      "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+      "name": "epoch-04.pt"
+    },
+    "context-spanning/narrow": {
+      "step": 196,
+      "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+      "name": "epoch-04.pt"
+    },
+    "personaplex/broad": {
+      "step": 62,
+      "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+      "name": "interrupted.pt"
+    },
+    "context-spanning/broad": {
+      "step": 63,
+      "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+      "name": "interrupted.pt"
+    }
+  },
+  "all_four_fresh_native_restores_before_learning": true,
+  "stop_on_any_restore_failure_no_automatic_rollback": true,
+  "repeat_gradient_calibration": false,
+  "training_target_per_arm": 196,
+  "complete_coverage_epochs": 4,
+  "unchanged_data_losses_precision_retention_and_folds": true,
+  "remaining_GPU_hours": 74.5025,
+  "interval8": "Only after actual successful positive7; full training completion permits evaluation-only8, otherwise remaining training plus full evaluation using matched_finish",
+  "evaluation": "Full32 per condition, four candidates plus two untouched bases; complete192. Reasoning independent of ASR; no adoption before full fresh20/connected-backend/live/British listening qualification.",
+  "new_scope": "Allows failed6 recovery7 using exact saved62/63, and new pinned producer identity with concurrent scheduler reads; no extra starts/hours/resources/replay or weaker freshness",
+  "known_limit": "A genuine scheduler outage lasting45seconds still stops; historical outage avoidance is not proven",
+  "recovery_status": "LOCAL_INTEGRATION_PENDING_HOST_CPU_PROOF_NO_SUBMISSION"
+}
