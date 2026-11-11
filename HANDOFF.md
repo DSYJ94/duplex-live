@@ -1,3 +1,13 @@
+# LOCAL — Official access renewal opened; same training remains live
+
+Actual observer64733 confirmed job8317068 RUNNING21:55:50UTC, Plex97/CS99, no archive failure. No restart or live source change. Previous goal turn was a verified wait. Current native producer10e7 and all112GPUh/max10/backup/restore/product gates remain unchanged. OneDrive stays paused.
+
+Official Clifton renewal started in toolsession87533, private log /private/tmp/duplex-clifton-renewal-20261111-2156.log (0600 via umask077). Sanitized check confirms browser/HTTPS instructions, no error; user asked to finish official sign-in and reply done. Do not expose log/device codes or duplicate renewal while this session remains live. Existing certificate expires22:55:48UTC. Local read-only process-inventory toolsession11596 has not returned; it is NOT training or an authentication process, and its observation delay does not mean training stopped. Observer64733 remains the sole training observer. After user completion, verify new certificate validity and bounded actual SSH, then continue same job/epoch backups. Training runs independently of sign-in.
+
+Next actual milestone Plex98 and existing automatic epoch archive; do not duplicate writer. Final10 remains held for scheduler-pacing integration/explicit contract reconciliation; CPU prototype is not deployed. Full product goal remains active and no candidate adopted.
+
+---
+
 # LOCAL — BOTH96 recovery states preserved; valid training continues
 
 Actual SAME8317068 RUNNING21:47:11UTC/nid010999, Plex96/CS98, same10e7source/workers/observer64733; no terminal/archivefailure. ContextSpanning98 completeepoch2 remains independently archived. PersonaPlex96 now full source/destination/reference/derivedreceipt hashPASS on independentLustre21:49:04UTC:1557215641bytes SHA1ef88102760622f17a39878deb86b554e38d2d2a43fa0a610f0882cffb7edb7f. Destination job-8317068-rolling-v1/personaplex/broad/step-0096/live.pt. Smallreceipt rsync0/tempLOCAL and SHA-boundexecutionJSON; native restore still required, no fabricated behavior approval. Original matched_archive code unchanged; allolderstates intact, noMacweights/OneDriveedits. Readerg2:430 completed; soleobserver64733 continues. HOME20619415552bytes passes32GiB.
