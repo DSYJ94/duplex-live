@@ -14,7 +14,7 @@
   "first_actual_queue": "8317068|RUNNING|0:15|nid010999",
   "actual_completed_native_restores_at_first_observation": 0,
   "actual_new_updates_at_first_observation": 0,
-  "observer_tool_session": 64733,
+  "observer_tool_session": 49569,
   "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068",
   "OneDrive_writes": false,
   "actual_native_restores_all4_passed": true,
@@ -1913,11 +1913,11 @@
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T22:54:56Z",
+  "last_observed_UTC": "2026-11-11T23:04:44Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 104,
-    "context-spanning/broad": 107
+    "personaplex/broad": 105,
+    "context-spanning/broad": 109
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
@@ -2010,5 +2010,7 @@
   "personaplex_rolling96_receipt_sha256": "0277880d21a864172b46371278ffb01b87d209a46e4d6b433306d63fa1c3a10b",
   "context_spanning_rolling104_receipt_sha256": "95010d500fa572355753e7168ff914012dc5206943d8dac7c48b2623dd92c7ec",
   "rolling104_metadata_rsync_exit": 0,
-  "personaplex_rolling104_receipt_sha256": "cb94baa3789c87b65d4cbc405fd6ed0a9b0b3131d030dc817d31dade8cfa49a5"
+  "personaplex_rolling104_receipt_sha256": "cb94baa3789c87b65d4cbc405fd6ed0a9b0b3131d030dc817d31dade8cfa49a5",
+  "renewed_certificate_expires_UTC": "2026-11-12T11:03:51Z",
+  "renewed_observation_sha256": "72590e901e4c59c01976c6b715d6c54b4ff27db301d1786124f71a1ab16b591b"
 }

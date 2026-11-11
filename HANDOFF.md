@@ -1,3 +1,13 @@
+# LOCAL — Official renewal succeeded; same training confirmed live; local monitor resumed
+
+Owner repliedDone. Clifton80009 actualexit0; localcertificate inspectedvalid11Nov23:03:51 through12Nov11:03:51UTC. Actual boundedfreshSSH/one-shot observer5415 exit0 at23:04:44UTC confirmed SAME8317068 RUNNING5:45:54/nid010999, Plex105/CS109, nohostterminal/archivefailure. Same10e7nativeproducer/workers, norestart/submission orsavedupdate replay. Both104fullstatebackups +98epochs remain verified; nextuseful rolling112whenactualsaved. Exactrenewedobservation receipt SHA-boundexecutionJSON. Old64733 is terminalclosed; ONEreplacementLOCALobserver49569 started with60secondinitialspacing andthenexisting>=60secondpoll. Log rpc9-monitor-renewed-20261111.jsonl. Do not duplicate on timeout. Training neverpaused forauth.
+
+Goaltracker get_goal stillreportedBLOCKED fromearlierexpiredaccess; available update_goal cannotresume(activeisusercontrolled). Current ownerDone authorizescontinuingwork andaccessblockerISresolved, notanotherblockedturn. Preservefullobjective anddo notmarkcomplete/resetgoal. Ifautomaticgoalcontinuationdoesnotresume, ownerneedsresumeexistinggoal; no newgoal/subgoal/successredefinition.
+
+Nextapprovedcontroller63f121fc876394c8d63a38e22535b6a2496015f8/source-paced-final10-4381fd6 remainsdeployed; pacedgrant89d10ff311a9ed2b7b428240faab46ef44e55b6eb0089e3634f91e4a2f5e52d7. Onlyafteractualsuccessfulpositive9/fullnativefinalrestores/COMPLETED0/newfullhashbackups/actualremaining112GPUh/max10/fulltraining+192schedule: invokeexistingexclusivefinal10helper, noprematureduplicate/nofailed9retry. No currentnative/guard/math/datachanges. OneDrivepaused/tempcheckoutonly; noGPU/GCP/API/purchasesadded. Modelwinner/productqualificationstillunproven.
+
+---
+
 # LOCAL — Goal blocked on official sign-in after three consecutive expired-access turns
 
 Third consecutive goalturn revalidated actualSSH255/publickeydenied at22:57:23UTC11Nov. First was observer64733 actualexit1 aftertwoexpiredcertprobes, second boundedSSH22:57:06 exit255 withsamecertvalidonlyto22:55:48; third22:57:23same. No liveobservation available, no remotejobstop/restart/submission. No remaining independent local prerequisite needed before results: approvedfinal10controller63f deployed/CPUverified, exactaccounting/backup/native/full192 gates retained. Further product/foundation decisions need actualcurrenttraining/results, so goal shouldbe BLOCKED onuserinstitutionalsignin, notcomplete orpaused. Broaderobjective/threefoundationtracks/SFT/RL/data/fulltuning plan unchanged.
