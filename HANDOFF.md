@@ -1,3 +1,11 @@
+# LOCAL — Local process identity prerequisite implemented; live guard unchanged
+
+Added training/personaplex/local_process_identity.py for proposed future paced heartbeat. Reads Linux bootID/PID/startticks/allUIDs/cgroup, rejects dead/zombie/reused/missing processes and changing identity during observation. Exact parent-launcher identity comparison supplies LOCAL liveness evidence only; it does not prove scheduler allocation or refresh a provider timestamp. No running-module imports/wiring changed; no deployment or additional model check. Combined local process + separate-clock contract13testsPASS, including PID reuse/exit/UID/cgroup/reboot/race/staleclock. This is a necessary CPU implementation component, NOT complete runtime integration or an actual Linux-host proof. Final10 HOLD remains until full focused integration and explicit45s-provider-contract reconciliation.
+
+Actual8317068 last confirmed RUNNING22:06:38UTC/Plex98CS101, nofailure; both98epoch checkpoints independently verified, same10e7native source/observer64733. Continue monitoring without modifying validtraining. Official renewal87533 expiredexit1; user ready request pending, no duplicate sign-in. Certificate valid until22:55:48UTC. OneDrive paused/tempcheckoutonly;112GPUh/max10/API0 unchanged, productgoalACTIVE. Prior goal turn made checkpoint/handoff progress; current work prepares necessary continuation infrastructure only. No new jobs/GCP/purchases/API/data transfers.
+
+---
+
 # LOCAL — Renewal session expired; existing monitoring still available
 
 Clifton tool87533 actually exited1; sanitized private log confirms expired/error and no success. No fresh certificate claimed. User asked to reply ready before opening another short-lived official session; do not automatically duplicate expired-code attempts. Existing certificate remains valid until22:55:48UTC. Training8317068 continues independently; observer64733 last confirmed RUNNING22:05:34UTC, Plex98/CS101/noarchivefailure. BOTHepoch2 backups already verified and preserved in80107f8. No model interruption, restart, or OneDrive write.
