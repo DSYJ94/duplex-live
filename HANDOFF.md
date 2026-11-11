@@ -1,3 +1,11 @@
+# LOCAL — Certificate expired; observer actually terminated; training state now unverified
+
+After certificate22:55:48UTC expiry, observer64733 performed two bounded freshSSH probes, both exit255 Permission denied(publickey); actual observer toolterminalexit1. Observer64733 is CLOSED, notlive; do not poll/restart it until officialrenewal. No newobserver/authflow/job submitted. Last real successfulSlurm observation remains22:54:56UTC:8317068 RUNNING/Plex104CS107/noarchivefailure. Accessfailure is NOTa trainingterminal; neverclaimjobstopped orresubmitbecauseofthisgap. RemoteSlurm/native/epocharchive services independentofMac. BOTH104 fullstatebackups+both98epochs verifiedpreserved, smallreceiptsretrieved actualrsync0 andcommittedafd431d beforeexpiry.
+
+Userreadyrequest pending; afterready openfreshofficialClifton, no passwords/codeschat, verifynewcert+boundedfreshSSH, then inspectexisting8317068/actualterminals/backupstatus first. Futurefinal10 authorized63f controller and112GPUh/max10/full192 boundariesunchanged; successfulparent/restore/hash/accounting gatingstillmandatory. OneDrivepaused/tempcheckoutonly. This is FIRST goalturn with actual expired-access blocker, with checkpointprogress completed thisturn; broadgoal remainsACTIVE and unfinished. Do not fabricate continuingliveevidence.
+
+---
+
 # LOCAL — BOTH104 full recovery states preserved before certificate expiry
 
 Actual same8317068 RUNNING22:54:56UTC/nid010999/Plex104CS107/noarchivefailure, nativeproducer10e7 unchanged. PersonaPlex104 backup actualPASS22:55:24UTC:1557255001bytes SHA903db433d3397ec92ab336e8c4c50794a17cb03c4360edf3ed8662a3d1803b52. Originalmatched_archive actualrsync0/fullsource+destination+native-reference+derivedreceipt hashesverified on independentLustre job-8317068-rolling-v1/personaplex/broad/step-0104/live.pt. Exact104native ref and104training log bound beforecopy. Derivedinput NOTrestore/adoption approval. Smallreceipt copiedtempLOCAL actualrsync0 beforeexpiry, SHA-boundexecutionJSON. CS104alreadybackedup; both98epochs/allolderstatesintact. NoMacweights/OneDrivechanges, modelinterruption orduplicatewriter.
