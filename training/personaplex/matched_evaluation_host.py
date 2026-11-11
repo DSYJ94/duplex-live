@@ -55,7 +55,7 @@ def completed_parent(root,digest):
 
 
 def new_allocation(parent,source,job,prior):
-    if parent['continuation_interval'] not in ((8,) if parent.get(r.startup.KEY) else (6,7)):raise ValueError('Only unused authorized7/8 evaluation interval allowed')
+    if parent['continuation_interval'] not in ((9,) if parent.get(r.startup.KEY) else (6,7)):raise ValueError('Only unused authorized7/8 evaluation interval allowed')
     lease=dict(parent,job_id=job['JobId'],node=job['NodeList'],controller_source=source,
         continuation_interval=parent['continuation_interval']+1,prior_GPU_seconds=prior,
         start_unix=g.stamp(job['StartTime']),stop_unix=g.stamp(job['EndTime']),

@@ -9,7 +9,7 @@ PROPOSAL=Path('docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-PROPOSAL-2026-11-11.js
 KEY='rpc_startup_authorization_sha256'
 
 
-def authority():
+def previous_authority():
     recovery.authority()
     proposal=json.loads(PROPOSAL.read_text());value=json.loads(AUTH.read_text())
     expected=dict(status='OWNER_APPROVED_RPC_STARTUP_RECOVERY8',provider='Isambard',account=g.ACCOUNT,
@@ -28,11 +28,35 @@ def authority():
     return g.sha(AUTH)
 
 
+MOUNT_AUTH=Path('docs/NATIVE-MOSHI-RPC-MOUNT-CONTINUATION-AUTHORIZATION-2026-11-11.json')
+MOUNT_PROPOSAL=Path('docs/NATIVE-MOSHI-RPC-MOUNT-CONTINUATION-PROPOSAL-2026-11-11.json')
+
+
+def authority():
+    previous_authority()
+    proposal=json.loads(MOUNT_PROPOSAL.read_text());value=json.loads(MOUNT_AUTH.read_text())
+    expected=dict(status='OWNER_APPROVED_RPC_MOUNT_RECOVERY9',provider='Isambard',account=g.ACCOUNT,
+        failed_job='8314862',actual_prior_GPU_seconds=135137,maximum_aggregate_GPU_hours=112,
+        maximum_total_running_intervals=10,next_interval=9,simultaneous_GPUs=2,
+        maximum_single_job_seconds=86400,native_guard_seconds=45,storage_guard_seconds=120,
+        all_four_fresh_native_restores_before_learning=True,saved_update_replay=False,
+        new_GCP_compute=False,new_purchases=False,new_external_model_API_calls=0,
+        OneDrive_writes=False,Mac_checkpoint_downloads=False)
+    expected['selected_states']={b+'/'+c:dict(step=n,sha256=d,name=f) for (b,c),(n,d,f) in recovery.STATES.items()}
+    if any(value.get(k)!=v for k,v in expected.items()):raise ValueError('Exact owner mount9/10 grant required')
+    if not value.get('owner_answer') or value.get('proposal_sha256')!=g.sha(MOUNT_PROPOSAL):
+        raise ValueError('Actual owner answer and immutable mount proposal required')
+    if any(value.get(k)!=v for k,v in proposal.items() if k!='status'):
+        raise ValueError('Mount grant cannot broaden the owner-reviewed proposal')
+    return g.sha(MOUNT_AUTH)
+
+
 def first_interval(lease):
     if lease.get(KEY) is None:return 7
     if lease[KEY]!=authority():raise ValueError('Exact startup continuation identity required')
-    return 8
+    return 9
 
 
 def history(original):
-    return dict(original,**{'8314042':dict(state='FAILED',elapsed=30,GPUs=2)})
+    return dict(original,**{'8314042':dict(state='FAILED',elapsed=30,GPUs=2),
+        '8314862':dict(state='FAILED',elapsed=43,GPUs=2)})

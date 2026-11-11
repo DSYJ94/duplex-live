@@ -1,4 +1,4 @@
-"""One exclusive recovery8 submission, only after the exact owner amendment.
+"""One exclusive recovery9 submission, only after the exact owner amendment.
 
 A timeout leaves the claim intact and UNKNOWN: never retry sbatch automatically.
 """
@@ -20,7 +20,7 @@ def command(work,source):
         '--inputs-sha',DATA_SHA]
     return ['sbatch','--parsable','--account=brics.u6ada','--partition=workq','--nodes=1',
         '--gpus=2','--cpus-per-task=16','--mem=200G','--time=24:00:00','--no-requeue','--export=NONE',
-        '--job-name=duplex-matched-rpc-recovery8-v1','--chdir='+str(work),
+        '--job-name=duplex-matched-rpc-recovery9-v1','--chdir='+str(work),
         '--output='+str(DURABLE/'slurm-rpc-recovery-%j.log'),
         '--wrap=ulimit -c 0\nexec '+' '.join(shlex.quote(x) for x in native)]
 
@@ -33,13 +33,13 @@ def submit(source):
     if subprocess.check_output(['git','status','--porcelain'],universal_newlines=True).strip():
         raise ValueError('No uncommitted deployment changes allowed')
     queue=subprocess.check_output(['squeue','-h','-A','brics.u6ada','-o','%i'],universal_newlines=True,timeout=20)
-    if queue.strip():raise ValueError('No other project job may overlap recovery8')
-    if prior_usage('0',HISTORY)!=135051:raise ValueError('All seven failed allocations must remain counted')
+    if queue.strip():raise ValueError('No other project job may overlap recovery9')
+    if prior_usage('0',HISTORY)!=135137:raise ValueError('All eight failed allocations must remain counted')
     storage_check()
-    claim=DURABLE/'rpc-recovery8-submission-v1';claim.mkdir(exist_ok=False)
+    claim=DURABLE/'rpc-recovery9-submission-v1';claim.mkdir(exist_ok=False)
     cmd=command(work,source)
     (claim/'command.json').write_text(json.dumps(dict(source=source,authorization_sha256=grant,
-        command=cmd,prior_GPU_seconds=135051,interval=8,started_unix=time.time()),indent=2)+'\n')
+        command=cmd,prior_GPU_seconds=135137,interval=9,started_unix=time.time()),indent=2)+'\n')
     try:
         result=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=60)
     except subprocess.TimeoutExpired:

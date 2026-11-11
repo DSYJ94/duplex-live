@@ -15,7 +15,7 @@ from .matched_generation import completed_states
 
 def evaluation_lease(previous,source,job):
     """A source transition inside one interval cannot reset any budget clock."""
-    allowed=(9,) if previous.get('rpc_startup_authorization_sha256') else (7,8) if previous.get('storage_recovery_authorization_sha256') else (6,)
+    allowed=(10,) if previous.get('rpc_startup_authorization_sha256') else (7,8) if previous.get('storage_recovery_authorization_sha256') else (6,)
     if previous['job_id']!=job or previous.get('continuation_interval') not in allowed:
         raise ValueError('Only the last approved actual running window may evaluate here')
     lease=dict(previous,source=source,controller_source=source,trainer_source=previous['source'])

@@ -38,6 +38,8 @@ CONTROL=('training/personaplex/matched_resume.py',NATIVE,'training/personaplex/m
     'training/personaplex/matched_storage_recovery.py','training/personaplex/matched_storage_quota.py',
     'training/personaplex/matched_storage_job.py','training/personaplex/matched_archive.py',str(STORAGE_AUTH),
     'training/personaplex/matched_rpc_recovery.py','training/personaplex/matched_rpc_startup.py',
+    'docs/NATIVE-MOSHI-RPC-MOUNT-CONTINUATION-PROPOSAL-2026-11-11.json',
+    'docs/NATIVE-MOSHI-RPC-MOUNT-CONTINUATION-AUTHORIZATION-2026-11-11.json',
     'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-PROPOSAL-2026-11-11.json',
     'docs/NATIVE-MOSHI-RPC-STARTUP-CONTINUATION-AUTHORIZATION-2026-11-11.json','training/personaplex/matched_rpc_job.py',
     'docs/NATIVE-MOSHI-RPC-RECOVERY-PROPOSAL-2026-11-11.json',
@@ -204,7 +206,7 @@ def main(a):
     ordered=chain(a.previous_root,a.previous_result_sha);old=ordered[-1]['lease'];interval=old['continuation_interval']+1
     post_mode=bool(old.get('postupdate_recovery_authorization_sha256'))
     storage_mode=bool(old.get('storage_recovery_authorization_sha256'))
-    if interval>(9 if old.get(startup.KEY) else 8 if storage_mode else 6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
+    if interval>(10 if old.get(startup.KEY) else 8 if storage_mode else 6 if post_mode else 4):raise ValueError('Approved running interval count exhausted')
     amendment=g.sha(g.EXTENSION)
     phase=dict(continuation_authorization_sha256=amendment,continuation_interval=interval)
     if post_mode:phase['postupdate_recovery_authorization_sha256']=post_authority()

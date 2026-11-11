@@ -1,0 +1,66 @@
+{
+  "status": "OWNER_APPROVED_RPC_MOUNT_RECOVERY9",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "failed_job": "8314862",
+  "failure_evidence": "docs/NATIVE-MOSHI-RPC-STARTUP-EXECUTION-2026-11-11.json",
+  "actual_prior_GPU_seconds": 135137,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 10,
+  "previous_maximum_total_running_intervals": 9,
+  "next_interval": 9,
+  "simultaneous_GPUs": 2,
+  "maximum_single_job_seconds": 86400,
+  "scope": "Allow mount-startup recovery9 after failed8; permit10 ONLY from actual successful positive9 with all native restores and COMPLETED0, to finish remaining training and full evaluation. No automatic retry after a failed9.",
+  "reason_for_ninth_interval": "Renumbered recovery9 after infrastructure-only failed8; remaining PersonaPlex serial forecast exceeds one24-hour allocation, so successful-checkpoint continuation10 is required.",
+  "selected_states": {
+    "personaplex/narrow": {
+      "step": 196,
+      "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+      "name": "epoch-04.pt"
+    },
+    "context-spanning/narrow": {
+      "step": 196,
+      "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+      "name": "epoch-04.pt"
+    },
+    "personaplex/broad": {
+      "step": 62,
+      "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+      "name": "interrupted.pt"
+    },
+    "context-spanning/broad": {
+      "step": 63,
+      "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+      "name": "interrupted.pt"
+    }
+  },
+  "startup_read_repair": "At most three read-only scontrol attempts,20seconds each, before lease/model creation; retry TimeoutExpired only. No sbatch retry. Validate actual provider job clocks after successful read; no clock reset.",
+  "native_guard_seconds": 45,
+  "storage_guard_seconds": 120,
+  "all_four_fresh_native_restores_before_learning": true,
+  "stop_on_any_restore_failure_no_automatic_rollback": true,
+  "training_target_per_arm": 196,
+  "complete_coverage_epochs": 4,
+  "saved_update_replay": false,
+  "repeat_gradient_calibration": false,
+  "unchanged_data_losses_precision_retention_and_folds": true,
+  "new_GCP_compute": false,
+  "new_purchases": false,
+  "new_external_model_API_calls": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "full_evaluation": "All192 native outputs; independent reasoning/speech and all existing fresh20/connected-backend/live/British gates before adoption. No passing-subset acceptance.",
+  "forecast_total_GPU_hours": 93.65574708028713,
+  "forecast_is_not_a_new_benchmark": true,
+  "implementation_status": "Shared mount target precreation is Git-deployed and passed22 actualHOSTCPU tests plus actualparallel contained CPU native imports. Any9/10 authorization/accounting/source binding must be complete and verified before submission; no new owner grant exists.",
+  "next_submission": "Exclusive new durable recovery9 claim; exact failed8 accounting/empty queue/Git-deployed producer. No duplicate on timeout.",
+  "stop_condition": "Failed9 or insufficient complete schedule stops branch; no automatic11/no budget reset.",
+  "mount_repair_proof": "docs/NATIVE-MOSHI-RPC-MOUNT-REPAIR-PROOF-2026-11-11.json",
+  "mount_repair": "Precreate and validate worktree/runs on host before parallel container launches; reject files/symlinks. Original snapshot remains read-only; no native/data/math change.",
+  "owner_answer": "Approve recovery9 and successful continuation10; keep112 GPU-hours",
+  "proposal_commit": "2ba6ab4bc2d0dd87ae4dd8d06692957a7a436060",
+  "proposal_sha256": "fda8629cd914802fbacf36a8959b76124588c6b5e727cf237418e73919b94ead",
+  "question_call": "call_3822c72b6e884f9188c053f9e7f1cbb3",
+  "approved_UTC": "2026-11-11T17:17:10.129607+00:00"
+}

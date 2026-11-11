@@ -73,8 +73,8 @@ def main(a,startup_recovery=False):
     from . import matched_rpc_startup as startup
     startup_grant=startup.authority() if startup_recovery else None
     history=startup.history(HISTORY) if startup_recovery else HISTORY
-    expected_prior=135051 if startup_recovery else 134991
-    interval=8 if startup_recovery else 7
+    expected_prior=135137 if startup_recovery else 134991
+    interval=9 if startup_recovery else 7
     storage=storage_check();original=preflight(ORIGINAL_ROOT,PACKET_SHA)
     jobid=os.environ['SLURM_JOB_ID'];prior=prior_usage(jobid,history)
     if prior!=expected_prior:raise ValueError('All six actual allocations must remain counted')
