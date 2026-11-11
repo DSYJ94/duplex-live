@@ -1,3 +1,13 @@
+# LOCAL — Monitoring contract prototype preserved; current training unchanged
+
+Previous goal turn was a verified wait on observer64733/job8317068. This turn again verified actual RUNNING21:14:51UTC, same10e7 producer/workers, Plex91/CS94, no terminal/archive failure, HOME19061895168bytes below32GiB. No restart, model edit or duplicate observer. Current88 backups remain verified; next actual96 save/epoch98 is pending, not claimed.
+
+The previously untracked CPU-only paced_guard_contract and its test are now preserved in Git. Added fail-closed finite/nonnegative clock checks, complete allocation identity requirements and rejection of future provider-attempt stamps; actual local7testsPASS. This remains a PROPOSAL PROTOTYPE, not a deployed or integrated guard and not final10 readiness. Provider90s/local45s semantics still require explicit treatment against the existing approved45s contract; final10 HOLD remains. No relaxation of the live guard, native source or current112GPUh/max10/API0 limits. Do not mistake these CPU tests for a host/native proof. Finish the focused runtime integration and reviewable contract amendment before any next submission, without interrupting current valid training.
+
+Current product goal remains ACTIVE; foundation comparison then substantial SFT/RL/data/full-tuning branches stay in the committed plans. OneDrive paused; localtemp checkout only. Clifton expires22:55:48UTC; renew officially before monitoring expires. Preserve all checkpoints/receipts; no new purchases/GCP/APIs/agents/chats/resources. Continue same observer64733 and existing epoch archive helper.
+
+---
+
 # LOCAL — Native RL plan added; Bidaily research inspected; valid training continues
 
 Owner11November asks to add RL and inspect ML/AI Learning's AI research agent (Bidaily). Read-only chat inspection6ae5bd9c-30d4-83eb-bf1c-f7bb39ed5690 returned recent7–9November briefings plus weight-space discussion; no message, new agent, schedule change or exhaustive feed sweep. Primary-verified papers: native Moshi/PersonaPlex interactivity GRPO2606.11167v2; MiRL2610.35697/code; Agentic-OPD2611.12799; BudgetMix2611.06483; stage-specific LoRA2611.08414; OPAL; DPO; R1 author overview. Conditional architecture leads LoopBeforeYouLeap2611.06206/HiRes2610.41711 abstracts checked, not implemented. New docs/NATIVE-RL-AND-RESEARCH-INTEGRATION-2026-11-11.md records source links, methods/limits, phased native implementation, task-and-behavior/waveform/worker reward contract, reasoning/routing, held-out protection, British preference-label admission, exact native prefix/state requirements and full evaluation. Released Kyutai RL weights have explicit NC combined license: reference method, not automatic product replacement. No weights downloaded/terms accepted.
