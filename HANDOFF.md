@@ -1,3 +1,13 @@
+# LOCAL — SSH monitoring restored; NEW single read-only observer84424
+
+Oldobserver31208 ended1 after two SSHbannertimeouts at~04:44UTC11Nov; notifyowner of accessgap, no trainingstopassumption. Boundedfreshactualprobe **04:44:57UTC** succeeded: SAME8285192 RUNNING/nid010789, broadraw16/CS14, samePIDs26245/34309, narrow196bothfinalnativePASS/backedup. Actualcertvalid10Nov22:33:07→11Nov10:33:07UTC, no sign-inblocker. Read-only actualpgrep confirmed NO oldmatched_observer process before reconnect. **ONE new foreground observertool84424** now runs unchanged boundedfreshSSH/60spolls/one-read-retry and appends ignoredexisting storage6-monitor-8285192.jsonl. Do NOTreuse31208 orduplicate84424/modelontimeout.
+
+Artifactwatcher25705 is NOT active locally; remote114294/login42 UNKNOWN/no terminal. Do not restart a competing persistentwatcher. Fouroriginal immutable147/196 backupsPASS; no broadimmutableepochyet. Use bounded disjoint synchronous-copy fallback describedbelow for nextNEWimmutableepoch iforiginalbackupabsent; fullhash/refs required, no plannedcopy counted. PrimaryNFS HOME9.52GB<32GiB atfreshprobe, providerquotaguardPASS.
+
+Nativejob/sourceD945/one2GPUs/44709priorGPUseconds/112aggregateh/max8intervals/current6/originalSTOP11Nov22:28:47UTC/recipe/data/OPAL unchanged. OneDrive editing/eviction/checkpointdownloadspause absolute; tempcheckoutmainmetadataonly. No GPUrestart/GCP/purchase/API/newagents/chats/automation. Goalactive, continue SAMEvalidtrainingthroughsuccessfulwindow/strictrestores/realterminal/backups, then authorizedsuccessful7/8 continuation and fullreasoning/delegation/speechevaluation. No morediagnosticpreparation; currentaccessrestored, nohumaninputpending.
+
+---
+
 # LOCAL — Valid broad training11/9; bounded backup fallback avoids more host diagnostics
 
 Actual11Nov04:07:28UTC fresh samejob8285192 RUNNING/nid010789, broadPersonaPlex11/ContextSpanning9 actualcompletedupdates; samePID26245/34309/sourceD945/one2GPUjob. Bothnarrow196/finalnativeexactrestores and fourimmutable147/196 second-filesystemcopies remainPASS. Nativelearning continues; no improved reasoning/speech/adoption claim. One transient observation timeout at03:38 recovered byONEfreshread; sameobserver31208 remainslive. No modelrestart or validtrainingpause.
