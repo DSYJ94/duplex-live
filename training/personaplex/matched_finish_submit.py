@@ -10,6 +10,7 @@ from . import matched_evaluation_host as evaluation
 from .matched_interrupted import DURABLE
 from .matched_reuse import DATA_SHA
 from .matched_storage_quota import storage_check
+from . import paced_health_service as paced
 
 ROOT=DURABLE/'runs/rpc-recovery-8317068'
 CLAIM=DURABLE/'matched-final10-submission-v1'
@@ -114,8 +115,8 @@ def forecast(root,seconds,complete):
 
 
 def command(work,source,digest,complete,seconds):
-    module='training.personaplex.matched_evaluation_host' if complete else 'training.personaplex.matched_finish'
-    native=['/usr/bin/python3','-B','-u','-m',module,'--controller-source',source]
+    native=['/usr/bin/python3','-B','-u','-m','training.personaplex.paced_finish',
+        '--mode','evaluate' if complete else 'train','--controller-source',source]
     if complete:native+=['--training-root',str(ROOT),'--phase-result-sha',digest]
     else:native+=['--inputs','/projects/u6ada/duplex-live/native-moshi-matched-inputs-v1',
         '--inputs-sha',DATA_SHA,'--previous-root',str(ROOT),'--previous-result-sha',digest]
@@ -127,6 +128,7 @@ def command(work,source,digest,complete,seconds):
 
 
 def submit(source):
+    pacing_grant=paced.authority()  # explicit amendment required before any allocation
     grant=startup.authority();work=Path.cwd();work.resolve().relative_to(DURABLE.resolve())
     if subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()!=source:
         raise ValueError('Exact final controller Git producer required')
@@ -147,7 +149,8 @@ def submit(source):
     cmd=command(work,source,digest,complete,seconds)
     CLAIM.mkdir(exist_ok=False)
     (CLAIM/'command.json').write_text(json.dumps(dict(source=source,authorization_sha256=grant,
-        command=cmd,prior_GPU_seconds=prior,maximum_seconds=seconds,interval=10,
+        command=cmd,paced_authorization_sha256=pacing_grant,
+        prior_GPU_seconds=prior,maximum_seconds=seconds,interval=10,
         previous_result_sha256=digest,evaluation_only=complete,storage=storage,schedule=schedule,independent_backups=backups,started_unix=time.time()),indent=2)+'\n')
     try:
         result=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=60)

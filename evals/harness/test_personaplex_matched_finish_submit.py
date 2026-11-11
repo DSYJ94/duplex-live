@@ -16,9 +16,10 @@ class FinalSubmission(unittest.TestCase):
             with self.assertRaises(ValueError):s.walltime(invalid)
 
     def test_complete_and_partial_routes_do_not_repeat_training(self):
-        for complete,module in ((True,'matched_evaluation_host'),(False,'matched_finish')):
+        for complete,mode in ((True,'evaluate'),(False,'train')):
             cmd=s.command(Path('/allocated/controller'),'new-controller','phase-sha',complete,47520)
-            self.assertIn(module,cmd[-1]);self.assertIn('--time=792',cmd)
+            self.assertIn('training.personaplex.paced_finish',cmd[-1])
+            self.assertIn('--mode '+mode,cmd[-1]);self.assertIn('--time=792',cmd)
             self.assertIn('--no-requeue',cmd);self.assertIn('--export=NONE',cmd)
             self.assertIn('--gpus=2',cmd);self.assertNotIn('matched_native --stage admit',cmd[-1])
             self.assertEqual('--inputs-sha' in cmd[-1],not complete)
@@ -45,6 +46,12 @@ class FinalSubmission(unittest.TestCase):
 
 
 class ExclusiveFinalClaim(unittest.TestCase):
+    def test_unapproved_pacing_cannot_submit_or_query_resources(self):
+        with patch.object(s.paced,'authority',side_effect=FileNotFoundError('grant absent')), \
+             patch.object(s.subprocess,'check_output') as query, patch.object(s.subprocess,'run') as submit:
+            with self.assertRaises(FileNotFoundError):s.submit('controller')
+            query.assert_not_called();submit.assert_not_called()
+
     def test_timeout_keeps_claim_and_second_call_cannot_submit(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);work=root/'controller';work.mkdir();claim=root/'claim'
@@ -52,7 +59,8 @@ class ExclusiveFinalClaim(unittest.TestCase):
             def query(cmd,**kwargs):
                 if cmd[:2]==['git','rev-parse']:return 'controller\n'
                 return ''
-            with patch.object(s,'DURABLE',root),patch.object(s,'CLAIM',claim),patch.object(s.Path,'cwd',return_value=work),\
+            with patch.object(s.paced,'authority',return_value='fixture-paced-grant'),\
+                 patch.object(s,'DURABLE',root),patch.object(s,'CLAIM',claim),patch.object(s.Path,'cwd',return_value=work),\
                  patch.object(s,'parent',return_value=([dict(lease=old)],'phase-sha',False)),\
                  patch.object(s.resume,'verify_worker'),patch.object(s.resume,'allocation_carry',return_value=307937),\
                  patch.object(s,'storage_check',return_value={'passed':True}),patch.object(s,'forecast',return_value={'synthetic':'schedule'}),patch.object(s,'backup_proofs',return_value={'both':'synthetic fixture'}),\
