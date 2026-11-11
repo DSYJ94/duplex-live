@@ -1,0 +1,190 @@
+{
+  "exported_UTC": "2026-11-11T02:58:15.424578+00:00",
+  "job": "8285192",
+  "actual_native_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+  "metadata_copy_actual_rsync_exit": 0,
+  "OneDrive_writes": false,
+  "Mac_checkpoint_downloads": false,
+  "records": {
+    "cold-source-quota-preservation-eb138.json": {
+      "sha256": "eedd31e1e0285a7b9a9567e33f7741c2153cacae152fe7795a2d210cb0814435",
+      "value": {
+        "actual_UTC": "2026-11-11T02:52:09Z",
+        "old": "/projects/u6ada/duplex-live/source-host-startup-repair-eb138a72c8ca",
+        "preserved": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/preserved-source-eb138a72c8ca",
+        "commit": "eb138a72c8cae9d6733daa48a2195e4554303e32",
+        "tracked_files": 2425,
+        "all_tracked_bytes_and_modes_identical": true,
+        "ignored_files": 0,
+        "unrelated_files": 0,
+        "old_owned_by_our_uid": true,
+        "manifest_sha256": "d75da44775b162b0648bb9f82a1999d0004b014af096967f34e271651adefada",
+        "old_files_deleted": true,
+        "training_job_unchanged": "8285192",
+        "old_path_now_symlink_to_preserved": true,
+        "actual_cleanup_UTC": "2026-11-11T02:54:59Z",
+        "checkpoints_and_bare_objects_untouched": true
+      }
+    },
+    "runs/storage-recovery-8285192/independent-archive-status.json": {
+      "sha256": "91724672df27f6ac1245bcd1af02e44543a12efd4657e7838a98f81ebf2578b0",
+      "value": {
+        "job_id": "8285192",
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "copies": [
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/context-spanning/narrow/train/epoch-03.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/context-spanning/narrow/epoch-03/epoch-03.pt",
+            "step": 147,
+            "bytes": 289985405,
+            "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T00:37:03Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-03.pt": {
+                "bytes": 289985405,
+                "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184"
+              },
+              "epoch-03.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "f8d11042a058beb0da1985467d9a238473d79171698eebb1f239879b58ce8190"
+              },
+              "epoch-03.json": {
+                "bytes": 343,
+                "sha256": "e3b6e67f8edf08317836944d78c92d77dee416dd55925d5374bfdd9718e30bd8"
+              }
+            }
+          },
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-03.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/epoch-03/epoch-03.pt",
+            "step": 147,
+            "bytes": 289915773,
+            "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T00:15:30Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-03.pt": {
+                "bytes": 289915773,
+                "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a"
+              },
+              "epoch-03.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "b1a91c873a3bff7ae026fc87dc16adf7b2500655334cb016e1968f1f0f9b697e"
+              },
+              "epoch-03.json": {
+                "bytes": 343,
+                "sha256": "6bafad02e19a1ef809abd5083046db33018b576bb0b9bc3713c9607a09a430b8"
+              }
+            }
+          },
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-04.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/epoch-04/epoch-04.pt",
+            "step": 196,
+            "bytes": 289940925,
+            "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T02:56:47Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-04.pt": {
+                "bytes": 289940925,
+                "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a"
+              },
+              "epoch-04.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "d61e16fece57364d23450579ad6a2e1f30951dbc72e44b457b129a800abf4022"
+              },
+              "epoch-04.json": {
+                "bytes": 343,
+                "sha256": "3046cab169744a5d601dfd8870557626b30c49ddd36444dcd1f2c56713570cd4"
+              }
+            }
+          }
+        ],
+        "passed": true,
+        "training_interrupted": false,
+        "OneDrive_writes": false
+      }
+    },
+    "runs/storage-recovery-8285192/execution-8285192/independent-archive-original-failure-preserved.json": {
+      "sha256": "9205f539a7db1661aebd3b9a5c5d0912927d2351ae709457eabc51586daa5ccf",
+      "value": {
+        "job_id": "8285192",
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "error": "OSError: [Errno 122] Disk quota exceeded: '/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/.epoch-04-stage-223621'",
+        "passed": false,
+        "training_interrupted": false,
+        "actual_UTC": "2026-11-11T02:41:12Z"
+      }
+    },
+    "runs/storage-recovery-8285192/execution-8285192/archive-recovery1.log": {
+      "sha256": "7881a7aafff3dde2598a3ecb801c00d61c40f213c10b67c5316e3cfd695340e2",
+      "value": "srun: got SIGCONT\nsrun: forcing job termination\nsrun: forcing job termination\nsrun: StepId=8285192.0 aborted before step completely launched.\nsrun: Job step aborted: Waiting up to 32 seconds for job step to finish.\n[2026-11-11T02:55:28.026] error: Unable to create TMPDIR [/local/user/1483809154]: Permission denied\n[2026-11-11T02:55:28.026] error: Setting TMPDIR to /tmp\n[2026-11-11T02:55:28.033] error: *** STEP 8285192.0 ON nid010789 CANCELLED AT 2026-11-11T02:55:28 DUE to SIGNAL Killed ***\nsrun: error: nid010789: task 0: Killed\nsrun: Terminating StepId=8285192.0\n"
+    },
+    "runs/storage-recovery-8285192/execution-8285192/archive-recovery2-process.json": {
+      "sha256": "ccc19b37571692eb966ef3b475afcf98b693715a0804efba33803bb0ddfdbb5d",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "job_id": "8285192",
+        "pid": 114294,
+        "host": "login42",
+        "role": "artifact-copy watcher only, no model or GPU",
+        "Mac_connection_required": true,
+        "started_UTC": "2026-11-11T02:56:43Z"
+      }
+    },
+    "runs/storage-recovery-8285192/personaplex/narrow/final-restore/restore.json": {
+      "sha256": "fe7050749df1b95c854f9760e1029b0b0903fdd1bf63f9aa772a9ab911fedb30",
+      "value": {
+        "passed": true,
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+        "base": "personaplex",
+        "capacity": "narrow",
+        "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+        "actual_CUDA": true,
+        "checkpoint_sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+        "reference_execution_id": "518d539a905a43198fb6de9d38d27d4b",
+        "execution_id": "a573451818ba453fab5f8117060965e1",
+        "pid": 49,
+        "all_Adam_RNG_OPAL_fields_exact": true,
+        "native_logits_exact": true,
+        "optimizer_updates": 0,
+        "restored_training_step": 196,
+        "adopted": false
+      }
+    },
+    "runs/storage-recovery-8285192/execution-8285192/personaplex-narrow-final-restore-terminal.json": {
+      "sha256": "a37a7e970b43cbb66e3b26619cda44254859d8111ecc882380021ff41bfde997",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "personaplex",
+        "capacity": "narrow",
+        "stage": "restore",
+        "pid": 25498,
+        "execution_id": "a573451818ba453fab5f8117060965e1",
+        "started_unix": 1794364854.7588944,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794364884.912061,
+        "seconds": 30.153167009353638
+      }
+    }
+  }
+}
