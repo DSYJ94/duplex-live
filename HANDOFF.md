@@ -2,14 +2,16 @@
 
 The active objective is to finish the approved matched PersonaPlex / Context Spanning experiment, then compare reasoning, delegation and speech with the untouched bases. Keep valid training running. The application goal is active; its historical Venus244 wording does not replace this owner-approved experiment.
 
-Fresh check **11 November05:54:35UTC**: job **8285192** is RUNNING on **nid010789**, using the same two GPUs and native producer `d9453cfaa09076b1c181723384da4c9cf49a9524`.
+Fresh check **11 November08:06:44UTC**: job **8285192** is RUNNING on **nid010789**, using the same two GPUs and native producer `d9453cfaa09076b1c181723384da4c9cf49a9524`.
 
 | Lineage | Actual completed updates | State |
 | --- | ---: | --- |
 | PersonaPlex,1,894,400 trainable parameters | 196/196 | Four epochs complete; final independent native restore passed |
 | Context Spanning,1,894,400 trainable parameters | 196/196 | Four epochs complete; final independent native restore passed |
-| PersonaPlex,105,070,592 trainable parameters | 24/196 | Training; PID26245, execution `cd104fd28ddd4f0691b86736defb1fbb` |
-| Context Spanning,105,070,592 trainable parameters | 23/196 | Training; PID34309, execution `053f64786fc542a2a9ad9ce9142c0a70` |
+| PersonaPlex,105,070,592 trainable parameters | 40/196 | Training; PID26245, execution `cd104fd28ddd4f0691b86736defb1fbb` |
+| Context Spanning,105,070,592 trainable parameters | 40/196 | Training; PID34309, execution `053f64786fc542a2a9ad9ce9142c0a70` |
+
+Both broad lineages are continuing without a model restart; no immutable broad epoch exists yet (first complete coverage boundary49). Read-only observation and the existing native guards continue alongside training.
 
 Both narrow final restores prove exact Adam/RNG/OPAL/native outputs; their actual exit codes are0. This establishes saved-state integrity, not improved reasoning or speech. Full frozen32 per condition across four candidates and two matched untouched bases remains required. Keep the original data, retention losses, recipe, folds and common OPAL KEEP/API0 unchanged during this comparison. No new model API calls are authorized.
 
