@@ -1,0 +1,20 @@
+{
+  "job_id": "8317068",
+  "actual_sbatch_exit": 0,
+  "actual_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+  "actual_HOSTCPU_tests": 47,
+  "actual_HOSTCPU_exit": 0,
+  "native_and_nine_math_dependencies_unchanged": true,
+  "owner_grant_sha256": "f661027f2aceba9de5a2c11a129133fa4faef22ce7dae0bca9a3b687d784a45b",
+  "interval": 9,
+  "actual_prior_GPU_seconds": 135137,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_running_intervals": 10,
+  "first_fresh_observation_UTC": "2026-11-11T17:19:04Z",
+  "first_actual_queue": "8317068|RUNNING|0:15|nid010999",
+  "actual_completed_native_restores_at_first_observation": 0,
+  "actual_new_updates_at_first_observation": 0,
+  "observer_tool_session": 64733,
+  "root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068",
+  "OneDrive_writes": false
+}
