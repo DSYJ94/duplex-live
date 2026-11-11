@@ -1568,15 +1568,47 @@
       "created": true,
       "training_interrupted": false,
       "OneDrive_writes": false
+    },
+    "personaplex/broad/64": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/personaplex/broad/step-0064/live.pt",
+      "step": 64,
+      "bytes": 1556970265,
+      "sha256": "9fd1d3fead335ea870f041fb6f86e7c533a23cda726753d6da44938cedee1698",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T17:39:00Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1556970265,
+          "sha256": "9fd1d3fead335ea870f041fb6f86e7c533a23cda726753d6da44938cedee1698"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "4a33c9bf2c1e041cc902346fc59a012b5eeda9a5fb49301b310e57fc3ef8b382"
+        },
+        "personaplex-rolling64-backup-input.json": {
+          "bytes": 678,
+          "sha256": "7d9b4cf5f8dc778817c02ea0344748298d62c035ade0cb9e5c5c75d0219600b7"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
     }
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T17:35:34Z",
+  "last_observed_UTC": "2026-11-11T17:39:54Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 63,
+    "personaplex/broad": 64,
     "context-spanning/broad": 65
   },
-  "new_checkpoint_backup_is_not_native_restore_or_adoption": true
+  "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
+  "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb"
 }
