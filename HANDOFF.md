@@ -1,3 +1,13 @@
+# LOCAL —8314862FAILED before container Python; NO new updates, no retry authorized
+
+Promptly toldowneractualfailure. SAMEjob8314862 actualFAILED1:0 after43s,11Nov16:04:45→16:05:28UTC,2GPUs=86GPU seconds; all8prior135137GPU seconds=37.5380556GPUh. Hostterminal16:05:08actual1; providercleanupcountedto16:05:28. All4freshnative restoresNOTpassed; no modelPython/newupdates/checkpoints. PersonaPlexchild255: Apptainer mount hookfailedto mkdir source-rpc8-approved-f54da42/runs because fileexists. CSchild143terminatedafterpeerfailed. HOST lsconfirms sharedruns directorycreated16:05. This is containerbind-targetcreation, NOTcheckpoint/numerical/backpropfailure. Freshqueueempty. Storage15.87GB<32GiB PASS; newactuallease/guardsourcef54 andstartup8authority successfullycreated. Archivehelperterminal0/no newcheckpointcopies. Allold62/63/196 andNFS+Lustrebackups intact. Observer44121endedonactualterminal; no duplicateobserver/model.
+
+Prepared minimal fix: create/validate realworktree/runs directory ONCE onhost before BOTHparallelcontainerchildren; rejectsymlinks/files, neverwriteartifacts there (originalsnapshotmountread-only). Native/math/data/recipe/45/120checks unchanged. NeedactualCPUcontainedparallelmountproofbeforedeclaringrepairverified. No additionalnumericaladmissionorGPUstart. Currentgrant explicitlyforbidsautomaticretryafterfailed8;9onlysuccessfulpositive8, hence executionBLOCKED onscopeafterrepair. DoNOTconsume9orchangebudget/authorityunilaterally.112h/max9unchanged. No fabricatednewgrant/positiveparent/replay.
+
+OneDriveediting/eviction/weightsdownloadsPAUSED. AllLOCALworktemporarycheckoutmain. NoGCP/purchases/API/newresources/newagents/chats/automations. Actualproducerf54/oldfailedrecords preserved. Prepareconcreterepair/actualCPUproofandboundedfinalscopeproposal; userdecisiononlyafterreviewableresult. Do notenterdiagnosticsresearchloop; thisoneexactmountpreconditionisdiagnosed.
+
+---
+
 # LOCAL — Recovery8 ACTUALLY submitted ONCE8314862; observe SAME job
 
 Approvedproducer f54da428a659dd45832509ffb4a802d04a022344 Git-deployed NFS `source-rpc8-approved-f54da42`. Actual HOSTPython3.6 full45CPUchecks exit0; actualnativeworker+all9mathdependency bytes exactoldD945. RealnewownergrantSHAff5c24d0bd3d42b0b06718fb6353bd78b7a309ada75782c20457fe8cc49ea6ff. Exclusive actualsubmission wrapper90394 exited0/Slurm8314862 (ONEinvocation; neverrepeat). Firstfreshobservation11Nov16:04:52UTC RUNNING0:07/nid010127, no restorescompleted/no loggedupdatesatthatobservation. Do notcallthisactuallearningyet.

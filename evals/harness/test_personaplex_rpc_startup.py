@@ -18,6 +18,22 @@ def phase():
 
 
 class ApprovedStartup(unittest.TestCase):
+    def test_mount_target_is_precreated_and_reusable_before_parallel_children(self):
+        with tempfile.TemporaryDirectory() as root:
+            target=job.prepare_mount_target(Path(root))
+            self.assertTrue(target.is_dir())
+            self.assertEqual(job.prepare_mount_target(Path(root)),target)
+            self.assertEqual(list(target.iterdir()),[])
+
+    def test_mount_target_rejects_files_and_aliases_without_removing_them(self):
+        with tempfile.TemporaryDirectory() as root:
+            target=Path(root)/'runs';target.write_text('preserve')
+            with self.assertRaises(FileExistsError):job.prepare_mount_target(Path(root))
+            self.assertEqual(target.read_text(),'preserve')
+            target.unlink();target.symlink_to(Path(root),target_is_directory=True)
+            with self.assertRaises(ValueError):job.prepare_mount_target(Path(root))
+            self.assertTrue(target.is_symlink())
+
     def test_exact_grant_and_no_extra_interval_or_money(self):
         p=phase();self.assertEqual(g.phase_limit(p),112*3600)
         self.assertEqual(g.phase_limit(dict(p,continuation_interval=9)),112*3600)

@@ -23,6 +23,20 @@ HISTORY=dict(OLD_HISTORY,**{'8285192':dict(state='FAILED',elapsed=45141,GPUs=2)}
 
 
 
+
+def prepare_mount_target(work):
+    """Create shared bind target once, before parallel Apptainer children.
+
+    Creating it concurrently inside Apptainer can fail with EEXIST. The target
+    holds no artifacts: the original snapshot is mounted here read-only.
+    """
+    target=Path(work)/'runs'
+    if target.is_symlink():raise ValueError('Snapshot mount target cannot be an alias')
+    target.mkdir(exist_ok=True)
+    if not target.is_dir():raise ValueError('Snapshot mount target must be a directory')
+    return target
+
+
 def startup_job(jobid):
     """Read-only retry BEFORE model/lease creation; never retries a submission.
 
@@ -87,6 +101,7 @@ def main(a,startup_recovery=False):
     write(root/'rpc-recovery-initial.json',dict(source=source,authorization_sha256=grant,failed_job='8285192'))
     devices=visible_pair(os.environ['CUDA_VISIBLE_DEVICES']);services=[];control=None;code=1;archiver=None
     try:
+        prepare_mount_target(Path.cwd())
         watcher,services,control=health.start(lease,execution)
         if startup_recovery:
             from .matched_archive import start_helper
