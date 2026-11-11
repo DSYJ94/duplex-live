@@ -2,6 +2,8 @@
 
 ## Current operational goal — owner updated 11 November 2026
 
+Owner compute direction,11November: use the time-limited20,000GPU-hour Isambard award decisively. The supplied pace snapshot requires about246GPU-hours/day (about10.25continuous GPUs); plan useful8–16GPU jobs and sustained data-rich training rather than remaining indefinitely on tiny pilots. See [the research-backed scaling programme](NATIVE-ISAMBARD-SCALE-AND-TRAINING-STRATEGY-2026-11-11.md): real selective/full native-LM tuning versus strong adapter controls, conditional knowledge mid-training and function-preserving growth, with a proposed19,915GPU-hour planning envelope. This is programme planning, not a reset of the current112-hour/max10-start clocks or permission for new purchases/API payloads. The new official scheduler-pacing conflict recorded there must be resolved before the next allocation; do not silently weaken45-second freshness or modify the live immutable worker.
+
 **Select the strongest practical foundation among PersonaPlex, Context Spanning and preserved Venus, then train and integrate it into a usable native full-duplex voice product approaching GPT-live interaction quality.** Success means competent basic spoken reasoning, appropriate delegation of harder work, faithful natural British English speech, simultaneous listening/speaking, silence and interruption control, pause/resume, reliable asynchronous cancellation/result handling, and measured usable end-to-end latency. GPT-live equivalence is the intended direction, not an achieved or guaranteed benchmark result.
 
 Keep separate evidence-bearing tracks; do not silently abandon or merge them:

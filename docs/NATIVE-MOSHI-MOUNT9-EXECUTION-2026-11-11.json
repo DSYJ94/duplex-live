@@ -1723,15 +1723,77 @@
       "created": true,
       "training_interrupted": false,
       "OneDrive_writes": false
+    },
+    "personaplex/broad/88": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/personaplex/broad/step-0088/live.pt",
+      "step": 88,
+      "bytes": 1557164249,
+      "sha256": "58f3eff619d6a2198b03acb7a785831bd7116ef0a3a9d53dd9908cd99739c80e",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T20:56:50Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557164249,
+          "sha256": "58f3eff619d6a2198b03acb7a785831bd7116ef0a3a9d53dd9908cd99739c80e"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "2be7609e2a1280bd292cbc3f22ca527a25641000c07f34800ca793501e21f013"
+        },
+        "personaplex-rolling88-backup-input.json": {
+          "bytes": 678,
+          "sha256": "d6123bef899be7cc4a52bac178238da7872f27f684c43025bc8bd364b7d0aad1"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
+    },
+    "context-spanning/broad/88": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/context-spanning/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/context-spanning/broad/step-0088/live.pt",
+      "step": 88,
+      "bytes": 1557258201,
+      "sha256": "389284c79b871c2e681318548d6a26e98b48be40e107c25812cd09df42c2775a",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T20:32:29Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557258201,
+          "sha256": "389284c79b871c2e681318548d6a26e98b48be40e107c25812cd09df42c2775a"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "cb52e14f4f46f50d7b4797dc5b18c1ae0b0a2c4d17957bcc875451fb82cfc084"
+        },
+        "context-spanning-rolling88-backup-input.json": {
+          "bytes": 688,
+          "sha256": "33437c65f8f60665a1408be54e4015040d1214a8546c0760ff789c46443890af"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
     }
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T20:16:44Z",
+  "last_observed_UTC": "2026-11-11T20:55:11Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 84,
-    "context-spanning/broad": 86
+    "personaplex/broad": 89,
+    "context-spanning/broad": 91
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
@@ -1746,5 +1808,10 @@
     "personaplex": "1f9d3ec1d089acf23cc7c3224e29172f32b94de17d4b4a28bd3791c5891ff8a9",
     "context-spanning": "b0a05d4ba858175f259b2ae35e468963f990b1bb575f7df6ed05e2018cce6817"
   },
-  "rolling80_metadata_rsync_exit": 0
+  "rolling80_metadata_rsync_exit": 0,
+  "rolling88_receipt_copy_sha256": {
+    "personaplex": "b1ae895f52727a8fe8094049554f23dd4ad59a409616597432683aa283a3247d",
+    "context-spanning": "96fb6ff70573eb6addecc6b84aca945c6aabcced9c2d8522a782a60b6daa7a08"
+  },
+  "rolling88_metadata_rsync_exit": 0
 }

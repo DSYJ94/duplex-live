@@ -26,5 +26,10 @@
   "maximum_total_running_intervals": 10,
   "maximum_single_job_seconds": 86400,
   "external_model_API_calls": 0,
-  "OneDrive_writes": false
+  "OneDrive_writes": false,
+  "service_compliance_readiness": false,
+  "new_material_finding": "Official Slurm guide requires script polling interval at least60seconds; inherited matched_health.watch/matched_guard.refresh polls approximately10seconds under45second scheduler-freshness contract. Requires explicit reconciliation before further allocation; CPU25 proof remains original and valid but is not complete operational approval.",
+  "service_source": "https://docs.isambard.ac.uk/user-documentation/guides/slurm/",
+  "live_source_modified_for_finding": false,
+  "new_submission_performed": false
 }
