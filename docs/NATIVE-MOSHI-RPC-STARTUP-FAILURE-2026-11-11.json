@@ -27,8 +27,12 @@
   "checkpoint_modifications": false,
   "checkpoints": "Exact four prior selected checkpoints and NFS/Lustre preservation receipts unchanged; no new checkpoint produced",
   "local_repair_tests": 15,
-  "host_repair_tests": null,
+  "host_repair_tests": 15,
   "OneDrive_writes": false,
   "restart_authorized": false,
-  "reason": "Owner grant permits8 only after actual successful positive7; actual7 FAILED"
+  "reason": "Owner grant permits8 only after actual successful positive7; actual7 FAILED",
+  "host_test_exit": 0,
+  "host_test_source": "97bc11907d435319998fc5c82ea69f1981f8cdee",
+  "host_python": "Isambard /usr/bin/python3 (3.6)",
+  "model_loaded_during_tests": false
 }
