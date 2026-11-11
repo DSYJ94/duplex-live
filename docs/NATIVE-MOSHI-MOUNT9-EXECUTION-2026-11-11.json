@@ -1599,16 +1599,85 @@
       "created": true,
       "training_interrupted": false,
       "OneDrive_writes": false
+    },
+    "personaplex/broad/72": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/personaplex/broad/step-0072/live.pt",
+      "step": 72,
+      "bytes": 1557031449,
+      "sha256": "be218c6869cb4b49a78e057a10ce0b2777106655c8f29a901f3c6a860486a26b",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T18:37:35Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557031449,
+          "sha256": "be218c6869cb4b49a78e057a10ce0b2777106655c8f29a901f3c6a860486a26b"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "ebfeb6cc6ac9d9e587924b69bc719a05373706ec1002672265798f774c5352e6"
+        },
+        "personaplex-rolling72-backup-input.json": {
+          "bytes": 678,
+          "sha256": "4e759755fa6b3780149058aa7c6928667286f023ac52e371883e8c2fd3cfa532"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
+    },
+    "context-spanning/broad/72": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/context-spanning/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/context-spanning/broad/step-0072/live.pt",
+      "step": 72,
+      "bytes": 1557023257,
+      "sha256": "1130bbf033534c11bd3dab574953e7aab307fcbc48cf2f0dfe6b2dd3b5131c23",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T18:26:12Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557023257,
+          "sha256": "1130bbf033534c11bd3dab574953e7aab307fcbc48cf2f0dfe6b2dd3b5131c23"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "1b0ca758b105a8d077736ac1d0a3f83529a2f9abe2a18eeec8d92d1afbf8656e"
+        },
+        "context-spanning-rolling72-backup-input.json": {
+          "bytes": 688,
+          "sha256": "c597d9a46948677c65eae4cf79408d4d88a2d5419710ba8bea16425485396f72"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
     }
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T17:39:54Z",
+  "last_observed_UTC": "2026-11-11T18:38:06Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 64,
-    "context-spanning/broad": 65
+    "personaplex/broad": 72,
+    "context-spanning/broad": 73
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
-  "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb"
+  "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
+  "rolling72_receipt_copy_sha256": {
+    "personaplex": "735044dc72c6aa218b7c1f14913c5676a6e72c552a966bf26ec1e7043a23af7f",
+    "context-spanning": "71f3b91d7e0d472469c95af6b2189a13479d9e15a3f92e4dd225c90447cc7060"
+  },
+  "rolling72_metadata_rsync_exit": 0,
+  "last_storage_bytes": 19061207040,
+  "last_storage_guard_passed": true
 }

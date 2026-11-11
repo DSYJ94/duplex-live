@@ -1,3 +1,16 @@
+# LOCAL — Sustained valid training; BOTH rolling72 states fully hash-backed
+
+Previous goal turn made progress preparing the authorized final continuation. This turn maintained a verified wait on SAME actual observer64733/job8317068, then preserved new recovery states. Latest fresh18:38:06UTC: RUNNING1:19:16/nid010999, PersonaPlex72 / Context Spanning73, same producer10e7e0664e47c1222e0492a8367b3c000ed5789d and train execution IDs. No terminal or archive failure. Provider HOME usage19061207040bytes remains below34359738368byte guard. No model/code/recipe change or training interruption.
+
+New independent Lustre backups (complete weights/state/native reference/derived backup receipt hashes, actual rsync0):
+- PersonaPlex72:1557031449bytes, SHAbe218c6869cb4b49a78e057a10ce0b2777106655c8f29a901f3c6a860486a26b, completed18:37:35UTC.
+- Context Spanning72:1557023257bytes, SHA1130bbf033534c11bd3dab574953e7aab307fcbc48cf2f0dfe6b2dd3b5131c23, completed18:26:12UTC.
+Both live copies are under `/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/<base>/broad/step-0072/live.pt`, disjoint from the epoch/window archive helper. Native save reference and actual matching step log were required before copying; all three destination file hashes verified. Derived backup inputs are labelled as provenance from actual saves, NOT new native restores or behavioral approval. Old64 backups and all historical states remain intact. Actual small72 receipts copied to temporary LOCAL with rsync0 and SHA-bound in docs/NATIVE-MOSHI-MOUNT9-EXECUTION-2026-11-11.json; NO Mac weights/OneDrive edits.
+
+Only one observer remains64733. Reader orchestration cells g2:339/g2:343 both completed normally at the actual new save boundaries; do not start another observer or model. Next monitor valid training/epoch archives; preserve later useful saves without repeating calibration or testing completed arms. Final continuation10 helper/controller READY at7cf4325993171f773e137dde72763b2fb4efb369 in historical-basename source-final10-controller-b9628d7; invoke ONLY after actual positive9/COMPLETED0/final restores/backups and actual accounting, never now. Existing112h/max10/twoGPU/max24h/135137priorGPU seconds/no failed9 retry/no11 unchanged. Product goal ACTIVE/unfinished and three foundation branches preserved; no foundation winner or behavioral improvement claim yet. Clifton expires22:55:48UTC; renew officially when needed. OneDrive stays PAUSED; no purchases/GCP/newresources/APIs/agents/chats/automations.
+
+---
+
 # LOCAL — Successful-window continuation10 READY; current training still running
 
 New isolated final-submission helper is Git-deployed on the UNUSED controller worktree `/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-final10-controller-b9628d7`, whose ACTUAL HEAD is7cf4325993171f773e137dde72763b2fb4efb369 (basename is historical, do not infer its SHA). Actual HOSTPython3.6 tests25PASS/exit0 at17:50:51UTC. ALL running worker/control bytes compared with native10e7 PASS. Actual parent phase-result absent; final10 claim absent; no GPU job submitted or model loaded. Small proof copied with rsync0 and SHA-bound in docs/NATIVE-MOSHI-FINAL10-SUBMISSION-READINESS-2026-11-11.json. Actual new proof retains its own producer, not relabelled native approval.
