@@ -1,0 +1,30 @@
+{
+  "actual_HOST_proof": {
+    "actual_UTC": "2026-11-11T17:50:51Z",
+    "source": "7cf4325993171f773e137dde72763b2fb4efb369",
+    "actual_HOSTCPU_tests": 25,
+    "actual_HOSTCPU_exit": 0,
+    "all_running_worker_CONTROL_bytes_identical": true,
+    "actual_parent_final_result_missing": true,
+    "actual_final10_claim_absent": true,
+    "GPU_jobs_submitted": 0,
+    "models_loaded": 0
+  },
+  "actual_metadata_rsync_exit": 0,
+  "actual_HOST_proof_sha256": "0ecf997ad0383c60a176600d808f98e103e888f25112368c3d4146440a603bf7",
+  "controller_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-final10-controller-b9628d7",
+  "actual_controller_source": "7cf4325993171f773e137dde72763b2fb4efb369",
+  "running_native_source_unchanged": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+  "future_submission_module": "training.personaplex.matched_finish_submit",
+  "final10_invoked": false,
+  "actual_current9_eligible": false,
+  "requires_actual_successful_positive9": true,
+  "requires_full_new_selected_state_hash_backups": true,
+  "requires_remaining_complete_schedule_and_full_comparison": true,
+  "requires_actual_full_Slurm_accounting": true,
+  "maximum_aggregate_GPU_hours": 112,
+  "maximum_total_running_intervals": 10,
+  "maximum_single_job_seconds": 86400,
+  "external_model_API_calls": 0,
+  "OneDrive_writes": false
+}
