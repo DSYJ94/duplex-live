@@ -1789,11 +1789,11 @@
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T20:55:11Z",
+  "last_observed_UTC": "2026-11-11T21:11:35Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 89,
-    "context-spanning/broad": 91
+    "personaplex/broad": 91,
+    "context-spanning/broad": 93
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",

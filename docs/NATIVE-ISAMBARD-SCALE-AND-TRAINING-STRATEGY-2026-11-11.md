@@ -6,7 +6,7 @@ Owner direction, 11 November 2026: the time-limited 20,000 GPU-hour award should
 
 **Finish the current controlled foundation comparison, then move to a larger, data-rich programme with a real full-fine-tuning comparison.** Budget in thousands of GPU-hours and plan productive 8–16 GPU jobs, rather than continuing indefinitely with tiny adapters or one GPU. Keep Venus, PersonaPlex and Context Spanning as evidence-bearing branches until the foundation decision. Retain useful Venus states and compatible recipes; a Venus adapter cannot simply be attached to a Moshi-family base.
 
-The priority order is: broader qualified data; matched high-rank adapter versus selective/full native-LM tuning; knowledge-oriented mid-training if native competence remains insufficient; structural expansion if an actual capacity bottleneck remains. This ordering is a project recommendation, not a claim that a paper has already solved our voice failures. Do not pretrain a replacement foundation from scratch merely to spend the allocation.
+The priority order is: broader qualified data and a coherent native seed; matched high-rank adapter versus selective/full native-LM tuning; native interaction/reasoning-routing RL where trustworthy rewards and usable rollouts exist; knowledge-oriented mid-training if native competence remains insufficient; structural expansion if an actual capacity bottleneck remains. These are evidence-dependent branches, not a mandatory serial queue or a claim that a paper has already solved our voice failures. Do not pretrain a replacement foundation from scratch merely to spend the allocation. The owner's11November RL addition is specified in [the native RL and research integration plan](NATIVE-RL-AND-RESEARCH-INTEGRATION-2026-11-11.md), including a read-only review of the requested Bidaily research chat.
 
 ## Pace implied by the supplied portal snapshot
 
@@ -44,7 +44,8 @@ This is a planning envelope over the screenshot's remaining19,915GPU-hours, **no
 | --- | ---: | --- |
 | Existing experiment completion, foundation comparison and integration allowance | 200 |Complete current evidence, reuse comparable Venus results, choose the next foundation/repair. Existing phase limits still apply.|
 | Dataset qualification, local teacher/codec preparation and useful inference | 1,200 |Larger verified manifests, synthetic/public licensed source pool, native aligned caches and independent quality results.|
-| Sustained supervised native post-training and recipe/data comparisons | 6,000 |Several complete learning curves and retained checkpoints on a substantially broader corpus.|
+| Sustained supervised native post-training and recipe/data comparisons | 3,000 |Several complete learning curves and retained checkpoints on a substantially broader corpus.|
+| Native RL, rollout generation and targeted capability recovery | 3,000 |GRPO interaction/routing with task-and-behavior rewards, MiRL-style targeted practice and conditional checkpoint consolidation; include all learner/rollout/judge GPU-hours.|
 | Selective/full native-LM tuning versus a strong adapter control | 5,000 |Actual behavioral evidence for unfreezing weights and the best retention/LR setting.|
 | Knowledge-oriented mid-training, if needed | 3,500 |Measured gains on new basic/technical reasoning while preserving duplex speech.|
 | Conditional structural growth/targeted architecture experiments | 1,500 |Function-preserving capacity candidate only if better data/full tuning still reveal a capacity limit.|
@@ -69,7 +70,7 @@ If verified knowledge/data/recipe interventions saturate and additional capacity
 
 ### Reactive optimisation without corrupting the comparison
 
-Keep the present matched study on common OPAL KEEP/API0 until its declared endpoint. In the larger programme, use resumable phase-boundary decisions to adjust LR, data mixture, retention or trainable sets from TRAIN/DEV evidence. Record the observed failure, proposed intervention, recipe/source/data hashes, optimizer-state policy and full outcome. Mine repeated TRAIN failures with benign contrasts using the useful MiRL principle; do not claim that this implements MiRL RL. Full RL/control rollouts become useful when rewards score real request correctness, silence, cancellation and grounded completion rather than only keywords or sounds. Jev/API optimiser participation, unconstrained code rewriting and new external teacher payloads are not already active or covered by the current API0 phase.
+Keep the present matched study on common OPAL KEEP/API0 until its declared endpoint. In the larger programme, use resumable phase-boundary decisions to adjust LR, data mixture, retention or trainable sets from TRAIN/DEV evidence. Record the observed failure, proposed intervention, recipe/source/data hashes, optimizer-state policy and full outcome. Mine repeated TRAIN failures with benign contrasts using the useful MiRL principle; do not claim that this implements MiRL RL. The [native RL plan](NATIVE-RL-AND-RESEARCH-INTEGRATION-2026-11-11.md) now assigns3,000 of the existing19,915 planning GPU-hours to actual policy learning/rollouts and targeted recovery, with no increase in the total. RL requires trustworthy rewards and coherent exploration, not every behavior already solved. Jev/API optimiser participation, unconstrained code rewriting and new external teacher payloads are not already active or covered by the current API0 phase.
 
 ## Storage, operational pacing and the next concrete action
 
