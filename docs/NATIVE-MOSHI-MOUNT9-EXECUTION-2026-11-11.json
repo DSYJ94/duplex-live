@@ -1785,6 +1785,37 @@
       "created": true,
       "training_interrupted": false,
       "OneDrive_writes": false
+    },
+    "context-spanning/broad/96": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/context-spanning/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/context-spanning/broad/step-0096/live.pt",
+      "step": 96,
+      "bytes": 1557318105,
+      "sha256": "fee3eabbc6b8e978e856de984bcc7ec5a43078555fa3b8fd2dd1897ad98a8e55",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T21:28:53Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557318105,
+          "sha256": "fee3eabbc6b8e978e856de984bcc7ec5a43078555fa3b8fd2dd1897ad98a8e55"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1102,
+          "sha256": "efc3121ad046aaf6b5321ef6438bbaa4f435a9fd77d04c6b29fc9509510dc023"
+        },
+        "context-spanning-rolling96-backup-input.json": {
+          "bytes": 620,
+          "sha256": "5c53008ebc5fdf2e13c8cbc2f66d0e2f4fff7586f029bb0081dfffb74f7fd1e9"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
     }
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
@@ -1813,5 +1844,7 @@
     "personaplex": "b1ae895f52727a8fe8094049554f23dd4ad59a409616597432683aa283a3247d",
     "context-spanning": "96fb6ff70573eb6addecc6b84aca945c6aabcced9c2d8522a782a60b6daa7a08"
   },
-  "rolling88_metadata_rsync_exit": 0
+  "rolling88_metadata_rsync_exit": 0,
+  "context_spanning_rolling96_receipt_sha256": "eb00030fdcfd08656cf5b0d59994442ec4587479db1a3cbb28ecf9386d646c22",
+  "rolling96_metadata_rsync_exit": 0
 }

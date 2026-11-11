@@ -1,3 +1,13 @@
+# LOCAL — Context Spanning96 independently backed up; training continues
+
+Verified wait on SAME observer64733/job8317068 advanced to actual Plex93/CS96 at21:27:48UTC; SlurmRUNNING4:08:58/nid010999, same10e7producer/workers, no terminal/archivefailure, HOME19061993472bytes passes32GiB. Prior local readercellg2:412 completed its bounded10polls; readerg2:413 completed. Only observer64733 remains; no duplicate/restart/model change.
+
+Actual Context Spanning96 full-state independentLustre backup PASS at21:28:53UTC:1557318105bytes SHAfee3eabbc6b8e978e856de984bcc7ec5a43078555fa3b8fd2dd1897ad98a8e55. Exact actual native save reference and matching logged96 required; original10e7 matched_archive full source/destination/reference/receipt hashes passed. Destination /projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/context-spanning/broad/step-0096/live.pt. Derived backup input explicitly NOT native restore approval. Smallreceipt copiedtempLOCAL rsync0, SHA-boundexecutionJSON. No Macweights/OneDrivewrites. Plex96 pending; both88 and allolderstates retained. Next preserveactualPlex96 and watch both98 completeepoch/DEV/archive evidence.
+
+Current112GPUh/max10/successfulparentfinal10/API0 unchanged. Pacedguard CPUprototype94b74f4 is NOT deployed; final10service-compliance HOLD until explicit contract reconciliation/integration, no liveguard45s relaxation. No additionaldiagnostic/model admission loops. Broadgoal ACTIVE; foundationwinner/product still unproven. Cliftonexpires22:55:48UTC; renewofficiallybeforefreshaccess expires. OneDrivepaused, tempcheckoutmain only; no newjobs/GCP/purchases/APIs/agents/chats/resources.
+
+---
+
 # LOCAL — Monitoring contract prototype preserved; current training unchanged
 
 Previous goal turn was a verified wait on observer64733/job8317068. This turn again verified actual RUNNING21:14:51UTC, same10e7 producer/workers, Plex91/CS94, no terminal/archive failure, HOME19061895168bytes below32GiB. No restart, model edit or duplicate observer. Current88 backups remain verified; next actual96 save/epoch98 is pending, not claimed.
