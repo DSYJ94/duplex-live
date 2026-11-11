@@ -1,3 +1,13 @@
+# LOCAL — Both narrow196 runs COMPLETE and backed up; both broad stages active
+
+Fresh03:03:23UTC11Nov: SAME Isambard8285192/nid010789 remains RUNNING. BOTH 1,894,400-parameter narrow adapters reached196/four complete coverage epochs. BOTH distinct final native CUDA Adam/RNG/OPAL/logit restores passed exit0. Original producerD945 unchanged. New Context Spanning196 SHA `504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670`,290009981bytes, fully copied/hash-verified to existing separate Lustre **03:01:50UTC**. PersonaPlex196 SHAa5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a copied02:56:47UTC. Full small proofs `docs/NATIVE-MOSHI-NARROW-COMPLETE-2026-11-11.json` and prior backup-recovery export. Both147 copies also preserved. No Mac weights/OneDrive work.
+
+BOTH 105,070,592-parameter broad stages are now actual training processes: PersonaPlex PID26245/executioncd104fd28ddd4f0691b86736defb1fbb/started02:41:24UTC/lastloggedstep2; Context Spanning PID34309/execution053f64786fc542a2a9ad9ce9142c0a70/started03:02:29UTC/no completed update yet in03:03snapshot. Worker startup is not a logged update. No inference or improvement claim from these training/state results.
+
+Continue SAME read-onlyobserver31208 and artifact-copywatcher25705/login42PID114294 (Mac SSH dependent) without duplication; originalarchivefailure preserved and quota repair documented immediately below. Source/records ONLY temporarycheckoutmain `/private/tmp/duplex-quota-recovery-20261109`; OneDrive editing/eviction/weightdownloads PAUSED. SAME44709priorGPUseconds/112h/interval6max8/originalSTOP11Nov22:28:47UTC/one2GPUjob; exactD945native math/data/recipe/KEEPAPI0 unchanged. NoGCP/purchase/API/newagents/chats/automation. Goalactive; keepforegroundthroughpositivewindow/finalrestores/backups/actualSlurmterminal, then approved7/8 successful-state continuation and fullmatchednativeevaluation. Do not stop valid training, reset clocks or resubmit on observation timeout.
+
+---
+
 # LOCAL — PersonaPlex narrow196 finished; broad training live; backup quota repaired
 
 **Goal:** complete the approved matched PersonaPlex / Context Spanning comparison, then measure reasoning, delegation and speech against both untouched bases. Valid training remains uninterrupted. OneDrive editing, eviction and weight downloads remain PAUSED; all LOCAL work stays in `/private/tmp/duplex-quota-recovery-20261109` on main.

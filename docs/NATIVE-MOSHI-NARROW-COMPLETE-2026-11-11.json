@@ -1,0 +1,200 @@
+{
+  "actual_export_UTC": "2026-11-11T03:03:47.411571+00:00",
+  "job": "8285192",
+  "actual_rsync_exit": 0,
+  "small_metadata_only": true,
+  "OneDrive_writes": false,
+  "records": {
+    "independent-archive-status.json": {
+      "sha256": "9d706c6e124593124e8074c8b932eac355ca00e19da8c0e9aa98399d713bf863",
+      "value": {
+        "job_id": "8285192",
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "copies": [
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/context-spanning/narrow/train/epoch-03.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/context-spanning/narrow/epoch-03/epoch-03.pt",
+            "step": 147,
+            "bytes": 289985405,
+            "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T00:37:03Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-03.pt": {
+                "bytes": 289985405,
+                "sha256": "e71de20994eac6f9d5177c61ef6bd5aaa9663525f087b026213a5fb6e25dc184"
+              },
+              "epoch-03.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "f8d11042a058beb0da1985467d9a238473d79171698eebb1f239879b58ce8190"
+              },
+              "epoch-03.json": {
+                "bytes": 343,
+                "sha256": "e3b6e67f8edf08317836944d78c92d77dee416dd55925d5374bfdd9718e30bd8"
+              }
+            }
+          },
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-03.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/epoch-03/epoch-03.pt",
+            "step": 147,
+            "bytes": 289915773,
+            "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T00:15:30Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-03.pt": {
+                "bytes": 289915773,
+                "sha256": "d98b29533a220975c138e38f05f2fab6847d60f4ba055815213a7c7a96759f7a"
+              },
+              "epoch-03.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "b1a91c873a3bff7ae026fc87dc16adf7b2500655334cb016e1968f1f0f9b697e"
+              },
+              "epoch-03.json": {
+                "bytes": 343,
+                "sha256": "6bafad02e19a1ef809abd5083046db33018b576bb0b9bc3713c9607a09a430b8"
+              }
+            }
+          },
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-04.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/personaplex/narrow/epoch-04/epoch-04.pt",
+            "step": 196,
+            "bytes": 289940925,
+            "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T02:56:47Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-04.pt": {
+                "bytes": 289940925,
+                "sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a"
+              },
+              "epoch-04.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "d61e16fece57364d23450579ad6a2e1f30951dbc72e44b457b129a800abf4022"
+              },
+              "epoch-04.json": {
+                "bytes": 343,
+                "sha256": "3046cab169744a5d601dfd8870557626b30c49ddd36444dcd1f2c56713570cd4"
+              }
+            }
+          },
+          {
+            "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/context-spanning/narrow/train/epoch-04.pt",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192/context-spanning/narrow/epoch-04/epoch-04.pt",
+            "step": 196,
+            "bytes": 290009981,
+            "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+            "actual_rsync_exit_code": 0,
+            "hash_verified": true,
+            "separate_filesystem": true,
+            "actual_UTC": "2026-11-11T03:01:50Z",
+            "native_restore_still_required": true,
+            "backup_program_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+            "files": {
+              "epoch-04.pt": {
+                "bytes": 290009981,
+                "sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670"
+              },
+              "epoch-04.pt.native-reference.json": {
+                "bytes": 1103,
+                "sha256": "02ab2efc2eae8acf3c7b3020c8698362f5b4d108f675f3a67028f28d35961731"
+              },
+              "epoch-04.json": {
+                "bytes": 343,
+                "sha256": "e1d7dae1bb0debcaf3569f95037f7ded7901fd2033d9d637063955a9eb92c586"
+              }
+            }
+          }
+        ],
+        "passed": true,
+        "training_interrupted": false,
+        "OneDrive_writes": false
+      }
+    },
+    "context-spanning/narrow/final-restore/restore.json": {
+      "sha256": "1ec79d898307df17c08e52598a74904807959d9a28acf137e226f2459d2d306b",
+      "value": {
+        "passed": true,
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "lineage_source": "8b822b0d85ccea4f291255204cbc358fa85469c4",
+        "base": "context-spanning",
+        "capacity": "narrow",
+        "data_report_sha256": "72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26",
+        "actual_CUDA": true,
+        "checkpoint_sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+        "reference_execution_id": "c8a52dde43ec45c9b97b8cdd3990340c",
+        "execution_id": "b439280a010943fa947ecdc1e1f34790",
+        "pid": 50,
+        "all_Adam_RNG_OPAL_fields_exact": true,
+        "native_logits_exact": true,
+        "optimizer_updates": 0,
+        "restored_training_step": 196,
+        "adopted": false
+      }
+    },
+    "execution-8285192/context-spanning-narrow-final-restore-terminal.json": {
+      "sha256": "78c87c799aefc599eec055f1b2e6b9b7e14b3d423176d8c2ffaa4d8cd51994cf",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "base": "context-spanning",
+        "capacity": "narrow",
+        "stage": "restore",
+        "pid": 33527,
+        "execution_id": "b439280a010943fa947ecdc1e1f34790",
+        "started_unix": 1794366109.5711384,
+        "module": "training.personaplex.matched_native",
+        "actual_exit_code": 0,
+        "ended_unix": 1794366149.7761457,
+        "seconds": 40.2050085067749
+      }
+    },
+    "context-spanning/narrow/train/training-terminal.json": {
+      "sha256": "29f8484a2299189b0f3da25d45ef283c3c68dac7bd422b631bbc9c2cc2ca11ab",
+      "value": {
+        "completed": true,
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "actual_new_updates": 92,
+        "total_lineage_updates": 196,
+        "complete_epochs": 4,
+        "final_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/context-spanning/narrow/train/epoch-04.pt",
+        "checkpoint_sha256": "504a5f40d9232092a2028a8a92abe79432ca638e4b60712f12a630aeeb2a8670",
+        "final_independent_restore_required": true,
+        "full_native64_fresh20_speech_backend_live_qualification_required": true,
+        "adopted": false
+      }
+    },
+    "personaplex/narrow/train/training-terminal.json": {
+      "sha256": "47c9842866aa96cc2bcb5607eba83fd642cc47074f4cb9997daa22dceac5ca8d",
+      "value": {
+        "completed": true,
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "actual_new_updates": 84,
+        "total_lineage_updates": 196,
+        "complete_epochs": 4,
+        "final_checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/storage-recovery-8285192/personaplex/narrow/train/epoch-04.pt",
+        "checkpoint_sha256": "a5f32f3ed8558ec3e47624003987fdfeacf6d81595ded80d491450a0ccde5e2a",
+        "final_independent_restore_required": true,
+        "full_native64_fresh20_speech_backend_live_qualification_required": true,
+        "adopted": false
+      }
+    }
+  }
+}
