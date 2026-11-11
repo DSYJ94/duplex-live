@@ -1,0 +1,315 @@
+{
+  "recorded_UTC": "2026-11-11T11:06:16.709367+00:00",
+  "job": "8285192",
+  "actual_state": "FAILED",
+  "actual_exit": "1:0",
+  "allocated_seconds": 45141,
+  "GPUs": 2,
+  "prior_GPU_seconds": 44709,
+  "total_phase_GPU_seconds": 134991,
+  "total_phase_GPU_hours": 37.4975,
+  "remaining_of112_GPU_hours": 74.5025,
+  "reported_trigger": "scontrol scheduler RPC timed out within original freshness window; guard exited",
+  "training_restart_submitted": false,
+  "all_latest_and_normal_states_hash_backed_up": true,
+  "native_restore_of_new_broad_states_not_tested": true,
+  "records": {
+    "execution-8285192/terminal.json": {
+      "sha256": "72fd21c6107f755017cf1daf37d268c59c09a34f31cf5e552092a79c20e0e569",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "job_id": "8285192",
+        "actual_exit_code": 1,
+        "ended_UTC": "2026-11-11T11:01:08.665344+00:00",
+        "adopted": false
+      }
+    },
+    "execution-8285192/health-watch.log": {
+      "sha256": "7565b71929721177d8b8805b42488cc43e64e6df8b79144594e94e97932d90bc",
+      "value": "{\"event\": \"observation_timeout\", \"original_success_unix\": 1794355315.6165442}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794362393.7084093}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794383402.0519724}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794391204.0081007}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794393100.6387906}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794394015.0670953}\n{\"event\": \"observation_timeout\", \"original_success_unix\": 1794394816.743979}\nTraceback (most recent call last):\n  File \"/usr/lib64/python3.6/subprocess.py\", line 425, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n  File \"/usr/lib64/python3.6/subprocess.py\", line 863, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n  File \"/usr/lib64/python3.6/subprocess.py\", line 1535, in _communicate\n    self._check_timeout(endtime, orig_timeout)\n  File \"/usr/lib64/python3.6/subprocess.py\", line 891, in _check_timeout\n    raise TimeoutExpired(self.args, orig_timeout)\nsubprocess.TimeoutExpired: Command '['scontrol', 'show', 'job', '-o', '8285192']' timed out after 13.935172319412231 seconds\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/usr/lib64/python3.6/runpy.py\", line 193, in _run_module_as_main\n    \"__main__\", mod_spec)\n  File \"/usr/lib64/python3.6/runpy.py\", line 85, in _run_code\n    exec(code, run_globals)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-d9453cfaa090/training/personaplex/matched_health.py\", line 128, in <module>\n    if a.mode=='watch':watch(lease,a.output,a.storage)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-d9453cfaa090/training/personaplex/matched_health.py\", line 40, in watch\n    try:last,delay=heartbeat_once(lease,output,storage,last)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-d9453cfaa090/training/personaplex/matched_health.py\", line 30, in heartbeat_once\n    checked=g.refresh(lease,output,last)\n  File \"/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-d9453cfaa090/training/personaplex/matched_guard.py\", line 124, in refresh\n    universal_newlines=True,timeout=max(1,deadline-time.time()))\n  File \"/usr/lib64/python3.6/subprocess.py\", line 356, in check_output\n    **kwargs).stdout\n  File \"/usr/lib64/python3.6/subprocess.py\", line 430, in run\n    stderr=stderr)\nsubprocess.TimeoutExpired: Command '['scontrol', 'show', 'job', '-o', '8285192']' timed out after 13.935172319412231 seconds\n"
+    },
+    "execution-8285192/health-storage.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "value": ""
+    },
+    "execution-8285192/guard.json": {
+      "sha256": "5e7c074ca5f0ffa2e40cdeeeb326a7b2650f52b484f62bee971653b4ad042fa7",
+      "value": {
+        "job_id": "8285192",
+        "account": "brics.u6ada",
+        "node": "nid010789",
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "authorization_sha256": "09a94b32454098cb4830edd5ac858e78708f200682f8d5e5e0a3b01c8abee611",
+        "stop_unix": 1794436127.0,
+        "GPU_count": 2,
+        "prior_GPU_seconds": 44709,
+        "continuation_authorization_sha256": "7c2a1f8ec6057b06b3475fd775071d5b16cab9b6a4fb9c9b666fbb6262d63072",
+        "continuation_interval": 6,
+        "postupdate_recovery_authorization_sha256": "87c4b62448db8a3c71bbeb777176e5093804a100df21c588a82f39e63d0b7373",
+        "normal88_authorization_sha256": "e721800dbc0b9823e0c8fa029ef1fb50673871618db69588410a25624199f6ad",
+        "storage_recovery_authorization_sha256": "58723fa032be29cb639a02bc1ebb372b5b83faabf85ca723980a6ee346d8f7ab",
+        "checked_unix": 1794394816.743979,
+        "expires_unix": 1794394861.743979
+      }
+    },
+    "execution-8285192/storage-last-observation.json": {
+      "sha256": "941ac64963112cb22627b9ca32c7bfd3548f8e2b55721b31ad8baed022b78fb1",
+      "value": {
+        "home_bytes": 12631433216,
+        "run_bytes": 12631433216,
+        "home_limit_GiB": 100,
+        "run_limit_GiB": 32,
+        "separate_filesystem": true,
+        "measurement": "raw provider quota; entire HOME usage conservatively bounds this run",
+        "provider_filesystem": "data1.vastp2.isambard.ac.uk:/p2/home",
+        "provider_block_unit_bytes": 1024,
+        "provider_home_hard_bytes": 107999997952,
+        "provider_home_files": 31167,
+        "whole_HOME_limit_bytes": 34359738368,
+        "provider_query_seconds": 0.010447207023389637,
+        "job_id": "8285192",
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "passed": true,
+        "checked_unix": 1794394854.5915136,
+        "probe_seconds": 0.015606428030878305
+      }
+    },
+    "execution-8285192/postfailure-preservation-terminal.json": {
+      "sha256": "c942e736718e931addba70e60ef06e35c2f34dbd87e8b017f4654008feb33400",
+      "value": {
+        "pid": 59814,
+        "host": "login40",
+        "job": "8285192",
+        "started_UTC": "2026-11-11T11:04:38Z",
+        "actual_exit_code": 0,
+        "records": [
+          {
+            "base": "personaplex",
+            "kind": "live",
+            "step": 56,
+            "sha256": "785da8dc79c51e738f129975d55de280b062c43474f45fb72a6bd7d5bba7ac4b",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192-independent-recovery3/personaplex/broad/postfailure-live-56",
+            "files": {
+              "live.pt": {
+                "bytes": 1556954841,
+                "sha256": "785da8dc79c51e738f129975d55de280b062c43474f45fb72a6bd7d5bba7ac4b"
+              },
+              "live.pt.native-reference.json": {
+                "bytes": 1102,
+                "sha256": "e0d0770e3384d4dae4de2ef9e7c381ace36fdc4a4c8f0efba15bcfc1d01ba3bb"
+              }
+            },
+            "actual_rsync_exit": 0,
+            "full_hash_verified": true,
+            "separate_filesystem": true,
+            "native_restore_not_yet_tested": true,
+            "actual_UTC": "2026-11-11T11:04:47Z"
+          },
+          {
+            "base": "personaplex",
+            "kind": "interrupted",
+            "step": 62,
+            "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192-independent-recovery3/personaplex/broad/postfailure-interrupted-62",
+            "files": {
+              "interrupted.pt": {
+                "bytes": 1556965576,
+                "sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902"
+              },
+              "interrupted.pt.native-reference.json": {
+                "bytes": 1102,
+                "sha256": "b4ed9806e32b2d675e8b01c5c2b57ef723d13269b1b6458eacccb0b7dfc5a595"
+              },
+              "training-interrupted.json": {
+                "bytes": 231,
+                "sha256": "54f66a39fbcac01908ff3defd0771169bfeb811f9f54ecd6ee1396457abdcac5"
+              }
+            },
+            "actual_rsync_exit": 0,
+            "full_hash_verified": true,
+            "separate_filesystem": true,
+            "native_restore_not_yet_tested": true,
+            "actual_UTC": "2026-11-11T11:04:57Z"
+          },
+          {
+            "base": "context-spanning",
+            "kind": "live",
+            "step": 56,
+            "sha256": "78414a93818ba8bfb22bdbb6666147d874d13b29e5cf002f87e06f1366758472",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192-independent-recovery3/context-spanning/broad/postfailure-live-56",
+            "files": {
+              "live.pt": {
+                "bytes": 1556789337,
+                "sha256": "78414a93818ba8bfb22bdbb6666147d874d13b29e5cf002f87e06f1366758472"
+              },
+              "live.pt.native-reference.json": {
+                "bytes": 1102,
+                "sha256": "e0e292df1f8e576ffd1bdab4c37209bbe9bd0270a95e633db4b368c46f16bfc5"
+              }
+            },
+            "actual_rsync_exit": 0,
+            "full_hash_verified": true,
+            "separate_filesystem": true,
+            "native_restore_not_yet_tested": true,
+            "actual_UTC": "2026-11-11T11:05:08Z"
+          },
+          {
+            "base": "context-spanning",
+            "kind": "interrupted",
+            "step": 63,
+            "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+            "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8285192-independent-recovery3/context-spanning/broad/postfailure-interrupted-63",
+            "files": {
+              "interrupted.pt": {
+                "bytes": 1556800776,
+                "sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4"
+              },
+              "interrupted.pt.native-reference.json": {
+                "bytes": 1102,
+                "sha256": "5ad9c4c75911a53ce7c0cca62bd887b96e8f33eaa8eae47d2c9cfff62515f7a2"
+              },
+              "training-interrupted.json": {
+                "bytes": 231,
+                "sha256": "0ab94aa7801aed5098245a5be46c7107214c0775872e6f0963c06c0033e00c4d"
+              }
+            },
+            "actual_rsync_exit": 0,
+            "full_hash_verified": true,
+            "separate_filesystem": true,
+            "native_restore_not_yet_tested": true,
+            "actual_UTC": "2026-11-11T11:05:33Z"
+          }
+        ],
+        "all_four_states_preserved": true
+      }
+    },
+    "personaplex/broad/train/live.pt.native-reference.json": {
+      "sha256": "e0d0770e3384d4dae4de2ef9e7c381ace36fdc4a4c8f0efba15bcfc1d01ba3bb",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint_sha256": "785da8dc79c51e738f129975d55de280b062c43474f45fb72a6bd7d5bba7ac4b",
+        "fingerprints": {
+          "teacher-recovery-train-007": {
+            "hidden": "6508658acae703a3465cd3bd3ceebd802977a33ab55efae43739a890a391d0f5",
+            "text_logits": "5dbb38ff158068c0180bd72e9d13fd8164527f168e82e0c702fb6071ae721706"
+          },
+          "teacher-recovery-train-011": {
+            "hidden": "b3e1d79e8efbcbd7bfcb0977e6362e47e5c4583b4a4ccb1244633536b2b8c3cc",
+            "text_logits": "11b901fc5ea2e38dc77c48ff30ecc9f9b2712a36a35ed6034f81592bfed9ff95"
+          },
+          "teacher-recovery-train-019": {
+            "hidden": "ccc443b604f2cfef18e56f272befc3cb74fe45f31e6f27ec81f8f79f4afcfcdf",
+            "text_logits": "d46749b081b69bb333432b8e37cc028d03eddf0c7fcfa40d8669e6befb267e9e"
+          },
+          "teacher-recovery-train-020": {
+            "hidden": "c5568e8612912c8a30661901fb64e4c81d574ce0e800455b1194ffdf26073984",
+            "text_logits": "ca58e5489bbeb84adb265e7828d2ecefbc63884e54136c74a1d1dceac2e2fef3"
+          }
+        },
+        "execution_id": "cd104fd28ddd4f0691b86736defb1fbb",
+        "step": 56
+      }
+    },
+    "personaplex/broad/train/interrupted.pt.native-reference.json": {
+      "sha256": "b4ed9806e32b2d675e8b01c5c2b57ef723d13269b1b6458eacccb0b7dfc5a595",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint_sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902",
+        "fingerprints": {
+          "teacher-recovery-train-007": {
+            "hidden": "35553466304cd802e52e0c2170c5b1fabee2beb66e773e37edfcc61b6d8ab736",
+            "text_logits": "61d1f9bb5025659a5445bac7dfa5140481e25b27a0a26f006caeed1ca1982b8f"
+          },
+          "teacher-recovery-train-011": {
+            "hidden": "fb5c9a1f3b2184c964fc77d75906d187800c6eb3fa976ceaf4503d426e1331af",
+            "text_logits": "614ddb3133adc6495a1fcc83415fc33e9e537fe84b20545a0c15e7536603ebbc"
+          },
+          "teacher-recovery-train-019": {
+            "hidden": "9dbb4e038d9d374ffa8b3346769e694cc0368ea25e9c92b38605e8180e528ecf",
+            "text_logits": "5e7e9949c5f10a0fc6bfae5cee29c2a4e404d8dad4e646afb180a1304ffab9a2"
+          },
+          "teacher-recovery-train-020": {
+            "hidden": "600659dc4a07cd202811d65f6f2aa6c7e3d3c76adc6886aa5d932d1f4d140d3e",
+            "text_logits": "455ad4bad3ef7990d79644931c8e89684ecc523a6c7160185440e4515f42a2c1"
+          }
+        },
+        "execution_id": "cd104fd28ddd4f0691b86736defb1fbb",
+        "step": 62
+      }
+    },
+    "personaplex/broad/train/training-interrupted.json": {
+      "sha256": "54f66a39fbcac01908ff3defd0771169bfeb811f9f54ecd6ee1396457abdcac5",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "completed": false,
+        "actual_new_updates": 62,
+        "total_lineage_updates": 62,
+        "checkpoint_sha256": "e5c8f62f11c65effc8bb91b7ee6fee226bb46091e8fafc90090e471a28ee7902"
+      }
+    },
+    "context-spanning/broad/train/live.pt.native-reference.json": {
+      "sha256": "e0e292df1f8e576ffd1bdab4c37209bbe9bd0270a95e633db4b368c46f16bfc5",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint_sha256": "78414a93818ba8bfb22bdbb6666147d874d13b29e5cf002f87e06f1366758472",
+        "fingerprints": {
+          "teacher-recovery-train-007": {
+            "hidden": "3daf21874e5d812b6cab90562b987535d39def1ae5159b85dcb1f7e59a326af1",
+            "text_logits": "93edb23edd39ac66fcfdaaec5ecea807dd7eeba711fe9dd09ea6ebea6a71cacb"
+          },
+          "teacher-recovery-train-011": {
+            "hidden": "d0ab297e01ba6e286a9dfad17f82f2dffe9938ce2c144e324a40b0b9baa9b04b",
+            "text_logits": "54465a62adaec9ba8f3466a5c415b6059028fe9a1b883b9065a1a15da5c6b0ba"
+          },
+          "teacher-recovery-train-019": {
+            "hidden": "16e5b34ec0d5e2640887d8850796baaffdb0d25e583aa8d5ea2f55f42e251e83",
+            "text_logits": "69e59fbf6a3f9849b754a0d49a36565022b6aa4ab726a75b64de9cd9ceb849d7"
+          },
+          "teacher-recovery-train-020": {
+            "hidden": "3b1c4897e40a63ad6a4ae7fd2ecdab05b2da8f9644e4fc9d9b2f37e4111c4837",
+            "text_logits": "35f2dfe803722da3abd0599072b2f6b24d05729a9f2dab091d55e88a9fbed01b"
+          }
+        },
+        "execution_id": "053f64786fc542a2a9ad9ce9142c0a70",
+        "step": 56
+      }
+    },
+    "context-spanning/broad/train/interrupted.pt.native-reference.json": {
+      "sha256": "5ad9c4c75911a53ce7c0cca62bd887b96e8f33eaa8eae47d2c9cfff62515f7a2",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "checkpoint_sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4",
+        "fingerprints": {
+          "teacher-recovery-train-007": {
+            "hidden": "9be61994f4c5a0bc6efca7f08cef0211339ba9310748edf18f2506471235c3bc",
+            "text_logits": "17da42ce7104525ea50ef009b75cccab282eda1da3ec1a64d317e5a289051f7a"
+          },
+          "teacher-recovery-train-011": {
+            "hidden": "ebf8a2ebf18599d722d35d7b86e09f4af1852bfed611aea747ff4f48e5f813a7",
+            "text_logits": "5d2bfb66cc04bcc6d65d3cda1e681b4b47e72800dcd4edb6a5acbf132cffc5bc"
+          },
+          "teacher-recovery-train-019": {
+            "hidden": "6d0a621d273b43d75570dfa2dd0909ce2ee47cc8a9314aff5ad85eb0e9a1fd40",
+            "text_logits": "35330a8ae3240a4afc2c5f9d69bb123efed64261df7d188175f033d268896323"
+          },
+          "teacher-recovery-train-020": {
+            "hidden": "4410c2485f32b1712f535ce93cc6f7d455633dc9420a81656f0d9ae7f89267db",
+            "text_logits": "02025f5624fa525ba7cf90ed5a2279b6dd30fe342ff90c73da0fc7961b1c9f28"
+          }
+        },
+        "execution_id": "053f64786fc542a2a9ad9ce9142c0a70",
+        "step": 63
+      }
+    },
+    "context-spanning/broad/train/training-interrupted.json": {
+      "sha256": "0ab94aa7801aed5098245a5be46c7107214c0775872e6f0963c06c0033e00c4d",
+      "value": {
+        "source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+        "completed": false,
+        "actual_new_updates": 63,
+        "total_lineage_updates": 63,
+        "checkpoint_sha256": "93d0cc0b3a377cfa7f9d24f88b145e3d6fbfae99fd6c40b15b7d37a5bff023a4"
+      }
+    }
+  }
+}
