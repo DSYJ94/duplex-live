@@ -1,0 +1,26 @@
+{
+  "status": "LOCAL_CPU_REPAIR_PREPARED_NOT_GPU_APPROVED",
+  "original_native_source": "d9453cfaa09076b1c181723384da4c9cf49a9524",
+  "change": "Overlap the same two scheduler reads within their unchanged shared deadline",
+  "unchanged": {
+    "resource": true,
+    "phase_limit": true,
+    "validate_job": true,
+    "ensure": true,
+    "check": true,
+    "native_worker_bytes_unchanged": true
+  },
+  "tests_passed": 12,
+  "scaled_latency_test_before": "RED: serial second squeue read times out after remaining7.49seconds",
+  "scaled_latency_test_after": "GREEN: both12second simulated reads complete concurrently inside20secondbudget",
+  "limits": {
+    "native_guard_seconds": 45,
+    "storage_seconds": 120,
+    "aggregate_GPU_hours": 112,
+    "max_intervals": 8
+  },
+  "historical_outage_counterfactual_not_proven": true,
+  "real45second_controller_outage_still_stops": true,
+  "new_native_job": false,
+  "recovery_runner_not_yet_prepared": true
+}

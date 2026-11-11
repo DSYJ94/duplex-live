@@ -1,3 +1,13 @@
+# LOCAL — Scheduler RPC overlap repair prepared; recovery remains unsubmitted
+
+Previous turn made progress: preserved all four latest/normal broad states after actualFAILED6. Fresh read-only Slurm check confirms8285192FAILED/1:0/45141s and accountqueueempty. No model is running. All source work remains temporarycheckoutmain; OneDrivePAUSED.
+
+A deterministic scaled-latency test drives the REAL matched_guard.refresh seam: old serial scontrol+squeue share20s, each12s response makes secondread timeout (REDactual7.49s remainder). Prepared fix overlaps exactlythose same two reads within unchanged shared20s/originalremainingfreshness deadline. No extraRPCs, changed model/data/math, new admission or widenedexpiry. All12 focused tests PASS: partial-pair timeout preserves oldguardbytes, expiredwindowstillraises, wrongallocation/overlap stillreject, old45s andstorage120s retained. Nativeworkerbytes andASTresource/phase_limit/validate_job/ensure/check unchanged againstD945. Proof docs/NATIVE-MOSHI-SCHEDULER-RPC-REPAIR-2026-11-11.json. No actual GPU/hostdeployment proof is claimed. A real controller outage longerthan45s MUSTstillstop; the recorded historicalfailure is not proven preventable by this overlap fix.
+
+Next: finish concrete failed-window recovery runner and proposal selecting interrupted raw62/CS63, requiringallfour independent native restores beforelearning; no repeated gradients, no automaticrollback/replay. Newguard-source identity must be explicitly bound, retaining originalD945 checkpoints/references/proofs without relabelling. Validate actualhostPython3.6 CPU compatibility viaGit deployment, then ask the owner to amend failed6→7 eligibility within same112h/max8/all134991priorGPU seconds. Do not ask for execution approval on an incomplete runner, do not submit a GPU job under the current successful-window-only grant, and do not start an infrastructure sweep. Goalactive; meaningful preparation remains possible, noblockedstatus.
+
+---
+
 # LOCAL — Job8285192 FAILED; all latest states independently preserved; NO restart
 
 Actual Slurm8285192 FAILED/1:0, elapsed45141s, two GPUs, ended11Nov11:01:08UTC. Native producerD945 unchanged. Owner notified promptly when actual terminal was observed11:02UTC. The reported trigger is independent scheduler guard exit after internal `scontrol show job` timeout consumed the remaining original45s freshness window. `health-watch.log` records the exact traceback; storage remained valid12.63GB<32GiB. No GPU OOM/backpropagation failure is reported by this failure log. Do not weaken freshness, pretend a successful window, or conflate this with the Mac certificate renewal. New local certificate remains valid10:55:48→22:55:48UTC; fresh SSH works.

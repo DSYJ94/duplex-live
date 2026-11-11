@@ -118,12 +118,18 @@ def check(path,needed=0):
 
 
 def refresh(lease,output,last_success=None):
+    from concurrent.futures import ThreadPoolExecutor
     now=time.time();deadline=now+20 if last_success is None else min(now+20,last_success+44)
+    def query(command):
+        return subprocess.check_output(command,universal_newlines=True,
+            timeout=max(1,deadline-time.time()))
     try:
-        job=subprocess.check_output(['scontrol','show','job','-o',lease['job_id']],
-            universal_newlines=True,timeout=max(1,deadline-time.time()))
-        queue=subprocess.check_output(['squeue','-A',ACCOUNT,'-h','-o','%i'],
-            universal_newlines=True,timeout=max(1,deadline-time.time()))
+        # Same two authoritative reads and shared deadline; neither read spends
+        # the other's response budget. Failed/partial pairs never renew a guard.
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            job_future=pool.submit(query,['scontrol','show','job','-o',lease['job_id']])
+            queue_future=pool.submit(query,['squeue','-A',ACCOUNT,'-h','-o','%i'])
+            job=job_future.result();queue=queue_future.result()
     except subprocess.TimeoutExpired:
         if last_success is None or time.time()>=last_success+44:raise
         print(json.dumps(dict(event='observation_timeout',original_success_unix=last_success)),flush=True)
