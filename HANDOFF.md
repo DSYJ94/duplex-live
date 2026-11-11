@@ -1,3 +1,11 @@
+# LOCAL — User goal ACTIVE and multi-track product plan recorded; SAME valid job continues
+
+OwnerupdatedappgoaltoaccountforPersonaPlex/ContextSpanning/Venusbranches andthen trainselectedfoundationtowardusablefull-duplexGPT-live-likeproduct. `get_goal` ACTUALLYreturnedACTIVE withthisnewobjective. DoNOTmarkcompleteorreplacegoal. Canonicaldocs/NATIVE-PRODUCT-GOAL-2026-11-07.md nowhas currentoperationalmulti-trackgoal/decisioncriteria/shareddata/runtime/adaptiveinterventions/anti-spiralpolicy. Venuspreservedcomparator/resumablecompatiblebranch, NOTdiscarded/notdirectadaptertransplant/notcurrent192cohort. No newcompute/API/resourcepermissions inferredfromgoal.
+
+Latest17:20:11UTC actual8317068RUNNING: PersonaPlexbroad35.39s/CSbroad45.56s/Plexnarrow26.19s actualrestoreexit0; CSnarrowinprogress. NOloggednewupdatesyet. SAMEobserver64733 andproducer10e7, no duplicate/restart/newjob. All4freshnativeproofsrequired beforeactuallearning; preserveexisting112h/max10/135137priorseconds/allcheckpoints/OneDrivepause. PlanningdoesNOTpausevalidrestore/training. Continueactualstateobservation andupdateonlymeaningfulresults/failures/accessneeds.
+
+---
+
 # LOCAL — Mount recovery9 ACTUAL8317068RUNNING; observe SAME restores, no learning claim yet
 
 Actualproducer10e7e0664e47c1222e0492a8367b3c000ed5789d Git-deployed NFS source-mount9-approved-10e7e06. ActualHOSTPython3.6 all47CPUchecks exit0/newownergrant f661027f2aceba9de5a2c11a129133fa4faef22ce7dae0bca9a3b687d784a45b verified; nativeworker+9mathdependencies byteexactD945. Worktree/runs precreated BEFORE submission and validated again beforeparallelcontainerchildren. Actualexclusivewrapper48786 exited0/Slurm8317068 ONCE. Firstfresh17:19:04UTC RUNNING0:15/nid010999; bothbroad actualrestoreworkerslaunched, no restoreterminal/no newupdatesyet. Storage15.92GB<32GiB PASS. No duplicatejob/restartonobservationtimeout.
@@ -6,7 +14,7 @@ ONEread-onlyobserver64733/root `/home/u6ada/dsyj94.u6ada/duplex-native-recovery-
 
 OwneraskedVenusdispositionduringrecovery: usefulVenusstates/recipes/data/runfailures retainedasreference, NOTdirectlytransplantedontoMoshifamily. Storagepolicy9NovrecordsfiveusefulhistoricalVenusstates35.17GBafterowner-authorizedobsoletecopycleanup; noOneDrivefilehash/rehydrationwasperformednow. Venuscanresumeonlywithitscompatiblebase/recipe; itisnotadoptedandnotincludedincurrentfourarms/twobases192cohort. Reusedatasets/evals/diagnoseswherequalified; futuredistillationONLYverifiedbehaviors, notbadoutputs. No foundationdecisionmadebeforematchedresults. Productreasoning/speech/realbackend/live/British/fresh20acceptanceremainunfinished.
 
-LOCALtemporarycheckoutmainonly/OneDriveeditingevictionweightsdownloadsPAUSED. Actualproducerstays10e7afterthismetadataonlycommit; donotdeploymetadataorinterruptvalidjob. Certvalidto11Nov22:55:48UTC; renewofficiallybeforemonitoringexpireswhenneeded, jobindependent. NoGCP/purchases/API/newresources/newagents/chats/automations. AppgoalstaleBLOCKED, ownerexplicitlyauthorizedexecution. FulloldNFS+Lustrecheckpoints/data/receiptspreserved.
+LOCALtemporarycheckoutmainonly/OneDriveeditingevictionweightsdownloadsPAUSED. Actualproducerstays10e7afterthismetadataonlycommit; donotdeploymetadataorinterruptvalidjob. Certvalidto11Nov22:55:48UTC; renewofficiallybeforemonitoringexpireswhenneeded, jobindependent. NoGCP/purchases/API/newresources/newagents/chats/automations. AppgoalwaspreviouslyBLOCKED; ownerhasnowexplicitlysetupdatedmulti-trackobjectiveACTIVE (get_goalverified11Nov), executionauthorized. FulloldNFS+Lustrecheckpoints/data/receiptspreserved.
 
 ---
 

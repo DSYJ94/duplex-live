@@ -1,5 +1,37 @@
 # Active native voice product goal
 
+## Current operational goal — owner updated 11 November 2026
+
+**Select the strongest practical foundation among PersonaPlex, Context Spanning and preserved Venus, then train and integrate it into a usable native full-duplex voice product approaching GPT-live interaction quality.** Success means competent basic spoken reasoning, appropriate delegation of harder work, faithful natural British English speech, simultaneous listening/speaking, silence and interruption control, pause/resume, reliable asynchronous cancellation/result handling, and measured usable end-to-end latency. GPT-live equivalence is the intended direction, not an achieved or guaranteed benchmark result.
+
+Keep separate evidence-bearing tracks; do not silently abandon or merge them:
+
+| Track | Current role | Next decision or action |
+| --- | --- | --- |
+| PersonaPlex | Native duplex foundation; narrow1.89M and broad105M adapter arms | Finish the approved matched training and complete evaluation against its untouched base. |
+| Context Spanning | Native duplex foundation with its released backend communication protocol; same two adapter sizes | Finish the same matched experiment and measure native reasoning separately from appropriate handoff and connected-backend success. |
+| Venus | Preserved language/control comparator and compatible resumable adaptation branch, including the698M work | Retain the selected useful checkpoints and full recipe/results provenance. Reuse completed comparable evidence; run only missing decision-changing controls before foundation selection. Neither discard Venus nor automatically fund another unchanged Venus epoch. |
+| Shared data and evaluation | Basic reasoning, context, uncertainty, clarification, routing, speech fidelity and interaction control | Use current data unchanged during the matched experiment. After results, expand or repair diagnosed TRAIN coverage, preserve held-out folds and protect ordinary capabilities. |
+| Product runtime | Native audio plus asynchronous reasoning backend, cancellation, pending conversation, stale-result handling and live UI | Validate the actual conversation route and task lifecycle; distinguish correct generated text, correct speech and backend completion. Current training grant remains API0. |
+
+The current192-output Moshi comparison contains four trained candidates plus their two untouched bases; it does **not** include Venus. Use existing Venus evidence only where inputs and scoring are genuinely comparable. Any missing common native controls must respect each model's official input/output contract and carry its own evidence. Do not compare unrelated loss scales or claim a winning foundation from teacher-forced loss alone. If no branch meets critical requirements, report that and choose the smallest evidence-supported repair; do not declare the least-bad branch product-qualified.
+
+A Venus adapter is tied to its compatible base, module shapes and learned representation; it cannot simply be loaded onto PersonaPlex or Context Spanning. Reuse qualified examples, recipes, failure analysis and evaluation infrastructure. Behavioural distillation is a possible later transfer method, limited to independently verified TRAIN outputs; never promote gibberish, wrong answers or held-out evaluation answers into training. The recorded storage cleanup retained five useful historical Venus states; obsolete local copies were removed at the owner's request. Keep OneDrive editing/eviction/weight downloads paused until explicitly resumed.
+
+After the foundation decision, train toward the full product using this order of evidence:
+
+1. Separate **foundation limitations**, **adaptation damage**, **missing/poor data**, **speech conditioning/runtime defects**, and **insufficient trainable capacity** using the matched results. Preserve correct basic reasoning while learning control and delegation.
+2. Choose the intervention that addresses the observed failure: improved/expanded data and verified reasoning examples; sampling/loss/learning-rate or retention changes; speech projector/acoustic alignment; broader adapters or selective/full fine-tuning. More parameters or full pretraining are conditional options, not assumed cures.
+3. Use recorded OPAL/reactive optimisation at resumable phase boundaries to change recipes when evidence supports it. Current matched arms retain common KEEP/API0 to keep the comparison interpretable. Use the useful MiRL idea of mining repeated TRAIN failures with benign contrasts; do not label supervised failure mining as implemented MiRL RL. No autonomous code rewriting, Jev participation or weight-space surgery is claimed active.
+4. Evaluate complete cohorts and independently restored states, then the real connected stack and owner listening/live test. Only adopt after reasoning, delegation, speech and interaction/latency acceptance; keep a known baseline and rollback state.
+
+**Execution now:** preserve and monitor the SAME approved Isambard job8317068/source10e7e0664e47c1222e0492a8367b3c000ed5789d. All four fresh native state restores must pass before new updates; completed narrow196 arms are not retrained. Continue the two broad arms from exact62/63 without replay. The112 aggregate GPU-hour/max10-start grant and successful-parent-only continuation10 remain binding; the broader product goal grants no new provider purchases, resources, APIs or unapproved retries. A valid run must not be paused for planning or new research.
+
+**Avoid getting bogged down:** each diagnostic must distinguish a concrete cause and change the next action. Reuse existing admissions and completed evaluations; do not repeat them unchanged. Reassess infrastructure after20minutes and the training hypothesis after30minutes of diagnosis, without interrupting valid training/copyback/guards. Ask the owner at foundation selection or another major intervention decision; do not turn routine commands into repeated approval requests. Record source, data/recipe hashes, complete metrics, state restoration and backups for every actual run.
+
+The detailed historical results below remain provenance; the current execution source and job state are in HANDOFF.md.
+
+
 Updated 8 November 2026 from the owner's direction: “Keep pursuing goal to improve it. Note down to not be conservative with Isambard.” This updates the working plan; the active goal remains unfinished. The historical 244-update reference is provenance, not the current training checkpoint.
 
 Build a useful native full-duplex voice product approaching GPT-live/Thinking Machines interaction quality: natural English/British speech, useful ordinary reasoning, simultaneous listening/speaking, appropriate acknowledgements, reliable required silence, interruption and pause/resume, and asynchronous delegation of harder reasoning with conversation while work is pending, cancellation, result grounding and stale-result handling. A correct transcript, low teacher-forced loss or a working transport alone cannot establish completion.
