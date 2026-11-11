@@ -184,5 +184,1357 @@
     "personaplex": "6270c278cb7540619efa069966f870cd",
     "context-spanning": "a4bcd826a05e4e9c8bdf134922b90349"
   },
-  "actual_new_logged_updates_at_172324UTC": 0
+  "actual_new_logged_updates_at_172324UTC": 0,
+  "actual_training_resumed": true,
+  "first_updates_observed_UTC": "2026-11-11T17:29:00Z",
+  "actual_first_new_updates": {
+    "personaplex": {
+      "saved_step": 62,
+      "first_new_update": {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "step": 63,
+        "epoch": 2,
+        "seconds": 463.34295973496046,
+        "LR": 1.6946583704589972e-06,
+        "objective": 495.39815999770644,
+        "components": [
+          {
+            "group": "actual",
+            "id": "6:/projects/u6si/duplex-live/runs/context-training-proof-7495656",
+            "weight": 0.21875,
+            "ret_scale": 24.5,
+            "weighted_loss": 0.29570260643959045,
+            "text_ce": 1.3517833948135376,
+            "ret_raw": 5.6973450263120284e-11
+          },
+          {
+            "group": "reference",
+            "id": "teacher-recovery-train-019",
+            "weight": 1.0208333333333333,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.1480780839920044,
+            "kl": 0.0044136554934084415,
+            "hidden_mse": 0.01406424306333065,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "old25",
+            "id": "teacher-cf-recovery-train-002-3",
+            "weight": 0.3223684210526316,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.29569000005722046,
+            "text_ce": 0.9172424674034119,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "new24",
+            "id": "teacher-native2-train-019",
+            "weight": 1.53125,
+            "ret_scale": 0.0,
+            "weighted_loss": 1.6693716049194336,
+            "text_ce": 1.0902018547058105,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "word",
+            "id": "teacher-recovery-train-010",
+            "weight": 62.720000000000006,
+            "ret_scale": 0.0,
+            "weighted_loss": 204.21705627441406,
+            "kl": 0.38095811009407043,
+            "hidden_mse": 0.2875053584575653,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "clock",
+            "id": "clock-teacher-native2-train-010",
+            "weight": 74.66666666666667,
+            "ret_scale": 0.0,
+            "weighted_loss": 196.4299774169922,
+            "kl": 0.10752351582050323,
+            "hidden_mse": 0.25232353806495667,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "audio49",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.9999999999999999,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.5454333424568175,
+            "acoustic_ce": 0.5454333424568176,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                513,
+                512,
+                512,
+                512,
+                512,
+                512,
+                512,
+                512
+              ],
+              "per_head_ce": [
+                0.47610169649124146,
+                0.76796954870224,
+                0.946204423904419,
+                1.0883727073669434,
+                1.0260504484176636,
+                1.0551947355270386,
+                1.1964324712753296,
+                1.2043895721435547
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "stream49",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.45370370370370366,
+            "ret_scale": 49.0,
+            "weighted_loss": 32.2716633458841,
+            "text_ce": 1.0617531391243369,
+            "ret_raw": 0.6487743268213133,
+            "gradient_calls": 514,
+            "recorded_call_count": 516,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged"
+          },
+          {
+            "group": "control40",
+            "id": "native-control3-train-022",
+            "weight": 1.225,
+            "ret_scale": 49.0,
+            "weighted_loss": 0.8777727542042821,
+            "text_ce": 0.5399729841117988,
+            "ret_raw": 1.4615920393337409e-10,
+            "gradient_calls": 800,
+            "recorded_call_count": 801,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.17657619714736938,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                800,
+                799,
+                799,
+                799,
+                799,
+                799,
+                799,
+                799
+              ],
+              "per_head_ce": [
+                0.15857109427452087,
+                0.39157766103744507,
+                0.23112040758132935,
+                0.2807590365409851,
+                0.26222145557403564,
+                0.3837698996067047,
+                0.3411698639392853,
+                0.245670348405838
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "reasoning32",
+            "id": "native-reasoning4-train-030",
+            "weight": 0.765625,
+            "ret_scale": 24.5,
+            "weighted_loss": 56.873535674842216,
+            "text_ce": 1.2590102041404618,
+            "ret_raw": 2.2740445141555776,
+            "gradient_calls": 729,
+            "recorded_call_count": 731,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.2553670406341553,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                728,
+                727,
+                727,
+                727,
+                727,
+                727,
+                727,
+                727
+              ],
+              "per_head_ce": [
+                0.23124685883522034,
+                0.3661622405052185,
+                0.36364519596099854,
+                0.42813870310783386,
+                0.3813953399658203,
+                0.574058473110199,
+                0.4519563615322113,
+                0.4282216429710388
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "ordinary48",
+            "id": "venus-retention-request-v2-train-ordinary-0014",
+            "weight": 1.0208333333333333,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.77387889350454,
+            "text_ce": 0.872897744178772,
+            "ret_raw": 1.4699638728465914e-10,
+            "acoustic_ce": 0.864779531955719,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                141,
+                140,
+                140,
+                140,
+                140,
+                140,
+                140,
+                140
+              ],
+              "per_head_ce": [
+                0.6925414204597473,
+                1.4824155569076538,
+                2.2779018878936768,
+                2.061784505844116,
+                2.0788097381591797,
+                2.2731776237487793,
+                2.103802442550659,
+                2.3874692916870117
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          }
+        ],
+        "sampler": [
+          {
+            "group": "actual",
+            "index": 6,
+            "id": "6:/projects/u6si/duplex-live/runs/context-training-proof-7495656",
+            "weight": 0.21875,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.008928571428571428
+          },
+          {
+            "group": "reference",
+            "index": 2,
+            "id": "teacher-recovery-train-019",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 12,
+            "original_component_weight": 0.25
+          },
+          {
+            "group": "old25",
+            "index": 12,
+            "id": "teacher-cf-recovery-train-002-3",
+            "weight": 0.3223684210526316,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.013157894736842105
+          },
+          {
+            "group": "new24",
+            "index": 14,
+            "id": "teacher-native2-train-019",
+            "weight": 1.53125,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.0625
+          },
+          {
+            "group": "word",
+            "index": 2,
+            "id": "teacher-recovery-train-010",
+            "weight": 62.720000000000006,
+            "visits_this_epoch": 5,
+            "original_component_weight": 6.4
+          },
+          {
+            "group": "clock",
+            "index": 6,
+            "id": "clock-teacher-native2-train-010",
+            "weight": 74.66666666666667,
+            "visits_this_epoch": 3,
+            "original_component_weight": 4.571428571428571
+          },
+          {
+            "group": "audio49",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.9999999999999999,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.02040816326530612
+          },
+          {
+            "group": "stream49",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.45370370370370366,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.009259259259259259
+          },
+          {
+            "group": "control40",
+            "index": 22,
+            "id": "native-control3-train-022",
+            "weight": 1.225,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.025
+          },
+          {
+            "group": "reasoning32",
+            "index": 30,
+            "id": "native-reasoning4-train-030",
+            "weight": 0.765625,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.03125
+          },
+          {
+            "group": "ordinary48",
+            "index": 14,
+            "id": "venus-retention-request-v2-train-ordinary-0014",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.020833333333333332
+          }
+        ],
+        "opal": {
+          "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+          "update": 63,
+          "program_version": 0,
+          "programs": {
+            "updater.py": "374ae6d85a9198eeaa7b8843cc3ddd06b688b8ef2cc9c7e9346bbad941d0b301",
+            "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+          },
+          "complete_wrapped_state_required": true
+        },
+        "gradient_norm": 884.2860107421875,
+        "nonzero_B_paths": 97,
+        "all_trainable_gradients_present_finite": true
+      },
+      "latest_copied_update": {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "step": 63,
+        "epoch": 2,
+        "seconds": 463.34295973496046,
+        "LR": 1.6946583704589972e-06,
+        "objective": 495.39815999770644,
+        "components": [
+          {
+            "group": "actual",
+            "id": "6:/projects/u6si/duplex-live/runs/context-training-proof-7495656",
+            "weight": 0.21875,
+            "ret_scale": 24.5,
+            "weighted_loss": 0.29570260643959045,
+            "text_ce": 1.3517833948135376,
+            "ret_raw": 5.6973450263120284e-11
+          },
+          {
+            "group": "reference",
+            "id": "teacher-recovery-train-019",
+            "weight": 1.0208333333333333,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.1480780839920044,
+            "kl": 0.0044136554934084415,
+            "hidden_mse": 0.01406424306333065,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "old25",
+            "id": "teacher-cf-recovery-train-002-3",
+            "weight": 0.3223684210526316,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.29569000005722046,
+            "text_ce": 0.9172424674034119,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "new24",
+            "id": "teacher-native2-train-019",
+            "weight": 1.53125,
+            "ret_scale": 0.0,
+            "weighted_loss": 1.6693716049194336,
+            "text_ce": 1.0902018547058105,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "word",
+            "id": "teacher-recovery-train-010",
+            "weight": 62.720000000000006,
+            "ret_scale": 0.0,
+            "weighted_loss": 204.21705627441406,
+            "kl": 0.38095811009407043,
+            "hidden_mse": 0.2875053584575653,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "clock",
+            "id": "clock-teacher-native2-train-010",
+            "weight": 74.66666666666667,
+            "ret_scale": 0.0,
+            "weighted_loss": 196.4299774169922,
+            "kl": 0.10752351582050323,
+            "hidden_mse": 0.25232353806495667,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "audio49",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.9999999999999999,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.5454333424568175,
+            "acoustic_ce": 0.5454333424568176,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                513,
+                512,
+                512,
+                512,
+                512,
+                512,
+                512,
+                512
+              ],
+              "per_head_ce": [
+                0.47610169649124146,
+                0.76796954870224,
+                0.946204423904419,
+                1.0883727073669434,
+                1.0260504484176636,
+                1.0551947355270386,
+                1.1964324712753296,
+                1.2043895721435547
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "stream49",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.45370370370370366,
+            "ret_scale": 49.0,
+            "weighted_loss": 32.2716633458841,
+            "text_ce": 1.0617531391243369,
+            "ret_raw": 0.6487743268213133,
+            "gradient_calls": 514,
+            "recorded_call_count": 516,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged"
+          },
+          {
+            "group": "control40",
+            "id": "native-control3-train-022",
+            "weight": 1.225,
+            "ret_scale": 49.0,
+            "weighted_loss": 0.8777727542042821,
+            "text_ce": 0.5399729841117988,
+            "ret_raw": 1.4615920393337409e-10,
+            "gradient_calls": 800,
+            "recorded_call_count": 801,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.17657619714736938,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                800,
+                799,
+                799,
+                799,
+                799,
+                799,
+                799,
+                799
+              ],
+              "per_head_ce": [
+                0.15857109427452087,
+                0.39157766103744507,
+                0.23112040758132935,
+                0.2807590365409851,
+                0.26222145557403564,
+                0.3837698996067047,
+                0.3411698639392853,
+                0.245670348405838
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "reasoning32",
+            "id": "native-reasoning4-train-030",
+            "weight": 0.765625,
+            "ret_scale": 24.5,
+            "weighted_loss": 56.873535674842216,
+            "text_ce": 1.2590102041404618,
+            "ret_raw": 2.2740445141555776,
+            "gradient_calls": 729,
+            "recorded_call_count": 731,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.2553670406341553,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                728,
+                727,
+                727,
+                727,
+                727,
+                727,
+                727,
+                727
+              ],
+              "per_head_ce": [
+                0.23124685883522034,
+                0.3661622405052185,
+                0.36364519596099854,
+                0.42813870310783386,
+                0.3813953399658203,
+                0.574058473110199,
+                0.4519563615322113,
+                0.4282216429710388
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "ordinary48",
+            "id": "venus-retention-request-v2-train-ordinary-0014",
+            "weight": 1.0208333333333333,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.77387889350454,
+            "text_ce": 0.872897744178772,
+            "ret_raw": 1.4699638728465914e-10,
+            "acoustic_ce": 0.864779531955719,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                141,
+                140,
+                140,
+                140,
+                140,
+                140,
+                140,
+                140
+              ],
+              "per_head_ce": [
+                0.6925414204597473,
+                1.4824155569076538,
+                2.2779018878936768,
+                2.061784505844116,
+                2.0788097381591797,
+                2.2731776237487793,
+                2.103802442550659,
+                2.3874692916870117
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          }
+        ],
+        "sampler": [
+          {
+            "group": "actual",
+            "index": 6,
+            "id": "6:/projects/u6si/duplex-live/runs/context-training-proof-7495656",
+            "weight": 0.21875,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.008928571428571428
+          },
+          {
+            "group": "reference",
+            "index": 2,
+            "id": "teacher-recovery-train-019",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 12,
+            "original_component_weight": 0.25
+          },
+          {
+            "group": "old25",
+            "index": 12,
+            "id": "teacher-cf-recovery-train-002-3",
+            "weight": 0.3223684210526316,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.013157894736842105
+          },
+          {
+            "group": "new24",
+            "index": 14,
+            "id": "teacher-native2-train-019",
+            "weight": 1.53125,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.0625
+          },
+          {
+            "group": "word",
+            "index": 2,
+            "id": "teacher-recovery-train-010",
+            "weight": 62.720000000000006,
+            "visits_this_epoch": 5,
+            "original_component_weight": 6.4
+          },
+          {
+            "group": "clock",
+            "index": 6,
+            "id": "clock-teacher-native2-train-010",
+            "weight": 74.66666666666667,
+            "visits_this_epoch": 3,
+            "original_component_weight": 4.571428571428571
+          },
+          {
+            "group": "audio49",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.9999999999999999,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.02040816326530612
+          },
+          {
+            "group": "stream49",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.45370370370370366,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.009259259259259259
+          },
+          {
+            "group": "control40",
+            "index": 22,
+            "id": "native-control3-train-022",
+            "weight": 1.225,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.025
+          },
+          {
+            "group": "reasoning32",
+            "index": 30,
+            "id": "native-reasoning4-train-030",
+            "weight": 0.765625,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.03125
+          },
+          {
+            "group": "ordinary48",
+            "index": 14,
+            "id": "venus-retention-request-v2-train-ordinary-0014",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.020833333333333332
+          }
+        ],
+        "opal": {
+          "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+          "update": 63,
+          "program_version": 0,
+          "programs": {
+            "updater.py": "374ae6d85a9198eeaa7b8843cc3ddd06b688b8ef2cc9c7e9346bbad941d0b301",
+            "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+          },
+          "complete_wrapped_state_required": true
+        },
+        "gradient_norm": 884.2860107421875,
+        "nonzero_B_paths": 97,
+        "all_trainable_gradients_present_finite": true
+      },
+      "copied_rows": 1
+    },
+    "context-spanning": {
+      "saved_step": 63,
+      "first_new_update": {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "step": 64,
+        "epoch": 2,
+        "seconds": 442.11260239302646,
+        "LR": 1.6819983600624985e-06,
+        "objective": 251.18839557757696,
+        "components": [
+          {
+            "group": "actual",
+            "id": "7:/projects/u6si/duplex-live/runs/context-training-proof-7495657",
+            "weight": 0.21875,
+            "ret_scale": 24.5,
+            "weighted_loss": 0.32301875948905945,
+            "text_ce": 1.4766278266906738,
+            "ret_raw": 2.61643435806036e-07
+          },
+          {
+            "group": "reference",
+            "id": "teacher-recovery-train-020",
+            "weight": 1.0208333333333333,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.0281995702534914,
+            "kl": 0.00438939081504941,
+            "hidden_mse": 0.0023234677501022816,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "old25",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.3223684210526316,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.31254369020462036,
+            "text_ce": 0.9695233106613159,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "new24",
+            "id": "teacher-native2-train-023",
+            "weight": 1.53125,
+            "ret_scale": 0.0,
+            "weighted_loss": 1.689595103263855,
+            "text_ce": 1.1034090518951416,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "word",
+            "id": "teacher-recovery-train-011",
+            "weight": 62.720000000000006,
+            "ret_scale": 0.0,
+            "weighted_loss": 192.69288635253906,
+            "kl": 1.5645787715911865,
+            "hidden_mse": 0.15076929330825806,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "clock",
+            "id": "clock-teacher-native2-train-011",
+            "weight": 56.0,
+            "ret_scale": 0.0,
+            "weighted_loss": 6.316155910491943,
+            "kl": 0.03751398250460625,
+            "hidden_mse": 0.007527451030910015,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "audio49",
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.9999999999999999,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.5864983797073363,
+            "acoustic_ce": 0.5864983797073364,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                474,
+                473,
+                473,
+                473,
+                473,
+                473,
+                473,
+                473
+              ],
+              "per_head_ce": [
+                0.5168775320053101,
+                1.0297091007232666,
+                1.052824854850769,
+                1.046387791633606,
+                1.0410016775131226,
+                1.1015387773513794,
+                1.0935993194580078,
+                1.2214727401733398
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "stream49",
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.45370370370370366,
+            "ret_scale": 49.0,
+            "weighted_loss": 0.6220255788138316,
+            "text_ce": 0.93384850501619,
+            "ret_raw": 0.004047654150812641,
+            "gradient_calls": 475,
+            "recorded_call_count": 477,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged"
+          },
+          {
+            "group": "control40",
+            "id": "native-control3-train-023",
+            "weight": 1.225,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.2895929093289658,
+            "text_ce": 0.9622848497428969,
+            "ret_raw": 1.2002640374972643e-05,
+            "gradient_calls": 850,
+            "recorded_call_count": 851,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.08996395021677017,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                850,
+                849,
+                849,
+                849,
+                849,
+                849,
+                849,
+                849
+              ],
+              "per_head_ce": [
+                0.08568375557661057,
+                0.09055022150278091,
+                0.16201631724834442,
+                0.11895079910755157,
+                0.10478102415800095,
+                0.19746294617652893,
+                0.07433569431304932,
+                0.09566040337085724
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "reasoning32",
+            "id": "native-reasoning4-train-031",
+            "weight": 0.765625,
+            "ret_scale": 24.5,
+            "weighted_loss": 45.557690462889575,
+            "text_ce": 1.1517045624181286,
+            "ret_raw": 1.8109220788060938,
+            "gradient_calls": 722,
+            "recorded_call_count": 724,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.4027111530303955,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                721,
+                720,
+                720,
+                720,
+                720,
+                720,
+                720,
+                720
+              ],
+              "per_head_ce": [
+                0.37712234258651733,
+                0.4418206214904785,
+                0.5496500730514526,
+                0.5839592218399048,
+                0.5908606648445129,
+                0.6969833970069885,
+                0.6025556921958923,
+                0.6325886845588684
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "ordinary48",
+            "id": "venus-retention-request-v2-train-ordinary-0015",
+            "weight": 1.0208333333333333,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.7701888605952263,
+            "text_ce": 0.7781749367713928,
+            "ret_raw": 4.172750413999893e-05,
+            "acoustic_ce": 0.9538847208023071,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                107,
+                106,
+                106,
+                106,
+                106,
+                106,
+                106,
+                106
+              ],
+              "per_head_ce": [
+                0.7600805163383484,
+                2.525313138961792,
+                2.285287380218506,
+                2.2958927154541016,
+                2.295717239379883,
+                2.1903133392333984,
+                2.4315850734710693,
+                2.343291997909546
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          }
+        ],
+        "sampler": [
+          {
+            "group": "actual",
+            "index": 7,
+            "id": "7:/projects/u6si/duplex-live/runs/context-training-proof-7495657",
+            "weight": 0.21875,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.008928571428571428
+          },
+          {
+            "group": "reference",
+            "index": 3,
+            "id": "teacher-recovery-train-020",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 12,
+            "original_component_weight": 0.25
+          },
+          {
+            "group": "old25",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.3223684210526316,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.013157894736842105
+          },
+          {
+            "group": "new24",
+            "index": 15,
+            "id": "teacher-native2-train-023",
+            "weight": 1.53125,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.0625
+          },
+          {
+            "group": "word",
+            "index": 3,
+            "id": "teacher-recovery-train-011",
+            "weight": 62.720000000000006,
+            "visits_this_epoch": 5,
+            "original_component_weight": 6.4
+          },
+          {
+            "group": "clock",
+            "index": 7,
+            "id": "clock-teacher-native2-train-011",
+            "weight": 56.0,
+            "visits_this_epoch": 4,
+            "original_component_weight": 4.571428571428571
+          },
+          {
+            "group": "audio49",
+            "index": 14,
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.9999999999999999,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.02040816326530612
+          },
+          {
+            "group": "stream49",
+            "index": 14,
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.45370370370370366,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.009259259259259259
+          },
+          {
+            "group": "control40",
+            "index": 23,
+            "id": "native-control3-train-023",
+            "weight": 1.225,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.025
+          },
+          {
+            "group": "reasoning32",
+            "index": 31,
+            "id": "native-reasoning4-train-031",
+            "weight": 0.765625,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.03125
+          },
+          {
+            "group": "ordinary48",
+            "index": 15,
+            "id": "venus-retention-request-v2-train-ordinary-0015",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.020833333333333332
+          }
+        ],
+        "opal": {
+          "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+          "update": 64,
+          "program_version": 0,
+          "programs": {
+            "updater.py": "374ae6d85a9198eeaa7b8843cc3ddd06b688b8ef2cc9c7e9346bbad941d0b301",
+            "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+          },
+          "complete_wrapped_state_required": true
+        },
+        "gradient_norm": 2722.18115234375,
+        "nonzero_B_paths": 97,
+        "all_trainable_gradients_present_finite": true
+      },
+      "latest_copied_update": {
+        "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+        "step": 64,
+        "epoch": 2,
+        "seconds": 442.11260239302646,
+        "LR": 1.6819983600624985e-06,
+        "objective": 251.18839557757696,
+        "components": [
+          {
+            "group": "actual",
+            "id": "7:/projects/u6si/duplex-live/runs/context-training-proof-7495657",
+            "weight": 0.21875,
+            "ret_scale": 24.5,
+            "weighted_loss": 0.32301875948905945,
+            "text_ce": 1.4766278266906738,
+            "ret_raw": 2.61643435806036e-07
+          },
+          {
+            "group": "reference",
+            "id": "teacher-recovery-train-020",
+            "weight": 1.0208333333333333,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.0281995702534914,
+            "kl": 0.00438939081504941,
+            "hidden_mse": 0.0023234677501022816,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "old25",
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.3223684210526316,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.31254369020462036,
+            "text_ce": 0.9695233106613159,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "new24",
+            "id": "teacher-native2-train-023",
+            "weight": 1.53125,
+            "ret_scale": 0.0,
+            "weighted_loss": 1.689595103263855,
+            "text_ce": 1.1034090518951416,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "word",
+            "id": "teacher-recovery-train-011",
+            "weight": 62.720000000000006,
+            "ret_scale": 0.0,
+            "weighted_loss": 192.69288635253906,
+            "kl": 1.5645787715911865,
+            "hidden_mse": 0.15076929330825806,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "clock",
+            "id": "clock-teacher-native2-train-011",
+            "weight": 56.0,
+            "ret_scale": 0.0,
+            "weighted_loss": 6.316155910491943,
+            "kl": 0.03751398250460625,
+            "hidden_mse": 0.007527451030910015,
+            "ret_raw": 0.0
+          },
+          {
+            "group": "audio49",
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.9999999999999999,
+            "ret_scale": 0.0,
+            "weighted_loss": 0.5864983797073363,
+            "acoustic_ce": 0.5864983797073364,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                474,
+                473,
+                473,
+                473,
+                473,
+                473,
+                473,
+                473
+              ],
+              "per_head_ce": [
+                0.5168775320053101,
+                1.0297091007232666,
+                1.052824854850769,
+                1.046387791633606,
+                1.0410016775131226,
+                1.1015387773513794,
+                1.0935993194580078,
+                1.2214727401733398
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "stream49",
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.45370370370370366,
+            "ret_scale": 49.0,
+            "weighted_loss": 0.6220255788138316,
+            "text_ce": 0.93384850501619,
+            "ret_raw": 0.004047654150812641,
+            "gradient_calls": 475,
+            "recorded_call_count": 477,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged"
+          },
+          {
+            "group": "control40",
+            "id": "native-control3-train-023",
+            "weight": 1.225,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.2895929093289658,
+            "text_ce": 0.9622848497428969,
+            "ret_raw": 1.2002640374972643e-05,
+            "gradient_calls": 850,
+            "recorded_call_count": 851,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.08996395021677017,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                850,
+                849,
+                849,
+                849,
+                849,
+                849,
+                849,
+                849
+              ],
+              "per_head_ce": [
+                0.08568375557661057,
+                0.09055022150278091,
+                0.16201631724834442,
+                0.11895079910755157,
+                0.10478102415800095,
+                0.19746294617652893,
+                0.07433569431304932,
+                0.09566040337085724
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "reasoning32",
+            "id": "native-reasoning4-train-031",
+            "weight": 0.765625,
+            "ret_scale": 24.5,
+            "weighted_loss": 45.557690462889575,
+            "text_ce": 1.1517045624181286,
+            "ret_raw": 1.8109220788060938,
+            "gradient_calls": 722,
+            "recorded_call_count": 724,
+            "native_text_truncation": "recorded call boundaries; forward KV values unchanged",
+            "acoustic_ce": 0.4027111530303955,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                721,
+                720,
+                720,
+                720,
+                720,
+                720,
+                720,
+                720
+              ],
+              "per_head_ce": [
+                0.37712234258651733,
+                0.4418206214904785,
+                0.5496500730514526,
+                0.5839592218399048,
+                0.5908606648445129,
+                0.6969833970069885,
+                0.6025556921958923,
+                0.6325886845588684
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          },
+          {
+            "group": "ordinary48",
+            "id": "venus-retention-request-v2-train-ordinary-0015",
+            "weight": 1.0208333333333333,
+            "ret_scale": 49.0,
+            "weighted_loss": 1.7701888605952263,
+            "text_ce": 0.7781749367713928,
+            "ret_raw": 4.172750413999893e-05,
+            "acoustic_ce": 0.9538847208023071,
+            "acoustic_objective": {
+              "assistant_audio_targets": [
+                107,
+                106,
+                106,
+                106,
+                106,
+                106,
+                106,
+                106
+              ],
+              "per_head_ce": [
+                0.7600805163383484,
+                2.525313138961792,
+                2.285287380218506,
+                2.2958927154541016,
+                2.295717239379883,
+                2.1903133392333984,
+                2.4315850734710693,
+                2.343291997909546
+              ],
+              "user_audio_loss_targets": 0,
+              "output_already_aligned": true,
+              "prefix_and_span_exclusion_requires_approved_audio_mask": true,
+              "original_text_and_kl_hidden_losses_must_be_preserved": true
+            }
+          }
+        ],
+        "sampler": [
+          {
+            "group": "actual",
+            "index": 7,
+            "id": "7:/projects/u6si/duplex-live/runs/context-training-proof-7495657",
+            "weight": 0.21875,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.008928571428571428
+          },
+          {
+            "group": "reference",
+            "index": 3,
+            "id": "teacher-recovery-train-020",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 12,
+            "original_component_weight": 0.25
+          },
+          {
+            "group": "old25",
+            "index": 13,
+            "id": "teacher-cf-recovery-train-003-2",
+            "weight": 0.3223684210526316,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.013157894736842105
+          },
+          {
+            "group": "new24",
+            "index": 15,
+            "id": "teacher-native2-train-023",
+            "weight": 1.53125,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.0625
+          },
+          {
+            "group": "word",
+            "index": 3,
+            "id": "teacher-recovery-train-011",
+            "weight": 62.720000000000006,
+            "visits_this_epoch": 5,
+            "original_component_weight": 6.4
+          },
+          {
+            "group": "clock",
+            "index": 7,
+            "id": "clock-teacher-native2-train-011",
+            "weight": 56.0,
+            "visits_this_epoch": 4,
+            "original_component_weight": 4.571428571428571
+          },
+          {
+            "group": "audio49",
+            "index": 14,
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.9999999999999999,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.02040816326530612
+          },
+          {
+            "group": "stream49",
+            "index": 14,
+            "id": "teacher-cf-recovery-train-004-1",
+            "weight": 0.45370370370370366,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.009259259259259259
+          },
+          {
+            "group": "control40",
+            "index": 23,
+            "id": "native-control3-train-023",
+            "weight": 1.225,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.025
+          },
+          {
+            "group": "reasoning32",
+            "index": 31,
+            "id": "native-reasoning4-train-031",
+            "weight": 0.765625,
+            "visits_this_epoch": 2,
+            "original_component_weight": 0.03125
+          },
+          {
+            "group": "ordinary48",
+            "index": 15,
+            "id": "venus-retention-request-v2-train-ordinary-0015",
+            "weight": 1.0208333333333333,
+            "visits_this_epoch": 1,
+            "original_component_weight": 0.020833333333333332
+          }
+        ],
+        "opal": {
+          "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+          "update": 64,
+          "program_version": 0,
+          "programs": {
+            "updater.py": "374ae6d85a9198eeaa7b8843cc3ddd06b688b8ef2cc9c7e9346bbad941d0b301",
+            "analysis.py": "39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af"
+          },
+          "complete_wrapped_state_required": true
+        },
+        "gradient_norm": 2722.18115234375,
+        "nonzero_B_paths": 97,
+        "all_trainable_gradients_present_finite": true
+      },
+      "copied_rows": 1
+    }
+  },
+  "first_update_metadata_rsync_exit": 0,
+  "first_update_metadata_inventory": {
+    "execution-8317068/guard.json": {
+      "bytes": 1059,
+      "sha256": "f8db249f5bd995d48dbb365a86c584b6ef1fda0bdf15cfc0314a5a87adb4ddc7"
+    },
+    "execution-8317068/lease.json": {
+      "bytes": 1401,
+      "sha256": "b088edebcaa07bd22c0cd3cf1e1eff6a5cb5ea9a53190253b60c549f3852652d"
+    },
+    "context-spanning/broad/train/training.jsonl": {
+      "bytes": 7138,
+      "sha256": "33164a7b7f6b2825bf80cc235bd4a2899a4c1948fc05cc03eead5f9fb2e902ad"
+    },
+    "personaplex/broad/train/training.jsonl": {
+      "bytes": 7160,
+      "sha256": "1e44fd119b64836c17226588dae5de446c4116e9db25da99449f24ca877463f7"
+    }
+  },
+  "metrics_limit": "Per-update weighted objectives on different batches; not validation loss, convergence or behavioral acceptance. No new epoch/window backup yet verified at this observation."
 }
