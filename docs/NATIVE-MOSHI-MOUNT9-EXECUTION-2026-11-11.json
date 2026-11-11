@@ -1878,15 +1878,46 @@
       "created": true,
       "training_interrupted": false,
       "OneDrive_writes": false
+    },
+    "personaplex/broad/104": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/live.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068-rolling-v1/personaplex/broad/step-0104/live.pt",
+      "step": 104,
+      "bytes": 1557255001,
+      "sha256": "903db433d3397ec92ab336e8c4c50794a17cb03c4360edf3ed8662a3d1803b52",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-11T22:55:24Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "live.pt": {
+          "bytes": 1557255001,
+          "sha256": "903db433d3397ec92ab336e8c4c50794a17cb03c4360edf3ed8662a3d1803b52"
+        },
+        "live.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "5727caf3b805e67d80f921e5f3c2ffbe7fa5c101bde822c8fe5679ec7c0a3d5e"
+        },
+        "personaplex-rolling104-backup-input.json": {
+          "bytes": 10291,
+          "sha256": "121cf4cc2c453fc584f61ff21d6308511a35736402f2bcf160e9563c090260d9"
+        }
+      },
+      "created": true,
+      "training_interrupted": false,
+      "OneDrive_writes": false
     }
   },
   "rolling_backup_receipt_copy_sha256": "b28cb96be71b6b31fed55aac237fa54381d10daec6f6bca5a1ea0ba321465017",
   "rolling_backup_metadata_rsync_exit": 0,
-  "last_observed_UTC": "2026-11-11T22:30:55Z",
+  "last_observed_UTC": "2026-11-11T22:54:56Z",
   "last_observed_Slurm_state": "RUNNING",
   "last_logged_steps": {
-    "personaplex/broad": 101,
-    "context-spanning/broad": 104
+    "personaplex/broad": 104,
+    "context-spanning/broad": 107
   },
   "new_checkpoint_backup_is_not_native_restore_or_adoption": true,
   "personaplex_rolling64_receipt_sha256": "af23ce1857d9b98d75cd7c272fbf50d7a3d882d058cfbbccfcc29be1f5f3d2bb",
@@ -1978,5 +2009,6 @@
   "epoch_archive_metadata_rsync_exit": 0,
   "personaplex_rolling96_receipt_sha256": "0277880d21a864172b46371278ffb01b87d209a46e4d6b433306d63fa1c3a10b",
   "context_spanning_rolling104_receipt_sha256": "95010d500fa572355753e7168ff914012dc5206943d8dac7c48b2623dd92c7ec",
-  "rolling104_metadata_rsync_exit": 0
+  "rolling104_metadata_rsync_exit": 0,
+  "personaplex_rolling104_receipt_sha256": "cb94baa3789c87b65d4cbc405fd6ed0a9b0b3131d030dc817d31dade8cfa49a5"
 }

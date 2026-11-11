@@ -1,3 +1,13 @@
+# LOCAL — BOTH104 full recovery states preserved before certificate expiry
+
+Actual same8317068 RUNNING22:54:56UTC/nid010999/Plex104CS107/noarchivefailure, nativeproducer10e7 unchanged. PersonaPlex104 backup actualPASS22:55:24UTC:1557255001bytes SHA903db433d3397ec92ab336e8c4c50794a17cb03c4360edf3ed8662a3d1803b52. Originalmatched_archive actualrsync0/fullsource+destination+native-reference+derivedreceipt hashesverified on independentLustre job-8317068-rolling-v1/personaplex/broad/step-0104/live.pt. Exact104native ref and104training log bound beforecopy. Derivedinput NOTrestore/adoption approval. Smallreceipt copiedtempLOCAL actualrsync0 beforeexpiry, SHA-boundexecutionJSON. CS104alreadybackedup; both98epochs/allolderstatesintact. NoMacweights/OneDrivechanges, modelinterruption orduplicatewriter.
+
+Certificate inspectedstillvalidonlyto22:55:48UTC; expiredrenewal87533 closed, readyrequestpending. Soleobserver64733 remains until its own actual terminal; distinguish authentication failure from training failure, neverrestart8317068 onaccessloss. Lastsuccessfulobservation22:54:56 is historicalafterexpiry, not continuingliveproof. Existing remoteepocharchive helper/Slurmjob do notdependonMac. Afterofficialrenewal firstinspectexistingjob/accounting/currentstates andfullbackups, notsubmitduplicate.
+
+Next final10 authorizedcontroller63f121fc876394c8d63a38e22535b6a2496015f8 in source-paced-final10-4381fd6; exactpacedgrant89d10ff311a9ed2b7b428240faab46ef44e55b6eb0089e3634f91e4a2f5e52d7. Servicepolicyblockerresolved; current9 muststillfinishsuccessfully/positivecheckpoint/fullnativefinalrestores/COMPLETED0/fullhashbackup+actualbudget beforeexistingexclusivehelpercaninvoke. No final10claim/job/service yet.112GPUh/max10/full192/API0/noGCP/no purchase unchanged. ProductgoalACTIVE and unfinished; thisturn made actualcheckpointpreservationprogress. OneDrivepaused/tempcheckoutonly.
+
+---
+
 # LOCAL — Owner approved paced final10; authorized controller deployed, no next job submitted
 
 Owner answer: “Approve monitoring amendment; keep existing limits”, call092a6444b7774787923b382ce970f8bd. Exact authority docs/NATIVE-MOSHI-PACED-FINAL10-AUTHORIZATION-2026-11-11.json SHA89d10ff311a9ed2b7b428240faab46ef44e55b6eb0089e3634f91e4a2f5e52d7, committed63f121fc876394c8d63a38e22535b6a2496015f8/pushed. Approved ONLY final10 provider>=60s attempts/<=90s actualprovider age/separate<=45s LOCALhealth/storage120s; all existing112GPUh/max10/successfulpositive9/backup/restore/full192/API0/noGCP/no purchase unchanged. Current9/live10e7 NOTmodified.
