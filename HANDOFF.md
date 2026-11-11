@@ -1,3 +1,13 @@
+# LOCAL — Institutional renewal succeeded; SAME training62/63
+
+Actual11Nov10:56:02UTC fresh bounded SSH confirms SAME job8285192 RUNNING/nid010789, broad PersonaPlex62/196 and ContextSpanning63/196; both narrow196/final restores remaincomplete. Native sourceD945/PIDs26245+34309/one2GPUjob unchanged. No training restart or pause.
+
+Owner said TRY AGAIN; one fresh official Clifton flow53509 completed actual0. Local certificate verified valid11Nov10:55:48→22:55:48UTC; private auth log retry1 remains0600/ignored, no secrets printed. No human sign-in blocker remains. Old read-only observer38870 ended1 after transport failures and reported long observation gaps1553s/2595s; do not claim uninterrupted observation. Actual pgrep confirmed it no longer exists before reconnect. The ONE current replacement read-only observer is tool98823, appending the existing ignored monitor JSONL with pipefail and unchanged bounded probes/one read retry; do not duplicate it. All original failures/ignored monitor logs retained; no inference of native failure from missing observations.
+
+Epoch49 broad checkpoints already fully hash-backed up in disjoint recovery3 subtree; original archive-status still counts only four narrow copies, so consult BROAD-EPOCH1-BACKUPS proof for complete six-state inventory. No new immutable epoch98 yet. OneDrive editing/eviction/weights downloads remainPAUSED; all LOCALwork tempcheckoutmain. Same44709 priorGPU seconds/112aggregateh/currentinterval6max8/originalSTOP11Nov22:28:47UTC. No GCP/purchases/newGPUjobs/API/newagents/chats/automations. Continue valid training, backup each new immutable epoch, then strict positive-window/COMPLETED0/restores/accounting before allowed7/8. Product goal and full reasoning/delegation/speech comparison remain unchanged; no further admission loop.
+
+---
+
 # LOCAL — Both broad arms completed epoch1; all new immutable states backed up
 
 **Current product direction:** a native full-duplex voice front end with competent basic reasoning, clarification and uncertainty; deliberate silence, interruption/pause/resume; reliable asynchronous delegation for harder work; intelligible, natural British speech. We are choosing the foundation and adaptation configuration through the owner-selected matched PersonaPlex/Context Spanning experiment. No candidate is production-qualified. Earlier Venus plans/results remain historical evidence, not the active training recipe.
