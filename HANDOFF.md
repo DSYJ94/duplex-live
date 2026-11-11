@@ -1,3 +1,11 @@
+# LOCAL — Proposed paced heartbeat engine tested; current training untouched
+
+Added training/personaplex/paced_heartbeat.py, a CPU-only callback engine combining separate provider/local evidence clocks. Provider attempt spacing includes failed attempts; timeout can retain ONLY original unexpired evidence; cancellation/identity/other errors are terminal with no fallback or implicit restart. Actual query latency counts toward expiry. Combined engine/process-identity/clock-contract20testsPASS (local CPU). This engine cannot submit or write a native guard and is NOT wired into actual launcher/provider/local probes. No claim of actual host proof or complete service compliance. Original45s authority still requires explicit provider90/local45 reconciliation before final10. The future launcher integration must also preserve immutable CONTROL/source verification and actual accounting, not bypass it. No liveguard changed.
+
+Actual same8317068 RUNNING22:14:13UTC, Plex99/CS102, noarchivefailure. Both epoch2 checkpoints remain independently verified; observer64733 solemonitor, producer10e7unchanged. Current valid training continues, no newjob/data/API/GCP/purchase/OneDrivework.112GPUh/max10/successfulparent-only final10 unchanged. Clifton renewal expiredexit1; userready responsepending, existingcertificatevalid22:55:48UTC. GoalACTIVE; next useful results remain actualtrainedcheckpoints/full192comparison, not CPU infrastructure test counts.
+
+---
+
 # LOCAL — Local process identity prerequisite implemented; live guard unchanged
 
 Added training/personaplex/local_process_identity.py for proposed future paced heartbeat. Reads Linux bootID/PID/startticks/allUIDs/cgroup, rejects dead/zombie/reused/missing processes and changing identity during observation. Exact parent-launcher identity comparison supplies LOCAL liveness evidence only; it does not prove scheduler allocation or refresh a provider timestamp. No running-module imports/wiring changed; no deployment or additional model check. Combined local process + separate-clock contract13testsPASS, including PID reuse/exit/UID/cgroup/reboot/race/staleclock. This is a necessary CPU implementation component, NOT complete runtime integration or an actual Linux-host proof. Final10 HOLD remains until full focused integration and explicit45s-provider-contract reconciliation.
