@@ -1,3 +1,15 @@
+# LOCAL — Evaluation recovery8365873 SUBMITTED and actualSlurmRUNNING; no training replay
+
+Latest owner explicitly requested finishcontroller/guardintegration thenlaunchrecovery/reuse76/checkpointpreservation/no repeatedtraining. Scoped authorization NATIVE-MOSHI-EVALUATION-RECOVERY-AUTHORIZATION-2026-11-12.json records exactrequest and disclosedimplementationchoice150secondproviderTTL,60secondqueries/local45/storage120, oneevaluation-onlyinterval11 <=4h withinoriginal112GPUh. This is not a separatelyquotednumericownerapproval orbudgetreset. Allprioractualcarry269405GPU seconds; maxnew28800=>298205 total<403200. No API/GCP/purchases/newtraining. Oldmax10supersededonlyforthisnarrowdirectedrecovery.
+
+ExactGitproducer4c86f7ffacf518d28128262b79568b1a76923e74, deployed /home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-eval-recovery-4c86f7f.56LOCAL and56actualHOSTCPU testsPASS; alloriginalCONTROL/training/math bytesidentical exceptexplicitguardamendment. Originalfailed10/oldleaseskeep90policy; onlyhashbound11gets150. Controllerreusesbothbaseline32raw+audit underoldproducer, narrow6each viaexactpinnedrecords; generates116remaining andrequiresall192. Nooptimizerpath. Actualsubmit22545 exited0 returned8365873 aftercheckpointbackup/inputhash/accounting/no-overlap checks; exclusiveclaim evaluation-recovery-submission-v1. NeverresubmitUNKNOWN orcurrentjob.
+
+Actual22:21:46UTC8365873 RUNNING0:18/nid010226. This confirmsallocation, notyetnativeoutput. ONEnewLOCALobserver19906 polls60seconds, log runs/isambard-evaluation-recovery-20261112/observer.jsonl; no oldobserversalive. Remoteoutput /home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-recovery-v1; hostlog slurm-eval-recovery-8365873.log. Follow SAMEactualjob/observer/guard/conditioncounts, no duplicate/restartontimeout. Actualcollector/audit/terminal proofstillrequired. Sourceandreceipts trackedexecutionJSON. SourcepushinitialGitHub500twice; laterpush88159 actual0, originmain4c86f7f. Gitbundledeploymentwascompletebeforelaunch.
+
+Checkpoint196statesandold76outputs intact; noMacweights. Certificatevaliduntil13Nov03:19:43UTC. OneDrivewritepermissionresumed, actualcheckout/private/tmp/duplex-recovery-20261112. Afterfullcomparison: fullreasoning/semantic/speechreview+artifactbackup; choosefoundationfromevidence andprepare substantiveSFT/fulltune/growth/RLphase. No adoptionorfrontier-equivalenceclaim fromloss/ASR alone. Goalactiveandunfinished.
+
+---
+
 # LOCAL — Actual reuse pin87557 exited0:76outputs verified,116generationremaining
 
 SameCPUtool87557 nowTERMINALsuccess0. Actual summary: PersonaPlexbaseline32/fullaudit, CSbaseline32/fullaudit, Plexnarrow6, CSnarrow6; modelsloaded0/optimizerupdates0/originaloutputsmodifiedfalse. Exactrecordpaths/SHA andfullproducer38fe151 in tracked recoveryJSON; smallsummaryrsync0LOCAL runs/isambard-final10-20261112/reuse-pin/summary.json. No rehash/run/duplicatepinneeded. Reuse76 leaves116nativeoutputs togenerate, plus fullcandidateaudits/semantics/listening. Baselineauditresultsandoldproducerretainedhonestly, no passing-subset/adoption.
