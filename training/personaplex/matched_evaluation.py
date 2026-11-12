@@ -52,7 +52,32 @@ def collect(a,rows,selection):
     from contextspan.model.engine import seed_all
     from evals.context_spanning_download import SOURCE_COMMIT,VOICE_SHA256
     from .foundation_context import PERSONA,WEIGHTS,word_records
-    root=Path(a.root)/(a.base+'-'+a.capacity);root.mkdir(exist_ok=False)
+    root=Path(a.root)/(a.base+'-'+a.capacity)
+    reused=[]
+    if getattr(a,'reuse_record',None):
+        from .matched_evaluation_reuse import materialize, pin
+        from .matched_interrupted import DURABLE
+        record_path=Path(a.reuse_record)
+        record_path.resolve().relative_to(DURABLE.resolve())
+        if not a.reuse_record_sha or g.sha(record_path)!=a.reuse_record_sha:
+            raise ValueError('Exact pinned reuse record required')
+        record=json.loads(record_path.read_text())
+        Path(record['parent']).resolve().relative_to(DURABLE.resolve())
+        profile=record['profile']
+        if (profile['base']!=a.base or profile['capacity']!=a.capacity
+                or profile['trainer_source']!=a.trainer_source
+                or profile['selection']!=selection or profile['optimizer_updates']!=0
+                or profile['seed']!=42 or profile['temp_audio']!=.8 or profile['temp_text']!=.7
+                or profile['upstream']!=SOURCE_COMMIT or profile['voice_sha256']!=VOICE_SHA256
+                or profile['persona']!=PERSONA):
+            raise ValueError('Reuse requires identical model, sampler, voice and persona')
+        if pin(record['parent'],rows,profile)!=record:
+            raise ValueError('Pinned original cases changed')
+        reused=materialize(record,root)
+        (root/'profile.json').rename(root/'original-profile.json')
+        (root/'results.json').rename(root/'original-results.json')
+    else:
+        root.mkdir(exist_ok=False)
     os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-B','-m',
         'evals.cuda_linker_path','--out',str(root/'driver')],text=True).strip()
     g.check(a.lease,600);seed_all(42);engine=make_engine(a,selection)
@@ -63,9 +88,14 @@ def collect(a,rows,selection):
         persona=PERSONA,voice_sha256=VOICE_SHA256,seed=42,temp_audio=.8,temp_text=.7,
         loads=engine.evaluation_model_loads,torch=torch.__version__,optimizer_updates=0,
         native_worker_interface=False,voice_accent_not_certified=True,live_microphone_latency=False,adopted=False))
-    results=[];quality=word_records()
+    results=list(reused);quality=word_records()
+    reused_ids={r['id'] for r in reused}
+    if reused:
+        write(root/'results.json',dict(source=a.source,cases=results,required_cases=32,qualified=False,
+            reused_producer=record['original_source'],reuse_record_sha256=a.reuse_record_sha))
     with torch.inference_mode():
         for case in rows:
+            if case['id'] in reused_ids:continue
             g.check(a.lease,180+case['frames']*3);seed_all(42);engine.reset();engine.set_persona(PERSONA,voice)
             folder=root/case['id'];folder.mkdir();path=Path(case['folder'])/'user.wav'
             audio,sr=sf.read(path,dtype='float32')
@@ -165,4 +195,5 @@ if __name__=='__main__':
     p.add_argument('--base',choices=('personaplex','context-spanning'),required=True)
     p.add_argument('--capacity',choices=CAPACITIES,required=True)
     p.add_argument('--stage',choices=('collect','audit'),required=True)
+    p.add_argument('--reuse-record');p.add_argument('--reuse-record-sha')
     main(p.parse_args())

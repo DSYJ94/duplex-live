@@ -1,0 +1,27 @@
+{
+  "parent_root": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/matched-evaluation-8352856",
+  "original_source": "63f121fc876394c8d63a38e22535b6a2496015f8",
+  "trainer_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+  "conditions": {
+    "personaplex-baseline": {
+      "base": "personaplex",
+      "capacity": "baseline",
+      "profile_sha256": "172ad6fba9390aa01cd8009ae81f6c9428eaad0c4033e0bac3c8cbe31ab613d8"
+    },
+    "context-spanning-baseline": {
+      "base": "context-spanning",
+      "capacity": "baseline",
+      "profile_sha256": "cef0aabb19a99283522130a61f59edf2351345eeb0a506f0f31d38fa562e7f09"
+    },
+    "personaplex-narrow": {
+      "base": "personaplex",
+      "capacity": "narrow",
+      "profile_sha256": "5575fe9abd08965ba64263d35c7f660cfc4e4a311635fb41656f944629fc89e1"
+    },
+    "context-spanning-narrow": {
+      "base": "context-spanning",
+      "capacity": "narrow",
+      "profile_sha256": "aa73425e5288587c57e8d03cb49be809d715afb0a50f2c87173249d174532157"
+    }
+  }
+}
