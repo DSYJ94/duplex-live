@@ -1,3 +1,11 @@
+# LOCAL — Evaluation guard failure reproduced; diagnostic repair33checksPASS; no GPU retry
+
+Applied diagnosing-bugs skill boundedloop. Exacttimeout timing reproduced: actualHeartbeat success0/provider timeout60/localhealthfresh91 raisesexpiredprovider; nextproviderattempt cannotoccurbefore120 underexisting60spacing. This is intrinsic90TTL/60spacing intoleranceofoneRPCmiss, not evidenceofbadmodelweights. Historicalsnapshotproviderage87.9295 supports this, but unretainedactualquerytimeout remainsunproved. NewHeartbeat.failure_receipt recordsfailedclock/provider/localages/lastattempt/timeout; watcherwritesfailureJSONanddurablelogevent. Allthresholds/stopbehavior remainunchanged. RegressionRED AttributeError thenGREEN; all33paced/submit CPUchecksPASS. No model/GPU/submission/checkpointchanges.
+
+Recovery is NOT complete or running. Need implement exactpartial-output resume with immutablebaseline/narrowcase hashes and prepareconcrete evaluation-only intervalscope; currentmax10exhausted/112GPUhcarry269405sec unchanged. If150secondproviderTTLproposed tosurviveone60pacedmiss, it is explicitpolicyamendment requiringownerdecision, notsilentfix. Nativequalitygatesnotweakened. OneDrivewritepermissionresumed; activecheckout/private/tmp/duplex-recovery-20261112 main. Preserveallstatesandrawfailedoutputs. Next substantiveSFT/fulltune/growth/RL followscomparison; no newtrainingreplayed.
+
+---
+
 # LOCAL — Owner resumed OneDrive editing; Oruk/capacity/RL incorporated in wider plan
 
 Owner12Nov explicitly allows OneDrive editing again; previous pause is revoked. This turn kept work in /private/tmp/duplex-recovery-20261112 to preserve unrelated local edits. Research decision NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md linked from all three canonical product/scale/RL plans. Next programme design includes matched broadadapter/selective-full/growth arms; no assumption extra capacity requires scratchpretraining. Oruk ASR RL suggests reward/style controls and plain-RL baseline, notblind creditmask copying or crossarchitectureweightaveraging. CurrentnativeRLnotrunning.

@@ -1,0 +1,25 @@
+{
+  "status": "OFFLINE_REPRODUCTION_AND_FAILURE_RECEIPT_REPAIR_PASS_CONTINUATION_NOT_LAUNCHED",
+  "failed_job": "8352856",
+  "training_repeated": false,
+  "checkpoints_modified": false,
+  "original_provider_TTL_seconds": 90,
+  "original_provider_attempt_spacing_seconds": 60,
+  "original_local_TTL_seconds": 45,
+  "tests_passed": 33,
+  "reproduction": "Success at0, provider attempt timeout at60, fresh local health at91: actual contract rejects provider age91; earliest permitted next provider query120. Eight heartbeat tests include exact receipt regression, RED AttributeError before repair then GREEN.",
+  "actual_saved_provider_age_seconds": 87.92950129508972,
+  "actual_failure_cause_limit": "Provider expiry strongly supported by snapshot; original timed-out query is unrecorded, so exact RPC failure is not proven.",
+  "implemented": [
+    "Structured failure reason, provider/local ages, last provider-attempt monotonic clock and timeout flag on failure",
+    "Durable watcher log event plus node-local failure JSON; no stale evidence renewal or implicit restart"
+  ],
+  "still_required": [
+    "Evaluation-only resume preserving complete baselines and complete narrow cases with exact profile/input/trace/chunk hashes",
+    "New interval authorization beyond exhausted max10 starts, preserving original112GPU-hour carry",
+    "Explicit decision if provider TTL changes; do not call diagnostic receipts a resilience fix",
+    "Full remaining generated comparison, independent speech/semantic/reasoning review and retained output backup"
+  ],
+  "GPU_jobs_submitted": 0,
+  "quality_thresholds_changed": false
+}

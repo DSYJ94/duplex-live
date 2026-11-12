@@ -56,6 +56,22 @@ class HeartbeatIntegration(unittest.TestCase):
         with self.assertRaises(RuntimeError): self.engine.tick()
         self.assertEqual(self.calls, [0, 60])
 
+    def test_failure_receipt_identifies_expired_provider_not_fresh_local(self):
+        self.engine.tick()
+        self.advance(60)
+        self.failure = subprocess.TimeoutExpired('fixture', 20)
+        self.engine.tick()
+        self.advance(31)
+        with self.assertRaises(RuntimeError):
+            self.engine.tick()
+        receipt = self.engine.failure_receipt
+        self.assertEqual(receipt['failed_evidence'], 'provider')
+        self.assertEqual(receipt['provider_age_seconds'], 91)
+        self.assertEqual(receipt['local_age_seconds'], 0)
+        self.assertTrue(receipt['provider_query_timed_out'])
+        self.assertEqual(self.calls, [0, 60])
+        self.assertTrue(self.engine.failed)
+
     def test_initial_timeout_never_creates_a_guard(self):
         self.failure = subprocess.TimeoutExpired('fixture', 20)
         with self.assertRaises(subprocess.TimeoutExpired): self.engine.tick()

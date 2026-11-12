@@ -63,7 +63,14 @@ def watch(lease, control):
         lambda: observations.provider(lease, control/'provider.json'),
         lambda: observations.local(lease, parent, control/'storage.json'))
     while True:
-        proof = engine.tick()
+        try:
+            proof = engine.tick()
+        except Exception:
+            receipt = dict(engine.failure_receipt or {}, job_id=lease['job_id'],
+                           service_source=lease['controller_source'])
+            write(control/'heartbeat-failure.json', receipt)
+            print(json.dumps(dict(event='heartbeat_failed', **receipt)), flush=True)
+            raise
         row = dict(engine.provider['original_provider_receipt'])
         row.update(checked_unix=proof['local_observed_unix'], expires_unix=proof['expires_unix'],
             provider_observed_unix=proof['provider_observed_unix'],
