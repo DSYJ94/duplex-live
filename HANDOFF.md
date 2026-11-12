@@ -1,3 +1,15 @@
+# LOCAL — Corrected evaluation recovery 8366795 is running; 76 outputs reused
+
+The single submit controller 57584 exited successfully after all host staging and the actual inference-container staging check passed. All 76 saved outputs are copied and hash-verified before GPU allocation; the container no longer needs rsync. Actual sbatch returned job **8366795**, source **ebd71281829150e855b738dd8ed4e1262e714cb5**. Fresh Slurm observation: RUNNING, nid010084, elapsed 23 seconds. Allocation is confirmed; new model outputs are not yet confirmed. No training/calibration is repeated and all four trained196 states remain preserved.
+
+ONE read-only observer is live: tool session **69544**, script /private/tmp/duplex-eval-observe-8366795.py, log runs/isambard-evaluation-recovery-20261112-v2/observer.jsonl. It polls at least 60 seconds apart and stops on actual terminal or access failure. Never duplicate the submit controller or job on observation timeout. Remote output: /home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-recovery-v2. Native terminal will be execution-8366795/terminal.json. Model/guard source stays ebd7128; later metadata commits do not change the producer.
+
+Original 112 GPU-hour limit remains: actual prior carry270565 GPU-seconds, interval12 maximum13800 running seconds on two GPUs, combined recovery running-time upper580+13800=14380 seconds within original14400. No automatic start13, purchase, GCP or external model API calls. Provider spacing60/TTL150, local45/storage120; full192 comparison required, no subset acceptance or adoption. Generate only116 remaining outputs, then independent semantics/listening and full backup. Source and metadata receipts are recorded in docs/NATIVE-MOSHI-EVALUATION-RECOVERY-V2-EXECUTION-2026-11-12.json. Both earlier failed jobs and outputs remain intact.
+
+Current checkout /private/tmp/duplex-recovery-20261112 main; owner permits OneDrive editing again, but unrelated work is preserved. Certificate valid until13Nov03:19:43UTC. Goal remains active: complete comparison, distinguish foundation versus training regressions, then prepare substantial data/SFT/full-tune/growth/native-RL programme. No winner yet.
+
+---
+
 # LOCAL —8365873 FAILED on missing container rsync; host-prestage repair57LOCALPASS; no training replay
 
 Actualobserver19906 CLOSEDterminal at22:31:29UTC. ActualSlurm8365873 FAILED1:0/580seconds; bothnarrowcollectlogs failFileNotFoundError rsync atmaterialize beforemake_engine. Guardfresh(local23.9/provider36.6 atfinalsnapshot), so150policy worked, no repeatedproviderexpiry. Bothbaseline32 hostcopiesverified; no newcandidateoutputs ormodelweightloads/optimizerupdates. Alloriginal76/checkpoints preserved. OldexecutionJSONupdatedtruthfully. Carryafterfailedjob270565GPU seconds.
