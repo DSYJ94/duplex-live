@@ -1,4 +1,4 @@
-"""Opt-in final10 service. No live launcher uses this module yet.
+"""Opt-in paced service for final10 and explicitly scoped evaluation recovery.
 
 Requires an explicit owner amendment; missing authorization fails BEFORE
 creating any process or native guard. Old training/control files stay intact.
@@ -20,7 +20,11 @@ PROPOSAL = Path('docs/NATIVE-MOSHI-PACED-FINAL10-PROPOSAL-2026-11-11.json')
 AUTH = Path('docs/NATIVE-MOSHI-PACED-FINAL10-AUTHORIZATION-2026-11-11.json')
 
 
-def authority():
+def authority(lease=None):
+    if lease and lease.get("evaluation_recovery_authorization_sha256"):
+        from .evaluation_recovery_policy import authority as recovery_authority, validate
+        validate(lease)
+        return recovery_authority()
     from .matched_rpc_startup import authority as original_authority
     original = original_authority()
     proposal = json.loads(PROPOSAL.read_text())
@@ -44,7 +48,11 @@ def authority():
 
 def check_context(lease):
     g.resource(lease)
-    if (lease.get('continuation_interval') != 10
+    recovery=bool(lease.get('evaluation_recovery_authorization_sha256'))
+    if recovery:
+        from .evaluation_recovery_policy import validate
+        validate(lease)
+    if (lease.get('continuation_interval') != (11 if recovery else 10)
             or os.environ.get('SLURM_JOB_ID') != lease['job_id']
             or os.environ.get('SLURM_JOB_ACCOUNT') != lease['account']
             or socket.gethostname().split('.')[0] != lease['node']):
@@ -52,7 +60,7 @@ def check_context(lease):
 
 
 def watch(lease, control):
-    grant = authority()
+    grant = authority(lease)
     check_context(lease)
     parent = json.loads((control/'parent-identity.json').read_text())
     # Child service must share the originally admitted host parent's cgroup/UID.
@@ -61,7 +69,8 @@ def watch(lease, control):
         raise RuntimeError('Service escaped admitted parent identity')
     engine = Heartbeat(lease,
         lambda: observations.provider(lease, control/'provider.json'),
-        lambda: observations.local(lease, parent, control/'storage.json'))
+        lambda: observations.local(lease, parent, control/'storage.json'),
+        provider_ttl=150 if lease.get('evaluation_recovery_authorization_sha256') else 90)
     while True:
         try:
             proof = engine.tick()
@@ -83,7 +92,7 @@ def watch(lease, control):
 
 
 def start(lease, execution):
-    grant = authority()  # fail before creating files/services if unapproved
+    grant = authority(lease)  # fail before creating files/services if unapproved
     check_context(lease)
     source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], universal_newlines=True).strip()
     if source != lease.get('controller_source'):
@@ -96,7 +105,7 @@ def start(lease, execution):
     write(control/'lease.json', lease)
     write(control/'parent-identity.json', process.capture(os.getpid()))
     write(execution/'paced-policy.json', dict(authorization_sha256=grant, source=source,
-        local_max_age_seconds=45, provider_max_age_seconds=90, provider_spacing_seconds=60))
+        local_max_age_seconds=45, provider_max_age_seconds=150 if lease.get("evaluation_recovery_authorization_sha256") else 90, provider_spacing_seconds=60))
     services = []
     from .matched_interrupted import DURABLE
     os.environ['APPTAINER_BINDPATH'] = str(DURABLE)+':'+str(DURABLE)+','+str(control)+':'+str(control)

@@ -58,7 +58,7 @@ def phase_limit(lease):
     if lease.get('rpc_recovery_authorization_sha256') is not None:
         from .matched_rpc_recovery import authority as rpc_authority
         if (lease['rpc_recovery_authorization_sha256']!=rpc_authority() or intervals!=8
-                or lease.get('continuation_interval') not in ((9,10) if lease.get('rpc_startup_authorization_sha256') else (7,8))):
+                or lease.get('continuation_interval') not in ((9,10,11) if lease.get('evaluation_recovery_authorization_sha256') else (9,10) if lease.get('rpc_startup_authorization_sha256') else (7,8))):
             raise ValueError('Exact failed6 recovery authority required for7/8')
     if lease.get('rpc_startup_authorization_sha256') is not None:
         from .matched_rpc_startup import authority as startup_authority
@@ -66,6 +66,10 @@ def phase_limit(lease):
                 or not lease.get('rpc_recovery_authorization_sha256')):
             raise ValueError('Exact startup8/9 amendment and all previous grants required')
         intervals=10
+    if lease.get('evaluation_recovery_authorization_sha256') is not None:
+        from .evaluation_recovery_policy import validate as evaluation_authority
+        if intervals!=10:raise ValueError('Original complete authority chain required')
+        evaluation_authority(lease);intervals=11
     if type(lease.get('continuation_interval')) is not int or not 1<=lease['continuation_interval']<=intervals:
         raise ValueError('Bounded actual continuation interval required')
     if sha(EXTENSION)!=digest or any(authority.get(k)!=v for k,v in required.items()):
@@ -115,6 +119,8 @@ def ensure(lease,guard,now=None,environ=None,needed=0):
         raise RuntimeError('Native learner must remain inside its scheduler allocation')
     for key in ('job_id','account','node','source','authorization_sha256','stop_unix','GPU_count','prior_GPU_seconds','continuation_authorization_sha256','continuation_interval','postupdate_recovery_authorization_sha256','normal88_authorization_sha256','storage_recovery_authorization_sha256','rpc_recovery_authorization_sha256','rpc_startup_authorization_sha256'):
         if guard.get(key)!=lease.get(key):raise RuntimeError('Independent matched guard identity differs: '+key)
+    if lease.get('evaluation_recovery_authorization_sha256')!=guard.get('evaluation_recovery_authorization_sha256'):
+        raise RuntimeError('Evaluation recovery guard authority differs')
     if (not 0<=now-guard['checked_unix']<=45
             or not now<min(guard['expires_unix'],guard['stop_unix']-30)
             or needed<0 or now+needed>=lease['stop_unix']-180):
@@ -162,6 +168,8 @@ def refresh(lease,output,last_success=None):
         row['rpc_recovery_authorization_sha256']=lease['rpc_recovery_authorization_sha256']
     if lease.get('rpc_startup_authorization_sha256') is not None:
         row['rpc_startup_authorization_sha256']=lease['rpc_startup_authorization_sha256']
+    if lease.get('evaluation_recovery_authorization_sha256') is not None:
+        row['evaluation_recovery_authorization_sha256']=lease['evaluation_recovery_authorization_sha256']
     row.update(checked_unix=now,expires_unix=min(now+45,lease['stop_unix']-30))
     path=Path(output);tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(row));os.replace(str(tmp),str(path))
     return now

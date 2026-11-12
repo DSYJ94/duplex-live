@@ -32,7 +32,7 @@ class ServiceWiring(unittest.TestCase):
                  patch.object(s, 'check_context'), patch.object(s.process, 'capture', return_value=parent), \
                  patch.object(s.observations, 'provider', return_value=provider), \
                  patch.object(s.observations, 'local', return_value=local), \
-                 patch.object(s, 'Heartbeat', side_effect=lambda l,p,q: Heartbeat(l,p,q,clock=lambda:1060,monotonic=lambda:60)), \
+                 patch.object(s, 'Heartbeat', side_effect=lambda l,p,q,**kw: Heartbeat(l,p,q,clock=lambda:1060,monotonic=lambda:60,**kw)), \
                  patch.object(s.g, 'ensure') as ensure, \
                  patch.object(s.time, 'sleep', side_effect=InterruptedError('end fixture')):
                 with self.assertRaises(InterruptedError): s.watch(lease, root)
