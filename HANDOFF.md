@@ -1,3 +1,9 @@
+# LOCAL — Transient SSH gap recovered; same8352856 still queued
+
+Observer45793 is now CLOSED after actual SSH255 connection closed. Fresh bounded SSH93067 also timed out at banner exchange; certificate remains valid through13Nov03:19:43UTC. Subsequent bounded freshSSH18980 exited0 at12Nov15:47:56UTC: SAME8352856 PENDING/Resources. No scheduler/model restart or resubmission. ONE replacementLOCALobserver12609 waits60seconds before firstquery, then>=60secondspacing, exits on pending-state transition/accessfailure. Do not poll/restart old45793 or create a second observer. All current checkpoints/112GPUh/max10/controller63f/native10e7 unchanged. OneDrivepaused; currenttempcheckout /private/tmp/duplex-recovery-20261112. Broadgoalactive; awaiting actualfull192 comparison, notadopted.
+
+---
+
 # LOCAL — Final196 checkpoint identities durably recorded; same evaluation queued
 
 Tracked docs/NATIVE-MOSHI-FINAL10-EXECUTION-2026-11-12.json now includes complete final10-admission backup records for both broad196 states, including native/save receipt manifests. PersonaPlex final SHA a4005b71886dd40e43f236b04b88aa724d8c65be60051513dadea73f92d61e31 (1557293309B); Context Spanning final SHA5f6fd16a0e4f0446a9888cbe96fced53c2e8453b81e17b81526bdadc0da20c8a (1557335933B). Actual admission rehashed source and independentLustre destination files; no duplicate checkpoint transfer.

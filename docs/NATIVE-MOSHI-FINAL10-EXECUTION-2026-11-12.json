@@ -82,10 +82,18 @@
   },
   "backup_evidence_scope": "Actual final10 admission rehashed both source checkpoints and every destination manifest file on the independent filesystem; checkpoint bytes remain on Isambard, no Mac weight download.",
   "queued_observer": {
-    "tool_session": 45793,
+    "tool_session": 12609,
     "read_only": true,
     "minimum_query_spacing_seconds": 60,
     "exits_on_state_change_from_pending": true,
     "submits_jobs": false
+  },
+  "observation_gap": {
+    "old_observer45793": "terminal exit0 after SSH255 connection closed",
+    "fresh_retry": "banner timeout SSH255",
+    "recovered_UTC": "2026-11-12T15:47:56Z",
+    "actual_queue": "8352856|PENDING|0:00||(Resources)",
+    "certificate_still_valid": true,
+    "job_restarted": false
   }
 }
