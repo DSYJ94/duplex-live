@@ -1,3 +1,13 @@
+# LOCAL — All four configurations trained; full192 evaluation submitted8352856
+
+Fresh Clifton61450 exited0; certificate valid12Nov15:19:43 to13Nov03:19:43UTC. Actual SSH verified8317068 COMPLETED0:0/17:49:14, host terminal11:07:50.733UTC12Nov, phase all_four_complete=true. Both broad196/four epochs finished; narrow196 already preserved. Independent archive status passes all six epoch2/3/4 copies. Exact approved63f final10 helper revalidated final source/destination hashes, native restore records, original accounting and complete schedule before submission. No training interruption or saved updates replayed.
+
+ONE exclusive final10 submitted8352856 actualsbatch0, controller63f121fc876394c8d63a38e22535b6a2496015f8. Last actual squeue PENDING (None); no model launch claimed. Evaluation-only: all six foundation/adapter configurations x32 =192 native outputs, ZERO optimizer updates. PriorGPUcarry263445seconds; maximumsinglejob69780seconds, original112GPUh/max10 unchanged. Actual selected backups and submission command/response/job receipts copied as metadata only to runs/isambard-final10-20261112. No weights downloaded to Mac.
+
+Observe SAME8352856; never duplicate submission or infer failure from observation timeout. Remote log /home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/slurm-final10-8352856.log; evaluation root runs/matched-evaluation-8352856 under same durable root. On completion retrieve full comparison/output evidence and evaluate reasoning, delegation and speech independently. No winner/adoption yet. OneDrive editing remains PAUSED; new active checkout /private/tmp/duplex-recovery-20261112. Old temp checkout absent, no assumption of old local observer alive. Goal user-resumed ACTIVE, broad product objective remains unfinished.
+
+---
+
 # LOCAL — Access renewal required; checkout recovered outside OneDrive
 
 At 2026-11-12T15:15:17.227509+00:00 the prior /private/tmp/duplex-quota-recovery-20261109 checkout was absent. Recovered committed main from GitHub into /private/tmp/duplex-recovery-20261112. No OneDrive reads/writes, checkpoint deletion, job submission, or interruption. Local certificate expired 12 November 11:03:51 UTC; bounded SSH returned255/publickey denied. Current job8317068 outcome UNKNOWN: last confirmed observation remains 11Nov23:08:53 UTC, Plex106/CS109 RUNNING. Do not infer job termination from inaccessible local state.

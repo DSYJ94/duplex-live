@@ -1,0 +1,25 @@
+{
+  "actual_UTC": "2026-11-12T15:22:00.451427+00:00",
+  "training_job": "8317068",
+  "training_slurm_state": "COMPLETED",
+  "training_exit": "0:0",
+  "training_elapsed": "17:49:14",
+  "all_four_complete": true,
+  "evaluation_job": "8352856",
+  "evaluation_last_observed_state": "PENDING",
+  "controller_source": "63f121fc876394c8d63a38e22535b6a2496015f8",
+  "native_training_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+  "prior_GPU_seconds": 263445,
+  "maximum_seconds": 69780,
+  "interval": 10,
+  "evaluation_only": true,
+  "adopted": false,
+  "OneDrive_writes": false,
+  "local_checkout": "/private/tmp/duplex-recovery-20261112",
+  "certificate_expires_UTC": "2026-11-13T03:19:43Z",
+  "submission_receipts": {
+    "command.json": "7dc4052525a83d71fb33d7e330e49316359d4f88811391ae38e70a01c4742ee5",
+    "job.json": "e43ed15958569753760330d874adc88bd29bb9d0983fe0507d4cae47771b76e2",
+    "response.json": "0cf082946b3b9c378c657977cb611c5a03e9c80c28a9ebd0b6e9e75e7e953fd3"
+  }
+}
