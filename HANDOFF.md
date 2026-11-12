@@ -1,3 +1,13 @@
+# LOCAL —8365873 FAILED on missing container rsync; host-prestage repair57LOCALPASS; no training replay
+
+Actualobserver19906 CLOSEDterminal at22:31:29UTC. ActualSlurm8365873 FAILED1:0/580seconds; bothnarrowcollectlogs failFileNotFoundError rsync atmaterialize beforemake_engine. Guardfresh(local23.9/provider36.6 atfinalsnapshot), so150policy worked, no repeatedproviderexpiry. Bothbaseline32 hostcopiesverified; no newcandidateoutputs ormodelweightloads/optimizerupdates. Alloriginal76/checkpoints preserved. OldexecutionJSONupdatedtruthfully. Carryafterfailedjob270565GPU seconds.
+
+Fixedrsyncseam: ALL76 copy/verify onHOSTbeforeGPUallocation; nativecollector onlyreads preparedrecord+hashverifiedfiles, neverrequiresrsync. Newstaged-check CLI mustPASSinsideactualCPUcontainerbefore sbatch.57LOCALtestsPASS inclmissing-rsyncmock andprepared-pathread. Exactnewcodecommit ebd7128 (fullSHAfetchGit), deploymenttool6911 to source-eval-recovery-ebd7128 inprogress untilactual0; no newjobsubmittedyet. Do notduplicateorassumesuccessontimeout.
+
+Sameownerrecoveryrequest remainsauthority; firstimplementationstart11consumed580s, correctedoneboundedstart12 <=13800s sharesoriginal14400scombinedrecoverytime (580+13800=14380), original112GPUh unchanged. This is implementation-boundcountamendment, not falselyquotedseparatenumericapproval. Newexclusiveclaim evaluation-recovery-submission-v2, outputruns/evaluation-recovery-v2. Existingv1/835alloutputsimmutable. Noautostart13 orbudgetreset. NextactualHOST57+identityproof, thensingle submit doesCPUstage+actualcontainerproof beforeallocating GPU. SourceGitdeployment/push; no extramodelAPI/GCP/purchases. Goalactive. Currentcheckout/private/tmp/duplex-recovery-20261112; OneDrivewritesallowed.
+
+---
+
 # LOCAL — Evaluation recovery8365873 SUBMITTED and actualSlurmRUNNING; no training replay
 
 Latest owner explicitly requested finishcontroller/guardintegration thenlaunchrecovery/reuse76/checkpointpreservation/no repeatedtraining. Scoped authorization NATIVE-MOSHI-EVALUATION-RECOVERY-AUTHORIZATION-2026-11-12.json records exactrequest and disclosedimplementationchoice150secondproviderTTL,60secondqueries/local45/storage120, oneevaluation-onlyinterval11 <=4h withinoriginal112GPUh. This is not a separatelyquotednumericownerapproval orbudgetreset. Allprioractualcarry269405GPU seconds; maxnew28800=>298205 total<403200. No API/GCP/purchases/newtraining. Oldmax10supersededonlyforthisnarrowdirectedrecovery.
