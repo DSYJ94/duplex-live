@@ -1,3 +1,11 @@
+# LOCAL — Final196 checkpoint identities durably recorded; same evaluation queued
+
+Tracked docs/NATIVE-MOSHI-FINAL10-EXECUTION-2026-11-12.json now includes complete final10-admission backup records for both broad196 states, including native/save receipt manifests. PersonaPlex final SHA a4005b71886dd40e43f236b04b88aa724d8c65be60051513dadea73f92d61e31 (1557293309B); Context Spanning final SHA5f6fd16a0e4f0446a9888cbe96fced53c2e8453b81e17b81526bdadc0da20c8a (1557335933B). Actual admission rehashed source and independentLustre destination files; no duplicate checkpoint transfer.
+
+ONE local read-only pending observer tool45793 checks8352856 >=60s apart and emits state changes, exits on leavingPENDING or access failure. Last emitted15:27:47UTC PENDING/Resources; SAMEhandle remainslive without change. Do not create another observer while this is live. It neither submits nor cancels jobs. After statechange inspect actual8352856 log/lease/worker/terminal; do not equate schedulerRUNNING with modeloutput. Current goal is a verified wait, not blocked/completed. Product interpretation boundaries recorded in docs/NATIVE-MOSHI-FINAL10-INTERPRETATION-2026-11-12.md. OneDrive remains paused.
+
+---
+
 # LOCAL — All four configurations trained; full192 evaluation submitted8352856
 
 Fresh Clifton61450 exited0; certificate valid12Nov15:19:43 to13Nov03:19:43UTC. Actual SSH verified8317068 COMPLETED0:0/17:49:14, host terminal11:07:50.733UTC12Nov, phase all_four_complete=true. Both broad196/four epochs finished; narrow196 already preserved. Independent archive status passes all six epoch2/3/4 copies. Exact approved63f final10 helper revalidated final source/destination hashes, native restore records, original accounting and complete schedule before submission. No training interruption or saved updates replayed.

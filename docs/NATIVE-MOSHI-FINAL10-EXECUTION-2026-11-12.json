@@ -21,5 +21,71 @@
     "command.json": "7dc4052525a83d71fb33d7e330e49316359d4f88811391ae38e70a01c4742ee5",
     "job.json": "e43ed15958569753760330d874adc88bd29bb9d0983fe0507d4cae47771b76e2",
     "response.json": "0cf082946b3b9c378c657977cb611c5a03e9c80c28a9ebd0b6e9e75e7e953fd3"
+  },
+  "final_broad_checkpoints": {
+    "personaplex": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/personaplex/broad/train/epoch-04.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068/personaplex/broad/epoch-04/epoch-04.pt",
+      "step": 196,
+      "bytes": 1557293309,
+      "sha256": "a4005b71886dd40e43f236b04b88aa724d8c65be60051513dadea73f92d61e31",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-12T11:07:28Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "epoch-04.pt": {
+          "bytes": 1557293309,
+          "sha256": "a4005b71886dd40e43f236b04b88aa724d8c65be60051513dadea73f92d61e31"
+        },
+        "epoch-04.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "9ed323cab6516beef8ac67e5d84d4ba4d5d281ebbdc3a39f679d1943a91f075a"
+        },
+        "epoch-04.json": {
+          "bytes": 343,
+          "sha256": "4269ce10de0b571f75f2bb5fa23327dd2118c49c326a6fed1ad76acdba9d0e82"
+        }
+      }
+    },
+    "context-spanning": {
+      "source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "checkpoint": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/rpc-recovery-8317068/context-spanning/broad/train/epoch-04.pt",
+      "destination": "/projects/u6ada/duplex-live/native-moshi-postupdate-backup-v1/job-8317068/context-spanning/broad/epoch-04/epoch-04.pt",
+      "step": 196,
+      "bytes": 1557335933,
+      "sha256": "5f6fd16a0e4f0446a9888cbe96fced53c2e8453b81e17b81526bdadc0da20c8a",
+      "actual_rsync_exit_code": 0,
+      "hash_verified": true,
+      "separate_filesystem": true,
+      "actual_UTC": "2026-11-12T10:09:18Z",
+      "native_restore_still_required": true,
+      "backup_program_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "files": {
+        "epoch-04.pt": {
+          "bytes": 1557335933,
+          "sha256": "5f6fd16a0e4f0446a9888cbe96fced53c2e8453b81e17b81526bdadc0da20c8a"
+        },
+        "epoch-04.pt.native-reference.json": {
+          "bytes": 1103,
+          "sha256": "b0c0ec333d61ef3b6ecf3942705165fa573ec70c3e0bc4211522e369cc4cec20"
+        },
+        "epoch-04.json": {
+          "bytes": 343,
+          "sha256": "d7c90d624385babcbc8ba4242c82365d5e7e9ada719a014ef1f5295f062dcbe7"
+        }
+      }
+    }
+  },
+  "backup_evidence_scope": "Actual final10 admission rehashed both source checkpoints and every destination manifest file on the independent filesystem; checkpoint bytes remain on Isambard, no Mac weight download.",
+  "queued_observer": {
+    "tool_session": 45793,
+    "read_only": true,
+    "minimum_query_spacing_seconds": 60,
+    "exits_on_state_change_from_pending": true,
+    "submits_jobs": false
   }
 }
