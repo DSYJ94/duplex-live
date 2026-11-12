@@ -61,7 +61,9 @@ def pin(parent, rows, expected_profile):
                 or json.loads((folder/'result.json').read_text()) != case):
             raise ValueError('Only complete exact native cases may be reused')
         trace = [json.loads(line) for line in (folder/'trace.jsonl').read_text().splitlines()]
-        if (len(trace) != row['frames'] or [t['sequence'] for t in trace] != list(range(row['frames']))):
+        # Legacy timeline frames are one second; native streaming frames are 80ms.
+        native_frames=(round(row['frames']*24000)+1919)//1920
+        if (len(trace) != native_frames or [t['sequence'] for t in trace] != list(range(native_frames))):
             raise ValueError('Every original native frame required')
         for frame in trace:
             name = frame['chunk_file']

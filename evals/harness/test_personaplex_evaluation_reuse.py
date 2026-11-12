@@ -10,11 +10,11 @@ class ReuseTest(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)/'old'; self.root.mkdir()
-        self.rows = [dict(id='case-%02d'%i, input_sha256='hash-%d'%i, family='ordinary', frames=1) for i in range(32)]
+        self.rows = [dict(id='case-%02d'%i, input_sha256='hash-%d'%i, family='ordinary', frames=.08) for i in range(32)]
         self.profile = dict(source='original', trainer_source='trained', seed=42)
         (self.root/'profile.json').write_text(json.dumps(self.profile))
         row=self.rows[0]
-        self.case=dict(row, complete=True, input_frames=1); del self.case['frames']
+        self.case=dict(row, complete=True, input_frames=.08); del self.case['frames']
         folder=self.root/row['id']; folder.mkdir()
         (folder/'result.json').write_text(json.dumps(self.case))
         (folder/'trace.jsonl').write_text(json.dumps(dict(sequence=0,chunk_file='chunk.wav'))+'\n')
