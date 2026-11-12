@@ -1,6 +1,6 @@
 # Native voice reinforcement learning and research integration
 
-Updated 11 November 2026. This is the next-phase implementation plan, not evidence of a running RL learner. Current matched job8317068 remains unchanged on producer10e7e0664e47c1222e0492a8367b3c000ed5789d, OPAL KEEP/API0, two GPUs and its existing112 aggregate GPU-hour/max10-start contract. OneDrive remains paused; this note is maintained in the temporary recovery checkout.
+Updated 12 November 2026. All four matched configurations finished196updates; training job8317068 completed0:0. Evaluation-only job8352856 is queued under controller63f121fc876394c8d63a38e22535b6a2496015f8; it makes ZERO optimizer updates. The current matched experiment remains OPAL KEEP/API0, with the existing112GPU-hour/max10-start contract. OneDrive remains paused; current local checkout is /private/tmp/duplex-recovery-20261112. This remains a next-phase RL plan, not a running learner.
 
 ## Decision and relationship to the product
 
@@ -71,6 +71,15 @@ Compare a retained SFT control and RL candidate under the same evaluation inputs
 
 ## Current state and next executable action
 
-Current study remains OPAL KEEP/API0; no GRPO, DPO, MiRL RL, checkpoint distillation or new spectral updater has been deployed. Finish valid training and preserve its states first. The separate scheduler-pacing conflict in [the scaling plan](NATIVE-ISAMBARD-SCALE-AND-TRAINING-STRATEGY-2026-11-11.md) must be reconciled before the next allocation; do not silently relax freshness or change the live worker. Existing untracked CPU pacing-contract work is not a deployed guard.
+Current study remains OPAL KEEP/API0; no GRPO, DPO, MiRL RL or checkpoint distillation has been deployed. Training is finished and final states are independently hash-backed up. The earlier scheduler-pacing conflict was resolved by explicit owner amendment and Git-deployed controller63f; actual on-node evaluation startup still needs verification. Observe the submitted8352856 rather than repeat training or reopen that guard decision.
 
 After the complete comparison, the next substantive phase proposal should name the chosen foundation, broader corpus, SFT/RL/reference checkpoints, trainable tensors, reward version, rollout budget and full evaluation. If coherent control is already available, use it directly as the RL seed instead of another unchanged SFT loop. Review new Bidaily leads at these real decisions; do not suspend productive learning for a continual paper sweep.
+
+
+## Owner follow-up, 12 November: start RL from demonstrated strengths
+
+The earlier Venus698,351,616-parameter adapter established real learnability and saved-state restoration, but not product qualification. The contemporaneous COMPLETE64 result records60newupdates per arm, main word-fidelity13/32 versus11/32 for the851,968-parameter control, peak32/32 for both, with neither qualified. These word counts measure speech/text agreement, not reasoning accuracy. Paired60 records also show ordinary KL/hidden drift above initialization. Preserve this branch and its useful coherent examples; do not promote all its outputs into an RL teacher/reward baseline. These are the cited run's results, not a claim that no later Venus run exists. Sources: NATIVE-VENUS-LARGE-CAPACITY-COMPLETE64-RESULT-2026-11-06.json and NATIVE-VENUS-LARGE-CAPACITY-PAIRED60-RESULT-2026-11-05.json.
+
+RL need not wait until every behaviour passes. Start the next phase from whichever compatible saved checkpoint the complete comparison shows can produce coherent useful attempts, keeping its SFT/reference control. Prefer native GRPO for verifiable basic answers and correct direct/clarify/delegate decisions, plus audio-grounded timing/control rewards. The published Moshi/PersonaPlex interaction-RL result is direct architectural evidence, unlike transferring an unrelated text-only rollout engine by assumption: https://arxiv.org/html/2606.11167v2 . Keep task correctness, semantic quality and speech retention alongside timing reward; a silent-everywhere or delegate-everything policy must lose. Use MiRL-style recovery only on repeatedly observed TRAIN errors while maintaining broad rehearsal. The preceding reward/state contracts remain binding.
+
+In parallel with broader native SFT data preparation, implement the selected foundation's rollout/log-probability/reward path and one positive-update restore/throughput admission, then run a sustained matched SFT-versus-RL comparison. This is an implementation sequence, not an additional compute grant or an already selected foundation. Use the planned multi-GPU Isambard programme for actual rollouts, policy/reference evaluation and learning; report reward yield, unseen task success, speech and latency, not reward alone. Do not require another unchanged SFT epoch solely because RL is new.

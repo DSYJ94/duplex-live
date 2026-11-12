@@ -1,3 +1,13 @@
+# LOCAL — Final10 evaluation FAILED on guard expiry; training preserved; research saved
+
+Actual observer12609 exited after8352856 RUNNING at16:14:33UTC/nid011081. Subsequent actualSlurm21:19:06UTC: FAILED1:0/2980seconds/2GPUs. Both baseline collections/audits completed; narrow collection partial. Native worker errors are expired independent guard; paced-watch rejected missing/future/expired evidence. Exact causal clock not yet established. No numerical/model failure inferred; no full192 comparison or adoption. All four trained196 checkpoints remain independently hashverified. Current112GPUh/max10-start grant has consumed final10; NO automatic11/retry authorized. Actualcarry269405GPU seconds (74.8347h), remaininghours do not add starts.
+
+Metadata-only results/logs copied actualrsync0 to runs/isambard-final10-20261112/results; everyretrievedfileSHA and actualconditioncounts recorded in tracked executionJSON. Raw audio staysIsambard; preserve it. Next boundedtask diagnose specificguardexpiry from actuallogs/receipts, prepare concrete evaluation-only repair/resume retaining completed outputs, no newtraining or qualityrelaxation. Any newallocation needsphase/startscope decision; routine offline repair remainsauthorized. No liveGPU/model tointerrupt.
+
+Owner SGLang link exactXpost403/unverified; primaryofficialOmniPersonaPlex native80ms/realtime serving is relevant runtimecandidate, notinstalled. Research and pretraining/midtraining/growth/RL recommendation in docs/NATIVE-SGLANG-RESEARCH-2026-11-12.md; updated existingRLplan with measured698Mlimitations and coherent-seed nativeGRPO recommendation. CurrentRLnotimplemented/running. OneDriveeditingpaused/tempcheckout /private/tmp/duplex-recovery-20261112; preserve all checkpoints and objective.
+
+---
+
 # LOCAL — Transient SSH gap recovered; same8352856 still queued
 
 Observer45793 is now CLOSED after actual SSH255 connection closed. Fresh bounded SSH93067 also timed out at banner exchange; certificate remains valid through13Nov03:19:43UTC. Subsequent bounded freshSSH18980 exited0 at12Nov15:47:56UTC: SAME8352856 PENDING/Resources. No scheduler/model restart or resubmission. ONE replacementLOCALobserver12609 waits60seconds before firstquery, then>=60secondspacing, exits on pending-state transition/accessfailure. Do not poll/restart old45793 or create a second observer. All current checkpoints/112GPUh/max10/controller63f/native10e7 unchanged. OneDrivepaused; currenttempcheckout /private/tmp/duplex-recovery-20261112. Broadgoalactive; awaiting actualfull192 comparison, notadopted.
