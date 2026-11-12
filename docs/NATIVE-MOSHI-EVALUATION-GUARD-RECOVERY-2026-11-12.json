@@ -21,5 +21,30 @@
     "Full remaining generated comparison, independent speech/semantic/reasoning review and retained output backup"
   ],
   "GPU_jobs_submitted": 0,
-  "quality_thresholds_changed": false
+  "quality_thresholds_changed": false,
+  "reuse_implementation": {
+    "module": "training.personaplex.matched_evaluation_reuse",
+    "collector_optional_hash_pinned_resume": true,
+    "completed_cases_excluded_from_regeneration": true,
+    "partial_case_folders_excluded": true,
+    "original_profile_and_collection_preserved": true,
+    "local_tests_passed": 52,
+    "actual_HOST_reuse_tests_passed": 6,
+    "deployed_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-eval-reuse-a5c1deb",
+    "actual_deployed_source": "38fe151a",
+    "actual_pin_tool_session": 87557,
+    "actual_pin_terminal": null,
+    "actual_pin_output": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb",
+    "pin_models_loaded": 0,
+    "known_repaired_verifier_assumption": "Original timeline frames count seconds; native frames count80ms, including final padding.33s requires413frames."
+  },
+  "proposed_150_second_policy": {
+    "local_CPU_tested": true,
+    "deployed": false,
+    "default_remains90": true,
+    "runtime_authority_unchanged": true,
+    "scope_decision_still_required": true,
+    "survives_one_missed60_second_query": true,
+    "fails_on_second_miss_or_cancellation": true
+  }
 }

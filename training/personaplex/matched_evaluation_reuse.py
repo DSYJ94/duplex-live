@@ -121,6 +121,10 @@ def main(args):
         folder=parent/name
         if sha(folder/'profile.json')!=expected['profile_sha256']:
             raise ValueError('Historical profile bytes differ')
+        for kind in ('results','report'):
+            expected_hash=expected.get(kind+'_sha256')
+            if expected_hash and sha(folder/(kind+'.json'))!=expected_hash:
+                raise ValueError('Historical collection/audit bytes differ')
         record=pin(folder,rows,dict(source=index['original_source'],
             trainer_source=index['trainer_source'],base=base,capacity=capacity,
             seed=42,temp_audio=.8,temp_text=.7,optimizer_updates=0))

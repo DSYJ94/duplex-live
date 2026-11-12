@@ -11,7 +11,8 @@ from . import paced_guard_contract as contract
 
 class Heartbeat:
     def __init__(self, lease, read_provider, read_local,
-                 clock=time.time, monotonic=time.monotonic):
+                 clock=time.time, monotonic=time.monotonic, provider_ttl=contract.PROVIDER_TTL):
+        self.provider_ttl = provider_ttl
         self.lease = dict(lease)
         self.read_provider = read_provider
         self.read_local = read_local
@@ -38,7 +39,7 @@ class Heartbeat:
                 return checked-stamp if contract.finite_number(stamp) else None
             provider_age, local_age = age(self.provider), age(self.last_local)
             failed = 'other'
-            for label, value, ttl in (('provider', provider_age, contract.PROVIDER_TTL),
+            for label, value, ttl in (('provider', provider_age, self.provider_ttl),
                                       ('local', local_age, contract.LOCAL_TTL)):
                 if value is None or not 0 <= value <= ttl:
                     failed = label
@@ -76,10 +77,10 @@ class Heartbeat:
         local = self.read_local()
         self.last_local = local
         checked = self.clock()  # query latency counts toward actual evidence age
-        proof = contract.validate(self.lease, self.provider, local, checked)
+        proof = contract.validate(self.lease, self.provider, local, checked, provider_ttl=self.provider_ttl)
         proof.update(provider_attempt_monotonic=self.last_attempt,
                      provider_query_timed_out=timeout,
                      expires_unix=min(local['observed_unix'] + contract.LOCAL_TTL,
-                                       self.provider['observed_unix'] + contract.PROVIDER_TTL,
+                                       self.provider['observed_unix'] + self.provider_ttl,
                                        self.lease['stop_unix'] - 180))
         return proof

@@ -21,7 +21,9 @@ def provider_due(now,last_attempt):
     return last_attempt is None or now-last_attempt>=PROVIDER_INTERVAL
 
 
-def validate(lease,provider,local,now):
+def validate(lease,provider,local,now,provider_ttl=PROVIDER_TTL):
+    if type(provider_ttl) is not int or provider_ttl not in (90,150):
+        raise ValueError("Explicit supported provider evidence policy required")
     if not finite_number(now):raise ValueError('Finite clock required')
     for key in ('job_id','account','node'):
         if not isinstance(lease.get(key),str) or not lease[key].strip():
@@ -31,7 +33,7 @@ def validate(lease,provider,local,now):
             raise RuntimeError('Finite nonnegative original clocks required')
     if type(lease.get('GPU_count')) is not int or lease['maximum_seconds']<=180:
         raise RuntimeError('Usable bounded allocation required')
-    for record,ttl in ((provider,PROVIDER_TTL),(local,LOCAL_TTL)):
+    for record,ttl in ((provider,provider_ttl),(local,LOCAL_TTL)):
         stamp=record.get('observed_unix')
         if (type(stamp) not in (int,float) or not math.isfinite(stamp)
                 or not 0<=now-stamp<=ttl):raise RuntimeError('Missing, future or expired evidence')
@@ -49,5 +51,5 @@ def validate(lease,provider,local,now):
             or lease['prior_GPU_seconds']+lease['GPU_count']*lease['maximum_seconds']>112*3600):
         raise RuntimeError('Original aggregate/resource limits exceeded')
     return dict(local_observed_unix=local['observed_unix'],provider_observed_unix=provider['observed_unix'],
-        local_max_age_seconds=LOCAL_TTL,provider_max_age_seconds=PROVIDER_TTL,
+        local_max_age_seconds=LOCAL_TTL,provider_max_age_seconds=provider_ttl,
         owner_amendment_still_required=True,runtime_integration=False)

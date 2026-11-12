@@ -106,4 +106,40 @@ class HeartbeatIntegration(unittest.TestCase):
         with self.assertRaises(RuntimeError): self.engine.tick()
 
 
+class Proposed150Policy(HeartbeatIntegration):
+    def setUp(self):
+        super().setUp()
+        self.engine.provider_ttl=150
+
+    def test_one_missed_query_can_recover_at120_without_fast_retry(self):
+        self.engine.tick();self.advance(60)
+        self.failure=subprocess.TimeoutExpired('fixture',20)
+        proof=self.engine.tick();self.assertEqual(proof['expires_unix'],1045+60)
+        self.advance(60);self.failure=None
+        proof=self.engine.tick()
+        self.assertEqual(proof['provider_observed_unix'],1120)
+        self.assertEqual(self.calls,[0,60,120])
+
+    def test_two_misses_expire_original_evidence_without_relabelling(self):
+        self.engine.tick();self.advance(60)
+        self.failure=subprocess.TimeoutExpired('fixture',20)
+        self.engine.tick();self.advance(60);self.engine.tick();self.advance(31)
+        with self.assertRaises(RuntimeError):self.engine.tick()
+        self.assertEqual(self.engine.failure_receipt['provider_age_seconds'],151)
+        self.assertEqual(self.calls,[0,60,120])
+
+    # Inherited90-policy assertions remain exercised by HeartbeatIntegration.
+    def test_timeout_uses_only_original_unexpired_evidence_without_fast_retry(self):
+        self.test_two_misses_expire_original_evidence_without_relabelling()
+
+    def test_failure_receipt_identifies_expired_provider_not_fresh_local(self):
+        self.test_two_misses_expire_original_evidence_without_relabelling()
+
+    def test_query_duration_counts_toward_expiry(self):
+        def slow_remote():
+            result=dict(self.provider);self.advance(151);return result
+        self.engine.read_provider=slow_remote
+        with self.assertRaises(RuntimeError):self.engine.tick()
+
+
 if __name__ == '__main__': unittest.main()

@@ -51,3 +51,20 @@ class ReuseTest(unittest.TestCase):
     def test_subset_cannot_be_called_complete_audit(self):
         (self.root/'report.json').write_text(json.dumps(dict(complete=True,cases=[self.case])))
         self.assertFalse(pin(self.root,self.rows,self.profile)['full_audit'])
+
+    def test_legacy_33_second_case_requires_413_native_frames(self):
+        self.rows[0]['frames']=33
+        self.case['input_frames']=33
+        folder=self.root/'case-00'
+        (folder/'result.json').write_text(json.dumps(self.case))
+        (self.root/'results.json').write_text(json.dumps(dict(source='original',required_cases=32,cases=[self.case])))
+        frames=[]
+        for i in range(413):
+            name='chunk-%04d.wav'%i
+            (folder/name).write_bytes(b'PCM fixture')
+            frames.append(json.dumps(dict(sequence=i,chunk_file=name)))
+        (folder/'trace.jsonl').write_text('\n'.join(frames)+'\n')
+        record=pin(self.root,self.rows,self.profile)
+        self.assertEqual(len(record['cases']),1)
+        (folder/'trace.jsonl').write_text('\n'.join(frames[:-1])+'\n')
+        with self.assertRaisesRegex(ValueError,'Every original native frame'):pin(self.root,self.rows,self.profile)
