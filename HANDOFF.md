@@ -1,3 +1,11 @@
+# LOCAL — Access renewal required; checkout recovered outside OneDrive
+
+At 2026-11-12T15:15:17.227509+00:00 the prior /private/tmp/duplex-quota-recovery-20261109 checkout was absent. Recovered committed main from GitHub into /private/tmp/duplex-recovery-20261112. No OneDrive reads/writes, checkpoint deletion, job submission, or interruption. Local certificate expired 12 November 11:03:51 UTC; bounded SSH returned255/publickey denied. Current job8317068 outcome UNKNOWN: last confirmed observation remains 11Nov23:08:53 UTC, Plex106/CS109 RUNNING. Do not infer job termination from inaccessible local state.
+
+Fresh Clifton renewal tool6762 is waiting. Automatic browser opening failed; official sign-in link sent to owner. After renewal verify certificate and actual same8317068/Slurm terminal/checkpoints before any next action. No replacement observer started: historical49569 cannot be assumed alive following local checkout loss. Preserve exact authorized63f final10 controller and all successful-parent/fullrestore/fullbackup/112GPUh/max10 gates. No failed-parent retry authorized. Goal ACTIVE, first renewed access-blocker turn; not complete/paused/blocked. This turn recovered the source checkout, but current remote training and backup status remain unverified.
+
+---
+
 # LOCAL — Official renewal succeeded; same training confirmed live; local monitor resumed
 
 Owner repliedDone. Clifton80009 actualexit0; localcertificate inspectedvalid11Nov23:03:51 through12Nov11:03:51UTC. Actual boundedfreshSSH/one-shot observer5415 exit0 at23:04:44UTC confirmed SAME8317068 RUNNING5:45:54/nid010999, Plex105/CS109, nohostterminal/archivefailure. Same10e7nativeproducer/workers, norestart/submission orsavedupdate replay. Both104fullstatebackups +98epochs remain verified; nextuseful rolling112whenactualsaved. Exactrenewedobservation receipt SHA-boundexecutionJSON. Old64733 is terminalclosed; ONEreplacementLOCALobserver49569 started with60secondinitialspacing andthenexisting>=60secondpoll. Log rpc9-monitor-renewed-20261111.jsonl. Do not duplicate on timeout. Training neverpaused forauth.
