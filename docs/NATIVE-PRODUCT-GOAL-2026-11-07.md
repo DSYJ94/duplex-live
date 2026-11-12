@@ -1,5 +1,7 @@
 # Active native voice product goal
 
+12 November follow-up: [Oruk, capacity growth, mid-training and RL decision](NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md). Keep a genuine matched structural-growth arm in the next programme design alongside broad-adapter and selective/full tuning controls; capacity is not ruled out. Extra parameters do not require from-scratch pretraining. Owner has resumed permission to edit OneDrive files. Evaluation8352856 failed on provider-evidence guard expiry after baseline completion; trained196 states remain preserved and candidate comparison incomplete. No RL learner is running.
+
 ## Current operational goal — owner updated 11 November 2026
 
 Owner11November addition: include reinforcement learning and inspect the ML/AI Learning Bidaily research chat. See [the native RL/research integration plan](NATIVE-RL-AND-RESEARCH-INTEGRATION-2026-11-11.md). It records primary-verified native Moshi/PersonaPlex GRPO, MiRL error targeting, checkpoint distillation, budget-sensitive agent evaluation and stage-specific LoRA optimization. Native interaction/routing RL follows a coherent seed and trustworthy task/waveform/worker rewards; it need not wait until all behaviors are solved. The programme now reserves3,000GPU-hours for RL/rollouts by reallocating the existing6,000SFT bucket, preserving the19,915 total planning envelope. Current matched training remains fixed OPAL KEEP/API0, with no deployed RL or new allocation. The research chat was read, not messaged or rescheduled.

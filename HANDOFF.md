@@ -1,3 +1,11 @@
+# LOCAL — Owner resumed OneDrive editing; Oruk/capacity/RL incorporated in wider plan
+
+Owner12Nov explicitly allows OneDrive editing again; previous pause is revoked. This turn kept work in /private/tmp/duplex-recovery-20261112 to preserve unrelated local edits. Research decision NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md linked from all three canonical product/scale/RL plans. Next programme design includes matched broadadapter/selective-full/growth arms; no assumption extra capacity requires scratchpretraining. Oruk ASR RL suggests reward/style controls and plain-RL baseline, notblind creditmask copying or crossarchitectureweightaveraging. CurrentnativeRLnotrunning.
+
+Guard diagnosis narrowed from actualcopiedreceipts: providerage87.9295s atlastlocalguard, expiry=originalprovider+90; storagefreshafterward. Watcherexpired evidence, notnative numericalfailure; exactmissedquerycauseunretained/unproven. All4trained196safe; eval8352856FAILED/112GPUh/max10 exhaustedstarts unchanged. No newjob/permissionweaken/replay. Continue offlineguardobservability/evaluation-onlyresume preparation, then concrete newinterval scope needed. No otheragent/compute work remainslive.
+
+---
+
 # LOCAL — Final10 evaluation FAILED on guard expiry; training preserved; research saved
 
 Actual observer12609 exited after8352856 RUNNING at16:14:33UTC/nid011081. Subsequent actualSlurm21:19:06UTC: FAILED1:0/2980seconds/2GPUs. Both baseline collections/audits completed; narrow collection partial. Native worker errors are expired independent guard; paced-watch rejected missing/future/expired evidence. Exact causal clock not yet established. No numerical/model failure inferred; no full192 comparison or adoption. All four trained196 checkpoints remain independently hashverified. Current112GPUh/max10-start grant has consumed final10; NO automatic11/retry authorized. Actualcarry269405GPU seconds (74.8347h), remaininghours do not add starts.

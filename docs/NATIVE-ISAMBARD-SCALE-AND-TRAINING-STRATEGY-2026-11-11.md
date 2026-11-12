@@ -1,5 +1,7 @@
 # Use the Isambard award for substantial native voice training
 
+12 November follow-up: [Oruk, capacity growth, mid-training and RL decision](NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md). Keep a genuine matched structural-growth arm in the next programme design alongside broad-adapter and selective/full tuning controls; capacity is not ruled out. Extra parameters do not require from-scratch pretraining. Owner has resumed permission to edit OneDrive files. Evaluation8352856 failed on provider-evidence guard expiry after baseline completion; trained196 states remain preserved and candidate comparison incomplete. No RL learner is running.
+
 Owner direction, 11 November 2026: the time-limited 20,000 GPU-hour award should be used decisively for the full-duplex product, including substantial post-training, selective/full fine-tuning, useful mid-training and additional capacity where justified. This updates programme planning; it does not silently change the immutable clocks or restart rules of the current matched experiment. OneDrive editing/eviction/checkpoint downloads remain paused. All work described here is on Isambard; no additional GCP purchases, external API payloads or storage destinations are authorized by this research note.
 
 ## Recommendation

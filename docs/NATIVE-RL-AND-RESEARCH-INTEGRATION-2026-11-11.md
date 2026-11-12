@@ -1,5 +1,7 @@
 # Native voice reinforcement learning and research integration
 
+12 November follow-up: [Oruk, capacity growth, mid-training and RL decision](NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md). Keep a genuine matched structural-growth arm in the next programme design alongside broad-adapter and selective/full tuning controls; capacity is not ruled out. Extra parameters do not require from-scratch pretraining. Owner has resumed permission to edit OneDrive files. Evaluation8352856 failed on provider-evidence guard expiry after baseline completion; trained196 states remain preserved and candidate comparison incomplete. No RL learner is running.
+
 Updated 12 November 2026. All four matched configurations finished196updates; training job8317068 completed0:0. Evaluation-only job8352856 is queued under controller63f121fc876394c8d63a38e22535b6a2496015f8; it makes ZERO optimizer updates. The current matched experiment remains OPAL KEEP/API0, with the existing112GPU-hour/max10-start contract. OneDrive remains paused; current local checkout is /private/tmp/duplex-recovery-20261112. This remains a next-phase RL plan, not a running learner.
 
 ## Decision and relationship to the product
