@@ -1,3 +1,11 @@
+# LOCAL — Actual reuse pin87557 exited0:76outputs verified,116generationremaining
+
+SameCPUtool87557 nowTERMINALsuccess0. Actual summary: PersonaPlexbaseline32/fullaudit, CSbaseline32/fullaudit, Plexnarrow6, CSnarrow6; modelsloaded0/optimizerupdates0/originaloutputsmodifiedfalse. Exactrecordpaths/SHA andfullproducer38fe151 in tracked recoveryJSON; smallsummaryrsync0LOCAL runs/isambard-final10-20261112/reuse-pin/summary.json. No rehash/run/duplicatepinneeded. Reuse76 leaves116nativeoutputs togenerate, plus fullcandidateaudits/semantics/listening. Baselineauditresultsandoldproducerretainedhonestly, no passing-subset/adoption.
+
+PriorHANDOFFlive87557note superseded: CLOSEDsuccess0, neverpoll/restart. Recoverycollector code/hash checks CPU52local/HOST6passed. Proposed150policy notenabled; default90/oldgrant max10 remain. Next finish singleevaluation-onlyrecoverycontroller andexplicitpolicy/startscope package; do not repeattraining/calibration oroldoutputgeneration. Alltrained196statesintact. Work/private/tmp/duplex-recovery-20261112 main; OneDriveeditingallowed. Broadergoalactive.
+
+---
+
 # LOCAL — Completed-output reuse implemented; cluster hash pin87557 is LIVE; no GPU restart
 
 New module matched_evaluation_reuse validates original profile/input/result/frame/chunk identities, freezes file manifests, excludes incomplete casefolders and rsync-copiesonlycommittedcases without modifying originals. matched_evaluation.collect has optional pinnedreuse record: preserves oldprofile/results +originreceipt and skipscompletedcaseIDs; sameengine/sampler/persona/voice/checkpointrequired. All32 completecohort remainsrequired; noadoption/subsetthresholdchange. Local52testsPASS inclmodifiedchunk/missingframe/wrongprofile/pathescape/33s->413nativeframes. Originalinput_frames islegacy1secondtimeline, notnative80ms; firstactualclusterpinfailed onthatnewverifierassumption andwasfixed. Failedartifactsretained. ActualHOST6reuse testsPASS. No model/optimizerloaded.

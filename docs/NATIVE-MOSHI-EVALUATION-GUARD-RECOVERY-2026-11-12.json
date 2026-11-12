@@ -31,12 +31,48 @@
     "local_tests_passed": 52,
     "actual_HOST_reuse_tests_passed": 6,
     "deployed_worktree": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/source-eval-reuse-a5c1deb",
-    "actual_deployed_source": "38fe151a",
+    "actual_deployed_source": "38fe151a26dd86aff3f08be7494a10ae6ab33d36",
     "actual_pin_tool_session": 87557,
-    "actual_pin_terminal": null,
+    "actual_pin_terminal": 0,
     "actual_pin_output": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb",
     "pin_models_loaded": 0,
-    "known_repaired_verifier_assumption": "Original timeline frames count seconds; native frames count80ms, including final padding.33s requires413frames."
+    "known_repaired_verifier_assumption": "Original timeline frames count seconds; native frames count80ms, including final padding.33s requires413frames.",
+    "actual_pin_summary": {
+      "conditions": {
+        "personaplex-baseline": {
+          "record": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb/personaplex-baseline.json",
+          "sha256": "bf0646f82a1be53f950c51abb02358f2297b1fd57a8a3ef334438af09052e919",
+          "cases": 32,
+          "full_audit": true
+        },
+        "context-spanning-baseline": {
+          "record": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb/context-spanning-baseline.json",
+          "sha256": "a428e6a0fa42eb8e43b865e1d9e99506ffe254ac763d6d8845b9ef277741ed59",
+          "cases": 32,
+          "full_audit": true
+        },
+        "personaplex-narrow": {
+          "record": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb/personaplex-narrow.json",
+          "sha256": "2e85b38e83dd7a4ad38c385d1edb0c2565dc8c9de72c1fdfcc062af6b752ab36",
+          "cases": 6,
+          "full_audit": false
+        },
+        "context-spanning-narrow": {
+          "record": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-reuse-pin-a5c1deb/context-spanning-narrow.json",
+          "sha256": "0915a208184cca7c69dc47069f2dbf3bdfead41110376fd1303119175100836a",
+          "cases": 6,
+          "full_audit": false
+        }
+      },
+      "original_source": "63f121fc876394c8d63a38e22535b6a2496015f8",
+      "trainer_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+      "models_loaded": 0,
+      "optimizer_updates": 0,
+      "source_outputs_modified": false,
+      "required_comparison_outputs": 192
+    },
+    "verified_reusable_outputs": 76,
+    "remaining_generation_outputs": 116
   },
   "proposed_150_second_policy": {
     "local_CPU_tested": true,
