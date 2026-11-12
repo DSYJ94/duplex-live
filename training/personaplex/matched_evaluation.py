@@ -55,7 +55,7 @@ def collect(a,rows,selection):
     root=Path(a.root)/(a.base+'-'+a.capacity)
     reused=[]
     if getattr(a,'reuse_record',None):
-        from .matched_evaluation_reuse import materialize, pin
+        from .matched_evaluation_reuse import prepared, pin
         from .matched_interrupted import DURABLE
         record_path=Path(a.reuse_record)
         record_path.resolve().relative_to(DURABLE.resolve())
@@ -73,7 +73,7 @@ def collect(a,rows,selection):
             raise ValueError('Reuse requires identical model, sampler, voice and persona')
         if pin(record['parent'],rows,profile)!=record:
             raise ValueError('Pinned original cases changed')
-        reused=materialize(record,root)
+        reused=prepared(record,root)
         (root/'profile.json').rename(root/'original-profile.json')
         (root/'results.json').rename(root/'original-results.json')
     else:

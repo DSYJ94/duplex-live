@@ -104,6 +104,17 @@ def materialize(record, target):
     return record['cases']
 
 
+
+def prepared(record, target):
+    """Inference reads only host-staged, fully verified bytes; no copy executable."""
+    target=Path(target)
+    origin=target/'reuse-origin.json'
+    if not origin.exists() or json.loads(origin.read_text())!=record:
+        raise ValueError('Exact host-prepared reuse receipt required before inference')
+    verify(target,record['files'])
+    return record['cases']
+
+
 def main(args):
     from .matched_interrupted import DURABLE
     from .foundation_context import cases

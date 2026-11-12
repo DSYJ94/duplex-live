@@ -9,7 +9,7 @@ from training.personaplex.evaluation_recovery import accounting
 class RecoveryPolicy(unittest.TestCase):
     def lease(self):
         old=json.loads(Path('evals/fixtures/native-moshi-evaluation-8352856-lease.json').read_text())
-        old.update(continuation_interval=11,optimizer_updates=0,maximum_seconds=14400,prior_GPU_seconds=269405)
+        old.update(continuation_interval=12,optimizer_updates=0,maximum_seconds=13800,prior_GPU_seconds=270565)
         old[policy.KEY]=policy.authority()
         return old
 
@@ -19,7 +19,7 @@ class RecoveryPolicy(unittest.TestCase):
         self.assertEqual(g.resource(lease),lease)
 
     def test_cannot_train_extend_interval_or_reset_time_cap(self):
-        for changes in [dict(optimizer_updates=1),dict(continuation_interval=12),dict(maximum_seconds=14401),{policy.KEY:'wrong'}]:
+        for changes in [dict(optimizer_updates=1),dict(continuation_interval=13),dict(maximum_seconds=13801),{policy.KEY:'wrong'}]:
             lease=self.lease();lease.update(changes)
             with self.assertRaises(ValueError):g.resource(lease)
 
@@ -28,8 +28,8 @@ class RecoveryPolicy(unittest.TestCase):
         with self.assertRaises(ValueError):g.resource(lease)
 
     def test_failed_evaluation_time_is_counted_without_relabelling_it_successful(self):
-        text='8352856|duplex-matched-final10-v1|brics.u6ada|FAILED|1:0|2980|gres/gpu=2'
+        text='8352856|duplex-matched-final10-v1|brics.u6ada|FAILED|1:0|2980|gres/gpu=2\n8365873|duplex-matched-eval-recovery-v1|brics.u6ada|FAILED|1:0|580|gres/gpu=2'
         with patch('training.personaplex.evaluation_recovery.resume.allocation_carry',return_value=263445):
-            self.assertEqual(accounting(text,[]),269405)
+            self.assertEqual(accounting(text,[]),270565)
             with self.assertRaises(ValueError):accounting(text.replace('2980','0'),[])
             with self.assertRaises(ValueError):accounting(text.replace('FAILED','COMPLETED'),[])

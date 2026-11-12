@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from training.personaplex.matched_evaluation_reuse import pin, materialize, verify
+from unittest.mock import patch
+from training.personaplex.matched_evaluation_reuse import pin, materialize, verify, prepared
 
 
 class ReuseTest(unittest.TestCase):
@@ -68,3 +69,10 @@ class ReuseTest(unittest.TestCase):
         self.assertEqual(len(record['cases']),1)
         (folder/'trace.jsonl').write_text('\n'.join(frames[:-1])+'\n')
         with self.assertRaisesRegex(ValueError,'Every original native frame'):pin(self.root,self.rows,self.profile)
+
+    def test_prepared_inference_never_invokes_rsync(self):
+        record=pin(self.root,self.rows,self.profile)
+        target=Path(self.temp.name)/'prepared';materialize(record,target)
+        with patch('training.personaplex.matched_evaluation_reuse.subprocess.run',side_effect=FileNotFoundError('rsync')) as run:
+            self.assertEqual(prepared(record,target),[self.case]);run.assert_not_called()
+        with self.assertRaisesRegex(ValueError,'host-prepared'):prepared(record,Path(self.temp.name)/'absent')

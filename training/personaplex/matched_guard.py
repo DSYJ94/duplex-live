@@ -58,7 +58,7 @@ def phase_limit(lease):
     if lease.get('rpc_recovery_authorization_sha256') is not None:
         from .matched_rpc_recovery import authority as rpc_authority
         if (lease['rpc_recovery_authorization_sha256']!=rpc_authority() or intervals!=8
-                or lease.get('continuation_interval') not in ((9,10,11) if lease.get('evaluation_recovery_authorization_sha256') else (9,10) if lease.get('rpc_startup_authorization_sha256') else (7,8))):
+                or lease.get('continuation_interval') not in ((9,10,11,12) if lease.get('evaluation_recovery_authorization_sha256') else (9,10) if lease.get('rpc_startup_authorization_sha256') else (7,8))):
             raise ValueError('Exact failed6 recovery authority required for7/8')
     if lease.get('rpc_startup_authorization_sha256') is not None:
         from .matched_rpc_startup import authority as startup_authority
@@ -69,7 +69,7 @@ def phase_limit(lease):
     if lease.get('evaluation_recovery_authorization_sha256') is not None:
         from .evaluation_recovery_policy import validate as evaluation_authority
         if intervals!=10:raise ValueError('Original complete authority chain required')
-        evaluation_authority(lease);intervals=11
+        evaluation_authority(lease);intervals=12
     if type(lease.get('continuation_interval')) is not int or not 1<=lease['continuation_interval']<=intervals:
         raise ValueError('Bounded actual continuation interval required')
     if sha(EXTENSION)!=digest or any(authority.get(k)!=v for k,v in required.items()):

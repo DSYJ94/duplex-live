@@ -52,7 +52,7 @@ def check_context(lease):
     if recovery:
         from .evaluation_recovery_policy import validate
         validate(lease)
-    if (lease.get('continuation_interval') != (11 if recovery else 10)
+    if (lease.get('continuation_interval') != (12 if recovery else 10)
             or os.environ.get('SLURM_JOB_ID') != lease['job_id']
             or os.environ.get('SLURM_JOB_ACCOUNT') != lease['account']
             or socket.gethostname().split('.')[0] != lease['node']):
