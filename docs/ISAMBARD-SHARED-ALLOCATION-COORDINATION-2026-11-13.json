@@ -25,9 +25,9 @@
     "GPUs": 1,
     "maximum_wall_hours": 12,
     "maximum_requested_GPU_hours": 12,
-    "reported_state": "PENDING",
-    "state_source": "Owner-authorized Remora chat report; not a fresh direct Slurm observation",
-    "actual_start": null,
+    "reported_state": "RUNNING",
+    "state_source": "Remora monitoring owner reports actual Slurm start; no duplicate observer in duplex",
+    "actual_start": "2026-11-13T12:16:37",
     "actual_end": null,
     "actual_GPU_hours": null,
     "root": "/projects/u6ada/remora/context-v2-20261113",
@@ -40,7 +40,10 @@
     "voice_assets_modified": false,
     "monitoring_owner": "Remora chat",
     "previous_job": "8385651",
-    "repair": "Remora-only configuration disables unused Apex; complete Trainer import and6320 data/tokenizer checks reportedly pass CPU; original voice runtime unchanged"
+    "repair": "Remora-only configuration disables unused Apex; complete Trainer import and6320 data/tokenizer checks reportedly pass CPU; original voice runtime unchanged",
+    "node": "nid010136",
+    "reported_phase": "Public model loaded; frozen baseline inference",
+    "confirmed_optimizer_updates": 0
   },
   "coordination": "Before later voice submission reconcile actual8385651 state, association/QoS and planned allocation. No duplicate monitoring/submission, cancellation, implied budget grant or GPU-hour reset.",
   "remora_history": [

@@ -1,3 +1,9 @@
+# Shared allocation — Remora8385685 reported RUNNING; baseline inference, no confirmed updates
+
+Remora monitoring owner reports actualSlurm start13Nov12:16:37/nid010136,1GPU/max12h, publicshardsloaded and frozenbaselineinference begun. No optimizerupdatesconfirmed yet. This is Remora, not duplextraining. Remoraownsmonitoring; nointervention/duplicateobserver. Earlierfailed8385651 carry29GPU-seconds retained. Beforelaterduplexsubmission reconcile8385685 actualstate/QoS. Voicecomparison/backupscomplete andvoiceGPUreservationsremainempty.
+
+---
+
 # Shared allocation update — Remora8385651 failed before model; retry8385685 reported PENDING
 
 Remora monitoring owner reports8385651 FAILED1:0 after29s/1GPU (~0.00806elapsedGPUh), optionalApex import beforemodel/run directory/optimizerupdates. Original log/source preserved. Remora-only nativeBF16 configuration repair passes completeTrainerimport+6320data/tokenizer CPU checks; no voice/runtimecontainer change. Separate8385685 submitted1GPU/max12h, reportedPENDING, root/projects/u6ada/remora/context-v2-20261113. These are reported states, not fresh directSlurmverification in duplex. Remora owns monitoring. Sharedledger retainsfailedattempt andnewjob; no duplicate training or voice allocation. Reconcile8385685 before latervoiceGPUsubmission.
