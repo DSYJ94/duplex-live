@@ -1,3 +1,13 @@
+# LOCAL — Distributed OPAL clipping ownership implemented; large rank-state collection blocker identified
+
+FreshSSH13Nov17:25:36UTC queue empty; certificate valid23:35:42. New distributed_opal.py preserves NativeOpal KEEP/API0, collective agreement of update counters, and EXACTLY ONE clipping owner via DistributedNative.clip_grad_norm. Upstream clipping disabled only within new distributed wrapper; existing NativeOpal/training files unchanged. Full OPAL registry/program/diagnostic/RNG state retained. Compiles only; actual OPAL integration/restore test not yet run.
+
+Important checkpoint integration: complete OPAL state includes local optimizer moments. Existing distributed_state.py all_gather_object(rank_state) would replicate huge full-LM state on every rank. DO NOT launch full training with that collector. Replace it with per-rank durable shards plus rank0 manifest/collective success agreement, then independently restore complete program/Adam/RNG exactly. Do not strip OPAL fields to conceal memory. This is a concrete remaining build issue, not a model numerical failure.
+
+Owner asks finish objective/state/data then start Isambard training. Still no new GPUjob/nativeupdates, expanded native audio notqualified. Continue per-rank checkpoint publication and live OPAL fixture, expanded native teachers/audio and single coherent phase admission; no repeated196training or hiddenqualityrelaxation. All checkpoints/full192backups intact. Currentmain/private/tmp/duplex-recovery-20261112.
+
+---
+
 # Shared allocation — Remora audit closed; no reservation, product acceptance rejected
 
 Monitoring owner reports8386702 COMPLETED0:0/346s/1GPU/zero updates; totalRemora1815GPU-seconds=0.504167GPUh including29sfailedstartup+1440sSFT. No futurejob/reservation. Audit16/16original but36/64freshcounterexamples, missing-context0/8 andmetadata-only0/8; notproductqualified, noadoption. Originalbaseline2/160 was schema-confounded (posthoc30/160); prior160/160mustnotbeusedasproductsuccess. Accumulationdefectpreserved/future-sourcefixonly. These are Remora-reported results, not independentduplexevaluation. Recheck actualqueue beforeduplexallocation. Voiceintegration/data/statework remainsunfinished; do not replay oldtraining.
