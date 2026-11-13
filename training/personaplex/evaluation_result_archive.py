@@ -38,7 +38,7 @@ def inventory(root):
     return rows
 
 
-def archive():
+def archive(resume_stage=False):
     terminal = json.loads((ROOT / ('execution-' + JOB) / 'terminal.json').read_text())
     comparison = json.loads((ROOT / 'comparison.json').read_text())
     if terminal['actual_exit_code'] != 0 or terminal['source'] != PRODUCER or not comparison['complete_six_times32']:
@@ -57,13 +57,25 @@ def archive():
     rows = inventory(ROOT)
     print(json.dumps(dict(event='source_inventory_complete', files=len(rows), bytes=sum(r['bytes'] for r in rows))), flush=True)
     stage = DEST.with_name('.' + DEST.name + '-stage')
-    stage.mkdir(exist_ok=False)
+    if resume_stage:
+        if not stage.is_dir() or stage.is_symlink():
+            raise ValueError('Explicit existing incomplete stage required')
+    else:
+        stage.mkdir(exist_ok=False)
     if DEST.exists():
         raise ValueError('Existing immutable backup must never be overwritten')
-    result = subprocess.run(['rsync', '-ar', '--no-owner', '--no-group', '--exclude=session-token',
-                             '--timeout=180', str(ROOT) + '/', str(stage) + '/'])
-    if result.returncode:
-        raise RuntimeError('Actual rsync failed: ' + str(result.returncode))
+    # Small batches avoid one long many-file IPC transfer; final full hashes
+    # remain mandatory. Existing completed files are reused by normal rsync.
+    for offset in range(0, len(rows), 2000):
+        batch = rows[offset:offset + 2000]
+        names = b''.join(r['path'].encode() + b'\0' for r in batch)
+        result = subprocess.run(['rsync', '-ar', '--no-owner', '--no-group', '--exclude=session-token',
+                                 '--timeout=180', '--from0', '--files-from=-',
+                                 str(ROOT) + '/', str(stage) + '/'], input=names)
+        if result.returncode:
+            raise RuntimeError('Actual rsync failed in batch: ' + str(result.returncode))
+        print(json.dumps(dict(event='archive_batch_copied', through=min(offset + 2000, len(rows)),
+                              total=len(rows))), flush=True)
     copied = inventory(stage)
     if rows != copied:
         raise ValueError('Complete destination SHA256 inventory differs')
@@ -79,5 +91,7 @@ def archive():
 
 
 if __name__ == '__main__':
-    argparse.ArgumentParser(description=__doc__).parse_args()
-    archive()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--resume-stage', action='store_true')
+    args = parser.parse_args()
+    archive(args.resume_stage)
