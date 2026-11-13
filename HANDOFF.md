@@ -1,3 +1,15 @@
+# LOCAL — Distributed build executable slice and source intake verified; no new GPU training
+
+Actual producer **7aea19aa73fdbf463f908ad7fcf2b3b54ea91b31**, deployed cleanIsambard worktree/projects/u6ada/duplex-live/source-distributed-native-bd9b9b7. Native forward routing/full-LM FSDP/broadadapter DDP/state helpers and collective streaming plan implemented; existing training/math/control files unchanged. Actualcontainer tool62255 exited0:10testsPASS and real2-process CPU Gloo gradient-accumulation proofPASS against global-mean reference, exact rankparameter agreement. Onlytoyfixture2updates; ZERO actual native/GPUupdates. Earlier4245 was a fixturetarget-layout failure, preserved in buildledger; corrected andpassed. No live testprocess/job remains. FullCUDAFSDP/completeRNGOPALnative restore NOT yet approved orimplemented endtoend. Never call this trainingrunning.
+
+Historical1008TRAIN/64DEVtextseed localfile was missing. Recovered exactpublicTRAIN/license/pool/curriculum frompinnedsource; originalpoolSHA201840725b7dca1d76348d669cbaca1fe34083e41dd5aa4edf23d76284894b8e andcurriculumSHA882ddfa593a7caa5abca9140cd263cde767198d40f439d945fe75cf65b81ffa2 matched. Artifactrsync11466 exited0 andremoteSHAread matched. Fullsmallsource/intake under/projects/u6ada/duplex-live/expanded-native-source-intake-20261113-v1; localignoredruns/native-distributed-build-20261113. No officialTEST/owner/API/audio. Intakeexplicitlymaths-only,16sharedtemplates, noautolabelallmathsdirect, no nativequalification. Coveragegapsremain andmustdrivebroadercollection.
+
+Detailedbuild+actualproofs/nextsteps docs/NATIVE-DISTRIBUTED-BUILD-2026-11-13.md/json. Nextwire collective streaming slots into retained Objective and complete per-rank RNG/OPAL/data-bound checkpoints/restore, alongsideexpandedqualifiednative corpus; thenonecoherentfourGPUfullLMadmission andsubstantialphase, no zero-update/kernelspiral or oldtrainingreplay. Full192 comparison/allcheckpointbackupsremaincomplete. Newphase/GPUjobnotlaunched.
+
+Remora ownerreports8385685 COMPLETED0:0/1440s/1GPU,400updates/fullaudit; earlierfailure29GPU-seconds =>0.4080556GPUh totalreported. No futureRemoraGPUreservation; ownmonitoringclosed. Directsharedqueue duringbuild wasempty; freshcheckagainbeforeallocation. Sharedledgerupdatedwithoutduplicatemonitor. Mainwork/private/tmp/duplex-recovery-20261112; OneDriveallowed/unrelatedpreserved. Goalactive/productunfinished. Sourcecommit/pushrelevantonly.
+
+---
+
 # Shared allocation — Remora8385685 reported RUNNING; baseline inference, no confirmed updates
 
 Remora monitoring owner reports actualSlurm start13Nov12:16:37/nid010136,1GPU/max12h, publicshardsloaded and frozenbaselineinference begun. No optimizerupdatesconfirmed yet. This is Remora, not duplextraining. Remoraownsmonitoring; nointervention/duplicateobserver. Earlierfailed8385651 carry29GPU-seconds retained. Beforelaterduplexsubmission reconcile8385685 actualstate/QoS. Voicecomparison/backupscomplete andvoiceGPUreservationsremainempty.

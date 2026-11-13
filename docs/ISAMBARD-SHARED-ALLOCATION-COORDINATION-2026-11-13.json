@@ -25,11 +25,11 @@
     "GPUs": 1,
     "maximum_wall_hours": 12,
     "maximum_requested_GPU_hours": 12,
-    "reported_state": "RUNNING",
+    "reported_state": "COMPLETED",
     "state_source": "Remora monitoring owner reports actual Slurm start; no duplicate observer in duplex",
     "actual_start": "2026-11-13T12:16:37",
     "actual_end": null,
-    "actual_GPU_hours": null,
+    "actual_GPU_hours": 0.4,
     "root": "/projects/u6ada/remora/context-v2-20261113",
     "synthetic_rows": 6320,
     "model": "Qwen/Qwen3-4B-Instruct-2507",
@@ -43,7 +43,13 @@
     "repair": "Remora-only configuration disables unused Apex; complete Trainer import and6320 data/tokenizer checks reportedly pass CPU; original voice runtime unchanged",
     "node": "nid010136",
     "reported_phase": "Public model loaded; frozen baseline inference",
-    "confirmed_optimizer_updates": 0
+    "confirmed_optimizer_updates": 0,
+    "reported_exit": "0:0",
+    "elapsed_seconds": 1440,
+    "reported_optimizer_updates": 400,
+    "reported_audit_cases": 160,
+    "adapter_adopted": false,
+    "monitoring_complete": true
   },
   "coordination": "Before later voice submission reconcile actual8385651 state, association/QoS and planned allocation. No duplicate monitoring/submission, cancellation, implied budget grant or GPU-hour reset.",
   "remora_history": [
@@ -59,5 +65,7 @@
       "failure": "Optional inherited Apex amp import, before model load",
       "evidence_source": "Remora chat report; not fresh direct provider verification"
     }
-  ]
+  ],
+  "remora_total_reported_GPU_hours": 0.40805555555555556,
+  "remora_future_reservations": []
 }

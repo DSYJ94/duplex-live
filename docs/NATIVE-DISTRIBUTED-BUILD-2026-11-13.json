@@ -1,0 +1,35 @@
+{
+  "source": "7aea19aa73fdbf463f908ad7fcf2b3b54ea91b31",
+  "actual_Isambard_container_tests": 10,
+  "actual_test_tool_session": 62255,
+  "actual_test_exit": 0,
+  "two_process_proof": {
+    "passed": true,
+    "world_size": 2,
+    "backend": "gloo",
+    "device": "CPU",
+    "fixture_updates": 2,
+    "native_optimizer_updates": 0,
+    "native_weights_loaded": false,
+    "global_mean_gradient_reference_passed": true,
+    "rank_parameter_equality_exact": true
+  },
+  "previous_fixture_failure": {
+    "source": "189dc3925398c45c7471032eed9c417c003cdbd5",
+    "tool": 4245,
+    "reason": "Toy temporal layer had no child Linear modules, so only text head received adapters; audio path had no trainable graph. Fixture corrected to realistic nested layer."
+  },
+  "native_CUDA_FSDP_approved": false,
+  "training_running": false,
+  "source_curriculum_sha256": "882ddfa593a7caa5abca9140cd263cde767198d40f439d945fe75cf65b81ffa2",
+  "source_pool_sha256": "201840725b7dca1d76348d669cbaca1fe34083e41dd5aa4edf23d76284894b8e",
+  "source_reconstructed_hash_identical": true,
+  "TRAIN": 1008,
+  "DEV": 64,
+  "intake_sha256": "9f6cdc4866c00a06bb55fe70b2f31f5fd9c07d1870b41b88a7ad1267e8820e60",
+  "native_audio_qualified": false,
+  "source_path_on_Isambard": "/projects/u6ada/duplex-live/expanded-native-source-intake-20261113-v1",
+  "source_worktree": "/projects/u6ada/duplex-live/source-distributed-native-bd9b9b7",
+  "external_model_API_calls": 0,
+  "new_native_updates": 0
+}
