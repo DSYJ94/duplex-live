@@ -1,3 +1,11 @@
+# Shared allocation update — Remora8385651 reported PENDING; no new voice job
+
+Owner-authorized Remora chat reports actual submission **8385651/remora-context-v1**, brics.u6ada/workq, ONEGPU/max12hours. ReportedPENDING; actualstart/end/GPUh unverified. Isolated public/synthetic6320-row Qwen3-4B LoRA400update experiment, no private telemetry/RL or voice-file changes. Source/model/runtime/data at /projects/u6ada/remora/context-v1-20261113; exactmodelrevision and authority evidence in docs/ISAMBARD-SHARED-ALLOCATION-COORDINATION-2026-11-13.json. Remora chat owns monitoring/accounting and will report changes; do not duplicate its job or monitor.
+
+Last direct sharedqueue check12:11:04UTC was empty before its submission. Duplex has no current/futureGPUreservation and its full192/backup milestone remains complete. Before any later voice allocation reconcile actual8385651 state and association/QoS; no need to cancel valid Remora work. Its12GPUh is requested maximum, not actual usage or new budget granted by this chat. Wholeaward snapshot and voice experiment accounting remain separate. No training/evaluation replay or newvoicejob.
+
+---
+
 # LOCAL — Full comparison and independent backup COMPLETE; next substantial training design ready
 
 13November: final archive publisher **67868 exited0**. All52525entries/1613572550bytes match the full source manifest on independentLustre at /projects/u6ada/duplex-live/native-moshi-evaluation-backup-v1/job-8366795. Manifest SHA256 **f79f72b8f14daa90a6f968cb10e5e29db45659103e7a1777059ad1caef97e482**. Publisher source **53b38279a13216bc7b2ed5cc96918a5c0b636eda**, historical worktree source-eval-archive-2a6ade6. Small manifest/receipt retrieved by actualrsync0 and localmanifestSHA/count/bytes checked. No helper remainslive. Old13709/54146/29775 are terminal failures, not retry handles. One0byte rsync temp is preserved in siblingquarantine; original tree untouched.29775 had already passed complete source/destination equality and written the manifest, then receipt-only Python36 text=True failed. Finalizer used that exact pinned manifest plus fresh full destination verification and independent-filesystem check; no verification fabricated or repeated GPU work.

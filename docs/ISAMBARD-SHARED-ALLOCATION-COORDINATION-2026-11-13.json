@@ -1,0 +1,44 @@
+{
+  "recorded_UTC": "2026-11-13T12:13:23Z",
+  "award": "AIRR Homunculus 20000 GPU-hours",
+  "account": "brics.u6ada",
+  "owner_authorization_evidence": {
+    "thread": "01a17447-3cd3-74f1-b096-068f4bb6b91f",
+    "human_message": "01a1d4c2-c6fe-7560-915a-41ab6ae17056",
+    "scope": "Prepare first Isambard experiment coordinating GPU allocation with duplex chat"
+  },
+  "last_direct_queue_check": {
+    "UTC": "2026-11-13T12:11:04Z",
+    "jobs": []
+  },
+  "duplex": {
+    "current_GPU_job": null,
+    "future_GPU_reservations": [],
+    "completed_evaluation": "8366795",
+    "matched_experiment_actual_GPU_hours": 77.95361111111112,
+    "whole_award_usage_not_equal_to_experiment_usage": true
+  },
+  "remora": {
+    "job_id": "8385651",
+    "name": "remora-context-v1",
+    "partition": "workq",
+    "GPUs": 1,
+    "maximum_wall_hours": 12,
+    "maximum_requested_GPU_hours": 12,
+    "reported_state": "PENDING",
+    "state_source": "Owner-authorized Remora chat report; not a fresh direct Slurm observation",
+    "actual_start": null,
+    "actual_end": null,
+    "actual_GPU_hours": null,
+    "root": "/projects/u6ada/remora/context-v1-20261113",
+    "synthetic_rows": 6320,
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "planned_updates": 400,
+    "method": "LoRA SFT followed by reloaded audit; not RL",
+    "private_telemetry": false,
+    "voice_assets_modified": false,
+    "monitoring_owner": "Remora chat"
+  },
+  "coordination": "Before later voice submission reconcile actual8385651 state, association/QoS and planned allocation. No duplicate monitoring/submission, cancellation, implied budget grant or GPU-hour reset."
+}
