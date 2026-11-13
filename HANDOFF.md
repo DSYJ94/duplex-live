@@ -1,3 +1,9 @@
+# LOCAL — Distributed checkpoint envelope added; research/harness continuity explicit
+
+New distributed_state.py adds collective lineage/update agreement, immutable model/Adam publication and per-rank RNG/OPAL envelopes. Compiles locally; distributed execution/restore tests and trainer integration remain outstanding. No new GPU/native updates or model adoption. Existing saved states untouched. Research continuity is explicit in docs/NATIVE-DISTRIBUTED-RESEARCH-CONTINUITY-2026-11-13.md: preserve OPAL programs/diagnostics/RNG, MiRL TRAIN-failure branch, native GRPO, full-tuning/CPT/growth comparisons and all existing native/backend/listening/latency harnesses. KEEP/API0 remains current; no autonomous rewriting/native RL claimed active. Continue actual checkpoint restore integration and broader native data qualification before training admission.
+
+---
+
 # LOCAL — Distributed build executable slice and source intake verified; no new GPU training
 
 Actual producer **7aea19aa73fdbf463f908ad7fcf2b3b54ea91b31**, deployed cleanIsambard worktree/projects/u6ada/duplex-live/source-distributed-native-bd9b9b7. Native forward routing/full-LM FSDP/broadadapter DDP/state helpers and collective streaming plan implemented; existing training/math/control files unchanged. Actualcontainer tool62255 exited0:10testsPASS and real2-process CPU Gloo gradient-accumulation proofPASS against global-mean reference, exact rankparameter agreement. Onlytoyfixture2updates; ZERO actual native/GPUupdates. Earlier4245 was a fixturetarget-layout failure, preserved in buildledger; corrected andpassed. No live testprocess/job remains. FullCUDAFSDP/completeRNGOPALnative restore NOT yet approved orimplemented endtoend. Never call this trainingrunning.
