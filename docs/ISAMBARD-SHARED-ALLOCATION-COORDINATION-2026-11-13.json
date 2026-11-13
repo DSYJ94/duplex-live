@@ -19,7 +19,7 @@
     "whole_award_usage_not_equal_to_experiment_usage": true
   },
   "remora": {
-    "job_id": "8385651",
+    "job_id": "8385685",
     "name": "remora-context-v1",
     "partition": "workq",
     "GPUs": 1,
@@ -30,7 +30,7 @@
     "actual_start": null,
     "actual_end": null,
     "actual_GPU_hours": null,
-    "root": "/projects/u6ada/remora/context-v1-20261113",
+    "root": "/projects/u6ada/remora/context-v2-20261113",
     "synthetic_rows": 6320,
     "model": "Qwen/Qwen3-4B-Instruct-2507",
     "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
@@ -38,7 +38,23 @@
     "method": "LoRA SFT followed by reloaded audit; not RL",
     "private_telemetry": false,
     "voice_assets_modified": false,
-    "monitoring_owner": "Remora chat"
+    "monitoring_owner": "Remora chat",
+    "previous_job": "8385651",
+    "repair": "Remora-only configuration disables unused Apex; complete Trainer import and6320 data/tokenizer checks reportedly pass CPU; original voice runtime unchanged"
   },
-  "coordination": "Before later voice submission reconcile actual8385651 state, association/QoS and planned allocation. No duplicate monitoring/submission, cancellation, implied budget grant or GPU-hour reset."
+  "coordination": "Before later voice submission reconcile actual8385651 state, association/QoS and planned allocation. No duplicate monitoring/submission, cancellation, implied budget grant or GPU-hour reset.",
+  "remora_history": [
+    {
+      "job_id": "8385651",
+      "reported_state": "FAILED",
+      "reported_exit": "1:0",
+      "elapsed_seconds": 29,
+      "GPUs": 1,
+      "elapsed_allocation_GPU_hours": 0.008055555555555555,
+      "optimizer_updates": 0,
+      "model_loaded": false,
+      "failure": "Optional inherited Apex amp import, before model load",
+      "evidence_source": "Remora chat report; not fresh direct provider verification"
+    }
+  ]
 }

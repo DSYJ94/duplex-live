@@ -1,3 +1,9 @@
+# Shared allocation update — Remora8385651 failed before model; retry8385685 reported PENDING
+
+Remora monitoring owner reports8385651 FAILED1:0 after29s/1GPU (~0.00806elapsedGPUh), optionalApex import beforemodel/run directory/optimizerupdates. Original log/source preserved. Remora-only nativeBF16 configuration repair passes completeTrainerimport+6320data/tokenizer CPU checks; no voice/runtimecontainer change. Separate8385685 submitted1GPU/max12h, reportedPENDING, root/projects/u6ada/remora/context-v2-20261113. These are reported states, not fresh directSlurmverification in duplex. Remora owns monitoring. Sharedledger retainsfailedattempt andnewjob; no duplicate training or voice allocation. Reconcile8385685 before latervoiceGPUsubmission.
+
+---
+
 # Shared allocation update — Remora8385651 reported PENDING; no new voice job
 
 Owner-authorized Remora chat reports actual submission **8385651/remora-context-v1**, brics.u6ada/workq, ONEGPU/max12hours. ReportedPENDING; actualstart/end/GPUh unverified. Isolated public/synthetic6320-row Qwen3-4B LoRA400update experiment, no private telemetry/RL or voice-file changes. Source/model/runtime/data at /projects/u6ada/remora/context-v1-20261113; exactmodelrevision and authority evidence in docs/ISAMBARD-SHARED-ALLOCATION-COORDINATION-2026-11-13.json. Remora chat owns monitoring/accounting and will report changes; do not duplicate its job or monitor.
