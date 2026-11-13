@@ -7,14 +7,15 @@ from . import reasoning_audio1072 as renderer
 
 def main():
     p=argparse.ArgumentParser()
-    for name in ('plan','inventory','key-file','out'):p.add_argument('--'+name,type=Path,required=True)
+    for name in ('plan','inventory','originals','key-file','out'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--user-rp-voice',action='store_true')
     a=p.parse_args();inventory=json.loads(a.inventory.read_text());plan=json.loads(a.plan.read_text())
     if not inventory['complete'] or len(inventory['rows'])!=2144:raise ValueError('Complete original inventory required')
     failed={r['id'] for r in inventory['rows'] if not r['raw_peak_pass']}
     if not failed:raise ValueError('No diagnosed raw peak failures')
     # Reuse renderer's credit, receipt and ambiguity protections. Its complete
     # cohort remains2144: unchanged artifacts are linked in a NEW version.
-    original=a.inventory.parent.parent/'native-reasoning-audio1072-20261113-v1'
+    original=a.originals
     if not original.is_dir():raise ValueError('Original immutable collection missing')
     a.out.mkdir(parents=True,exist_ok=True)
     for row in plan['exact_speech_payloads']:
@@ -25,10 +26,11 @@ def main():
             if not target.exists():target.symlink_to(source)
             elif not target.is_symlink() or target.resolve()!=source:raise ValueError('Unexpected replacement')
     lineage=a.out/'repair-lineage.json'
-    expected=dict(original=str(original.resolve()),repaired_ids=sorted(failed),reason='raw_peak_above_0.995',words_changed=False,gain_changed=False,whole_cohort_required=2144)
+    expected=dict(original=str(original.resolve()),repaired_ids=sorted(failed),reason='raw_peak_above_0.995',words_changed=False,gain_changed=False,whole_cohort_required=2144,user_RP_voice=a.user_rp_voice)
     if lineage.exists():
         if json.loads(lineage.read_text())!=expected:raise ValueError('Repair identity changed')
     else:renderer.write(lineage,expected)
+    if a.user_rp_voice:renderer.VOICES=dict(renderer.VOICES,user=renderer.VOICES['assistant'])
     with patch.object(sys,'argv',['renderer','--plan',str(a.plan),'--key-file',str(a.key_file),'--out',str(a.out)]):renderer.main()
 
 

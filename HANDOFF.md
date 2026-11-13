@@ -1,3 +1,15 @@
+# LOCAL — Complete2144 ASR retrieved; peak repairs versioned; complete semantic review51970 LIVE
+
+8408781 actualterminal0 ended1794609619.2665484, ALL2144 audited,1197 pass word+peak,913 word-only failures/28peak-only/6both, nativeupdates0. Original report/records local runs/audio1072-qualification-submission-v1/results. No passing-subset acceptance. Remora8408812 now owns nextGPU withafterany8408781; no voiceGPU reserved. Alloldstates/backups preserved.
+
+Peak34 actualPCM inspected, originalwords/WAV/receipts preserved. Newversion v2 rerenderedONLY34 usingincludedcredits,29pass;v3 rerenderedONLY5,4pass; v4 rerendersONEpersistentAlicepeak source usingexistingapprovedBritishRPBen (voice changeexplicitinrepair-lineage). ONE v4writer tool48535 live/observe; no repeatedrequests/normalization/thresholdchange. Full2144 newinventory stillrequired andchanged34 independentASRpending. Audio/semanticcollection NOTapprovedfortraining.
+
+ONE full1072 independentAstrareview tool51970 LIVE, sourceac254f0, outputruns/native-reasoning-audio1072-semantic-v1.67batches/16records/concurrency2, no automaticretries. Officialcurrent10USDinput/50USDoutputper1M verifiedmodelpage; fullworstreservation41.23521USD<approved100; allspeechusesincludedcredits/cash0. Exactoriginalapprovedquestions/responses +recognizedsyntheticwords only, credentialsremainMac. Earlyreview448/1072 allsemanticpass; laterGSMnotyetreviewed, neverinferwholepass. OriginalASR947fail includesmath-symbolspeech/orthographyandrealworderrors; rawGSMexplanation contradictionobserved. Diagnose completeoriginalsemanticresults beforebroadre-recording; don'tspendcredits repeatingbadtext.
+
+New distributed_expanded_objective.py implements declared equal-example globalmean text/native8headacousticSFT, zero-masspadding ranksstillparticipate, retainedlosses unchanged/no inventedRETtargets. Compilationonly/nativeCUDAandfullstateadmission stillrequired; nottrainingready. OPALKEEP/fullregistry intact. Goalunfinished: finish semantic/source repairs/native conversion/fullFSDPadmission and newstudenttraining, noold196replay. Currenttempcheckoutmain; sourcechangescommitted/pushedrelevantonly.
+
+---
+
 # LOCAL — Audio audit recovery8408781 submitted; completed1343 reused
 
 8400573 actually ended1 after1343/2144 records: Whisper timestamp decoder TypeError float/None in chunk merge. All existing source-bound audit records preserved. Source689cecbb8 Git-deployed via bundle to source-audio1072-689cecb. Recovery8408781 actualsbatchreceipt,1GPU/max1h/no-requeue, reuses1343 completedrecords; catches ONLY matching decoderTypeError as explicit word_passfalse/error record and continues whole2144. No threshold changes/subsetacceptance/nativeoptimizerupdates. Freshqueueempty before submission; Remora8400058 reportedcompleted750steps/3642GPU-seconds; coordinationnotifiednew8408781 toprevent overlap. Neverresubmit8408781 on observationtimeout.
