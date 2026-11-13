@@ -25,14 +25,16 @@ def inventory(root):
         if any(part in {'.private', 'owner', 'conversations'} or part.endswith('.env') for part in p.relative_to(root).parts):
             raise ValueError('Private path refused')
         if p.is_symlink():
-            raise ValueError('Evaluation backup must contain regular files only')
+            # Preserve runtime link text without following it into system paths.
+            rows.append(dict(path=name, kind='symlink', target=os.readlink(p), bytes=0))
+            continue
         if p.is_file():
             before = p.stat()
             digest = sha(p)
             after = p.stat()
             if (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns):
                 raise ValueError('Evaluation source changed during inventory')
-            rows.append(dict(path=name, bytes=after.st_size, sha256=digest))
+            rows.append(dict(path=name, kind='file', bytes=after.st_size, sha256=digest))
     return rows
 
 
