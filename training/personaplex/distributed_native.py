@@ -121,18 +121,31 @@ class DistributedNative:
     def full_state(self, optimizer):
         """Collective on ALL ranks. Only rank0 writes returned full CPU state."""
         if not self.sharded:
-            return dict(model=self.wrapped.module.state_dict(), optimizer=optimizer.state_dict())
+            learned = {n: p.detach().cpu().clone() for n, p in self.wrapped.module.named_parameters() if p.requires_grad}
+            return dict(method=self.method, ownership=self.ownership, model=learned,
+                        optimizer=cpu_state(optimizer.state_dict()))
         from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
         from torch.distributed.fsdp import StateDictType, FullStateDictConfig, FullOptimStateDictConfig
         with FSDP.state_dict_type(self.wrapped, StateDictType.FULL_STATE_DICT,
                                   FullStateDictConfig(offload_to_cpu=True, rank0_only=True),
                                   FullOptimStateDictConfig(offload_to_cpu=True, rank0_only=True)):
-            return dict(model=self.wrapped.state_dict(), optimizer=FSDP.optim_state_dict(self.wrapped, optimizer))
+            return dict(method=self.method, ownership=self.ownership, model=self.wrapped.state_dict(),
+                        optimizer=FSDP.optim_state_dict(self.wrapped, optimizer))
 
     def load_full_state(self, state, optimizer):
         """ALL ranks receive the same checkpoint; never use adapter-only restore."""
+        if state.get('method') != self.method or state.get('ownership') != self.ownership:
+            raise ValueError('Exact distributed method and parameter ownership required')
         if not self.sharded:
-            self.wrapped.module.load_state_dict(state['model'], strict=True)
+            selected = {n: p for n, p in self.wrapped.module.named_parameters() if p.requires_grad}
+            if selected.keys() != state['model'].keys():
+                raise ValueError('Exact complete adapter state required')
+            for name, p in selected.items():
+                value = state['model'][name]
+                if value.shape != p.shape or value.dtype != p.dtype or not torch.isfinite(value).all():
+                    raise ValueError('Invalid learned state: ' + name)
+            with torch.no_grad():
+                for name, p in selected.items(): p.copy_(state['model'][name].to(p.device))
             optimizer.load_state_dict(state['optimizer'])
             return
         from torch.distributed.fsdp import FullyShardedDataParallel as FSDP, StateDictType, FullStateDictConfig
@@ -140,3 +153,11 @@ class DistributedNative:
                                   FullStateDictConfig(offload_to_cpu=True, rank0_only=False)):
             self.wrapped.load_state_dict(state['model'], strict=True)
         optimizer.load_state_dict(FSDP.optim_state_dict_to_load(self.wrapped, optimizer, state['optimizer']))
+
+
+def cpu_state(value):
+    if torch.is_tensor(value): return value.detach().cpu().clone()
+    if isinstance(value, dict): return {k: cpu_state(v) for k, v in value.items()}
+    if isinstance(value, list): return [cpu_state(v) for v in value]
+    if isinstance(value, tuple): return tuple(cpu_state(v) for v in value)
+    return value

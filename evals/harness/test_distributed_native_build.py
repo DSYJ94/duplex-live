@@ -58,4 +58,30 @@ class NativeBuild(unittest.TestCase):
         with self.assertRaises(ValueError): NativeDispatch(ToyNative())('bad', torch.ones(1, 4))
 
 
+    def test_real_gloo_adapter_save_restore_does_not_duplicate_frozen_base(self):
+        import tempfile
+        from pathlib import Path
+        import torch.distributed as dist
+        from training.personaplex.distributed_native import DistributedNative
+        with tempfile.TemporaryDirectory() as folder:
+            dist.init_process_group('gloo', init_method='file://' + str(Path(folder)/'rendezvous'), rank=0, world_size=1)
+            try:
+                initial=ToyNative(); other=copy.deepcopy(initial)
+                runtime=DistributedNative(initial,'broad-lora64','cpu')
+                opt=torch.optim.AdamW(runtime.parameters(),lr=1e-3)
+                x=torch.randn(1,2,4)
+                runtime.view.forward_codes(x)[1].square().mean().backward()
+                runtime.clip_grad_norm(1.); opt.step()
+                state=runtime.full_state(opt)
+                self.assertTrue(all('.lora_' in n for n in state['model']))
+                restored=DistributedNative(other,'broad-lora64','cpu')
+                other_opt=torch.optim.AdamW(restored.parameters(),lr=1e-3)
+                restored.load_full_state(state,other_opt)
+                torch.testing.assert_close(runtime.view.forward_codes(x)[1],restored.view.forward_codes(x)[1],rtol=0,atol=0)
+                self.assertEqual(len(other_opt.state_dict()['state']),len(opt.state_dict()['state']))
+                invalid=dict(state,model={})
+                with self.assertRaises(ValueError):restored.load_full_state(invalid,other_opt)
+            finally: dist.destroy_process_group()
+
+
 if __name__ == '__main__': unittest.main()
