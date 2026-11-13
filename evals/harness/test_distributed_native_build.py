@@ -10,7 +10,7 @@ from training.personaplex.distributed_native import NativeDispatch, NativeView, 
 class ToyNative(nn.Module):
     def __init__(self):
         super().__init__()
-        self.transformer = nn.Module(); self.transformer.layers = nn.ModuleList([nn.Linear(4, 4)])
+        self.transformer = nn.Module(); self.transformer.layers = nn.ModuleList([nn.Sequential(nn.Linear(4, 4))])
         self.depformer = nn.Module(); self.depformer.layers = nn.ModuleList([nn.Linear(4, 4)])
         self.text_linear = nn.Linear(4, 8)
     def forward_codes(self, x):
