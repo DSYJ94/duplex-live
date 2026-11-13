@@ -99,6 +99,8 @@ def finalize_verified_stage(expected_manifest_sha):
     manifest = stage / 'archive-inventory.json'
     if DEST.exists() or sha(manifest) != expected_manifest_sha:
         raise ValueError('Exact unpublished post-equality manifest required')
+    if not independent_filesystems(ROOT, stage):
+        raise ValueError('Independent final destination filesystem required')
     value = json.loads(manifest.read_text())
     if value['source'] != str(ROOT) or value['producer'] != PRODUCER or value['job_id'] != JOB:
         raise ValueError('Exact completed evaluation lineage required')
