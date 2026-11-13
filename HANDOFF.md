@@ -1,3 +1,11 @@
+# LOCAL — Audio account credit admission progressed; native modality direction confirmed
+
+Actual read-onlyElevenLabs subscription/modelAPI checks succeeded usingonlypreviouslyauthorizedexistinglocalkey, nocredentialoutput/copy/transfer. Creator204095includedcreditsremain (used5703/limit209798), overage disabled. Actualaccountmodel_rates.character_cost_multiplier=0.5 forv4Turbo/Flash2.5/Turbo2.5;2144utterances319491charactersneedbase159745.5credits, with20%reserve191694.6<204095. Wholebasecohortfitsexistingcredits; approvedvoiceIDs/voice-specificfees stillmustbindbeforefirstgeneration. NOspeechgeneration/APIsemanticreview/audioqualification/trainingclaimyet. Ledger NATIVE-REASONING-AUDIO1072-CREDIT-ADMISSION-2026-11-13.json. Owner100USDcap/nopurchase/topup intact.
+
+Owner wants intelligentnativeaudioforeground+asynccomplexreasoner: architecture remainsnativeMoshi/PersonaPlex, withtext/knowledgelearning+speechexposure+separateinteraction/routingtraining, notvoiceimitationassoleintelligence. Currentmodalitystrategyrecorded. Continuevoicefee/renderercheckthenwholebatchqualification alongsideGPUFSDP/nativeobjectiveadmission; noold196replay. Remora coordination saysnonewvoice-reservationconflict; freshcheckactualsharedqueuebeforeallocation.
+
+---
+
 # LOCAL — Reasoning-modality plan clarified from official architecture sources
 
 Owner asks whetheraudio is right mediumforreasoning. New NATIVE-REASONING-MODALITY-STRATEGY-2026-11-13.md separatestext/knowledge learning, native speechalignment andinteraction/task-lifecycle training. Approved1072audio corpus isboundedalignment/transfer corpus, notsolegeneralreasoningstrategy;100USD/creditsfirst/no purchase unchanged. NativeMoshi textconditioning mustbevalidated, notassumedordinarychat. GPT-Live/TMLpublicsources support intelligentforeground+asynchronousbackground; theirfulltrainingrecipesunknown. No APIcall/audioapproval/GPUtraining claimed. ContinueCUDAFSDP/objectivestateadmission andcredits/pricesqualification; preserveold196states andOPAL.

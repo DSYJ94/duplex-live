@@ -1,0 +1,24 @@
+{
+  "actual_subscription_read": true,
+  "tier": "creator",
+  "used_credits": 5703,
+  "included_limit": 209798,
+  "available_credits": 204095,
+  "overage_enabled": false,
+  "approved_characters": 319491,
+  "model_rates": {
+    "eleven_v4_turbo": 0.5,
+    "eleven_flash_v2_5": 0.5,
+    "eleven_turbo_v2_5": 0.5
+  },
+  "base_required_credits": 159745.5,
+  "base_requirement_plus_20_percent": 191694.6,
+  "base_cohort_fits_existing_credits": true,
+  "voice_specific_fee_check_pending": true,
+  "whole_collection_render_admitted": false,
+  "provider_generation_calls": 0,
+  "owner_USD_cap": 100,
+  "no_purchase": true,
+  "no_topup": true,
+  "keys_printed_or_transferred": false
+}
