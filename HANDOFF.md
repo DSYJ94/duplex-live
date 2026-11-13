@@ -1,3 +1,9 @@
+# LOCAL — Reasoning-modality plan clarified from official architecture sources
+
+Owner asks whetheraudio is right mediumforreasoning. New NATIVE-REASONING-MODALITY-STRATEGY-2026-11-13.md separatestext/knowledge learning, native speechalignment andinteraction/task-lifecycle training. Approved1072audio corpus isboundedalignment/transfer corpus, notsolegeneralreasoningstrategy;100USD/creditsfirst/no purchase unchanged. NativeMoshi textconditioning mustbevalidated, notassumedordinarychat. GPT-Live/TMLpublicsources support intelligentforeground+asynchronousbackground; theirfulltrainingrecipesunknown. No APIcall/audioapproval/GPUtraining claimed. ContinueCUDAFSDP/objectivestateadmission andcredits/pricesqualification; preserveold196states andOPAL.
+
+---
+
 # LOCAL — Complete1072 audio/semantic collection APPROVED with100USD cap; credits first
 
 Owner explicitly approved proposed2144speechutterances/319491characters plus1072independentsemanticreviews at **100USD maximum**, replacingproposed150. Useexistingcreditsfirst; no purchase/topup. Exactsourceplanupdated NATIVE-REASONING-AUDIO1072-SOURCE-PLAN-2026-11-13.json. Beforeanycalls reconcilecurrentprovidercredits/prices andreservewholecohortwithin100; ifunfit preparecheaperwholecohortroute, neveracceptpassingsubset. Onlyexistingauthorizedkeys/approvedBritishvoices, noowner/officialTESTdata. No calls/audioqualification/traininglaunchclaimyet.

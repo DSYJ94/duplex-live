@@ -1,0 +1,16 @@
+# Reasoning, speech alignment and interaction are separate learning targets
+
+Spoken maths imitation is useful cross-modal alignment, not a sufficient standalone strategy for improving general reasoning. Preserve the approved1072 audio collection as a bounded alignment/transfer corpus; do not describe it as pretraining a capable reasoner or as a control/routing curriculum. Existing100USD/credits-first/no-purchase limits remain unchanged. No provider request or qualified native training is claimed by this note.
+
+The recommended programme learns knowledge/reasoning from verified text/rationales and broader domain data using compatible full/selective LM tuning or continued pretraining, retains speech rehearsal, and tests transfer with paired text-accessible and spoken questions where the architecture supports the intervention. Do not assume Moshi accepts ordinary text chat as an equivalent input: define and validate its native text-stream conditioning first. Failure on spoken input alone cannot isolate perception, reasoning, alignment or decoder defects.
+
+Then aligned user/assistant audio teaches access to that competence through speech, pronunciation and concise spoken explanations. Separate interaction examples and waveform/task rewards teach silence/release, interruption, pause/resume, calibrated delegation and actual asynchronous receipts/cancellation. A routing policy needs competent basic comprehension and uncertainty judgment, not merely a request token. Existing native history/KL/hidden/fit15 objectives and OPAL state remain protected.
+
+Weights do not contain clean separate boxes for reasoning versus voice/behavior. Language/semantic and audio components have different roles but training can interfere across them; amplitude also reflects decoder/recording/playback and is not solely a knowledge-weight problem. Do not silently normalize clipped outputs or use agreement with generated text as answer correctness.
+
+Primary public evidence:
+- [GPT-Live prompting](https://developers.openai.com/api/docs/guides/live-prompting): live frontend listens/speaks and requests backend reasoning/tool work asynchronously. Public runtime documentation does not disclose the complete training corpus/recipe.
+- [Thinking Machines interaction models](https://thinkingmachines.ai/blog/interaction-models/): native multimodal microturn interaction model with asynchronous sustained-reasoning background model; foreground also described as intelligent. Their from-scratch route is not proof we need scratch training or can reproduce their training within our allocation.
+- [Moshi paper](https://arxiv.org/abs/2410.00037): joint speech/text generation with time-aligned text preceding associated audio. Its Inner Monologue is a text/speech mechanism, not proof of hidden mathematical chain-of-thought or frontier reasoning.
+
+Next implementation: complete native CUDA/FSDP restore/objective admission; maintain an explicit text-learning versus speech-transfer comparison in the substantive phase; qualify the1072 speech collection under current credits/prices before rendering; broaden beyond maths and add real connected routing/control data. Additional backbone parameters remain an experimental arm. No completed196-update lineage is repeated.
