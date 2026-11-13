@@ -1,3 +1,13 @@
+# LOCAL — Retrieval needs certificate renewal; last verified evaluation154/192
+
+13 November11:03UTC: original observer69544 is no longer available. Its durable log last verified **8366795 RUNNING at12Nov23:48:11UTC**, with baseline32+narrow32+broad13 for each foundation: **154/192 complete**. Both narrow reports exist. Observer later recorded SSH255/broken-pipe at13Nov01:05:15UTC. This connection failure does not establish native job failure. Current terminal/comparison outcome remains UNKNOWN. Never resubmit or repeat training based on lost monitoring.
+
+Actual local certificate expired13Nov03:19:43UTC; fresh boundedSSH returned255/publickey denied. ONE new official Clifton renewal45293 is waiting for owner sign-in; official fresh link supplied to owner, no browser-origin bypass. Next: finish same renewal, inspect actual8366795 Slurm terminal/comparison and all six reports, retrieve only needed output/review metadata, independently back up new artifacts and score reasoning separately from speech. Existing four196 checkpoints and original76 outputs were preserved. No job/weight changes made this turn.
+
+Source remains ebd71281829150e855b738dd8ed4e1262e714cb5, original112GPUh/interval12/max13800seconds unchanged, no automatic13. Actual final elapsed/cost remains unverified until provider access. Goal active; immediate human sign-in blocker, not model failure or completed comparison. Temp checkout /private/tmp/duplex-recovery-20261112; OneDrive writes permitted but unrelated files untouched.
+
+---
+
 # LOCAL — Corrected evaluation recovery 8366795 is running; 76 outputs reused
 
 The single submit controller 57584 exited successfully after all host staging and the actual inference-container staging check passed. All 76 saved outputs are copied and hash-verified before GPU allocation; the container no longer needs rsync. Actual sbatch returned job **8366795**, source **ebd71281829150e855b738dd8ed4e1262e714cb5**. Fresh Slurm observation: RUNNING, nid010084, elapsed 23 seconds. Allocation is confirmed; new model outputs are not yet confirmed. No training/calibration is repeated and all four trained196 states remain preserved.

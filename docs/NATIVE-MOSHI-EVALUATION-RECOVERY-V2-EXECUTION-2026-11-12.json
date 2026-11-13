@@ -1,5 +1,5 @@
 {
-  "status": "SUBMITTED_ACTUAL_SLURM_RUNNING",
+  "status": "FINAL_OUTCOME_UNVERIFIED_LOCAL_CERTIFICATE_EXPIRED",
   "job_id": "8366795",
   "source": "ebd71281829150e855b738dd8ed4e1262e714cb5",
   "training_job": "8317068",
@@ -21,7 +21,7 @@
   "provider_TTL_seconds": 150,
   "local_TTL_seconds": 45,
   "storage_TTL_seconds": 120,
-  "observer_tool_session": 69544,
+  "observer_tool_session": null,
   "last_Slurm_state": "RUNNING",
   "node": "nid010084",
   "comparison_complete": false,
@@ -32,5 +32,22 @@
     "submission/command.json": "bf9cfc7a50e708c6eb7010af0dce458fa178b95ff760f88ef5ceae49ce55e5d5",
     "submission/job.json": "0b0ccc3c4631417179db89a081b54dd02e78aabefb94a19097aa0f75f8b3b55c",
     "submission/response.json": "fcee067b93e88bd233d40e32017bcc2d173a3d018d99ae52966f41451315840b"
-  }
+  },
+  "observer_closed": true,
+  "last_verified_output_UTC": "2026-11-12T23:48:11.131657Z",
+  "last_verified_counts": {
+    "personaplex-baseline": 32,
+    "personaplex-narrow": 32,
+    "personaplex-broad": 13,
+    "context-spanning-baseline": 32,
+    "context-spanning-narrow": 32,
+    "context-spanning-broad": 13
+  },
+  "last_verified_total": 154,
+  "monitor_connection_failure_UTC": "2026-11-13T01:05:15.473323Z",
+  "access_check_UTC": "2026-11-13T11:03:20Z",
+  "access_check_exit": 255,
+  "certificate_expired_UTC": "2026-11-13T03:19:43Z",
+  "current_remote_state": "UNKNOWN",
+  "renewal_tool_session": 45293
 }
