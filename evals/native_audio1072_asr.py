@@ -25,9 +25,15 @@ def main():
         else:
             audio,sr=sf.read(path,dtype='float32')
             if sr!=16000 or audio.ndim!=1:raise ValueError('Original16000Hz mono required')
-            out=pipe(dict(array=audio,sampling_rate=sr),return_timestamps='word',generate_kwargs=dict(language='en',task='transcribe',do_sample=False))
-            error=wer(' '.join(words(source['text'])),' '.join(words(out['text'])))
-            value=dict(id=source['id'],fold=source['fold'],source_sha256=row['sha256'],source_words=source['text'],recognized=out['text'],words=out.get('chunks',[]),WER=error,word_pass=error<=.05,peak_pass=row['raw_peak_pass'],native_training_approved=False)
+            try:
+                out=pipe(dict(array=audio,sampling_rate=sr),return_timestamps='word',generate_kwargs=dict(language='en',task='transcribe',do_sample=False))
+                error=wer(' '.join(words(source['text'])),' '.join(words(out['text'])))
+                value=dict(id=source['id'],fold=source['fold'],source_sha256=row['sha256'],source_words=source['text'],recognized=out['text'],words=out.get('chunks',[]),WER=error,word_pass=error<=.05,peak_pass=row['raw_peak_pass'],native_training_approved=False)
+            except TypeError as exc:
+                # Preserve decoder failures as failed records; never approve a subset.
+                if "NoneType" not in str(exc):
+                    raise
+                value=dict(id=source['id'],fold=source['fold'],source_sha256=row['sha256'],source_words=source['text'],recognized=None,words=[],WER=None,word_pass=False,peak_pass=row['raw_peak_pass'],decoder_error=repr(exc),native_training_approved=False)
             with dest.open('x') as f:json.dump(value,f,indent=2);f.write('\n')
         results.append(value)
         print(json.dumps(dict(completed=len(results),required=2144)),flush=True)
