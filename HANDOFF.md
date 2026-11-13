@@ -1,3 +1,9 @@
+# Shared allocation — Remora audit closed; no reservation, product acceptance rejected
+
+Monitoring owner reports8386702 COMPLETED0:0/346s/1GPU/zero updates; totalRemora1815GPU-seconds=0.504167GPUh including29sfailedstartup+1440sSFT. No futurejob/reservation. Audit16/16original but36/64freshcounterexamples, missing-context0/8 andmetadata-only0/8; notproductqualified, noadoption. Originalbaseline2/160 was schema-confounded (posthoc30/160); prior160/160mustnotbeusedasproductsuccess. Accumulationdefectpreserved/future-sourcefixonly. These are Remora-reported results, not independentduplexevaluation. Recheck actualqueue beforeduplexallocation. Voiceintegration/data/statework remainsunfinished; do not replay oldtraining.
+
+---
+
 # LOCAL — Retained objective collective integration added; launch still pending complete state/data admission
 
 New distributed_objective.py routes the unchanged matched Objective through DistributedNative.view. All ranks must agree on the identical retained exposure sequence before any model forward, preventing unequal recorded-call collectives. Existing per-member/group weights remain unchanged; no implicit accumulation/world-size divisor is added. No old loss/data/source approval modified, no optimizer updates or GPU submission. Compilation only; actual native integration test and OPAL sharded clipping/state ownership still required before launch. New-data partitioning needs its own declared normalization rather than copying replicated retention semantics.

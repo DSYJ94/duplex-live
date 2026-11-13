@@ -66,17 +66,23 @@
       "evidence_source": "Remora chat report; not fresh direct provider verification"
     }
   ],
-  "remora_total_reported_GPU_hours": 0.40805555555555556,
+  "remora_total_reported_GPU_hours": 0.5041666666666667,
   "remora_future_reservations": [],
   "remora_audit": {
     "job_id": "8386702",
     "GPUs": 1,
     "maximum_wall_hours": 1,
-    "state": "SUBMITTED_REPORTED",
+    "state": "COMPLETED_REPORTED",
     "actual_start": null,
-    "actual_GPU_hours": null,
+    "actual_GPU_hours": 0.0961111111111111,
     "training_updates": 0,
     "root": "/projects/u6ada/remora/context-audit-20261113",
-    "monitoring_owner": "Remora chat"
+    "monitoring_owner": "Remora chat",
+    "reported_exit": "0:0",
+    "elapsed_seconds": 346,
+    "new_counterexamples_exact": 36,
+    "new_counterexamples_total": 64,
+    "original_cases_reproduced": 16,
+    "product_qualified": false
   }
 }
