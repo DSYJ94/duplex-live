@@ -67,5 +67,16 @@
     }
   ],
   "remora_total_reported_GPU_hours": 0.40805555555555556,
-  "remora_future_reservations": []
+  "remora_future_reservations": [],
+  "remora_audit": {
+    "job_id": "8386702",
+    "GPUs": 1,
+    "maximum_wall_hours": 1,
+    "state": "SUBMITTED_REPORTED",
+    "actual_start": null,
+    "actual_GPU_hours": null,
+    "training_updates": 0,
+    "root": "/projects/u6ada/remora/context-audit-20261113",
+    "monitoring_owner": "Remora chat"
+  }
 }

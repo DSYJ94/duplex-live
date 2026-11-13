@@ -1,3 +1,9 @@
+# Shared allocation — audit8386702 reported submitted; accumulation warning retained
+
+Remora reports1GPU/max1h read-onlyaudit8386702 at/projects/u6ada/remora/context-audit-20261113; monitoring remainsitsowner, no voiceGPUreservation. Reconcileactualstatebeforevoiceallocation. Remora's tinyHFTrainer probe reportedly found8xaccumulationnormalization bug; originalstatespreserved/downgraded, no trainingreplay. Duplexusesdifferentnativeobjective; no inferenceofsamebug. Researchcontinuitynote nowrequires fullnativeglobal-reference accumulation parity includinguneventargetcounts/retention/rankpartitioning. ExistingCPUtwo-rankfixturePASSdoesnotreplacefullnativeproof. No voiceGPUjob/newupdates.
+
+---
+
 # LOCAL — Distributed checkpoint envelope added; research/harness continuity explicit
 
 New distributed_state.py adds collective lineage/update agreement, immutable model/Adam publication and per-rank RNG/OPAL envelopes. Compiles locally; distributed execution/restore tests and trainer integration remain outstanding. No new GPU/native updates or model adoption. Existing saved states untouched. Research continuity is explicit in docs/NATIVE-DISTRIBUTED-RESEARCH-CONTINUITY-2026-11-13.md: preserve OPAL programs/diagnostics/RNG, MiRL TRAIN-failure branch, native GRPO, full-tuning/CPT/growth comparisons and all existing native/backend/listening/latency harnesses. KEEP/API0 remains current; no autonomous rewriting/native RL claimed active. Continue actual checkpoint restore integration and broader native data qualification before training admission.
