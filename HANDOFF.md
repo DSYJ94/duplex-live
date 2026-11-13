@@ -1,3 +1,11 @@
+# LOCAL — Replacement institutional renewal15727 pending; browser origin blocked
+
+Owner replied done, but original renewal45293 saved no certificate after more than five minutes; freshSSH still255 and certificate unchanged/expired. Exact local authPID86743 was inspected and stopped; no cluster job or model process was touched. ONE replacement renewal **15727** is now live, official fresh device link supplied to owner. Never poll old45293 as live or start a duplicate renewal.
+
+Owner requests automatic browser opening next time. Actual Chrome create-tab attempt was rejected by saved browser security permission for keycloak.isambard.ac.uk. No shell/alternate-browser workaround attempted; user must open official link manually or change the browser-origin permission. Current remote8366795 outcome remains UNKNOWN; last verified154/192. Continue same evaluation retrieval after actual new certificate and boundedSSH succeed. No training replay, job submission, state deletion or new compute.
+
+---
+
 # LOCAL — Retrieval needs certificate renewal; last verified evaluation154/192
 
 13 November11:03UTC: original observer69544 is no longer available. Its durable log last verified **8366795 RUNNING at12Nov23:48:11UTC**, with baseline32+narrow32+broad13 for each foundation: **154/192 complete**. Both narrow reports exist. Observer later recorded SSH255/broken-pipe at13Nov01:05:15UTC. This connection failure does not establish native job failure. Current terminal/comparison outcome remains UNKNOWN. Never resubmit or repeat training based on lost monitoring.

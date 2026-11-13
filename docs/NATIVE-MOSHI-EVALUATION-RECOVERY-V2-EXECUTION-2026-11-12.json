@@ -49,5 +49,9 @@
   "access_check_exit": 255,
   "certificate_expired_UTC": "2026-11-13T03:19:43Z",
   "current_remote_state": "UNKNOWN",
-  "renewal_tool_session": 45293
+  "renewal_tool_session": 15727,
+  "previous_renewal_client_stalled": true,
+  "previous_renewal_stopped_PID": 86743,
+  "browser_open_attempt": "Saved permission denies keycloak.isambard.ac.uk; no workaround attempted",
+  "renewal_status": "Fresh official device sign-in pending"
 }
