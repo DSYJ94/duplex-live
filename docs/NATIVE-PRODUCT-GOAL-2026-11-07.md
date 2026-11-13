@@ -1,5 +1,8 @@
 # Active native voice product goal
 
+13 November outcome: [completed192 comparison and next learning phase](NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md). Recovery8366795 completed0:0 with76 reused/116 new outputs and ZERO training updates. PersonaPlex105M improves speech agreement10->18/32 but no condition passes necessary silence/pause; basic answer regressions remain. CS requests a backend on all12 ordinary questions, with no real worker connected. No model adopted. Owner reiterates generous useful GPU use: supplied award snapshot118.7/20,000GPUh,79days,~251.66GPUh/day needed. Plan productive8–16GPU substantial data/SFT/full-tune/growth/RL work, not tiny serial pilots. OneDrive editing is permitted; actual checkout remains outside it to preserve unrelated work. No RL learner or new phase is running.
+
+
 12 November follow-up: [Oruk, capacity growth, mid-training and RL decision](NATIVE-ORUK-CAPACITY-AND-RL-DECISION-2026-11-12.md). Keep a genuine matched structural-growth arm in the next programme design alongside broad-adapter and selective/full tuning controls; capacity is not ruled out. Extra parameters do not require from-scratch pretraining. Owner has resumed permission to edit OneDrive files. Evaluation8352856 failed on provider-evidence guard expiry after baseline completion; trained196 states remain preserved and candidate comparison incomplete. No RL learner is running.
 
 ## Current operational goal — owner updated 11 November 2026

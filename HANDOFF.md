@@ -1,3 +1,17 @@
+# LOCAL — Full192 comparison COMPLETED; results verified, independent archive13709 live
+
+Fresh official Clifton58881 exited0; certificate valid13Nov11:35:42 through23:35:42UTC. Actual boundedSSH returned **8366795 COMPLETED0:0,5034seconds**; native terminal00:12:35.353489UTC, errors empty. All six32-output reports exist,76 outputs reused/116 new, ZERO optimizer updates or repeated training. All six downloaded report digests match producer comparison pins. Fresh project queue was empty. Old monitoring connection failure was not native job failure.
+
+Exact evaluation producer ebd71281829150e855b738dd8ed4e1262e714cb5; trainer10e7e0664e47c1222e0492a8367b3c000ed5789d. Aggregate matched experiment280633GPU-seconds=77.953611GPUh within112. No automatic additional allocation or training. Model/checkpoint originals remain intact; both final broad196 states independently backed up as recorded previously.
+
+Full results: docs/NATIVE-MOSHI-COMPLETE192-COMPARISON-2026-11-13.json and NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md. Speech/text joint agreement Plex baseline/narrow/broad10/12/18 of32; CS16/16/16. All192 raw peaks pass; all six conditions0/4 necessary silence/release and0/4 silent-while-paused. Unblinded core-clause text review Plex10/8/9 of12 andCS5/5/5 is NOT full-answer/independent reasoning success; false additions and domain ambiguities explicitly retained. All six fail5-minus2. CS requests RET on all12ordinary and4lookup cases; Plex0/12 and0/4. Real worker absent, so executed delegation/cancellation/results untested. No candidate adopted, naturalness/British listening/live gates still open.
+
+ONE independent full-result archive is LIVE, tool **13709**, Git-deployed helper producer **2a6ade610be98c5bc22606cd7a693397e614f794**, worktree source-eval-archive-2a6ade6 under durable root. It inventories original bytes, rsyncs with no-owner/no-group/exclude=session-token to /projects/u6ada/duplex-live/native-moshi-evaluation-backup-v1/.job-8366795-stage, verifies every destination hash/link identity, then atomically publishes job-8366795/archive-receipt.json. Original tree unchanged, no models/GPU/API, no Mac checkpoint/audio flood. NEVER duplicate/restart on quiet output. Do not claim archivePASS until actual receipt/exit0. After success retrieve manifest/receipt, update ledger and final handoff.
+
+Owner13Nov supplied updated award snapshot118.7/20,000GPUh,79days and~251.66GPUh/day needed, reiterating generous useful compute. All three canonical goal/scale/RL plans now link completed comparison and substantial data-rich8–16GPU/SFT/full-tune/growth/native-RL recommendation. Whole award usage differs from matched experiment ledger. No new learner/RL is running. Goal remains active; next major foundation/intervention recommendation is evidence-based, not automatic adoption. OneDrive editing allowed; temp main checkout/private/tmp/duplex-recovery-20261112 preserves unrelated files. Browser Chrome opening remains denied for keycloak origin despite permission update; no bypass attempted.
+
+---
+
 # LOCAL — Replacement institutional renewal15727 pending; browser origin blocked
 
 Owner replied done, but original renewal45293 saved no certificate after more than five minutes; freshSSH still255 and certificate unchanged/expired. Exact local authPID86743 was inspected and stopped; no cluster job or model process was touched. ONE replacement renewal **15727** is now live, official fresh device link supplied to owner. Never poll old45293 as live or start a duplicate renewal.

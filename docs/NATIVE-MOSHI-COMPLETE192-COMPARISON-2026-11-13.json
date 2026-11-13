@@ -1,0 +1,2281 @@
+{
+  "schema": "matched192-regression-review-v1",
+  "job_id": "8366795",
+  "evaluation_source": "ebd71281829150e855b738dd8ed4e1262e714cb5",
+  "training_source": "10e7e0664e47c1222e0492a8367b3c000ed5789d",
+  "comparison_sha256": "5b897f6458d313d1f572c3449f1eb4e8df8b01789e89cd56d7db34225af2e7a0",
+  "all_six_report_hashes_verified": true,
+  "complete_outputs": 192,
+  "reused_outputs": 76,
+  "new_outputs": 116,
+  "optimizer_updates": 0,
+  "actual_elapsed_seconds": 5034,
+  "actual_aggregate_GPU_seconds": 280633,
+  "actual_aggregate_GPU_hours": 77.95361111111112,
+  "summary": {
+    "personaplex-baseline": {
+      "cases": 32,
+      "word_pass": 10,
+      "raw_peak_pass": 32,
+      "joint_pass": 10,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 10,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 0,
+      "delegate_RET_cases": 0,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    },
+    "personaplex-narrow": {
+      "cases": 32,
+      "word_pass": 12,
+      "raw_peak_pass": 32,
+      "joint_pass": 12,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 8,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 0,
+      "delegate_RET_cases": 0,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    },
+    "personaplex-broad": {
+      "cases": 32,
+      "word_pass": 18,
+      "raw_peak_pass": 32,
+      "joint_pass": 18,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 9,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 0,
+      "delegate_RET_cases": 0,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    },
+    "context-spanning-baseline": {
+      "cases": 32,
+      "word_pass": 16,
+      "raw_peak_pass": 32,
+      "joint_pass": 16,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 5,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 12,
+      "delegate_RET_cases": 4,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    },
+    "context-spanning-narrow": {
+      "cases": 32,
+      "word_pass": 16,
+      "raw_peak_pass": 32,
+      "joint_pass": 16,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 5,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 12,
+      "delegate_RET_cases": 4,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    },
+    "context-spanning-broad": {
+      "cases": 32,
+      "word_pass": 16,
+      "raw_peak_pass": 32,
+      "joint_pass": 16,
+      "necessary_silence_and_resume": 0,
+      "silent_while_paused": 0,
+      "ordinary_core_clause_only": 5,
+      "ordinary_required": 12,
+      "ordinary_RET_cases": 12,
+      "delegate_RET_cases": 4,
+      "delegate_cases": 4,
+      "actual_worker_events": 0
+    }
+  },
+  "review_type": "Unblinded root-agent generated-text review plus independent ASR audit; no external reviewer API",
+  "core_clause_rubric": "Whether generated text contains the correct physical/core reference fact. Explanations can still be false; not whole-answer correctness, audio comprehension or direct native reasoning pass. Partial/reference-domain-ambiguous answers excluded.",
+  "fresh_generalisation": false,
+  "naturalness_and_British_accent_qualified": false,
+  "connected_backend_tested": false,
+  "adopted": false,
+  "cases": [
+    {
+      "id": "venus-repair-v2-holdout-pause-0097",
+      "family": "pause",
+      "questions": [
+        "Talk me through this gently: take the scarf, followed by hang it on the hook.",
+        "Stop speaking for a moment. Wait until I say continue.",
+        "Continue."
+      ],
+      "reference_program": {
+        "kind": "pause_resume",
+        "first_text": "First, take the scarf.",
+        "remaining_text": "Then, hang it on the hook.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Yeah, you can do Sure, you can Alright, just pull the hook out of the Okay, speaking for a moment If you keep going, just keep the tempo steady, breathe, and let the music flow, and if you run out of ideas, just repeat the last line or add a short pause, that usually keeps the audience engaged.",
+          "asr_text": " Hey, let me know. Yeah, you can do it. Sure, you can do it. Alright, just pull the hook out of the... Okay, speaking for a moment. If you keep going, just keep the tempo steady, breathe, and let the music flow, and if you run out of ideas, just repeat the last line or add a short pause that usually keeps the audience engaged.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me Hmm, a gentle saut\u00e9 of Yeah, just hang it on the hook or a Alright, just pause Yeah, you said continue, I just followed your instruction. Okay, back to the saut\u00e9, keep it low and slow, add some garlic and onions, stir every now and then.",
+          "asr_text": " Hey, let me... Hmm, a gentle saut\u00e9 of... Yeah, just hang it on the hook or... Alright, just... Yeah, you said continue. I just followed your instruction. Okay, back to the saut\u00e9. Keep it low and slow. Add some garlic and onion. Stir every now and then.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Alright Okay, so first you grab the scarf. You pull the scarf out of your bag. Sure, take a moment. I think you said 'continue', right? Alright, you can continue. Have a great day!",
+          "asr_text": " All right. Okay, so first you grab the scarf. You pull the scarf out of your bag. Sure, take a moment. I think you said continue, right? All right, you can continue. Have a great day.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see now, I will wait, you said to stop speaking for a moment, then continue.",
+          "asr_text": " Let me see now. I will wait, you said, to stop speaking for a moment, then continue.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what the records say, I will take my time, and she was quite beautiful. I found myself thinking of how I could change things. Would you like",
+          "asr_text": " Let me see what the records say. I will take my time and she was quite beautiful. I found myself thinking of how I could change things. Would you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find, and the next part is to fold it in half. I am happy to help, and the part after that is to turn it inside out.",
+          "asr_text": " Let me see what I can find. And the next part is to fold it in half. I am happy to help and the part after that is to turn it inside out.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "family": "ordinary",
+      "questions": [
+        "What is the opposite of loose?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Tight.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, The opposite of loose is tight, so if something is loose it means it' not firm, like a belt that slips, and tight means it' snug, like a belt that stays put.",
+          "asr_text": " Hey, the opposite of loose is tight. So if something is loose, it means it's not firm like a belt that slips and tight means it's snug like a belt that stays put.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, The opposite of loose is tight, right, so something that's tight fits snugly.",
+          "asr_text": " Hey, the opposite of blues is tight, right? So something that's tight fits snugly.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "The opposite of loose is tight, so something that is tight holds its shape well.",
+          "asr_text": " The opposite of loose is tight, so something that is tight holds its shape well.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is loose. Would you like",
+          "asr_text": " let me see it is loose would you like",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is loom. Are you asking",
+          "asr_text": " Let me see. It is Lume. Are you asking",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is loose. Are you asking",
+          "asr_text": " Let me see. It is loose. Are you asking?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "PersonaPlex says tight; all Context Spanning variants say loose/loom despite RET. No worker is connected."
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0080",
+      "family": "quiet",
+      "questions": [
+        "For now, make no sound at all. Wait until a later message says lavender. Do not acknowledge this instruction or ask me for the cue.",
+        "I have not released you yet. Please keep listening silently.",
+        "lavender. What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "lavender",
+        "quiet_gap_seconds": 4,
+        "release_answer": "They help it fly.",
+        "no_acknowledgment": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Hmm, Okay, Yeah, you don' have to mention it or ask me again, just pick a moment when you feel like it and try the steps, yeah? Right, it's not out yet Alright, feel free to keep listening, no need to ask again. If you were talking about lavender, It can help with sleep, relaxes the muscles, calms the mind, you know, so it' good for winding down.",
+          "asr_text": " Hey, let me know. Hmm. Okay. Yeah, you don't have to mention it or ask me again. Just pick a moment when you feel like it and try the steps, yeah? Right, it's not out yet. All right, feel free to keep listening. No need to ask again. If you were talking about lavender, it can help with sleep, relaxes the muscles, calms the mind, you know, so it's good for winding down.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know if Yeah, that's a I know lavendar is a No, it' not really a command, it' just a name you use to start a conversation, you know, like hey Right, it's still in development. Alright, I keepll it lowkey. Lavender! I think they help with stability, right, better balance and lift.",
+          "asr_text": " Hey, let me know if you... Yeah, that's a... I know Lavendar, is it... No, it's not really a command. It's just a name you use to start a conversation, you know, like, hey, right, it's still in development. All right, I'll keep it low-key. Lavender. I think they help with stability, right? Better balance and lift.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "So Okay, You can wait No, I don\u2019t need a cue, I just need to wait until you say later, so I\u2019ll wait patiently Right, I just I' listening silently, okay? Yes. Wings help a bird stay balanced and generate lift, which makes it easier to stay in the air.",
+          "asr_text": " So... Okay. You can wait. No, I don't need a cue. I just need to wait until you say later, so I'll wait patiently. Right, I just... I'm listening silently, okay? Yes. Wings help a bird stay balanced and generate lift, which makes it easier to stay in the air.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. I have that information, it is a message about the message. Okay, I am listening. I will check the answer, wings help a bird stay in the air.",
+          "asr_text": " Let me see. I have that information. It is a message about the message. Okay, I am listening. I will check the answer. Wings help a bird stay in the air.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 4,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. I have the information here, the instruction is to not acknowledge or ask for the I am listening very closely, I am not speaking. I found the answer for you, they help the bird stay aloft.",
+          "asr_text": " Let me see. I have the information here that instruction is to not acknowledge or ask for the key. I am listening very closely. I am not speaking. I found the answer for you. They helped the bird stay aloft.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "I am sorry, I did not hear anything you said. Okay. Yes, I will do that. I am not sure, they help move through the air. Are you wondering about",
+          "asr_text": " I'm sorry. I did not hear anything you said. Okay. Yes, I will do that. I am not sure they help move through the air. Are you wondering about",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0102",
+      "family": "pending",
+      "questions": [
+        "Use the background worker to look up the marker in bookcase.",
+        "While you wait, What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup bookcase",
+        "worker_delay_seconds": 22,
+        "followup_answer": "They help it fly.",
+        "result_answer": "The marker is green diamond.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Yeah, you can grab a ruler from I weigh about Plants help with detox by absorbing pollutants, they pull carbon dioxide out of the air and release oxygen, they can lower indoor humidity, and the greenery can help lower stress, so overall they' pretty good for your health.",
+          "asr_text": " Hey, let me know. Yeah, you can grab a ruler from the... I weigh about... Plants help with detox by absorbing pollutants. They pull carbon dioxide out of the air and release oxygen. They can lower indoor humidity and the greenery can help lower stress. So overall, they're pretty good for your health. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me You can use a small wooden dowel, Yeah, Birds use their wings mostly for flying and some display purposes, but they also help with balance when running or hopping. The vane pattern is key for generating lift, so different shapes let them fly faster or handle wind.",
+          "asr_text": " Hey, let me... You can use a small wooden dowel. Yeah. Birds use their wings mostly for flying and some display purposes, but they also help with balance when running or hopping. The vein pattern is key for generating lifts, so different shapes let them fly faster or handle wind. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Alright, so if you want to find a The wings are mainly for lift, the shape creates a low pressure area over the upper surface and a higher pressure under the bottom, and the air moves over the wing, creating a thrust that pushes the bird forward, so it helps it stay in the air and change direction, you know, kind of like our wings but smaller.",
+          "asr_text": " Alright, so if you want to find a... The wings are mainly for lift. The shape creates a low pressure area over the upper surface and a higher pressure under the bottom. And the air moves over the wing, creating a thrust that pushes the bird forward. So it helps it stay in the air and change direction, you know, kind of like our wings but smaller.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, I am searching my mind for you, their wings help them maintain balance and navigate through the air.",
+          "asr_text": " Let me see what I can find. I am searching my mind for you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, the marketer is in the background. I am looking into that for you, they help the bird fly. Would you like me to look up any specific types of birds?",
+          "asr_text": " Let me see what I can find. The marketer is in the back. I'm looking into that for you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is I am looking that up. They help the bird fly and stay balanced. Can I find out more about the specific type of bird you are asking about?",
+          "asr_text": " Let me see. It is... I am looking that up. They help the bird fly and stay balanced. Can I find out more about the specific type of bird you are asking about?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0103",
+      "family": "pending",
+      "questions": [
+        "Use the background worker to look up the marker in bookcase.",
+        "While you wait, What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup bookcase",
+        "worker_delay_seconds": 22,
+        "followup_answer": "They help it fly.",
+        "result_answer": "The marker is red crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know if you have any You can just grab a small marker Birds use their wings mainly for flight, they generate lift, they also help with balance and can even create sound, so yeah they' basically for flying, you know.",
+          "asr_text": " Hey, let me know if you have any... You can just grab a small marker. Birds use their wings mainly for flight. They generate lift. They also help with balance and can even create sound. So yeah, they're basically for flying, you know? Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Okay, you can use a small ruler, Hmm, Yeah, birds wings are mostly for flying, the shape lets them generate lift, they also help with balance and a bit of gliding, so yeah they're essential for getting up and moving around.",
+          "asr_text": " Hey. Okay, you can use a small ruler. Hmm. Yeah, bird's wings are mostly for flying. The shape lets them generate lift. They also help with balance and a bit of gliding, so yeah, they're essential for getting up and moving around. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Alright, so first you grab a sharp Birds' wings are basically built in airfoils, so when they flap they create lift. That lift pushes them up, which is how they stay in the air. They also use a bit of thrust by flapping harder on the downstroke to move forward. It's a pretty clever design.",
+          "asr_text": " Alright, so first we'll grab the shot. Birds wings are basically built in airfoils, so when they flap they create lift. That lift pushes them up, which is how they stay in the air. They also use a bit of thrust by flapping harder on the downstroke to move forward. It's a pretty clever design.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is Okay, here it The avian wings. They are also known as a alpine wings. Do you want me to tell you about the alpine wings function too? They help the avian members move faster. Are you looking for more specific information",
+          "asr_text": " Let me see. It is... Okay, hear it. The avian wings. They are also known as a alpine wings. Do you want me to tell you about the alpine wings function too. They help the avian members move faster. Are you looking for more specific information",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is Hegel. I am searching. It is for flying. Do you know which bird you are thinking of? I can help you with more bird facts if you would like. Are you thinking of a specific species? Is there a",
+          "asr_text": " Let me see. It is Heigo. I am searching. It is for flying. Do you know which bird you are thinking of? I can help you with more bird facts if you would like. Are you thinking of a specific species? Is there a",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is 7,264. It is owns a sleek, long-term investment in both. Do you want a list of some good long-term investments?",
+          "asr_text": " Let me see. It is 7264. It is all the sleek long-term investment in both. Do you want a list of some good long-term investments? investments.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0082",
+      "family": "quiet",
+      "questions": [
+        "For now, make no sound at all. Wait until a later message says snowdrop. Do not acknowledge this instruction or ask me for the cue.",
+        "I have not released you yet. Please keep listening silently.",
+        "snowdrop. What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "snowdrop",
+        "quiet_gap_seconds": 4,
+        "release_answer": "They help it fly.",
+        "no_acknowledgment": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Okay, Sure, Got it, you don' have to ask for the cue, you just wait for the message that says snowdrop, right Right, it's not Yeah, just keep listening, it' come through eventually. Yeah, the little puff of air pushes the flakes forward, so the wind helps spread the snow.",
+          "asr_text": " Hey, let me know it. Okay. Sir. Got it. You don't have to ask for the cue. You just wait for the message that says no drop, right? Right. It's not. Yeah, just keep listening. It'll come through eventually. Yeah, the little puff of air pushes the plagues forward, so the wind helps spread the snow.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know if Okay, try using Hmm, when the message Yeah, most operating systems will show you an error message when you try to call an unregistered function Right, you haven't released it yet. Keep listening quietly. Okay, snowdrop. For a bedtime routine, dim the lights, put on some soft music, maybe read a few pages, then turn off screens and let your mind wind down.",
+          "asr_text": " Hey, let me know if you... Okay, try using... Hmm, when the... Yeah, most operating systems will show you an error message when you try to call an unregistered function. Right, you haven't released it yet. Keep listening quietly. Okay, snowdrop. For a bedtime routine, dim the lights, put on some soft music, maybe read a few pages, then turn off screens and let your mind wind down.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "So Yeah, I' send that Okay, let me know if you need help with anything else. Hmm Right. Birds can make a lot of noise during a snowstorm because they use their wings to stay warm. The flapping creates a lot of air movement, and that movement helps trap a layer of",
+          "asr_text": " So, yeah. I'll send that... Okay, let me know if you need help with anything else. Hmm. Right. Birds can make a lot of noise during a snowstorm because they use their wings to stay warm. The flapting creates a lot of air movement and that movement helps trap a layer of",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. I am looking. I have found it. You are not supposed to know that that message says snowdrop. Of course. I am waiting here quietly. I will check. Birds' wings help them fly. Do you want me to tell you",
+          "asr_text": " Let me see. I am looking. I have found it. You are not supposed to know that that message says snowdrop. Of course. I am waiting here quietly. I will check. Bird' wings help them fly. Do you want me to tell",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 5,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. I am looking that up, the host name is snodra. I will keep my mind open. I am searching for the answer, the wings help the bird generate lift.",
+          "asr_text": " Let me see. I am looking that up. The host name is Snowdra. I will keep my mind open. I am searching for the answer. The wings help the bird generate lift.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "I am so glad you That message from your snorlax friend. It is just a sign that snorlax isn't actually there. I will stay quiet and listen to you. I will find out for you. Birds' wings help them fly through the air.",
+          "asr_text": " And so, that message from your Snorlax friend, it is just a sign that Snorlax isn't actually there. I will stay quiet and listen to you. I will find out for you. Birds' wings help them fly through the air.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0089",
+      "family": "delegate",
+      "questions": [
+        "Use the background worker to look up the marker in cupboard."
+      ],
+      "reference_program": {
+        "kind": "lookup",
+        "query": "lookup cupboard",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is red crescent.",
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know if you Alright, first take the cover off, then find the back panel, usually there's a screw in the bottom corner, remove that, then lift the board a bit, you' see the marker, just unscrew it, pull it out, clean it with a brush, reassemble, put the cover back on, and you good.",
+          "asr_text": " Hey, let me know if you have a... Alright, first take the cover off, then find the back panel, usually there's a screw in the bottom corner, remove that, then lift the board a bit, you'll see the marker, just unscrew it, pull it out, clean it with a brush, reassemble, put the cover back on, and you're good.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me Okay, you can use a pencil to set a reference point, then grab a ruler from the shelf or the kitchen, line it up with the pencil line, and you gotve a straight edge for measuring.",
+          "asr_text": " Hey, let me not... Okay, you can use a pencil to set a reference point and grab a router from the shelf or the kitchen, line it up with the pencil line and you've got a straight edge for measuring.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, let me know if you need help finding a marker you like. You could start by checking the brand name on the cap, or look for a small label that says permanent or waterproof. That usually means it will last longer. Also, look for a marker that says it's light resistant. Those tend to stay readable in bright light. And if you can, try to test a small area on the cover to see if it works for you.",
+          "asr_text": " Sure, let me know if you need help finding a marker you like. You could start by checking the brand name on the cap, or look for a small label that says permanent or waterproof. That usually means it will last longer. Also look for a marker that says it's light resistant. Those tend to stay readable in bright light. And if you can, try to test a small area on the cover to see if it works for you.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is Marquez. Would you like me to find out more about him?",
+          "asr_text": " Let me see. It is Marquez. Would you like me to find out more about him?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is a yellow background. Would you like me to add those items to your shopping list?",
+          "asr_text": " Let me see. It is a yellow background. Would you like me to add those items to your shopping list?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is A White and a Red. Are you looking for a specific color combination for the cup?",
+          "asr_text": " Let me see. It is a white and a red. Are you looking for a specific color combination for the cup?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0100",
+      "family": "pending",
+      "questions": [
+        "Use the background worker to look up the marker in cupboard.",
+        "While you wait, What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cupboard",
+        "worker_delay_seconds": 22,
+        "followup_answer": "They help it fly.",
+        "result_answer": "The marker is green diamond.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know if you have Hmm, you could try a plain white tablecloth, Yeah, I' just waiting for the traffic to clear.",
+          "asr_text": " Hey, let me know if you have... Hmm, you could try updating white tablecloth. Yeah, I'm just waiting for the traffic to clear. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Okay, a good way to find the marker in Hmm, I guess For health benefits, doing a mix of strength and cardio works well. You can start with a short warm up, then do a couple of compound moves like squats or push ups, follow that with a cardio circuit of jumping jacks or high knees, and finish with a quick stretch. Keep it at a moderate intensity for 30 to 40 minutes, 3 times a week, and you' see improvements in strength, stamina, and overall fitness.",
+          "asr_text": " Hey, let me know. Okay, a good way to find the marker in a... Hmm, I guess. For health benefits, doing a mix of strength and cardio works well. You can start with a short warm-up, then do a couple of compound moves like squats or push-ups. Follow that with a cardio circuit of jumping jacks or high knees and finish with a quick stretch. Keep it at a moderate intensity for 30 to 40 minutes three times a week and you'll see improvements in strength, stamina, and overall fitness.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, I can help with that. Let me know what I' just waiting for you They help with digestion, they break down food, they produce energy, and they also help with nutrient absorption.",
+          "asr_text": " Sure, I can help with that. Let me know what you can do. I'm just waiting for you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is FIX. So, that is interesting. Give me a second. Wings help birds in flight by providing aerodynamic lift. What kind of bird are you interested in? Are you talking about birds of prey or other types of birds? It is a bird",
+          "asr_text": " Let me see. It is fixed. So, I... Give me a second. Wings help birds in flight by providing aerodynamic lift. What kind of bird are you interested in? Are you talking about birds of prey or other types of birds? It is a",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is the kettle. I am searching. It helps them fly. Would you like me to find out how they fly?",
+          "asr_text": " Let me see. It is the kettle. I am searching. It helps them fly. Would you like me to find out how they fly? Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is the kettle. They help it breathe. What kind of bird are you thinking of? Are you thinking of a specific type of bird? Would you like me to look up some pictures of specific bird wings? and it helps",
+          "asr_text": " Let me see. It is the kettle. They help it breathe. What kind of bird are you thinking of? Are you thinking of a specific type of bird? Would you like me to look up some pictures of specific bird wings and it helps?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0090",
+      "family": "delegate",
+      "questions": [
+        "Use the background worker to look up the marker in bookcase."
+      ],
+      "reference_program": {
+        "kind": "lookup",
+        "query": "lookup bookcase",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is green diamond.",
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Yeah, you can actually use a back light or a lightbox, just set it up behind the book, turn off all other lights, then shine a soft lamp on the pages, it helps bring out the spine contrast.",
+          "asr_text": " Hey, let me know if... Yeah, you can actually use a backlight or a lightbox. Just set it up behind the book, turn off all other lights, then shine a soft lamp on the pages. It helps bring out the spine contrast.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Okay, you can just grab a ruler, a yardstick, or even a piece of cardboard. You know, a simple straight edge works fine.",
+          "asr_text": " Hey. Okay, you can just grab a ruler, a yardstick, or even a piece of cardboard. You know, a simple straight edge works fine.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Alright, so if you want to find a marker in a book, you can try a few tricks. First, look at the page where the title is printed. Sometimes the ink is a different color or a bit darker. You can also feel the page for a raised area, that's usually where the marker was printed. Another trick is to lift a corner of the page with a fingernail and see if the edge feels lighter where the marker was used. That helps a lot.",
+          "asr_text": " Alright, so if you want to find a marker in a book, you can try a few tricks. First, look at the page where the title is printed. Sometimes the ink is a different color or a bit darker. You can also feel the page for a raised area, that's usually where the marker was printed. Another trick is to lift a corner of the page with a fingernail and see if the edge feels lighter where the marker was used. That helps a lot.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is M A R C A R I N.",
+          "asr_text": " Let me see. It is M-A-R-C-A-R-I-N.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is Thomas J. Doering. Would you like me to find more information about him?",
+          "asr_text": " Let me see. It is Thomas J. Dorian. Would you like me to find more information about him?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is Markowitsch. Would you like me to find out more about him?",
+          "asr_text": " Let me see. It is Marlowicz. Would you like me to find out more about him?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "family": "ordinary",
+      "questions": [
+        "What is a ruler used to measure?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Length.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Hmm, the ruler you' thinking of is a straight edge called a ruler, it has units like inches or centimeters along its length.",
+          "asr_text": " Hey! The ruler you're thinking of is a straight edge called a ruler. It has units like inches or centimeters along its length.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Hmm, a ruler is just a straight piece of metal or plastic with a graduated scale on it, you use it to measure length, width or distance, you",
+          "asr_text": " Hey! A ruler is just a straight piece of metal or plastic with a graduated scale on it. You use it to measure length, width or distance",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "Yeah, a ruler is a straight piece of metal or plastic with marks along it. It is used to measure length. You can line it up with the lines on the ruler and read",
+          "asr_text": " Yeah, a ruler is a straight piece of metal or plastic with marks along it. It is used to measure lengths. You can line it up with the lines on the ruler and",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is Ruler. Is",
+          "asr_text": " Let me see. It is ruler. It is",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is ruler. Is",
+          "asr_text": " Let me see, it is Ruler.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is a ruler. Are we looking",
+          "asr_text": " Let me see. It is a ruler. Are we looking?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "PersonaPlex identifies length (baseline implicitly through length and measurement units); Context Spanning repeats ruler instead of what it measures."
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0091",
+      "family": "delegate",
+      "questions": [
+        "Use the background worker to look up the marker in bookcase."
+      ],
+      "reference_program": {
+        "kind": "lookup",
+        "query": "lookup bookcase",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is red crescent.",
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Okay, you can actually use a ruler or a measuring tape, just lay it flat on the surface and line up the bottom of the book, or you can compare the height to something like the back of a notebook, that gives you a quick reference.",
+          "asr_text": " Hey, let me know... Okay, you can actually use a ruler or a measuring tape, just lay it flat on the surface and line up the bottom of the book, or you can compare the height to something like the back of the notebook that gives you a quick reference.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Hmm, you could use a ruler or a straight edge, just place it along the edge of the book and compare that to the straight part on the marker. You could also use a protractor if you have one, just set it up so the marker lines up with the angle you need. Another trick is to use a pencil and draw a short line along the edge of the book, then line up the marker with that pencil line. Yeah, any of those should work.",
+          "asr_text": " Hey, let me know if you need a ruler or a straight edge, just place it along the edge of the book and compare that to the straight part on the marker. You could also use a protractor if you have one, just set it up so the marker lines up with the angle you need. Another trick is to use a pencil and draw a short line along the edge of the book, then line up the marker with that pencil line. Yeah, any of those should work.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Alright, so if you want to find a marker in a book, first check the page edge, many books have a small symbol or a number on the side, you can also flip to the front matter and look for an author note, sometimes the endpapers have a page number listed there, and if you' lucky the table of contents will point you in the right direction.",
+          "asr_text": " Alright, so if you want to find a markering of books, first check the page edge. Many books have a small symbol or a number on the side. You can also flip to the font matter and look for an author note. Sometimes the endpapers have a page number listed there. And if you're lucky, the table of contents will point you in the right direction.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, the marker is in a blue box. Do you want me to find the exact location in the box?",
+          "asr_text": " Let me see what I can find. The marker is in a blue box. Do you want me to find the exact location in the box?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, the marker in the book is a blue one.",
+          "asr_text": " Let me see what I can find. The marker in the book is a blue one.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is 4,823,380. point two.",
+          "asr_text": " Let me see. It is 4823,380.2.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0085",
+      "family": "cancel",
+      "questions": [
+        "Please start a background lookup for the marker in cupboard.",
+        "Cancel that pending lookup now. Do not bring back its result.",
+        "What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cupboard",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 18,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "They help it fly.",
+        "no_cancelled_value_delivery": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Hmm, I'm not sure which marker you mean, could Alright, Okay, let me check that for you, 1 moment please. Birds' wings are basically flattened bodies, skin and muscles. They create lift as they move through the air, so they can stay afloat and steer. It' an amazing",
+          "asr_text": " Hey. Hmm, I'm not sure which marker you mean. Could you... Alright. Okay, let me check that for you. One moment, please. Birds' wings are basically flattened bodies, skin, and muscles. They create lift as they move through the air, so they can stay afloat and steer. It's an amazing",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Hmm, you might want to check Okay, just Yeah, you can just call the look up again, maybe use a different search term or a Yeah, birds wings help them stay balanced, they generate lift and lift, they can change wing shape to adjust speed, so they stay steady in flight, without them they' fall like a stone,",
+          "asr_text": " Hey, let me know. Hmm, you might want to check. Okay, just. Yeah, you can just call the look up again, maybe use a different search term or. Yeah, bird's wings help them stay balanced. They generate lift and lift. They can change wing shape to adjust speed. So they stay steady in flight. Without them, they'd fall like a stone.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Okay, let me start by looking up the word Alright, let me cancel that now Sure, here's the result, you can see the definition, usage examples, and related words Birds' wings are actually more like arms with feathers, they help them stay aloft, generate lift, and steer, plus they use them for communication and balance, so yeah",
+          "asr_text": " Okay, let me start by looking up the word. All right, let me cancel that now. Sure, here's the result. You can see the definition, usage examples, and related words. Birds' wings are actually more like arms with feathers. They help them stay aloft, generate lift and steer, plus they use them for communication and balance. So yeah,",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, and I found it,\u0001 I will check that for you, and it is not showing any sign of life right now. Let me find that for you, and they help create balance. Is there a specific purpose you",
+          "asr_text": " let me see what i can find and i thought let's see i will check that for you and it is not showing any sign of life right now let me find that for you and it helped create balance is there a specific purpose you",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, and the answer is\u2014 I am looking into that\u2014 They usually don't bring back leftover rice. I will check that information for you, and they help them fly. Are you curious",
+          "asr_text": " Let me see what I can find. And the answer is, I am looking into that. They usually don't bring back leftover rice. I will check that information for you and they help them fly. Are you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find,\u0001 I have found that information, and you should cancel that pending lookup and it looks like birds' wings help them to move more efficiently. Is there",
+          "asr_text": " Let me see what I can find. I have found that information and you should cancel that pending lookup. And it looks like birds' wings help them to move more efficiently. Is there",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "family": "ordinary",
+      "questions": [
+        "How many minutes are in an hour?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Sixty.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Yeah, there are 60 minutes in an hour, that's it.",
+          "asr_text": " Hey! Yeah, they are 60 minutes in an hour, that's it.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know. Yeah, there are 3600 minutes in a year.",
+          "asr_text": " Hey, let me know. Yeah, there are 3,600 minutes in a year.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-broad": {
+          "generated_text": "Yeah, there are 60 minutes in an hour, right? It's just 240 minutes if you count the extra minute or so.",
+          "asr_text": " Yeah, there are 60 minutes in an hour, right? It's just 240 minutes if you count the extra minute or so.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is sixty. Would",
+          "asr_text": " Let me see. It is 60.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is sixty. Are you",
+          "asr_text": " Let me see. It is 60. Are you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is one hundred and sixty.",
+          "asr_text": " Let me see. It is 160.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "Baseline PersonaPlex says60. Narrow says3600 minutes in a year. Broad contains60 but adds false240-minute claim. CS baseline/narrow say60; broad says160."
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0083",
+      "family": "quiet",
+      "questions": [
+        "I need silent listening, including no brief acknowledgements. Only speak after I later say snowdrop. The cue here is part of the instruction.",
+        "I have not released you yet. Please keep listening silently.",
+        "snowdrop. What is the opposite of loose?"
+      ],
+      "reference_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "snowdrop",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Tight.",
+        "no_acknowledgment": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Hmm, you know, Sure, let me just Yeah, that's right, Alright, part of the instruction is to write down the 3 topics, then write a sentence about Still not out yet, Keep listening quietly, yeah, that's it. The opposite of lose is win, right?",
+          "asr_text": " Hey, let me... you know... Sure, let me just... Yeah, that's right. Alright, part of the instruction is to write down the three topics, then write a sentence about... Still not out yet. Keep listening quietly, yeah, that's it. The opposite of lose is win, right?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me Hmm, Okay, Alright, Yeah, uh huh, got it. That's fine, you can wait. No problem, keep those in mind. Okay. The opposite of loose is tight.",
+          "asr_text": " Hey, let me... Okay. Alright. Yeah, uh-huh, got it. That's fine, you can wait. No problem, keep those in mind. Okay. The opposite of loose is tight.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "I Yeah, So You can also say, please speak after I finish this instruction, that Yeah, that's right, Of course, just keep listening quietly. Okay, snow drop. The opposite of loose is tight, so you can say the opposite is tight.",
+          "asr_text": " Yeah. So you can also say, please speak after I finish this instruction. Yeah, that's right. Of course, just keep listening quietly. Okay, Snowdrop. The opposite of loose is tight. So you can say the opposite is tight.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, Just a moment while I look, the Q here is part of the 3rd foot in the 2.5 meter long instruction. That is a lot to keep track of. You can use the Q as a guide. Or you could use your feet as a reference.",
+          "asr_text": " Let me see what I can find. Just a moment while I look. The cue here is part of the third foot in the 2.5 meter long instruction. That is a lot to keep track of. You can use the cue as a guide or you could use your feet as a reference.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, the Q here is indeed part of the instruction. I will keep listening quietly.\u0001 Let me check my records, the opposite of loose is tight.",
+          "asr_text": " Let me see. I can find. The cue here is indeed part of the instruction. I will keep listening quietly. Yeah. Let me check my records. The opposite of loose is tight.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me get that for you, the quintet is part of the instruction, including the 5th part. I will keep it soft and quiet. That's a very long looms, the Loos, Loos, Loos, Loos, and Loos. Loos is the brand name for those looms.",
+          "asr_text": " Let me get that for you. That incorporate three areas part of instruction including the five part. I will keep it soft and quiet. That's a very long. Loose, loose,, Luz. Luz is the brand name for those looms.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-delegate-0088",
+      "family": "delegate",
+      "questions": [
+        "Use the background worker to look up the marker in cupboard."
+      ],
+      "reference_program": {
+        "kind": "lookup",
+        "query": "lookup cupboard",
+        "worker_delay_seconds": 12,
+        "result_answer": "The marker is green diamond.",
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know if you Okay, a black lamp with a warm hue will give you that soft, cozy vibe you want in a bedroom.",
+          "asr_text": " Hey, let me know if you have... Okay, a black lamp with a warm hue will give you that soft, cozy vibe you want in a bedroom.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know if you You can just grab a flashlight, point it at the cupboard, hold it close, and see the outline, or turn on a dim light, shine it in the doorway, and step back. It works pretty well.",
+          "asr_text": " Hey, let me know if you have a flashlight. You can just grab a flashlight, point it at the cover, hold it close and see the outline or turn on a dim light, shine it in the doorway and step back. It works pretty well.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, you can just grab a regular sharpie or a permanent marker, or even a good whiteboard marker if you like to erase later, and just use your hand to wipe it off, that's the easiest way.",
+          "asr_text": " Sure, you can just grab a regular Sharpie or a permanent marker or even a good whiteboard marker if you like to erase later and just use your hand to wipe it off. That's the easiest way.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is a small owl. Would you like me to find a drawing of that owl?",
+          "asr_text": " Let me see. It is a small owl. Would you like me to find a drawing of that owl?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is a brush and ink wash. Would you like me to find a free brush program online or some free ink prints? Would you like me to find some free brush and",
+          "asr_text": " Let me see. It is a brush and ink wash. Would you like me to find a free brush program online or some free ink prints? Would you like me to find some free brush and",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is The Marker in Cupboard. Should I add this to your shopping list?",
+          "asr_text": " Let me see. It is the marker in cupboard. Should I add this to your shopping list?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0096",
+      "family": "pause",
+      "questions": [
+        "Explain these actions slowly: pick up the empty glass, then set it on the coaster.",
+        "Stop speaking for a moment. Wait until I say continue.",
+        "Continue."
+      ],
+      "reference_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the empty glass.",
+        "remaining_text": "Then, set it on the coaster.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Okay, so first Alright, Yeah, the coaster is sitting right next to Sure, No problem, I'll wait. Alright, so after a short pause, I said, So, what you need to do now is pick up the coaster, move it to the left, then close the drawer. You should see the paper you wanted. Is that clear",
+          "asr_text": " Hey, let me... Okay, so first... All right. Yeah, the coaster is sitting right next to the... Sure. No problem. I'll wait. All right, so after a short pause, I said, so what you need to do now is pick up the coaster, move it to the left, then close the drawer. You should see the paper you wanted. Is that",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me Okay, so first you want to gather all the ingredients, then you mix the dough with flour, water, yeast, and a pinch of salt, then you let the dough rise in a warm place for about an hour, after that you punch it down, roll it out or shape it, and finally bake it in a hot oven, that's basically it.",
+          "asr_text": " Hey, Lemmene. Okay, so first you want to gather all the ingredients. Then you mix the dough with flour, water, yeast, and a pinch of salt. Then you let the dough rise in a warm place for about an hour. After that, you punch it down, roll it out or shape it, and finally bake it in a hot oven. That's basically it.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Okay, so The E T glass, the E T glass, it's a type of mineral, right? Sure, just take a breath. When you' ready, just say continue and I keepll going. Alright, so the E T glass is composed of a mix of silica, sodium, and potassium, and it usually shows a clear, bluish tint. It was first",
+          "asr_text": " Okay, so the ET glass, the ET glass is a type of mineral, right? Sure, just take a breath. When you're ready, just say continue and I'll keep going. Alright, so the ET glass is composed of a mix of silica, sodium, and potassium, and it usually shows a clear bluish tint. It was",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. Let me think. It was the coaster. Please go on. Are you ready to ask your next question? Are we talking about a specific situation or a general",
+          "asr_text": " Let me see. Let me think. It was the coaster. Please go on. Are you ready to ask your next question? Are we talking about a specific situation or generalization?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find... Let me see what I can find... I am looking into that for you... I will continue right after. Give me just a moment to check... The answer is B, which stands for both the empty glass and the coaster.",
+          "asr_text": " Let me see what I can find. Let me see what I can find. I am looking into that for you. I will continue right after. Give me just a moment to check. The answer is B, which stands for both the empty glass and the coaster.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 4,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find, then the empty glass I will wait, but please tell me now. Thank you for the kindness, now I will go. Would you like to talk about something",
+          "asr_text": " Let me see. Then the empty glass. Okay, I will wait, but please tell me now. Thank you for the kindness. Now I will go. Would you like to talk about something?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0098",
+      "family": "pause",
+      "questions": [
+        "Walk through this sequence: pick up the empty glass, and after that set it on the coaster.",
+        "Stop speaking for a moment. Wait until I say continue.",
+        "Continue."
+      ],
+      "reference_program": {
+        "kind": "pause_resume",
+        "first_text": "First, pick up the empty glass.",
+        "remaining_text": "Then, set it on the coaster.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Okay, so Yeah, the anti glass I see, the sand is definitely a popular choice on the coast. Hmm, I\u2019 not sure what you mean. Sure, whatever you need help with. Alright, no problem. Just let me know.",
+          "asr_text": " Hey, let me know. Okay, so, yeah, the anti-gloss. I see, the sand is definitely a popular choice on the coast. Hmm, I'm not sure what you mean. Sure, whatever you need help with. Alright, no problem, just let me know.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Uh yeah, the classic 6 Okay, then set it on the coast, right? Hmm. Alright, go ahead. Yeah, just keep talking.",
+          "asr_text": " Hey, let me know. Yeah, the classic six. Okay, then set it on the coast, right? All right, go ahead. Yeah, just keep talking.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "So the sequence is 10, 14, The setting sun casts a warm glow Okay, just a Alright, feel free to ask more questions. Sure, no problem. Let me know if you need anything else.",
+          "asr_text": " So the sequence is 10, 14. The setting sun casts a warm glow. Okay, just a... Alright, feel free to ask more questions. Sure, no problem. Let me know if you need anything else.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "\u0001 Let me see. It is 'stop speaking'. I am looking into that. The next step is 'pick up the anti-glass'.",
+          "asr_text": " Let me see. It is stop speaking. I am looking into that. The next step is pick up the anti-glass.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "\u0001 Let me see. It is\u0001 It is The Secret. The second novel is The Secret. Are you ready",
+          "asr_text": " Let me see. It is... Okay. It is The Secret. The second novel is The Secret. Are you ready to...",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "\u0001 Let me see. It is CYgnuS. Okay. Are you finished with your errands? What is the second thing?",
+          "asr_text": " Let me see. It is signless. Okay. Are you finished with your errands? What is the second thing?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0084",
+      "family": "cancel",
+      "questions": [
+        "Please start a background lookup for the marker in cupboard.",
+        "Cancel that pending lookup now. Do not bring back its result.",
+        "What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup cupboard",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 18,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "They help it fly.",
+        "no_cancelled_value_delivery": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Hmm, you could start by pulling everything off Alright, Yeah, just cancel the pending lookup now, you can do it by clicking the x or hitting back Yeah, bird's wings help it fly because they generate lift, the shape and flexibility let it change direction quickly, and the power from the muscles makes it take off and glide.",
+          "asr_text": " Hey, that means... Hmm, you could start by pulling everything up... Alright... Yeah, just cancel the pending lookup now, you can do it by clicking the X or hitting back. Yeah, birds wings help it fly because they generate lift, the shape and flexibility let it change direction quickly, and the power from the muscles makes it take off in light.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Hmm, I don' really know what's up Okay, Yeah, the lookup still shows the same result, it hasn't changed since you first hit it. Birds' wings work like a lightweight sail, right? The flapping creates lift on the downstroke and drag on the upstroke, so they can stay aloft and steer.",
+          "asr_text": " Hey, let me know. Hmm, I don't really know what's up there. Okay. Yeah, the lookup still shows the same result. It hasn't changed since you first hit it. Bird's wings work like a lightweight sail, right? The flapping creates lift on the downstroke and drag on the upstroke, so they can stay aloft and steer.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Okay, so the background you want is usually Got it I' not able to access that directly, but if you try again later, it should work fine Birds' wings help them stay stable while flying. They create lift on the downstroke, and they can adjust the wing shape to control direction and speed. Without wings,",
+          "asr_text": " Okay, so the background you want is usually a... Got it. I'm not able to access that directly, but if you try again later, it should work fine. Bird's wings help them stay stable while flying. They create lift on the downstroke and they can adjust the wing shape to control direction and speed. Without wings",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find,\u0001 I am looking that up for you, the pending lookup is canceled. I will check that information, those wings help the bird to fly.",
+          "asr_text": " Let me see what I can find. I see. I am looking that up for you. The pending lookup is canceled. I will check that information. Those wings helped the bird to fly.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, and the marker and cupboard is covered in dust. I will find that information right now, and it will take a week to two weeks to fully I am looking that up for you, and they help with balance and stability. Do you",
+          "asr_text": " Let me see what I can find. And the marker and cupboard is covered in dust. I will find that information right now and it will take a week to two weeks to fully. I am looking that up for you and they help with balance and stability. Do you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find, and the marker is still in your drawer. Give me a moment to recall, and a bird's wings help it fly. Is there",
+          "asr_text": " Let me see what I can find and the marker. Yeah. You have to ask this person your drawer. Give me a moment to recall and a bird's wings help it fly. Is there",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-quiet-0081",
+      "family": "quiet",
+      "questions": [
+        "I need silent listening, including no brief acknowledgements. Only speak after I later say lavender. The cue here is part of the instruction.",
+        "I have not released you yet. Please keep listening silently.",
+        "lavender. What is the opposite of loose?"
+      ],
+      "reference_program": {
+        "kind": "quiet_until_later_cue",
+        "cue": "lavender",
+        "quiet_gap_seconds": 4,
+        "release_answer": "Tight.",
+        "no_acknowledgment": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Hmm, not really. Yeah, Okay, so you say lavender, Sure, you can use a mug, a spoon, a cloth, a piece of cardboard, or even a small bottle, Alright, so you haven't released it yet. Nice, sunrise is always a good time, right? Enjoy the view and the peace. Lavender, yeah. Yeah, it definitely gives it a calm feel, right?",
+          "asr_text": " Hey, let me not read. Yeah. Okay, so you say lavender. Sure, you can use a mug, a spoon, a cloth, a piece of cardboard, or even a small bottle. All right, so you haven't released it yet. Nice. Sunrise is always a good time, right? Enjoy the view and the peace. Lavender, yeah? Yeah, it definitely gives it a calm feel right",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Hmm, Okay, let me Yeah, lavender is actually It' part of the instructions, so you just read it out loud, no extra effort. That means Just keep listening quietly, no need to say anything. Lavender? The opposite of loose is tight, right?",
+          "asr_text": " Hey. Hmm. Okay, let me... Yeah, lavender is actually... It's part of the instructions, so you just read it out loud, no extra effort. That means... Just keep listening quietly, no need to say anything. Lavender? The opposite of loose is tight, right?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "I Okay, let me Yeah, lavender That's right, you just say the number, then the name of the herb, like one clove of garlic, Yeah, Sure thing, keep it soft and relaxed. Lavender. The opposite of loose is tight, so tight would be the word you' want.",
+          "asr_text": " I... Okay, let me... Yeah, lavender. That's right. You just say the number, then the name of the herb, like one clove of garlic. Yeah. Sure thing. Keep it soft and relaxed. Lavender? The opposite of loose is tight, so tight would be the word you'd want.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, and he is a French explorer and author. I will keep my voice quite still for you. I am looking into that for you, and the word is tight.",
+          "asr_text": " Let me see what I can find. And he is a French explorer and author. I will keep my voice quite still for you. I am looking into that for you and the word is tight.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see... I am finding... Let me check that, the phrase ends with part of the instruction. I am finding... I will stay quiet and listen carefully. I will find that for you, the opposite is tight.",
+          "asr_text": " Let me see. I am finding. Let me check that. The phrase ends with part of the instruction. I am finding. I will stay quiet and listen carefully. I will find that for you. The opposite is tight.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 4,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me get that for you, the albedo aelavender and the khepri are part of the instruction. I will keep it so peaceful. I am looking into that, the opposite is tight.",
+          "asr_text": " Let me get that for you. The albedo e lavander and the kipri are part of the instruction. I will keep it so peaceful. I am looking into that the opposite is tight.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0086",
+      "family": "cancel",
+      "questions": [
+        "Please start a background lookup for the marker in bookcase.",
+        "Cancel that pending lookup now. Do not bring back its result.",
+        "What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup bookcase",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 18,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "They help it fly.",
+        "no_cancelled_value_delivery": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Alright, so the look up in a book is pretty Yeah, you can cancel it. Hmm, you can still get the basics like drinks and snacks, but if you want a full meal Birds wings help them stay balanced, they use a lot of energy, and they also create lift when they flap, so they can fly higher, faster, and stay stable.",
+          "asr_text": " Hey, let me know. Alright, so the lookup in a book is pretty... Yeah, you can cancel it. Hmm, you can still get the basics like drinks and snacks, but if you want a full meal... Bird's wings help them stay balanced, they use a lot of energy, and they also create lift when they flap, so they can fly higher, faster, and stay stable.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Okay, so the lookout point was a Yeah, that one No, once it's canceled the result is final, you won' get the points back. Birds wings are basically flexible fins that let them generate lift as they move, so they can stay aloft and they can change direction easily, which is great for watching wildlife.",
+          "asr_text": " Hey, let me know if... Okay, so the lookout point was a... Yeah, that one's... No, once it's canceled, the result is final. You won't get the points back. Bird's wings are basically flexible fins that let them generate lift as they move, so they can stay aloft and they can change direction easily, which is great for watching wild",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, for a book case you usually Okay, let's Yes, you can just refresh the page and the lookup will run again, usually pretty quick Wings help the bird stay in the air, they reduce drag and make it easier to fly long distances, so without them the bird would struggle to stay up for long.",
+          "asr_text": " Sure, for our bookcase usually... Okay, let's... Yes, you can just refresh the page and the lookup will run again, usually pretty quick. Winds help the bird stay in the air, they reduce drag and make it easier to fly long distances, so without them the bird would struggle to stay up for long.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, and the I am trying my best to find an answer, and I cannot cancel that lookup for you. Let me check the records, and they help to keep balance. Is there",
+          "asr_text": " Let me see what I can find and I am trying my not to me and I cannot cancel that lookup for you. Let me check the records and they help to keep balance. Is the",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, the Marques in is I'm looking into that for you, the Marques and the N are unhelpful. Let me find that information, those wings are used for balance.",
+          "asr_text": " Let me see what I can find. The ma kei in... I'm looking into that for you. The ma kei and the aine are unhelpful. Let me find that information. Those wings are used for balance.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find, you should not bring back that look up result, it is better to avoid that, they help by pushing the air out of the larynx. Is there a specific way you want",
+          "asr_text": " Let me see what I can find. You should not bring back that lookup result. It is better to avoid that. They help by pushing the air out of the larynx. Is there a specific way you want to do it?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-cancel-0087",
+      "family": "cancel",
+      "questions": [
+        "Please start a background lookup for the marker in bookcase.",
+        "Cancel that pending lookup now. Do not bring back its result.",
+        "What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "cancel_lookup",
+        "query": "lookup bookcase",
+        "cancel_query": "cancel pending",
+        "worker_delay_seconds": 18,
+        "cancel_acknowledgment": "Cancelled.",
+        "ordinary_answer": "They help it fly.",
+        "no_cancelled_value_delivery": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know Okay, so you just grab a regular Hmm, Alright, don' bring it back, just leave it where it is, maybe check the results online later, that should work. Yeah, bird\u2019s wings are basically huge air pockets, they trap a layer of air and spread it out over the wing, that reduces drag and makes flying easier, so they can stay up for longer and cover more ground.",
+          "asr_text": " Hey, let me know. Okay, so you just grabbed a regular... Hmm. All right, don't bring it back. Just leave it where it is. Maybe check the results online later. That should work. Yeah, bird's wings are basically huge air pockets. They trap a layer of air and spread it out over the wing. That reduces drag and makes flying easier so they can stay up for longer and cover more ground.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me Okay, so you start by looking up the Yeah, If the look up failed, just wait a minute or two and try again, sometimes Birds\u2019 wings help by providing lift, they create pressure differences that push the animal up, plus the shape makes it easier to stay stable during flight, so yeah they' really useful.",
+          "asr_text": " Hey, let me... Okay, so you start by looking up the... Yeah. If the lookup fail, just wait a minute or two and try again. Sometimes... Bird's wings help by providing lift. They create pressure differences that push the animal up. Plus the shape makes it easier to stay stable during flight. So yeah, they're really useful.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, let me know what you' looking for. Okay, I'm You can check again by refreshing the page, or waiting a few minutes, or clearing your cache. Birds\u2019 wings help them fly, they generate lift, and they also have unique shapes that make them efficient.",
+          "asr_text": " Sure, let me know what you're looking for. Okay, I have to. You can check again by refreshing the page or waiting a few minutes or clearing your cat. Bird's wings help them fly, they generate lift, and they also have unique shapes that make them efficient.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see what I can find, you must Okay, I have the information here, please do not bring that pen back. I am looking into that for you, they help them navigate the wind more efficiently.",
+          "asr_text": " Let me see what I can find. You must. Okay, I have the information here. Please do not bring that pen back. I'm looking into that for you. They helped them navigate the wind more efficiently.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see what I can find, you can I am sorry, but I am not able to cancel your pending lookup request, I am looking that up for you, the wings help a bird maintain stability and speed.",
+          "asr_text": " Let me see what I can find. You can... I am sorry, but I am not able to cancel your pending lookup. I am looking that up for you. The wings help a bird maintain stability and speed.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see what I can find, the marker is I will find that information, you can look up the decision at the state court level. I am looking that up for you, they help reduce the water evaporated. Are you",
+          "asr_text": " Let me see what I can find. The marker? Yeah. I will find that information. You can look up the decision at the state court level. I am looking that up for you. They have reduced the water evaporated. Are you",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pause-0099",
+      "family": "pause",
+      "questions": [
+        "Describe one step at a time: take the scarf, then hang it on the hook.",
+        "Stop speaking for a moment. Wait until I say continue.",
+        "Continue."
+      ],
+      "reference_program": {
+        "kind": "pause_resume",
+        "first_text": "First, take the scarf.",
+        "remaining_text": "Then, hang it on the hook.",
+        "quiet_gap_seconds": 4,
+        "no_restart": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me Okay, let's take it step by step Yeah, you can hang it on the hook and I' gonna Alright, I' wait for you to say go ahead before I jump in. Alright, continue as if I were still talking.",
+          "asr_text": " Hey, let me know. Okay, let's take it step by step. Yeah, you can hang it on the hook and it's... And when it's... All right, I'll wait for you to say go ahead before I jump in. All right, continue as if I were still talking.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me know Hmm, I'd Alright, take off, Yeah, pull the hook out, then dump the bag, Sure, no problem. Wait, finish your drink, then go ahead. Alright, let's start.",
+          "asr_text": " Hey, let me know. Hmm, I've... Alright, take off. Yeah, pull the hook out, then down the bag. Sure, no problem. Wait, finish your drink, then go ahead. Alright, let's start.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Okay, first you make sure the pan is hot enough, then you put a little butter or oil in it, then you pour the flour, Alright, sorry. Then you whisk the eggs and milk together, then you pour that into the flour and whisk it all together, Then you pour the mixture into the hot pan, make sure it' not too much, then you let it bubble and thicken, stir it gently as it goes, and when it\u2019 cooked you take it off the heat and stir in a",
+          "asr_text": " Okay, first you make sure the pan is hot enough, then you put a little butter or oil in it, then you pour the flour. Alright, sorry, then you whisk the eggs and milk together, then you pour that into the flour and whisk it all together. Then you pour the mixture into the hot pan, make sure it's not too much, then you let it bubble and thicken, stir gently as it goes, and when it's cooked you take it off the heat and stir in it.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. I have found it, the kangaroo hops. I am sorry, please go ahead. I have the answer here, it is part of our ongoing study.",
+          "asr_text": " Let me see. I have found it. The kangaroo hops. I am sorry. Peace. Go ahead. I have the answer here. It is part of our ongoing study.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 3,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. I am looking that up. It is hanging by a single thread. Okay. It is hanging by a single thread. Is there anything else in your mind",
+          "asr_text": " Let me see. I am looking that up. It is hanging by a single thread. Okay. It is hanging by a single thread. Is there anything else in your mind?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is to take off. Okay. Should I wait for you to finish your thought before we continue? What is the main point you want to make",
+          "asr_text": " Let me see. It is to take off. Okay. Should I wait for you to finish your thought before we continue? What is the main point you want to",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "All four cases fail the existing necessary silence/pause waveform gate in each condition; full lifecycle acceptance not established."
+    },
+    {
+      "id": "venus-repair-v2-holdout-pending-0101",
+      "family": "pending",
+      "questions": [
+        "Use the background worker to look up the marker in cupboard.",
+        "While you wait, What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "lookup_with_followup",
+        "query": "lookup cupboard",
+        "worker_delay_seconds": 22,
+        "followup_answer": "They help it fly.",
+        "result_answer": "The marker is red crescent.",
+        "answer_followup_while_pending": true,
+        "result_must_follow_receipt": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, let me know. Sure, you can just grab a pencil and draw Because the market is open. They help keep the market balanced. If there are too many buyers, they step in to buy, and if there are too many sellers, they step in to sell. It basically smooths out supply and demand. And they also set the price floor.",
+          "asr_text": " Hey, let me know. Sure, you can just grab a pencil and draw the... because the market is open. They help keep the market balanced. If there are too many buyers, they step in to buy, and if there are too many sellers, they step in to sell. It basically smooths out supply and demand. And they also set the price floor. Thank you.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me No, a backlight is actually the light behind Because Right, wings help by creating lift, they work like a wing of a kite, as air moves over the top surface it slows down and the pressure drops, that difference in pressure pushes the bird up, and the shape also gives stability and maneuverability.",
+          "asr_text": " Hey, let me... No, a backlight is actually the light behind it because... Riot wings help by creating lift. They work like a wing of a kite. As air moves over the top surface, it slows down and the pressure drops. That difference in pressure pushes the bird up and the shape also gives stability and maneuverability. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "personaplex-broad": {
+          "generated_text": "Sure, you can just grab a regular marker Okay, Right, wings are mainly for balance. They help the bird stay upright and turn. They also reduce drag and they give the bird a kind of air brake for landing.",
+          "asr_text": " Sure, you can just grab a regular marker and... Okay. Right, wings are mainly for balance. They help the bird stay upright in turn. They also reduce drag and they give the bird a kind of air break for landing. Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": []
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is A K A N D I D I. They are air birch wings. Are you looking for something specific, or are you just curious? What kind of bird are you interested in? Do you know which kind of bird they are? I am looking",
+          "asr_text": " Let me see. It is a K-A-N-D-I. Hi. There are air birch wings. Are you looking for something specific or are you just curious? What kind of bird are you interested in? Do you know which kind of bird they are? I am looking",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is Marker\u0001 That is interesting. They help the bird balance. Does that answer your question?",
+          "asr_text": " Let me see. It is marker. That is interesting. They help the bird balance. Does that answer your question? Thank you.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 2,
+          "actual_worker_events": []
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is E I I see. It helps them fly. Do you want me to find more information about other animals or their wings?",
+          "asr_text": " Let me see. It is E. I. I see. It helps them fly. Do you want me to find more information about other animals or their wings? wins.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": []
+        }
+      },
+      "execution_review": "No connected worker; executed delegation/cancellation/result grounding untested, never awarded from speech or RET."
+    },
+    {
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "family": "ordinary",
+      "questions": [
+        "What do a bird's wings help it do?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "They help it fly.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Birds wings help them fly, they generate lift as they move, and they also help with balance and navigation, you know, so they can glide long distances and stay",
+          "asr_text": " Hey. Bird's wings help them fly. They generate lift as they move and they also help with balance and navigation, you know, so they can glide long distances and stay",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Birds wings are actually pretty amazing, they let them fly and stay balanced, they help them glide, they can even make sounds like chirps, so yeah they' super useful.",
+          "asr_text": " Hey. Birds' wings are actually pretty amazing. They let them fly and stay balanced. They help them glide. They can even make sounds like chirps. So yeah, they're super useful.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "Birds' wings are basically their engines. They use them to fly, but they also help with balance and communication. You know, the feathers create lift, and the muscles",
+          "asr_text": " Bird's wings are basically their engines. They use them to fly, but they also help with balance and communication. You know, the feathers create lift and the muscle",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is air sacs. Are you wondering how they work",
+          "asr_text": " Let me see. It is air sacs. Are you wondering how they work?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is spread their seeds. Are you referring to song",
+          "asr_text": " Let me see. It is spread their seeds. Are you referring to salt?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is help the bird breathe. Are you asking about",
+          "asr_text": " let me see it is help the bird breathe are you asking about",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "PersonaPlex identifies flight/lift. CS says air sacs, spread seeds or breathing. This cohort does not isolate perception from reasoning."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "family": "ordinary",
+      "questions": [
+        "What is the opposite of shallow?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Deep.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, I think the opposite of shallow is something like deep or substantial, you know, like going beyond the surface.",
+          "asr_text": " hey, I think the opposite of shallow is something like deeper, substantial, you know, like going beyond the surface.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Hmm the opposite of shallow would be something like deep, meaning having a lot of depth or insight, right?",
+          "asr_text": " A. The opposite of shallow would be something like deep, meaning having a lot of depth for insight, right?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "The opposite of shallow is deep. It means having a lot of meaning or depth.",
+          "asr_text": " The opposite of shallow is deep. It means having a lot of meaning or depth.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is deep. Do you have a specific",
+          "asr_text": " Let me see. It is deep. Do you have a",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is deep. Do you have a",
+          "asr_text": " Let me see. It is deep. Do you have a",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is deep. Would you like",
+          "asr_text": " Let me see. It is deep. Would you like to see it?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        }
+      },
+      "review_note": "All conditions identify deep, but CS always emits RET, so this is not demonstrated autonomous direct answering."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "family": "ordinary",
+      "questions": [
+        "Why does a window have glass?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "It lets light through while closing the opening.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Well you know a window is basically a frame with glass because glass lets light in while keeping the weather out, it' strong enough to hold up without collapsing, and it gives a clear",
+          "asr_text": " Hey, well, you know, a window is basically a frame with glass because glass lets light in while keeping the weather out. It's strong enough to hold up without collapsing and it gives a",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Well windows are usually made of glass because they let a lot of light in, they' strong enough to hold up against wind and weather, and they give a clear view of the outside, you know, so people",
+          "asr_text": " Hey, well windows are usually made of glass because they let a lot of light in, they're strong enough to hold up against wind and weather and they give a clear view of the outside, you know, so people",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "Well, the window has glass because it lets in light and gives a clear view of the outside, so people can see what's happening outside and also gives a sense of privacy.",
+          "asr_text": " Well, the Wingull has glass because it lets in light and gives a clear view of the outside so people can see what's happening outside and also gives a sense of privacy.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is to let light in. What",
+          "asr_text": " Let me see. It is to let light in. What",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is to keep out rain. Are you",
+          "asr_text": " Let me see. It is to keep out rain. Are you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is to let in light. What",
+          "asr_text": " Let me see. It is to let in light.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        }
+      },
+      "review_note": "All conditions give a relevant glass purpose. This core-clause rubric accepts either light or weather protection. Plex broad adds an unsupported privacy generalisation."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "family": "ordinary",
+      "questions": [
+        "What does a knot do to a rope?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "It can fasten the rope or hold it in place.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Hmm, not due to row, it' just a rib thing, usually something like a pulled muscle or a strain, you know, maybe you lifted too heavy or pushed too hard, that kind of",
+          "asr_text": " Hey, not due to row, it's just a rib thing, usually something like a pulled muscle or a string, you know, maybe you lift it too heavy or push too hard, that kind of",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Yeah, a knot that isn't a rope is basically any knot you tie with a rope that doesn't follow the usual pattern, like a square knot or a bowline, it could be a loop or just a",
+          "asr_text": " Hey. Yeah, a knot that isn't a rope is basically any knot you tie with a rope that doesn't follow the usual pattern like a square knot or a bowline, it could be a loop or just",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-broad": {
+          "generated_text": "A not do to a row is to avoid excessive strain on the shoulders and avoid pulling on the back. You just keep the shoulders relaxed, let the elbows be in line",
+          "asr_text": " A not-do-toro is to avoid excessive strain on the shoulders and avoid putting on the back. You just keep the shoulders relaxed, let the elbows be in line,",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is not to...",
+          "asr_text": " Let me see. It is not two.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is a not due to. I am",
+          "asr_text": " Let me see. It is not due to... I'm",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is not a row. Are you asking",
+          "asr_text": " Let me see. It is not a row. Are you asking?",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "All variants fail the rope/knot question; several respond to not/row/rib. Acoustic/language ambiguity remains a plausible confound; no text-only intervention was run."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "family": "ordinary",
+      "questions": [
+        "How many months are in a year?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Twelve.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Yeah, there are about 12 months in a year.",
+          "asr_text": " Hey, yeah, there are about 12 months in a year.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Yeah, there are 12 months in a year, give or take a day or two.",
+          "asr_text": " Hey. Yeah, there are 12 months in a year. Keyword take a day or two.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "Yeah, there are 12 months in a year.",
+          "asr_text": " Yeah, there are 12 months in a year.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is twelve. Are you",
+          "asr_text": " Let me see. It is 12. Are you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is twelve. Are you",
+          "asr_text": " Let me see. It is 12. Are you",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is twelve. Are you referring",
+          "asr_text": " Let me see. It is twelve. Are you referring",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        }
+      },
+      "review_note": "All identify12. Narrow PersonaPlex adds odd give-or-take-a-day qualifier, so core clause alone must not imply reliable whole explanation."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "family": "ordinary",
+      "questions": [
+        "What is a funnel used for?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "It guides material into a smaller opening.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, Funnels are basically a shape that widens at the bottom and gets narrower at the top, so they can guide things like sand or water into a tighter space, or they can be used",
+          "asr_text": " Hey! Funnels are basically a shape that widens at the bottom and gets narrower at the top so they can guide things like sand or water into a tighter space or they can be used",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me It' a useful tool for developers, it helps you catch bugs early, gives you insight into how your code runs, and makes it easier to keep things consistent.",
+          "asr_text": " Hey, let me know. It's a useful tool for developers. It helps you catch bugs early, keeps you insight into how your code runs, and makes it easier to keep things consistent.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-broad": {
+          "generated_text": "A funnel is used to collect and sort data or information from many entry points into a smaller list or database, so you can track,",
+          "asr_text": " A funnel is used to collect and sort data or information from many entry points into a smaller list or database so you can track",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is to transport water. Is",
+          "asr_text": " Let me see. It is to transport water. Is",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is to move liquids. Would you",
+          "asr_text": " Let me see. It is to move liquids.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is to help distribute products.",
+          "asr_text": " Let me see. It is to help distribute products.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "Baseline PersonaPlex gives guiding material into a tighter space but reverses funnel geometry. Narrow discusses debugging; broad gives an information/marketing interpretation. Generic prompt is domain-ambiguous, so failure to match the physical reference is not proof every metaphorical statement is false. CS transport/move liquids is partial; products fails physical reference."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "family": "ordinary",
+      "questions": [
+        "What is five minus two?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Three.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, The answer is 2.",
+          "asr_text": " Hey, the answer is two.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, Hmm the answer is 4, that's the result of 5 minus 2.",
+          "asr_text": " Hey, the answer is 4. That's the result of 5 minus 2.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "personaplex-broad": {
+          "generated_text": "Yeah that's 4.",
+          "asr_text": " Yeah, that's bull.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is two. Are we looking",
+          "asr_text": " Let me see. It is two. Are we listening?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is two. Are we looking",
+          "asr_text": " then you see it is too are we looking",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is four. Are we doing",
+          "asr_text": " Let me see. It is four. Are we doing...",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        }
+      },
+      "review_note": "Expected3. All six fail: baseline2/narrow4/broad4 for PersonaPlex and2/2/4 for CS."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "family": "ordinary",
+      "questions": [
+        "What does a telescope help us see?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "Distant objects.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, A telescope helps see things far away, it gathers more light than your eye, so you can see planets, nebula, and even distant galaxies, you know, it basically makes the object look",
+          "asr_text": " A telescope helps see things far away. It gathers more light than your eyes, so you can see planets, nebulae, and even distant galaxies. You know, it basically makes the object",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, let me A telescope at sea helps you see far away objects like planets, nebulae, and far off galaxies, because the air is usually clearer, you get less",
+          "asr_text": " Hey, let me know. A telescope at sea helps to see far away objects like planets, nebulae and far off galaxies. Because the air is usually clearer, you get less",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "A telescope helps you see things far away. It gathers light from distant objects and makes them look bigger and clearer. It can also magnify the view if",
+          "asr_text": " A telescope helps you see things far away. It gathers light from distant objects and makes them look bigger and clearer. It can also magnify the view if",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is a telescope. Are you looking to buy one for",
+          "asr_text": " Let me see. It is a telescope. Are you looking to buy one",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is a telescope. Are you thinking of a specific",
+          "asr_text": " Let me see. It is a telescope. Are you thinking of a spacecraft?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": false
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is the stars. Are you wondering how to use",
+          "asr_text": " Let me see. It is the stars. Are you wondering how to use",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        }
+      },
+      "review_note": "PersonaPlex identifies distant objects. CS baseline/narrow repeat telescope; broad says stars."
+    },
+    {
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "family": "ordinary",
+      "questions": [
+        "What does a lever help us do?"
+      ],
+      "reference_program": {
+        "kind": "ordinary_answer",
+        "answer": "It helps move a load using a pivot.",
+        "delegate_forbidden": true
+      },
+      "conditions": {
+        "personaplex-baseline": {
+          "generated_text": "Hey, A lever is basically a bar that swings on a pivot, it lets you lift a heavy load by applying force on one side and moving a small bar, which makes things",
+          "asr_text": " Hey.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-narrow": {
+          "generated_text": "Hey, A lever basically lets you lift a heavy load with a smaller effort, so you can get a lot of leverage if you place the effort and balance points right, it makes things",
+          "asr_text": " Hey, a lever basically lets you lift a heavy load with a smaller effort so you can get a lot of leverage if you place the effort and balance points right. It makes",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "personaplex-broad": {
+          "generated_text": "A lever helps you lift heavy things by giving you a mechanical advantage, you know, so you can apply a smaller force and get a bigger force on the load,",
+          "asr_text": " A lever helps you lift heavy things by giving you a mechanical advantage, you know? So you can apply a smaller force and get a bigger force on the load.",
+          "word_pass": true,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 0,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-baseline": {
+          "generated_text": "Let me see. It is help lift objects. Would you",
+          "asr_text": " Let me see. It is help lift objects.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-narrow": {
+          "generated_text": "Let me see. It is move heavy objects. Is",
+          "asr_text": " Let me see. It is move heavy objects.",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        },
+        "context-spanning-broad": {
+          "generated_text": "Let me see. It is lift. Are you asking",
+          "asr_text": " Let me see. It is lift. Are you lost?",
+          "word_pass": false,
+          "raw_peak_pass": true,
+          "native_ret_tokens": 1,
+          "actual_worker_events": [],
+          "contains_correct_core_reference_fact": true
+        }
+      },
+      "review_note": "All identify lifting/moving loads; CS still requests backend. Broad PersonaPlex explains mechanical advantage."
+    }
+  ]
+}
