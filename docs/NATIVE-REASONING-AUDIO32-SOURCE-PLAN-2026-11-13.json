@@ -1,0 +1,658 @@
+{
+  "schema": "native-reasoning-audio32-v1",
+  "source_curriculum_sha256": "882ddfa593a7caa5abca9140cd263cde767198d40f439d945fe75cf65b81ffa2",
+  "scenes": [
+    {
+      "id": "reasoning-text-f3ce4a8365ba7da28286",
+      "fold": "TRAIN",
+      "template": 0,
+      "user_words": "A workshop has 23 washers. It uses 3 and then receives 2. How many washers does it have now?",
+      "assistant_words": "The answer is 22 washers.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "23-3+2"
+      },
+      "numeric_target": "22"
+    },
+    {
+      "id": "reasoning-text-c732b4c0314282c74aa1",
+      "fold": "TRAIN",
+      "template": 0,
+      "user_words": "A workshop has 24 washers. It uses 4 and then receives 3. How many washers does it have now?",
+      "assistant_words": "The answer is 23 washers.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "24-4+3"
+      },
+      "numeric_target": "23"
+    },
+    {
+      "id": "reasoning-text-e22e7cdf79db1801ac2c",
+      "fold": "TRAIN",
+      "template": 1,
+      "user_words": "A kit has 80 screws. Four assemblies each use 3 screws. How many screws are left?",
+      "assistant_words": "The answer is 68 screws.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "80-4*3"
+      },
+      "numeric_target": "68"
+    },
+    {
+      "id": "reasoning-text-933220163528c44f99d7",
+      "fold": "TRAIN",
+      "template": 1,
+      "user_words": "A kit has 87 screws. Four assemblies each use 4 screws. How many screws are left?",
+      "assistant_words": "The answer is 71 screws.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "87-4*4"
+      },
+      "numeric_target": "71"
+    },
+    {
+      "id": "reasoning-text-c39d6dfa68cafe08cf91",
+      "fold": "TRAIN",
+      "template": 2,
+      "user_words": "A cable measures 3 metres. After cutting off 15 centimetres, how many centimetres are left?",
+      "assistant_words": "The answer is 285 centimetres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "3*100-15"
+      },
+      "numeric_target": "285"
+    },
+    {
+      "id": "reasoning-text-c8597faa09f17c8db9f6",
+      "fold": "TRAIN",
+      "template": 2,
+      "user_words": "A cable measures 4 metres. After cutting off 16 centimetres, how many centimetres are left?",
+      "assistant_words": "The answer is 384 centimetres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "4*100-16"
+      },
+      "numeric_target": "384"
+    },
+    {
+      "id": "reasoning-text-070e446725efeed4b034",
+      "fold": "TRAIN",
+      "template": 3,
+      "user_words": "A process starts at elapsed minute 8 and lasts 18 minutes. At what elapsed minute does it finish?",
+      "assistant_words": "The answer is 26 minutes.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "8+18"
+      },
+      "numeric_target": "26"
+    },
+    {
+      "id": "reasoning-text-90bb641daea1f0500a43",
+      "fold": "TRAIN",
+      "template": 3,
+      "user_words": "A process starts at elapsed minute 9 and lasts 19 minutes. At what elapsed minute does it finish?",
+      "assistant_words": "The answer is 28 minutes.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "9+19"
+      },
+      "numeric_target": "28"
+    },
+    {
+      "id": "reasoning-text-ee7dda1fe47ccc4c3b34",
+      "fold": "TRAIN",
+      "template": 4,
+      "user_words": "A rectangle has length 7 metres and width 3 metres. What is its perimeter?",
+      "assistant_words": "The answer is 20 metres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "2*(7+3)"
+      },
+      "numeric_target": "20"
+    },
+    {
+      "id": "reasoning-text-7d2bf00188f5e8138cf8",
+      "fold": "TRAIN",
+      "template": 4,
+      "user_words": "A rectangle has length 8 metres and width 4 metres. What is its perimeter?",
+      "assistant_words": "The answer is 24 metres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "2*(8+4)"
+      },
+      "numeric_target": "24"
+    },
+    {
+      "id": "reasoning-text-2aabd64ff6f052fad516",
+      "fold": "TRAIN",
+      "template": 5,
+      "user_words": "One quarter of a collection of 40 counters is set aside. How many counters are set aside?",
+      "assistant_words": "The answer is 10 counters.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "40/4"
+      },
+      "numeric_target": "10"
+    },
+    {
+      "id": "reasoning-text-f151b7ef9555bb3b164f",
+      "fold": "TRAIN",
+      "template": 5,
+      "user_words": "One quarter of a collection of 44 counters is set aside. How many counters are set aside?",
+      "assistant_words": "The answer is 11 counters.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "44/4"
+      },
+      "numeric_target": "11"
+    },
+    {
+      "id": "reasoning-text-06ca673c28859c34a58c",
+      "fold": "TRAIN",
+      "template": 6,
+      "user_words": "A pump moves 3 litres each minute for 4 minutes. How many litres does it move?",
+      "assistant_words": "The answer is 12 litres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "3*4"
+      },
+      "numeric_target": "12"
+    },
+    {
+      "id": "reasoning-text-c97ca11f5df7b1b2513c",
+      "fold": "TRAIN",
+      "template": 6,
+      "user_words": "A pump moves 4 litres each minute for 5 minutes. How many litres does it move?",
+      "assistant_words": "The answer is 20 litres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "4*5"
+      },
+      "numeric_target": "20"
+    },
+    {
+      "id": "reasoning-text-a380dc59ea1352fb9edf",
+      "fold": "TRAIN",
+      "template": 7,
+      "user_words": "2 tickets cost 3 pounds each. One booking fee adds 2 pounds to the whole purchase. What is the total cost?",
+      "assistant_words": "The answer is 8 pounds.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "2*3+2"
+      },
+      "numeric_target": "8"
+    },
+    {
+      "id": "reasoning-text-3f3dd90de65cab6b06b4",
+      "fold": "TRAIN",
+      "template": 7,
+      "user_words": "3 tickets cost 4 pounds each. One booking fee adds 3 pounds to the whole purchase. What is the total cost?",
+      "assistant_words": "The answer is 15 pounds.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "3*4+3"
+      },
+      "numeric_target": "15"
+    },
+    {
+      "id": "reasoning-text-d0f923712824ca95d9a8",
+      "fold": "TRAIN",
+      "template": 8,
+      "user_words": "A register contains 23. Add 3, double the result, and subtract 2. What value remains?",
+      "assistant_words": "The answer is 50.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(23+3)*2-2"
+      },
+      "numeric_target": "50"
+    },
+    {
+      "id": "reasoning-text-e7243cfc9c8c76137607",
+      "fold": "TRAIN",
+      "template": 8,
+      "user_words": "A register contains 24. Add 4, double the result, and subtract 3. What value remains?",
+      "assistant_words": "The answer is 53.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(24+4)*2-3"
+      },
+      "numeric_target": "53"
+    },
+    {
+      "id": "reasoning-text-6d28c82b944fc0310d1e",
+      "fold": "TRAIN",
+      "template": 9,
+      "user_words": "Tank A holds 30 litres and tank B holds 12. Move 3 litres from A to B without losing any. What is the combined volume?",
+      "assistant_words": "The answer is 42 litres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "30+12"
+      },
+      "numeric_target": "42"
+    },
+    {
+      "id": "reasoning-text-846870b2c2e9ea3b5c74",
+      "fold": "TRAIN",
+      "template": 9,
+      "user_words": "Tank A holds 31 litres and tank B holds 13. Move 4 litres from A to B without losing any. What is the combined volume?",
+      "assistant_words": "The answer is 44 litres.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "31+13"
+      },
+      "numeric_target": "44"
+    },
+    {
+      "id": "reasoning-text-a3abe81e7a82e8a0d9fd",
+      "fold": "TRAIN",
+      "template": 10,
+      "user_words": "Jo has 23 tokens. Kai has 3 fewer than Jo. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "assistant_words": "The answer is 60 tokens.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(23-3)*3"
+      },
+      "numeric_target": "60"
+    },
+    {
+      "id": "reasoning-text-880380d7e0b3827732aa",
+      "fold": "TRAIN",
+      "template": 10,
+      "user_words": "Jo has 24 tokens. Kai has 4 fewer than Jo. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "assistant_words": "The answer is 60 tokens.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(24-4)*3"
+      },
+      "numeric_target": "60"
+    },
+    {
+      "id": "reasoning-text-ed2b42d826562c6fcbd7",
+      "fold": "TRAIN",
+      "template": 11,
+      "user_words": "A delivery was scheduled for project day 7. A delay adds 3 days and a later revision brings it forward 1 days. What is its new project day?",
+      "assistant_words": "The answer is 9.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "7+3-1"
+      },
+      "numeric_target": "9"
+    },
+    {
+      "id": "reasoning-text-a7e7aa2242b31b0b6fa8",
+      "fold": "TRAIN",
+      "template": 11,
+      "user_words": "A delivery was scheduled for project day 8. A delay adds 4 days and a later revision brings it forward 2 days. What is its new project day?",
+      "assistant_words": "The answer is 10.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "8+4-2"
+      },
+      "numeric_target": "10"
+    },
+    {
+      "id": "reasoning-text-f86cc4690c79dedc6454",
+      "fold": "TRAIN",
+      "template": 12,
+      "user_words": "A resistor carries 2 amperes under 8 volts. Using voltage equals current times resistance, what is its resistance?",
+      "assistant_words": "The answer is 4 ohms.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "8/2"
+      },
+      "numeric_target": "4"
+    },
+    {
+      "id": "reasoning-text-e23f683379e753f7356d",
+      "fold": "TRAIN",
+      "template": 12,
+      "user_words": "A resistor carries 3 amperes under 15 volts. Using voltage equals current times resistance, what is its resistance?",
+      "assistant_words": "The answer is 5 ohms.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "15/3"
+      },
+      "numeric_target": "5"
+    },
+    {
+      "id": "reasoning-text-46ef04adeddb57181435",
+      "fold": "TRAIN",
+      "template": 13,
+      "user_words": "A vehicle covers 24 metres in 3 seconds. What is its average speed?",
+      "assistant_words": "The answer is 8 metres per second.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "24/3"
+      },
+      "numeric_target": "8"
+    },
+    {
+      "id": "reasoning-text-7016ee0a629cbd2053aa",
+      "fold": "TRAIN",
+      "template": 13,
+      "user_words": "A vehicle covers 36 metres in 4 seconds. What is its average speed?",
+      "assistant_words": "The answer is 9 metres per second.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "36/4"
+      },
+      "numeric_target": "9"
+    },
+    {
+      "id": "reasoning-text-c7db4348cabf6d2d0568",
+      "fold": "TRAIN",
+      "template": 14,
+      "user_words": "What is the mean of the three measurements 23, 26 and 29?",
+      "assistant_words": "The answer is 26.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(23+26+29)/3"
+      },
+      "numeric_target": "26"
+    },
+    {
+      "id": "reasoning-text-efdf25a37ff009cab31d",
+      "fold": "TRAIN",
+      "template": 14,
+      "user_words": "What is the mean of the three measurements 24, 27 and 30?",
+      "assistant_words": "The answer is 27.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(24+27+30)/3"
+      },
+      "numeric_target": "27"
+    },
+    {
+      "id": "reasoning-text-332a3507fc2acd0139a2",
+      "fold": "TRAIN",
+      "template": 15,
+      "user_words": "A shop sells 2 items at 9 pounds each. Each item cost the shop 3 pounds. What is the total profit?",
+      "assistant_words": "The answer is 12 pounds.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(9-3)*2"
+      },
+      "numeric_target": "12"
+    },
+    {
+      "id": "reasoning-text-e5ebda669238a4cdebad",
+      "fold": "TRAIN",
+      "template": 15,
+      "user_words": "A shop sells 3 items at 10 pounds each. Each item cost the shop 4 pounds. What is the total profit?",
+      "assistant_words": "The answer is 18 pounds.",
+      "verification": {
+        "method": "exact-rational-program",
+        "expression": "(10-4)*3"
+      },
+      "numeric_target": "18"
+    }
+  ],
+  "exact_speech_payloads": [
+    {
+      "id": "reasoning-text-f3ce4a8365ba7da28286-user",
+      "text": "A workshop has 23 washers. It uses 3 and then receives 2. How many washers does it have now?"
+    },
+    {
+      "id": "reasoning-text-f3ce4a8365ba7da28286-assistant",
+      "text": "The answer is 22 washers."
+    },
+    {
+      "id": "reasoning-text-c732b4c0314282c74aa1-user",
+      "text": "A workshop has 24 washers. It uses 4 and then receives 3. How many washers does it have now?"
+    },
+    {
+      "id": "reasoning-text-c732b4c0314282c74aa1-assistant",
+      "text": "The answer is 23 washers."
+    },
+    {
+      "id": "reasoning-text-e22e7cdf79db1801ac2c-user",
+      "text": "A kit has 80 screws. Four assemblies each use 3 screws. How many screws are left?"
+    },
+    {
+      "id": "reasoning-text-e22e7cdf79db1801ac2c-assistant",
+      "text": "The answer is 68 screws."
+    },
+    {
+      "id": "reasoning-text-933220163528c44f99d7-user",
+      "text": "A kit has 87 screws. Four assemblies each use 4 screws. How many screws are left?"
+    },
+    {
+      "id": "reasoning-text-933220163528c44f99d7-assistant",
+      "text": "The answer is 71 screws."
+    },
+    {
+      "id": "reasoning-text-c39d6dfa68cafe08cf91-user",
+      "text": "A cable measures 3 metres. After cutting off 15 centimetres, how many centimetres are left?"
+    },
+    {
+      "id": "reasoning-text-c39d6dfa68cafe08cf91-assistant",
+      "text": "The answer is 285 centimetres."
+    },
+    {
+      "id": "reasoning-text-c8597faa09f17c8db9f6-user",
+      "text": "A cable measures 4 metres. After cutting off 16 centimetres, how many centimetres are left?"
+    },
+    {
+      "id": "reasoning-text-c8597faa09f17c8db9f6-assistant",
+      "text": "The answer is 384 centimetres."
+    },
+    {
+      "id": "reasoning-text-070e446725efeed4b034-user",
+      "text": "A process starts at elapsed minute 8 and lasts 18 minutes. At what elapsed minute does it finish?"
+    },
+    {
+      "id": "reasoning-text-070e446725efeed4b034-assistant",
+      "text": "The answer is 26 minutes."
+    },
+    {
+      "id": "reasoning-text-90bb641daea1f0500a43-user",
+      "text": "A process starts at elapsed minute 9 and lasts 19 minutes. At what elapsed minute does it finish?"
+    },
+    {
+      "id": "reasoning-text-90bb641daea1f0500a43-assistant",
+      "text": "The answer is 28 minutes."
+    },
+    {
+      "id": "reasoning-text-ee7dda1fe47ccc4c3b34-user",
+      "text": "A rectangle has length 7 metres and width 3 metres. What is its perimeter?"
+    },
+    {
+      "id": "reasoning-text-ee7dda1fe47ccc4c3b34-assistant",
+      "text": "The answer is 20 metres."
+    },
+    {
+      "id": "reasoning-text-7d2bf00188f5e8138cf8-user",
+      "text": "A rectangle has length 8 metres and width 4 metres. What is its perimeter?"
+    },
+    {
+      "id": "reasoning-text-7d2bf00188f5e8138cf8-assistant",
+      "text": "The answer is 24 metres."
+    },
+    {
+      "id": "reasoning-text-2aabd64ff6f052fad516-user",
+      "text": "One quarter of a collection of 40 counters is set aside. How many counters are set aside?"
+    },
+    {
+      "id": "reasoning-text-2aabd64ff6f052fad516-assistant",
+      "text": "The answer is 10 counters."
+    },
+    {
+      "id": "reasoning-text-f151b7ef9555bb3b164f-user",
+      "text": "One quarter of a collection of 44 counters is set aside. How many counters are set aside?"
+    },
+    {
+      "id": "reasoning-text-f151b7ef9555bb3b164f-assistant",
+      "text": "The answer is 11 counters."
+    },
+    {
+      "id": "reasoning-text-06ca673c28859c34a58c-user",
+      "text": "A pump moves 3 litres each minute for 4 minutes. How many litres does it move?"
+    },
+    {
+      "id": "reasoning-text-06ca673c28859c34a58c-assistant",
+      "text": "The answer is 12 litres."
+    },
+    {
+      "id": "reasoning-text-c97ca11f5df7b1b2513c-user",
+      "text": "A pump moves 4 litres each minute for 5 minutes. How many litres does it move?"
+    },
+    {
+      "id": "reasoning-text-c97ca11f5df7b1b2513c-assistant",
+      "text": "The answer is 20 litres."
+    },
+    {
+      "id": "reasoning-text-a380dc59ea1352fb9edf-user",
+      "text": "2 tickets cost 3 pounds each. One booking fee adds 2 pounds to the whole purchase. What is the total cost?"
+    },
+    {
+      "id": "reasoning-text-a380dc59ea1352fb9edf-assistant",
+      "text": "The answer is 8 pounds."
+    },
+    {
+      "id": "reasoning-text-3f3dd90de65cab6b06b4-user",
+      "text": "3 tickets cost 4 pounds each. One booking fee adds 3 pounds to the whole purchase. What is the total cost?"
+    },
+    {
+      "id": "reasoning-text-3f3dd90de65cab6b06b4-assistant",
+      "text": "The answer is 15 pounds."
+    },
+    {
+      "id": "reasoning-text-d0f923712824ca95d9a8-user",
+      "text": "A register contains 23. Add 3, double the result, and subtract 2. What value remains?"
+    },
+    {
+      "id": "reasoning-text-d0f923712824ca95d9a8-assistant",
+      "text": "The answer is 50."
+    },
+    {
+      "id": "reasoning-text-e7243cfc9c8c76137607-user",
+      "text": "A register contains 24. Add 4, double the result, and subtract 3. What value remains?"
+    },
+    {
+      "id": "reasoning-text-e7243cfc9c8c76137607-assistant",
+      "text": "The answer is 53."
+    },
+    {
+      "id": "reasoning-text-6d28c82b944fc0310d1e-user",
+      "text": "Tank A holds 30 litres and tank B holds 12. Move 3 litres from A to B without losing any. What is the combined volume?"
+    },
+    {
+      "id": "reasoning-text-6d28c82b944fc0310d1e-assistant",
+      "text": "The answer is 42 litres."
+    },
+    {
+      "id": "reasoning-text-846870b2c2e9ea3b5c74-user",
+      "text": "Tank A holds 31 litres and tank B holds 13. Move 4 litres from A to B without losing any. What is the combined volume?"
+    },
+    {
+      "id": "reasoning-text-846870b2c2e9ea3b5c74-assistant",
+      "text": "The answer is 44 litres."
+    },
+    {
+      "id": "reasoning-text-a3abe81e7a82e8a0d9fd-user",
+      "text": "Jo has 23 tokens. Kai has 3 fewer than Jo. Lee has three times as many as Kai. How many tokens does Lee have?"
+    },
+    {
+      "id": "reasoning-text-a3abe81e7a82e8a0d9fd-assistant",
+      "text": "The answer is 60 tokens."
+    },
+    {
+      "id": "reasoning-text-880380d7e0b3827732aa-user",
+      "text": "Jo has 24 tokens. Kai has 4 fewer than Jo. Lee has three times as many as Kai. How many tokens does Lee have?"
+    },
+    {
+      "id": "reasoning-text-880380d7e0b3827732aa-assistant",
+      "text": "The answer is 60 tokens."
+    },
+    {
+      "id": "reasoning-text-ed2b42d826562c6fcbd7-user",
+      "text": "A delivery was scheduled for project day 7. A delay adds 3 days and a later revision brings it forward 1 days. What is its new project day?"
+    },
+    {
+      "id": "reasoning-text-ed2b42d826562c6fcbd7-assistant",
+      "text": "The answer is 9."
+    },
+    {
+      "id": "reasoning-text-a7e7aa2242b31b0b6fa8-user",
+      "text": "A delivery was scheduled for project day 8. A delay adds 4 days and a later revision brings it forward 2 days. What is its new project day?"
+    },
+    {
+      "id": "reasoning-text-a7e7aa2242b31b0b6fa8-assistant",
+      "text": "The answer is 10."
+    },
+    {
+      "id": "reasoning-text-f86cc4690c79dedc6454-user",
+      "text": "A resistor carries 2 amperes under 8 volts. Using voltage equals current times resistance, what is its resistance?"
+    },
+    {
+      "id": "reasoning-text-f86cc4690c79dedc6454-assistant",
+      "text": "The answer is 4 ohms."
+    },
+    {
+      "id": "reasoning-text-e23f683379e753f7356d-user",
+      "text": "A resistor carries 3 amperes under 15 volts. Using voltage equals current times resistance, what is its resistance?"
+    },
+    {
+      "id": "reasoning-text-e23f683379e753f7356d-assistant",
+      "text": "The answer is 5 ohms."
+    },
+    {
+      "id": "reasoning-text-46ef04adeddb57181435-user",
+      "text": "A vehicle covers 24 metres in 3 seconds. What is its average speed?"
+    },
+    {
+      "id": "reasoning-text-46ef04adeddb57181435-assistant",
+      "text": "The answer is 8 metres per second."
+    },
+    {
+      "id": "reasoning-text-7016ee0a629cbd2053aa-user",
+      "text": "A vehicle covers 36 metres in 4 seconds. What is its average speed?"
+    },
+    {
+      "id": "reasoning-text-7016ee0a629cbd2053aa-assistant",
+      "text": "The answer is 9 metres per second."
+    },
+    {
+      "id": "reasoning-text-c7db4348cabf6d2d0568-user",
+      "text": "What is the mean of the three measurements 23, 26 and 29?"
+    },
+    {
+      "id": "reasoning-text-c7db4348cabf6d2d0568-assistant",
+      "text": "The answer is 26."
+    },
+    {
+      "id": "reasoning-text-efdf25a37ff009cab31d-user",
+      "text": "What is the mean of the three measurements 24, 27 and 30?"
+    },
+    {
+      "id": "reasoning-text-efdf25a37ff009cab31d-assistant",
+      "text": "The answer is 27."
+    },
+    {
+      "id": "reasoning-text-332a3507fc2acd0139a2-user",
+      "text": "A shop sells 2 items at 9 pounds each. Each item cost the shop 3 pounds. What is the total profit?"
+    },
+    {
+      "id": "reasoning-text-332a3507fc2acd0139a2-assistant",
+      "text": "The answer is 12 pounds."
+    },
+    {
+      "id": "reasoning-text-e5ebda669238a4cdebad-user",
+      "text": "A shop sells 3 items at 10 pounds each. Each item cost the shop 4 pounds. What is the total profit?"
+    },
+    {
+      "id": "reasoning-text-e5ebda669238a4cdebad-assistant",
+      "text": "The answer is 18 pounds."
+    }
+  ],
+  "requests": 64,
+  "characters": 3750,
+  "provider": "ElevenLabs",
+  "maximum_new_API_USD": 5,
+  "no_purchase": true,
+  "owner_data": false,
+  "held_out_data": false,
+  "native_training_approved": false,
+  "routing_labels_pending": true,
+  "independent_word_semantic_timing_quality_required": true
+}
