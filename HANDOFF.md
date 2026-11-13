@@ -1,3 +1,11 @@
+# LOCAL — Real two-rank fresh-process OPAL restore PASS; complete expanded audio payload prepared
+
+Actual CPUcontainer tool33173 exited0. RealOPAL KEEP/Adam/RNG/program state and outputlogits restored EXACT on bothranks across distinctsave/restorePIDs53592->54856 and53593->54857. Nativeweightsloadedfalse, toyupdate1 only. Proofs retrieved actualrsync68557 to runs/native-distributed-build-20261113/opal-restore. GPUFSDPnative admission stillrequired, not implied byCPUproof. Sourceb243c1ae (full viaGit), remoteproof /projects/u6ada/duplex-live/distributed-opal-restore-proof-b243c1a. No native savedupdates replayed.
+
+Complete1072scene source plan prepared:1008TRAIN/64DEV,2144 exactTTStexts/319491characters plus1072 exactsynthetic/public semantic records. NATIVE-REASONING-AUDIO1072-SOURCE-PLAN-2026-11-13.json preserves originalwords/folds/curriculumSHA. Proposed providerElevenLabs speech+OpenAI Astra independentsemantics, combinedmaximum150USD/no purchase/topup, wholecohortprice/creditadmission first. This is newAPIusage beyondfinishedphase's allowance; ownerdecisionpending beforecalls. Earlier32sceneplan is an unexecuted subsetproposal, not a passing-subset approval or requestedcollection. No APIrequest/audio generated yet; no sourcequalified or traininglaunched. Continue nativeGPUobjective/checkpoint admission setup whileawaitingdata provider decision; do not fabricateaudioapproval or runoldtrainingagain. Fresh17:31:58UTCqueueempty; certificateexpires23:35:42UTC.
+
+---
+
 # LOCAL — Large OPAL rank-state collector replaced with durable rank shards
 
 New distributed_state schemaV2 writes complete RNG/OPAL registry state perrank, fsyncs and hashes each shard, and gathers only small filename/digest/error descriptors. Rank0 common checkpoint preserves full model/Adam and shardmanifest. Restore verifies ownshardSHA beforecallback; no OPAL fields removed and no huge rank-state all-gather. Compiles; distributed fresh-process OPAL/fullnative restore remains to be exercised. Earlier all-gather blocker is implementation-resolved, not hardware-approved. No GPUtraining started, source/dataqualification still outstanding. Continue actualtests and expandednative data; preserveoldstates/no replay.
