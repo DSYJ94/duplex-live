@@ -1,3 +1,11 @@
+# LOCAL — Retained objective collective integration added; launch still pending complete state/data admission
+
+New distributed_objective.py routes the unchanged matched Objective through DistributedNative.view. All ranks must agree on the identical retained exposure sequence before any model forward, preventing unequal recorded-call collectives. Existing per-member/group weights remain unchanged; no implicit accumulation/world-size divisor is added. No old loss/data/source approval modified, no optimizer updates or GPU submission. Compilation only; actual native integration test and OPAL sharded clipping/state ownership still required before launch. New-data partitioning needs its own declared normalization rather than copying replicated retention semantics.
+
+Owner explicitly requests finishing integration, expanded data and next Isambard training run. Continue that task; do not call the runner ready merely from CPU fixtures. Current native audio expansion remains unqualified; original1072 text seed restored on Isambard with exactSHA, no source audio generated. Preserve full192 results and196 checkpoints. Reconcile shared Remora audit and live queue before allocation; never repeat completed training. Work/private/tmp/duplex-recovery-20261112 main.
+
+---
+
 # Shared allocation — audit8386702 reported submitted; accumulation warning retained
 
 Remora reports1GPU/max1h read-onlyaudit8386702 at/projects/u6ada/remora/context-audit-20261113; monitoring remainsitsowner, no voiceGPUreservation. Reconcileactualstatebeforevoiceallocation. Remora's tinyHFTrainer probe reportedly found8xaccumulationnormalization bug; originalstatespreserved/downgraded, no trainingreplay. Duplexusesdifferentnativeobjective; no inferenceofsamebug. Researchcontinuitynote nowrequires fullnativeglobal-reference accumulation parity includinguneventargetcounts/retention/rankpartitioning. ExistingCPUtwo-rankfixturePASSdoesnotreplacefullnativeproof. No voiceGPUjob/newupdates.
