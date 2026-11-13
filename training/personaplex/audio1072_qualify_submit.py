@@ -1,5 +1,5 @@
 """LOCAL single submitter: await actual complete render, inventory, transfer, audit."""
-import json,os,subprocess,sys,time
+import json,os,subprocess,sys,time,shlex
 from pathlib import Path
 
 
@@ -26,7 +26,7 @@ def main():
     cmd=['sbatch','--parsable','--account=brics.u6ada','--partition=workq','--gpus=1','--time=04:00:00','--cpus-per-task=8','--mem=80G','--no-requeue','--job-name=duplex-audio1072-asr','--dependency=afterany:8400058','--chdir='+target,'--output='+remote+'/slurm-%j.log','--wrap=/usr/bin/python3 -B -u -m training.personaplex.audio1072_asr_job']
     (claim/'command.json').write_text(json.dumps(dict(source=source,command=cmd,native_optimizer_updates=0))+'\n')
     # Ambiguous submission is never retried automatically.
-    result=subprocess.run(['ssh','-o','BatchMode=yes',host,*cmd],text=True,capture_output=True,timeout=90)
+    result=subprocess.run(['ssh','-o','BatchMode=yes',host,shlex.join(cmd)],text=True,capture_output=True,timeout=90)
     (claim/'response.json').write_text(json.dumps(dict(exit=result.returncode,stdout=result.stdout,stderr=result.stderr))+'\n')
     if result.returncode:raise RuntimeError('Submission failed; inspect before any retry')
     job=result.stdout.strip().split(';')[0]
