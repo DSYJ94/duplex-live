@@ -1,3 +1,11 @@
+# LOCAL — Audio audit recovery8408781 submitted; completed1343 reused
+
+8400573 actually ended1 after1343/2144 records: Whisper timestamp decoder TypeError float/None in chunk merge. All existing source-bound audit records preserved. Source689cecbb8 Git-deployed via bundle to source-audio1072-689cecb. Recovery8408781 actualsbatchreceipt,1GPU/max1h/no-requeue, reuses1343 completedrecords; catches ONLY matching decoderTypeError as explicit word_passfalse/error record and continues whole2144. No threshold changes/subsetacceptance/nativeoptimizerupdates. Freshqueueempty before submission; Remora8400058 reportedcompleted750steps/3642GPU-seconds; coordinationnotifiednew8408781 toprevent overlap. Neverresubmit8408781 on observationtimeout.
+
+Actual34rawpeak waveform inspections saved runs/native-distributed-build-20261113/raw-peak-failure-inspection.json with sourceSHA/exactwords/saturation/highsamplecounts. Originals untouched; newversionrepair/requalification stillpendingcompleteASR. No gainnormalization. Allold196states/full192backups preserved. OPALKEEP/fullstate intact; nativeFSDP/data conversion/semantic qualification/actualstudenttraining stillunfinished. Continuegoal, do not claim ASR as training or replayold196. Certificateexpires23:35:42UTC13Nov.
+
+---
+
 # LOCAL — Actual independent source-audio audit8400573 SUBMITTED; no native training replay
 
 ONEqualificationcontroller64213 exited0 andactualsbatchreturned **8400573**. Exactsourcein claimjob.json/command.json and NATIVE-AUDIO1072-QUALIFICATION-EXECUTION-2026-11-13.json. All2144 originalrecordings transferred to/projects/u6ada/duplex-live/native-reasoning-audio1072-20261113-v1/audio withcompletehash/clockinventory. CPUraw34peakfailures retained; ASRstillcompletecohort, no subsetapproval. JoboneGPU/workq/max4h, dependencyafterany8400058 toserializewithvalidRemorawork. IndependentWhisperword/timingaudit, ZERO nativeoptimizerupdates, notvoicetraining. NativeFSDP/teachersemantic/sourcequalification stillrequired.
