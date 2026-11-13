@@ -1,3 +1,9 @@
+# LOCAL — Large OPAL rank-state collector replaced with durable rank shards
+
+New distributed_state schemaV2 writes complete RNG/OPAL registry state perrank, fsyncs and hashes each shard, and gathers only small filename/digest/error descriptors. Rank0 common checkpoint preserves full model/Adam and shardmanifest. Restore verifies ownshardSHA beforecallback; no OPAL fields removed and no huge rank-state all-gather. Compiles; distributed fresh-process OPAL/fullnative restore remains to be exercised. Earlier all-gather blocker is implementation-resolved, not hardware-approved. No GPUtraining started, source/dataqualification still outstanding. Continue actualtests and expandednative data; preserveoldstates/no replay.
+
+---
+
 # LOCAL — Distributed OPAL clipping ownership implemented; large rank-state collection blocker identified
 
 FreshSSH13Nov17:25:36UTC queue empty; certificate valid23:35:42. New distributed_opal.py preserves NativeOpal KEEP/API0, collective agreement of update counters, and EXACTLY ONE clipping owner via DistributedNative.clip_grad_norm. Upstream clipping disabled only within new distributed wrapper; existing NativeOpal/training files unchanged. Full OPAL registry/program/diagnostic/RNG state retained. Compiles only; actual OPAL integration/restore test not yet run.
