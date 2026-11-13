@@ -1,3 +1,11 @@
+# LOCAL — Complete1072 audio/semantic collection APPROVED with100USD cap; credits first
+
+Owner explicitly approved proposed2144speechutterances/319491characters plus1072independentsemanticreviews at **100USD maximum**, replacingproposed150. Useexistingcreditsfirst; no purchase/topup. Exactsourceplanupdated NATIVE-REASONING-AUDIO1072-SOURCE-PLAN-2026-11-13.json. Beforeanycalls reconcilecurrentprovidercredits/prices andreservewholecohortwithin100; ifunfit preparecheaperwholecohortroute, neveracceptpassingsubset. Onlyexistingauthorizedkeys/approvedBritishvoices, noowner/officialTESTdata. No calls/audioqualification/traininglaunchclaimyet.
+
+Contents1008TRAIN=512authoredexactarithmetic across16templates+496GSM8KpublicTRAINwordproblems;64DEV=32+32. Spokenuserquestions andgoldspokenresponses teachaudio-conditionedanswering/basicmultistepreasoning. This collectionismaths-only, notnewdialoguecontrol/cancellation/silence/delegationcurriculum; retainexistingnativecontrol/history/KL/hiddenobjectives andseparateroutingexpansion. Publicgold/annotationchecksarenotfullsemanticapproval; independentreviewrequired. OPALtwo-rankfreshCPUrestorepassed, nativeGPUFSDP/dataqualification stillrequired. Continueuserauthorizedbuildandtraininggoal; noold196replay.
+
+---
+
 # LOCAL — Real two-rank fresh-process OPAL restore PASS; complete expanded audio payload prepared
 
 Actual CPUcontainer tool33173 exited0. RealOPAL KEEP/Adam/RNG/program state and outputlogits restored EXACT on bothranks across distinctsave/restorePIDs53592->54856 and53593->54857. Nativeweightsloadedfalse, toyupdate1 only. Proofs retrieved actualrsync68557 to runs/native-distributed-build-20261113/opal-restore. GPUFSDPnative admission stillrequired, not implied byCPUproof. Sourceb243c1ae (full viaGit), remoteproof /projects/u6ada/duplex-live/distributed-opal-restore-proof-b243c1a. No native savedupdates replayed.

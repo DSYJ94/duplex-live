@@ -10731,7 +10731,7 @@
     "speech": "ElevenLabs",
     "independent_semantics": "OpenAI Astra"
   },
-  "maximum_total_API_USD": 150,
+  "maximum_total_API_USD": 100,
   "maximum_semantic_requests": 1072,
   "no_purchase": true,
   "no_credit_top_up": true,
@@ -23062,5 +23062,8 @@
         "full_semantic_verification": false
       }
     }
-  ]
+  ],
+  "owner_approved": true,
+  "owner_approval": "approved on $100 but try to use credits first",
+  "existing_credits_first": true
 }
