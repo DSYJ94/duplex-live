@@ -1,5 +1,7 @@
 # Native voice reinforcement learning and research integration
 
+13November research update: [concrete parallel full-LM, CPT and block-growth design](NATIVE-SUBSTANTIAL-TRAINING-RESEARCH-2026-11-13.md), with verified upstream full-tuning/FSDP switches, explicit corpus/token/native-frame budgets and4->8/16GPU scaling. No new learner launched.
+
 13 November outcome: [completed192 comparison and next learning phase](NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md). Recovery8366795 completed0:0 with76 reused/116 new outputs and ZERO training updates. PersonaPlex105M improves speech agreement10->18/32 but no condition passes necessary silence/pause; basic answer regressions remain. CS requests a backend on all12 ordinary questions, with no real worker connected. No model adopted. Owner reiterates generous useful GPU use: supplied award snapshot118.7/20,000GPUh,79days,~251.66GPUh/day needed. Plan productive8–16GPU substantial data/SFT/full-tune/growth/RL work, not tiny serial pilots. OneDrive editing is permitted; actual checkout remains outside it to preserve unrelated work. No RL learner or new phase is running.
 
 

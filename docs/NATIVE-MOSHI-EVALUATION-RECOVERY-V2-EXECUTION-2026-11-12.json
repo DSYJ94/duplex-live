@@ -62,10 +62,26 @@
   "completed_UTC": "2026-11-13T00:12:35.353489Z",
   "actual_completed_outputs": 192,
   "certificate_expires_UTC": "2026-11-13T23:35:42Z",
-  "backup_tool_session": 13709,
-  "backup_source": "2a6ade610be98c5bc22606cd7a693397e614f794",
-  "backup_status": "IN_PROGRESS",
+  "backup_tool_session": 29775,
+  "backup_source": "a6b6a59191a6f3498a65213213714ccd34f97d9f",
+  "backup_status": "VERIFYING_COMPLETE_STAGE_AFTER_QUARANTINING_ONE_RSYNC_TEMPORARY",
   "all_six_report_hashes_verified": true,
   "review": "NATIVE-MOSHI-COMPLETE192-COMPARISON-2026-11-13.json",
-  "decision": "NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md"
+  "decision": "NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md",
+  "previous_backup_actual_exit": 1,
+  "previous_backup_rsync_exit": 10,
+  "source_inventory_entries": 52525,
+  "source_inventory_bytes": 1613572550,
+  "previous_resume_tool_session": 54146,
+  "previous_resume_actual_exit": 1,
+  "previous_resume_all_52525_entries_copied": true,
+  "inventory_difference": {
+    "missing": [],
+    "extra": [
+      "personaplex-narrow/venus-repair-v2-holdout-ordinary-0092/.chunk-0119.wav.5dc5TL"
+    ]
+  },
+  "temporary_file_quarantined": true,
+  "temporary_file_bytes": 0,
+  "temporary_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 }

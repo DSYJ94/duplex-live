@@ -23,6 +23,8 @@ All six fail5-minus2: PersonaPlex answers2/4/4, Context Spanning2/2/4. All strug
 
 All PersonaPlex variants emit zero RET events on the four explicit lookup scenes. All Context Spanning variants emit RET on all four, but also all12 easy ordinary questions. No worker is connected: actual task events are zero throughout. Executed delegation, complete request context, cancellation, result grounding and stale-result exclusion are **untested**, not established failures of a real connected backend. Disconnected CS responses must not be sold as backend answers. PersonaPlex's lack of native requests in this harness remains a genuine routing deficit to address.
 
+Primary-source implementation/resource follow-up: [full tuning, CPT and structural-growth design](NATIVE-SUBSTANTIAL-TRAINING-RESEARCH-2026-11-13.md).
+
 ## What changes next
 
 **Recommended learning foundation: retain untouched PersonaPlex as the primary reasoning-retention reference and next supervised seed, with its105M result as a speech-improvement comparator.** The trained105M state is not automatically a better starting point, because its reasoning/control acceptance failed. Preserve all Context Spanning and Venus states. Test the same real backend with the existing CS request interface as a parallel system-level branch before declaring CS intrinsically inferior. This is a recommendation, not an adopted model or a new training launch.
@@ -40,4 +42,4 @@ Owner's13November portal screenshot reports118.7GPUh used of20,000,79days left,2
 
 ## Preservation
 
-All four196 checkpoints remain on original and independently hash-verified cluster filesystems, including the final broad states recorded in the final10 execution ledger. No new Mac checkpoint downloads. Full evaluation archive is being copied and full-file SHA256 checked on independent Lustre by the single Git-deployed backup helper; record its actual receipt before claiming completed backup. Naturalness/accent listening and fresh connected-stack acceptance remain open, so programme/product goal remains active.
+All four196 checkpoints remain on original and independently hash-verified cluster filesystems, including the final broad states recorded in the final10 execution ledger. No new Mac checkpoint downloads. The first archive helper13709 failed with rsync10/12 after source inventory52525entries/1613572550bytes; original tree and partial destination remain intact. ONE resumed helper54146 uses producer a6b6a59191a6f3498a65213213714ccd34f97d9f and2000-file batches, reusing copied files and requiring full final hash/link equality. Record its actual receipt before claiming completed backup. Naturalness/accent listening and fresh connected-stack acceptance remain open, so programme/product goal remains active.
