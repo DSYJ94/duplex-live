@@ -1,5 +1,5 @@
 {
-  "status": "COMPLETED_FULL192_RESULTS_HASH_VERIFIED_BACKUP_IN_PROGRESS",
+  "status": "COMPLETED_FULL192_COMPARISON_AND_INDEPENDENT_BACKUP_VERIFIED",
   "job_id": "8366795",
   "source": "ebd71281829150e855b738dd8ed4e1262e714cb5",
   "training_job": "8317068",
@@ -62,9 +62,9 @@
   "completed_UTC": "2026-11-13T00:12:35.353489Z",
   "actual_completed_outputs": 192,
   "certificate_expires_UTC": "2026-11-13T23:35:42Z",
-  "backup_tool_session": 29775,
+  "backup_tool_session": null,
   "backup_source": "a6b6a59191a6f3498a65213213714ccd34f97d9f",
-  "backup_status": "VERIFYING_COMPLETE_STAGE_AFTER_QUARANTINING_ONE_RSYNC_TEMPORARY",
+  "backup_status": "PASSED",
   "all_six_report_hashes_verified": true,
   "review": "NATIVE-MOSHI-COMPLETE192-COMPARISON-2026-11-13.json",
   "decision": "NATIVE-MOSHI-COMPLETE192-DECISION-2026-11-13.md",
@@ -83,5 +83,44 @@
   },
   "temporary_file_quarantined": true,
   "temporary_file_bytes": 0,
-  "temporary_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  "temporary_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "backup_actual_exit": 0,
+  "backup": {
+    "passed": true,
+    "verification": "prior_full_equality_manifest_plus_fresh_full_destination_verification",
+    "source": "/home/u6ada/dsyj94.u6ada/duplex-native-recovery-20261109-v1/runs/evaluation-recovery-v2",
+    "destination": "/projects/u6ada/duplex-live/native-moshi-evaluation-backup-v1/job-8366795",
+    "job_id": "8366795",
+    "producer": "ebd71281829150e855b738dd8ed4e1262e714cb5",
+    "files": 52525,
+    "bytes": 1613572550,
+    "independent_filesystem": true,
+    "actual_rsync_exit_code": 0,
+    "every_file_sha256_verified": true,
+    "optimizer_updates": 0,
+    "manifest_sha256": "f79f72b8f14daa90a6f968cb10e5e29db45659103e7a1777059ad1caef97e482",
+    "actual_unix": 1794571582.2723763,
+    "backup_program_source": "53b38279a13216bc7b2ed5cc96918a5c0b636eda"
+  },
+  "backup_receipt_sha256": "721b5d839071fcd695554f53b29efe7103290aa7ffa392bf9d0f6071f0a73e2c",
+  "retrieved_manifest_SHA_verified": true,
+  "naturalness_British_accent_and_live_latency_qualified": false,
+  "backup_recovery_history": [
+    {
+      "tool": 13709,
+      "result": "rsync10/12; original and partial stage preserved"
+    },
+    {
+      "tool": 54146,
+      "result": "all52525 copied; one extra0byte transfer temp rejected"
+    },
+    {
+      "tool": 29775,
+      "result": "source/destination equalityPASS and manifest written; Python36 receipt writer text=True failed"
+    },
+    {
+      "tool": 67868,
+      "result": "pinned manifest/fresh full destination verification and publicationPASS0"
+    }
+  ]
 }
