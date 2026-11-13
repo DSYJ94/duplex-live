@@ -1,3 +1,11 @@
+# LOCAL — Actual independent source-audio audit8400573 SUBMITTED; no native training replay
+
+ONEqualificationcontroller64213 exited0 andactualsbatchreturned **8400573**. Exactsourcein claimjob.json/command.json and NATIVE-AUDIO1072-QUALIFICATION-EXECUTION-2026-11-13.json. All2144 originalrecordings transferred to/projects/u6ada/duplex-live/native-reasoning-audio1072-20261113-v1/audio withcompletehash/clockinventory. CPUraw34peakfailures retained; ASRstillcompletecohort, no subsetapproval. JoboneGPU/workq/max4h, dependencyafterany8400058 toserializewithvalidRemorawork. IndependentWhisperword/timingaudit, ZERO nativeoptimizerupdates, notvoicetraining. NativeFSDP/teachersemantic/sourcequalification stillrequired.
+
+Remorachatnotifiedactual8400573dependency/resources; no model/assetscrosschanged. Do notrerun64213 orresubmit8400573ontimeout. ObservecurrentjobactualSlurm/remoteexecutionterminal/asrprogress, preservefailures; fullsemanticreviewwithinapproved100USD thennewversionrepairofdiagnosedsourceclips/no gainconcealment/fullcohortgate. Allold196states/full192backupsintact. Goalactive; traininglaunchunfinished. Certificatevaliduntil23:35:42UTC13Nov. Sourceworktree/projects/u6ada/duplex-live/source-audio1072-69de83c; smallmetadataLOCALclaim runs/audio1072-qualification-submission-v1.
+
+---
+
 # LOCAL — Full2144 audio generation COMPLETE; raw34peak failures; qualification submitter64213 LIVE
 
 Actualrenderer89497 exited0 andcollection-complete.json confirms2144/2144 usingapprovedBritishvoices/credits. No validgenerationinterrupted/duplicated. Originalrawsource/receipts at runs/native-reasoning-audio1072-20261113-v1. Completeinventory actual64213 reports34peakgatefailures,0empty/short, all2144hashed/clockchecked. Noaudioapproval/trainingclaim. Preserve originals; diagnose/repairfailedsourceclips innewversion withsamewords; nevergain-normalizeorlowerthreshold.

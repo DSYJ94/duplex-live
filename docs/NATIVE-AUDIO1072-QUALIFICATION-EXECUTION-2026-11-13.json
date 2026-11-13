@@ -1,0 +1,15 @@
+{
+  "job_id": "8400573",
+  "source": "69de83cc84df2c6029182f3434999071398dd001",
+  "source_audio_complete": 2144,
+  "raw_peak_failures": 34,
+  "source_short_failures": 0,
+  "model": "independent Whisper turbo",
+  "GPU_count": 1,
+  "maximum_wall_hours": 4,
+  "dependency": "afterany:8400058",
+  "native_optimizer_updates": 0,
+  "training_running": false,
+  "audio_qualified": false,
+  "remote_root": "/projects/u6ada/duplex-live/native-reasoning-audio1072-20261113-v1"
+}
