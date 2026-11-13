@@ -80,18 +80,55 @@ def archive(resume_stage=False):
     if rows != copied:
         raise ValueError('Complete destination SHA256 inventory differs')
     write(stage / 'archive-inventory.json', dict(files=rows, source=str(ROOT), producer=PRODUCER, job_id=JOB))
-    receipt = dict(passed=True, source=str(ROOT), destination=str(DEST), job_id=JOB, producer=PRODUCER,
+    publish(stage, rows, 'fresh_full_source_destination_equality')
+
+
+def publish(stage, rows, verification):
+    receipt = dict(passed=True, verification=verification, source=str(ROOT), destination=str(DEST), job_id=JOB, producer=PRODUCER,
                    files=len(rows), bytes=sum(r['bytes'] for r in rows), independent_filesystem=True,
                    actual_rsync_exit_code=0, every_file_sha256_verified=True, optimizer_updates=0,
                    manifest_sha256=sha(stage / 'archive-inventory.json'), actual_unix=time.time(),
-                   backup_program_source=subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip())
+                   backup_program_source=subprocess.check_output(['git', 'rev-parse', 'HEAD'], universal_newlines=True).strip())
     write(stage / 'archive-receipt.json', receipt)
     os.rename(stage, DEST)
     print(json.dumps(receipt), flush=True)
 
 
+def finalize_verified_stage(expected_manifest_sha):
+    stage = DEST.with_name('.' + DEST.name + '-stage')
+    manifest = stage / 'archive-inventory.json'
+    if DEST.exists() or sha(manifest) != expected_manifest_sha:
+        raise ValueError('Exact unpublished post-equality manifest required')
+    value = json.loads(manifest.read_text())
+    if value['source'] != str(ROOT) or value['producer'] != PRODUCER or value['job_id'] != JOB:
+        raise ValueError('Exact completed evaluation lineage required')
+    # a6b6a591 writes this manifest only AFTER every source/destination row
+    # matches. Its actual publisher then failed on Python3.6 text=True.
+    # Recheck the complete destination against that full-source manifest.
+    rows = value['files']
+    actual = inventory(stage)
+    expected_names = {r['path'] for r in rows} | {'archive-inventory.json'}
+    import os
+    names = set()
+    for folder, dirs, files in os.walk(str(stage), followlinks=False):
+        for name in files:
+            names.add(str((Path(folder) / name).relative_to(stage)))
+        for name in dirs:
+            path = Path(folder) / name
+            if path.is_symlink():
+                names.add(str(path.relative_to(stage)))
+    if names != expected_names or [r for r in actual if r['path'] != 'archive-inventory.json'] != rows:
+        raise ValueError('Full final destination inventory differs')
+    publish(stage, rows, 'prior_full_equality_manifest_plus_fresh_full_destination_verification')
+
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--resume-stage', action='store_true')
+    parser.add_argument('--finalize-stage-manifest-sha')
     args = parser.parse_args()
-    archive(args.resume_stage)
+    if args.finalize_stage_manifest_sha:
+        finalize_verified_stage(args.finalize_stage_manifest_sha)
+    else:
+        archive(args.resume_stage)
