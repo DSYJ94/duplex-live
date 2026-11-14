@@ -21,7 +21,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ['plan','key-file','out']:p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--model',choices=['eleven_flash_v2_5','eleven_v4_turbo'],default=MODEL);p.add_argument('--speed',type=float,choices=[.9,1.],default=1.);p.add_argument('--stability',type=float,choices=[.5,.75],default=.5)
-    a=p.parse_args();model_id=a.model;settings=dict(stability=a.stability,similarity_boost=.75,speed=a.speed);raw=a.plan.read_bytes();plan=json.loads(raw)
+    p.add_argument('--user-rp-voice',action='store_true')
+    a=p.parse_args();voices=dict(VOICES,user=VOICES['assistant']) if a.user_rp_voice else dict(VOICES);model_id=a.model;settings=dict(stability=a.stability,similarity_boost=.75,speed=a.speed);raw=a.plan.read_bytes();plan=json.loads(raw)
     if not plan.get('owner_approved') or plan['maximum_total_API_USD']!=100 or len(plan['exact_speech_payloads'])!=2144:
         raise ValueError('Exact complete owner-approved100USD cohort required')
     secret=a.key_file.read_text();match=re.search(r'eleven\s*labs',secret,re.I)
@@ -35,7 +36,7 @@ def main():
     model=next(m for m in models if m['model_id']==model_id)
     rate=model['model_rates']['character_cost_multiplier']*model['model_rates']['cost_discount_multiplier']
     if rate!=.5 or sub.get('max_credit_limit_extension')!=0:raise ValueError('Exact discount and disabled overage required')
-    for voice in VOICES.values():
+    for voice in voices.values():
         info=get('voices/'+voice)
         if info.get('labels',{}).get('accent')!='british':raise ValueError('Approved British voice required')
         sharing=info.get('sharing') or {}
@@ -44,7 +45,7 @@ def main():
     lock=a.out/'writer.lock';lock.mkdir(exist_ok=False)
     try:
         ledger=a.out/'admission.json'
-        identity=dict(plan_sha256=digest(raw),model=model_id,voice_settings=settings,voices=VOICES,rate=rate,required=2144,credits_only=True,USD_cap=100)
+        identity=dict(plan_sha256=digest(raw),model=model_id,voice_settings=settings,voices=voices,rate=rate,required=2144,credits_only=True,USD_cap=100)
         if ledger.exists():
             if json.loads(ledger.read_text())['identity']!=identity:raise ValueError('Existing collection differs')
         else:write(ledger,dict(identity=identity,initial_used=sub['character_count'],initial_limit=sub['character_limit']))
@@ -65,7 +66,7 @@ def main():
                 if current.get('max_credit_limit_extension')!=0:raise ValueError('Overage protection changed')
                 need=sum(len(r['text']) for r in payloads if not (a.out/(r['id']+'.json')).exists())*rate*1.2
                 if current['character_limit']-current['character_count']<need:raise ValueError('Credits no longer admit whole remainder')
-            role=row['id'].rsplit('-',1)[1];voice=VOICES[role]
+            role=row['id'].rsplit('-',1)[1];voice=voices[role]
             request=dict(text=row['text'],model_id=model_id,voice_settings=settings,language_code='en')
             pending=a.out/(row['id']+'.inflight.json');write(pending,dict(id=row['id'],text_sha256=digest(row['text'].encode()),voice_id=voice,model=model_id))
             req=urllib.request.Request('https://api.elevenlabs.io/v1/text-to-speech/'+voice+'?output_format=pcm_16000',data=json.dumps(request).encode(),headers=headers,method='POST')

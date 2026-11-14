@@ -40,17 +40,16 @@ def build(a):
     import torch
     from evals.native_control_cache import runtime,source_pins
     from evals.moshi_training_smoke import tensor_hashes
-    from portable.venus.native_app import ensure_guard
-    from training.venus.isambard_native import guarded
+    from .expanded_guard import check as guarded
     if subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source:raise ValueError('Exact committed producer required')
     if not 0<=a.shard<a.shards<=16:raise ValueError('Explicit bounded distinct codec shards required')
-    ensure_guard();guarded(a.lease,120)
+    guarded(a.lease,120)
     _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model)
     out=a.root/('shard-%02d'%a.shard);out.mkdir(parents=True,exist_ok=False)
     mimi,tokenizer,builder=runtime(a.codec_source,a.interleaver_source,a.model);before=tensor_hashes(mimi.named_parameters())
     report=dict(source=a.source,code_sha256=sha(Path(__file__)),source_manifest_sha256=sha(a.data/'manifest.json'),source_pins=pins,shard=a.shard,shards=a.shards,pid=os.getpid(),actual_CUDA=True,gpu=torch.cuda.get_device_name(),rows=[],complete_shard=False,optimizer_updates=0,native_training_approved=False)
     for row in rows[a.shard::a.shards]:
-        ensure_guard();guarded(a.lease,60)
+        guarded(a.lease,60)
         path=a.data/row['path'];audio,rate=sf.read(path,dtype='float32',always_2d=True)
         if rate!=24000 or len(audio)!=row['frames']*1920:raise ValueError('Complete original24k native source required')
         side=json.loads(path.with_suffix('.json').read_text());codes,timing=encode(audio,side,mimi,builder,tokenizer)
@@ -80,7 +79,7 @@ def verify(a):
             if timing!=entry['native_word_timing']:raise ValueError('Fresh complete native word timing differs')
             entries[row['id']]=dict(entry,shard=rank)
     if len(entries)!=1072:raise ValueError('All1072 native examples required')
-    result=dict(source=a.source,source_manifest_sha256=sha(a.data/'manifest.json'),complete1072=True,TRAIN=1008,DEV=64,rows=[entries[r['id']]for r in rows],actual_independent_CPU_verifier_pid=os.getpid(),capture_pids=sorted(pids),optimizer_updates=0,native_training_approved=False,native_engine_capture_and_restore_still_required=True)
+    result=dict(source=a.source,code_sha256=sha(Path(__file__)),source_manifest_sha256=sha(a.data/'manifest.json'),complete1072=True,TRAIN=1008,DEV=64,rows=[entries[r['id']]for r in rows],actual_independent_CPU_verifier_pid=os.getpid(),capture_pids=sorted(pids),optimizer_updates=0,native_training_approved=False,native_engine_capture_and_restore_still_required=True)
     with (a.root/'cache.json').open('x') as f:json.dump(result,f,indent=2);f.write('\n')
 
 
