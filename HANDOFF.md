@@ -1,3 +1,19 @@
+# LOCAL — 14 November: full corrected semantics PASS; final audio replacements DONE; delta word audit ACTIVE
+
+Actual source b22b6ed (preceding semantic fix6ace274), main clean recovery checkout /private/tmp/duplex-recovery-20261112. ALL1072 current V4 semantic records independently PASS: runs/native-reasoning-audio1072-derived-semantic-v4/report.json, planSHA4497959dc14c68da54cce9f5d7189fff6c78066cbc1f72b8c96c564f765c3be9. Reused1068 exact parent verdicts +4 freshly reviewed actual numeric-format corrections. Original mistakes/outputs remain intact.
+
+Renderer33850 completed2144; v4 raw inventory ALL2144 PASS. Four corrected assistant recordings then rendered by tool51294 actual2144 complete; NEW audio runs/native-reasoning-audio1072-20261114-derived-v5,2140 exact unchanged receipt/PCM/fold links +4 replacements. Full v5 raw inventory46463 terminal0/ALL2144 PASS. No waveform gain/trim. No new student optimizer update or voice GPU job yet.
+
+ACTIVE ONE delta Scribe tool35115, sourceb22b6ed, output runs/native-reasoning-audio1072-scribe-v2. Same complete-cohort Scribe3 protocol/no reference/bias; exact PCM/text/fold reuse only, every score recomputed under same word policy. Changed sources252, unchanged1892 (actual admission maximum_calls252). Six local reuse/spoken-math tests PASS. Never duplicate this process on observation timeout. Full2144 required; previous recognizer reports intact.
+
+Budget correction durable: runs/native-distributed-build-20261113/provider-cost-state-v4.json carries48.58929913194444 prior +9.63166 semantic221 reserve +0.30711 semantic4 reserve =58.52806913194444USD. New Scribe admission adds4.202 =>62.73006913194444USD worst combined. Cap100 unchanged; all unknown calls still fully reserved, included ElevenLabs credits first/overage disabled/no purchase. Do not use stale v3 ledger for new calls. Next API ledger MUST add current Scribe reservation or reconcile actual terminal usage honestly.
+
+Fresh bounded actual SSH queue: Remora8429627 RUNNING42:09, no voice job. Do not interrupt. Local Isambard cert renewal valid until14Nov22:32:47UTC. Separate justified voice allocation may coexist subject actual provider limits/coordination; no duplicate or shared model writer. Old four-arm196 training and192 evaluation remain complete/preserved; never rerun.
+
+Next: observe35115, inspect whole report and repair only measured failed sources; complete authored assistant-word alignment1072, source export/Mimi/native Engine capture and independent reconstruction. Finish actual distributed trainer CLI and native CUDA/AdamRNGOPAL fresh restore admission, then substantial new data-rich training. Existing distributed objective/checkpoint/OPAL code and expanded196 NEW-update schedule preserved, but NOT yet end-to-end admitted. No claim training is running. No more research sweeps or unchanged calibrations. Preserve unrelated tracked PYC; commit/push relevant only; keep this handoff current.
+
+---
+
 # LOCAL — 14Nov source repair progressing; all1072 semantics PASS at v2; v4 articulation writer ACTIVE
 
 Originalapproved933repair68932 andcontroller52359 both actual0; controller submitted8421718actual0/full2144ASRaudit copied+SHA1535e30a429c6a4cc5e8cd668c0b68abe7bb472a3a73514c43429873972d4b3b. New teacher review97210 actual0/all1072reviewed/7flags. Those7 correctedmanually in newV2authorization;12actualrawpeakviolationsinspected/resynthesized, onepersistentAlicepeakresynthesizedusingapprovedRPBenUSERonly. v3audio ALL2144rawPASS, alloldoriginals preserved. Actual7-onlysemanticreapproval87337 exited0: ALL1072PASS,1065exactpassedparentrecordsreused; report runs/native-reasoning-audio1072-derived-semantic-v2/report.json bindsplanSHA dd1709ac3920b7b4adf1b32d1ed2da5d432ed2ebbf28253fad1df9a33031471f. No studentupdates.
