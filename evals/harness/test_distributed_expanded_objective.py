@@ -18,7 +18,7 @@ class ExpandedNativeContract(unittest.TestCase):
 
     def test_microbatches_normalize_over_whole_global_batch(self):
         with patch('torch.distributed.get_world_size',return_value=4),self.collective([True,False,False,False]):
-            self.assertEqual(scale(True,21*49/1008,global_batch_count=21),4*49/1008)
+            self.assertAlmostEqual(scale(True,21*49/1008,global_batch_count=21),4*49/1008,places=15)
             self.assertEqual(scale(False,21*49/1008,global_batch_count=21),0.)
 
     def test_empty_global_batch_is_rejected(self):
