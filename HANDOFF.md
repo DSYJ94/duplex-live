@@ -1,3 +1,13 @@
+# LOCAL — Approved derived repair ACTUALLY RUNNING; two distinct workers, no duplicate jobs
+
+ONE speechrenderer tool68932 actualsource8e60e37, moduledata.synthetic.reasoning_audio1072, outputruns/native-reasoning-audio1072-20261114-derived-v1, exclusivewriter.lock LIVE.1211unchangedsourceWAV/textreceiptSHAverifiedandlinked;933approvedreplacementtexts/192957chars. Actualreceipts1514/2144lastread (303new), notqualified. No source/gain/word/foldrelaxation. ObserveSAMEworker/receipts; neverrerunwhilelock/inflight exists. Fullyadmittedincludedcreditquota/0overage, no purchase/topup. Authorizationsource docs/NATIVE-REASONING-AUDIO1072-DERIVED-REPAIR-AUTHORIZATION-2026-11-14.json, exactsealedproposal31b0133ownerapproved14Nov.
+
+ONE independentfull1072authoredsemanticreview tool97210 actualsource86beff6 LIVE,134batchesof8/concurrency2/max4096output, noautomaticretries. Outputruns/native-reasoning-audio1072-derived-semantic-v1. Text-onlyreviewavoidswaitingfornewASR: exactapprovedquestions/correctedresponses/verification only; word/timing/audioapprovalstillseparate. Wholeworstreservation42.5698USD + allprior53.47655 =96.04635<100USD; doNOTresetcap oraddunreservedcalls. Rawusage+2unknownpriorrequestsfullycarried. Anyfuturealignmentcostmustreconcileactualterminalresponseusageandfullyreserveunknowns beforeadmission; no purchases. This reviewbindsactualapprovedplanSHA, norelabeledoldverdicts.
+
+FreshSSH11:05UTCqueueempty; Remoraaskedforactualv4jobIDbeforevoiceGPUauditserialization. No voiceGPUreservation/nostudentupdatesyet. Existing8420708actual0/fullmetadatahashbackupDONE; no repeat196training. ContinueSAME68932and97210 thenfullnewrawchecks/independentword+clockapproval/semanticapproval/measuredwordalignment/nativeexport/MimiEngineownership/actualFSDP+freshAdamRNGOPALrestore thennewstudenttraining. KeepupdatingHANDOFF withactualIDs/results/sourceSHAs; no nativeadoptionfromCPUtests. Preserveoriginalaudio/alloldcheckpoints/OPALfullstate/unrelatedPYC.
+
+---
+
 # LOCAL — 14Nov owner APPROVED complete derived teaching-word repair; rendering next
 
 Owner explicitly approved exact31b0133 teaching-word corrections withinSAME100USDcap andrequestsfullrepair/requalificationthenIsambardtraining, withcontinuoushandoffupdates. Sealedproposalunchanged; newauthorization docs/NATIVE-REASONING-AUDIO1072-DERIVED-REPAIR-AUTHORIZATION-2026-11-14.json bindsproposalSHA/commitandownerinstruction. FreshboundedSSH11:05UTCworks/queueempty. No newGPUreservationyet; reconcileRemoraplansbeforeaudit/training.
