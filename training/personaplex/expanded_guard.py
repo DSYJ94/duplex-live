@@ -36,7 +36,8 @@ def ensure(lease,guard,needed=0,*,now=None,environ=None):
     if env.get('SLURM_JOB_ID')!=lease['job_id'] or env.get('SLURM_JOB_ACCOUNT')!=ACCOUNT:raise RuntimeError('Worker must remain inside its own allocation')
     for key in ('job_id','account','node','source','authorization_sha256','GPU_count','start_unix','stop_unix'):
         if lease[key]!=guard.get(key):raise RuntimeError('Independent guard identity changed: '+key)
-    if not guard.get('provider_job_verified') or guard.get('terminal') or not 0<=now-guard['heartbeat_unix']<=45 or needed<0 or now+needed>=lease['stop_unix']-180:raise RuntimeError('Actual guard missing, terminal, expired or insufficient preservation time')
+    if not guard.get('provider_job_verified') or guard.get('terminal') or not 0<=now-guard['heartbeat_unix']<=45 or needed<0:raise RuntimeError('Actual guard missing, terminal, expired or insufficient preservation time')
+    if now+needed>=lease['stop_unix']-180:raise TimeoutError('Immutable scheduler deadline requires checkpoint continuation')
 
 
 def check(path,needed=0):

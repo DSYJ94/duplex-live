@@ -10,6 +10,10 @@ class ExpandedGuardTest(unittest.TestCase):
         lease,guard,env=self.fixture();guard['observation_error']='TimeoutExpired'
         ensure(lease,guard,now=110.,environ=env)
         with self.assertRaises(RuntimeError):ensure(lease,guard,now=821.,environ=env)
+    def test_fresh_guard_requires_continuation_before_deadline(self):
+        lease,guard,env=self.fixture();guard['heartbeat_unix']=800.
+        with self.assertRaises(TimeoutError):ensure(lease,guard,needed=30,now=800.,environ=env)
+
     def test_wrong_allocation_expired_heartbeat_and_terminal_fail(self):
         lease,guard,env=self.fixture()
         for changed in [dict(guard,job_id='456'),dict(guard,heartbeat_unix=40.),dict(guard,terminal=True),dict(guard,provider_job_verified=False)]:

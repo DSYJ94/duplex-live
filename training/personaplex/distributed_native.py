@@ -58,7 +58,12 @@ def configure_lm(lm, method):
         raise ValueError('Pass only the native LM; codec remains frozen and separate')
     if method == 'broad-lora64':
         from .capacity import configure
-        details = configure(lm, method)
+        devices=sorted({p.device.index for p in lm.parameters() if p.is_cuda})
+        with torch.random.fork_rng(devices=devices):
+            torch.manual_seed(17)
+            for index in devices:
+                with torch.cuda.device(index):torch.cuda.manual_seed(17)
+            details = configure(lm, method)
     else:
         # FP32 optimizer/master parameters; FSDP casts computation to BF16.
         lm.float().requires_grad_(True)

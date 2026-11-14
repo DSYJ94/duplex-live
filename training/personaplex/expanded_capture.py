@@ -42,6 +42,7 @@ def capture(a):
     from evals.personaplex_train import MODEL_HASHES
     from evals.moshi_training_smoke import tensor_hashes
     from data.personaplex.expanded_source_export import resample_native
+    torch.cuda.set_device(int(os.environ.get('LOCAL_RANK','0')))
     check(a.lease,240);rows,cache=preflight(a)
     if subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source or not 0<=a.shard<a.shards<=16:raise ValueError('Exact committed distinct capture shard required')
     if subprocess.check_output(['git','-C',str(VENDOR),'rev-parse','HEAD'],text=True).strip()!=SOURCE_COMMIT or subprocess.check_output(['git','-C',str(VENDOR),'status','--porcelain'],text=True).strip() or sha(WEIGHTS/'context_spanning_7b.pt')!=WEIGHT_SHA256 or any(sha(PP/n)!=v for n,v in MODEL_HASHES.items()):raise ValueError('Exact unmodified published native model/codec/tokenizer required')
@@ -105,4 +106,4 @@ def verify(a):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('stage',choices=['capture','verify'])
     for n in ('data','cache','root','lease'):p.add_argument('--'+n,type=Path,required=n!='lease')
-    p.add_argument('--source',required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--shard',type=int,default=0);a=p.parse_args();(capture if a.stage=='capture'else verify)(a)
+    p.add_argument('--source',required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--shard',type=int,default=int(os.environ.get('LOCAL_RANK','0')));a=p.parse_args();(capture if a.stage=='capture'else verify)(a)

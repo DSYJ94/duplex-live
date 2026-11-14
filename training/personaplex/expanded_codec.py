@@ -17,6 +17,17 @@ def inputs(data):
         path=data/row['path'];side=path.with_suffix('.json')
         if not path.resolve().is_relative_to(data.resolve()) or sha(path)!=row['wav_sha256'] or sha(side)!=row['sidecar_sha256'] or json.loads(side.read_text())['fold']!=row['fold']:raise ValueError('Source PCM/sidecar/fold changed')
     if sum(r['fold']=='TRAIN' for r in rows)!=1008 or sum(r['fold']=='DEV' for r in rows)!=64:raise ValueError('No DEV relabeling or omitted sources')
+    from data.personaplex.expanded_source_export import admission
+    quality=data/'qualification'
+    names=[('plan.json','source_plan_sha256'),('quality.json','quality_sha256'),('semantics.json','semantic_sha256'),('alignment.json','alignment_sha256')]
+    for name,key in names:
+        if sha(quality/name)!=manifest[key]:raise ValueError('Full qualified source evidence changed')
+    plan,q,sem,aligned=[json.loads((quality/name).read_text())for name,key in names]
+    judged,_=admission(plan,q,sem,aligned,expected_plan_sha=manifest['source_plan_sha256'])
+    for row in rows:
+        if len(row['parents'])!=2:raise ValueError('Both complete original source channels required')
+        for parent in row['parents']:
+            if judged[parent['id']]['source_sha256']!=parent['sha256'] or judged[parent['id']]['fold']!=row['fold']:raise ValueError('Native channel source/fold evidence differs')
     return manifest,rows
 
 
@@ -43,6 +54,7 @@ def build(a):
     from .expanded_guard import check as guarded
     if subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source:raise ValueError('Exact committed producer required')
     if not 0<=a.shard<a.shards<=16:raise ValueError('Explicit bounded distinct codec shards required')
+    torch.cuda.set_device(int(os.environ.get('LOCAL_RANK','0')))
     guarded(a.lease,120)
     _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model)
     out=a.root/('shard-%02d'%a.shard);out.mkdir(parents=True,exist_ok=False)
@@ -83,11 +95,26 @@ def verify(a):
     with (a.root/'cache.json').open('x') as f:json.dump(result,f,indent=2);f.write('\n')
 
 
+def text_preflight(a):
+    import soundfile as sf
+    from evals.native_control_cache import text_builder,source_pins,frame_duration
+    from evals.recovery_encode import native_word_timing
+    _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model);_,tokenizer,builder=text_builder(a.codec_source,a.interleaver_source,a.model,'cpu');checked=[]
+    for row in rows:
+        path=a.data/row['path'];info=sf.info(path);side=json.loads(path.with_suffix('.json').read_text())
+        if info.samplerate!=24000 or info.channels!=2 or info.frames!=row['frames']*1920:raise ValueError('Complete native PCM geometry required')
+        text=builder.prepare_item(side['alignments'],frame_duration(row['frames']))
+        if tuple(text.shape)!=(1,1,row['frames']) or (text<0).any() or (text>=tokenizer.vocab_size()).any() or (text==4).any():raise ValueError('Full native target coverage and no fabricated delegation required')
+        timing=native_word_timing(text[0,0].tolist(),side['alignments'],tokenizer.encode,12.5);checked.append(dict(id=row['id'],fold=row['fold'],timing=timing))
+    result=dict(source=a.source,complete1072=True,source_manifest_sha256=sha(a.data/'manifest.json'),source_pins=pins,rows=checked,actual_CUDA=False,native_codec_or_training_approved=False)
+    with (a.root/'text-preflight.json').open('x')as f:json.dump(result,f,indent=2);f.write('\n')
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['build','verify'])
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['build','verify','text-preflight'])
     for n in ('data','root','model','codec-source','interleaver-source','lease'):p.add_argument('--'+n,type=Path,required=n!='lease')
-    p.add_argument('--source',required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--shard',type=int,default=0);a=p.parse_args()
-    (build if a.stage=='build' else verify)(a)
+    p.add_argument('--source',required=True);p.add_argument('--shards',type=int,required=True);p.add_argument('--shard',type=int,default=int(os.environ.get('LOCAL_RANK','0')));a=p.parse_args()
+    {'build':build,'verify':verify,'text-preflight':text_preflight}[a.stage](a)
 
 
 if __name__=='__main__':main()

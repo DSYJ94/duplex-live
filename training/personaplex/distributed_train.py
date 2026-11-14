@@ -14,10 +14,11 @@ from training.venus.state import rng_state
 
 
 def update(runtime,base,opal,*,step,retained_groups,references,exposures,
-           expanded_row,valid,expanded_coefficient,identity,checkpoint_path,log_path,expanded_microbatches=None):
+           expanded_row,valid,expanded_coefficient,identity,checkpoint_path,log_path,expanded_microbatches=None,admission=None):
     if type(step) is not int or step<0 or checkpoint_manifest(opal.active.optimizer)['update']!=step:
         raise ValueError('Exact current OPAL step required; no replay of saved updates')
-    if not identity.get('native_data_qualified') or not identity.get('native_fresh_restore_passed'):
+    proof=identity if admission is None else admission
+    if not proof.get('native_data_qualified') or not proof.get('native_fresh_restore_passed'):
         raise ValueError('Actual complete native data and fresh restore admission required')
     if checkpoint_path is not None and Path(checkpoint_path).exists():raise ValueError('Immutable next checkpoint already exists')
     microbatches=[dict(row=expanded_row,valid=valid)] if expanded_microbatches is None else expanded_microbatches
