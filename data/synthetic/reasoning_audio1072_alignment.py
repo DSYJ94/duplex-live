@@ -39,6 +39,7 @@ def main():
     p=argparse.ArgumentParser()
     for n in ('plan','quality','semantics','inventory','audio','cost-ledger','key-file','out'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--reuse-from',type=Path)
+    p.add_argument('--reuse-verified',type=Path)
     a=p.parse_args();plan=json.loads(a.plan.read_text());quality=json.loads(a.quality.read_text());sem=json.loads(a.semantics.read_text());inv=json.loads(a.inventory.read_text());cost=json.loads(a.cost_ledger.read_text());pin=sha(a.plan)
     if not plan['owner_approved'] or plan['maximum_total_API_USD']!=100 or not quality['complete'] or not quality['all_passed'] or len(quality['rows'])!=2144 or quality['source_plan_sha256']!=pin:raise ValueError('Full exact2144 independent word approval required')
     if not sem['complete1072'] or not sem['all_passed'] or len(sem['rows'])!=1072 or sem['source_plan_sha256']!=pin:raise ValueError('Full exact1072 semantic approval required')
@@ -50,6 +51,21 @@ def main():
         rows.append(dict(id=ident,text=scene['response'],fold=scene['fold'],source_sha256=r['source_sha256'],seconds=v['seconds'],file=key+'.wav'))
     if len(rows)!=1072 or len({r['id'] for r in rows})!=1072:raise ValueError('Every1072 assistant required')
     reused={}
+    if a.reuse_verified:
+        report_path=a.reuse_verified/'report.json';previous=json.loads(report_path.read_text())
+        if not previous['complete1072'] or not previous['all_authored_words_measured'] or previous['source_plan_sha256']!=pin or len(previous['rows'])!=1072 or len({r['id']for r in previous['rows']})!=1072:raise ValueError('Complete exact-plan passing alignment parent required')
+        old={r['id']:r for r in previous['rows']}
+        if set(old)!={r['id']for r in rows}:raise ValueError('Exact whole1072 alignment membership required')
+        for row in rows:
+            prior=old[row['id']]
+            if any(prior[k]!=row[k]for k in ('id','fold','text','source_sha256')):continue
+            spans=[w for w in prior['measured_words'] if w['text'].strip()]
+            if [w['text']for w in spans]!=[m[0]for m in re.finditer(r'[^\s:]+:?',row['text'])]:raise ValueError('Prior authored measurement sequence changed')
+            previous_start=0.
+            for w in spans:
+                if not all(isinstance(w[k],(int,float)) and math.isfinite(w[k])for k in ('start','end')) or not 0<=w['start']<=w['end']<=row['seconds']+.02 or w['start']<previous_start:raise ValueError('Prior measured endpoints changed')
+                previous_start=w['start']
+            reused[row['id']]=dict(prior,reused_alignment_report_sha256=sha(report_path))
     if a.reuse_from:
         history=[];cursor=a.reuse_from
         while cursor is not None:
@@ -70,7 +86,7 @@ def main():
                 if len({sha(f)for f in found})!=1:raise ValueError('Multiple distinct responses cannot be selected for passing')
                 response=found[0];raw=json.loads(response.read_text());reused[row['id']]=dict(row,measured_words=measured_words(row['text'],raw,row['seconds']),alignment_loss=raw.get('loss'),reused_response_sha256=sha(response))
     pending=[r for r in rows if r['id']not in reused]
-    reserve=sum(max(60,r['seconds']) for r in rows)/3600
+    reserve=json.loads((history[-1]/'admission.json').read_text())['reservation_USD'] if a.reuse_from else sum(max(60,r['seconds'])for r in pending)/3600
     if cost['combined_usage_upper_USD']+reserve>100:raise ValueError('Whole alignment plus all prior reserves must fit100USD')
     secret=a.key_file.read_text();match=re.search(r'eleven\s*labs',secret,re.I)
     if not match:raise ValueError('Authorized credential section missing')
@@ -82,7 +98,7 @@ def main():
     a.out.mkdir(parents=True,exist_ok=False)
     def write(name,value):
         with (a.out/name).open('x') as f:json.dump(value,f,indent=2);f.write('\n')
-    write('admission.json',dict(source_plan_sha256=pin,quality_sha256=sha(a.quality),semantic_sha256=sha(a.semantics),maximum_calls=len(pending),reused_verified_responses=len(reused),reservation_shared_with_parent=str(a.reuse_from) if a.reuse_from else None,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,cap_USD=100,conservative_hourly_USD=1,minimum_reserved_seconds=60,price_source='https://elevenlabs.io/docs/overview/capabilities/forced-alignment',pricing='same as speech-to-text; conservatively reserved at1USD/hour',automatic_retries=0,concurrency=2,alignment_is_not_independent_recognition=True))
+    write('admission.json',dict(source_plan_sha256=pin,quality_sha256=sha(a.quality),semantic_sha256=sha(a.semantics),maximum_calls=len(pending),reused_verified_responses=len(reused),verified_parent_report_sha256=sha(a.reuse_verified/'report.json') if a.reuse_verified else None,reservation_shared_with_parent=str(a.reuse_from) if a.reuse_from else None,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,cap_USD=100,conservative_hourly_USD=1,minimum_reserved_seconds=60,price_source='https://elevenlabs.io/docs/overview/capabilities/forced-alignment',pricing='same as speech-to-text; conservatively reserved at1USD/hour',automatic_retries=0,concurrency=2,alignment_is_not_independent_recognition=True))
     stop=threading.Event()
     def one(row):
         if stop.is_set():return None

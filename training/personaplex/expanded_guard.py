@@ -40,7 +40,9 @@ def ensure(lease,guard,needed=0,*,now=None,environ=None):
 
 
 def check(path,needed=0):
-    lease=resource(json.loads(Path(path).read_text()));guard=json.loads(Path(os.environ['DUPLEX_LIVE_GUARD_FILE']).read_text());ensure(lease,guard,needed);return lease
+    lease=resource(json.loads(Path(path).read_text()))
+    if subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()!=lease['source']:raise RuntimeError('Actual committed worker source differs from admitted lease')
+    guard=json.loads(Path(os.environ['DUPLEX_LIVE_GUARD_FILE']).read_text());ensure(lease,guard,needed);return lease
 
 
 def watch(path,output):
@@ -50,12 +52,15 @@ def watch(path,output):
         now=time.time()
         if last_query is None or now-last_query>=60:
             last_query=now
+            job=None
             try:
                 raw=subprocess.check_output(['scontrol','show','job','-o',lease['job_id']],universal_newlines=True,timeout=20);job=parse_job(raw)
                 if verified and job.get('JobId')==lease['job_id'] and job.get('JobState')in ('COMPLETED','FAILED','CANCELLED','TIMEOUT','OUT_OF_MEMORY','NODE_FAIL','PREEMPTED'):terminal=True
                 else:validate_job(job,lease,time.time());verified=True
                 observation=dict(provider_checked_unix=time.time(),provider_state=job.get('JobState'),observation_error=None)
             except Exception as exc:
+                required={'JobId','Account','JobState','AllocTRES','NumNodes','NodeList','Partition','StartTime','EndTime'}
+                if verified and job is not None and required<=set(job) and job.get('JobState')=='RUNNING':terminal=True
                 observation=dict(observation,observation_error=type(exc).__name__)
                 # Initial admission still requires a real provider success.
                 # After admission, immutable walltime remains enforced while
