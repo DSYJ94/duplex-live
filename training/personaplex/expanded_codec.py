@@ -31,6 +31,24 @@ def inputs(data):
     return manifest,rows
 
 
+def measured_events(alignments):
+    # Alignment timestamps are quantized. A zero-width measured bin remains a
+    # real authored event; do not invent an ending or silently drop its tokens.
+    import math
+    for tokens,(lo,hi),speaker in alignments:
+        if not math.isfinite(lo+hi) or not 0<=lo<=hi:raise ValueError('Finite measured event bins required')
+    return list(alignments)
+
+
+def measured_builder(codec_source,interleaver_source,model,device):
+    from evals.native_control_cache import text_builder
+    loaders,tokenizer,original=text_builder(codec_source,interleaver_source,model,device)
+    class PreserveMeasuredBins(type(original)):
+        def _keep_those_with_duration(self,alignments):return measured_events(alignments)
+    builder=PreserveMeasuredBins(tokenizer,12.5,text_padding=3,end_of_text_padding=0,zero_padding=-1,keep_main_only=True,keep_and_shift=True,device=device)
+    return loaders,tokenizer,builder
+
+
 def encode(audio,side,mimi,builder,tokenizer):
     import numpy as np
     import torch
@@ -49,7 +67,7 @@ def encode(audio,side,mimi,builder,tokenizer):
 def build(a):
     import soundfile as sf
     import torch
-    from evals.native_control_cache import runtime,source_pins
+    from evals.native_control_cache import source_pins
     from evals.moshi_training_smoke import tensor_hashes
     from .expanded_guard import check as guarded
     if subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()!=a.source:raise ValueError('Exact committed producer required')
@@ -58,7 +76,10 @@ def build(a):
     guarded(a.lease,120)
     _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model)
     out=a.root/('shard-%02d'%a.shard);out.mkdir(parents=True,exist_ok=False)
-    mimi,tokenizer,builder=runtime(a.codec_source,a.interleaver_source,a.model);before=tensor_hashes(mimi.named_parameters())
+    loaders,tokenizer,builder=measured_builder(a.codec_source,a.interleaver_source,a.model,'cuda')
+    mimi=loaders.get_mimi(a.model/'tokenizer-e351c8d8-checkpoint125.safetensors',device='cuda',num_codebooks=8).eval().requires_grad_(False)
+    if mimi.sample_rate!=24000 or mimi.frame_rate!=12.5:raise ValueError('Original native codec clock required')
+    before=tensor_hashes(mimi.named_parameters())
     report=dict(source=a.source,code_sha256=sha(Path(__file__)),source_manifest_sha256=sha(a.data/'manifest.json'),source_pins=pins,shard=a.shard,shards=a.shards,pid=os.getpid(),actual_CUDA=True,gpu=torch.cuda.get_device_name(),rows=[],complete_shard=False,optimizer_updates=0,native_training_approved=False)
     for row in rows[a.shard::a.shards]:
         guarded(a.lease,60)
@@ -76,7 +97,7 @@ def build(a):
 def verify(a):
     import torch
     from evals.native_control_cache import text_builder,source_pins,check_codes
-    _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model);_,tokenizer,builder=text_builder(a.codec_source,a.interleaver_source,a.model,'cpu');entries={};pids=set()
+    _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model);_,tokenizer,builder=measured_builder(a.codec_source,a.interleaver_source,a.model,'cpu');entries={};pids=set()
     for rank in range(a.shards):
         out=a.root/('shard-%02d'%rank);report=json.loads((out/'cache.json').read_text())
         if not report['complete_shard'] or report['shards']!=a.shards or report['shard']!=rank or report['source']!=a.source or report['code_sha256']!=sha(Path(__file__)) or report['source_manifest_sha256']!=sha(a.data/'manifest.json') or report['source_pins']!=pins or report['optimizer_updates']!=0 or not report['actual_CUDA'] or not report['all_codec_parameters_unchanged'] or report['pid']==os.getpid():raise ValueError('Actual complete separate-process pinned shard required')
@@ -99,7 +120,7 @@ def text_preflight(a):
     import soundfile as sf
     from evals.native_control_cache import text_builder,source_pins,frame_duration
     from evals.recovery_encode import native_word_timing
-    _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model);_,tokenizer,builder=text_builder(a.codec_source,a.interleaver_source,a.model,'cpu');checked=[]
+    _,rows=inputs(a.data);pins=source_pins(a.codec_source,a.interleaver_source,a.model);_,tokenizer,builder=measured_builder(a.codec_source,a.interleaver_source,a.model,'cpu');checked=[]
     for row in rows:
         path=a.data/row['path'];info=sf.info(path);side=json.loads(path.with_suffix('.json').read_text())
         if info.samplerate!=24000 or info.channels!=2 or info.frames!=row['frames']*1920:raise ValueError('Complete native PCM geometry required')
