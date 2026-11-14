@@ -12,11 +12,20 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def measured_words(text,response,seconds):
-    words=[dict(w)for w in response['words'] if w['text'].strip()]
+    characters=response.get('characters')
+    if characters is not None:
+        if any(len(c['text'])!=1 for c in characters) or ''.join(c['text']for c in characters)!=text:raise ValueError('Exact authored character sequence required')
+        # Some provider word entries group parenthesized expressions. Its
+        # CHARACTER endpoints are also measured: take exact endpoints, never
+        # divide a group duration or interpolate a word boundary.
+        spans=list(re.finditer(r'[^\s:]+:?',text))
+        words=[dict(text=m[0],start=characters[m.start()]['start'],end=characters[m.end()-1]['end'],measurement='provider-character-endpoints')for m in spans]
+    else:
+        words=[dict(w)for w in response['words'] if w['text'].strip()]
     # Provider receives the authored script. Preserve its measured words as
     # indivisible labels: 22 is ONE authored numeric token, not two invented
     # word intervals. The native interleaver owns tokenizer subword placement.
-    if [w['text'].strip()for w in words]!=text.split():raise ValueError('Every exact authored word needs its own measured interval')
+    if [w['text'].strip()for w in words] != ([m[0]for m in re.finditer(r'[^\s:]+:?',text)] if characters is not None else text.split()):raise ValueError('Every exact authored word needs its own measured interval')
     previous=0.
     for w in words:
         lo,hi=w['start'],w['end']
@@ -42,15 +51,24 @@ def main():
     if len(rows)!=1072 or len({r['id'] for r in rows})!=1072:raise ValueError('Every1072 assistant required')
     reused={}
     if a.reuse_from:
-        parent=json.loads((a.reuse_from/'admission.json').read_text())
-        if parent['source_plan_sha256']!=pin or parent['quality_sha256']!=sha(a.quality) or parent['semantic_sha256']!=sha(a.semantics) or parent['maximum_calls']!=1072 or parent['carried_usage_upper_USD']!=cost['combined_usage_upper_USD']:raise ValueError('Exact original complete-cohort reservation required')
+        history=[];cursor=a.reuse_from
+        while cursor is not None:
+            if cursor.resolve() in {x.resolve()for x in history}:raise ValueError('Cyclic recovery lineage')
+            parent=json.loads((cursor/'admission.json').read_text())
+            if parent['source_plan_sha256']!=pin or parent['quality_sha256']!=sha(a.quality) or parent['semantic_sha256']!=sha(a.semantics) or parent['maximum_calls']+parent.get('reused_verified_responses',0)!=1072 or parent['carried_usage_upper_USD']!=cost['combined_usage_upper_USD']:raise ValueError('Exact original complete-cohort reservation required')
+            history.append(cursor);cursor=Path(parent['reservation_shared_with_parent']) if parent.get('reservation_shared_with_parent') else None
         for row in rows:
-            response=a.reuse_from/(row['id']+'-response.json');inflight=a.reuse_from/(row['id']+'-inflight.json')
-            if inflight.exists() and json.loads(inflight.read_text())!=row:raise ValueError('Previous request source identity changed')
-            if inflight.exists() and not response.exists():raise ValueError('Unknown previous request cannot be repeated')
-            if response.exists():
-                if not inflight.exists():raise ValueError('Response without original source receipt')
-                raw=json.loads(response.read_text());reused[row['id']]=dict(row,measured_words=measured_words(row['text'],raw,row['seconds']),alignment_loss=raw.get('loss'),reused_response_sha256=sha(response))
+            found=[]
+            for folder in history:
+                response=folder/(row['id']+'-response.json');inflight=folder/(row['id']+'-inflight.json')
+                if inflight.exists() and json.loads(inflight.read_text())!=row:raise ValueError('Previous request source identity changed')
+                if inflight.exists() and not response.exists():raise ValueError('Unknown previous request cannot be repeated')
+                if response.exists():
+                    if not inflight.exists():raise ValueError('Response without original source receipt')
+                    found.append(response)
+            if found:
+                if len({sha(f)for f in found})!=1:raise ValueError('Multiple distinct responses cannot be selected for passing')
+                response=found[0];raw=json.loads(response.read_text());reused[row['id']]=dict(row,measured_words=measured_words(row['text'],raw,row['seconds']),alignment_loss=raw.get('loss'),reused_response_sha256=sha(response))
     pending=[r for r in rows if r['id']not in reused]
     reserve=sum(max(60,r['seconds']) for r in rows)/3600
     if cost['combined_usage_upper_USD']+reserve>100:raise ValueError('Whole alignment plus all prior reserves must fit100USD')
