@@ -11,6 +11,9 @@ NUMBER_START='zero one two three four five six seven eight nine ten eleven twelv
 
 
 def words(text):
+    # Unambiguous unit abbreviations attached to numeric quantities only.
+    unit_names={'cm':'centimetres','mm':'millimetres','km':'kilometres','m':'metres','kg':'kilograms','lb':'pounds','lbs':'pounds'}
+    text=re.sub(r'(\d)[ \t]*(cm|mm|km|kg|lbs|lb|m)\b',lambda m:m[1]+' '+unit_names[m[2]],text)
     s=verbalize(text).lower().replace('metres','meters').replace('litres','liters').replace('litre','liter')
     s=re.sub(r'\bper cent\b','percent',s)
     # Optional conjunctions inside numeric place-value notation only. Never

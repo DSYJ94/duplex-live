@@ -16,6 +16,8 @@ class SpokenMath(unittest.TestCase):
         self.assertEqual(verbalize('13 + 4 + 16 = 45'),'thirteen plus four plus sixteen equals forty five')
         self.assertIn('bee-eaters',verbalize('10 bee-eaters'))
         self.assertEqual(verbalize('x is unknown'),'x is unknown')
+        self.assertEqual(verbalize('8x\n1100=11x',spell_numbers=False),'8 x\n1100 equals 11 x')
+        self.assertEqual(verbalize('£15.'),'fifteen pounds.')
 
 
 if __name__=='__main__':unittest.main()

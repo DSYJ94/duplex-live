@@ -17,13 +17,13 @@ def verbalize(text,*,spell_numbers=True):
     # inside an ordinary word stays a hyphen; 100-20 is subtraction.
     s=s.replace('×',' times ').replace('*',' times ').replace('+',' plus ').replace('=',' equals ').replace('%',' percent ')
     s=re.sub(r'(?<![A-Za-z])-(?![A-Za-z])',' minus ',s)
-    s=re.sub(r'(?:(?<=\d)|\b)x(?=\s*\d)',' times ',s)
+    s=re.sub(r'(?:(?<=\d)|\b)x(?=[ \t]*\d)',' times ',s)
     def money(m):
         major=int(m[2]);fraction=m[3] or '';minor=int(fraction.ljust(2,'0')) if fraction else 0
         unit=('pound' if major==1 else 'pounds') if m[1]=='£' else ('dollar' if major==1 else 'dollars')
         sub=('penny' if minor==1 else 'pence') if m[1]=='£' else ('cent' if minor==1 else 'cents')
         return say(major)+' '+unit+(' and '+say(minor)+' '+sub if minor else '')
-    s=re.sub(r'([$£])(\d+)(?:\.(\d{1,2}))?(?![\d.])',money,s)
+    s=re.sub(r'([$£])(\d+)(?:\.(\d{1,2}))?(?!\d|\.\d)',money,s)
     s=re.sub(r'\b(\d{1,2}):([0-5]\d)\b',lambda m:integer(int(m[1]))+(" o'clock" if int(m[2])==0 else ' '+integer(int(m[2]))),s)
     if spell_numbers:
         s=re.sub(r'\b(\d+)\.(\d+)\b',lambda m:integer(int(m[1]))+' point '+' '.join(integer(int(c)) for c in m[2]),s)
@@ -33,8 +33,6 @@ def verbalize(text,*,spell_numbers=True):
     s=s.replace('×',' times ').replace('*',' times ').replace('+',' plus ').replace('=',' equals ').replace('%',' percent ')
     s=re.sub(r'(?<=[A-Za-z])/(?=[A-Za-z])',' per ',s).replace('/',' divided by ')
     s=re.sub(r'(?<![A-Za-z])-(?![A-Za-z])',' minus ',s)
-    # Operators may now sit between number words; do not rewrite variable x.
-    s=re.sub(r'\bx(?=\s*(?:\d|'+ '|'.join(['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety']) +r')\b)','times',s)
     s=re.sub(r'\bsq\s+in\b','square inches',s,flags=re.I)
     s=re.sub(r'[ \t]+',' ',s)
     return s.strip()
