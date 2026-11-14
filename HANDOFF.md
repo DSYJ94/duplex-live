@@ -1,3 +1,11 @@
+# LOCAL — 14Nov owner APPROVED complete derived teaching-word repair; rendering next
+
+Owner explicitly approved exact31b0133 teaching-word corrections withinSAME100USDcap andrequestsfullrepair/requalificationthenIsambardtraining, withcontinuoushandoffupdates. Sealedproposalunchanged; newauthorization docs/NATIVE-REASONING-AUDIO1072-DERIVED-REPAIR-AUTHORIZATION-2026-11-14.json bindsproposalSHA/commitandownerinstruction. FreshboundedSSH11:05UTCworks/queueempty. No newGPUreservationyet; reconcileRemoraplansbeforeaudit/training.
+
+Newoutputruns/native-reasoning-audio1072-20261114-derived-v1 seededONLY1211unchangedutterances afterfullWAV/textreceiptSHAverification; symlinksresolveimmutableparents.933approvedreplacementrequests/192957chars, all1072scenes/1008TRAIN64DEV remain. Existingcreditsfirst/100USD/no purchase/no topup/disabled overage/fullrequalification. Renderer NOTclaimedrunninguntilactualtoolhandlebelow. UseONEexclusivewriter; neverduplicateonobservationtimeout. No studentupdates/no old196replay. Originals/all checkpoints/OPALKEEPfullstateintact. Next launchrendererandrecordhandle/source, followfullraw+independentword/timing+semanticapproval+measuredalignment/nativeconversion/GPUfreshrestore thennewtraining. Preserve unrelatedPYC.
+
+---
+
 # LOCAL — 14Nov: complete fixed-clock audit8420708 DONE; source correction decision pending
 
 FreshCliftonauth82324actual0 andboundedSSHworks. Correctlocalcertat/Users/daryl/Library/Caches/clifton/u6ada.aip2.isambard-cert.pub (exactvaliditytooloutput; don'tassumedefaultid-certpath). BrowserChromeopenstillblockedbysavedoriginpermission; ownercompletedofficialmanuallink. No credentialsprinted/transferred.
