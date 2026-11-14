@@ -13,6 +13,16 @@ def integer(n):
 def verbalize(text,*,spell_numbers=True):
     say=integer if spell_numbers else str
     s=re.sub(r'(?<=\d),(?=\d{3}(?:\D|$))','',text)
+    # Proper fractional literals have conventional spoken number names; no
+    # arithmetic expression is solved or reduced to its result.
+    fraction_names={2:'half',3:'third',4:'quarter',5:'fifth',6:'sixth',8:'eighth',10:'tenth',12:'twelfth',16:'sixteenth'}
+    def fraction(m):
+        n,d=int(m[1]),int(m[2])
+        if not 0<n<d or d not in fraction_names:return m[0]
+        name=fraction_names[d];name=('halves' if d==2 else name+'s') if n!=1 else name
+        return integer(n)+' '+name
+    s=re.sub(r'\b(\d+)[ \t]*/[ \t]*(\d+)\b',fraction,s)
+    s=re.sub(r'(?<=[A-Za-z])/(?=[A-Za-z])',' per ',s).replace('/',' divided by ')
     # Expand operators while numeric adjacency is still visible. A hyphen
     # inside an ordinary word stays a hyphen; 100-20 is subtraction.
     s=s.replace('×',' times ').replace('*',' times ').replace('+',' plus ').replace('=',' equals ').replace('%',' percent ')

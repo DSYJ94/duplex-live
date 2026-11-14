@@ -12,6 +12,11 @@ class SpokenMath(unittest.TestCase):
     def test_money_and_decimals_preserve_values(self):
         self.assertEqual(verbalize('$12.50 and £1.01'),'twelve dollars and fifty cents and one pound and one penny')
         self.assertEqual(verbalize('2.4 metres'),'two point four metres')
+    def test_proper_fraction_notation_preserves_literal_value(self):
+        self.assertEqual(verbalize('1/2 the age'),'one half the age')
+        self.assertEqual(verbalize('3/4 of the total'),'three quarters of the total')
+        self.assertEqual(verbalize('70/5'),'seventy divided by five')
+
     def test_no_semantic_repair_is_claimed(self):
         self.assertEqual(verbalize('13 + 4 + 16 = 45'),'thirteen plus four plus sixteen equals forty five')
         self.assertIn('bee-eaters',verbalize('10 bee-eaters'))
