@@ -75,7 +75,7 @@ def main():
             write('%03d-error.json'%index,dict(error_type=type(exc).__name__,status='failed_or_unknown',retry=False));return None
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(run,enumerate(bodies)))
     complete=all(x is not None for x in results);rows=previous+[x for batch in results if batch for x in batch]
-    write('report.json',dict(complete1072=complete,reviewed=len(rows),all_passed=complete and all(x['correct'] and x['explanation_consistent'] for x in rows),rows=rows,native_training_approved=False,automatic_retries=0))
+    write('report.json',dict(source_plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),complete1072=complete,reviewed=len(rows),all_passed=complete and all(x['correct'] and x['explanation_consistent'] for x in rows),rows=rows,native_training_approved=False,automatic_retries=0))
     if not complete:raise RuntimeError('Partial review preserved; no retry/subset acceptance')
 
 
