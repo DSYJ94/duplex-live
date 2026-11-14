@@ -17,6 +17,10 @@ class SpokenMath(unittest.TestCase):
         self.assertEqual(verbalize('3/4 of the total'),'three quarters of the total')
         self.assertEqual(verbalize('70/5'),'seventy divided by five')
 
+    def test_leading_decimal_zeros_are_not_lost(self):
+        self.assertEqual(verbalize('.05'),'zero point zero five')
+        self.assertEqual(verbalize('$.05'),'zero dollars and five cents')
+
     def test_no_semantic_repair_is_claimed(self):
         self.assertEqual(verbalize('13 + 4 + 16 = 45'),'thirteen plus four plus sixteen equals forty five')
         self.assertIn('bee-eaters',verbalize('10 bee-eaters'))

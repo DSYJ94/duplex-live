@@ -13,6 +13,8 @@ def integer(n):
 def verbalize(text,*,spell_numbers=True):
     say=integer if spell_numbers else str
     s=re.sub(r'(?<=\d),(?=\d{3}(?:\D|$))','',text)
+    s=re.sub(r'([$£])[ \t]+(?=\d|\.\d)',r'\1',s)
+    s=re.sub(r'(?<!\d)\.(\d+)',r'0.\1',s)
     # Proper fractional literals have conventional spoken number names; no
     # arithmetic expression is solved or reduced to its result.
     fraction_names={2:'half',3:'third',4:'quarter',5:'fifth',6:'sixth',8:'eighth',10:'tenth',12:'twelfth',16:'sixteenth'}
