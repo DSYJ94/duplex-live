@@ -14,6 +14,12 @@ class MathSpeechOrthography(unittest.TestCase):
         self.assertEqual(words('88 metres'),words('88m'))
         self.assertNotEqual(words('285cm'),words('285mm'))
 
+    def test_apostrophe_typography_and_speed_units(self):
+        self.assertEqual(words('Jaylen’s dog'),words("Jaylen's dog"))
+        self.assertEqual(words('twenty mph'),words('twenty miles per hour'))
+        self.assertNotEqual(words('twenty mph'),words('twenty kilometres per hour'))
+        self.assertNotEqual(words('Jo'),words('Joe'))
+
     def test_wrong_values_units_homophones_and_missing_words_fail(self):
         for a,b in [('Go.','Go. Go.'),('room sign','rune sign'),('12 pounds','12 dollars'),('$1.25','$125'),('4*40=160','4 40 160'),('4+4','8'),('A timer measures time','Timer measures time'),('The bus arrived first','The boss arrived first')]:
             with self.subTest(a=a,b=b):self.assertGreater(wer(a,b),.05)

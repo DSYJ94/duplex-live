@@ -11,6 +11,9 @@ NUMBER_START='zero one two three four five six seven eight nine ten eleven twelv
 
 
 def words(text):
+    # Typography does not change lexical content. Preserve apostrophe ownership.
+    text=text.replace('’',"'").replace('‘',"'")
+    text=re.sub(r'\bmph\b','miles per hour',text,flags=re.I)
     # Unambiguous unit abbreviations attached to numeric quantities only.
     unit_names={'cm':'centimetres','mm':'millimetres','km':'kilometres','m':'metres','kg':'kilograms','lb':'pounds','lbs':'pounds'}
     text=re.sub(r'(\d)[ \t]*(cm|mm|km|kg|lbs|lb|m)\b',lambda m:m[1]+' '+unit_names[m[2]],text)
