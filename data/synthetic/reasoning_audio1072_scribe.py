@@ -6,9 +6,11 @@ transcript editing, keyterms, non-verbatim filtering, or waveform changes.
 """
 import argparse,concurrent.futures,hashlib,json,math,re,threading,urllib.request,uuid
 from pathlib import Path
+from . import math_spoken_words
 from .math_spoken_words import wer
 
 
+POLICY='math-spoken-v3-typographic-apostrophe-speed-unit'
 FIELDS=dict(model_id='scribe_v3',language_code='en',numbers_format='words',timestamps_granularity='word',diarize='false',tag_audio_events='false',no_verbatim='false',temperature='0',seed='42424242')
 
 
@@ -38,8 +40,8 @@ def main():
             if reusable(row,prev):
                 # Recompute every score under this source version. Never reuse a
                 # verdict across changed PCM, words, folds or recognition policy.
-                if prev['recognizer']!='scribe_v3' or prev['word_policy']!='math-spoken-v2-sentence-currency-unit-fix':raise ValueError('Parent word protocol differs')
-                result=dict(prev);result['WER']=wer(row['source_text'],prev['recognized']);result['word_pass']=result['WER']<=.05;result['peak_pass']=row['raw_peak_pass'];reused.append(result)
+                if prev['recognizer']!='scribe_v3' or prev['word_policy'] not in ('math-spoken-v2-sentence-currency-unit-fix',POLICY):raise ValueError('Parent word protocol differs')
+                result=dict(prev);result['word_policy']=POLICY;result['WER']=wer(row['source_text'],prev['recognized']);result['word_pass']=result['WER']<=.05;result['peak_pass']=row['raw_peak_pass'];reused.append(result)
             else:pending_rows.append(row)
     else:pending_rows=rows
     reserve=sum(max(60,r['seconds']) for r in pending_rows)/3600
@@ -51,7 +53,7 @@ def main():
     def write(name,value):
         with (a.out/name).open('x') as f:json.dump(value,f,indent=2);f.write('\n')
     fields=dict(FIELDS)
-    write('admission.json',dict(required=2144,plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),protocol='complete2144_scribe3_no_reference_or_bias_v1',fields=fields,word_policy='math-spoken-v2-sentence-currency-unit-fix',WER_limit=.05,peak_limit=.995,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,published_hourly_USD=.2,conservative_hourly_reservation_USD=1,conservative_minimum_seconds_per_request=60,price_source='https://elevenlabs.io/pricing/api',included_credits_before=sub['character_limit']-sub['character_count'],overage_disabled=True,maximum_calls=len(pending_rows),reused_exact_records=len(reused),parent_report_sha256=hashlib.sha256((a.reuse_from/'report.json').read_bytes()).hexdigest() if a.reuse_from else None,concurrency=2,automatic_retries=0,owner_conversations=False,reference_text_sent=False,earlier_Whisper_reports_preserved=True,native_training_approved=False))
+    write('admission.json',dict(word_policy_source_sha256=hashlib.sha256(Path(math_spoken_words.__file__).read_bytes()).hexdigest(),required=2144,plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),protocol='complete2144_scribe3_no_reference_or_bias_v1',fields=fields,word_policy=POLICY,WER_limit=.05,peak_limit=.995,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,published_hourly_USD=.2,conservative_hourly_reservation_USD=1,conservative_minimum_seconds_per_request=60,price_source='https://elevenlabs.io/pricing/api',included_credits_before=sub['character_limit']-sub['character_count'],overage_disabled=True,maximum_calls=len(pending_rows),reused_exact_records=len(reused),parent_report_sha256=hashlib.sha256((a.reuse_from/'report.json').read_bytes()).hexdigest() if a.reuse_from else None,concurrency=2,automatic_retries=0,owner_conversations=False,reference_text_sent=False,earlier_Whisper_reports_preserved=True,native_training_approved=False))
     stop=threading.Event()
     def one(row):
         if stop.is_set():return None
@@ -65,7 +67,7 @@ def main():
             with urllib.request.urlopen(req,timeout=300) as response:raw=json.load(response);request_id=response.headers.get('request-id')
             write(ident+'-response.json',raw);error=wer(row['source_text'],raw['text']);ws=[w for w in raw.get('words',[]) if w.get('type')=='word'];spans=[(w['start'],w['end']) for w in ws]
             timing=bool(spans) and all(all(isinstance(x,(int,float)) and math.isfinite(x) for x in t) and 0<=t[0]<=t[1]<=row['seconds']+.02 for t in spans)
-            result=dict(id=ident,fold=row['fold'],source_sha256=row['sha256'],source_words=row['source_text'],recognized=raw['text'],words=[dict(text=w['text'],timestamp=[w['start'],w['end']])for w in ws],WER=error,word_pass=error<=.05,peak_pass=row['raw_peak_pass'],timing_pass=timing,request_id=request_id,recognizer='scribe_v3',word_policy='math-spoken-v2-sentence-currency-unit-fix',native_training_approved=False)
+            result=dict(id=ident,fold=row['fold'],source_sha256=row['sha256'],source_words=row['source_text'],recognized=raw['text'],words=[dict(text=w['text'],timestamp=[w['start'],w['end']])for w in ws],WER=error,word_pass=error<=.05,peak_pass=row['raw_peak_pass'],timing_pass=timing,request_id=request_id,recognizer='scribe_v3',word_policy=POLICY,native_training_approved=False)
             write(ident+'.json',result);return result
         except Exception as exc:
             write(ident+'-error.json',dict(error_type=type(exc).__name__,status='failed_or_unknown',retry=False));stop.set();return None
@@ -76,7 +78,7 @@ def main():
             for result in pool.map(one,pending_rows[1:]):
                 if result:results.append(result)
                 if len(results)%25==0:print(json.dumps(dict(completed=len(results),required=2144)),flush=True)
-    report=dict(source_plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),complete=len(results)==2144,requested=2144,passed=sum(r['word_pass'] and r['peak_pass'] for r in results),all_passed=len(results)==2144 and all(r['word_pass'] and r['peak_pass'] for r in results),recognizer='scribe_v3',protocol='complete2144_scribe3_no_reference_or_bias_v1',rows=results,native_training_approved=False,independent_semantic_and_authored_word_alignment_still_required=True)
+    report=dict(source_plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),complete=len(results)==2144,requested=2144,passed=sum(r['word_pass'] and r['peak_pass'] and r['timing_pass'] for r in results),all_passed=len(results)==2144 and all(r['word_pass'] and r['peak_pass'] and r['timing_pass'] for r in results),recognizer='scribe_v3',protocol='complete2144_scribe3_no_reference_or_bias_v1',rows=results,native_training_approved=False,independent_semantic_and_authored_word_alignment_still_required=True)
     write('report.json',report)
     if not report['complete']:raise RuntimeError('Incomplete source audit preserved; no retry/subset acceptance')
 
