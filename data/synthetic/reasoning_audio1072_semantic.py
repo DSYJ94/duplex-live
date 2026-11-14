@@ -25,16 +25,21 @@ def verdict(response,ids):
 
 def main():
     p=argparse.ArgumentParser()
-    for name in ('plan','asr','env-file','out'):p.add_argument('--'+name,type=Path,required=True)
+    for name in ('plan','env-file','out'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--recover-from',type=Path)
-    a=p.parse_args();plan=json.loads(a.plan.read_text());audit=json.loads((a.asr/'report.json').read_text())
-    if not plan['owner_approved'] or plan['maximum_total_API_USD']!=100 or len(plan['exact_semantic_records'])!=1072 or not audit['complete'] or len(audit['rows'])!=2144:raise ValueError('Complete approved exact cohort required')
-    by={x['id']:x for x in audit['rows']};records=[]
+    p.add_argument('--asr',type=Path);p.add_argument('--text-only',action='store_true');p.add_argument('--prior-admission',type=Path)
+    a=p.parse_args();plan=json.loads(a.plan.read_text());audit=None if a.text_only else json.loads((a.asr/'report.json').read_text())
+    if not plan['owner_approved'] or plan['maximum_total_API_USD']!=100 or len(plan['exact_semantic_records'])!=1072 or (not a.text_only and (not audit['complete'] or len(audit['rows'])!=2144)):raise ValueError('Complete approved exact cohort required')
+    by={} if a.text_only else {x['id']:x for x in audit['rows']};records=[]
     for source in plan['exact_semantic_records']:
         row=dict(source)
-        row['recognized_user']=by[row['id']+'-user']['recognized'];row['recognized_assistant']=by[row['id']+'-assistant']['recognized']
+        if not a.text_only:
+            row['recognized_user']=by[row['id']+'-user']['recognized'];row['recognized_assistant']=by[row['id']+'-assistant']['recognized']
         records.append(row)
     previous=[];carried_reservation=0.
+    if a.prior_admission:
+        prior=json.loads(a.prior_admission.read_text());carried_reservation=prior['combined_reservation_USD']
+    if plan.get('approved_proposal_sha256') and not a.prior_admission:raise ValueError('Derived review must carry all earlier provider reservations')
     if a.recover_from:
         old=json.loads((a.recover_from/'report.json').read_text())
         if old['complete1072']:raise ValueError('Completed cohort must never be repeated')
@@ -49,9 +54,9 @@ def main():
         carried_reservation=json.loads((a.recover_from/'admission.json').read_text())['reservation_USD']
         # Distinct single-record requests replace the two timed-out16-record
         # batches; charge their FULL old reservation, even if billing is unknown.
-    size=1 if a.recover_from else 16
+    size=1 if a.recover_from else (8 if a.text_only else 16)
     bodies=[body(records[i:i+size]) for i in range(0,len(records),size)]
-    if a.recover_from:
+    if a.recover_from or a.text_only:
         for b in bodies:b['max_output_tokens']=4096
     reserve=sum((len(json.dumps(b).encode())+4096)*10/1e6+b['max_output_tokens']*50/1e6 for b in bodies)
     if carried_reservation+reserve>100 or any(len(json.dumps(b).encode())+4096>272000 for b in bodies):raise ValueError('Entire cohort exceeds100USD/context pricing bound')
@@ -75,7 +80,7 @@ def main():
             write('%03d-error.json'%index,dict(error_type=type(exc).__name__,status='failed_or_unknown',retry=False));return None
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(run,enumerate(bodies)))
     complete=all(x is not None for x in results);rows=previous+[x for batch in results if batch for x in batch]
-    write('report.json',dict(source_plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),complete1072=complete,reviewed=len(rows),all_passed=complete and all(x['correct'] and x['explanation_consistent'] for x in rows),rows=rows,native_training_approved=False,automatic_retries=0))
+    write('report.json',dict(review_scope='authored_semantics_only' if a.text_only else 'authored_plus_recognized_words',source_plan_sha256=hashlib.sha256(a.plan.read_bytes()).hexdigest(),complete1072=complete,reviewed=len(rows),all_passed=complete and all(x['correct'] and x['explanation_consistent'] for x in rows),rows=rows,native_training_approved=False,automatic_retries=0))
     if not complete:raise RuntimeError('Partial review preserved; no retry/subset acceptance')
 
 
