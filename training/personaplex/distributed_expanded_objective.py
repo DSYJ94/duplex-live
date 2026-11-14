@@ -9,16 +9,20 @@ import torch
 import torch.distributed as dist
 
 
-def scale(valid, coefficient):
+def scale(valid, coefficient, global_batch_count=None):
     if type(valid) is not bool or not math.isfinite(coefficient) or coefficient<=0:
         raise ValueError('Declared positive new-data objective mass required')
-    flags=[None]*dist.get_world_size();dist.all_gather_object(flags,valid)
-    count=sum(flags)
-    if not count:raise ValueError('Empty global new-data batch')
-    return coefficient*dist.get_world_size()/count if valid else 0.
+    local=dict(valid=valid,coefficient=coefficient,global_batch_count=global_batch_count)
+    flags=[None]*dist.get_world_size();dist.all_gather_object(flags,local)
+    if any(x['coefficient']!=coefficient or x['global_batch_count']!=global_batch_count for x in flags):raise ValueError('Ranks disagree on complete global batch weighting')
+    count=sum(x['valid'] for x in flags)
+    if not count:raise ValueError('Empty global new-data microbatch')
+    denominator=count if global_batch_count is None else global_batch_count
+    if type(denominator) is not int or denominator<count:raise ValueError('Whole global batch count required')
+    return coefficient*dist.get_world_size()/denominator if valid else 0.
 
 
-def backward(runtime,row,*,valid,coefficient):
+def backward(runtime,row,*,valid,coefficient,global_batch_count=None):
     from evals.personaplex_adapters import checkpoint_language_layers
     from evals.context_native_stream_gradient import coefficients
     from evals.context_native_audio49_training import forward as audio_forward
@@ -28,7 +32,7 @@ def backward(runtime,row,*,valid,coefficient):
     required=('id','fold','inputs','mask','targets','codes','audio_mask','native_qualification')
     if any(k not in row for k in required) or row['fold']!='TRAIN' or row['native_qualification'] is not True:
         raise ValueError('Complete independently admitted native TRAIN pair required')
-    mass=scale(valid,coefficient);lm=runtime.view;device=runtime.device
+    mass=scale(valid,coefficient,global_batch_count);lm=runtime.view;device=runtime.device
     x,m,y=(row[k].to(device) for k in ('inputs','mask','targets'))
     if not m.any():raise ValueError('Real example required even for zero-mass padding')
     with checkpoint_language_layers(lm):

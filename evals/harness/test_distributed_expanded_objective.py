@@ -6,7 +6,7 @@ from training.personaplex.distributed_train import update
 
 class ExpandedNativeContract(unittest.TestCase):
     def collective(self,flags):
-        def gather(out,value):out[:]=flags
+        def gather(out,value):out[:]=[dict(value,valid=v) for v in flags]
         return patch('torch.distributed.all_gather_object',side_effect=gather)
 
     def test_partial_global_batch_keeps_equal_example_gradient_mass(self):
@@ -15,6 +15,11 @@ class ExpandedNativeContract(unittest.TestCase):
             self.assertEqual(scale(False,3.),0.)
             # DDP averages four replicas; two valid examples each receive1/2.
             self.assertEqual((6.*2+6.*4)/4,3.*(2+4)/2)
+
+    def test_microbatches_normalize_over_whole_global_batch(self):
+        with patch('torch.distributed.get_world_size',return_value=4),self.collective([True,False,False,False]):
+            self.assertEqual(scale(True,21*49/1008,global_batch_count=21),4*49/1008)
+            self.assertEqual(scale(False,21*49/1008,global_batch_count=21),0.)
 
     def test_empty_global_batch_is_rejected(self):
         with patch('torch.distributed.get_world_size',return_value=2),self.collective([False,False]):
