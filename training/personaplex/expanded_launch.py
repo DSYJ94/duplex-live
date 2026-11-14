@@ -41,7 +41,11 @@ def main():
             subprocess.run(cmd,env=environment,check=True)
         if not (a.root/'codec'/'cache.json').exists():
             (a.root/'codec').mkdir(exist_ok=True)
-            execute('training.personaplex.expanded_codec',['text-preflight']+common)
+            pref=a.root/'codec'/'text-preflight.json'
+            if not pref.exists():execute('training.personaplex.expanded_codec',['text-preflight']+common)
+            else:
+                checked=json.loads(pref.read_text())
+                if not checked['complete1072'] or checked['source_manifest_sha256']!=sha(a.data/'manifest.json') or checked['code_sha256']!=sha(Path('training/personaplex/expanded_codec.py')):raise ValueError('Actual complete CPU preflight differs')
             execute('training.personaplex.expanded_codec',['build']+common+['--lease',str(path)],gpu=True,parallel=True)
             execute('training.personaplex.expanded_codec',['verify']+common)
         capture=['--data',str(a.data),'--cache',str(a.root/'codec'),'--root',str(a.root/'capture'),'--source',a.source,'--shards','4']

@@ -127,7 +127,7 @@ def text_preflight(a):
         text=builder.prepare_item(side['alignments'],frame_duration(row['frames']))
         if tuple(text.shape)!=(1,1,row['frames']) or (text<0).any() or (text>=tokenizer.vocab_size()).any() or (text==4).any():raise ValueError('Full native target coverage and no fabricated delegation required')
         timing=native_word_timing(text[0,0].tolist(),side['alignments'],tokenizer.encode,12.5);checked.append(dict(id=row['id'],fold=row['fold'],timing=timing))
-    result=dict(source=a.source,complete1072=True,source_manifest_sha256=sha(a.data/'manifest.json'),source_pins=pins,rows=checked,actual_CUDA=False,native_codec_or_training_approved=False)
+    result=dict(source=a.source,code_sha256=sha(Path(__file__)),complete1072=True,source_manifest_sha256=sha(a.data/'manifest.json'),source_pins=pins,rows=checked,actual_CUDA=False,native_codec_or_training_approved=False)
     with (a.root/'text-preflight.json').open('x')as f:json.dump(result,f,indent=2);f.write('\n')
 
 
