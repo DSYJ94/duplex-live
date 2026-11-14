@@ -3,17 +3,33 @@
 Alignment receives audio plus authored text; it is not a recognition verdict.
 No retries, interpolation, trimming or changed folds are allowed.
 """
-import argparse, concurrent.futures, hashlib, json, re, threading, urllib.request, uuid
+import argparse, concurrent.futures, hashlib, json, math, re, threading, urllib.request, uuid
 from pathlib import Path
-from data.venus.context_alignment import measured_units
+
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def measured_words(text,response,seconds):
+    words=[dict(w)for w in response['words'] if w['text'].strip()]
+    # Provider receives the authored script. Preserve its measured words as
+    # indivisible labels: 22 is ONE authored numeric token, not two invented
+    # word intervals. The native interleaver owns tokenizer subword placement.
+    if [w['text'].strip()for w in words]!=text.split():raise ValueError('Every exact authored word needs its own measured interval')
+    previous=0.
+    for w in words:
+        lo,hi=w['start'],w['end']
+        if not all(isinstance(x,(int,float)) and math.isfinite(x)for x in (lo,hi)) or not 0<=lo<=hi<=seconds+.02 or lo<previous:raise ValueError('Actual finite monotonic source-bound intervals required')
+        previous=lo
+    if not words or words[-1]['end']<=words[-1]['start']:raise ValueError('Positive measured final word ending required')
+    return words
+
+
 def main():
     p=argparse.ArgumentParser()
     for n in ('plan','quality','semantics','inventory','audio','cost-ledger','key-file','out'):p.add_argument('--'+n,type=Path,required=True)
+    p.add_argument('--reuse-from',type=Path)
     a=p.parse_args();plan=json.loads(a.plan.read_text());quality=json.loads(a.quality.read_text());sem=json.loads(a.semantics.read_text());inv=json.loads(a.inventory.read_text());cost=json.loads(a.cost_ledger.read_text());pin=sha(a.plan)
     if not plan['owner_approved'] or plan['maximum_total_API_USD']!=100 or not quality['complete'] or not quality['all_passed'] or len(quality['rows'])!=2144 or quality['source_plan_sha256']!=pin:raise ValueError('Full exact2144 independent word approval required')
     if not sem['complete1072'] or not sem['all_passed'] or len(sem['rows'])!=1072 or sem['source_plan_sha256']!=pin:raise ValueError('Full exact1072 semantic approval required')
@@ -24,6 +40,18 @@ def main():
         if not r['word_pass'] or not r['peak_pass'] or not r['timing_pass'] or r['source_words']!=scene['response'] or r['fold']!=scene['fold'] or sha(a.audio/(key+'.wav'))!=r['source_sha256'] or v['sha256']!=r['source_sha256']:raise ValueError('Qualified unchanged assistant ownership required')
         rows.append(dict(id=ident,text=scene['response'],fold=scene['fold'],source_sha256=r['source_sha256'],seconds=v['seconds'],file=key+'.wav'))
     if len(rows)!=1072 or len({r['id'] for r in rows})!=1072:raise ValueError('Every1072 assistant required')
+    reused={}
+    if a.reuse_from:
+        parent=json.loads((a.reuse_from/'admission.json').read_text())
+        if parent['source_plan_sha256']!=pin or parent['quality_sha256']!=sha(a.quality) or parent['semantic_sha256']!=sha(a.semantics) or parent['maximum_calls']!=1072 or parent['carried_usage_upper_USD']!=cost['combined_usage_upper_USD']:raise ValueError('Exact original complete-cohort reservation required')
+        for row in rows:
+            response=a.reuse_from/(row['id']+'-response.json');inflight=a.reuse_from/(row['id']+'-inflight.json')
+            if inflight.exists() and json.loads(inflight.read_text())!=row:raise ValueError('Previous request source identity changed')
+            if inflight.exists() and not response.exists():raise ValueError('Unknown previous request cannot be repeated')
+            if response.exists():
+                if not inflight.exists():raise ValueError('Response without original source receipt')
+                raw=json.loads(response.read_text());reused[row['id']]=dict(row,measured_words=measured_words(row['text'],raw,row['seconds']),alignment_loss=raw.get('loss'),reused_response_sha256=sha(response))
+    pending=[r for r in rows if r['id']not in reused]
     reserve=sum(max(60,r['seconds']) for r in rows)/3600
     if cost['combined_usage_upper_USD']+reserve>100:raise ValueError('Whole alignment plus all prior reserves must fit100USD')
     secret=a.key_file.read_text();match=re.search(r'eleven\s*labs',secret,re.I)
@@ -36,7 +64,7 @@ def main():
     a.out.mkdir(parents=True,exist_ok=False)
     def write(name,value):
         with (a.out/name).open('x') as f:json.dump(value,f,indent=2);f.write('\n')
-    write('admission.json',dict(source_plan_sha256=pin,quality_sha256=sha(a.quality),semantic_sha256=sha(a.semantics),maximum_calls=1072,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,cap_USD=100,conservative_hourly_USD=1,minimum_reserved_seconds=60,price_source='https://elevenlabs.io/docs/overview/capabilities/forced-alignment',pricing='same as speech-to-text; conservatively reserved at1USD/hour',automatic_retries=0,concurrency=2,alignment_is_not_independent_recognition=True))
+    write('admission.json',dict(source_plan_sha256=pin,quality_sha256=sha(a.quality),semantic_sha256=sha(a.semantics),maximum_calls=len(pending),reused_verified_responses=len(reused),reservation_shared_with_parent=str(a.reuse_from) if a.reuse_from else None,carried_usage_upper_USD=cost['combined_usage_upper_USD'],reservation_USD=reserve,combined_reservation_USD=cost['combined_usage_upper_USD']+reserve,cap_USD=100,conservative_hourly_USD=1,minimum_reserved_seconds=60,price_source='https://elevenlabs.io/docs/overview/capabilities/forced-alignment',pricing='same as speech-to-text; conservatively reserved at1USD/hour',automatic_retries=0,concurrency=2,alignment_is_not_independent_recognition=True))
     stop=threading.Event()
     def one(row):
         if stop.is_set():return None
@@ -45,14 +73,15 @@ def main():
         try:
             request=urllib.request.Request('https://api.elevenlabs.io/v1/forced-alignment',data=body,headers={'xi-api-key':key,'Content-Type':'multipart/form-data; boundary='+boundary})
             with urllib.request.urlopen(request,timeout=180) as response:raw=json.load(response);request_id=response.headers.get('request-id')
-            write(ident+'-response.json',raw);units=measured_units(row['text'],raw,row['seconds'])
-            result=dict(row,measured_words=raw['words'],native_speech_units=units,alignment_loss=raw.get('loss'),request_id=request_id);write(ident+'.json',result);return result
+            write(ident+'-response.json',raw);words=measured_words(row['text'],raw,row['seconds'])
+            result=dict(row,measured_words=words,alignment_loss=raw.get('loss'),request_id=request_id);write(ident+'.json',result);return result
         except Exception as exc:
             write(ident+'-error.json',dict(error_type=type(exc).__name__,no_retry=True));stop.set();return None
-    first=one(rows[0]);results=[first] if first else []
+    for ident,result in reused.items():write(ident+'.json',result)
+    first=one(pending[0]) if pending else None;results=list(reused.values())+([first]if first else [])
     if first:
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-            for result in pool.map(one,rows[1:]):
+            for result in pool.map(one,pending[1:]):
                 if result:results.append(result)
                 if len(results)%25==0:print(json.dumps(dict(completed=len(results),required=1072)),flush=True)
     report=dict(source_plan_sha256=pin,complete1072=len(results)==1072,all_authored_words_measured=len(results)==1072,rows=results,original_audio_unchanged=True,timestamps_interpolated=False,native_training_approved=False)
