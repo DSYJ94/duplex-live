@@ -9,3 +9,4 @@ class ClearSourceTest(unittest.TestCase):
         self.assertEqual(prepare('250 ml; 4 kg per kg'),'two hundred and fifty millilitres; four kilograms per kilogram')
     def test_no_unit_substitution_inside_time_or_ordinary_words(self):
         self.assertEqual(prepare('six a.m. at home'),'six a.m. at home')
+        self.assertEqual(prepare('50 cm³ of helium'),'fifty cubic centimetres of helium')

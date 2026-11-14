@@ -22,7 +22,7 @@ def prepare(text):
     s=re.sub(r'(\d+/\d+)ths\b',r'\1',s)
     s=re.sub(r'(?<=\d)\s*\(', ' times (',s)
     s=s.replace('−',' minus ').replace('–',' minus ')
-    s=re.sub(r'\bcm³\b','cubic centimetres',s)
+    s=re.sub(r'\bcm³(?!\w)','cubic centimetres',s)
     for short,long in [('sq ft','square feet'),('mph','miles per hour'),('kgs','kilograms'),('kg','kilograms'),('mg','milligrams'),('ml','millilitres'),('oz','ounces'),('cm','centimetres'),('mm','millimetres'),('km','kilometres'),('g','grams'),('m','metres')]:
         s=re.sub(r'(?<![\w.])'+re.escape(short)+r'\b',long,s)
     s=re.sub(r'\bper (kilograms|grams|milligrams|metres|millilitres|ounces)\b',lambda m:'per '+m[1][:-1],s)
