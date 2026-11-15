@@ -55,12 +55,21 @@ def run(a):
     if old['input_sha256']!=OLD_SHA:raise ValueError('Exact original tensor artifact required')
     schedule=build(groups,native['rows'],world_size=world);flat=[x for e in schedule['schedule']for x in e]
     recipe=dict(RECIPE,updates=196,epochs=4,new_TRAIN=1008,new_DEV=64,new_objective='equal-example cycle mean text+all8 native assistant acoustic heads',native_world_size=4,checkpoint_cadence='every completed update; immutable epoch states; rolling GC only after backup')
-    lm,loads=model(SimpleNamespace(base='personaplex'),folder);baseline=fingerprint(lm,groups);refs={}
+    lm,loads=model(SimpleNamespace(base='personaplex'),folder);baseline=fingerprint(lm,groups);refs={};repeated={}
     with torch.no_grad():
         for r in groups['reference']:
-            m=r['mask'].cuda();h,z=lm.forward_codes(r['inputs'].cuda());refs[r['id']]=(h[:,m].detach().cpu().clone(),z[0,0,m].float().softmax(-1).detach().cpu())
-    runtime=DistributedNative(lm,'broad-lora64',torch.device('cuda',local));selected={n:p for n,p in lm.named_parameters()if p.requires_grad}
-    if runtime.ownership['trainable_parameters']!=105070592 or fingerprint(runtime.view,groups)!=baseline:raise ValueError('Complete broad ownership or exact zero expansion failed')
+            m=r['mask'].cuda();h,z=lm.forward_codes(r['inputs'].cuda());repeated[r['id']]=dict(hidden=digest(h[:,m]),text_logits=digest(z[0,0,m]));refs[r['id']]=(h[:,m].detach().cpu().clone(),z[0,0,m].float().softmax(-1).detach().cpu())
+    write(folder/'zero-raw.json',dict(source=a.source,baseline=baseline,repeated=repeated,exact=baseline==repeated))
+    if repeated!=baseline:raise ValueError('Raw native repeat is not exact before adapter insertion')
+    def configured(model,ownership):
+        actual=fingerprint(model,groups)
+        write(folder/'zero-configured.json',dict(source=a.source,ownership=ownership,baseline=baseline,actual=actual,exact=actual==baseline))
+        if ownership['trainable_parameters']!=105070592:raise ValueError('Exact broad parameter ownership failed')
+        if actual!=baseline:raise ValueError('Adapter insertion changed native outputs before distributed wrapping')
+    runtime=DistributedNative(lm,'broad-lora64',torch.device('cuda',local),after_configure=configured);selected={n:p for n,p in lm.named_parameters()if p.requires_grad}
+    wrapped=fingerprint(runtime.view,groups)
+    write(folder/'zero-wrapped.json',dict(source=a.source,baseline=baseline,actual=wrapped,exact=wrapped==baseline))
+    if wrapped!=baseline:raise ValueError('Distributed wrapping changed native outputs')
     base=torch.optim.AdamW(runtime.parameters(),lr=recipe['learning_rate'],betas=tuple(recipe['adam_betas']),eps=recipe['adam_eps'],weight_decay=recipe['weight_decay'],foreach=False,fused=False,amsgrad=False)
     adam=materialize_adam(base);opal=DistributedOpal(runtime,base,source=BASE/'opal-upstream-v1',run_dir=folder/'opal',recipe=recipe)
     identity=dict(source=a.source,base='personaplex',method='broad-lora64',trainable_parameters=105070592,world=world,old_inputs_sha256=OLD_SHA,old_input_report_sha256=OLD_REPORT_SHA,capture_provenance=provenance,expanded_inputs_sha256=sha(a.expanded/'inputs.json'),authorization_sha256=sha(AUTH),recipe=recipe,native_data_qualified=True,new_experiment=True,old_saved_updates_replayed=0)

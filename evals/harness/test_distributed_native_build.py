@@ -67,7 +67,11 @@ class NativeBuild(unittest.TestCase):
             dist.init_process_group('gloo', init_method='file://' + str(Path(folder)/'rendezvous'), rank=0, world_size=1)
             try:
                 initial=ToyNative(); other=copy.deepcopy(initial)
-                runtime=DistributedNative(initial,'broad-lora64','cpu')
+                checks=[]
+                def configured(model,ownership):
+                    self.assertIs(model,initial);self.assertGreater(ownership['trainable_parameters'],0);checks.append(True)
+                runtime=DistributedNative(initial,'broad-lora64','cpu',after_configure=configured)
+                self.assertEqual(checks,[True])
                 opt=torch.optim.AdamW(runtime.parameters(),lr=1e-3)
                 x=torch.randn(1,2,4)
                 runtime.view.forward_codes(x)[1].square().mean().backward()

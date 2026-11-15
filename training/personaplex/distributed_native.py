@@ -77,12 +77,13 @@ def configure_lm(lm, method):
 
 
 class DistributedNative:
-    def __init__(self, lm, method, device, process_group=None):
+    def __init__(self, lm, method, device, process_group=None, after_configure=None):
         import torch.distributed as dist
         if not dist.is_initialized():
             raise ValueError('Initialize the declared distributed process group first')
         self.method, self.device = method, torch.device(device)
         self.ownership = configure_lm(lm, method)
+        if after_configure is not None:after_configure(lm,self.ownership)
         dispatch = NativeDispatch(lm)
         self.sharded = method == 'full-lm'
         if self.sharded:

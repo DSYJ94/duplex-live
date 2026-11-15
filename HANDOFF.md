@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:8478324 FAILED79sec at strictzeroexpansion; instrument distinct gates before further learning
+
+8478324 FAILED79seconds/fourGPUs=316GPU-seconds; newphaseactualtotal15556GPU-seconds. Completedcodec+capture+independent1072 preserved/reused. Retainedfull323/schedule/provenance passed and actualnative model loaded; combinedownership/zeroexpansion gate failed onallranks, before gradients/optimizerupdates. Do NOT weaken exactness or claimcapacityfailure. Next admission records independent immutable rawrepeat/configured/preDDP/wrapped fingerprints and exact trainableownership, stopping at first actualdifference. Header-only safetensors shape count checked separately, no modelweights loadedCPU. Addedafter_configure callback for stageisolation, defaultunchanged; no recipe/precision/checkpoint/adoption changes. Samejob observer69929 ended after actualterminal, no activevalidtraining. CPUtest and actualnextgate evidence required; no blindfulltraining retry, no completedprep replay.
+
+---
+
 # LOCAL — 15Nov16:23UTC:admissionrepair allCPUproofsPASS; ONE8478324 submitted, BOTHprep stages reused
 
 ONE actual8478324/source76375f6a32d64d5ce4f2c2bb5feba43281270275, immutable source-expanded-76375f6; submission-v8/submission.json. Same4GPUs/workq/oneNode/24h/no-requeue/root/data/NFSbackup/20kaward, all15240prior actualGPU-seconds carried. Actual contained4testsPASS; repairedsource full323originaltensor/report/schedules+expanded4epochs+captureprovenancePASS. Completed codec1072(original7ab60a5) and nativecapture1072+independentproof(originalef0e59d) MUST reuse unchanged; no relabel, no re-encoding/capture. New runner source cleanly binds originaldata producers by unchangedcode hashes plus bothretainedreport72e2.../tensor a493... pins. Fourworst nativegradients/Adam/freshrestore and actualnewupdates stillpending; no model-improvement claim.
