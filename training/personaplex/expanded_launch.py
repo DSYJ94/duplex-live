@@ -54,8 +54,8 @@ def main():
         env={k:environment[k]for k in ('DUPLEX_LIVE_GUARD_FILE','DUPLEX_LIVE_LEASE_FILE','SLURM_JOB_ID','SLURM_JOB_ACCOUNT')};env.update(OMP_NUM_THREADS=8,MKL_NUM_THREADS=8,GIT_OPTIONAL_LOCKS='0')
         def execute(module,args,gpu=False,parallel=False):
             cmd=container_command(Path.cwd(),gpu=gpu,environment=env,backup=a.backup)
-            if parallel:cmd+=['torch.distributed.run','--standalone','--nproc_per_node=4','--module',module]+args
-            else:cmd+=[module]+args
+            if parallel:cmd+=['torch.distributed.run','--standalone','--nproc_per_node=4','--module','training.personaplex.expanded_gpu',module]+args
+            else:cmd+=(['training.personaplex.expanded_gpu',module]if gpu else[module])+args
             subprocess.run(cmd,env=environment,check=True)
         if not (a.root/'codec'/'cache.json').exists():
             (a.root/'codec').mkdir(exist_ok=True)

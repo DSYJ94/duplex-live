@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:8466779 FAILED before updates; exact CUDA linker omission repaired
+
+8466779 terminalFAILED41seconds/fourGPUs=164GPU-seconds. New-phase prior failed total320GPU-seconds (68+88+164), no optimizer updates. Git/container startup repair worked; native Mimi first encode reached compiler then failed libcuda.so cannot found. New expanded_gpu wrapper reuses existing evals.cuda_linker_path repair before every native GPU module import; no precision/compiler disable, no model/data/objective change. CPU1072 text proof stays valid because codec bytes unchanged. Partial empty codec shards preserved, must archive before a replacement writer; do not overwrite or duplicate. No active valid training to interrupt. Next verify wrapper, deploy immutable source, archive failed shards, submit ONE v4 claim and observe actual progress. Older header below describes submission before failure and is historical.
+
+---
+
 # LOCAL — 15Nov: isolated startup PASS; replacement8466779 submitted
 
 Actual job8466257 FAILED1:0 after22seconds/fourGPUs (88GPU-seconds), before model loading or optimizer updates: contained runtime hid the worktree Git metadata under HOME. Earlier8445171 used68GPU-seconds; total failed new-phase allocations156GPU-seconds, never reset. Fix179e684df36269c73e46cf482f998c898cece82c explicitly mounts ONLY exact worktree/vendor Git metadata read-only plus approved NFS backup. Six focused tests PASS. Actual isolated --containall/--nv startup smoke PASS with all1072 data/qualification hashes; this is NOT a CUDA/gradient admission. Remote proof native-expanded1072-container-startup-proof-v1.json.
