@@ -1,3 +1,11 @@
+# LOCAL — 15Nov:storage runtimePASS; ONE replacement8475202 submitted
+
+Actual contained CPU regressionPASS plus actual g++ shared compilation/16MiB temp write on allocatedLustre PASS; proof /projects/u6ada/duplex-live/native-expanded1072-storage-proof-v1/proof.json. This is storage/compiler proof, NOT CUDAgradient admission. ONE new actual8475202/source1405bdd0b0 (fullSHA submission-v6/submission.json), source-expanded-1405bdd, same4GPUs/workq/24h/no-requeue/phase/data/NFSbackup/20kaward. All1084 priorfailedGPU-seconds carried. Complete1072 codec/independent proof reused with original7ab60a5 producer. Priorcapture had no case report; entirepartial capture quarantined phase/failed-8466944-capture. No old checkpoint deleted, no completed training repeated. New optimizer updates not yet verified. Observe SAME8475202; no duplicate submission on timeout; report stops promptly.
+
+Owner's standing critical questions recorded in docs/NATIVE-TRAINING-CRITICAL-REVIEW-2026-11-15.md: review capacity/growth, selective/full tuning/CPT/RL versusLoRA, and data coverage for reasoning, voice quality, duplex and control at each completeepoch/final evaluation.105M is a control, not a provenoptimum. OPALKEEP/API0 unchanged; later adaptive changes executable/versioned/checkpointed. No new API costs or research detour required to get currentrun learning.
+
+---
+
 # LOCAL — 15Nov status refresh:8466944 FAILED90sec, compiler temporary space; no updates
 
 Fresh sacct8466944 FAILED90seconds/fourGPUs=360GPU-seconds. Phase failed actual total1084GPU-seconds=724+360; preserve all accounting. Native capture reached real model path but compiler failed No space left on device under contained/tmp. Codec ALL1072 and independent verification remain intact. No new optimizer updates. Repair expanded_gpu routes TMPDIR/TORCHINDUCTOR_CACHE_DIR/TRITON_CACHE_DIR to unique job-local allocatedLustre directories before importing torch/compiler; no precision/objective/OPAL change. Regression covers unique repeated stage scratch and actual directories. Not yet claim GPU validation/replacement submitted. Preserve/quarantine any partial capture artifacts before newwriter; never repeat verifiedcodec.
