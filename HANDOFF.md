@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:8466849 stopped AFTER verified1072 codec; isolated PID collision fixed
+
+8466849 terminalFAILED101seconds/fourGPUs=404GPU-seconds; phase prior total724GPU-seconds. ALL1072 CUDA codec outputs and independent codec/cache.json PASS, preserved and MUST reuse. Capture bootstrap failed before model loading because fresh Apptainer PID namespace reused PID63-66 and driver-PID directories already existed. Wrapper now uses UUID unique driver directories, regression invokes twice with identical PID and ensures separate paths. No change to codec/capture/math/recipe/OPAL, zero optimizer updates. Next v5 must reuse completed codec, never relabel its original7ab60a5 producer. No capture outputs existed before bootstrap. All original checkpoints remain untouched.
+
+---
+
 # LOCAL — 15Nov:8466849 real CUDA codec ALL1072 complete; verification next
 
 Actual remote read: allFOUR shard cache.json report268/268 complete_shardTRUE, total1072 native Mimi examples encoded on CUDA in SAME job8466849/source7ab60a5ccc. Driver-linker repair moved past actual failed encode. Independent codec/cache.json not yet present at observation; capture/inputs.json and admission.json absent. ZERO optimizer updates verified, no training/improvement claim. Continue observing SAME actual job through independent reconstruction, full native capture, distributed gradient/Adam and fresh restore into196NEW updates. Do not restart/repeat completed1072 codec shards or old training. All caps, backups,OPAL and156+164priorGPU-seconds unchanged. Historical headers follow.
