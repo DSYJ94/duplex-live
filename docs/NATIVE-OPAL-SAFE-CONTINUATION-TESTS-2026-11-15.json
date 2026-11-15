@@ -59,5 +59,10 @@
   "adaptive_native_restore_status": "WAITING_FOR_VALID_PARENT_COOPERATIVE_COMPLETION",
   "active_training_modified": false,
   "new_training_updates_repeated": 0,
-  "new_GPU_job_submitted": false
+  "new_GPU_job_submitted": false,
+  "staged_source": "6b32c9dd98afcf43c1c86bda5a0cccc5916818e5",
+  "staged_remote_worktree": "/projects/u6ada/duplex-live/source-adaptive-6b32c9d",
+  "staged_remote_tracked_tree_clean": true,
+  "staged_actual_host_launcher_help_passed": true,
+  "stage_log_sha256": "6647a9c43a402d96f853afd0ce63118ffa2c2f6a012c6f3ab37537b50371376c"
 }

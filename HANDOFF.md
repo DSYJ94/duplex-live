@@ -1,3 +1,15 @@
+# Staged immutable adaptive producer6b32c9d; no new GPU job
+
+Actual new producer6b32c9dd98afcf43c1c86bda5a0cccc5916818e5 is deployed clean at
+/projects/u6ada/duplex-live/source-adaptive-6b32c9d. Actual host Python3.6
+expanded_launch --help PASS with --adaptive-plan. No new job/model was submitted;
+original8478956/source3c6f699 continues. Latest snapshot44/196 with complete NFS
+backup40. Adaptive GPU restore remains WAITING_FOR_VALID_PARENT_COOPERATIVE_COMPLETION,
+not passed. This metadata commit is not the staged producer. CPU tests46PASS and
+all next-action/gate details immediately below and in the linked plan/proof.
+
+---
+
 # LOCAL — Adaptive safe launcher connected/tested; native handover waits for valid8478956
 
 Owner explicitly requests connecting adaptive OPAL to safe continuation while
