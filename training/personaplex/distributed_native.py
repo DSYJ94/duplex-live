@@ -4,6 +4,7 @@ No scheduler submission, new data approval, optimizer update or adoption occurs
 here. CUDA full-shard/state restoration admission is still required on hardware.
 """
 from contextlib import nullcontext
+from dataclasses import is_dataclass,replace
 from functools import partial
 import torch
 from torch import nn
@@ -20,7 +21,14 @@ class NativeDispatch(nn.Module):
             return self.lm.forward_codes(codes)
         if kind == 'audio':
             # Existing audio_forward owns native_depth_context outside this call.
-            return self.lm.forward_train(codes)
+            output=self.lm.forward_train(codes)
+            # Native LMOutput is a dataclass. DDP discovers every tensor there,
+            # but its output sink does not propagate unused dataclass branches.
+            # This route supervises audio only: preserve text values as metadata,
+            # and exclude its unsupervised head from reducer graph discovery.
+            if is_dataclass(output) and hasattr(output,'text_logits'):
+                output=replace(output,text_logits=output.text_logits.detach())
+            return output
         raise ValueError('Unknown native forward kind')
 
 
