@@ -64,12 +64,15 @@ def recorded_text(lm,inputs,mask,targets,calls,weight,*,population=None,ret_scal
     total=extra=0.;gradient_calls=0
     with lm.streaming(1):
         for call in calls:
-            start,n=call['start'],call['frames'];active=mask[start:start+n]
-            if call.get('phase') in ('prefix','span') and active.any():
+            start,n=call['start'],call['frames'];active=mask[start:start+n];targeted=bool(active.any())
+            if call.get('phase') in ('prefix','span') and targeted:
                 raise ValueError('Prefix or provided span acquired a target')
-            h,z=lm.forward_codes(inputs[:,:,start:start+n])
+            # A target-free recorded call has no backward by design. DDP must
+            # not prepare a reduction for it; KV values and boundaries stay fixed.
+            with torch.set_grad_enabled(torch.is_grad_enabled() and targeted):
+                h,z=lm.forward_codes(inputs[:,:,start:start+n])
             if not torch.isfinite(h).all() or not torch.isfinite(z).all():raise ValueError('Nonfinite recorded native output')
-            if active.any():
+            if targeted:
                 labels=targets[start:start+n][active];logits=z[0,0,active].float()
                 ce=(F.cross_entropy(logits,labels,reduction='none')*coef[start:start+n][active]).sum()
                 auxiliary=ret_loss(logits,labels,population) if population else ce.new_zeros(())
