@@ -1,3 +1,9 @@
+# LOCAL — 15Nov: recovery8466944 submitted; reuse ALL1072 verified codec
+
+ONE actual replacement8466944/source721da0fc87 (fullSHA v5/submission.json), worktree source-expanded-721da0f, submission-v5 atomicclaim. Same4GPUs/workq/24h/no-requeue/20kaward and unchanged roots/backups/OPALKEEP/API0. PriorfailedphaseGPU724seconds carried. Actual contained runtime repeated-bootstrap UUID regression PASS (hostPython3.6 unittest failed because mock.call_args.args differs; production uses containerPython3.12, test actualPASS). Codec ALL1072 CUDA +independent verification from original7ab60a5 producer preserved/reused, no relabel or repetition. New updates stillZERO until actual learner logs. Observe same8466944 from capture onwards; never duplicate on timeout. No partial capture artifacts existed at recovery. All original checkpoints intact; no more API work required.
+
+---
+
 # LOCAL — 15Nov:8466849 stopped AFTER verified1072 codec; isolated PID collision fixed
 
 8466849 terminalFAILED101seconds/fourGPUs=404GPU-seconds; phase prior total724GPU-seconds. ALL1072 CUDA codec outputs and independent codec/cache.json PASS, preserved and MUST reuse. Capture bootstrap failed before model loading because fresh Apptainer PID namespace reused PID63-66 and driver-PID directories already existed. Wrapper now uses UUID unique driver directories, regression invokes twice with identical PID and ensures separate paths. No change to codec/capture/math/recipe/OPAL, zero optimizer updates. Next v5 must reuse completed codec, never relabel its original7ab60a5 producer. No capture outputs existed before bootstrap. All original checkpoints remain untouched.
