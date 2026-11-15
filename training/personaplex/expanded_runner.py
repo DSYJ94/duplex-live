@@ -7,6 +7,7 @@ import argparse,json,os,time,uuid,math,shutil,re
 from pathlib import Path
 from types import SimpleNamespace
 
+OLD_REPORT_SHA='72e2b514b1c922f6591e18e1d30b198628170db2a2cc5e2efdb12d8d3d538e26'
 OLD_SHA='a49375937dd8377ed6098011f91bb729fb6843939373fa4cc922d819d7c12efa'
 BASE=Path('/projects/u6ada/duplex-live')
 
@@ -28,6 +29,7 @@ def run(a):
     from .matched_state import materialize_adam
     from .matched_schedule import epoch
     from .expanded_schedule import build
+    from .expanded_provenance import capture_provenance
     from .distributed_native import DistributedNative,cpu_state
     from .distributed_opal import DistributedOpal
     from .distributed_objective import backward_retained
@@ -39,7 +41,8 @@ def run(a):
     torch.cuda.set_device(local);dist.init_process_group('nccl',timeout=timedelta(minutes=30));check(a.lease,600)
     execution=uuid.uuid4().hex;folder=a.root/('job-'+os.environ['SLURM_JOB_ID'])/a.stage/('rank-%02d'%rank);folder.mkdir(parents=True,exist_ok=False)
     native=json.loads((a.expanded/'inputs.json').read_text())
-    if not native['complete1072'] or native['TRAIN']!=1008 or native['DEV']!=64 or native['source']!=a.source or len(native['rows'])!=1072 or len({r['id']for r in native['rows']})!=1072:raise ValueError('All independently reconstructed new native data required')
+    if not native['complete1072'] or native['TRAIN']!=1008 or native['DEV']!=64 or len(native['rows'])!=1072 or len({r['id']for r in native['rows']})!=1072:raise ValueError('All independently reconstructed new native data required')
+    provenance=capture_provenance(native,a.source)
     table={r['id']:r for r in native['rows']};loaded={}
     def item(ident):
         if ident not in loaded:
@@ -48,7 +51,9 @@ def run(a):
             s=torch.load(path,map_location='cpu',weights_only=True)
             loaded[ident]=dict(id=ident,fold=r['fold'],inputs=s['inputs'],targets=s['targets'],mask=s['mask'],codes=s['codes'][None],audio_mask=s['mask'][None],native_qualification=True)
         return loaded[ident]
-    groups,old=corpus(a.old_inputs,OLD_SHA);schedule=build(groups,native['rows'],world_size=world);flat=[x for e in schedule['schedule']for x in e]
+    groups,old=corpus(a.old_inputs,OLD_REPORT_SHA)
+    if old['input_sha256']!=OLD_SHA:raise ValueError('Exact original tensor artifact required')
+    schedule=build(groups,native['rows'],world_size=world);flat=[x for e in schedule['schedule']for x in e]
     recipe=dict(RECIPE,updates=196,epochs=4,new_TRAIN=1008,new_DEV=64,new_objective='equal-example cycle mean text+all8 native assistant acoustic heads',native_world_size=4,checkpoint_cadence='every completed update; immutable epoch states; rolling GC only after backup')
     lm,loads=model(SimpleNamespace(base='personaplex'),folder);baseline=fingerprint(lm,groups);refs={}
     with torch.no_grad():
@@ -58,7 +63,7 @@ def run(a):
     if runtime.ownership['trainable_parameters']!=105070592 or fingerprint(runtime.view,groups)!=baseline:raise ValueError('Complete broad ownership or exact zero expansion failed')
     base=torch.optim.AdamW(runtime.parameters(),lr=recipe['learning_rate'],betas=tuple(recipe['adam_betas']),eps=recipe['adam_eps'],weight_decay=recipe['weight_decay'],foreach=False,fused=False,amsgrad=False)
     adam=materialize_adam(base);opal=DistributedOpal(runtime,base,source=BASE/'opal-upstream-v1',run_dir=folder/'opal',recipe=recipe)
-    identity=dict(source=a.source,base='personaplex',method='broad-lora64',trainable_parameters=105070592,world=world,old_inputs_sha256=OLD_SHA,expanded_inputs_sha256=sha(a.expanded/'inputs.json'),authorization_sha256=sha(AUTH),recipe=recipe,native_data_qualified=True,new_experiment=True,old_saved_updates_replayed=0)
+    identity=dict(source=a.source,base='personaplex',method='broad-lora64',trainable_parameters=105070592,world=world,old_inputs_sha256=OLD_SHA,old_input_report_sha256=OLD_REPORT_SHA,capture_provenance=provenance,expanded_inputs_sha256=sha(a.expanded/'inputs.json'),authorization_sha256=sha(AUTH),recipe=recipe,native_data_qualified=True,new_experiment=True,old_saved_updates_replayed=0)
     checkpoints=a.root/'checkpoints'
     if rank==0:checkpoints.mkdir(exist_ok=True)
     dist.barrier();frozen=frozen_versions(lm)
