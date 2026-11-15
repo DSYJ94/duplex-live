@@ -1,3 +1,9 @@
+# LOCAL — OPAL liveverified at update3; validtraining untouched
+
+15 November live verification: job8478956/source3c6f699 has completed3/196 NEWupdates. On ALLfour ranks the training log records actual upstreamOPAL8b16759a3e9930916ed582e28068267859f935f8/update3/programv000, identical finiteglobal loss566.5672386886578 and globalpreclipnorm1092.4033203125. Distributedruntime owns the single clip(max1); upstreamOPAL owns optimizer/scheduler updates. Allfour fresh Adam/RNG/OPAL/native restores exact. Program hashes updater.py36910001a50f70c3f658737ed150a1ed1394091855b8d85ee4342a79f7976439 and analysis.py39aab2354740c1d61f5eacf00720ce33940defe382833d998b2246235e0647af preserved in logs/checkpoints. KEEP/API0 is deliberate fixedrecipe control: autonomouscode rewriting/Jev/MiRLcurriculum/GRPO/DPO/weight-space surgery are NOT active. Retained323/history/KL/hidden, qualifiednative1072, fullgradients and state-preservation harnesses ARE active. Do not silentlyactivate new algorithms or hot-edit validworker. Use complete49-updateepoch/64DEV results for documentednext-phase decisions, including data/capacity/fulltune/RL; no modelquality claim from3updates. Owner requests occasional token-efficient checks, not nonstopLLM polling.
+
+---
+
 # LOCAL — 15Nov owner cadence change:stop continuous AI polling; training8478956 healthy2/196
 
 Owner explicitly requests occasional monitoring to save tokens and permits ending continuous agent activity. Fresh read-only nativeguard snapshot: same8478956 providerverifiedTRUE/terminalFALSE/heartbeatage3.97seconds; latestcompletedupdate2/196,302.23235835006926seconds includingcheckpoint, LR2.5e-7, phase/checkpoints/step-0002.pt. Validtraining untouched, no restart/pause/duplicate. InitialNFS step-0000 backup complete; trainedstep1/2 savedLustre, nextscheduledindependentbackup8/epoch/endwindow. Do NOTclaimtrainedcheckpointNFSbackupalreadyexists.
