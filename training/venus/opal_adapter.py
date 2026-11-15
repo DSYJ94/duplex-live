@@ -48,7 +48,7 @@ class Options:
             raise ValueError('Explicit total updates and the existing product goal are required')
         if type(self.every) is not int or self.every < 1:
             raise ValueError('Positive observation interval required')
-        if not isinstance(self.backend,str) or (self.backend != 'keep' and not self.backend.startswith(('mailbox:','local-git:'))):
+        if not isinstance(self.backend,str) or (self.backend not in ('keep','boundary-local') and not self.backend.startswith(('mailbox:','local-git:'))):
             raise ValueError('Only keep, an explicit mailbox, or the zero-API LOCAL Git backend is admitted')
         if self.backend.startswith('mailbox:') and not Path(self.backend[len('mailbox:'):]).is_absolute():
             raise ValueError('Mailbox requires an explicit absolute folder')
@@ -61,7 +61,9 @@ class Options:
             raise ValueError('LOCAL Git requires explicit absolute decision/repository paths and exactly zero API budget')
         if not local and self.local_git_repo:
             raise ValueError('LOCAL repository belongs only to the explicit zero-API Git backend')
-        if self.backend != 'keep' and not local and self.maximum_agent_cost_usd == 0:
+        if self.backend=='boundary-local' and self.maximum_agent_cost_usd!=0:
+            raise ValueError('Boundary-local decisions require zero external API budget')
+        if self.backend not in ('keep','boundary-local') and not local and self.maximum_agent_cost_usd == 0:
             raise ValueError('An explicit positive agent budget is required before mailbox requests')
         if (type(self.decision_timeout_seconds) is not int or type(self.unavailable_timeout_seconds) is not int
                 or not 1 <= self.decision_timeout_seconds <= 300 or not 0 <= self.unavailable_timeout_seconds <= 60):
@@ -79,14 +81,14 @@ def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_gra
     """
     options.validate()
     opal = load_upstream(source)
-    runtime_backend=options.backend
+    runtime_backend=None if options.backend=='boundary-local' else options.backend
     if options.backend.startswith('local-git:'):
         from .opal_supervisor import local_backend
         runtime_backend=local_backend(options.backend[len('local-git:'):],options.local_git_repo,
                                       timeout=options.decision_timeout_seconds)
     schedule = sorted({min(step,options.total_steps) for step in options.decision_updates})
-    if not schedule:
-        schedule = [options.total_steps]
+    if options.backend=='boundary-local':schedule=[]
+    elif not schedule:schedule=[options.total_steps]
     arguments = dict(total_steps=options.total_steps, goal=options.goal, scheduler=scheduler,
         schedule=schedule, every=options.every, max_decisions=len(schedule),
         backend=runtime_backend, blocking=False, summarize=False, share_code=False,
@@ -99,7 +101,7 @@ def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_gra
         # exactly zero cost; finite decision counts and waiting still apply.
         # Paid/mailbox backends retain their original positive USD cap.
         arguments['max_cost_usd']=None
-    elif options.backend != 'keep':
+    elif options.backend not in ('keep','boundary-local'):
         arguments.update(max_cost_usd=options.maximum_agent_cost_usd,
             backend_options=dict(timeout=options.decision_timeout_seconds,
                 unavailable_timeout=options.unavailable_timeout_seconds,broker_wait=15,poll=1))

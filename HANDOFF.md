@@ -1,3 +1,42 @@
+# LOCAL — Adaptive controller CPU-tested; valid8478956 reaches40/196 unchanged
+
+15 November evening: implemented the local evaluated-boundary policy/evidence
+reader, real pinned OPAL catalogue-program installer and opt-in DistributedOpal
+controller state. Isambard CPU test suite PASS29, including a distinct-process
+exact OPAL restore/next Adam update and two actual Gloo ranks with distinct RNG,
+unanimous programme hashes and exactly one collective clip. Proof with source
+file hashes: docs/NATIVE-OPAL-ADAPTIVE-CONTROLLER-TESTS-2026-11-15.json.
+Pure Mac tests PASS12. No GPU allocation, API call, model loading, native capture
+or voice training repeated for this work.
+
+Latest actual observation: job8478956 RUNNING/provider_verified/terminalFALSE,
+source3c6f699e85adb26ba764e473ee491c041c62f6db, four GPUs, completed40/196,
+checkpoint step-0040.pt, independent NFS step-0040/backup.json exists. Current
+worker/source/programv000 KEEP are UNCHANGED. Preserve all actual clocks,
+checkpoints, Adam/RNG/OPAL states and data; no restart or overlapping learner.
+Continue occasional lightweight observer checks; do not keep the LLM polling.
+
+Important: controller is built/tested but NOT GPU-admitted or activated. The
+current expanded_runner/launcher does not call its opt-in seam. The next safe
+continuation still needs native launcher binding, original-identity four-rank
+restore proof and explicit new source/controller lineage in a separate checkpoint
+namespace, backed up before learning. Restore latest cooperative terminal state;
+do not replay49 if parent advanced. There is no live epoch-yield/hot switch, so
+never stop the valid job to activate at49. If it finishes196 before any yield,
+use next substantial phase. Full activation instructions and remaining native
+work are in docs/NATIVE-OPAL-ADAPTIVE-BOUNDARY-PLAN-2026-11-15.md.
+
+Policy alters effective scheduled LR only (0.5/0.75/1/1.1) from complete1008TRAIN,
+323retained and64DEV evidence; rejects expired/replayed/bad checkpoint/fold
+requests. Regression reduces rate; recovery needs stable retention; above1 needs
+pinned native DEV behaviour proof. Failed behaviour blocks increases. No loss,
+coverage, clip or data changes. Current DEV lacks separate retained KL/hidden
+aggregates, so do not manufacture evidence for increasing LR. MiRL/RL/fulltune/
+growth remain in wider plan; not activated by these CPU tests. Exact restoration
+of changed OPAL programme fallback bookkeeping was tested, not waived.
+
+---
+
 # LOCAL — Adaptive OPAL boundary plan recorded; valid8478956 untouched
 
 Owner15November explicitly requests adaptive OPAL planning for next evaluation, with no interruption of validtraining. Plan docs/NATIVE-OPAL-ADAPTIVE-BOUNDARY-PLAN-2026-11-15.md records real blockers: DistributedOpal hardcodesKEEP/API0; NativeOpal decisions16/32/64/128 do not alignDEV49/98/147/196; liveimmutableworker has NOepochyield/hotswitch and continuesimmediatelyafter49backup. Therefore prepare49 evidence-driven decision, applyONLYfirstsafecheckpointcontinuation unlessowner explicitlyrevises no-interruption constraint; do NOT promise49liveapplication or killvalidworker. Newboundaryadapter/controller+typedpolicy/Gitprogram verification/all-rank transition/state tests required, notyetimplemented/deployed. Reuse existinglr_half temporaryscheduledratepattern but NOTitsclip1 in distributedruntime(doubleclip); preservesingleclip/schedulerowner, Adam/RNG/counters and originaldata/heldoutseparation. Localautomaticpolicy avoidsrequiringcontinuousLLMpolling; actualGitbrokeronlytransports/authenticatesprograms, doesnotauthor/adaptitself. MiRL/RL/fulltune/capacity remaininwiderplan. Latestfreshguard job8478956 healthy/verified/terminalFALSE, completedupdate4/196; new plan doesnotalterworker.

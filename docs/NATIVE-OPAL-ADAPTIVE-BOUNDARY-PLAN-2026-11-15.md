@@ -81,3 +81,68 @@ Keep `NATIVE-RL-AND-RESEARCH-INTEGRATION-2026-11-11.md` and `NATIVE-TRAINING-CRI
 - Capacity/full tuning/mid-training: decide from matched base-versus-adaptation and family-level results.105M is a control, not a settled optimum. Keep the +0.5–1.5B growth and selective/full-LM arms in the broader plan, with suitable data and exact streaming/state/retention tests.
 
 No RL learner, MiRL curriculum or arbitrary weight-space surgery is activated by this document. The goal is a useful adaptive training system, not a renamed KEEP backend or uncontrolled live code edits.
+
+
+## Implemented controller and activation status (15 November, evening)
+
+The next-continuation implementation now exists in `adaptive_policy.py`,
+`adaptive_evidence.py`, `adaptive_boundary.py` and the opt-in `DistributedOpal`
+seam. The default path remains KEEP and the immutable live source is unchanged.
+The controller runs locally without an API/LLM worker. It installs actual pinned
+OPAL updater code from a reviewed multiplier catalogue, rather than labelling
+an unchanged updater adaptive. It changes only effective scheduled learning
+rates (0.5, 0.75, 1.0, 1.1); coverage, losses, collective clipping and Adam state
+remain owned by the native driver.
+
+Requests bind the latest restored checkpoint, independent backup, dataset,
+complete unique epoch exposure and current/previous complete DEV reports.
+Incomplete evidence defers; expired, replayed, mismatched and unknown-field
+requests are rejected. A greater-than-2% DEV text or audio regression lowers
+one rate level; recovery requires improvement in both streams plus stable
+KL/hidden retention. A rate above the original nominal recipe additionally
+requires a pinned native DEV behavioural qualification. Reported behavioural
+failure blocks increases. These margins are initial policy choices, not proven
+optimal hyperparameters. No final-test answers enter the policy.
+
+Each zero-update installation verifies rank-local model/Adam/RNG preservation,
+shared scheduler/update agreement and unanimous installed program hashes.
+FSDP shards are NOT required to be identical across ranks. Full controller
+history and the effective-rate program are saved with each rank's OPAL state.
+The distributed seam refuses adaptive learning before explicit activation,
+and refuses silently loading an adaptive checkpoint as KEEP. An unexpected
+upstream program fallback stops the adaptive driver rather than publishing a
+successful update under the wrong recipe.
+
+Tests use the real pinned OPAL checkout on Isambard CPU: a genuine program
+installation at saved update49, actual next toy Adam update50 at multiplier0.75,
+exact fresh-process restoration of every compared OPAL field and the next Adam
+update, two Gloo ranks with distinct preserved RNG states, unanimous hashes,
+checkpoint disagreement rejection, and exactly one distributed clipping call.
+These are controller/runtime tests, NOT four-GPU native model admission.
+Pure evidence tests cover incomplete writer tails, missing ranks, DEV leakage,
+exact DEV membership and recomputed means. No voice training is repeated.
+
+### Remaining native activation work (not deployed)
+
+The running job8478956 still uses source3c6f699 and programv000. Its launcher has
+NO adaptive switch or safe epoch yield. The new controller is therefore NOT
+attached to that job and a DEV49 result alone cannot hot-activate it.
+
+At the first successful cooperative continuation, finish the native launcher
+binding: establish the parent job is terminal, select its LATEST verified
+checkpoint (not an earlier epoch if it has advanced), verify all four native
+Adam/RNG/OPAL restores under the original source identity, then publish an
+explicit source/controller transition in a separate checkpoint namespace and
+back it up before learning. Add the complete DEV -> checkpoint/backup -> decision
+-> transition-checkpoint ordering to that future runner. Subsequent adaptive
+checkpoints must load `adaptive_controller` through `restore_controller` after
+the exact OPAL restore. The current runner does not yet call this opt-in seam.
+Never bypass its strict identity check or attach a new source directly and call
+it an unchanged-state restore. No restart is authorized merely because these
+CPU tests pass. If the valid job finishes196 without yielding, activation belongs
+to the next substantial phase instead. Preserve the original196-update ceiling.
+
+Current live DEV reports lack separate retained KL/hidden DEV aggregates, so
+initial evidence can justify a reduction but cannot justify an increase until
+that evidence is qualified. The pre-existing MiRL/RL/growth plans above remain
+active research directions; none is silently added to this controlled run.

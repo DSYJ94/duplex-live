@@ -1,0 +1,36 @@
+{
+  "schema": "dl-adaptive-opal-cpu-proof-v1",
+  "observed_UTC": "2026-11-15T21:14:55.649896+00:00",
+  "environment": "Isambard existing Apptainer runtime CPU only; no GPU allocation",
+  "upstream_commit": "8b16759a3e9930916ed582e28068267859f935f8",
+  "result": "29 passed in 14.29s",
+  "log_sha256": "a62d2c73c23ac97b81efb735de811999e7ab16cb8c475889a3680bd30648900e",
+  "files": {
+    "training/personaplex/adaptive_policy.py": "c069260f5f2adff7eea6d26d6296d9f01424326380f57528fbf2dfb99eae9d3c",
+    "training/personaplex/adaptive_evidence.py": "e32ed75a990e35f26c0cc2f8c8ea94d400c080e147e94a575eac68fd5df950d7",
+    "training/personaplex/adaptive_boundary.py": "603b8644c432a8b2d7dcfdfcf48214dedb2c1813c08447455cc65d17047b7244",
+    "training/personaplex/distributed_opal.py": "f23d7dce973d64a32803dcdec49622bdb9ffe84a16156c7d52e6f61d77db4dd6",
+    "training/venus/opal_adapter.py": "5bd00faac2b894a94a6d192e7c799253f649da2d1ecb7cac305ebf953cbd279f",
+    "training/venus/opal_programs/distributed_lr_v1/updater.py": "0efc525e665d2a0611269ad25611ebf6476cd2db861b5b893895f70ceb944140",
+    "evals/harness/test_adaptive_policy.py": "2c6a57d1dd9e1f713c25086fdd9662d6eeb0d2024b2a1b1280e12c895d83a7cc",
+    "evals/harness/test_adaptive_evidence.py": "6ad6d936d1abb88f439791ee61929621887261f74d01c903e89a4b51c7dda5a1",
+    "evals/harness/test_adaptive_boundary.py": "07811733d254d9e5f83c1708530dfcfe8097fbd4d49c37249f405b3d5ffaed31"
+  },
+  "checks": [
+    "10 deterministic policy cases",
+    "2 complete-cohort evidence readers",
+    "real pinned OPAL install and 0.75 actual next Adam update",
+    "exact OPAL restore in distinct process and identical next model/Adam update",
+    "2 real Gloo ranks with distinct preserved RNG and unanimous program",
+    "checkpoint context disagreement rejects without learning",
+    "DistributedOpal invokes collective clipping exactly once",
+    "existing KEEP adapter and lr_half regressions"
+  ],
+  "actual_native_four_GPU_admission": false,
+  "live_job": "8478956",
+  "live_source_unchanged": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+  "live_latest_observed_update": 40,
+  "live_total_updates": 196,
+  "controller_active_in_live_job": false,
+  "remaining": "Native continuation launcher/lineage and boundary publication binding before GPU activation"
+}

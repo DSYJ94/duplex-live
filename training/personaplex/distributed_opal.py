@@ -5,7 +5,7 @@ from training.venus.opal_adapter import checkpoint_manifest
 
 
 class DistributedOpal:
-    def __init__(self, runtime, base, *, source, run_dir, recipe):
+    def __init__(self, runtime, base, *, source, run_dir, recipe, adaptive=False):
         clip = recipe['gradient_clip']
         if not isinstance(clip, (int, float)) or clip <= 0:
             raise ValueError('Positive declared distributed clipping norm required')
@@ -14,10 +14,20 @@ class DistributedOpal:
         # owns clipping. Never clip local FSDP shards a second time upstream.
         unclipped = dict(recipe, gradient_clip=None)
         self.active = NativeOpal(base, runtime.wrapped, source=source,
-            run_dir=run_dir, recipe=unclipped, backend='keep', agent_budget=0.)
+            run_dir=run_dir, recipe=unclipped, backend='boundary-local' if adaptive else 'keep', agent_budget=0.)
+        self.boundary = None
+        if adaptive:
+            from .adaptive_boundary import BoundaryController
+            self.boundary = BoundaryController(self.active)
 
     def step(self, loss, step):
         import torch.distributed as dist
+        if self.boundary is not None and not self.boundary.state['enabled']:
+            raise ValueError('Verified boundary activation required before adaptive learning')
+        if self.boundary is not None and self.boundary.state['enabled']:
+            from .adaptive_policy import program
+            if self.active.optimizer.files['updater.py'] != program(self.boundary.state['current_multiplier']):
+                raise ValueError('Unexpected program fallback; preserve checkpoint and stop before learning')
         local = checkpoint_manifest(self.active.optimizer)['update']
         ranks = [None] * dist.get_world_size()
         dist.all_gather_object(ranks, local)
@@ -25,13 +35,31 @@ class DistributedOpal:
             raise ValueError('All OPAL ranks must agree before clipping or stepping')
         norm = self.runtime.clip_grad_norm(self.recipe['gradient_clip'])
         result = self.active.step(loss, step)
-        return dict(program=result, global_preclip_norm=float(norm))
+        record = dict(program=result, global_preclip_norm=float(norm))
+        if self.boundary is not None and self.boundary.state['enabled']:
+            from .adaptive_policy import program
+            if self.active.optimizer.files['updater.py'] != program(self.boundary.state['current_multiplier']):
+                raise ValueError('OPAL program changed unexpectedly; do not publish a successful update')
+            record['effective_learning_rates'] = list(self.active.optimizer.updater.last_effective_rates)
+            record['adaptive_multiplier'] = self.boundary.state['current_multiplier']
+        return record
 
     def rank_state(self, rng):
         # Full upstream state is retained, including optimizer registry. Its
         # potentially large tensors must be saved PER RANK, not all-gathered.
-        return dict(rng=rng, opal=cpu_state(self.active.optimizer.state_dict()),
+        state = dict(rng=rng, opal=cpu_state(self.active.optimizer.state_dict()),
                     diagnostics=self.active.diagnostics_state, recipe=self.recipe)
+        if self.boundary is not None:state['adaptive_controller'] = self.boundary.state_dict()
+        return state
+
+    def restore_controller(self, rank_state):
+        saved = rank_state.get('adaptive_controller')
+        if self.boundary is None:
+            if saved is not None:raise ValueError('Adaptive checkpoint cannot silently resume as KEEP')
+        elif saved is not None:
+            self.boundary.load_state_dict(saved)
+        # Missing state means an explicitly verified predecessor transition,
+        # not permission to enable or step before the caller publishes lineage.
 
     def close(self):
         self.active.close()
