@@ -28,3 +28,7 @@ Optimise each family with explicit losses and held-out behavioural measures. Do 
 ## Immediate execution
 
 Storage repair1405bdd routes compiler/Triton/tmp files to unique allocated project directories. Actual contained runtime regression and project-storage C++ compilation/write test passed. Replacement8475202 submitted on fourGPUs; phase failed GPU seconds1084 carried forward. Verified1072 codec cache retains its original7ab60a5 source. Prior capture failed before any case report; partial artifacts quarantined without deleting originals. Observe this same job through native capture, gradient/Adam admission and fresh exact Adam/RNG/OPAL restore into actual updates. Do not restart valid training on an observation timeout.
+
+## Observed implementation confound
+
+15November: before learning, inserting adapters changed native BF16 outputs because the replacement feed-forward gate lost the published lazy compiler/fusion path. Raw repeats were exact and105,070,592 ownership was correct. Actual tiny native CPU regression reproduced max0.00390625, then passed exact equality plus nonzeroB gradients after using the same vendor compiler. Full hardware admission remains required. This is an implementation confound, not evidence that105M or the base has insufficient reasoning capacity. Do not attribute pre-update failures to training data, claim historical model results fixed, or weaken retention gates.
