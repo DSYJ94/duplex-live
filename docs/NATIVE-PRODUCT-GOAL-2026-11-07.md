@@ -1,5 +1,7 @@
 # Active native voice product goal
 
+15November adaptive direction: [next evaluated-boundary OPAL activation plan](NATIVE-OPAL-ADAPTIVE-BOUNDARY-PLAN-2026-11-15.md). Prepare result-driven decisions at DEV49 and safe checkpoint continuation; current worker has no live backend switch/epoch-yield, so do not promise exact49 application while also promising uninterrupted execution. MiRL/RL/capacity programme remains active.
+
 15November owner direction: keep capacity/growth, LoRA versus selective/full tuning/mid-training/RL, and distinct reasoning/voice/duplex/control dataset coverage under continual evidence-led review. See [standing critical review and decision criteria](NATIVE-TRAINING-CRITICAL-REVIEW-2026-11-15.md). The expanded1072 phase has real verified codec outputs and current recovery8475506; consult newest HANDOFF for actual capture/update state.105M is a controlled adaptation configuration, not a proven optimum. Never interrupt valid training, replay completed updates or mistake preparation for learning.
 
 13November research update: [concrete parallel full-LM, CPT and block-growth design](NATIVE-SUBSTANTIAL-TRAINING-RESEARCH-2026-11-13.md), with verified upstream full-tuning/FSDP switches, explicit corpus/token/native-frame budgets and4->8/16GPU scaling. No new learner launched.
