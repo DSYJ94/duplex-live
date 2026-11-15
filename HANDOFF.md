@@ -1,3 +1,11 @@
+# LOCAL — 15Nov status refresh:8466944 FAILED90sec, compiler temporary space; no updates
+
+Fresh sacct8466944 FAILED90seconds/fourGPUs=360GPU-seconds. Phase failed actual total1084GPU-seconds=724+360; preserve all accounting. Native capture reached real model path but compiler failed No space left on device under contained/tmp. Codec ALL1072 and independent verification remain intact. No new optimizer updates. Repair expanded_gpu routes TMPDIR/TORCHINDUCTOR_CACHE_DIR/TRITON_CACHE_DIR to unique job-local allocatedLustre directories before importing torch/compiler; no precision/objective/OPAL change. Regression covers unique repeated stage scratch and actual directories. Not yet claim GPU validation/replacement submitted. Preserve/quarantine any partial capture artifacts before newwriter; never repeat verifiedcodec.
+
+Adapter rationale:698M was Venus/Qwen-side adaptation,105M is a different Moshi/PersonaPlex-family rank64 scope, not directly portable/comparable. Complete192 evidence: PP105M speechagreement18/32 vsbase10, ordinarycore9/12 vs10; silence/pauseFAIL and no candidateadopted.105M is an expanded-data control/seed configuration, not proven optimum or evidence capacity is sufficient. Keep wider selective/full nativeLM tuning +function-preserving0.5–1.5B growth and laterRL programme active; evaluate same verifieddata/retention/live gates. Owner asks status/nextsteps/why105vs698; explain this tradeoff plainly, no claim improvements from newrun.
+
+---
+
 # LOCAL — 15Nov: recovery8466944 submitted; reuse ALL1072 verified codec
 
 ONE actual replacement8466944/source721da0fc87 (fullSHA v5/submission.json), worktree source-expanded-721da0f, submission-v5 atomicclaim. Same4GPUs/workq/24h/no-requeue/20kaward and unchanged roots/backups/OPALKEEP/API0. PriorfailedphaseGPU724seconds carried. Actual contained runtime repeated-bootstrap UUID regression PASS (hostPython3.6 unittest failed because mock.call_args.args differs; production uses containerPython3.12, test actualPASS). Codec ALL1072 CUDA +independent verification from original7ab60a5 producer preserved/reused, no relabel or repetition. New updates stillZERO until actual learner logs. Observe same8466944 from capture onwards; never duplicate on timeout. No partial capture artifacts existed at recovery. All original checkpoints intact; no more API work required.

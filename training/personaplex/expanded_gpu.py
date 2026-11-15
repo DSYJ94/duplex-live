@@ -1,12 +1,18 @@
 """Expose the actually loaded driver before importing a native GPU stage."""
-import os,runpy,subprocess,sys,uuid
+import os,runpy,subprocess,sys,uuid,tempfile
 from pathlib import Path
 
 
 def main():
     module=sys.argv[1]
     lease=Path(os.environ['DUPLEX_LIVE_LEASE_FILE'])
-    folder=lease.parent/('driver-'+uuid.uuid4().hex)
+    scratch=lease.parent/('scratch-'+uuid.uuid4().hex)
+    scratch.mkdir()
+    # Contained /tmp is small; keep compiler intermediates on allocated Lustre.
+    for key,name in [('TMPDIR','tmp'),('TORCHINDUCTOR_CACHE_DIR','inductor'),('TRITON_CACHE_DIR','triton')]:
+        path=scratch/name;path.mkdir();os.environ[key]=str(path)
+    tempfile.tempdir=os.environ['TMPDIR']
+    folder=scratch/'driver'
     os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output(
         [sys.executable,'-B','-m','evals.cuda_linker_path','--out',str(folder)],
         universal_newlines=True).strip()
