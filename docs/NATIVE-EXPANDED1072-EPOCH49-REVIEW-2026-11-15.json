@@ -1,0 +1,43 @@
+{
+  "status": "COMPLETED_EPOCH_REVIEW_ONLY_NOT_A_HANDOVER",
+  "actual_boundary": 49,
+  "coverage": {
+    "new_train": 1008,
+    "retained": 323,
+    "dev": 64
+  },
+  "previous_dev": {
+    "text": 0.8000170877203345,
+    "audio": 0.8090287568047643
+  },
+  "dev": {
+    "text": 0.7680951040238142,
+    "audio": 0.8010143046267331
+  },
+  "train_summary": {
+    "text": 0.7707438461541657,
+    "audio": 0.7333736935305217
+  },
+  "retention": null,
+  "recommendation": {
+    "request_sha256": "f5f46f4011280ba44c55b6ade2b45e76244042f0bdaa131116e7f4dc8a8d67bc",
+    "policy_sha256": "c060377a626a056a47c65776bfb9bf5dcd4adbca8e8104d1151337a70725d02e",
+    "boundary": 49,
+    "resume_step": 49,
+    "action": "keep",
+    "multiplier": 1.0,
+    "reason": "No justified change: DEV trade-off/noise or missing retention/behaviour evidence",
+    "recommendations": [],
+    "relative_dev_change": {
+      "text": -0.0399016273358394,
+      "audio": -0.009906263665687304
+    }
+  },
+  "optimizer_updates": 0,
+  "current_training_modified": false,
+  "reviewed_unix": 1794784950.4462998,
+  "advisory_only_never_reuse_as_a_handover_request": true,
+  "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+  "job": "8478956",
+  "native_free_generation_reasoning_speech_quality_not_established": true
+}

@@ -1,3 +1,34 @@
+# 15Nov — Fresh access restored; voice61/196; real full epoch49 evidence reviewed
+
+Renewal independently verified by a new SSH command. Prior publickey blocker is
+RESOLVED; no additional owner sign-in needed now. Fresh account squeue lists only
+voice8478956, dsyj94.u6ada, nid010879, RUNNING/24h. Guard provider verified,
+terminalFALSE; completed61/196. Independent NFS step56 backup complete6files.
+DEV49 exists and original worker kept training; no handover, interruption,
+repeated update or new voice reservation. Shared allocation snapshot sent to
+Remora under prior explicit owner coordination authorization; its distinct job
+still needs independent actual award/QoS admission.
+
+Read-only REAL epoch49 evidence via staged modern CPU runtime PASS coverage:
+1008 unique TRAIN,323 original retained components,64 complete DEV, all4 rank
+log prefixes and complete epoch49 backup receipt. No capture/calibration/model
+training repeated. DEV text0.8000170877203345 ->0.7680951040238142 (-3.99016%),
+DEV audio0.8090287568047643 ->0.8010143046267331 (-0.990626%). Full independent
+KL/hidden DEV retention evidence missing, native free-generation behaviour
+unqualified. Local policy's advisory is KEEP1.0, with explicit insufficient
+retention/behaviour/noise evidence for increasing LR. It is NOT applied to the
+valid job. This does not prove improved reasoning correctness or natural voice.
+Saved docs/NATIVE-EXPANDED1072-EPOCH49-REVIEW-2026-11-15.json. This review binds
+old boundary49 and is NEVER a valid future handover request: regenerate a fresh
+request bound to the actual latest cooperative checkpoint/backup after terminal.
+
+Adaptive immutable producer6b32c9d remains staged, native restore pending a safe
+cooperative handover. Existing observer51731 stays active. Preserve all guards,
+cap196 and source/state/backup gates; if job finishes196 evaluate it rather than
+inventing more updates. Earlier authentication-blocked notes below are historical.
+
+---
+
 # 15Nov23:04UTC — Voice59/196 healthy; Remora coordinated; fresh SSH authentication blocked
 
 Existing observer tool51731 remains alive and reports SAME8478956 RUNNING_NATIVE_GUARD,
