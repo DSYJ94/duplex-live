@@ -64,6 +64,8 @@ def configure_lm(lm, method):
             for index in devices:
                 with torch.cuda.device(index):torch.cuda.manual_seed(17)
             details = configure(lm, method)
+            from .native_adapter_compile import compile_gates
+            details["native_compiled_adapter_gates"] = compile_gates(lm)
     else:
         # FP32 optimizer/master parameters; FSDP casts computation to BF16.
         lm.float().requires_grad_(True)
