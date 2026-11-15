@@ -1,3 +1,9 @@
+# LOCAL — 15Nov: replacement8466849 submitted; observe SAME job
+
+ONE actual job8466849 submitted from immutable source7ab60a5ccc (fullSHA in remote native-expanded1072-submission-v4/submission.json), source-expanded-7ab60a5. Same4GPUs/workq/oneNode/24h/no-requeue, phase/data/NFS backup unchanged. Seven focused tests PASS including driver-before-native-import regression; codec module unchanged so complete1072 CPU proof reused. Empty failed8466779 shards archived to phase/failed-8466779-shards, no completed tensors existed. PriorfailedGPUtime320seconds counted, no new optimizer updates yet verified. No duplicate submission on observation timeout. Remora notified of actual replacement; its audit terminal/checkpoints remain untouched. Next observe actual codec ->capture ->gradients ->fresh restore ->196 NEW updates; no old training replay. Preserve all proofs/checkpoints and report stops promptly.
+
+---
+
 # LOCAL — 15Nov:8466779 FAILED before updates; exact CUDA linker omission repaired
 
 8466779 terminalFAILED41seconds/fourGPUs=164GPU-seconds. New-phase prior failed total320GPU-seconds (68+88+164), no optimizer updates. Git/container startup repair worked; native Mimi first encode reached compiler then failed libcuda.so cannot found. New expanded_gpu wrapper reuses existing evals.cuda_linker_path repair before every native GPU module import; no precision/compiler disable, no model/data/objective change. CPU1072 text proof stays valid because codec bytes unchanged. Partial empty codec shards preserved, must archive before a replacement writer; do not overwrite or duplicate. No active valid training to interrupt. Next verify wrapper, deploy immutable source, archive failed shards, submit ONE v4 claim and observe actual progress. Older header below describes submission before failure and is historical.
