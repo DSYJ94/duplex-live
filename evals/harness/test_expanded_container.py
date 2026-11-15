@@ -8,7 +8,7 @@ class ContainerStartupTest(unittest.TestCase):
         common='/home/u6ada/test/source.git'
         with patch('training.personaplex.expanded_launch.subprocess.check_output',return_value=common+'\n'):
             cmd=container_command(Path('/projects/u6ada/work'),gpu=True,environment={},backup=Path('/home/u6ada/test/backup'))
-        self.assertIn(common+':'+common+':ro',cmd)
-        self.assertEqual(cmd.count(common+':'+common+':ro'),1)
+        self.assertIn(str(Path(common).resolve())+':'+common+':ro',cmd)
+        self.assertEqual(cmd.count(str(Path(common).resolve())+':'+common+':ro'),1)
         self.assertNotIn('/home:/home',cmd)
         self.assertIn('--containall',cmd)

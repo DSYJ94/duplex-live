@@ -19,9 +19,9 @@ def container_command(work,*,gpu,environment,backup):
     for repository in repositories:
         raw=subprocess.check_output(['git','-C',str(repository),'rev-parse','--git-common-dir'],universal_newlines=True).strip();common=Path(raw)
         if not common.is_absolute():common=repository/common
-        common=common.resolve()
-        if str(common)not in seen:
-            seen.add(str(common));mounts.append(('--bind',str(common)+':'+str(common)+':ro'))
+        logical=Path(os.path.abspath(str(common)));physical=logical.resolve()
+        if str(logical)not in seen:
+            seen.add(str(logical));mounts.append(('--bind',str(physical)+':'+str(logical)+':ro'))
     cmd[image:image]=[part for pair in mounts for part in pair]
     return cmd
 
