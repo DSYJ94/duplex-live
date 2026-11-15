@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:prompt repairGREEN; ONE replacement8475506 submitted
+
+Actual contained targetedtests7 run/5PASS/2vendor-locationSKIP; explicitpersona and legacydefault testsPASS. One source-transfer fetch saw earlyEOF while uploadunfinished (noGPU/submission), completed transfer fetchedcleanly. ONEactual8475506/sourceef0e59dd9f (fullSHA submission-v7/submission.json), source-expanded-ef0e59d; same4GPUs/workq/24h/no-requeue/data/phase/NFSbackup/20kaward. PriorfailedGPU1460seconds carried. Complete1072 codec retained originalproducer7ab60a5; no relabel/repeat. Partialcapture no case reports, quarantined failed-8475202-capture. Observe SAMEactual8475506; no duplicate on observationtimeout. NewupdatesZERO until actualoptimizer event. Currentlocalremoteobserver monitors samejob each60s and returns on actualupdate or terminal; no modelwriter. Preserve allcheckpoint/API100cap/OPALKEEP/API0/criticalreview questions.
+
+---
+
 # LOCAL — 15Nov:8475202 stopped94sec after storage repair; explicit persona mismatch fixed
 
 8475202 FAILED94sec/fourGPUs=376GPU-seconds, phasefailedtotal1460GPU-seconds. Storage/compiler failure gone; actual native persona+stream trace reached strict framepartition failure. Rootcause: shared trace hardcoded BASE_INSTRUCTIONS but expandedprefix constructed different declaredINSTRUCTIONS; lengths differ. New optional trace instructions defaults exactlegacy string, expandedcapture explicitly passes its declaredINSTRUCTIONS. No word/frame/ownership gate loosened; no old vendor/checkpoint/corpus builder change. Actual runtime RED test catches missing explicitpersonaparam, legacydefaultPASS. Require GREEN before nextallocation. Codec1072 remains verified/reused, no new weightupdates. Preserve partialcapture under new quarantine; no blind completedwork replay. User standingcriticalreview doc remainscurrent.
