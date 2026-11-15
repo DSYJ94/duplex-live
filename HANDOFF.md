@@ -1,3 +1,11 @@
+# LOCAL — 15Nov:8475506 healthy nativecapture521/1072; SAME observer91081
+
+Fresh authoritative observer8475506 RUNNING819seconds, shardcasecounts131/131/128/131 (521total), all completecase nativeownership checksPASS; allshardsstillinprogress. Storage/projectcompiler and declaredpersona fixes sustained on actualnativeEngine; no new failures. Codec1072/independentverification remains reused. Capture independentinputs.json/admission.json not yet present; actualnewoptimizerupdatesZERO. Same read-only observer toolsession91081 watches each60seconds and exits on actualoptimizer event or providerterminal. Never rerun controller/model/submission on timeout. Actualproducer ef0e59dd9f, metadata source mayadvance without relabeling. Remora informed actual8475506 and confirms CPUonly/noGPU work; no changes to its assets/jobs.
+
+Ownercriticalreview doc linked from activeproductgoal5436d99. Keep105M a controlledconfiguration, capacity/growth/fulltune/midtraining/RL and family-specific dataquality activequestions. Do not interrupt thisvalidcapture/training to open anotherdiagnostic/researchbranch. Allcheckpoint/backups/APIcap100/OPALKEEP/API0/20kaward/failedGPUseconds1460 intact.
+
+---
+
 # LOCAL — 15Nov:prompt repairGREEN; ONE replacement8475506 submitted
 
 Actual contained targetedtests7 run/5PASS/2vendor-locationSKIP; explicitpersona and legacydefault testsPASS. One source-transfer fetch saw earlyEOF while uploadunfinished (noGPU/submission), completed transfer fetchedcleanly. ONEactual8475506/sourceef0e59dd9f (fullSHA submission-v7/submission.json), source-expanded-ef0e59d; same4GPUs/workq/24h/no-requeue/data/phase/NFSbackup/20kaward. PriorfailedGPU1460seconds carried. Complete1072 codec retained originalproducer7ab60a5; no relabel/repeat. Partialcapture no case reports, quarantined failed-8475202-capture. Observe SAMEactual8475506; no duplicate on observationtimeout. NewupdatesZERO until actualoptimizer event. Currentlocalremoteobserver monitors samejob each60s and returns on actualupdate or terminal; no modelwriter. Preserve allcheckpoint/API100cap/OPALKEEP/API0/criticalreview questions.
