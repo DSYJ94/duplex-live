@@ -1,0 +1,63 @@
+{
+  "schema": "dl-opal-safe-continuation-tests-v1",
+  "observed_UTC": "2026-11-15T21:35:57.810835+00:00",
+  "base_commit": "0953cc1",
+  "pinned_OPAL": "8b16759a3e9930916ed582e28068267859f935f8",
+  "environment": "Isambard existing container CPU only; no new allocation/model load",
+  "result": "46 passed in 12.46s",
+  "actual_host_Python36_launcher_syntax": true,
+  "log_sha256": "936d0365511764961bc4e40695cae9a91b684e8b9ad7eeabbb1a202b6dc36fe6",
+  "file_sha256": {
+    "training/personaplex/adaptive_handover.py": "9fabfb7386d42881839bdb43a6355c52aaed5ba6012e8aaf27e47a29a9e64963",
+    "training/personaplex/adaptive_native.py": "1e346d2075e637f93b26ea69f6f26783cd6f51785e24921352743adb5169bb38",
+    "training/personaplex/expanded_launch.py": "aae92bd10106ae62dbca49b4fe63eacd73a4072c268b35bca493a5156eeded5a",
+    "training/personaplex/expanded_runner.py": "f29a8fea1650d8eb31cb9b783205ec08d3faf9892570557ec678f7194611bc75",
+    "training/personaplex/adaptive_boundary.py": "49eda708871ab9613177c235d7822313c40f2195e32ca4bdee8784584453f76f",
+    "training/venus/opal_adapter.py": "f4af14504eb6dc347bf07a4c53d2c0c3f09b4e62874dd1264a29984c7faa85ba",
+    "evals/harness/test_adaptive_handover.py": "83bdc7389aff741fbcd31963a13a12c5cf629f8735a2220baa124b5950fac37c",
+    "evals/harness/test_adaptive_boundary.py": "e733c80eccd77a559b58dbdb11878860dda388d08d5c2bfc4b20a4bf054b544e"
+  },
+  "checks": [
+    "live/failed/complete parent rejected before model admission",
+    "latest successful checkpoint and independent six-file backup required",
+    "source-only transition rejects recipe/data/model/authorization changes",
+    "exact original KEEP state restores before local schedule transition; old counters/cost/ledger preserved",
+    "real pinned OPAL adaptive program and distinct-process exact next-update restore",
+    "two real Gloo ranks; RNG/program agreement and one clipping owner",
+    "every native restore boolean and all four distinct rank processes required",
+    "restore-transition-backup-fresh-verify-train ordering; failed verify never learns",
+    "later resumes require successful positive terminal checkpoint; no replay/overlap",
+    "existing guard, schedule, provenance, container and OPAL regressions"
+  ],
+  "current_job": "8478956",
+  "live_source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+  "live_update": 44,
+  "live_guard": {
+    "job_id": "8478956",
+    "account": "brics.u6ada",
+    "node": "nid010879",
+    "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+    "authorization_sha256": "efdcd5600bad70d1b08cf85941029a5ebd81608f26c3ea42b0ab992e2d4fc3a9",
+    "GPU_count": 4,
+    "start_unix": 1794761654.0,
+    "stop_unix": 1794848054.0,
+    "provider_checked_unix": 1794778462.1613567,
+    "provider_state": "RUNNING",
+    "observation_error": null,
+    "heartbeat_unix": 1794778462.1613624,
+    "provider_job_verified": true,
+    "terminal": false
+  },
+  "latest_independent_backup": {
+    "path": "/home/u6ada/dsyj94.u6ada/duplex-expanded1072-backups-v1/step-0040/backup.json",
+    "complete": true,
+    "step": 40,
+    "files": 6
+  },
+  "original_run_native_restore_passed": true,
+  "adaptive_native_restore_passed": false,
+  "adaptive_native_restore_status": "WAITING_FOR_VALID_PARENT_COOPERATIVE_COMPLETION",
+  "active_training_modified": false,
+  "new_training_updates_repeated": 0,
+  "new_GPU_job_submitted": false
+}

@@ -17,6 +17,9 @@ def write(path,value):
 
 
 def run(a):
+    adaptive_stages={'transition','verify-transition','train-adaptive'}
+    if a.stage in adaptive_stages and not getattr(a,'adaptive_plan',None):raise ValueError('Adaptive stage requires an explicit safe handover plan')
+    if getattr(a,'adaptive_plan',None) and a.stage not in adaptive_stages|{'verify'}:raise ValueError('Use the explicit adaptive restore/train stages')
     import torch,torch.distributed as dist
     from datetime import timedelta
     from evals.moshi_model_download import sha256 as sha
@@ -36,10 +39,18 @@ def run(a):
     from .distributed_expanded_objective import backward as new_backward
     from .distributed_train import update
     from .distributed_state import save,restore
+    adaptive_plan = json.loads(a.adaptive_plan.read_text()) if getattr(a,'adaptive_plan',None) else None
+    adaptive = adaptive_plan is not None
+    if adaptive:
+        from .adaptive_handover import restore_identity,target_identity,native_restore_packet,all_native_restored
+        from .adaptive_native import context as boundary_context,request_for,publish_decision
+        if str(a.root.resolve())!=adaptive_plan['root']or str(a.backup.resolve())!=adaptive_plan['backup']or a.source!=adaptive_plan['source']:
+            raise ValueError('Exact adaptive output/source/backup plan required')
+        if a.stage=='admit':raise ValueError('Reuse proven admission; do not repeat calibration')
     rank=int(os.environ['RANK']);world=int(os.environ['WORLD_SIZE']);local=int(os.environ['LOCAL_RANK'])
     if world!=4 or torch.cuda.device_count()!=4:raise ValueError('Exactly four independently allocated native GPUs required')
     torch.cuda.set_device(local);dist.init_process_group('nccl',timeout=timedelta(minutes=30));check(a.lease,600)
-    execution=uuid.uuid4().hex;folder=a.root/('job-'+os.environ['SLURM_JOB_ID'])/a.stage/('rank-%02d'%rank);folder.mkdir(parents=True,exist_ok=False)
+    execution=uuid.uuid4().hex;folder=a.root/('job-'+os.environ['SLURM_JOB_ID'])/('train' if adaptive and a.stage=='train-adaptive' else a.stage)/('rank-%02d'%rank);folder.mkdir(parents=True,exist_ok=False)
     native=json.loads((a.expanded/'inputs.json').read_text())
     if not native['complete1072'] or native['TRAIN']!=1008 or native['DEV']!=64 or len(native['rows'])!=1072 or len({r['id']for r in native['rows']})!=1072:raise ValueError('All independently reconstructed new native data required')
     provenance=capture_provenance(native,a.source)
@@ -71,7 +82,7 @@ def run(a):
     write(folder/'zero-wrapped.json',dict(source=a.source,baseline=baseline,actual=wrapped,exact=wrapped==baseline))
     if wrapped!=baseline:raise ValueError('Distributed wrapping changed native outputs')
     base=torch.optim.AdamW(runtime.parameters(),lr=recipe['learning_rate'],betas=tuple(recipe['adam_betas']),eps=recipe['adam_eps'],weight_decay=recipe['weight_decay'],foreach=False,fused=False,amsgrad=False)
-    adam=materialize_adam(base);opal=DistributedOpal(runtime,base,source=BASE/'opal-upstream-v1',run_dir=folder/'opal',recipe=recipe)
+    adam=materialize_adam(base);opal=DistributedOpal(runtime,base,source=BASE/'opal-upstream-v1',run_dir=folder/'opal',recipe=recipe,adaptive=adaptive)
     identity=dict(source=a.source,base='personaplex',method='broad-lora64',trainable_parameters=105070592,world=world,old_inputs_sha256=OLD_SHA,old_input_report_sha256=OLD_REPORT_SHA,capture_provenance=provenance,expanded_inputs_sha256=sha(a.expanded/'inputs.json'),authorization_sha256=sha(AUTH),recipe=recipe,native_data_qualified=True,new_experiment=True,old_saved_updates_replayed=0)
     checkpoints=a.root/'checkpoints'
     if rank==0:checkpoints.mkdir(exist_ok=True)
@@ -84,7 +95,7 @@ def run(a):
         dist.barrier();return path
     def backup(path):
         if rank==0:
-            target=a.backup/('step-%04d'%torch.load(path,map_location='cpu',weights_only=False)['step']);target.mkdir(parents=True,exist_ok=True);files=[path,Path(str(path)+'.sha256.json')]+sorted(path.parent.glob(path.name+'.rank-*.pt'));receipts=[]
+            saved_step=torch.load(path,map_location='cpu',weights_only=False)['step'];target=a.backup/(path.stem if path.stem.startswith(('adaptive-','transition-'))else 'step-%04d'%saved_step);target.mkdir(parents=True,exist_ok=True);files=[path,Path(str(path)+'.sha256.json')]+sorted(path.parent.glob(path.name+'.rank-*.pt'));receipts=[]
             for source in files:
                 dest=target/source.name
                 if not dest.exists():shutil.copyfile(source,dest)
@@ -92,13 +103,13 @@ def run(a):
                 value=sha(source)
                 if sha(dest)!=value:raise ValueError('Independent checkpoint backup differs')
                 receipts.append(dict(file=dest.name,sha256=value,bytes=dest.stat().st_size))
-            receipt=dict(complete=True,source=str(path),files=receipts,step=int(target.name[5:]))
+            receipt=dict(complete=True,source=str(path),files=receipts,step=saved_step)
             if (target/'backup.json').exists():
                 if json.loads((target/'backup.json').read_text())!=receipt:raise ValueError('Immutable backup identity changed')
             else:write(target/'backup.json',receipt)
             # Only redundant states of THIS new phase are collected. All old
             # studies, initialization, immutable epochs and latest two states stay.
-            current=int(target.name[5:]);keep={0,current,current-1}|{n for n in range(49,current+1,49)}
+            current=saved_step;keep={0,current,current-1}|{n for n in range(49,current+1,49)}
             for old_dir in a.backup.glob('step-*'):
                 n=int(old_dir.name[5:])
                 if n not in keep and n<current and (old_dir/'backup.json').exists():shutil.rmtree(old_dir)
@@ -108,7 +119,7 @@ def run(a):
                 if n not in keep and n<current:
                     for leaf in [old_file,Path(str(old_file)+'.sha256.json')]+list(checkpoints.glob(old_file.name+'.rank-*.pt')):
                         if leaf.exists():leaf.unlink()
-        dist.barrier()
+        dist.barrier();return a.backup/(path.stem if path.stem.startswith(('adaptive-','transition-'))else 'step-%04d'%(0 if path.stem=='init' else int(path.stem[5:])))/'backup.json'
     def development(step):
         from evals.context_native_stream_gradient import coefficients
         from evals.context_native_audio49_training import forward as audio_forward
@@ -133,35 +144,84 @@ def run(a):
             if size*8*1.1>lease['home_hard_bytes']-lease['home_used_bytes']:raise ValueError('Complete phase checkpoint retention does not fit actual user quota')
             backup(path);return
         if a.checkpoint is None:raise ValueError('Train requires an actual exact saved state')
+        if adaptive:
+            error=None
+            if rank==0:
+                try:
+                    metadata=json.loads(Path(str(a.checkpoint)+'.sha256.json').read_text())
+                    if sha(a.checkpoint)!=metadata['sha256']:raise ValueError('Common native checkpoint bytes differ')
+                    if a.stage=='transition'and metadata['sha256']!=adaptive_plan['parent_checkpoint_sha256']:raise ValueError('Wrong parent checkpoint')
+                except Exception as exc:error=repr(exc)
+            errors=[error];dist.broadcast_object_list(errors,src=0)
+            if errors[0]:raise ValueError(errors[0])
         saved=torch.load(a.checkpoint,map_location='cpu',weights_only=False);expected_rank={}
+        original_identity=identity
+        expected_identity=identity
+        if adaptive:
+            if a.stage=='transition':expected_identity=restore_identity(saved['identity'],identity,adaptive_plan)
+            else:expected_identity=target_identity(identity,adaptive_plan)
+
         def rank_restore(value):
             if value['writer_execution']==execution:raise ValueError('Fresh process required')
-            opal.active.optimizer.load_state_dict(value['opal']);opal.active.restore_diagnostics(value['diagnostics']);restore_rng(value['rng']);assert_optimizer_equal(value['opal'],opal.active.optimizer.state_dict())
+            opal.active.optimizer.load_state_dict(value['opal']);opal.active.restore_diagnostics(value['diagnostics']);opal.restore_controller(value);restore_rng(value['rng']);assert_optimizer_equal(value['opal'],opal.active.optimizer.state_dict())
             if not exact_state(value['rng'],rng_state()) or not exact_state(value['recipe'],recipe) or not exact_state(value['diagnostics'],opal.active.diagnostics_state):raise ValueError('Exact RNG/recipe/diagnostics restore required')
             if fingerprint(runtime.view,groups)!=value['native_fingerprint']:raise ValueError('Fresh native fingerprints differ')
             restore_rng(value['rng']);expected_rank.update(value)
-        step=restore(saved,runtime,base,identity=identity,restore_rank_state=rank_restore,checkpoint_directory=a.checkpoint.parent)
+        step=restore(saved,runtime,base,identity=expected_identity,restore_rank_state=rank_restore,checkpoint_directory=a.checkpoint.parent)
         if not exact_state(saved['training']['optimizer'],cpu_state(base.state_dict())):raise ValueError('Every common Adam field must restore exactly')
-        packet=dict(native_data_qualified=True,native_fresh_restore_passed=True,source=a.source,actual_CUDA=True,step=step,execution=execution,reference_execution=expected_rank['writer_execution'],pid=os.getpid(),all_Adam_RNG_OPAL_native_fields_exact=True);write(folder/'restore.json',packet)
+        if adaptive:
+            packet=native_restore_packet(source=a.source,step=step,execution=execution,pid=os.getpid(),rank=rank,value=expected_rank,
+                optimizer_exact=True,rng_exact=exact_state(expected_rank['rng'],rng_state()),recipe_exact=exact_state(expected_rank['recipe'],recipe),
+                diagnostics_exact=exact_state(expected_rank['diagnostics'],opal.active.diagnostics_state),fingerprint_exact=True,
+                common_adam_exact=exact_state(saved['training']['optimizer'],cpu_state(base.state_dict())))
+            identity=target_identity(original_identity,adaptive_plan)
+        else:packet=dict(native_data_qualified=True,native_fresh_restore_passed=True,source=a.source,actual_CUDA=True,step=step,execution=execution,reference_execution=expected_rank['writer_execution'],pid=os.getpid(),all_Adam_RNG_OPAL_native_fields_exact=True)
+        write(folder/'restore.json',packet)
         proofs=[None]*world;dist.all_gather_object(proofs,packet)
+        if adaptive:all_native_restored(proofs,step)
         if rank==0:write(folder.parent/'restore-all-ranks.json',dict(passed=True,rows=proofs))
         dist.barrier()
+        if adaptive and a.stage=='verify-transition':
+            if not opal.boundary.state['enabled']:raise ValueError('Restored controller not enabled')
+            if rank==0:write(folder.parent/'verify-terminal.json',dict(passed=True,step=step,new_updates=0,checkpoint_sha256=sha(a.checkpoint)))
+            return
+        def adaptive_boundary(path,receipt):
+            base.zero_grad(set_to_none=True)
+            values=None
+            if rank==0:
+                try:
+                    values=dict(context=boundary_context(path,receipt,a.expanded/'inputs.json'),request=request_for(adaptive_plan,a.root,a.expanded,a.old_inputs,receipt,step,opal.boundary.state['current_multiplier']),error=None)
+                except Exception as exc:values=dict(error=repr(exc))
+            packets=[values];dist.broadcast_object_list(packets,src=0);values=packets[0]
+            if values['error']:raise ValueError('Complete native decision evidence unavailable: '+values['error'])
+            return publish_decision(opal.boundary,checkpoint=checkpoint,backup_checkpoint=backup,context_value=values['context'],
+                request=values['request'] if rank==0 else None,step=step,
+                write_receipt=lambda value:write(folder.parent/('adaptive-decision-%04d.json'%step),value)if rank==0 else None)
+        if adaptive and a.stage=='transition':
+            if step!=adaptive_plan['step']:raise ValueError('Exact latest cooperative parent step required')
+            last=adaptive_boundary(a.checkpoint,Path(adaptive_plan['parent_backup_receipt']))
+            if rank==0:write(folder.parent/'transition-terminal.json',dict(passed=True,step=step,new_updates=0,checkpoint=str(last),checkpoint_sha256=sha(last)))
+            return
         if a.stage=='verify':
             if step!=196:raise ValueError('Final verification requires all196 new updates')
             if rank==0:write(folder.parent/'verify-terminal.json',dict(passed=True,step=step,new_updates=0))
             return
-        admission=json.loads((a.root/'admission.json').read_text());worst=admission['worst_update_seconds'];last=a.checkpoint
+        admission=json.loads(((Path(adaptive_plan['parent_root'])if adaptive else a.root)/'admission.json').read_text());worst=admission['worst_update_seconds'];last=a.checkpoint
         if step==0 and not (a.root/'dev-step-0000.json').exists():development(0)
         for index in range(step,len(flat)):
             try:check(a.lease,math.ceil(worst*1.25)+120)
             except TimeoutError:break
             row=flat[index];slots=[dict(row=item(slot[rank]['id']),valid=slot[rank]['valid'])for slot in row['microbatches']];lr=base.param_groups[0]['lr'];began=time.monotonic()
             result=update(runtime,base,opal,step=index,retained_groups=groups,references=refs,exposures=row['retained'],expanded_row=None,valid=True,expanded_coefficient=row['new_coefficient'],identity=identity,checkpoint_path=None,log_path=folder/'training.jsonl',expanded_microbatches=slots,admission=packet)
-            log_observation(opal.active.optimizer,dict(native_total=result['global_loss'],native_learning_rate=lr,completed_new_updates=index+1),fold='TRAIN');check_frozen(lm,frozen)
+            used_lr=result['opal'].get('effective_learning_rates',[lr])[0]
+            log_observation(opal.active.optimizer,dict(native_total=result['global_loss'],native_learning_rate=used_lr,completed_new_updates=index+1),fold='TRAIN');check_frozen(lm,frozen)
             if (index+1)%49==0:development(index+1)
             last=checkpoint(index+1)
-            if (index+1)%8==0 or (index+1)%49==0:backup(last)
-            if rank==0:print(json.dumps(dict(event='actual_new_optimizer_update',step=index+1,total=196,seconds=time.monotonic()-began,learning_rate_used=lr,checkpoint=str(last))),flush=True)
+            if (index+1)%8==0 or (index+1)%49==0:
+                receipt=backup(last)
+                if adaptive and (index+1)%49==0:
+                    step=index+1;last=adaptive_boundary(last,receipt)
+            if rank==0:print(json.dumps(dict(event='actual_new_optimizer_update',step=index+1,total=196,seconds=time.monotonic()-began,learning_rate_used=used_lr,checkpoint=str(last))),flush=True)
             step=index+1
         if step%8 and step%49:backup(last)
         if rank==0:write(folder.parent/'terminal.json',dict(source=a.source,actual_new_step=step,training_complete=step==196,continuation_ready=0<step<196,checkpoint=str(last),checkpoint_sha256=sha(last),native_behavior_speech_backend_live_acceptance_pending=True))
@@ -170,6 +230,6 @@ def run(a):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('stage',choices=['admit','train','verify'])
+    p=argparse.ArgumentParser();p.add_argument('stage',choices=['admit','train','verify','transition','verify-transition','train-adaptive'])
     for n in ('root','expanded','old-inputs','lease','backup'):p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--checkpoint',type=Path);p.add_argument('--source',required=True);run(p.parse_args())
+    p.add_argument('--adaptive-plan',type=Path);p.add_argument('--checkpoint',type=Path);p.add_argument('--source',required=True);run(p.parse_args())

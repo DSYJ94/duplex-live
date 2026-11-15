@@ -81,7 +81,10 @@ def wrap(optimizer, model, *, source, run_dir, options, scheduler=None, clip_gra
     """
     options.validate()
     opal = load_upstream(source)
-    runtime_backend=None if options.backend=='boundary-local' else options.backend
+    # Retain the zero-API KEEP transport registry for exact legacy ledger
+    # restoration. The local controller authors programs; no legacy decisions
+    # are scheduled after activation. This is not a paid/model agent backend.
+    runtime_backend='keep' if options.backend=='boundary-local' else options.backend
     if options.backend.startswith('local-git:'):
         from .opal_supervisor import local_backend
         runtime_backend=local_backend(options.backend[len('local-git:'):],options.local_git_repo,

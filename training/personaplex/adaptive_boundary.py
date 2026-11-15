@@ -33,7 +33,8 @@ def state_hash(value):
 class BoundaryController:
     def __init__(self, active, *, policy=Policy()):
         self.active,self.policy=active,policy
-        if active.options.backend!='boundary-local' or active.optimizer.worker is not None:
+        worker=active.optimizer.worker
+        if active.options.backend!='boundary-local' or (worker is not None and getattr(worker.backend,'name',None)!='keep'):
             raise ValueError('Construct a boundary-local continuation; never attach to a live KEEP worker')
         if checkpoint_manifest(active.optimizer)['upstream_commit']!=UPSTREAM_COMMIT:
             raise ValueError('Pinned OPAL implementation required')
@@ -105,7 +106,16 @@ class BoundaryController:
         self._collective_error(error)
         if len(set(self._gather(digest(context))))!=1:raise ValueError('Checkpoint bindings differ across ranks')
         if self.state['enabled']:return dict(status='already_enabled',new_optimizer_updates=0)
+        worker=self.opt.worker
+        self._collective_error('Legacy decision still in flight'if worker is not None and worker.busy else None)
+        # Preserve the old counters, cost, ledger and backend registry. Only
+        # automatic decision scheduling changes in this explicit transition.
+        previous_schedule=self._broadcast(self.opt.state_dict()['decision_schedule']if self.opt.rank0 else None)
+        self.opt._set_schedule([])
+        self.opt._sched_i=0
         record=self._install(self.state['current_multiplier'],context,'Enable local evaluated-boundary decisions; no LR change')
+        record['previous_decision_schedule']=previous_schedule
+        record['automatic_decision_schedule']=[]
         self.state['enabled']=True;self.state['history'].append(dict(kind='enabled',**record));return record
 
     def evaluate(self,request,context,*,now=None):

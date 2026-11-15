@@ -146,3 +146,82 @@ Current live DEV reports lack separate retained KL/hidden DEV aggregates, so
 initial evidence can justify a reduction but cannot justify an increase until
 that evidence is qualified. The pre-existing MiRL/RL/growth plans above remain
 active research directions; none is silently added to this controlled run.
+
+
+## Safe continuation launcher connected (15 November, later update)
+
+This supersedes the earlier "remaining native launcher binding" item. The new
+source now connects `expanded_launch --adaptive-plan` to the actual native
+runner's `transition`, `verify-transition` and `train-adaptive` stages. It is
+staged separately; it does not modify source3c6f699 or attach to job8478956.
+Evidence: `NATIVE-OPAL-SAFE-CONTINUATION-TESTS-2026-11-15.json`, 46 passing
+Isambard CPU tests plus actual host Python3.6 launcher syntax. This is NOT an
+adaptive four-GPU native restore pass. That remains pending until the live job
+can yield without interruption.
+
+The host first requires a fresh provider COMPLETED observation and the original
+successful cooperative host/train terminal. `adaptive_handover --prepare` binds
+its LATEST saved step, common metadata, complete independent six-file backup,
+original admission, complete DEV boundary and separate sibling output/backup
+namespaces. Live, failed, unknown and fully trained parents do not admit a new
+continuation. Any newer saved step prevents rollback. The host revalidates this
+plan before any GPU/model command. Preparation/validation runs in the existing
+modern CPU container; the login-node launcher remains Python3.6-compatible.
+No scheduler cancellation, automatic submission, calibration or data-generation
+retry is implemented.
+
+Inside the allocation, all four ranks restore the ORIGINAL predecessor identity
+and every saved Adam/OPAL/diagnostic/RNG field and native fingerprint first. Only
+source identity and the capture report's consumer-source field may differ;
+recipe, model ownership, data, capture producer, authorization and world size
+must match exactly. The successor receives an explicit adaptive lineage bound
+to the parent checkpoint, backup, policy and complete handover plan hashes.
+No old source is relabelled as a native proof produced by new code.
+
+The important KEEP migration case is tested with the REAL pinned upstream OPAL:
+retain its zero-cost KEEP transport registry so old decision counters, costs and
+ledger restore exactly. At the explicit enable transition, archive the old
+schedule in controller history and disable future legacy decision scheduling.
+The local controller authors and installs the actual updater programs; the idle
+KEEP transport is bookkeeping, NOT the adaptive decision-maker and NOT an LLM or
+paid API agent. Do not replace this with worker=None and silently lose the old
+rank-zero ledger fields. Subsequent full OPAL/controller restores remain exact.
+
+Transition order is: original four-rank native restore -> full previous/current
+DEV and unique TRAIN/rehearsal evidence -> zero-update controller decision ->
+separately named adaptive checkpoint -> independent full hash backup -> separate
+fresh four-rank `verify-transition` process -> fresh `train-adaptive` restoration
+and the NEXT unsaved update. A failed proof or backup never proceeds to learning.
+Actual effective, rather than merely nominal, learning rate is logged. All196
+updates and every objective/coverage requirement stay unchanged.
+
+Future in-process epoch boundaries use complete DEV -> pre-decision checkpoint
+and backup -> decision -> immutable `adaptive-step-NNNN.pt` and independent
+backup before another update. Parent states and the new adaptive states use
+separate sibling directories; existing originals are not garbage-collected by
+the new branch. New adaptive states include full controller history plus all
+rank-specific OPAL/RNG state. A further continuation requires a positive saved
+successful cooperative window and fresh terminal provider evidence, and selects
+the latest such state only. No blind zero-update retry or saved-update replay.
+
+### Next operator/agent action
+
+Keep observing8478956 occasionally through its existing lightweight observer.
+When it is provider COMPLETED with continuation_ready=true, collect a fresh
+provider JSON (`observed_unix` plus parsed `job`) and run the modern CPU module
+`training.personaplex.adaptive_handover --prepare --plan <new-plan.json>
+--provider-json <fresh-provider.json> --parent-root <original-phase>
+--parent-job 8478956 --parent-backup <original-NFS-backup>
+--root <new-sibling-phase> --backup <new-sibling-NFS-backup>
+--source <exact-new-immutable-source>`. The command refuses the currently live
+parent. Use the existing four-GPU/24-hour award-bounded launcher with the new
+source and `--adaptive-plan <new-plan.json>`; its host rechecks the provider and
+performs all three native stages in order. Do not submit while the parent is
+valid/running. Retain the existing award accounting, deadlines and API limits.
+If the parent finishes196, complete model evaluation and use the adaptive system
+in the next separately scoped substantial phase; never manufacture a
+continuation or exceed196 just to run a restore test.
+
+MiRL/RL, data quality, native reasoning, speech, capacity growth and selective/full
+fine-tuning remain in the wider plan. No training/data/reward experiment is
+silently introduced by this source transition.

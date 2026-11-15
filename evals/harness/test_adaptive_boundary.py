@@ -7,6 +7,31 @@ from training.personaplex.adaptive_boundary import BoundaryController,state_hash
 from evals.harness.test_adaptive_policy import request
 
 class AdaptiveBoundary(unittest.TestCase):
+    def test_keep_parent_restores_exact_before_schedule_transition(self):
+        source=os.environ['DUPLEX_OPAL_SOURCE']
+        with tempfile.TemporaryDirectory()as root:
+            model=torch.nn.Linear(2,1);base=torch.optim.AdamW(model.parameters(),lr=1e-3)
+            recipe=dict(updates=196,warmup_updates=16,learning_rate=1e-3,gradient_clip=None)
+            parent=NativeOpal(base,model,source=source,run_dir=Path(root)/'keep',recipe=recipe,backend='keep')
+            try:
+                for i in range(49):
+                    base.zero_grad(set_to_none=True);loss=model(torch.ones(2,2)).square().mean();loss.backward();parent.step(float(loss.detach()),i)
+                base.zero_grad(set_to_none=True)
+                saved=copy.deepcopy(parent.optimizer.state_dict());weights=copy.deepcopy(model.state_dict())
+            finally:parent.close()
+            model2=torch.nn.Linear(2,1);model2.load_state_dict(weights);base2=torch.optim.AdamW(model2.parameters(),lr=1e-3)
+            active=NativeOpal(base2,model2,source=source,run_dir=Path(root)/'adaptive',recipe=recipe,backend='boundary-local')
+            try:
+                active.optimizer.load_state_dict(saved);assert_optimizer_equal(saved,active.optimizer.state_dict())
+                counters=(saved['decisions'],saved['cost'],saved['ledger'])
+                ctrl=BoundaryController(active)
+                receipt=ctrl.enable(dict(resume_step=49,checkpoint_sha256='b'*64,backup_sha256='c'*64,data_sha256='a'*64))
+                after=active.optimizer.state_dict()
+                self.assertEqual((after['decisions'],after['cost'],after['ledger']),counters)
+                self.assertEqual(receipt['previous_decision_schedule'],saved['decision_schedule'])
+                self.assertEqual(active.optimizer.schedule,[])
+            finally:active.close()
+
     def test_actual_install_adam_scheduler_rng_and_restore(self):
         source=os.environ['DUPLEX_OPAL_SOURCE']
         with tempfile.TemporaryDirectory() as root:
@@ -15,7 +40,8 @@ class AdaptiveBoundary(unittest.TestCase):
             recipe=dict(updates=196,warmup_updates=16,learning_rate=1e-3,gradient_clip=None)
             active=NativeOpal(base,model,source=source,run_dir=Path(root)/'first',recipe=recipe,backend='boundary-local')
             try:
-                self.assertIsNone(active.optimizer.worker)
+                self.assertEqual(active.optimizer.worker.backend.name,'keep')
+                self.assertEqual(active.optimizer.schedule,[])
                 def update(owner,net,opt,step):
                     opt.zero_grad(set_to_none=True);loss=net(torch.ones(3,2)).square().mean();loss.backward()
                     torch.nn.utils.clip_grad_norm_(net.parameters(),1.)

@@ -1,3 +1,45 @@
+# LOCAL — Adaptive safe launcher connected/tested; native handover waits for valid8478956
+
+Owner explicitly requests connecting adaptive OPAL to safe continuation while
+keeping valid training running. Implemented in expanded_launch --adaptive-plan,
+adaptive_handover.py, adaptive_native.py and expanded_runner's explicit native
+transition/verify-transition/train-adaptive stages. Isambard CPU PASS46 including
+REAL pinned OPAL KEEP->adaptive exact ledger/state migration, distinct-process
+next-update restore, two Gloo ranks, launcher failure ordering and native restore
+admission gates. Actual host Python3.6 launcher syntax PASS. Proof/file hashes:
+docs/NATIVE-OPAL-SAFE-CONTINUATION-TESTS-2026-11-15.json.
+
+Latest fresh actual snapshot: SAME8478956/source3c6f699, four GPUs, RUNNING,
+provider_verifiedTRUE/terminalFALSE, completed44/196. Native original-run restore
+receipt passed; independent NFS step40 backup complete6files. Step44 exists on
+Lustre; do NOT imply it is independently backed up yet. No stop, pause, model
+restart, overlapping GPU allocation, new API call, data capture or training replay.
+
+Adaptive NATIVE restore is NOT yet performed/passed: doing so now would overlap
+valid training. The new connected pipeline will require latest cooperative
+provider-COMPLETED parent, all4 exact original native restores, explicit source/
+policy/checkpoint lineage, immutable adaptive checkpoint+hash backup, and a
+separate fresh native restore BEFORE learning. Current original196-update bound,
+20k-award accounting/4GPU24h bounds and all data/loss/gates remain unchanged.
+Do not force an epoch49 stop. If parent finishes196, evaluate it and move adaptive
+activation to the next properly scoped phase instead of inventing more updates.
+
+Read the appended 'Safe continuation launcher connected' section of
+NATIVE-OPAL-ADAPTIVE-BOUNDARY-PLAN-2026-11-15.md for exact preparation/launch flow.
+Old statements below that the launcher is unconnected are now historical.
+The new source is staged separately from the immutable live source. Keep checking
+occasionally, not continuously. Never rerun a model on observation timeout.
+
+Important migration correction: boundary-local now retains the ZERO-API KEEP
+transport registry solely so original rank-zero counters/cost/backend/ledger
+restore EXACTLY. Enable archives/clears the legacy decision schedule; local
+policy authors actual catalogue updater code. This is adaptive programming with
+preserved transport bookkeeping, not an unchanged permanent KEEP recipe. Do not
+undo it to worker=None and lose the original ledger. No paid/model agent used.
+MiRL/RL/data/capacity/full-tuning plans remain active, not newly enabled here.
+
+---
+
 # LOCAL — Adaptive controller CPU-tested; valid8478956 reaches40/196 unchanged
 
 15 November evening: implemented the local evaluated-boundary policy/evidence

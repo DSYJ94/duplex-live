@@ -26,10 +26,27 @@ def container_command(work,*,gpu,environment,backup):
     return cmd
 
 
+def adaptive_stages(execute,runner,folder,root,plan,checkpoint=None):
+    """Exact restore -> durable transition -> fresh restore -> actual learning."""
+    if checkpoint is None:
+        execute('training.personaplex.expanded_runner',['transition']+runner+['--checkpoint',plan['parent_checkpoint']],gpu=True,parallel=True)
+        transition=json.loads((folder/'transition'/'transition-terminal.json').read_text())
+        if not transition['passed']or transition['new_updates']!=0:raise ValueError('Native transition did not pass')
+        checkpoint=Path(transition['checkpoint'])
+    if checkpoint.resolve().parent!=(root/'checkpoints').resolve():
+        raise ValueError('Adaptive resume must use a checkpoint in its new namespace')
+    metadata=json.loads(Path(str(checkpoint)+'.sha256.json').read_text())
+    execute('training.personaplex.expanded_runner',['verify-transition']+runner+['--checkpoint',str(checkpoint)],gpu=True,parallel=True)
+    verification=json.loads((folder/'verify-transition'/'verify-terminal.json').read_text())
+    if (not verification['passed']or verification['new_updates']!=0 or verification['step']!=metadata['step']
+            or verification['checkpoint_sha256']!=metadata['sha256']):raise ValueError('Fresh adaptive native restore failed; no learning')
+    execute('training.personaplex.expanded_runner',['train-adaptive']+runner+['--checkpoint',str(checkpoint)],gpu=True,parallel=True)
+
+
 def main():
     p=argparse.ArgumentParser()
     for n in ('root','data','backup'):p.add_argument('--'+n,type=Path,required=True)
-    p.add_argument('--source',required=True);p.add_argument('--checkpoint',type=Path);a=p.parse_args();job=os.environ['SLURM_JOB_ID'];a.root.mkdir(parents=True,exist_ok=True);a.backup.mkdir(parents=True,exist_ok=True)
+    p.add_argument('--adaptive-plan',type=Path);p.add_argument('--source',required=True);p.add_argument('--checkpoint',type=Path);a=p.parse_args();job=os.environ['SLURM_JOB_ID'];a.root.mkdir(parents=True,exist_ok=True);a.backup.mkdir(parents=True,exist_ok=True)
     observation=subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=30);actual=parse_job(observation)
     raw=subprocess.check_output(['sacct','-A',ACCOUNT,'-S','2026-10-30','-X','-n','-P','-o','JobIDRaw,State,ElapsedRaw,AllocTRES,ReqTRES,TimelimitRaw'],universal_newlines=True,timeout=30);prior=reserved=0
     for line in raw.splitlines():
@@ -57,23 +74,47 @@ def main():
             if parallel:cmd+=['torch.distributed.run','--standalone','--nproc_per_node=4','--module','training.personaplex.expanded_gpu',module]+args
             else:cmd+=(['training.personaplex.expanded_gpu',module]if gpu else[module])+args
             subprocess.run(cmd,env=environment,check=True)
-        if not (a.root/'codec'/'cache.json').exists():
-            (a.root/'codec').mkdir(exist_ok=True)
-            pref=a.root/'codec'/'text-preflight.json'
-            if not pref.exists():execute('training.personaplex.expanded_codec',['text-preflight']+common)
-            else:
-                checked=json.loads(pref.read_text())
-                if not checked['complete1072'] or checked['source_manifest_sha256']!=sha(a.data/'manifest.json') or checked['code_sha256']!=sha(Path('training/personaplex/expanded_codec.py')):raise ValueError('Actual complete CPU preflight differs')
-            execute('training.personaplex.expanded_codec',['build']+common+['--lease',str(path)],gpu=True,parallel=True)
-            execute('training.personaplex.expanded_codec',['verify']+common)
-        capture=['--data',str(a.data),'--cache',str(a.root/'codec'),'--root',str(a.root/'capture'),'--source',a.source,'--shards','4']
-        if not (a.root/'capture'/'inputs.json').exists():
-            execute('training.personaplex.expanded_capture',['capture']+capture+['--lease',str(path)],gpu=True,parallel=True)
-            execute('training.personaplex.expanded_capture',['verify']+capture)
-        runner=['--root',str(a.root),'--expanded',str(a.root/'capture'),'--old-inputs',str(BASE/'native-moshi-matched-inputs-v1'),'--lease',str(path),'--backup',str(a.backup),'--source',a.source]
-        if not (a.root/'admission.json').exists():execute('training.personaplex.expanded_runner',['admit']+runner,gpu=True,parallel=True)
-        checkpoint=a.checkpoint or a.root/'checkpoints'/'init.pt'
-        execute('training.personaplex.expanded_runner',['train']+runner+['--checkpoint',str(checkpoint)],gpu=True,parallel=True)
+        adaptive=None
+        if a.adaptive_plan is not None:
+            adaptive=json.loads(a.adaptive_plan.read_text())
+            if adaptive['source']!=a.source or Path(adaptive['root']).resolve()!=a.root.resolve()or Path(adaptive['backup']).resolve()!=a.backup.resolve():raise ValueError('Exact adaptive source/output namespace required')
+            # Fresh scheduler evidence precedes any GPU/model command. No cancel,
+            # retry, job submission or automatic fallback exists in this branch.
+            parent_raw=subprocess.check_output(['scontrol','show','job','-o',adaptive['parent_job']],universal_newlines=True,timeout=30)
+            parent_provider=folder/'parent-provider.json'
+            evidence=dict(observed_unix=time.time(),job=parse_job(parent_raw));resume_args=[]
+            if a.checkpoint is not None:
+                if a.checkpoint.resolve().parent!=(a.root/'checkpoints').resolve():raise ValueError('Checkpoint outside adaptive namespace')
+                candidates=[]
+                for terminal_path in a.root.glob('job-*/host-terminal.json'):
+                    host=json.loads(terminal_path.read_text());terminal=host.get('training',{})
+                    if host.get('success')is True and terminal.get('continuation_ready')is True:candidates.append((terminal['actual_new_step'],terminal_path.parent.name[4:]))
+                if not candidates:raise ValueError('No successful adaptive parent; no startup retry')
+                previous=max(candidates)[1]
+                raw_resume=subprocess.check_output(['scontrol','show','job','-o',previous],universal_newlines=True,timeout=30)
+                evidence['resume_job']=parse_job(raw_resume);resume_args=['--resume-checkpoint',str(a.checkpoint)]
+            parent_provider.write_text(json.dumps(evidence)+'\n')
+            execute('training.personaplex.adaptive_handover',['--plan',str(a.adaptive_plan),'--provider-json',str(parent_provider)]+resume_args)
+            runner=['--root',str(a.root),'--expanded',str(Path(adaptive['parent_root'])/'capture'),'--old-inputs',str(BASE/'native-moshi-matched-inputs-v1'),'--lease',str(path),'--backup',str(a.backup),'--source',a.source,'--adaptive-plan',str(a.adaptive_plan)]
+            adaptive_stages(execute,runner,folder,a.root,adaptive,a.checkpoint)
+        else:
+            if not (a.root/'codec'/'cache.json').exists():
+                (a.root/'codec').mkdir(exist_ok=True)
+                pref=a.root/'codec'/'text-preflight.json'
+                if not pref.exists():execute('training.personaplex.expanded_codec',['text-preflight']+common)
+                else:
+                    checked=json.loads(pref.read_text())
+                    if not checked['complete1072'] or checked['source_manifest_sha256']!=sha(a.data/'manifest.json') or checked['code_sha256']!=sha(Path('training/personaplex/expanded_codec.py')):raise ValueError('Actual complete CPU preflight differs')
+                execute('training.personaplex.expanded_codec',['build']+common+['--lease',str(path)],gpu=True,parallel=True)
+                execute('training.personaplex.expanded_codec',['verify']+common)
+            capture=['--data',str(a.data),'--cache',str(a.root/'codec'),'--root',str(a.root/'capture'),'--source',a.source,'--shards','4']
+            if not (a.root/'capture'/'inputs.json').exists():
+                execute('training.personaplex.expanded_capture',['capture']+capture+['--lease',str(path)],gpu=True,parallel=True)
+                execute('training.personaplex.expanded_capture',['verify']+capture)
+            runner=['--root',str(a.root),'--expanded',str(a.root/'capture'),'--old-inputs',str(BASE/'native-moshi-matched-inputs-v1'),'--lease',str(path),'--backup',str(a.backup),'--source',a.source]
+            if not (a.root/'admission.json').exists():execute('training.personaplex.expanded_runner',['admit']+runner,gpu=True,parallel=True)
+            checkpoint=a.checkpoint or a.root/'checkpoints'/'init.pt'
+            execute('training.personaplex.expanded_runner',['train']+runner+['--checkpoint',str(checkpoint)],gpu=True,parallel=True)
         terminal=json.loads((folder/'train'/'terminal.json').read_text())
         if terminal['training_complete']:execute('training.personaplex.expanded_runner',['verify']+runner+['--checkpoint',terminal['checkpoint']],gpu=True,parallel=True)
         (folder/'host-terminal.json').write_text(json.dumps(dict(success=True,training=terminal),indent=2)+'\n')
