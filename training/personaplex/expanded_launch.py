@@ -8,6 +8,24 @@ from .expanded_guard import AUTH,ACCOUNT,KEY,sha,stamp,parse_job,validate_job
 from .matched_paths import command,BASE
 
 
+def container_command(work,*,gpu,environment,backup):
+    work=Path(work);cmd=command(work,gpu='0,1,2,3' if gpu else None,environment=environment)
+    image=cmd.index(str(BASE/'artifacts/native-v75/runtime/pytorch-new.sif'))
+    mounts=[('--bind',str(backup)+':'+str(backup))]
+    # Worktree .git files can point into allocated HOME. Expose ONLY the exact
+    # Git metadata directories read-only, never the whole HOME or credentials.
+    repositories=[work,BASE/'vendor/moshi-rag-8c6df-v1',BASE/'vendor/moshi-finetune-2acc-v1',BASE/'vendor/context-spanning-79df-v1']
+    seen=set()
+    for repository in repositories:
+        raw=subprocess.check_output(['git','-C',str(repository),'rev-parse','--git-common-dir'],universal_newlines=True).strip();common=Path(raw)
+        if not common.is_absolute():common=repository/common
+        common=common.resolve()
+        if str(common)not in seen:
+            seen.add(str(common));mounts.append(('--bind',str(common)+':'+str(common)+':ro'))
+    cmd[image:image]=[part for pair in mounts for part in pair]
+    return cmd
+
+
 def main():
     p=argparse.ArgumentParser()
     for n in ('root','data','backup'):p.add_argument('--'+n,type=Path,required=True)
@@ -33,9 +51,9 @@ def main():
             if watch.poll()is not None or time.time()>deadline:raise RuntimeError('Actual independent scheduler admission unavailable; no model started')
             time.sleep(2)
         common=['--data',str(a.data),'--root',str(a.root/'codec'),'--model',str(BASE/'public-models/personaplex-fdaf-v1'),'--codec-source',str(BASE/'vendor/moshi-rag-8c6df-v1'),'--interleaver-source',str(BASE/'vendor/moshi-finetune-2acc-v1'),'--source',a.source,'--shards','4']
-        env={k:environment[k]for k in ('DUPLEX_LIVE_GUARD_FILE','DUPLEX_LIVE_LEASE_FILE','SLURM_JOB_ID','SLURM_JOB_ACCOUNT')};env.update(OMP_NUM_THREADS=8,MKL_NUM_THREADS=8)
+        env={k:environment[k]for k in ('DUPLEX_LIVE_GUARD_FILE','DUPLEX_LIVE_LEASE_FILE','SLURM_JOB_ID','SLURM_JOB_ACCOUNT')};env.update(OMP_NUM_THREADS=8,MKL_NUM_THREADS=8,GIT_OPTIONAL_LOCKS='0')
         def execute(module,args,gpu=False,parallel=False):
-            cmd=command(Path.cwd(),gpu='0,1,2,3'if gpu else None,environment=env);image=cmd.index(str(BASE/'artifacts/native-v75/runtime/pytorch-new.sif'));cmd[image:image]=['--bind',str(a.backup)+':'+str(a.backup)]
+            cmd=container_command(Path.cwd(),gpu=gpu,environment=env,backup=a.backup)
             if parallel:cmd+=['torch.distributed.run','--standalone','--nproc_per_node=4','--module',module]+args
             else:cmd+=[module]+args
             subprocess.run(cmd,env=environment,check=True)
