@@ -1,3 +1,13 @@
+# LOCAL — 15Nov: isolated startup PASS; replacement8466779 submitted
+
+Actual job8466257 FAILED1:0 after22seconds/fourGPUs (88GPU-seconds), before model loading or optimizer updates: contained runtime hid the worktree Git metadata under HOME. Earlier8445171 used68GPU-seconds; total failed new-phase allocations156GPU-seconds, never reset. Fix179e684df36269c73e46cf482f998c898cece82c explicitly mounts ONLY exact worktree/vendor Git metadata read-only plus approved NFS backup. Six focused tests PASS. Actual isolated --containall/--nv startup smoke PASS with all1072 data/qualification hashes; this is NOT a CUDA/gradient admission. Remote proof native-expanded1072-container-startup-proof-v1.json.
+
+ONE new actual submission8466779, receipt /projects/u6ada/duplex-live/native-expanded1072-submission-v3/submission.json. Source179e684df36269c73e46cf482f998c898cece82c, immutable source-expanded-179e684. Same4GPUs/oneNode/workq/max24h/no-requeue/root/data/backup and20k award. Fresh queue empty before atomic v3 claim. Do not duplicate submission/controller on observation timeout. Observe actual job and native stages before claiming training updates. Full CPU1072 text proof reused honestly; no completed data audit or old training repeated. OPALKEEP/API0,100USD provider cap and88.17025381944444 conservative reserve unchanged. All original checkpoints preserved. Active durable local checkout runs/active-source-20261115; old /private/tmp source/run artifacts gone, final data+qualification remains verified on Isambard. Original outer dirty checkout untouched.
+
+Next observe8466779 codec/capture/gradients/fresh restore ->196 NEW expanded-data updates; report promptly on terminal failure. Do not call preparation training. Preserve immutable checkpoints and hash backups; no more paid audio work, research sweep or old training replay.
+
+---
+
 # LOCAL — 15Nov: full CPU recovery PASS; replacement8466257 submitted; durable checkout restored
 
 Active local clean checkout is now /Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/active-source-20261115 (clean clone of pushedmain55f87d8). The old /private/tmp/duplex-recovery-20261112 directory is gone; do NOT assume ignored local run files there survived. Source code is recovered from Git, final native1072 data+qualification is fully hash-verified on Isambard, and all old model checkpoints remain remotely preserved. No data generation or completed training was repeated. Original outer OneDrive checkout has many pre-existing changes; leave it untouched. Use this nested ignored runs checkout for source/handoff work.
