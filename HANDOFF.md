@@ -1,3 +1,26 @@
+# 15Nov23:04UTC — Voice59/196 healthy; Remora coordinated; fresh SSH authentication blocked
+
+Existing observer tool51731 remains alive and reports SAME8478956 RUNNING_NATIVE_GUARD,
+completed59/196 at23:04:25UTC, host_terminalFALSE. Boundary49 completed and the worker
+continued normally; it is NOT a safe handover. No valid training interrupted.
+Fresh SSH/squeue failed publickey authentication at23:09UTC; do not call the whole
+account queue or residual award balance freshly verified. Sign-in availability
+requested from owner; open a fresh official code when owner says ready. Existing
+monitor connection still works, independently of renewal for new SSH sessions.
+
+Under owner's prior explicit Remora coordination authorization, sent chat
+01a17447-3cd3-74f1-b096-068f4bb6b91f the current voice reservation8478956,
+4GPUs/node nid010879/account brics.u6ada/workq, immutable end16Nov16:54:14UTC,
+no other voice job/continuation submitted, distinct Remora resources allowed
+subject to fresh actual provider/account limits and total award. No whole-account
+exclusive window claimed; original voice GPUs remain protected until terminal.
+Remora must independently recheck scheduler state before its proposed envelope.
+No jobs cancelled/duplicated/launched on Remora's behalf. Adaptive source6b32c9d
+still awaits successful latest cooperative parent and all exact native restore
+gates. If current job finishes196, evaluate it; do not invent more updates.
+
+---
+
 # Staged immutable adaptive producer6b32c9d; no new GPU job
 
 Actual new producer6b32c9dd98afcf43c1c86bda5a0cccc5916818e5 is deployed clean at
