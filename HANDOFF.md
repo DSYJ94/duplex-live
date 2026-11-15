@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:8475202 stopped94sec after storage repair; explicit persona mismatch fixed
+
+8475202 FAILED94sec/fourGPUs=376GPU-seconds, phasefailedtotal1460GPU-seconds. Storage/compiler failure gone; actual native persona+stream trace reached strict framepartition failure. Rootcause: shared trace hardcoded BASE_INSTRUCTIONS but expandedprefix constructed different declaredINSTRUCTIONS; lengths differ. New optional trace instructions defaults exactlegacy string, expandedcapture explicitly passes its declaredINSTRUCTIONS. No word/frame/ownership gate loosened; no old vendor/checkpoint/corpus builder change. Actual runtime RED test catches missing explicitpersonaparam, legacydefaultPASS. Require GREEN before nextallocation. Codec1072 remains verified/reused, no new weightupdates. Preserve partialcapture under new quarantine; no blind completedwork replay. User standingcriticalreview doc remainscurrent.
+
+---
+
 # LOCAL — 15Nov:storage runtimePASS; ONE replacement8475202 submitted
 
 Actual contained CPU regressionPASS plus actual g++ shared compilation/16MiB temp write on allocatedLustre PASS; proof /projects/u6ada/duplex-live/native-expanded1072-storage-proof-v1/proof.json. This is storage/compiler proof, NOT CUDAgradient admission. ONE new actual8475202/source1405bdd0b0 (fullSHA submission-v6/submission.json), source-expanded-1405bdd, same4GPUs/workq/24h/no-requeue/phase/data/NFSbackup/20kaward. All1084 priorfailedGPU-seconds carried. Complete1072 codec/independent proof reused with original7ab60a5 producer. Priorcapture had no case report; entirepartial capture quarantined phase/failed-8466944-capture. No old checkpoint deleted, no completed training repeated. New optimizer updates not yet verified. Observe SAME8475202; no duplicate submission on timeout; report stops promptly.

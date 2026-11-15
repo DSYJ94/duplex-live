@@ -79,7 +79,7 @@ def validate_trace(clean,prefix,saved,calls,delay_sequence,initial):
                 assistant_acoustic_source_frames_per_head=frames,native_depth_target_mask_approval_required=True,training_approved=False)
 
 
-def trace(engine,voice,clean,pcm,label=None):
+def trace(engine,voice,clean,pcm,label=None,*,instructions=None):
     import numpy as np
     import torch
     from evals.lychee_context import BASE_INSTRUCTIONS
@@ -116,7 +116,7 @@ def trace(engine,voice,clean,pcm,label=None):
     gen.step,gen.prepare_step_input=forced,prepared
     try:
         with torch.no_grad():
-            engine.set_persona(BASE_INSTRUCTIONS,voice)
+            engine.set_persona(BASE_INSTRUCTIONS if instructions is None else instructions,voice)
             print(json.dumps(dict(native_trace=label,phase='persona_complete',elapsed_seconds=time.monotonic()-began)),flush=True)
             for frame in range(clean.shape[1]):
                 phase='live';result=engine.step(pcm[frame*1920:(frame+1)*1920])

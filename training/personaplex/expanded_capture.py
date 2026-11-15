@@ -65,7 +65,7 @@ def capture(a):
     for source,entry in list(zip(rows,cache['rows']))[a.shard::a.shards]:
         check(a.lease,120);folder=out/entry['id'];folder.mkdir();clean=torch.load(a.cache/('shard-%02d'%entry['shard'])/entry['file'],weights_only=True,map_location='cpu')['codes'][0];wave,rate=sf.read(a.data/source['path'],dtype='float32',always_2d=True)
         if rate!=24000 or wave.shape!=(clean.shape[1]*1920,2):raise ValueError('Whole original stereo source required')
-        saved,calls,decoded,execution=trace(engine,voice,clean,wave[:,1],entry['id']);codes,mask=assemble(clean,prefix,saved['streamed_user_codes']);offline,_=assemble(clean,prefix)
+        saved,calls,decoded,execution=trace(engine,voice,clean,wave[:,1],entry['id'],instructions=INSTRUCTIONS);codes,mask=assemble(clean,prefix,saved['streamed_user_codes']);offline,_=assemble(clean,prefix)
         saved.update(codes=codes,mask=mask,targets=codes[0],offline_inputs=delayed(offline,_delay_sequence,initial));ownership=validate_trace(clean,prefix,saved,calls,_delay_sequence,initial)
         torch.save(saved,folder/'inputs.pt');sf.write(folder/'teacher-forced-native.wav',decoded,24000,subtype='FLOAT')
         report['cases'].append(dict(id=entry['id'],fold=entry['fold'],calls=calls,ownership=ownership,inputs_sha256=sha(folder/'inputs.pt'),source_cache_sha256=entry['sha256'],teacher_forced_wav_sha256=sha(folder/'teacher-forced-native.wav'),native_execution=execution))
