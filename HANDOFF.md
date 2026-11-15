@@ -1,3 +1,9 @@
+# LOCAL — 15Nov:8466849 real CUDA codec ALL1072 complete; verification next
+
+Actual remote read: allFOUR shard cache.json report268/268 complete_shardTRUE, total1072 native Mimi examples encoded on CUDA in SAME job8466849/source7ab60a5ccc. Driver-linker repair moved past actual failed encode. Independent codec/cache.json not yet present at observation; capture/inputs.json and admission.json absent. ZERO optimizer updates verified, no training/improvement claim. Continue observing SAME actual job through independent reconstruction, full native capture, distributed gradient/Adam and fresh restore into196NEW updates. Do not restart/repeat completed1072 codec shards or old training. All caps, backups,OPAL and156+164priorGPU-seconds unchanged. Historical headers follow.
+
+---
+
 # LOCAL — 15Nov: replacement8466849 submitted; observe SAME job
 
 ONE actual job8466849 submitted from immutable source7ab60a5ccc (fullSHA in remote native-expanded1072-submission-v4/submission.json), source-expanded-7ab60a5. Same4GPUs/workq/oneNode/24h/no-requeue, phase/data/NFS backup unchanged. Seven focused tests PASS including driver-before-native-import regression; codec module unchanged so complete1072 CPU proof reused. Empty failed8466779 shards archived to phase/failed-8466779-shards, no completed tensors existed. PriorfailedGPUtime320seconds counted, no new optimizer updates yet verified. No duplicate submission on observation timeout. Remora notified of actual replacement; its audit terminal/checkpoints remain untouched. Next observe actual codec ->capture ->gradients ->fresh restore ->196 NEW updates; no old training replay. Preserve all proofs/checkpoints and report stops promptly.
