@@ -1,0 +1,25 @@
+{
+  "actual_job": "8522764",
+  "actual_source": "2e43982cfca7e89fdb52108a9a7f1db579bb399b",
+  "new_optimizer_updates": 0,
+  "teacher_forced_not_free_running": true,
+  "models": {
+    "baseline": {
+      "positions": 89,
+      "top1": 0,
+      "top25": 0,
+      "mean_probability": 3.558634866792765e-08,
+      "maximum_probability": 3.900598244399589e-07,
+      "raw_sha256": "e204a6499c8b95f4391165f30d9aaa3cd6a9a6e657156084a68433320cafb37a"
+    },
+    "expanded105M": {
+      "positions": 89,
+      "top1": 0,
+      "top25": 0,
+      "mean_probability": 1.4066337459581502e-05,
+      "maximum_probability": 5.352649532142095e-05,
+      "raw_sha256": "10b26b5411a0361da9f22b241aea0b2e34f463db1ea49e9a0ecb5ae0bfd4dc1d"
+    }
+  },
+  "interpretation": "Custom action remains poorly fitted even on original retained TRAIN histories. Does not isolate capacity versus optimizer/retention/conditioning; do not infer only an exposure gap."
+}

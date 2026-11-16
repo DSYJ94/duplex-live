@@ -1,3 +1,33 @@
+# 16Nov — RET underfit confirmed; next learning intervention staged, not installed
+
+Actual8522764 all89originalTRAIN teacher measurements complete for bothmodels:
+base RETmean3.5586e-8/max3.9006e-7; candidate mean1.4066e-5/max5.3526e-5;
+BOTH top1=0/top25=0. New measured readout JSON contains exact raw hashes; complete
+rawreports copied to runs/container-startup-20261115/causal8522764-reports. Current
+free-running304 job remainsunchanged and valid. This supports actionunderfitting,
+not merely a free-running exposuregap orproofthat paramcount is solecause.
+
+Read actual196 training log/rank0: retained word+clock scalar shares88.62→84.72%
+byepoch. RET auxiliary is alreadyclassbalanced and actuallynonzero in savedlogs.
+Do NOT claim omitted RET or scalarshares provegradientdominance. Original anchors
+are native520 targets, not all own-current-foundation rawteacher states. New plan
+NATIVE-NEXT-LEARNING-DECISION-2026-11-16.md prioritizes TRAIN-only failuremining and
+an explicit action/functional-retention recipe comparison, with true adaptiveOPAL
+at the NEXT newlearning boundary, MiRL/RL state/rewards and bounded WSP controls.
+
+Staged native_action_readout.RetReadout adds4097 learnedcoefficients at native
+texthead input, changesONLYRETlogit, freezesoldmodel/adapter and binds exactbase
+identity digest. CPU tests cover zero-insertion equality, nonRETinvariance,
+backward/frozenoriginal and freshlearnedweightrestore/wrongidentity rejection.
+Actual ARM CPU2tests PASS for stagedversion before a no-behavior atomicinstall
+ordering improvement; rerun exact committed version before anyGPU/training.
+No nativeGPU proof, no trainedhead, no changedcurrentjob, no claimedWSP/RLwin.
+This is a focused option against bias/sham controls, not arbitraryforcedrouting.
+Original196/Adam/RNG/OPAL/backups intact. Need final304 + localreference76 before
+choosing substantial repairedlearning; do not repeat unchangedtraining.
+
+---
+
 # 16Nov — Complete64 independent input recognition REUSED, not rerun
 
 All64 quantitative original user recordings have existing unbiased Scribe3
