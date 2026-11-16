@@ -1,0 +1,31 @@
+{
+  "status": "PARTIAL_COHORT_NOT_FINAL_COMPARISON",
+  "job": "8511770",
+  "reports": {
+    "baseline": {
+      "summary": {
+        "cases": 32,
+        "word_pass": 10,
+        "raw_peak_pass": 32,
+        "joint_pass": 10,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "sha256": "896ba2cdaa63d23fd9f89bc738474baf0f38f0752ca3e03750ca4023a3c23095"
+    },
+    "expanded105M": {
+      "summary": {
+        "cases": 32,
+        "word_pass": 16,
+        "raw_peak_pass": 31,
+        "joint_pass": 16,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "sha256": "d08e32298fe9861e1a5a3eee2dece4b777f7520e2840e705b9915f9f74f81f39"
+    }
+  },
+  "reasoning64_per_arm_still_pending": true,
+  "naturalness_accent_and_live_latency_not_established": true,
+  "adopted": false
+}

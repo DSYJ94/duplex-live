@@ -1,3 +1,24 @@
+# 16Nov16:47UTC — Control32 audit complete; full comparison still running
+
+8511770 remains RUNNING, latest116/192 collected: bothcontrol32 complete,
+bothDEV26/64. BOTH control speech audit reports actually complete/copied locally
+runs/container-startup-20261115/evaluation-control32; source2780df56 unchanged.
+Base word/joint10/32, rawpeak32/32; adapter word/joint16/32, rawpeak31/32.
+BOTH necessary_silence_and_resume0 and silent_while_paused0. Partial speech/text
+consistency improvement, NOT reasoning correctness, naturalness/accent or live
+readiness. No adoption. Full64 reasoning per arm and archive remain pending.
+Receipt docs/NATIVE-EXPANDED1072-CONTROL32-PARTIAL-2026-11-16.json; user informed.
+
+Remora reports8505349 COMPLETED all56: actual13900seconds*1GPU=3.861111GPUh,
+remaining reservation0; nid010037 released by Remora. Count actual ONCE, not its
+former6h limit. Older8491715 actual7042GPU-seconds remains counted separately.
+Current evaluation original lease remains conservative/unchanged; future actual
+admission must reconcile fresh actual account totals. No new voice jobs/training.
+Observer11871 still120s reads; orchestration wait can be resumed without any
+model restart. Preserve all completed outputs and checkpoint196. No new APIs.
+
+---
+
 # 16Nov — OWNER LISTENING FORMAT: single playback, no long trailing silence
 
 For all listening samples, combine user input and model response in ONE file per
