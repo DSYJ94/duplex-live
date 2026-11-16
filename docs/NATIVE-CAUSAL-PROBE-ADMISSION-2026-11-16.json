@@ -1,0 +1,27 @@
+{
+  "status": "ACTUAL_NATIVE_CAUSAL_JOB_RUNNING",
+  "job": "8522764",
+  "source": "2e43982cfca7e89fdb52108a9a7f1db579bb399b",
+  "node": "nid010820",
+  "GPUs": 4,
+  "start_UTC": "2026-11-16T20:37:39Z",
+  "end_UTC": "2026-11-17T02:37:39Z",
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "actual_modern_CPU_tests_passed": 17,
+  "actual_published_Engine_step_RET4_contract_passed": true,
+  "host_Python36_imports_passed": true,
+  "complete76_input_only_preparation_passed": true,
+  "required_new_outputs": 304,
+  "reused_original_audio_only_outputs": 192,
+  "backend": "Explicit narrow local exact-rational tool; not general reasoning or a provider call",
+  "early_actual_assisted_cases_per_model": 14,
+  "teacher_RET_probe": {
+    "original_positive_positions": 89,
+    "positive_rows": 68,
+    "total_recorded_input_frames": 54672,
+    "note": "Full54k recorded text-forward frames may take tens of minutes; do not treat initial absent final teacher report as a stall or interrupt valid work"
+  },
+  "checkpoints_unchanged": true,
+  "accepted": false
+}

@@ -1,3 +1,47 @@
+# 16Nov20:46UTC — ACTUAL causal8522764 running; active product goal
+
+Native causal8522764/source2e43982cfca7e89fdb52108a9a7f1db579bb399b verifiedRUNNING
+4GPUs nid010820, start16Nov20:37:39UTC/end17Nov02:37:39UTC (6h). Same retained
+checkpoint196, zerooptimizer/API/newTTS/GCP/purchases, full304newconditionoutputs;
+old192 audio-only reused. Admission receipt NATIVE-CAUSAL-PROBE-ADMISSION-2026-11-16.json.
+Modern actualCPU17 tests + actual publishedEngine.stepRET4 + noRNG stats +host3.6
+imports +complete76question-only prep PASS. Immutableworktree
+/projects/u6ada/duplex-live/source-causal-2e43982, ROOT
+/projects/u6ada/duplex-live/native-causal-probe-20261116-v1, resultsbackup
+/home/u6ada/dsyj94.u6ada/duplex-causal-probe-backups-v1. Originalcheckpointbackup
+/home/u6ada/dsyj94.u6ada/duplex-expanded1072-backups-v1. No sourcehotedit.
+
+Currentactualassisted14/76permodel, text-onlyranks firstmeasure ALL89originalTRAIN
+RETpositive positions. Those68rows require54672recorded temporal inputframes,
+so native teacher report may legitimately take tens ofminutes. No savedupdates
+replayed, no repeated calibration, not stalled merelybecause reportwrittenatend.
+Read-only observer tool51180,120s providerqueries, log
+runs/container-startup-20261115/causal-observer-8522764.jsonl; serverobserve-causal-
+8522764.py. Observe SAME job, neverduplicate/restartonSSHtimeout. Fresh actual
+quota~74GBused/105GBhard;8GiBresultheadroom admitted. ActiveRemora node010078
+explicitlyexcluded. Sentnewactualjob/node/scope undercoordinationpermission.
+
+AgentcompletedboundedMiniCPM-o4.5appendix in same researchMD: actualtextchat
+supports cleanercontrol, but1secduplexscheduling, no verifiedtypedtoolchannel,
+unpinnedTTSautoassets andunverifiedARMdependencies => boundedpristinecomparator,
+notblindreplacement. VoiceChat11Btoolinterruption/x86limits remain. Researchdone,
+no assets/jobs touched. PublicQwen27B pathrequest toRemora pending; no dependence
+forcurrentlocalmath probe. No furtherfoundationcatalogue needed beforeoutputs.
+
+Next: full304nativeoutputs +all89teacherRETstats, independentbackup then score
+againstpreserved64/12questions andoldaudio outputs. Prefix-text is supported
+contextconditioning, NOT text-chat equivalence; failurealonecannotproveweakbase.
+Distinguish rawmodel vsadaptation, perception vsreasoning, on-policy/state/voice
+conditioning vsretention/recipe beforetraining. Backend localmathunsupported
+questions failhonestly. CurrenteventsrecordnativeRET/task/result injection but
+not full toolresultpayload: do NOT claimproduct-qualified groundedgeneralbackend
+fromeventcounts; add opt-in synthetic receipt audit fornextconnectedphase ifneeded.
+All oldcheckpoints/results retained. ACTIVEgoalonlystopforneededhumaninput or
+actualfullproductacceptance. Authvaliduntil16Nov23:49:49UTC; existingSSHmaypersist,
+freshSSHneedsrenewalafterexpiry. No automaticChrome(blank/permissionblocked).
+
+---
+
 # 16Nov20:33UTC — Owner ACTIVE product goal; new frozen causal probe built locally
 
 Owner explicitly requests autonomous GPT-live type product with reasoning,
