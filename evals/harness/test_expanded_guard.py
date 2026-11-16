@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -29,3 +29,7 @@ class ExpandedGuardTest(unittest.TestCase):
         with self.assertRaises(ValueError):resource(dict(reference,GPU_count=4))
         with self.assertRaises(ValueError):resource(dict(reference,stop_unix=7201))
         with self.assertRaises(ValueError):resource(dict(reference,reference_authorization_sha256='changed'))
+        official=dict(single,official_authorization_sha256=sha(OFFICIAL_AUTH),stop_unix=18000.)
+        resource(official)
+        with self.assertRaises(ValueError):resource(dict(official,reference_authorization_sha256=sha(REFERENCE_AUTH)))
+        with self.assertRaises(ValueError):resource(dict(official,stop_unix=18001.))

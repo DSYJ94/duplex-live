@@ -11,18 +11,23 @@ AUTH=Path('docs/NATIVE-EXPANDED1072-EXECUTION-2026-11-14.json')
 ACCOUNT='brics.u6ada'
 KEY='duplex-expanded1072-v1'
 REFERENCE_AUTH=Path('docs/NATIVE-LOCAL-REASONER-REFERENCE-2026-11-16.json')
+OFFICIAL_AUTH=Path('docs/NATIVE-OFFICIAL-PERSONAPLEX-BASELINE-2026-11-16.json')
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def resource(lease):
-    if 'reference_authorization_sha256'in lease:
-        scope=json.loads(REFERENCE_AUTH.read_text())
-        if (lease['reference_authorization_sha256']!=sha(REFERENCE_AUTH)or scope['status']!='OWNER_DIRECTED_FROZEN_LOCAL_REFERENCE'
-                or scope['GPU_count']!=1 or scope['maximum_seconds']!=7200 or scope['external_API_calls']!=0 or scope['optimizer_updates']!=0):raise ValueError('Exact separate one-GPU reference scope required')
-        count=1;maximum=7200
-    else:count=4;maximum=86400
+    grants=[(k,p,status,seconds)for k,p,status,seconds in (
+        ('reference_authorization_sha256',REFERENCE_AUTH,'OWNER_DIRECTED_FROZEN_LOCAL_REFERENCE',7200),
+        ('official_authorization_sha256',OFFICIAL_AUTH,'OWNER_DIRECTED_OFFICIAL_CONTRACT_BASELINE',18000))if k in lease]
+    if len(grants)>1:raise ValueError('No mixed inference scopes')
+    count=4;maximum=86400
+    if grants:
+        key,path,status,maximum=grants[0];scope=json.loads(path.read_text())
+        if (lease[key]!=sha(path)or scope['status']!=status or scope['GPU_count']!=1 or scope['maximum_seconds']!=maximum
+                or scope['external_API_calls']!=0 or scope['optimizer_updates']!=0):raise ValueError('Exact separately declared frozen inference scope required')
+        count=1
     scope=json.loads(AUTH.read_text())
     if scope['status']!='OWNER_AUTHORIZED_CONTINUATION' or scope['award_total_GPU_hours']!=20000 or scope['maximum_simultaneous_voice_GPUs']!=4:raise ValueError('Exact current owner continuation scope required')
     if lease.get('provider')!='Slurm' or lease.get('resource_key')!=KEY or lease.get('account')!=ACCOUNT or lease.get('authorization_sha256')!=sha(AUTH) or lease.get('GPU_count')!=count or not str(lease.get('job_id','')).isdigit():raise ValueError('Exact declared scheduler allocation required')

@@ -1,0 +1,33 @@
+{
+  "status": "OWNER_DIRECTED_OFFICIAL_CONTRACT_BASELINE",
+  "owner_goal": "Autonomously build a useful native duplex product; diagnose foundation versus training/setup before further learning, using the existing20000GPUh Isambard award.",
+  "GPU_count": 1,
+  "maximum_seconds": 18000,
+  "external_API_calls": 0,
+  "optimizer_updates": 0,
+  "purchases": false,
+  "GCP": false,
+  "required_native_outputs": 128,
+  "conditions": [
+    "Untouched weights, official NVIDIA neural/prompt code, NATF2 packaged prompt and recommended QA persona",
+    "Same weights/code/persona, same original RPBen reference through documented normalized WAV path"
+  ],
+  "cohort_per_condition": "Only the64 quantitativeDEV, whole original user audio, seed42 and audio0.8/text0.7. Reuse the completed official32 control collection from job8203137; do not repeat it.",
+  "runtime": "Pinned NVIDIA16419a2 neural/prompt source and published NATF2, with explicit server six-frame boundaries/prompt pinning. Reuse the compiled Python3.12 ARM sphn0.2.1 extension already used by the completed official32; no fake module or new PCM alias. Full475 key/shape equivalence proved on CPU, no copied/random weights. New GPU contract not yet qualified.",
+  "reason": "Historical Context Spanning wrapper skipped reference loudness normalization and used one-frame boundaries; it is not an official-equivalence proof. This new condition must precede rejecting the foundation or another large unchanged training run.",
+  "reuse": "All historical checkpoints, complete192 audio-only and304 prefix-condition outputs remain unchanged. Reuse actual local reasoner reference76; never repeat training. New speech auditing must label recognition window/runtime conditions and preserve original scores and waveforms.",
+  "admission": "No overlapping voice allocation; fresh same-account actual usage plus concurrent reservations, successful completed parent with independent full backup, exact immutable source, pinned original public assets and prompt, CPU imports/full schema/PCM transport proof, actual one GPU and immutable scheduler clock.",
+  "preservation": "Separate output namespace and independent complete hash archive. No restart/model duplication on observation timeout; preserve partials and require identified tested cause for any recovery. End compute when work completes. No new source TTS in this baseline phase.",
+  "prior_official_evidence": {
+    "job": "8203137",
+    "producer": "605ff79ad37d5bfbaf808c700a69f06526c0f2a2",
+    "outputs": 32,
+    "voice": "NATF2",
+    "upstream": "16419a2ef7b98611f58c9df07477d00e5ad61d5f",
+    "speech_word_pass": 15,
+    "quiet_pass": 0,
+    "pause_pass": 0,
+    "interpretation": "Existing official-path failures remain valid. Current wrapper mismatch does not erase this evidence. Offline and server pinning settings differ; label new conditions accurately."
+  },
+  "execution_status": "PREPARED_NOT_SUBMITTED_MISSING_QUANTITATIVE_ONLY"
+}

@@ -1,0 +1,1551 @@
+{
+  "status": "COMPLETE152_GENERATED_TEXT_REVIEW",
+  "job": "8522764",
+  "producer": "2e43982cfca7e89fdb52108a9a7f1db579bb399b",
+  "interface": "Question supplied only in supported persona/context prefix; silence on user audio channel. This is NOT ordinary text-chat equivalence.",
+  "interpretation": "Most outputs are generic greetings. Prefix-only silence does not reliably solicit an answer; cannot use this as a clean test of latent text reasoning capacity.",
+  "scores": {
+    "baseline": {
+      "basic_core_correct": 0,
+      "basic_required": 12,
+      "quantitative_correct_without_false_explanation": 0,
+      "quantitative_required": 64,
+      "native_RET": 0,
+      "actual_requests": 0,
+      "source_sha256": "ec8594ed2a19d19bd022b28082867c978c30746f41d13d767c6a05627851fd8f"
+    },
+    "expanded105M": {
+      "basic_core_correct": 4,
+      "basic_required": 12,
+      "quantitative_correct_without_false_explanation": 1,
+      "quantitative_required": 64,
+      "native_RET": 0,
+      "actual_requests": 0,
+      "source_sha256": "b13a77cde3327dfb7e883618cceecbdcef83df510388eec2e99dd0f95b8a3716"
+    }
+  },
+  "cases": [
+    {
+      "model": "baseline",
+      "index": 0,
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "question": "What is the opposite of loose?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 1,
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "question": "What is a ruler used to measure?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 2,
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "question": "How many minutes are in an hour?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 3,
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "question": "What do a bird's wings help it do?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 4,
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "question": "What is the opposite of shallow?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 5,
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "question": "Why does a window have glass?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 6,
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "question": "What does a knot do to a rope?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 7,
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "question": "How many months are in a year?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 8,
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "question": "What is a funnel used for?",
+      "generated_text": "Hello, this is English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 9,
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "question": "What is five minus two?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 10,
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "question": "What does a telescope help us see?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 11,
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "question": "What does a lever help us do?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 12,
+      "id": "reasoning-text-aefafccabcd0342cfe05",
+      "question": "A workshop has 123 washers. It uses 5 and then receives 2. How many washers does it have now?",
+      "generated_text": "Hello, this is an English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 13,
+      "id": "reasoning-text-6d585b3ecc845eb6fb5b",
+      "question": "A workshop has 124 washers. It uses 6 and then receives 3. How many washers does it have now?",
+      "generated_text": "Hello, this is an English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 14,
+      "id": "reasoning-text-5df54da0bd6ebe850840",
+      "question": "A kit has 780 screws. Four assemblies each use 5 screws. How many screws are left?",
+      "generated_text": "Hello, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 15,
+      "id": "reasoning-text-e217bf11f5e026288cb1",
+      "question": "A kit has 787 screws. Four assemblies each use 6 screws. How many screws are left?",
+      "generated_text": "Hello, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 16,
+      "id": "reasoning-text-cd58473685e73cb64b16",
+      "question": "A cable measures 103 metres. After cutting off 35 centimetres, how many centimetres are left?",
+      "generated_text": "Hello, thank you for calling Helpful Chat. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 17,
+      "id": "reasoning-text-84f6b3fb27e0fe4630e7",
+      "question": "A cable measures 104 metres. After cutting off 36 centimetres, how many centimetres are left?",
+      "generated_text": "Hello, thank you for calling Vox Assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 18,
+      "id": "reasoning-text-bbeff7480eddc91d0f5d",
+      "question": "A process starts at elapsed minute 108 and lasts 33 minutes. At what elapsed minute does it finish?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 19,
+      "id": "reasoning-text-6a7f45c3b5a3bbd776bd",
+      "question": "A process starts at elapsed minute 109 and lasts 34 minutes. At what elapsed minute does it finish?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 20,
+      "id": "reasoning-text-03fda72b31e3c2cd9598",
+      "question": "A rectangle has length 107 metres and width 7 metres. What is its perimeter?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 21,
+      "id": "reasoning-text-f0cf800ef46ee44bbeb5",
+      "question": "A rectangle has length 108 metres and width 8 metres. What is its perimeter?",
+      "generated_text": "Hello, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 22,
+      "id": "reasoning-text-bf7c9eda84756710f8e8",
+      "question": "One quarter of a collection of 440 counters is set aside. How many counters are set aside?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 23,
+      "id": "reasoning-text-b7852c785b7e6c0cf395",
+      "question": "One quarter of a collection of 444 counters is set aside. How many counters are set aside?",
+      "generated_text": "Hello, this is the background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 24,
+      "id": "reasoning-text-55dd259259df770076c4",
+      "question": "A pump moves 5 litres each minute for 104 minutes. How many litres does it move?",
+      "generated_text": "Hello, this is my voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 25,
+      "id": "reasoning-text-20298af81edb5cb960d4",
+      "question": "A pump moves 6 litres each minute for 105 minutes. How many litres does it move?",
+      "generated_text": "Hello, this is my background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 26,
+      "id": "reasoning-text-7be066806a20706bf421",
+      "question": "102 tickets cost 12 pounds each. One booking fee adds 2 pounds to the whole purchase. What is the total cost?",
+      "generated_text": "Hello, thank you for calling Teamwork Assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 27,
+      "id": "reasoning-text-eab3a499904137e2ac54",
+      "question": "103 tickets cost 13 pounds each. One booking fee adds 3 pounds to the whole purchase. What is the total cost?",
+      "generated_text": "Hello, welcome to English speaking assistant. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 28,
+      "id": "reasoning-text-3599d4b234acd863b167",
+      "question": "A register contains 123. Add 5, double the result, and subtract 2. What value remains?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 29,
+      "id": "reasoning-text-eba15c44bc4f2d384958",
+      "question": "A register contains 124. Add 6, double the result, and subtract 3. What value remains?",
+      "generated_text": "Hello, welcome to the English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 30,
+      "id": "reasoning-text-714c03074a0131bc3bdd",
+      "question": "Tank A holds 130 litres and tank B holds 16. Move 5 litres from A to B without losing any. What is the combined volume?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 31,
+      "id": "reasoning-text-5a44fa94d6f516c37ae2",
+      "question": "Tank A holds 131 litres and tank B holds 17. Move 6 litres from A to B without losing any. What is the combined volume?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 32,
+      "id": "reasoning-text-3b36dd6ce0302d9c49d8",
+      "question": "Joseph has one hundred and twenty three tokens. Kai has five fewer than Joseph. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "generated_text": "Hello, this is help assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 33,
+      "id": "reasoning-text-926e0f8539917e7353b6",
+      "question": "Joseph has one hundred and twenty four tokens. Kai has six fewer than Joseph. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "generated_text": "Hello, this is the background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 34,
+      "id": "reasoning-text-21b79b0ed689927f0936",
+      "question": "A delivery was scheduled for project day 107. A delay adds 5 days and a later revision brings it forward 2 days. What is its new project day?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 35,
+      "id": "reasoning-text-82db21383afd5a18cef7",
+      "question": "A delivery was scheduled for project day 108. A delay adds 6 days and a later revision brings it forward 3 days. What is its new project day?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 36,
+      "id": "reasoning-text-b4d11120fdfd18c5c3f0",
+      "question": "A resistor carries 2 amperes under 208 volts. Using voltage equals current times resistance, what is its resistance?",
+      "generated_text": "Hello, this is my background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 37,
+      "id": "reasoning-text-27c9b8f6dbf8ec069f14",
+      "question": "A resistor carries 3 amperes under 315 volts. Using voltage equals current times resistance, what is its resistance?",
+      "generated_text": "Hello, this is the background assistant. Can I help you with anything specific?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 38,
+      "id": "reasoning-text-435fcac6963558a77b0c",
+      "question": "A vehicle covers 540 metres in 5 seconds. What is its average speed?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 39,
+      "id": "reasoning-text-0303d9fb8a1d64e1dfca",
+      "question": "A vehicle covers 654 metres in 6 seconds. What is its average speed?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 40,
+      "id": "reasoning-text-c7da3629667cd1e2c2e5",
+      "question": "What is the mean of the three measurements 123, 126 and 129?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 41,
+      "id": "reasoning-text-273b7b334dbc2908619f",
+      "question": "What is the mean of the three measurements 124, 127 and 130?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 42,
+      "id": "reasoning-text-b3e5716f69ab1bfe57f9",
+      "question": "A shop sells 3 items at 109 pounds each. Each item cost the shop 3 pounds. What is the total profit?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 43,
+      "id": "reasoning-text-8212ddf2a028643c919f",
+      "question": "A shop sells 4 items at 110 pounds each. Each item cost the shop 4 pounds. What is the total profit?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 44,
+      "id": "reasoning-text-41d4dcba337eaddb91e1",
+      "question": "New York is two-thirds as populated as all of New England. If New England has two million one hundred thousand people, calculate the combined population of both states.",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 45,
+      "id": "reasoning-text-ed480c21de82a3a03d2a",
+      "question": "An organization trying to save endangered species of turtles has taken twice more hawksbill turtles than the number of green turtles into a conservation center. If the number of green turtles is 800, calculate the number of turtles that have been taken into the conservation center.",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 46,
+      "id": "reasoning-text-d1ae04c64e3bc9e1ed2c",
+      "question": "Mark buys a loaf of bread for four dollars and twenty cents and some cheese for two dollars and five cents. He gives the cashier seven dollars. If the cashier only has one quarter and one dime in his till, plus a bunch of nickels, how many nickels does Mark get in his change?",
+      "generated_text": "Hello, thanks for calling Mark's help line. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 47,
+      "id": "reasoning-text-4580413bb7d3bfc0d82a",
+      "question": "To produce one chocolate bar, a company needs 1.5 grams of sugar. Every minute the company produces 36 chocolate bars. How many grams of sugar will the company use in two minutes?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 48,
+      "id": "reasoning-text-d041d1a4118b43712511",
+      "question": "James decides to bulk up.  He weighs 120 kg and gains 20% of his body weight in muscle and 1 quarter that much in fat.  How much does he weigh now?",
+      "generated_text": "Hello, this is voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 49,
+      "id": "reasoning-text-b39055ae902422741acb",
+      "question": "Out of the 200 cookies that Javier baked from the recipe he learned online, his wife took 30%, and his daughter took 40 from the remaining cookies. If he ate half of the remaining cookies, how many cookies did they not eat?",
+      "generated_text": "Hello, this is my voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 50,
+      "id": "reasoning-text-d84abf0c9ca3216ffdec",
+      "question": "Darcy washes and drys 20 shirts and 8 pairs of shorts. If he folds 12 of the shirts and 5 of the shorts, how many more remaining pieces of clothing does Darcy have to fold?",
+      "generated_text": "Hello, this is English speaking assistance. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 51,
+      "id": "reasoning-text-ec67b9af6c2f15648a08",
+      "question": "Sam and Drew have a combined age of 54. Sam is half of Drew's age. How old is Sam?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 52,
+      "id": "reasoning-text-8b9e18824ed3730e38d9",
+      "question": "Walter fell from the eighth platform of some scaffolding and fell past David after falling 4 meters. If he fell for an additional three more times that depth before hitting the ground, and the platforms are evenly spaced out in height, what platform was David on?",
+      "generated_text": "Hello, thanks for calling the background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 53,
+      "id": "reasoning-text-f85878e0bc6c051e4bdb",
+      "question": "If Jason eats three potatoes in 20 minutes, how long, in hours, would it take for him to eat all 27 potatoes cooked by his wife?",
+      "generated_text": "Hello, this is background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 54,
+      "id": "reasoning-text-217e748c629f849d0e4c",
+      "question": "Jason's stove catches on fire. Buying a replacement will cost one thousand two hundred dollars and fixing the damage to the wall behind it will cost one divided by six th as much. How much does he spend in total?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 55,
+      "id": "reasoning-text-0ab321ee3608474a6f03",
+      "question": "John took a test with 80 questions.  For the first 40 questions, she got 90% right.  For the next 40 questions, she gets 95% right.  How many total questions does she get right?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 56,
+      "id": "reasoning-text-2d292690c9c81e34b9dc",
+      "question": "If there are 8 slices in a large pizza, how many slices will remain if Mary orders 2 large pizzas and eats 7 slices?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 57,
+      "id": "reasoning-text-5140f68a58b6b023e14f",
+      "question": "Abigail has a report due tomorrow which needs to be 1000 words in length. Abigail can type 300 words in half an hour. If she has already written 200 words, how many more minutes will it take her to finish the report?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 58,
+      "id": "reasoning-text-fd54f0f20c1e97048457",
+      "question": "Stacy just bought a six month prescription of flea and tick medicine for her dog for one hundred and fifty dollars online. Her cashback app was offering ten percent cashback and she has a mail-in rebate for twenty five dollars on a six-month prescription. How much will the medicine cost after cashback and rebate offers?",
+      "generated_text": "Hello, thanks for calling. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 59,
+      "id": "reasoning-text-2ace324293650105e958",
+      "question": "Corna wants to buy a shirt. The store buys the shirt for $20, but charges 30% for profit. However, the shirt is on sale for 50% off the selling price. What is the price now?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 60,
+      "id": "reasoning-text-4ef8f54642caf2c74f16",
+      "question": "In the baking contest, three times as many people voted for the unicorn cake compared to the witch cake, and the number of votes for the dragon cake was 25 more than the number of votes for the witch cake. If 7 people voted for the witch cake, how many votes were cast total?",
+      "generated_text": "Hello, how can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 61,
+      "id": "reasoning-text-4d2678dfe73a50172d80",
+      "question": "Sam has 3 German Shepherds and 4 French Bulldogs. Peter wants to buy 3 times as many German Shepherds as Sam has and 2 times as many French Bulldogs as Sam has. How many dogs does Peter want to have?",
+      "generated_text": "Hello, thanks for calling the Animal Adoption Helpline. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 62,
+      "id": "reasoning-text-800fd33e454a0cbd54ac",
+      "question": "Anna goes trick-or-treating in a subdivision where she gets 14 pieces of candy per house. Her brother Billy goes trick-or-tricking in a neighboring subdivision where he gets 11 pieces of candy per house. If the first subdivision has 60 houses and the second subdivision has 75 houses, how many more pieces of candy does Anna get?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 63,
+      "id": "reasoning-text-fc1d398d740f13d02efd",
+      "question": "Gargamel needed new tires for his truck. He went to the auto shop and bought 4 tires on sale for $75 each. The salesman told him that he saved a total of $36. If Gargamel saved the same amount on each tire, what was the original price of each tire?",
+      "generated_text": "Hello, thanks for calling Gargamel. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 64,
+      "id": "reasoning-text-2ce26c6ac20122bd229a",
+      "question": "Dan's skateboarding helmet has ten more craters than Daniel's ski helmet. Rin's snorkel helmet has 15 more craters than Dan's and Daniel's helmets combined. If Rin's helmet has 75 craters, how many craters are in Dan's helmet?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 65,
+      "id": "reasoning-text-89e3d78b963d1faed9ab",
+      "question": "The cash price of a refrigerator was $8000. Samantha wanted to buy the refrigerator but pay in installments. If she paid a deposit of $3000 and paid 30 equal monthly installments of $300 each, calculate how much money she would have saved by paying cash.",
+      "generated_text": "Hello, thank you for calling English Speaking Assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 66,
+      "id": "reasoning-text-25c69e4272e2e78fd975",
+      "question": "Mabel is counting sharks in the ocean. She knows that of the fish that she sees, 25% will be sharks and 75% will be another type of fish. On day one she counts 15 fish. On day 2 she counts three times as many. How many sharks did she count over those two days?",
+      "generated_text": "Hello, this is your English speaking assistant. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 67,
+      "id": "reasoning-text-ee31096d69ba814784dc",
+      "question": "Three years ago, Bethany was twice the age of her younger sister. In 5 years, her younger sister will be 16. How old is Bethany now?",
+      "generated_text": "Hello, welcome to our English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 68,
+      "id": "reasoning-text-604f4ad74c93d026c80c",
+      "question": "Chris buys two and a half dozen donuts on his way to work to share with his coworkers. While driving, he eats ten percent of the donuts. Once inside, he grabs another four donuts for his afternoon snack. How many donuts are left for his coworkers?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 69,
+      "id": "reasoning-text-ae0e116890d3b4bdb5a1",
+      "question": "A professional company is hiring for a new position. They have two qualified applicants. The first applicant will accept a salary of $42000 and make the company $93000 in the first year, but needs 3 months of additional training that costs $1200 a month. The second applicant does not need training and will make the company $92000 in the first year, but is requesting a salary of $45000 and a hiring bonus of 1% of his salary. Less the amount it will cost to pay for each candidate, how many more dollars will one candidate make the company than the other in the first year?",
+      "generated_text": "Hello, this is John. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 70,
+      "id": "reasoning-text-e9a7d3d4c69b368dd832",
+      "question": "Noah has two closets. Each closet can fit one quarter as much as Ali's closet, which can fit two hundred pairs of jeans. How many jeans can both Noah\u2019s closets fit?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 71,
+      "id": "reasoning-text-1a9dc56d6505b4a3e81d",
+      "question": "John has 3 children. He and his wife are supposed to buy notebooks for their sons but they couldn't agree on how many to buy. So John bought 2 notebooks for each of his children and John's wife bought 5 notebooks for each of them. How many notebooks did they buy in total for their children?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 72,
+      "id": "reasoning-text-00f1af12efc39ddd8d41",
+      "question": "Bob has a cube of silver that measures 3 inches on each side.  A cubic inch of silver weighs 6 ounces.  Each ounce of silver sells for $25.  He sells it for 110% of its silver value.  How much does he sell it for?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 73,
+      "id": "reasoning-text-8fcc3af6ad26d54d045b",
+      "question": "Mary sees a flock of ducks crossing the street. There are 2 ducks with 5 ducklings each, 6 ducks with 3 ducklings each, and 9 ducks with 6 ducklings each. How many ducks and ducklings are there total?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 74,
+      "id": "reasoning-text-ed3a48df827e45098372",
+      "question": "For homework, Brooke has 15 math problems, 6 social studies problems, and 10 science problems. He can answer each math problem for 2 minutes while answering each social studies problem takes him 30 seconds. If he can answer each science problem in 1.5 minutes, how long will it take Brooke to answer all his homework?",
+      "generated_text": "Hello, thanks for calling. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "baseline",
+      "index": 75,
+      "id": "reasoning-text-81581203f1e3f92dabae",
+      "question": "Emma traveled by car 280 miles in 2 hours 20 minutes. What was the average speed of the car in miles per hour?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 0,
+      "id": "venus-repair-v2-holdout-ordinary-0093",
+      "question": "What is the opposite of loose?",
+      "generated_text": "What is the opposite of loose? The opposite of loose is tight. Is it something you can see, hear, or feel?",
+      "requested_answer_correct": true,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 1,
+      "id": "venus-repair-v2-holdout-ordinary-0095",
+      "question": "What is a ruler used to measure?",
+      "generated_text": "What is a ruler used to measure? It is used to measure length in inches or centimeters. You can use it to check dimensions, for example, a table's size",
+      "requested_answer_correct": true,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 2,
+      "id": "venus-repair-v2-holdout-ordinary-0094",
+      "question": "How many minutes are in an hour?",
+      "generated_text": "How many minutes are in an hour? There are 60 minutes in an hour.",
+      "requested_answer_correct": true,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 3,
+      "id": "venus-repair-v2-holdout-ordinary-0092",
+      "question": "What do a bird's wings help it do?",
+      "generated_text": "Thank you for calling. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 4,
+      "id": "venus-control-v1-holdout-ordinary-0220",
+      "question": "What is the opposite of shallow?",
+      "generated_text": "What is the opposite of shallow? The opposite of shallow is deep.",
+      "requested_answer_correct": true,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 5,
+      "id": "venus-control-v1-holdout-ordinary-0219",
+      "question": "Why does a window have glass?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 6,
+      "id": "venus-control-v1-holdout-ordinary-0223",
+      "question": "What does a knot do to a rope?",
+      "generated_text": "Welcome to the assistance line. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 7,
+      "id": "venus-control-v1-holdout-ordinary-0217",
+      "question": "How many months are in a year?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 8,
+      "id": "venus-control-v1-holdout-ordinary-0222",
+      "question": "What is a funnel used for?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 9,
+      "id": "venus-control-v1-holdout-ordinary-0221",
+      "question": "What is five minus two?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 10,
+      "id": "venus-control-v1-holdout-ordinary-0216",
+      "question": "What does a telescope help us see?",
+      "generated_text": "Hello, this is the background assistant. Can I ask what you need help with?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 11,
+      "id": "venus-control-v1-holdout-ordinary-0218",
+      "question": "What does a lever help us do?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 12,
+      "id": "reasoning-text-aefafccabcd0342cfe05",
+      "question": "A workshop has 123 washers. It uses 5 and then receives 2. How many washers does it have now?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 13,
+      "id": "reasoning-text-6d585b3ecc845eb6fb5b",
+      "question": "A workshop has 124 washers. It uses 6 and then receives 3. How many washers does it have now?",
+      "generated_text": "Hello, this is the English assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 14,
+      "id": "reasoning-text-5df54da0bd6ebe850840",
+      "question": "A kit has 780 screws. Four assemblies each use 5 screws. How many screws are left?",
+      "generated_text": "Hello, this is the English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 15,
+      "id": "reasoning-text-e217bf11f5e026288cb1",
+      "question": "A kit has 787 screws. Four assemblies each use 6 screws. How many screws are left?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 16,
+      "id": "reasoning-text-cd58473685e73cb64b16",
+      "question": "A cable measures 103 metres. After cutting off 35 centimetres, how many centimetres are left?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 17,
+      "id": "reasoning-text-84f6b3fb27e0fe4630e7",
+      "question": "A cable measures 104 metres. After cutting off 36 centimetres, how many centimetres are left?",
+      "generated_text": "Hello, this is the background assistant. The user is asking, how many centimeters are left on a cable after cutting off 36?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 18,
+      "id": "reasoning-text-bbeff7480eddc91d0f5d",
+      "question": "A process starts at elapsed minute 108 and lasts 33 minutes. At what elapsed minute does it finish?",
+      "generated_text": "Hello, this is the English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 19,
+      "id": "reasoning-text-6a7f45c3b5a3bbd776bd",
+      "question": "A process starts at elapsed minute 109 and lasts 34 minutes. At what elapsed minute does it finish?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 20,
+      "id": "reasoning-text-03fda72b31e3c2cd9598",
+      "question": "A rectangle has length 107 metres and width 7 metres. What is its perimeter?",
+      "generated_text": "Hello, this is my background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 21,
+      "id": "reasoning-text-f0cf800ef46ee44bbeb5",
+      "question": "A rectangle has length 108 metres and width 8 metres. What is its perimeter?",
+      "generated_text": "Hello, this is the background assistant. Can I get your name to look up details for the rectangle question?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 22,
+      "id": "reasoning-text-bf7c9eda84756710f8e8",
+      "question": "One quarter of a collection of 440 counters is set aside. How many counters are set aside?",
+      "generated_text": "Hello, this is the English assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 23,
+      "id": "reasoning-text-b7852c785b7e6c0cf395",
+      "question": "One quarter of a collection of 444 counters is set aside. How many counters are set aside?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 24,
+      "id": "reasoning-text-55dd259259df770076c4",
+      "question": "A pump moves 5 litres each minute for 104 minutes. How many litres does it move?",
+      "generated_text": "Hello, this is your English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 25,
+      "id": "reasoning-text-20298af81edb5cb960d4",
+      "question": "A pump moves 6 litres each minute for 105 minutes. How many litres does it move?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 26,
+      "id": "reasoning-text-7be066806a20706bf421",
+      "question": "102 tickets cost 12 pounds each. One booking fee adds 2 pounds to the whole purchase. What is the total cost?",
+      "generated_text": "Hello, this is the English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 27,
+      "id": "reasoning-text-eab3a499904137e2ac54",
+      "question": "103 tickets cost 13 pounds each. One booking fee adds 3 pounds to the whole purchase. What is the total cost?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 28,
+      "id": "reasoning-text-3599d4b234acd863b167",
+      "question": "A register contains 123. Add 5, double the result, and subtract 2. What value remains?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 29,
+      "id": "reasoning-text-eba15c44bc4f2d384958",
+      "question": "A register contains 124. Add 6, double the result, and subtract 3. What value remains?",
+      "generated_text": "Welcome to our support line. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 30,
+      "id": "reasoning-text-714c03074a0131bc3bdd",
+      "question": "Tank A holds 130 litres and tank B holds 16. Move 5 litres from A to B without losing any. What is the combined volume?",
+      "generated_text": "Hello, this is the tank volume assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 31,
+      "id": "reasoning-text-5a44fa94d6f516c37ae2",
+      "question": "Tank A holds 131 litres and tank B holds 17. Move 6 litres from A to B without losing any. What is the combined volume?",
+      "generated_text": "Hello, this is the helpline. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 32,
+      "id": "reasoning-text-3b36dd6ce0302d9c49d8",
+      "question": "Joseph has one hundred and twenty three tokens. Kai has five fewer than Joseph. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 33,
+      "id": "reasoning-text-926e0f8539917e7353b6",
+      "question": "Joseph has one hundred and twenty four tokens. Kai has six fewer than Joseph. Lee has three times as many as Kai. How many tokens does Lee have?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 34,
+      "id": "reasoning-text-21b79b0ed689927f0936",
+      "question": "A delivery was scheduled for project day 107. A delay adds 5 days and a later revision brings it forward 2 days. What is its new project day?",
+      "generated_text": "Hello, this is the English voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 35,
+      "id": "reasoning-text-82db21383afd5a18cef7",
+      "question": "A delivery was scheduled for project day 108. A delay adds 6 days and a later revision brings it forward 3 days. What is its new project day?",
+      "generated_text": "Hello, this is my background assistant. Can I help with anything today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 36,
+      "id": "reasoning-text-b4d11120fdfd18c5c3f0",
+      "question": "A resistor carries 2 amperes under 208 volts. Using voltage equals current times resistance, what is its resistance?",
+      "generated_text": "Hello, this is Moshi. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 37,
+      "id": "reasoning-text-27c9b8f6dbf8ec069f14",
+      "question": "A resistor carries 3 amperes under 315 volts. Using voltage equals current times resistance, what is its resistance?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 38,
+      "id": "reasoning-text-435fcac6963558a77b0c",
+      "question": "A vehicle covers 540 metres in 5 seconds. What is its average speed?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 39,
+      "id": "reasoning-text-0303d9fb8a1d64e1dfca",
+      "question": "A vehicle covers 654 metres in 6 seconds. What is its average speed?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 40,
+      "id": "reasoning-text-c7da3629667cd1e2c2e5",
+      "question": "What is the mean of the three measurements 123, 126 and 129?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 41,
+      "id": "reasoning-text-273b7b334dbc2908619f",
+      "question": "What is the mean of the three measurements 124, 127 and 130?",
+      "generated_text": "Hello, this is voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 42,
+      "id": "reasoning-text-b3e5716f69ab1bfe57f9",
+      "question": "A shop sells 3 items at 109 pounds each. Each item cost the shop 3 pounds. What is the total profit?",
+      "generated_text": "Hello, how can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 43,
+      "id": "reasoning-text-8212ddf2a028643c919f",
+      "question": "A shop sells 4 items at 110 pounds each. Each item cost the shop 4 pounds. What is the total profit?",
+      "generated_text": "Hello, this is an English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 44,
+      "id": "reasoning-text-41d4dcba337eaddb91e1",
+      "question": "New York is two-thirds as populated as all of New England. If New England has two million one hundred thousand people, calculate the combined population of both states.",
+      "generated_text": "Hello, this is background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 45,
+      "id": "reasoning-text-ed480c21de82a3a03d2a",
+      "question": "An organization trying to save endangered species of turtles has taken twice more hawksbill turtles than the number of green turtles into a conservation center. If the number of green turtles is 800, calculate the number of turtles that have been taken into the conservation center.",
+      "generated_text": "Hello, this is System. Can I help you with anything?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 46,
+      "id": "reasoning-text-d1ae04c64e3bc9e1ed2c",
+      "question": "Mark buys a loaf of bread for four dollars and twenty cents and some cheese for two dollars and five cents. He gives the cashier seven dollars. If the cashier only has one quarter and one dime in his till, plus a bunch of nickels, how many nickels does Mark get in his change?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 47,
+      "id": "reasoning-text-4580413bb7d3bfc0d82a",
+      "question": "To produce one chocolate bar, a company needs 1.5 grams of sugar. Every minute the company produces 36 chocolate bars. How many grams of sugar will the company use in two minutes?",
+      "generated_text": "Hello, this is the background assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 48,
+      "id": "reasoning-text-d041d1a4118b43712511",
+      "question": "James decides to bulk up.  He weighs 120 kg and gains 20% of his body weight in muscle and 1 quarter that much in fat.  How much does he weigh now?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 49,
+      "id": "reasoning-text-b39055ae902422741acb",
+      "question": "Out of the 200 cookies that Javier baked from the recipe he learned online, his wife took 30%, and his daughter took 40 from the remaining cookies. If he ate half of the remaining cookies, how many cookies did they not eat?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 50,
+      "id": "reasoning-text-d84abf0c9ca3216ffdec",
+      "question": "Darcy washes and drys 20 shirts and 8 pairs of shorts. If he folds 12 of the shirts and 5 of the shorts, how many more remaining pieces of clothing does Darcy have to fold?",
+      "generated_text": "Hello, this is English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 51,
+      "id": "reasoning-text-ec67b9af6c2f15648a08",
+      "question": "Sam and Drew have a combined age of 54. Sam is half of Drew's age. How old is Sam?",
+      "generated_text": "Hello, this is your English speaking assistant. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 52,
+      "id": "reasoning-text-8b9e18824ed3730e38d9",
+      "question": "Walter fell from the eighth platform of some scaffolding and fell past David after falling 4 meters. If he fell for an additional three more times that depth before hitting the ground, and the platforms are evenly spaced out in height, what platform was David on?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 53,
+      "id": "reasoning-text-f85878e0bc6c051e4bdb",
+      "question": "If Jason eats three potatoes in 20 minutes, how long, in hours, would it take for him to eat all 27 potatoes cooked by his wife?",
+      "generated_text": "Hello, this is Jason. Jason, how can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 54,
+      "id": "reasoning-text-217e748c629f849d0e4c",
+      "question": "Jason's stove catches on fire. Buying a replacement will cost one thousand two hundred dollars and fixing the damage to the wall behind it will cost one divided by six th as much. How much does he spend in total?",
+      "generated_text": "Hello, this is Jason. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 55,
+      "id": "reasoning-text-0ab321ee3608474a6f03",
+      "question": "John took a test with 80 questions.  For the first 40 questions, she got 90% right.  For the next 40 questions, she gets 95% right.  How many total questions does she get right?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 56,
+      "id": "reasoning-text-2d292690c9c81e34b9dc",
+      "question": "If there are 8 slices in a large pizza, how many slices will remain if Mary orders 2 large pizzas and eats 7 slices?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 57,
+      "id": "reasoning-text-5140f68a58b6b023e14f",
+      "question": "Abigail has a report due tomorrow which needs to be 1000 words in length. Abigail can type 300 words in half an hour. If she has already written 200 words, how many more minutes will it take her to finish the report?",
+      "generated_text": "Hello, this is voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 58,
+      "id": "reasoning-text-fd54f0f20c1e97048457",
+      "question": "Stacy just bought a six month prescription of flea and tick medicine for her dog for one hundred and fifty dollars online. Her cashback app was offering ten percent cashback and she has a mail-in rebate for twenty five dollars on a six-month prescription. How much will the medicine cost after cashback and rebate offers?",
+      "generated_text": "Hi, this is your English speaking assistant. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 59,
+      "id": "reasoning-text-2ace324293650105e958",
+      "question": "Corna wants to buy a shirt. The store buys the shirt for $20, but charges 30% for profit. However, the shirt is on sale for 50% off the selling price. What is the price now?",
+      "generated_text": "Hello, this is Corna. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 60,
+      "id": "reasoning-text-4ef8f54642caf2c74f16",
+      "question": "In the baking contest, three times as many people voted for the unicorn cake compared to the witch cake, and the number of votes for the dragon cake was 25 more than the number of votes for the witch cake. If 7 people voted for the witch cake, how many votes were cast total?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 61,
+      "id": "reasoning-text-4d2678dfe73a50172d80",
+      "question": "Sam has 3 German Shepherds and 4 French Bulldogs. Peter wants to buy 3 times as many German Shepherds as Sam has and 2 times as many French Bulldogs as Sam has. How many dogs does Peter want to have?",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 62,
+      "id": "reasoning-text-800fd33e454a0cbd54ac",
+      "question": "Anna goes trick-or-treating in a subdivision where she gets 14 pieces of candy per house. Her brother Billy goes trick-or-tricking in a neighboring subdivision where he gets 11 pieces of candy per house. If the first subdivision has 60 houses and the second subdivision has 75 houses, how many more pieces of candy does Anna get?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 63,
+      "id": "reasoning-text-fc1d398d740f13d02efd",
+      "question": "Gargamel needed new tires for his truck. He went to the auto shop and bought 4 tires on sale for $75 each. The salesman told him that he saved a total of $36. If Gargamel saved the same amount on each tire, what was the original price of each tire?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 64,
+      "id": "reasoning-text-2ce26c6ac20122bd229a",
+      "question": "Dan's skateboarding helmet has ten more craters than Daniel's ski helmet. Rin's snorkel helmet has 15 more craters than Dan's and Daniel's helmets combined. If Rin's helmet has 75 craters, how many craters are in Dan's helmet?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 65,
+      "id": "reasoning-text-89e3d78b963d1faed9ab",
+      "question": "The cash price of a refrigerator was $8000. Samantha wanted to buy the refrigerator but pay in installments. If she paid a deposit of $3000 and paid 30 equal monthly installments of $300 each, calculate how much money she would have saved by paying cash.",
+      "generated_text": "Hello, this is English speaking assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 66,
+      "id": "reasoning-text-25c69e4272e2e78fd975",
+      "question": "Mabel is counting sharks in the ocean. She knows that of the fish that she sees, 25% will be sharks and 75% will be another type of fish. On day one she counts 15 fish. On day 2 she counts three times as many. How many sharks did she count over those two days?",
+      "generated_text": "Hi, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 67,
+      "id": "reasoning-text-ee31096d69ba814784dc",
+      "question": "Three years ago, Bethany was twice the age of her younger sister. In 5 years, her younger sister will be 16. How old is Bethany now?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 68,
+      "id": "reasoning-text-604f4ad74c93d026c80c",
+      "question": "Chris buys two and a half dozen donuts on his way to work to share with his coworkers. While driving, he eats ten percent of the donuts. Once inside, he grabs another four donuts for his afternoon snack. How many donuts are left for his coworkers?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 69,
+      "id": "reasoning-text-ae0e116890d3b4bdb5a1",
+      "question": "A professional company is hiring for a new position. They have two qualified applicants. The first applicant will accept a salary of $42000 and make the company $93000 in the first year, but needs 3 months of additional training that costs $1200 a month. The second applicant does not need training and will make the company $92000 in the first year, but is requesting a salary of $45000 and a hiring bonus of 1% of his salary. Less the amount it will cost to pay for each candidate, how many more dollars will one candidate make the company than the other in the first year?",
+      "generated_text": "Hello, thank you for calling our company services. How can I assist you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 70,
+      "id": "reasoning-text-e9a7d3d4c69b368dd832",
+      "question": "Noah has two closets. Each closet can fit one quarter as much as Ali's closet, which can fit two hundred pairs of jeans. How many jeans can both Noah\u2019s closets fit?",
+      "generated_text": "Hey, let me get you the info. Ali's closet fits 200 pairs of jeans. Each of Noah's closets fits 1 quarter of that, so each fit 50 pairs. If you add them together that\u2019s 100 pairs. Does that make sense?",
+      "requested_answer_correct": true,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 71,
+      "id": "reasoning-text-1a9dc56d6505b4a3e81d",
+      "question": "John has 3 children. He and his wife are supposed to buy notebooks for their sons but they couldn't agree on how many to buy. So John bought 2 notebooks for each of his children and John's wife bought 5 notebooks for each of them. How many notebooks did they buy in total for their children?",
+      "generated_text": "Hello, this is the English speaking assistant. How can I help today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 72,
+      "id": "reasoning-text-00f1af12efc39ddd8d41",
+      "question": "Bob has a cube of silver that measures 3 inches on each side.  A cubic inch of silver weighs 6 ounces.  Each ounce of silver sells for $25.  He sells it for 110% of its silver value.  How much does he sell it for?",
+      "generated_text": "Hello, this is the voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 73,
+      "id": "reasoning-text-8fcc3af6ad26d54d045b",
+      "question": "Mary sees a flock of ducks crossing the street. There are 2 ducks with 5 ducklings each, 6 ducks with 3 ducklings each, and 9 ducks with 6 ducklings each. How many ducks and ducklings are there total?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 74,
+      "id": "reasoning-text-ed3a48df827e45098372",
+      "question": "For homework, Brooke has 15 math problems, 6 social studies problems, and 10 science problems. He can answer each math problem for 2 minutes while answering each social studies problem takes him 30 seconds. If he can answer each science problem in 1.5 minutes, how long will it take Brooke to answer all his homework?",
+      "generated_text": "Hey, let me know if you have any questions.",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    },
+    {
+      "model": "expanded105M",
+      "index": 75,
+      "id": "reasoning-text-81581203f1e3f92dabae",
+      "question": "Emma traveled by car 280 miles in 2 hours 20 minutes. What was the average speed of the car in miles per hour?",
+      "generated_text": "Hello, this is the English speaking voice assistant. How can I help you today?",
+      "requested_answer_correct": false,
+      "actual_RET": 0,
+      "actual_requests": 0
+    }
+  ],
+  "optimizer_updates": 0,
+  "accepted": false
+}

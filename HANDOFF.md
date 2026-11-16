@@ -1,3 +1,41 @@
+# 16Nov22:50UTC — Causal304 COMPLETE, independently backed; reference RUNNING
+
+Actual8522764 COMPLETED0:0, elapsed7586seconds x4 =30344GPU-seconds.
+Producer2e43982cfca7e89fdb52108a9a7f1db579bb399b unchanged. Host terminal
+confirms all304 and independent1534files/5458731485bytes with everySHA verified.
+Inventory52150c35d470bc3d7d1bf446308c57a36d1ce8a4182614c51ac258ba0d5b071f;
+backup /home/u6ada/dsyj94.u6ada/duplex-causal-probe-backups-v1/job-8522764.
+Small receipt and allfour complete resultJSONs copied locally. No optimization.
+
+Actual8523671 RUNNING on nid010224; immutableb17e17d45be0c69f497465ee5cc21ba6fc2fc450,
+path /projects/u6ada/duplex-live/source-reference-1a4886f MUST NOT change.
+Latest model log38/76; no stop observed. OneGPU frozen27B supported-text reference,
+no APIs/updates. Monitor SAMEjob occasionally, never restart on SSH timeout.
+
+Assisted152 review complete: basiccore11/12base versus10/12adapter; quantitative
+correct without falseexplanation2/64 versus3/64. Prefix-only152 review complete:
+base0/12basic0/64quant, adapter4/12basic1/64quant. Mostly generic greetings,
+so persona-prefix silence is NOT genuine textchat/latentreasoning equivalence.
+Allnew304 RET0 and requests0. Generatedtext semantic review is NOT speechquality
+acceptance. Full raw outputs preserved; no GPT-live qualification.
+
+CRITICAL priorworkreuse: official32 PersonaPlex already completed in8203137
+(source605ff79, NVIDIA16419a2/NATF2/QApersona). Word15/32,quiet0,pause0; retain
+that evidence. Existing actual ARM sphn0.2.1 binary under artifacts/personaplex-
+runtime-v1/pylibs; DO NOT rebuild/re-download or fake its module. Provisional
+new official scope reduced to missing64 x2voice conditions (128), NOT SUBMITTED.
+Whole strict native GPU contract still unproven for the new staged server path.
+
+Kokoro strictCPU0.7.16 proof now PASS all548tensors/81,763,410params; no clips
+generated or admitted. Modern-source failed strict proof retained. Keep separate
+from active native/reference runtimes. Next: complete reference76+independentbackup,
+then evidence-led action/recipe/data/newlearning decision with actual adaptiveOPAL,
+fixedcontrol, MiRL suffix/RL replay and functional retention. Do not repeat196.
+Cert expires16Nov23:49:49UTC; fresh access may need human renewal. Existing job
+and independent archive run without chat. Goal ACTIVE, product not accepted.
+
+---
+
 # 16Nov — ExactCPU27 action proof; local backend and localTTS staged
 
 Exact source5f6a0e2591a764622668344a42b90dd3ae76a696 passes actual ARM CPU27tests,
