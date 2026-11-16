@@ -1,0 +1,16 @@
+{
+  "status": "CPU_FIXTURE_PASS_NATIVE_GPU_PENDING",
+  "actual_ARM_CPU_tests": 3,
+  "source_file_sha256": "bbfa2b2608eb17f632d71e8b485cee6ae6eae0bd8ba1eb4ee673ce4ae44b34ce",
+  "tested": [
+    "learned delta installs with unchanged nonRET logits and legacy adapter values; all inference weights frozen",
+    "wrong checkpoint identity, incomplete step, NaN and altered program rejected before mutation",
+    "scalar bias cannot acquire hidden weights"
+  ],
+  "model_fixture": true,
+  "actual_native_GPU_restore": false,
+  "actual_CUDA_graph_capture": false,
+  "native_free_running_qualified": false,
+  "external_API_calls": 0,
+  "current_running_job_changed": false
+}

@@ -1,3 +1,29 @@
+# 16Nov23:45UTC — Native action loader seam staged; current job unchanged
+
+New optional expanded_evaluation.make_engine(readout_state=...) installs the
+validated residual INSIDE its loader, before Engine/LMGen warmup and graphcapture.
+DefaultNone path retained. Only expanded105M predecessor allowed; package binds
+complete196 checkpointSHA/source and exact nativefamily, step128 newhead only,
+Adam/RNG/OPAL/program membership/hashes, finiteFP32head and scalar-bias ownership.
+Old text-head adapter namespace is explicitly canonicalized back to original
+names for value auditing; no weight transplant. ActualARM CPU3fixturetests PASS
+0.068s on stagedhelper: logits/oldadaptervalues/frozenownership, invalidstate
+rejection BEFORE mutation, scalarcannotgainhiddenweights. Proofsourcehash in
+docs/NATIVE-ACTION-INFERENCE-CPU-PROOF-2026-11-16.json. This is NOT nativeGPU
+restore/graph/policy qualification. No nativeheadtraining or new savedLMupdates.
+Do NOT hotdeploy into running f926source8526401. Next actualnative featurecache,
+zero-insertion/wholeparent integrity, headfit and fresh fullstate/native restore
+remain required before any policy acceptance. Existing async worker was checked:
+NativeLiveSession already uses asyncio.to_thread for transcription and worker,
+so do not build a duplicate async execution framework.
+
+Renewal-readiness question pending; localcertificate independently rechecked
+valid16Nov11:49:49→23:49:49UTC. Need ownerready/sign-in for continued access.
+Current valid voice job and independent archive remain untouched. GoalACTIVE,
+currentproductunaccepted. Source/CPU progress is not acceptedproduct behavior.
+
+---
+
 # 16Nov23:35UTC — Next control fitter tested; only official8526401 native job active
 
 Staged action_fit.py is a FIXED supervised readout/bias control, not nativeLM

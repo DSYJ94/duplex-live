@@ -52,7 +52,7 @@ def named_adapter(state,selection):
     return result
 
 
-def make_engine(a,selection):
+def make_engine(a,selection,*,readout_state=None):
     import torch
     from .foundation_context import raw_model
     from .matched_generation import construct_engine
@@ -61,6 +61,7 @@ def make_engine(a,selection):
     from evals.context_spanning_probe import audited_loads
     from contextspan.model import engine as module,weights
     state=None
+    if readout_state is not None and a.capacity!='expanded105M':raise ValueError('Readout requires its exact expanded predecessor, never the raw base')
     if a.capacity!='baseline':
         if sha(selection['checkpoint'])!=selection['checkpoint_sha256']:raise ValueError('Final adapter identity changed')
         state=named_adapter(torch.load(selection['checkpoint'],map_location='cpu',weights_only=False),selection)
@@ -71,6 +72,9 @@ def make_engine(a,selection):
             ownership=configure_lm(lm,'broad-lora64')
             if ownership['trainable_parameters']!=105070592:raise ValueError('Full expanded adapter ownership required')
             load_adapter(lm,state)
+        if readout_state is not None:
+            from .action_inference import identity,install_fit
+            install_fit(lm,readout_state,identity(selection))
         return lm.requires_grad_(False).eval(),weights.load_mimi(device),weights.load_tokenizer()
     loads=[]
     with audited_loads(loads):engine=construct_engine(module,loader,checkpoint=str(WEIGHTS/'context_spanning_7b.pt'),device='cuda',temp=.8,temp_text=.7)
@@ -78,7 +82,7 @@ def make_engine(a,selection):
     if not own or not own[-1]['strict']or own[-1]['missing']or own[-1]['unexpected']:raise ValueError('Exact published raw base load required')
     if engine.lm.dep_q!=16 or engine.frame_size!=1920 or engine.frame_rate!=12.5:raise ValueError('Unchanged full native geometry required')
     if state is not None:
-        from evals.personaplex_adapters import adapter_parameters
+        from .action_inference import adapter_parameters
         actual=adapter_parameters(engine.lm)
         if actual.keys()!=state.keys()or any(not torch.equal(v.detach().cpu(),state[n])for n,v in actual.items()):raise ValueError('Engine warmup changed learned adapter values')
     else:
@@ -88,6 +92,9 @@ def make_engine(a,selection):
     install(engine);engine.evaluation_model_loads=own
     from evals.context_execution import snapshot
     engine.expanded_inference_proof=dict(actual_adapter_coefficients=0 if state is None else sum(v.numel()for v in state.values()),all_weights_frozen=not any(p.requires_grad for p in engine.lm.parameters()),execution=snapshot(engine.lm))
+    if readout_state is not None:
+        from .action_inference import identity
+        engine.expanded_inference_proof['learned_action_readout']=dict(identity=identity(selection),mode=readout_state['metadata']['mode'],new_readout_updates=128,native_free_running_qualified=False)
     return engine
 
 
