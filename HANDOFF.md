@@ -1,3 +1,35 @@
+# 16Nov21:19UTC — Reference8523671 queued after successful causal8522764
+
+Actual scheduler8523671 PENDING ReasonDependency afterok:8522764. One GPU,
+max2h, no requeue, 8CPU/220G requested, Remora nid010023 excluded. Immutable
+producer b17e17d45be0c69f497465ee5cc21ba6fc2fc450 in idle-then-pinned worktree
+/projects/u6ada/duplex-live/source-reference-1a4886f (path suffixhistorical).
+Actual ARM CPU25 tests PASS on that exactsource, imports TF5.23/Qwenloader;
+noGPUweights or optimization in CPUproof. Launcher preserves ACTUAL Slurm-selected
+CUDA index (does not force physicalGPU0). Host will require causal COMPLETED0:0,
+full304/independent backup, exact oneGPU/provider clock and fresh sharedaccounting
+before reference load. No valid native worker changed or interrupted.
+
+Reference root /projects/u6ada/duplex-live/native-local-reasoner-reference-20261116-v1;
+backup /home/u6ada/dsyj94.u6ada/duplex-local-reference-backups-v1;
+log /projects/u6ada/duplex-live/native-local-reference-8523671.log;
+SBATCH /projects/u6ada/duplex-live/native-local-reasoner-reference-20261116-v1.sh.
+Read actual submission.json there for prior+reservedGPU-seconds; later admission
+rechecks rather than reuses totals. Not RUNNING/completed; zerooptimizer/API.
+Remora notified under existing coordination authorization, sharedpublicweights
+retention requested. They report chain8521985→8523508→8523666,1GPU serial; fresh
+provider/accounting remains required rather than assuming their maximums actual.
+
+Current causal progress44/76 assisted each; baseprefix12/76. Base all89TRAIN RET
+teacher result now exists: top1=0/top25=0, meanprobability~3.56e-8. Untouched base
+has no learned customRET command; this is not yet an adapter failure. Candidate
+teacher result still computing; do not interrupt. Keep monitoring observer51180.
+Next: score completed304 + adapted89 and stronger text76, inputASR independently,
+then choose targeted native route/exposure or competence/data/recipe intervention.
+Actual original saved196 remains intact and no training updates repeated.
+
+---
+
 # 16Nov — Separate local reasoning reference staged; valid8522764 unchanged
 
 Actual CPU runtime readiness now PASS: Transformers5.23.0, imageNumPy1.26.4 /
