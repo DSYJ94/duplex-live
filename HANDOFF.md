@@ -1,3 +1,23 @@
+# 16Nov — OWNER LISTENING FORMAT: single playback, no long trailing silence
+
+For all listening samples, combine user input and model response in ONE file per
+condition on the same original audio-frame clock. Preserve overlap and all
+leading/internal pauses; remove only trailing silence with1.5s margin. Stereo
+user-left/model-right is available in combined-v2; no gain/normalization. Original
+raw full outputs remain intact for scoring. Explain offline audio-frame timing
+is NOT measured live wall-clock/microphone end-to-end latency.
+The previous67.44s previews included fixed60s DEV response window, not67s speech.
+Corrected pair: base14.8225s, adapter17.23825s; both local hashes verified under
+runs/container-startup-20261115/listening-preview-8511770/combined-v2.
+No new inference/training. Existing observer11871 unchanged; last16/32control
+perarm and6/64DEVperarm,44/192 complete, valid RUNNING. Long waiting toolcell
+was stopped only to respond to owner steering; GPU job/observer untouched.
+Current8511770 is evaluationONLY: rawbase vs full196-step105M adapter,96same
+inputs each, independent ASR/control/semantic review; actual backend/live latency
+not established by nativeRET or recorded playback. All checkpoints preserved.
+
+---
+
 # 16Nov16:07UTC — Live evaluation progressing; first A/B preview preserved
 
 8511770 remains RUNNING. Observer11871 reads every120s; latest counts8/32
