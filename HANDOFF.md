@@ -1,3 +1,39 @@
+# 16Nov — ExactCPU27 action proof; local backend and localTTS staged
+
+Exact source5f6a0e2591a764622668344a42b90dd3ae76a696 passes actual ARM CPU27tests,
+including final atomic action-readout installation. Receipt remote native-action-
+readout-CPU-proof-5f6a0e2.json; Macsmallcopy retained. No nativeGPU/head training.
+Actual public Qwenprocessor.decode + nonthinking chattemplate also PASS; queued
+reference8523671 still producerb17e17d, sourceworktree MUST NOT be modified.
+
+Old foreground observer51180 ended afterSSHtimeout, not GPUfailure. Actual job
+8522764 verifiedhealthy21:45UTC: bothassisted66/76, baseprefix36, adaptedprefix29.
+Do not restart model. Detached lightweight observer30659 produced no usableevents
+and is NOT relied upon. Use fresh occasional SAMEjob/provider reads with SSH
+ServerAliveInterval30/CountMax3; no more monitor-infrastructure loops.
+
+New local_reasoner_worker.Local27BExecutor reuses existing QwenResponseExecutor,
+actual RecordWorld/tool receipts, schema checks and Qwen3.5XML functionparser;
+explicit verified localactor only, no paidAPI fallback. New fixtureintegration
+plus related MacCPU50tests PASS: exactprivateread/actualreceipt followup, missing
+identification rejection and ordinary replywithout inventedreceipt. Not deployed
+into pendingreference; actual native structured-model qualification remains next.
+
+Bounded TTS research append done. Separate pinned327MB Kokoro82M assets +two
+Britishvoices bf_emma/bm_george/Apachelicense downloaded onlyto remote
+/projects/u6ada/duplex-live/public-models/kokoro-f3ff357-v1; allpublishedLFS/Gitblob
+hashes PASS. Localtinyreceipt only; NO Macweights. Separate source/dependencyroot
+/projects/u6ada/duplex-live/local-british-data-runtime-20261116-v1, sources pinned
+Kokorodfb907a/Misakifba1236, actual ARM binary dependencyinstallation0. OwnNumPy2.2.6,
+TF4.51.3/spaCy3.8.18, no existingnative/Remora/referenceenvmutations. English spaCy
+3.8.0/num2words staged. OfflineCPUreadiness-v2 PASS genuine Britishespeak/G2P and
+quietmodelFalse pipeline; default Misaki G2P firstattempt tried extraBARTweights,
+correctly blockedoffline. Explicit EspeakFallback closes it. NO GPUweights/TTS
+clips/trainingadmission yet. Need fullstrict KModelkeys+weights proof and independent
+whole qualification before anysource entersTRAIN. Avoidanother modelcatalogue.
+
+---
+
 # 16Nov — RET underfit confirmed; next learning intervention staged, not installed
 
 Actual8522764 all89originalTRAIN teacher measurements complete for bothmodels:
