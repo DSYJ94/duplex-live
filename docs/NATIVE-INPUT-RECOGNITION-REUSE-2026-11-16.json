@@ -1,0 +1,16 @@
+{
+  "complete64": true,
+  "passed": 64,
+  "existing_unbiased_source_recognizer": "scribe_v3",
+  "protocol": "complete2144_scribe3_no_reference_or_bias_v1",
+  "every_evaluated_user_PCM_exact": true,
+  "source_manifest_sha256": "9a5b6265566b430c7d788f0d756fcdeebd8fee8d02b5b4995c404c54921a015e",
+  "quality_sha256": "30a52fec21cd763920f38b3c0d057c291bb66f27b42c7c1792809742aa52fa70",
+  "reused_report_sha256": "f031338f0af3dfec351c423d103f274cf34fb9dd37df112fbf128b7cf8df069c",
+  "helper_sha256": "217c941dee11c49464d236585885da6a69c35cbfcb0cd38d3ab43d6c945eaca1",
+  "new_model_inferences": 0,
+  "external_API_calls": 0,
+  "optimizer_updates": 0,
+  "native_internal_perception_proven": false,
+  "scope": "64 quantitative inputs only; 12 basic source lineage remains separate"
+}

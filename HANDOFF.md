@@ -1,3 +1,19 @@
+# 16Nov — Complete64 independent input recognition REUSED, not rerun
+
+All64 quantitative original user recordings have existing unbiased Scribe3
+recognition with word_pass64/64. Verified original complete2144 qualityhash against
+admitted manifest, exact user-parent/audiohash and authoredquestion, and every
+actual evaluated floatPCM prefix EQUAL original qualified userchannel; remainder
+is onlysilence. CPU-only run, zero API/new model inference/optimization. Helper
+input_recognition_reuse.py and summary NATIVE-INPUT-RECOGNITION-REUSE-2026-11-16.json;
+full reused input transcripts/times in runs/container-startup-20261115/input-
+recognition-reuse-20261116.json, remote samebasename under projectroot. Source
+recognition is intelligibility evidence for Scribe, not proof of native internal
+perception or any model-answer correctness. No inspectedDEV enteredTRAIN. No need
+repeat these recognizer calls.12 basic input lineage remains separate.
+
+---
+
 # 16Nov21:19UTC — Reference8523671 queued after successful causal8522764
 
 Actual scheduler8523671 PENDING ReasonDependency afterok:8522764. One GPU,
