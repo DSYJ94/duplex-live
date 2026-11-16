@@ -1,3 +1,36 @@
+# 16Nov16:00UTC — TRAINING COMPLETE196; evaluation8511770 RUNNING
+
+8478956 actual provider COMPLETED exit0, elapsed73796s*4GPU=81.9955556GPUh.
+All196 NEW updates complete; final checkpoint SHA96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87.
+ALL4 fresh native Adam/RNG/OPAL/fingerprint restores PASS; independent six-file
+step196 NFS backup receipt d9791ff61ee209516c5223bdd05cc3287146fbc2e4317e8069485325db3e6420.
+Small original proofs locally runs/container-startup-20261115/final196; full
+checkpoints remain on independent cluster filesystems. No replay/adaptiveextra197.
+Detailed receipt docs/NATIVE-EXPANDED1072-TRAINING-COMPLETION-2026-11-16.json.
+
+Automatic one-shot comparison8506868 FAILED after31s before model loading:
+container lacked explicit read-only original-parent-backup bind. Source2780df56
+fixes bind and terminal provider retrieval after scontrol expiry; actual modern
+CPU container final196/all4restores/backup+complete input prep PASS before GPU.
+Regression10 tests9PASS1skip (native-input tested on cluster earlier). Preserved
+all failed receipts and old evaluation root, no completed outputs overwritten.
+
+Recovery8511770 actual RUNNING nid010814, same4GPU/32CPU/400G allocation;
+max5h59m to16Nov21:54:50UTC, excluding Remora nid010037. Actual plan JSONPASS.
+Prior31s counted: total evaluation upper(21540+31)*4=86284 GPU-seconds<24GPUh.
+Source2780df561a8dc9525b030d2bfdbd967cfc6de945, immutable worktree
+/projects/u6ada/duplex-live/source-expanded-eval-2780df5;
+root /projects/u6ada/duplex-live/native-expanded1072-evaluation-repair-v2;
+backup /home/u6ada/dsyj94.u6ada/duplex-expanded1072-evaluation-backups-v1.
+Read-only observer tool11871, server observe-eval-8511770.py, log
+runs/container-startup-20261115/evaluation-observer-8511770.jsonl,120s polls,
+no model actions. Never resubmit because observation timeout. Await full192,
+independent raw archive, semantic/routing and speech review before improvements.
+No reasoning/speech/backend acceptance claimed. No optimizer/API calls in eval.
+Remora8505349 remains1GPU nid010037/max6h, reported Qwen52/56; protect node.
+
+---
+
 # 16Nov12:42UTC — Evaluation ready; one-shot successful handover waiting
 
 Evaluation immutable producer069bc6534b794937632cbedb657c92e51c89d531 is

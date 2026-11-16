@@ -1,0 +1,85 @@
+{
+  "status": "TRAINING_COMPLETE_EVALUATION_PENDING",
+  "training_job": "8478956",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 73796,
+  "actual_GPUs": 4,
+  "actual_GPU_hours": 81.99555555555555,
+  "training": {
+    "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+    "actual_new_step": 196,
+    "training_complete": true,
+    "continuation_ready": false,
+    "checkpoint": "/projects/u6ada/duplex-live/native-expanded1072-phase-v1/checkpoints/step-0196.pt",
+    "checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+    "native_behavior_speech_backend_live_acceptance_pending": true
+  },
+  "fresh_native_restore": {
+    "passed": true,
+    "rows": [
+      {
+        "native_data_qualified": true,
+        "native_fresh_restore_passed": true,
+        "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+        "actual_CUDA": true,
+        "step": 196,
+        "execution": "e4f80e267e774a5c87021e712850cc11",
+        "reference_execution": "255e0a6348b64313bd097b1a475ad49c",
+        "pid": 63,
+        "all_Adam_RNG_OPAL_native_fields_exact": true
+      },
+      {
+        "native_data_qualified": true,
+        "native_fresh_restore_passed": true,
+        "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+        "actual_CUDA": true,
+        "step": 196,
+        "execution": "bde8e83cf7da45358fba671ebbcd9dda",
+        "reference_execution": "13070bc42d94466583d7e7e40e17b4c4",
+        "pid": 64,
+        "all_Adam_RNG_OPAL_native_fields_exact": true
+      },
+      {
+        "native_data_qualified": true,
+        "native_fresh_restore_passed": true,
+        "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+        "actual_CUDA": true,
+        "step": 196,
+        "execution": "d66f6116195744acae5fbbaf6689930a",
+        "reference_execution": "8e3b5b3191364d2187cfe1daaf0a127a",
+        "pid": 65,
+        "all_Adam_RNG_OPAL_native_fields_exact": true
+      },
+      {
+        "native_data_qualified": true,
+        "native_fresh_restore_passed": true,
+        "source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+        "actual_CUDA": true,
+        "step": 196,
+        "execution": "2859ea036872404a82095ee6b5525f25",
+        "reference_execution": "5ee24dcc60fc44c1a1a3a4f7356f5aa6",
+        "pid": 66,
+        "all_Adam_RNG_OPAL_native_fields_exact": true
+      }
+    ]
+  },
+  "independent_final_backup_receipt_sha256": "d9791ff61ee209516c5223bdd05cc3287146fbc2e4317e8069485325db3e6420",
+  "reasoning_delegation_speech_improvement_not_yet_established": true,
+  "failed_evaluation_job": {
+    "job": "8506868",
+    "elapsed_seconds": 31,
+    "GPUs": 4,
+    "model_loaded": false,
+    "cause": "Missing read-only parent-backup container bind"
+  },
+  "evaluation_recovery": {
+    "job": "8511770",
+    "source": "2780df561a8dc9525b030d2bfdbd967cfc6de945",
+    "root": "/projects/u6ada/duplex-live/native-expanded1072-evaluation-repair-v2",
+    "maximum_seconds": 21540,
+    "GPUs": 4,
+    "node": "nid010814",
+    "new_optimizer_updates": 0
+  }
+}
