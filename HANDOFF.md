@@ -1,3 +1,15 @@
+# 16Nov — Remora8491715 actual separate-node allocation reported
+
+Remora independently confirms8491715 RUNNING on nid010127, actual AllocTRES
+gres/gpu=1, one visible NVIDIA GH200120GB, resource-admission PASS, unchanged8h
+limit; Gemma12B loaded. This is Remora's verified report, not a new scheduler poll
+by the voice chat. Prior PENDING status below is superseded. Count its actual
+usage and remaining reservation in future shared-award admissions. Protected
+voice nid010879 is distinct and untouched; no additional Remora jobs or optimizer
+updates reported, no new voice job or adaptive handover submitted.
+
+---
+
 # 16Nov — Remora8491715 reservation reported; voice69/196 remains healthy
 
 Remora chat01a17447-3cd3-74f1-b096-068f4bb6b91f reports submitted job8491715,
