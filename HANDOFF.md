@@ -1,3 +1,44 @@
+# 16Nov23:10UTC — Reference76 COMPLETE; official missing128 actually generating
+
+8523671 COMPLETED0:0,1012GPU-seconds x1; full76 independently archived.
+Producerb17e17d45be0c69f497465ee5cc21ba6fc2fc450 unchanged. Backupinventory
+beb3f81d52fe62d9dc6b952cadef3fe09d51898c1f1e34948d07ce860abcf022.
+All76 generatedtext reviewed:12/12basiccore,62/64strictquantitative; turtle45
+has plausible2400 under ambiguous twice-more versus original3200, scaffold52
+exhausted512tokens beforefinalanswer. All75othersEOS. Median generation10.38s,
+p9531.48s, not streaming/nativevoice latency. Strong localbackend reference,
+NOT proofparamcountalonecausednativegap and NOT admittedTRAIN data. Fullresults
+smallcopy and detailedreview JSON local. No repeatedqueries/learning/APIs.
+
+New8526401 RUNNING actualnativeNATF2, latest4/64, source
+f926661581d09d123f04b4e83f699e580cd804c4 at source-official-f926661.
+OneGPU nid010224, started16Nov23:01:04UTC, immutabledeadline17Nov04:01:04UTC.
+Collect missingquantitative64 x NATF2/normalizedsameRPBen only, reuseoldofficial32.
+Root /projects/u6ada/duplex-live/native-official-quantitative-20261116-v1;
+backup /home/u6ada/dsyj94.u6ada/duplex-official-quantitative-backups-v1.
+ActualCPU6tests and strict475native-tensor shapes PASS, existingcompiledARM
+sphn0.2.1 reused; future1.0.0 dependency added ONLY isolatedofficialpylibs.
+BothfirstCPUwrapper errors(PYTHONPATH/missingmount) and missingfuture fixed
+beforeGPU submission. TinyCPUproofwriter literal\n formatting error derived
+without measurement changes; originalbytes retained. ActualGPUTRT prompt89frames
+prefilled/pinned; realoutput1 then4complete, no optimizer/backprop.
+Nevermodifythisworktree orresubmit onobservationtimeout. Fullindependentarchive
+required atsuccess. Remorainformed;8525986/nid010032 active,8526006pending then;
+fullfreshsharedactual/reservedaccounting capturedatadmission, noRemora changes.
+
+New action_features.py +2CPUtests staged for actual TRAIN projection cache:
+mathematical BF16 RET-vs-other probability AND gradients match actual projection
+on ARM CPU. Exactnative collection/injection/trainedrestore remain UNPROVEN.
+Noheadtraining/GPUclaim. Nextphaseplan NATIVE-ACTION-RECIPE-NEXT-PHASE-2026-11-16.md
+explicitly prioritizes learnedbias vs4097RETresidual, then functionalretention/
+recipe and broadconcept/context/uncertainty data; realOPALlocalGit proposals,
+MiRL taskANDbehavior RL/WSP controls remain in widerplan. Do notrepeat196.
+
+Owner readiness question pending for renewal; currentcert expires23:49:49UTC.
+Validjob/guard/archive independent ofchat. GoalACTIVE; no productaccepted.
+
+---
+
 # 16Nov22:50UTC — Causal304 COMPLETE, independently backed; reference RUNNING
 
 Actual8522764 COMPLETED0:0, elapsed7586seconds x4 =30344GPU-seconds.

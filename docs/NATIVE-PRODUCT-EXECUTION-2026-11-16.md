@@ -26,3 +26,12 @@ OPAL's full upstream agent code-editing mechanism and our staged bounded local c
 ## Acceptance evidence
 
 Acceptance requires all of: fresh basic/domain reasoning with uncertainty judgment; appropriate native direct/clarify/delegate choices; complete real task context and grounded result; asynchronous pending conversation, cancellation and stale-result exclusion; measured live turn-taking/interruption/latency; clear natural English/British speech; and correct silence/wait/pause/resume. No averaged score compensates for a failed critical family. Use independent fresh tests after model/recipe selection and owner listening/live test. Do not claim GPT-live parity from this phase.
+
+
+## 16 November completed evidence and the next learning branch
+
+Causal8522764 complete304, fully independently hash-backed. Assisted question-prefix+audio yields basiccore11/12base vs10/12adapter and supported quantitative2/64 vs3/64. Prefix-only is mostly greetings, so it is not a clean text-chat test. Full89 TRAIN teacher RET positions are top25=0 for both; action underfit is measured, not merely absent free-running dispatch.
+
+Local27B reference8523671 complete76 and independently backed: basiccore12/12, strict quantitative62/64; one ambiguous turtle question and one output-budget truncation account for the remaining two. This makes a useful backend plausible, not a native voice improvement or proof that size alone caused the gap. Keep all inspected outputs out of TRAIN.
+
+Official32 already exists (8203137) and is reused. New8526401 only collects missing quantitative64 under NATF2 and normalized sameRPBen/server prompt conditions,0updates/APIs. It runs independently and must not be interrupted. Next learning plan is NATIVE-ACTION-RECIPE-NEXT-PHASE-2026-11-16.md: precise bias-versus-native-readout control, functional-retention recipe repair, broad concept/context/uncertainty/action data, real OPAL local-Git program proposals and progressively qualified native MiRL/RL. No unchanged196 repeat or unmotivated billion-parameter expansion.
