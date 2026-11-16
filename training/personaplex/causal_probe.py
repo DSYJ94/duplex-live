@@ -38,7 +38,7 @@ def supplied_context(question):
 def ret_summary(logits):
     import torch
     z=logits.detach().float().reshape(-1,logits.shape[-1]);p=(z[:,4]-z.logsumexp(-1)).exp();rank=(z>z[:,4,None]).sum(-1)+1
-    return dict(positions=len(p),RET_probability_sum=float(p.sum()),RET_probability_max=float(p.max()),RET_top1=int((rank==1).sum()),RET_top25=int((rank<=25).sum()))
+    return dict(positions=len(p),RET_probability_sum=float(p.sum()),RET_probability_max=float(p.max()),RET_top1=int((z.argmax(-1)==4).sum()),RET_top25=int((z.topk(min(25,z.shape[-1]),-1).indices==4).any(-1).sum()))
 
 
 def teacher_ret(engine,out,guard):
