@@ -1,3 +1,16 @@
+# 16Nov — Remora actor allocation terminal accounting reported
+
+Remora reports8517385 COMPLETED exit0, actual114seconds*1GPU=0.031666667GPUh,
+remaining reservation0; nid010030 released. No new Remora job reported. Count
+actual114GPU-seconds ONCE; former3h maximum is historical, not actual spend.
+Prior Remora8505349 actual13900GPU-seconds and8491715 actual7042GPU-seconds
+remain separately counted. Voice8511770 completed8621s*4 and failed8506868
+31s*4 remain separate. Refresh actual account/provider state before future starts;
+this is a coordinated report, not a new whole-award accounting query. No jobs,
+model states, checkpoints, outputs or active leases changed by this update.
+
+---
+
 # 16Nov18:21UTC — FULL192 COMPARISON COMPLETE/BACKED UP; NOT ACCEPTED
 
 8511770 source2780df561a8dc9525b030d2bfdbd967cfc6de945 providerCOMPLETED exit0,
