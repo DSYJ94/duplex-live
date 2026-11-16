@@ -1,3 +1,42 @@
+# 16Nov — Subsequent bridge lifecycle fix; current source2e worker unchanged
+
+Found realruntime defect: successful delivered requests remainedclosed=False and
+therefore exposed as pending/cancellable to later semanticworker. New correct-seam
+regression reproducedRED, thenGREEN after atomic delivery+RecordWorld.finish under
+worldRLock. Added opt-in in-memory audit_sink capturing actual dispatchcontext,
+worker-returned payload, delivered reference/receipts and closedstate. Default
+serving still recordsNO user/tool content; only explicitly authorized synthetic
+caller may optin. MacCPU suite18PASS (old6nativeLive +new6bridge +guard +3math
++2probeinputs). Not deployed/hot-edited into valid8522764/source2e. Its old
+results retain oldruntime provenance; no retroactive improvement claim.
+
+Remora provided explicitlyread-only public Qwen3.6-27B weights:
+/projects/u6ada/remora/context-review-20261116-v1/shadow/models/qwen27b,
+pin /projects/u6ada/remora/context-review-20261116-v1/shadow/qwen27b-model-pin.json,
+revision8f33b98937c6031bb49e713dee3e8e185aafd26f, Apache2.0. Reference loader
+/projects/u6ada/remora/calculator-control-20261116-v1/source/training/targeted_learning/hf_actor.py
+inspectedONLY supplied publiccode; no private/device traces. Native ARM/GH200
+reportedworking: Transformers5.23.0/AutoModelForMultimodalLM+AutoProcessor,
+BF16/SDPA, trust_remote_codeFalse/local_files_onlyTrue, no optimizedFLA/causalconv
+kernels. Use separatevoice runtime; exactpublicmodeldir/pin read-onlybind only,
+no wholeRemoraroot/venv/source mounts or modifications. Askedretainsharedassets;
+no duplicate54GB weightcopy toMac/cloudrepo. Officialcard verifiedpublic model.
+
+CPU-only separate dependency stage tool45284 (600s hard bound, binarywheelsONLY)
+/projects/u6ada/duplex-live/local-reasoner-runtime-20261116-v1, install.log and
+installation.json. Imports/modelidentity/nativeGPUreference NOT yetverified.
+Never start secondvoice GPUallocation while8522764 active4GPUs. After its actual
+terminal andbackup, nextuseful oneGPU pass: real question-input ASR plus full76
+puretext Qwenreference, then connected localreasoner qualification. No paidmodel
+API, no newweights, no trainingrepeat. Do not silentlyuse stale ASR/goldanswers
+as modelinput except actual providedquestiontext conditions explicitlylabeled.
+
+Remora reports8520039 COMPLETED3819GPU-seconds/reservation0;8521985 currently1GPU
+nid010023/max4h. Freshprovider/account before furtheradmission; protect bothother
+runtime/state. Voice8522764 remains4GPU nid010820 with saved scopesource2e.
+
+---
+
 # 16Nov20:46UTC — ACTUAL causal8522764 running; active product goal
 
 Native causal8522764/source2e43982cfca7e89fdb52108a9a7f1db579bb399b verifiedRUNNING

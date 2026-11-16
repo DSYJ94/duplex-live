@@ -12,13 +12,14 @@ from evals.recovery_worker import RecordWorld, WorkerContractError, WorkerSupers
 
 
 class NativeLiveSession:
-    def __init__(self, engine, transcribe, records=None, worker=run_worker, maximum_requests=6, maximum_seconds=60, context_provider=None):
+    def __init__(self, engine, transcribe, records=None, worker=run_worker, maximum_requests=6, maximum_seconds=60, context_provider=None, audit_sink=None):
         if type(maximum_requests) is not int or not 1 <= maximum_requests <= 6:
             raise ValueError('One live session permits at most six native requests')
         if type(maximum_seconds) is not int or not 1 <= maximum_seconds <= 180:
             raise ValueError('Explicit native session bound must be1..180 seconds')
         self.maximum_seconds = maximum_seconds
         self.context_provider = context_provider
+        self.audit_sink = audit_sink
         self.engine, self.transcribe, self.worker = engine, transcribe, worker
         self.world = RecordWorld({} if records is None else records)
         self.maximum_requests = maximum_requests
@@ -26,6 +27,14 @@ class NativeLiveSession:
         self.audio, self.tokens, self.pending = [], [], {}
         self.closed = False
         self.requests = self.delivered = self.rejected = 0
+
+    def _audit(self, kind, **values):
+        # Opt-in diagnostic capture only. Serving never logs user/tool content
+        # unless its caller explicitly provides an authorized in-memory sink.
+        if self.audit_sink is not None:
+            from copy import deepcopy
+            self.audit_sink(dict(type=kind, session_id=self.identity,
+                available_audio_frames=len(self.audio), **deepcopy(values)))
 
     async def _work(self, identity, revision, pcm, seconds, assistant):
         from evals.context_spanning_asr import request_context
@@ -47,6 +56,7 @@ class NativeLiveSession:
             return None
         with self.world.lock:
             self.world.tasks[identity]['context'] = context
+        self._audit('dispatch_context', task_id=identity, context=context)
         try:
             result = await asyncio.to_thread(self.worker, context, self.world, identity,
                                             expected_revision=revision, dispatch_protocol='state-aware',
@@ -55,6 +65,7 @@ class NativeLiveSession:
             result = notice(error, identity)
         except WorkerSuperseded:
             return None
+        self._audit('worker_returned', task_id=identity, result=result)
         if self.closed:
             return None
         if result['route'] != 'error':
@@ -78,18 +89,25 @@ class NativeLiveSession:
                 result = dict(route='error', receipts=[], task_id=identity,
                               error_type=type(error).__name__,
                               content='The background request failed. No verified answer is available. Ask the user whether to try again.')
-            state = self.world.tasks[identity]
-            if self.closed or result is None or state['cancelled']:
-                self.rejected += 1
-                events.append(dict(type='backend_retired', task_id=identity))
-                continue
-            text, _ = reference(result, self.world)
-            self.engine.inject_context_span(text)
-            state['phase'] = 'failed' if result['route'] == 'error' else 'delivered'
-            self.delivered += 1
-            events.append(dict(type='backend_result', task_id=identity,
-                               route=result['route'], result_injected=True,
-                               error_type=result.get('error_type')))
+            # Delivery and retirement are one transaction relative to worker
+            # cancellation/replacement. A completed request is not still pending.
+            with self.world.lock:
+                state = self.world.tasks[identity]
+                if self.closed or result is None or state['cancelled'] or state.get('closed', False):
+                    self.rejected += 1
+                    events.append(dict(type='backend_retired', task_id=identity))
+                    self._audit('backend_retired', task_id=identity)
+                    continue
+                text, _ = reference(result, self.world)
+                self.engine.inject_context_span(text)
+                self.world.finish(identity, state['revision'])
+                if result['route'] == 'error':state['phase'] = 'failed'
+                self.delivered += 1
+                self._audit('backend_delivered', task_id=identity,
+                    context_reference=text, receipts=result['receipts'], state=state)
+                events.append(dict(type='backend_result', task_id=identity,
+                                   route=result['route'], result_injected=True,
+                                   error_type=result.get('error_type')))
         return events
 
     def step(self, frame):

@@ -9,11 +9,11 @@ from .native_live import NativeLiveSession
 
 
 class NativeConnection:
-    def __init__(self,engine,transcribe,worker,*,records=None,maximum_seconds=60,context_provider=None):
+    def __init__(self,engine,transcribe,worker,*,records=None,maximum_seconds=60,context_provider=None,audit_sink=None):
         if not callable(transcribe)or not callable(worker):
             raise ValueError('Explicit local transcription and backend callables required')
         self.session=NativeLiveSession(engine,transcribe,records=records,worker=worker,
-            maximum_seconds=maximum_seconds,context_provider=context_provider)
+            maximum_seconds=maximum_seconds,context_provider=context_provider,audit_sink=audit_sink)
 
     @property
     def requests(self):return self.session.requests

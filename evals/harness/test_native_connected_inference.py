@@ -26,7 +26,8 @@ class ConnectedNativeTests(unittest.IsolatedAsyncioTestCase):
             seen.append((context,kwargs))
             receipt=world.read(identity,'cupboard','marker',kwargs['expected_revision'])
             return dict(route='lookup',content='The marker is red crescent.',receipts=[receipt])
-        engine=NativeEngine([4,3]);connection=NativeConnection(engine,transcribe,worker,records={'cupboard':{'marker':'red crescent'}})
+        audit=[]
+        engine=NativeEngine([4,3]);connection=NativeConnection(engine,transcribe,worker,records={'cupboard':{'marker':'red crescent'}},audit_sink=audit.append)
         _,events=await connection.step(np.zeros(1920,np.float32))
         self.assertEqual([e['type']for e in events],['ret'])
         self.assertFalse(engine.spans)
@@ -37,6 +38,10 @@ class ConnectedNativeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([e['type']for e in events],['backend_result'])
         self.assertEqual(len(seen),1);self.assertTrue(seen[0][1]['scope_read_tools'])
         self.assertIn('red crescent',engine.spans[0]);self.assertEqual(connection.requests,1)
+        delivered=next(r for r in audit if r['type']=='backend_delivered')
+        self.assertEqual(delivered['receipts'][0]['value'],'red crescent')
+        self.assertTrue(delivered['state']['closed'])
+        self.assertIn('context',next(r for r in audit if r['type']=='dispatch_context'))
         connection.close()
 
     async def test_spoken_promise_does_not_dispatch_without_actual_ret(self):
@@ -72,6 +77,19 @@ class ConnectedNativeTests(unittest.IsolatedAsyncioTestCase):
         await connection.step(np.zeros(1920,np.float32))
         self.assertEqual(received[0]['text'],'What is five minus two?')
         self.assertNotIn('start_s',received[0]);self.assertIn('supplied',received[0]['source'])
+        connection.close()
+
+    async def test_delivered_work_is_closed_and_cannot_be_cancelled_as_pending(self):
+        def worker(*args,**kwargs):return dict(route='direct',content='Finished.',receipts=[])
+        connection=NativeConnection(NativeEngine([4,3]),transcribe,worker)
+        await connection.step(np.zeros(1920,np.float32))
+        for _ in range(100):
+            if all(task.done()for task in connection.session.pending.values()):break
+            await asyncio.sleep(.005)
+        await connection.step(np.zeros(1920,np.float32))
+        identity=next(iter(connection.session.world.tasks))
+        self.assertTrue(connection.session.world.tasks[identity]['closed'])
+        with self.assertRaises(ValueError):connection.session.world.cancel(identity)
         connection.close()
 
     async def test_external_backend_can_never_be_selected_implicitly(self):
