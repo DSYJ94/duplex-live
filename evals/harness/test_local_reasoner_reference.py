@@ -1,4 +1,4 @@
-import json,tempfile,unittest
+import json,os,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from training.personaplex.local_reasoner_reference import digest,verify_pin,question_rows,finish_record,REVISION
@@ -30,8 +30,8 @@ class ReferenceTest(unittest.TestCase):
 
     def test_reference_owns_one_gpu_and_binds_only_shared_public_assets(self):
         from training.personaplex.local_reference_host import reference_command,PUBLIC,PIN,RUNTIME
-        with patch('training.personaplex.local_reference_host.container_command',return_value=['apptainer','--env','CUDA_VISIBLE_DEVICES=0,1,2,3','--pwd','/source','python','-m'])as make:
+        with patch.dict(os.environ,{'CUDA_VISIBLE_DEVICES':'2'}),patch('training.personaplex.local_reference_host.container_command',return_value=['apptainer','--env','CUDA_VISIBLE_DEVICES=0,1,2,3','--pwd','/source','python','-m'])as make:
             cmd=reference_command(Path('/source'),True,{},Path('/backup'))
-        self.assertIn('CUDA_VISIBLE_DEVICES=0',cmd);self.assertNotIn('CUDA_VISIBLE_DEVICES=0,1,2,3',cmd)
+        self.assertIn('CUDA_VISIBLE_DEVICES=2',cmd);self.assertNotIn('CUDA_VISIBLE_DEVICES=0,1,2,3',cmd)
         self.assertIn(str(PUBLIC)+':'+str(PUBLIC)+':ro',cmd);self.assertIn(str(PIN)+':'+str(PIN)+':ro',cmd)
         self.assertEqual(make.call_args.kwargs['environment']['PYTHONPATH'],str(RUNTIME/'pylibs')+':/source')

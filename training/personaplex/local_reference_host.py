@@ -14,7 +14,9 @@ def reference_command(work,gpu,environment,backup):
     cmd=container_command(work,gpu=gpu,environment=env,backup=backup)
     if gpu:
         if cmd.count('CUDA_VISIBLE_DEVICES=0,1,2,3')!=1:raise ValueError('Explicit single GPU command ownership required')
-        cmd[cmd.index('CUDA_VISIBLE_DEVICES=0,1,2,3')]='CUDA_VISIBLE_DEVICES=0'
+        selected=os.environ.get('CUDA_VISIBLE_DEVICES','')
+        if not selected or ','in selected or selected=='-1':raise ValueError('One actual scheduler-selected GPU required')
+        cmd[cmd.index('CUDA_VISIBLE_DEVICES=0,1,2,3')]='CUDA_VISIBLE_DEVICES='+selected
     pos=cmd.index('--pwd');cmd[pos:pos]=['--bind',str(PUBLIC)+':'+str(PUBLIC)+':ro','--bind',str(PIN)+':'+str(PIN)+':ro']
     return cmd
 
