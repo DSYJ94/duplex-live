@@ -1,0 +1,15 @@
+{
+  "status": "OWNER_DIRECTED_FROZEN_LOCAL_REFERENCE",
+  "owner_goal": "Working native duplex product with sufficient reasoning and actual asynchronous delegation; identify base/data/recipe causes and act autonomously on Isambard.",
+  "GPU_count": 1,
+  "maximum_seconds": 7200,
+  "external_API_calls": 0,
+  "optimizer_updates": 0,
+  "purchases": false,
+  "GCP": false,
+  "questions": 76,
+  "model": "Read-only already shared public Qwen/Qwen3.6-27B at pinned revision; no new weights or private Remora data",
+  "parent": "8522764 must be provider COMPLETED0:0 with complete304 and independently verified final backup; no overlapping voice allocation",
+  "preservation": "All previous checkpoints/results untouched. New genuine supported text-chat condition, input-only questions, no expected answers/route/score. Complete outputs and model identity archived independently. Not a native voice acceptance claim.",
+  "admission": "Exact immutable source, published pin hashes, all inference tensor names/shapes, explicit official auxiliary MTP exclusion, actual one GPU/provider clock, fresh whole-award actual plus concurrent reserved accounting, existing HOME quota headroom. No automatic retry after observation timeout."
+}

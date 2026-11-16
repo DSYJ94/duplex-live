@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -20,3 +20,12 @@ class ExpandedGuardTest(unittest.TestCase):
             with self.assertRaises(RuntimeError):ensure(lease,changed,now=100.,environ=env)
         with self.assertRaises(ValueError):resource(dict(lease,GPU_count=8))
         with self.assertRaises(ValueError):resource(dict(lease,prior_award_GPU_seconds=20000*3600))
+
+    def test_single_gpu_requires_its_exact_separate_reference_scope(self):
+        lease,_,_=self.fixture();single=dict(lease,GPU_count=1)
+        with self.assertRaises(ValueError):resource(single)
+        reference=dict(single,reference_authorization_sha256=sha(REFERENCE_AUTH))
+        resource(reference)
+        with self.assertRaises(ValueError):resource(dict(reference,GPU_count=4))
+        with self.assertRaises(ValueError):resource(dict(reference,stop_unix=7201))
+        with self.assertRaises(ValueError):resource(dict(reference,reference_authorization_sha256='changed'))

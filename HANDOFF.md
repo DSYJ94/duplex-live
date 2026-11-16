@@ -1,3 +1,34 @@
+# 16Nov — Separate local reasoning reference staged; valid8522764 unchanged
+
+Actual CPU runtime readiness now PASS: Transformers5.23.0, imageNumPy1.26.4 /
+packaging25.0, public processor and genuine text-chat template. Meta-only schema
+PASS:1184 inference tensors all names/shapes agree with1199 published tensors;
+only15 mtp.* auxiliary keys excluded by official model ^mtp.* load-ignore rule.
+No GPU weights loaded by this stage, no model updates/API. Separate voice pylibs
+only, incompatible own downloaded NumPy/packaging quarantined rather than changing
+image/Remora/native runtime. CPU evidence in local-reasoner-runtime-20261116-v1.
+
+Built frozen local_reasoner_reference + local_reference_host with complete76
+input-only chat questions, full published pin hashes/shape verification, oneGPU
+ownership, explicitEOS/budget outcomes, independent full output hashes, successful
+causal304/backup parent prerequisite and no overlapping voice allocations. New
+REFERENCE scope is explicitly oneGPU/max7200s; original fourGPU guard contract
+unchanged when that separate exact scope is absent. Local25 related tests PASS.
+Actual Isambard CPU import/command tests and immutable deployment still REQUIRED
+before a dependent reference job may be queued. No reference GPU job submitted
+at this note; no training replay or checkpoint edits. Current causal8522764
+still immutable producer2e43982, last observed41/76 assisted permodel;89 original
+TRAIN RET stats are new frozen measurements, not repeated training.
+
+Decision matrix now records what each causal outcome changes. Stronger text
+reference is a product backend/control, not proof that parameter count alone
+caused native failure. Still need independent input-audio recognition and fresh
+live/control/listening acceptance. KEEP is preserved honestly; executable adaptive
+OPAL belongs to next NEW training boundary; failure mining is not labeledMiRL RL.
+No more foundation catalogue research before these outputs. Goal ACTIVE.
+
+---
+
 # 16Nov — Subsequent bridge lifecycle fix; current source2e worker unchanged
 
 Found realruntime defect: successful delivered requests remainedclosed=False and

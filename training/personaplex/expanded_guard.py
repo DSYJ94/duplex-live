@@ -10,24 +10,31 @@ from .matched_guard import parse_job,stamp
 AUTH=Path('docs/NATIVE-EXPANDED1072-EXECUTION-2026-11-14.json')
 ACCOUNT='brics.u6ada'
 KEY='duplex-expanded1072-v1'
+REFERENCE_AUTH=Path('docs/NATIVE-LOCAL-REASONER-REFERENCE-2026-11-16.json')
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def resource(lease):
+    if 'reference_authorization_sha256'in lease:
+        scope=json.loads(REFERENCE_AUTH.read_text())
+        if (lease['reference_authorization_sha256']!=sha(REFERENCE_AUTH)or scope['status']!='OWNER_DIRECTED_FROZEN_LOCAL_REFERENCE'
+                or scope['GPU_count']!=1 or scope['maximum_seconds']!=7200 or scope['external_API_calls']!=0 or scope['optimizer_updates']!=0):raise ValueError('Exact separate one-GPU reference scope required')
+        count=1;maximum=7200
+    else:count=4;maximum=86400
     scope=json.loads(AUTH.read_text())
     if scope['status']!='OWNER_AUTHORIZED_CONTINUATION' or scope['award_total_GPU_hours']!=20000 or scope['maximum_simultaneous_voice_GPUs']!=4:raise ValueError('Exact current owner continuation scope required')
-    if lease.get('provider')!='Slurm' or lease.get('resource_key')!=KEY or lease.get('account')!=ACCOUNT or lease.get('authorization_sha256')!=sha(AUTH) or lease.get('GPU_count')!=4 or not str(lease.get('job_id','')).isdigit():raise ValueError('Exact declared four-GPU scheduler allocation required')
-    if not 0<lease['stop_unix']-lease['start_unix']<=86400:raise ValueError('Immutable single-job scheduler bound required')
+    if lease.get('provider')!='Slurm' or lease.get('resource_key')!=KEY or lease.get('account')!=ACCOUNT or lease.get('authorization_sha256')!=sha(AUTH) or lease.get('GPU_count')!=count or not str(lease.get('job_id','')).isdigit():raise ValueError('Exact declared scheduler allocation required')
+    if not 0<lease['stop_unix']-lease['start_unix']<=maximum:raise ValueError('Immutable single-job scheduler bound required')
     prior=lease['prior_award_GPU_seconds'];other=lease['other_reserved_GPU_seconds']
-    if not all(isinstance(x,(int,float)) and x>=0 for x in (prior,other)) or prior+other+4*(lease['stop_unix']-lease['start_unix'])>20000*3600:raise ValueError('All prior usage and concurrent reservations must fit original award')
+    if not all(isinstance(x,(int,float)) and x>=0 for x in (prior,other)) or prior+other+count*(lease['stop_unix']-lease['start_unix'])>20000*3600:raise ValueError('All prior usage and concurrent reservations must fit original award')
     return lease
 
 
 def validate_job(job,lease,now):
     resource(lease);tres=dict(x.split('=',1)for x in job.get('AllocTRES','').split(',')if '='in x)
-    if job.get('JobId')!=lease['job_id'] or job.get('Account')!=ACCOUNT or job.get('JobState')!='RUNNING' or tres.get('gres/gpu')!='4' or job.get('NumNodes')not in ('1','1-1') or job.get('NodeList')!=lease['node'] or job.get('Partition')!='workq':raise ValueError('Actual exact running four-GPU node required')
+    if job.get('JobId')!=lease['job_id'] or job.get('Account')!=ACCOUNT or job.get('JobState')!='RUNNING' or tres.get('gres/gpu')!=str(lease['GPU_count']) or job.get('NumNodes')not in ('1','1-1') or job.get('NodeList')!=lease['node'] or job.get('Partition')!='workq':raise ValueError('Actual exact running allocated node required')
     if stamp(job['StartTime'])!=lease['start_unix'] or stamp(job['EndTime'])!=lease['stop_unix'] or not lease['start_unix']<=now<lease['stop_unix']-180:raise ValueError('Actual original provider clock differs')
 
 
