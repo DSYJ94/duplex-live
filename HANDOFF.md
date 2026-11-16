@@ -1,3 +1,50 @@
+# 16Nov18:21UTC — FULL192 COMPARISON COMPLETE/BACKED UP; NOT ACCEPTED
+
+8511770 source2780df561a8dc9525b030d2bfdbd967cfc6de945 providerCOMPLETED exit0,
+actual8621s*4GPUs=9.578889GPUh; reservation0/nid010814 released. Earlier8506868
+FAILED31s*4=124GPU-seconds remains counted, total eval9.613333GPUh<24h bound.
+All192 outputs and all4 speech audits complete. Independent NFS132866files/
+4566065549bytes every-fileSHA PASS; manifest5c817a61bec7eb88cc2da4c22b1253757b60506241f8bafebb4257cfecaa19c5
+confirmed remotely and matches copied immutable archive/host receipts. Full raw
+outputs remain on projects and independentHOME; only small JSON/previews onMac.
+Original196-step training/final4native restores/checkpoint backups unchanged.
+No optimizer updates, saved inference replay, new TTS/API calls or purchases.
+
+Full findings: docs/NATIVE-EXPANDED1072-COMPARISON-2026-11-16.md plus128-row
+paired semantic worksheet docs/NATIVE-EXPANDED1072-FULL192-SEMANTIC-REVIEW-2026-11-16.json.
+Basic core answers8/12base vs9/12adapter, small mixed gain. Arithmetic final
+answer1/64 vs3/64, but two candidate explanations explicitly false; correct answer
+without false explanation1/64 BOTH. Additional candidate numeric-hit48 ambiguous,
+NOT silently counted. NativeRET0 across96 each, no workers connected; silence0/4
+and pause0/4 BOTH. Strict ASR agreement11/96 vs18/96, peaks94/96 vs93/96. ASR-only
+terminalThankyou in65/62cases makes speech score unreliable as a naturalness/
+intelligibility measure; hypothetical phrase removal45/49 passes is sensitivity
+ONLY, never an official replacement. Britishaccent/naturalness/live latency NOT
+certified. Do not claim substantial reasoning or operational delegation gain.
+
+Owner listening format: combined input+response percondition, audio clock/overlap
+preserved, only trailing silence removed; corrected previews14.8s/17.2s. Separate
+67s rawstreams preserved for scoring. Not measured live end-to-end latency.
+We can discuss results NOW and listen to saved model+adapter previews. A live
+interactive diagnostic requires serving integration; no deployment claimed.
+
+Next recommended substantial phase: verify learned-versus-served native action
+representation; separate correct-text-conditioned reasoning from acoustic/number
+capture; then select data/recipe/foundation/capacity/full-tuning changes from that
+evidence. Preserve exactDEV out of subsequentTRAIN, retain original benchmark/
+failed outputs and all checkpoints. OPAL6b32c9d adaptive source remains staged for
+safe NEW continuation, not fake197 after completed196. MiRL/failure-family data
+and verifiable-outcome RL remain in wider plan, not claimed active improvements.
+No new voice job now. Major direction decision follows this completed report.
+
+Remora8505349 completed13900GPU-seconds/reservation0, earlier8491715 actual7042
+GPU-seconds separately counted. New Remora8517385 reportedRUNNING nid010030,
+requested1GPU/max3h; actual resource admission confirmation still awaited. Protect
+node, future accounting actual+remaining reservation only. Voice completion/released
+node and exact accounting sent under owner-authorized coordination.
+
+---
+
 # 16Nov16:47UTC — Control32 audit complete; full comparison still running
 
 8511770 remains RUNNING, latest116/192 collected: bothcontrol32 complete,
