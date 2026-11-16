@@ -1,6 +1,6 @@
 {
   "status": "CPU_READY_NOT_NATIVE_GPU_EVALUATED",
-  "unique_tests": 28,
+  "unique_tests": 24,
   "Isambard_CPU": {
     "passed": 15,
     "skipped": 1,

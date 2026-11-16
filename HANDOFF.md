@@ -1,3 +1,34 @@
+# 16Nov12:42UTC — Evaluation ready; one-shot successful handover waiting
+
+Evaluation immutable producer069bc6534b794937632cbedb657c92e51c89d531 is
+committed/pushed and staged at source-expanded-eval-069bc65 on Isambard.
+Actual modern CPU preparation PASS: complete64 DEV user-only waveforms with
+fixed60s tails, control32, input hashes in native-expanded1072-evaluation-v1/
+input-preparation.json. Actual hostPython3.6 imports and prepared SBATCH syntax
+PASS. Jobscript native-expanded1072-evaluation-job-v1.sh:4GPUs/32CPU/400G/6h,
+exclude activeRemora nid010037; zero optimizer/API updates. No eval job yet.
+
+One exclusive foreground SSH handover tool40441 runs evaluation-handover-
+20261116-fixed.py, snapshot scripts/expanded-evaluation-handover-20261116.py.
+Actual parent RUNNING observed; polls60s, never cancels/restarts any model.
+After provider COMPLETED, independently checks196 + all4 native exact restores
+and full six-file NFS backup in modernCPU process, then ONE sbatch submission.
+Durable submission.json intent created BEFORE sbatch; ambiguous submission
+MUST NEVER be retried without actual queue/marker inspection. Existing root/job-*
+also refuses duplicate. Lock .handover-controller.lock. Max wait16Nov17:10UTC.
+Log runs/container-startup-20261115/evaluation-handover-20261116-fixed.jsonl.
+Original controller67536 stopped before any submission because script directory
+was absent from Python import path; fixed controller explicitly pins WORK path.
+Training/observer untouched. Actual latest independent backup184 complete6files;
+training last189/196, observer25640. Do not confuse controller stop with training.
+
+CPU tests proof corrected:24 UNIQUE tests overall, Mac23=>22PASS1skip;
+Isambard16=>15PASS1skip, complementary capabilities. CPU-proof correction does
+not alter staged inference code069bc65. Full192 generation/semantics/speech
+review still pending, not claimed complete. Adaptive6b32c9d stays staged only.
+
+---
+
 # 16Nov — Access renewed; voice188/196; matched evaluation prepared
 
 Certificate renewal succeeded with certificate-cache write permission; valid until
