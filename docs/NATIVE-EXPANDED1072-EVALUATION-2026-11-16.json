@@ -1,0 +1,38 @@
+{
+  "status": "OWNER_DIRECTED_POST_TRAINING_EVALUATION",
+  "owner_request": "Preserve checkpoints, don't repeat updates, and evaluate reasoning, delegation and speech.",
+  "provider": "Isambard",
+  "account": "brics.u6ada",
+  "award_total_GPU_hours": 20000,
+  "maximum_simultaneous_voice_GPUs": 4,
+  "maximum_evaluation_job_seconds": 21600,
+  "maximum_evaluation_GPU_hours": 24,
+  "maximum_evaluation_jobs_now": 1,
+  "training_parent": "8478956",
+  "required_final_training_updates": 196,
+  "training_source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+  "conditions": [
+    "untouched raw PersonaPlex",
+    "expanded1072 broad-rank64 after196 updates"
+  ],
+  "trainable_adapter_coefficients": 105070592,
+  "cohorts_per_condition": {
+    "existing regression cases": 32,
+    "expanded DEV": 64
+  },
+  "required_outputs": 192,
+  "new_optimizer_updates": 0,
+  "new_external_model_API_calls": 0,
+  "new_purchases": false,
+  "GCP_usage": false,
+  "new_source_speech_generation": false,
+  "generation": "Same approved disjoint RPBen reference, training persona, native prefix/layout/compiler, seed42 and audio0.8/text0.7 sampler in both conditions. Raw original output chunks and timing retained without gain/trim/normalization.",
+  "DEV_input": "All original user-channel samples plus fixed60s response window independent of teacher answer duration; no assistant channel/answer, labels, scoring reference or forced backend result enters model inputs.",
+  "admission": "Provider COMPLETED successful196 parent, allfour final fresh native Adam/RNG/OPAL/fingerprint restores, final exact checkpoint and complete independent six-file backup; no overlapping valid training, no replay or calibration.",
+  "result_backup": "Full static evaluation inventory with every raw chunk hash compared on independent NFS; no active guard/compiler scratch or model checkpoints copied. No archive overwrites.",
+  "scope_limits": "DEV and inspected regressions are not fresh unseen benchmarks. NativeRET/routing and speech/control may be evaluated; backend execution/grounding and live microphone latency are not established by this collection. Semantic correctness and naturalness/accent require independent review. No adoption from lower loss or low WER alone.",
+  "baseline_reuse": "Earlier released-main-voice/wise-teacher outputs are not interchangeable with this RPBen/training-persona/native-layout comparison. No completed training is repeated. These matched inference conditions have not yet been collected. Any later recovery must preserve/reuse its completed identical outputs rather than overwrite them.",
+  "exclude_active_Remora_nodes": [
+    "nid010037"
+  ]
+}

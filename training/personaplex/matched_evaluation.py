@@ -12,14 +12,20 @@ from .matched_generation import completed_states,make_engine
 CAPACITIES=('baseline','narrow','broad')
 
 
-def complete_collection(value,rows):
+def complete_collection(value,rows,required=32):
+    if type(required)is not int or required not in (32,64):raise ValueError('Only declared complete32/64 cohorts admitted')
     actual=value.get('cases',[])
     expected={r['id']:r['input_sha256'] for r in rows}
-    if (value.get('required_cases')!=32 or len(rows)!=32 or len(expected)!=32
-            or len(actual)!=32 or {r['id']:r['input_sha256'] for r in actual}!=expected
+    if (value.get('required_cases')!=required or len(rows)!=required or len(expected)!=required
+            or len(actual)!=required or {r['id']:r['input_sha256'] for r in actual}!=expected
             or any(r.get('complete') is not True for r in actual)):
-        raise ValueError('All32 exact complete inputs required; no passing subset')
+        raise ValueError('All32 exact complete inputs required; no passing subset'if required==32 else'All declared exact complete inputs required; no passing subset')
     return actual
+
+
+def speech_presence(generated,recognized,voiced):
+    from data.venus.pacing import words
+    return bool(words(generated))and bool(words(recognized))and bool(voiced)
 
 
 def complete_frames(trace,derived_samples):
@@ -46,7 +52,9 @@ def interaction(case,trace,word_quality):
     return result
 
 
-def collect(a,rows,selection):
+def collect(a,rows,selection,*,factory=None,persona=None,voice_codes=None,voice_sha256=None,profile_extra=None,guard=None):
+    if len(rows)not in (32,64)or len({r['id']for r in rows})!=len(rows):raise ValueError('Complete unique32/64 cohort required before loading a model')
+    ensure=g.check if guard is None else guard
     import numpy as np,soundfile as sf,torch
     from scipy.signal import resample_poly
     from contextspan.model.engine import seed_all
@@ -80,34 +88,39 @@ def collect(a,rows,selection):
         root.mkdir(exist_ok=False)
     os.environ['TRITON_LIBCUDA_PATH']=subprocess.check_output([sys.executable,'-B','-m',
         'evals.cuda_linker_path','--out',str(root/'driver')],text=True).strip()
-    g.check(a.lease,600);seed_all(42);engine=make_engine(a,selection)
-    voice=torch.load(WEIGHTS/'voices/main.pt',map_location='cpu',weights_only=True)['codes'].long()
+    ensure(a.lease,600);seed_all(42);engine=(factory or make_engine)(a,selection)
+    voice=(torch.load(WEIGHTS/'voices/main.pt',map_location='cpu',weights_only=True)['codes']if voice_codes is None else voice_codes).long()
+    persona=PERSONA if persona is None else persona
+    voice_sha256=VOICE_SHA256 if voice_sha256 is None else voice_sha256
     if voice.ndim!=2 or voice.shape[0]!=8:raise ValueError('Original released voice geometry required')
     write(root/'profile.json',dict(source=a.source,trainer_source=a.trainer_source,
         upstream=SOURCE_COMMIT,base=a.base,capacity=a.capacity,selection=selection,
-        persona=PERSONA,voice_sha256=VOICE_SHA256,seed=42,temp_audio=.8,temp_text=.7,
+        persona=persona,voice_sha256=voice_sha256,seed=42,temp_audio=.8,temp_text=.7,
         loads=engine.evaluation_model_loads,torch=torch.__version__,optimizer_updates=0,
-        native_worker_interface=False,voice_accent_not_certified=True,live_microphone_latency=False,adopted=False))
+        native_worker_interface=False,voice_accent_not_certified=True,live_microphone_latency=False,adopted=False,
+        evaluation_context={} if profile_extra is None else profile_extra,
+        actual_expanded_inference=getattr(engine,'expanded_inference_proof',None)))
     results=list(reused);quality=word_records()
     reused_ids={r['id'] for r in reused}
     if reused:
-        write(root/'results.json',dict(source=a.source,cases=results,required_cases=32,qualified=False,
+        write(root/'results.json',dict(source=a.source,cases=results,required_cases=len(rows),qualified=False,
             reused_producer=record['original_source'],reuse_record_sha256=a.reuse_record_sha))
     with torch.inference_mode():
         for case in rows:
             if case['id'] in reused_ids:continue
-            g.check(a.lease,180+case['frames']*3);seed_all(42);engine.reset();engine.set_persona(PERSONA,voice)
+            ensure(a.lease,180);seed_all(42);engine.reset();engine.set_persona(persona,voice)
             folder=root/case['id'];folder.mkdir();path=Path(case['folder'])/'user.wav'
             audio,sr=sf.read(path,dtype='float32')
-            if sr!=16000 or audio.ndim!=1 or g.sha(path)!=case['input_sha256']:
+            if sr!=case.get('input_rate',16000) or sr not in (16000,24000) or audio.ndim!=1 or g.sha(path)!=case['input_sha256']:
                 raise ValueError('Original complete source waveform required')
-            user=resample_poly(audio,3,2).astype(np.float32);padding=(-len(user))%1920;user=np.pad(user,(0,padding))
+            ensure(a.lease,180+math.ceil(len(audio)/sr*3))
+            user=(resample_poly(audio,3,2)if sr==16000 else audio).astype(np.float32);padding=(-len(user))%1920;user=np.pad(user,(0,padding))
             sf.write(folder/'derived-user-24k.wav',user,24000,subtype='FLOAT')
             trace=[];tokens=[];started=time.monotonic()
             # Every original output frame is saved, without gain/trim/normalization.
             with (folder/'trace.jsonl').open('x') as log:
                 for i,offset in enumerate(range(0,len(user),1920)):
-                    g.check(a.lease);before=time.monotonic();out=engine.step(user[offset:offset+1920]);elapsed=time.monotonic()-before
+                    ensure(a.lease);before=time.monotonic();out=engine.step(user[offset:offset+1920]);elapsed=time.monotonic()-before
                     pcm=np.asarray(out['agent_pcm'] if out['agent_pcm'] is not None else [],dtype=np.float32)
                     if pcm.ndim!=1 or not np.isfinite(pcm).all():raise ValueError('Finite unmodified native PCM required')
                     name='chunk-%04d.wav'%i;sf.write(folder/name,pcm,24000,subtype='FLOAT');tokens.append(out['text_token'])
@@ -121,12 +134,13 @@ def collect(a,rows,selection):
                 wall_seconds=time.monotonic()-started,derived_tail_padding_samples=padding,qualified=False,
                 **interaction(case,trace,quality))
             write(folder/'result.json',result);results.append(result)
-            write(root/'results.json',dict(source=a.source,cases=results,required_cases=32,qualified=False))
-            print(json.dumps(dict(event='native_case_complete',condition=result['condition'],completed=len(results),required=32)),flush=True)
-    complete_collection(json.loads((root/'results.json').read_text()),rows)
+            write(root/'results.json',dict(source=a.source,cases=results,required_cases=len(rows),qualified=False))
+            print(json.dumps(dict(event='native_case_complete',condition=result['condition'],completed=len(results),required=len(rows))),flush=True)
+    complete_collection(json.loads((root/'results.json').read_text()),rows,required=len(rows))
 
 
-def audit(a,rows):
+def audit(a,rows,*,required=32,guard=None,require_spoken_content=False,recognizer_factory=None):
+    ensure=g.check if guard is None else guard
     import numpy as np,soundfile as sf
     from scipy.signal import resample_poly
     from training.venus.voice_compare import recognizer
@@ -135,13 +149,13 @@ def audit(a,rows):
     from data.venus.pacing import words
     from data.venus.repair import wer
     root=Path(a.root)/(a.base+'-'+a.capacity)
-    collected=complete_collection(json.loads((root/'results.json').read_text()),rows)
+    collected=complete_collection(json.loads((root/'results.json').read_text()),rows,required=required)
     profile=json.loads((root/'profile.json').read_text())
     if profile['source']!=a.source or profile['trainer_source']!=a.trainer_source:
         raise ValueError('Actual evaluation/training sources must stay separate and exact')
-    g.check(a.lease,600);pipe=recognizer();audits=[]
+    ensure(a.lease,600);pipe=(recognizer_factory or recognizer)();audits=[]
     for case in collected:
-        g.check(a.lease,90);folder=root/case['id'];trace=[json.loads(s) for s in (folder/'trace.jsonl').read_text().splitlines()]
+        ensure(a.lease,90);folder=root/case['id'];trace=[json.loads(s) for s in (folder/'trace.jsonl').read_text().splitlines()]
         arrays=[]
         for t in trace:
             pcm,sr=sf.read(folder/t['chunk_file'],dtype='float32')
@@ -158,19 +172,20 @@ def audit(a,rows):
             generate_kwargs=dict(language='en',task='transcribe',do_sample=False))['text'] if len(raw) and np.any(raw) else ''
         error=wer(' '.join(words(case['generated_text'])),' '.join(words(recognized)))
         peak=float(np.abs(raw).max()) if len(raw) else 0.
+        present=speech_presence(case['generated_text'],recognized,np.any(np.abs(raw)>.001))
         audits.append(dict(id=case['id'],family=case['family'],input_sha256=case['input_sha256'],
-            generated_text=case['generated_text'],asr_text=recognized,word_error_rate=error,word_pass=error<=.05,
+            generated_text=case['generated_text'],asr_text=recognized,word_error_rate=error,word_pass=error<=.05 and (present or not require_spoken_content),speech_content_present=present,
             raw_peak=peak,raw_peak_pass=peak<=.995,has_voiced_output=bool(np.any(np.abs(raw)>.001)),
             raw_wav_sha256=g.sha(wav),timed_raw_wav_sha256=g.sha(clockwav),timed_raw_peak=float(np.abs(timed).max()),
             source_chunks=[dict(file=t['chunk_file'],sha256=g.sha(folder/t['chunk_file'])) for t in trace],
             semantic_or_naturalness_pass_claimed=False))
-        write(root/'audit-progress.json',dict(required=32,cases=audits))
+        write(root/'audit-progress.json',dict(required=required,cases=audits))
     quiet=[r for r in collected if r['family']=='quiet'];pause=[r for r in collected if r['family']=='pause']
-    summary=dict(cases=32,word_pass=sum(r['word_pass'] for r in audits),raw_peak_pass=sum(r['raw_peak_pass'] for r in audits),
+    summary=dict(cases=required,word_pass=sum(r['word_pass'] for r in audits),raw_peak_pass=sum(r['raw_peak_pass'] for r in audits),
         joint_pass=sum(r['word_pass'] and r['raw_peak_pass'] for r in audits),
         necessary_silence_and_resume=sum(r['voiced_frames_before_cue_word']==0 and r['voiced_frames_after_cue_word']>0 for r in quiet),
         silent_while_paused=sum(r['voiced_frames_while_paused']==0 for r in pause))
-    report=dict(complete=len(audits)==32,source=a.source,trainer_source=a.trainer_source,summary=summary,cases=audits,
+    report=dict(complete=len(audits)==required,source=a.source,trainer_source=a.trainer_source,summary=summary,cases=audits,
         word_limit=.05,peak_limit=.995,asr_revision=REVISION,external_API_calls=0,optimizer_updates=0,
         connected_backend_tested=False,semantics_and_naturalness_require_review=True,adopted=False)
     write(root/'report.json',report);print(json.dumps(dict(condition=a.base+'-'+a.capacity,summary=summary)),flush=True)

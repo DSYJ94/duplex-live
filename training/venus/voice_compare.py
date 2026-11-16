@@ -10,13 +10,13 @@ from portable.venus.voice import reference
 
 CONDITIONS=('base-released-reference','step190-released-reference','step190-eleven-reference')
 
-def recognizer():
+def recognizer(device=0):
     import torch
     from transformers import AutoModelForSpeechSeq2Seq,AutoProcessor,pipeline
     name='openai/whisper-large-v3-turbo'
-    model=AutoModelForSpeechSeq2Seq.from_pretrained(name,revision=REVISION,local_files_only=True,torch_dtype=torch.float16).cuda().eval()
+    model=AutoModelForSpeechSeq2Seq.from_pretrained(name,revision=REVISION,local_files_only=True,torch_dtype=torch.float16).cuda(device=device).eval()
     p=AutoProcessor.from_pretrained(name,revision=REVISION,local_files_only=True)
-    return pipeline('automatic-speech-recognition',model=model,tokenizer=p.tokenizer,feature_extractor=p.feature_extractor,torch_dtype=torch.float16,device=0,chunk_length_s=30,batch_size=1)
+    return pipeline('automatic-speech-recognition',model=model,tokenizer=p.tokenizer,feature_extractor=p.feature_extractor,torch_dtype=torch.float16,device=device,chunk_length_s=30,batch_size=1)
 
 async def main(a):
     import torch,numpy as np,soundfile as sf

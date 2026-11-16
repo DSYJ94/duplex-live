@@ -1,3 +1,34 @@
+# 16Nov — Access renewed; voice188/196; matched evaluation prepared
+
+Certificate renewal succeeded with certificate-cache write permission; valid until
+16Nov23:49:49UTC. Manual official Keycloak link works. Automated Chrome opening
+remains permission-blocked; do not retry alternate automation or blank tabs.
+SAME training8478956/source3c6f699 remains healthy at actual188/196 in observer
+25640, same v3 log. No interruption, replay, new optimizer updates or adaptive
+handover. Preserve original final restore and independent final checkpoint backup.
+
+New zero-update evaluator collects192 matched native outputs: raw PersonaPlex and
+expanded105M, each on control32 plus expandedDEV64; same RPBen reference and
+training persona, no teacher answers/audio in inputs. DEV is model-selection data,
+control32 includes inspected regression/oldTRAIN cases, not a fresh unseen test.
+Requires parent COMPLETED196, all4 exact final native restores and independent
+six-file step196 backup before any model. One4GPU<=6h evaluation, original20k
+award, no purchases/GCP/APIs/training. See evaluation scope and CPU proof JSONs.
+Current local unittest23:22PASS/1native-input skip; actual Isambard CPU16:
+15PASS/1host-rsync skip. Both missing capabilities tested in the other environment.
+Actual small BF16 native compiler/backprop test passed. No GPU evaluation yet.
+Semantic correctness/routing and speech naturalness/accent review remain required;
+RET does not establish executed backend reasoning, WER does not prove quality.
+
+Remora reports8505349 RUNNING1GPU on nid010037, maximum6h; exclude that node
+from voice evaluation and count fresh actual+remaining reservation. Previous
+8491715 completed7042 GPU-seconds, reservation0; do not count old8h cap as usage.
+Adaptive6b32c9d stays staged only: completed196 must proceed to evaluation,
+not invented197 or replay. Evaluation source must be committed/staged separately;
+live training source stays3c6f699. No evaluation job submitted at this handoff.
+
+---
+
 # 16Nov10:49UTC — Voice171/196 healthy; Remora completed usage reconciled
 
 Fresh actual SSH/guard/log read confirms SAME8478956/source3c6f699 RUNNING,

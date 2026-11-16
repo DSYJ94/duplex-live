@@ -1,0 +1,27 @@
+{
+  "status": "CPU_READY_NOT_NATIVE_GPU_EVALUATED",
+  "unique_tests": 28,
+  "Isambard_CPU": {
+    "passed": 15,
+    "skipped": 1,
+    "skip_reason": "container has no rsync; real archive test passed on Mac"
+  },
+  "Mac": {
+    "passed": 22,
+    "skipped": 1,
+    "skip_reason": "Mac system Python lacks numpy/soundfile; real native CPU input test passed on Isambard"
+  },
+  "actual_native_small_BF16_compiler_test_passed": true,
+  "Isambard_login_Python36_syntax_passed": true,
+  "new_model_GPU_job_submitted": false,
+  "new_training_updates": 0,
+  "full192_generation_and_semantic_review_pending": true,
+  "files": {
+    "training/personaplex/expanded_evaluation.py": "344e5c7741bbecc7dc987e50e47b2b970451bcba4c0945cdf5375f8a3a959a86",
+    "training/personaplex/expanded_evaluation_host.py": "b7b860d4afbc84ddfcee8925b9bb5ec32a9014e2fdb740bd5532dca04ff89635",
+    "training/personaplex/expanded_evaluation_archive.py": "24c66baf91458628e0515244b5b97dd9950ec207fcdcec18bfbc565196af7f35",
+    "training/personaplex/matched_evaluation.py": "2d135afb7e1e728aedc07b3466d26be1f05a88bb56f1099e7419c41286e7263f",
+    "training/venus/voice_compare.py": "65e8338c17b125fbbde694338267d11d87d1e5f56b23d33bf9ff6db31a7533fa",
+    "evals/harness/test_expanded_evaluation.py": "e5f75dd3e3dbbf772bace1fad96ec9c69cc0798fa409e22b04082a54bfab3a09"
+  }
+}
