@@ -1,3 +1,52 @@
+# 16Nov20:33UTC — Owner ACTIVE product goal; new frozen causal probe built locally
+
+Owner explicitly requests autonomous GPT-live type product with reasoning,
+real async delegation, duplex micro-turns and silence/wait behaviour, plus useful
+OPAL/MiRL/WSP. Goal created ACTIVE; no token budget. See current product execution
+MD and refreshed primary-source research. Earlier goal pause/clear was superseded
+by this explicit create-goal instruction. Preserved196 and completed192 unchanged.
+
+NativeRET training and released Engine bothid4; sampling has no explicit RET mask.
+Retained corpus auxiliary89positive/75959negative positions (7actual+42stream49+
+40reasoning32); new1072 deliberately0RET. Apparent raw train-word-problem error
+already corrected in ACTUAL admitted plan; do not claim stale proposal as defect.
+Saved131806frame analysis: base mean36.68ms/p9536.51ms, adapter37.73/p9537.71ms
+per80ms frame; slow whole-loop substantially outsideengine. New FrameGuard keeps
+fresh original source/lease/heartbeat/deadline/resource checks eachframe but reads
+actual detachedHEAD rather than spawning git eachframe. New capture buffersraw
+frames then writeswhole-case waves/trace, preservingallraw samples/boundaries.
+
+Built explicit NativeConnection over existingasync NativeLiveSession; no implicit
+backend/provider selection. Added honest supplied-text context route (not fakeASR)
+and bounded local exact-rational math tool. Unsupported work failshonestly; no
+expectedanswer/caseID/score used. Forced-token contract tests proveplumbing ONLY.
+Current MacCPU suite17PASS incloldnativeLive6, newbridge5, guard1, calc3, inputs2.
+No actual sampled nativehandoff success claimed. All tests use fixtures, notweights.
+
+New causal_probe/host built locally, NOT GPUadmitted/submitted yet. Complete76
+questions (12basic+64DEV), base+105M, prefix-text-only andsameaudio+prefixtext =>304
+NEW outputs; oldaudio192 reused, no trainingupdate. Prefix is supportedcontext,
+NOT ordinarytextchat equivalence. Teacherforced all89 TRAINRET logit/rank probes
+separate from sampledbehavior. Separate namespace/immutablebackups; noAPI/TTS/
+GCP/purchases. Execution scopeJSON owner-directed, planned4GPU6h within20kaward,
+no arbitrary restart-count-only approval traps; everyactual+reserved usagecounts.
+Need actual modernCPU tests/hostimports/nativecontract before GPUstart, then run
+one admitted job on distinctnode and preserveallpartial results. Tests17 current;
+all304/fullnative evidence andactual workerrequests are FUTURE, not claimed.
+
+Primary research complete in NATIVE-ADAPTIVE-METHODS-AND-FOUNDATIONS-2026-11-16.md:
+VoiceChat11B concrete but x86optimizedstack, arithmetic/context limits, fixedvoice
+and inability tointerrupt duringtools => no blindreplacement/ARMinstallspiral.
+No alternativeverifiedallrequirements. SpeechinteractivityRL methods relevant;
+releasedPersonaPlexRLdelta noncommercial. OPALKEEP/catalogue != fullagentrewriting;
+MiRLsuffixRL != supervisedmining; WSPonlylocalizedcausalpathology withcontrols.
+Research agent done, no remote jobs or assets touched. Parent solecomputeexecutor.
+Remora currentlyreported8520039 active nid010078 +8521985pending perfreshqueue;
+askedfor publicQwen27B path/nativeARM code andnodeexclusions, replypending.
+Don'ttouchitsruntime or privateartifacts. Freshprovider/quota before ownstart.
+
+---
+
 # 16Nov — Remora actor allocation terminal accounting reported
 
 Remora reports8517385 COMPLETED exit0, actual114seconds*1GPU=0.031666667GPUh,

@@ -1,3 +1,5 @@
+16November active owner goal: [autonomous product execution and cause-separating checks](NATIVE-PRODUCT-EXECUTION-2026-11-16.md). Expanded105M/196 training and full192 **two-condition** evaluation are complete, backed up and NOT accepted; older192/four-trained/six-condition descriptions below are historical. Fresh current source/jobs in HANDOFF.
+
 # Active native voice product goal
 
 15November adaptive direction: [next evaluated-boundary OPAL activation plan](NATIVE-OPAL-ADAPTIVE-BOUNDARY-PLAN-2026-11-15.md). Prepare result-driven decisions at DEV49 and safe checkpoint continuation; current worker has no live backend switch/epoch-yield, so do not promise exact49 application while also promising uninterrupted execution. MiRL/RL/capacity programme remains active.

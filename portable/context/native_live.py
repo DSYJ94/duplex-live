@@ -12,9 +12,13 @@ from evals.recovery_worker import RecordWorld, WorkerContractError, WorkerSupers
 
 
 class NativeLiveSession:
-    def __init__(self, engine, transcribe, records=None, worker=run_worker, maximum_requests=6):
+    def __init__(self, engine, transcribe, records=None, worker=run_worker, maximum_requests=6, maximum_seconds=60, context_provider=None):
         if type(maximum_requests) is not int or not 1 <= maximum_requests <= 6:
             raise ValueError('One live session permits at most six native requests')
+        if type(maximum_seconds) is not int or not 1 <= maximum_seconds <= 180:
+            raise ValueError('Explicit native session bound must be1..180 seconds')
+        self.maximum_seconds = maximum_seconds
+        self.context_provider = context_provider
         self.engine, self.transcribe, self.worker = engine, transcribe, worker
         self.world = RecordWorld({} if records is None else records)
         self.maximum_requests = maximum_requests
@@ -26,12 +30,21 @@ class NativeLiveSession:
     async def _work(self, identity, revision, pcm, seconds, assistant):
         from evals.context_spanning_asr import request_context
         from evals.context_backend_failure import notice
-        recognized = await asyncio.to_thread(self.transcribe, pcm, 24000)
+        if self.context_provider is None:
+            recognized = await asyncio.to_thread(self.transcribe, pcm, 24000)
+            context, rejected = request_context(recognized, seconds, assistant, seconds, identity)
+            if rejected is not None:
+                return rejected
+        else:
+            # Explicit text already supplied by the user is a distinct modality.
+            # Never fabricate ASR words/timestamps from an expected transcript.
+            context = self.context_provider(seconds, assistant)
+            if (not isinstance(context,list) or not context or
+                    any(row.get('role') not in ('user','assistant') or not isinstance(row.get('text'),str)
+                        or not row.get('text','').strip() or not row.get('source') for row in context)):
+                raise ValueError('Explicit available context with honest modality/source required')
         if self.closed:
             return None
-        context, rejected = request_context(recognized, seconds, assistant, seconds, identity)
-        if rejected is not None:
-            return rejected
         with self.world.lock:
             self.world.tasks[identity]['context'] = context
         try:
@@ -87,8 +100,8 @@ class NativeLiveSession:
         frame = np.asarray(frame, dtype=np.float32)
         if frame.shape != (self.engine.frame_size,) or not np.isfinite(frame).all():
             raise ValueError('Exactly one finite native audio frame required')
-        if (len(self.audio)+1)*self.engine.frame_size > 60*24000:
-            raise ValueError('Experimental live sessions are bounded to sixty seconds')
+        if (len(self.audio)+1)*self.engine.frame_size > self.maximum_seconds*24000:
+            raise ValueError('Native session reached its explicit audio bound')
         events = self._drain()
         self.audio.append(frame.copy())
         result = self.engine.step(frame)
