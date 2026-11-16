@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "actual_native_model_loaded": false,
+  "native_GPU_injection_or_policy_qualified": false,
+  "feature_tests": 3,
+  "synthetic_readout_updates": 128,
+  "synthetic_bias_updates": 128,
+  "Adam_RNG_OPAL_restore_exact": true,
+  "fixture_root": "/projects/u6ada/duplex-live/action-fit-cpu-final-stage/fit-fixture-v2ijzckt",
+  "new_native_backbone_updates": 0,
+  "external_API_calls": 0,
+  "files": {
+    "training/personaplex/action_fit.py": "b75e5051c4d33716776e838c1f3465a00ea69f43e1ec615c94a8bea080577e38",
+    "training/personaplex/action_features.py": "17ed828dfef6383aee9f5648e38747813f2d7d2a09ebcc307b70c83bafb036db"
+  }
+}

@@ -1,3 +1,34 @@
+# 16Nov23:35UTC — Next control fitter tested; only official8526401 native job active
+
+Staged action_fit.py is a FIXED supervised readout/bias control, not nativeLM
+fine-tuning, RL or autonomous OPAL. Actual final ARM CPU3tests PASS; synthetic
+128newreadout +128newbias fixtureupdates completed, bias retains ONLY1trainable
+coefficient; full readout Adam/RNG/OPAL exact restore PASS in a separate instance
+(sameCPU process, NOT freshnativeGPU proof). Both original196 and allactualnative
+weights untouched. Exactsourcefile hashes match CPUproof; docs/NATIVE-ACTION-FIT-
+CPU-PROOF-2026-11-16.json retained. No nativefeaturecollection/headfit/injection
+or free-running qualification has happened. Originalfixtureproofs preserved.
+Nextimplement actual pinned TRAIN cache+native zero insertion/freshrestoration
+and bias/readout paired functional evaluation; keep outputs/steps distinct.
+Do NOT call these CPUfixture steps197+ or any native training progress.
+
+CPU actual NVIDIA WAV load/normalization branch PASS for originalRPBen unchanged
+SHA552adfe446367b04b29cdc0c715822fee95c45e485046ae50ff0a06b7afc61d0:
+[1,353280]floatPCM/24kHz,−24.0000LUFS,peak.40009555. Cachedvoice embeddings/cache
+cleared by actual upstream loader. No runtime hotpatch/modelGPU in this proof.
+This covers the future secondvoice branch before it starts; source f926 running
+unchanged. CurrentNATF2 lastactual26/64 at23:31:39UTC; SAMEjob8526401.
+No freshGPU stop observed. Maxdeadline04:01:04UTC17Nov, fullbackup automatic.
+
+Reference76 interpretation explicitly flags publicGSM8K TRAIN/pretrainingfamiliarity
+and familiarbasiccases;62/64 is attribution, NOT fresh unseen productacceptance.
+Owner renewal-readiness question stillpending; cert expires23:49:49UTC16Nov.
+Goal remainsACTIVE, existingjob/independentarchive continue without freshlogin.
+Need human institutionalrenewal for freshmonitoring/deployment afterwards; never
+resubmit on timeout or automatically reopen blankChrome sessions.
+
+---
+
 # 16Nov23:10UTC — Reference76 COMPLETE; official missing128 actually generating
 
 8523671 COMPLETED0:0,1012GPU-seconds x1; full76 independently archived.
@@ -20,7 +51,7 @@ ActualCPU6tests and strict475native-tensor shapes PASS, existingcompiledARM
 sphn0.2.1 reused; future1.0.0 dependency added ONLY isolatedofficialpylibs.
 BothfirstCPUwrapper errors(PYTHONPATH/missingmount) and missingfuture fixed
 beforeGPU submission. TinyCPUproofwriter literal\n formatting error derived
-without measurement changes; originalbytes retained. ActualGPUTRT prompt89frames
+without measurement changes; originalbytes retained. ActualGPU prompt89frames
 prefilled/pinned; realoutput1 then4complete, no optimizer/backprop.
 Nevermodifythisworktree orresubmit onobservationtimeout. Fullindependentarchive
 required atsuccess. Remorainformed;8525986/nid010032 active,8526006pending then;

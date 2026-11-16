@@ -17,3 +17,12 @@ class ActionFeaturesTest(unittest.TestCase):
         self.assertEqual(int(cache['positive'].sum()),1)
         with self.assertRaises(ValueError):selected(h,z,mask.long(),target)
         with self.assertRaises(ValueError):balanced_loss(torch.ones(3),cache['positive'],0,2)
+
+    def test_fit_rejects_dev_or_incomplete_population_and_bias_has_one_owner(self):
+        from training.personaplex.action_fit import model,validate
+        h=torch.ones(1,3,5);z=torch.ones(1,1,3,8);mask=torch.ones(3,dtype=torch.bool);target=torch.tensor([4,0,1]);row=dict(group='actual',id='fixture',fold='TRAIN',**selected(h,z,mask,target));cache=dict(schema='dl-native-ret-TRAIN-features-v1',optimizer_updates=0,native_backbone_updated=False,population=dict(positive=1,negative=2),rows=[row])
+        self.assertEqual(validate(cache),5)
+        with self.assertRaises(ValueError):validate(dict(cache,rows=[dict(row,fold='DEV')]))
+        with self.assertRaises(ValueError):validate(dict(cache,population=dict(positive=1,negative=1)))
+        bias=model(5,'bias','cpu');self.assertEqual(sum(p.numel()for p in bias.parameters()if p.requires_grad),1)
+        balanced_loss(binary_logits(row,bias),row['positive'],1,2).backward();self.assertIsNone(bias.weight.grad);self.assertIsNotNone(bias.bias.grad)

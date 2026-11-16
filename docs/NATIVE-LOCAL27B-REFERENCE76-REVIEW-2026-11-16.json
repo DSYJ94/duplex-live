@@ -857,5 +857,6 @@
       "review_note": "Requested answer and supporting arithmetic are correct in complete generated text."
     }
   ],
-  "product_accepted": false
+  "product_accepted": false,
+  "cohort_limit": "Familiar12 regressions,32 authored numerical template variants and32 questions from public GSM8K TRAIN. Possible pretraining familiarity/memorization is not excluded. This is cause attribution, not a fresh unseen reasoning benchmark; qualify fresh tasks after selecting the system."
 }
