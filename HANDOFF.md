@@ -1,3 +1,24 @@
+# 16Nov16:07UTC — Live evaluation progressing; first A/B preview preserved
+
+8511770 remains RUNNING. Observer11871 reads every120s; latest counts8/32
+basecontrol,7/32candidatecontrol,3/64perDEV. No stop/model action/replay.
+First completed DEV pair reasoning-text-aefafccabcd0342cfe05 question123-5+2:
+BOTH generated text answers wrong (base9; adapter117/17), correct120. This is
+one illustrative case, NOT overall accuracy or speech-ASR qualification. Do not
+claim reasoning improved from training completion/loss or sampleselection.
+Read-only modernCPU assembly reused completed raw chunks, preserved original
+frame clock, no trim/gain/normalization/new inference; remote immutable preview
+/projects/u6ada/duplex-live/evaluation-preview-8511770-v1, local ignored
+runs/container-startup-20261115/listening-preview-8511770, bothoutputSHAverified.
+Small receipt docs/NATIVE-EXPANDED1072-EARLY-PAIR-2026-11-16.json. User has
+input/base/adapter audio previews. All196 checkpoints remain preserved.
+We can discuss progress NOW; final comparative verdict after192+ASR+independent
+raw backup and semantic review. Expected several hours; hardstop21:54:50UKtoday,
+not guaranteed completion. Live test still needs stability/speech qualification
+and actual frontend serving; no live deployment claimed or interrupting eval.
+
+---
+
 # 16Nov16:00UTC — TRAINING COMPLETE196; evaluation8511770 RUNNING
 
 8478956 actual provider COMPLETED exit0, elapsed73796s*4GPU=81.9955556GPUh.

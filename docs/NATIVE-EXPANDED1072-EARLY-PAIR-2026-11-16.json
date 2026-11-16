@@ -1,0 +1,35 @@
+{
+  "status": "EARLY_FIRST_COMPLETE_PAIR_NOT_FULL_COMPARISON",
+  "job": "8511770",
+  "case": {
+    "id": "reasoning-text-aefafccabcd0342cfe05",
+    "fold": "DEV",
+    "question": "A workshop has 123 washers. It uses 5 and then receives 2. How many washers does it have now?",
+    "response": "The answer is 120 washers.",
+    "numeric_target": "120",
+    "verification": {
+      "parent": {
+        "method": "exact-rational-program",
+        "expression": "123-5+2"
+      },
+      "new_semantic_review_required": true,
+      "question_ambiguous_proposal": false,
+      "correction_proposal": false
+    }
+  },
+  "outputs": [
+    {
+      "condition": "baseline",
+      "generated_text": "Hello, I' here to Let me add that up real quick. 4 washes plus 5 new ones makes 9 total. You have 9 washes after getting the 2 new ones.",
+      "preview_sha256": "cc91f47f9858ec4ce57528f0bdb9491e8c27b186c5e8ad5efb685297e7609d5a"
+    },
+    {
+      "condition": "expanded105M",
+      "generated_text": "117 washes now. 5 used and then 2 more. 17 total.",
+      "preview_sha256": "155061239949ff8ce10d3588422c48493b6d678e3dd00906ebdee65a22aef35a"
+    }
+  ],
+  "reasoning_observation": "Both generated text answers incorrect for this single arithmetic case; speech ASR and full cohort review pending",
+  "new_inference_or_training": false,
+  "preview_root": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/active-source-20261115/runs/container-startup-20261115/listening-preview-8511770"
+}
