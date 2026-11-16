@@ -10,6 +10,17 @@ from .expanded_guard import AUTH,ACCOUNT,KEY,sha,stamp,parse_job,validate_job
 EVAL_AUTH=Path('docs/NATIVE-EXPANDED1072-EVALUATION-2026-11-16.json')
 
 
+def parent_provider(job):
+    try:
+        raw=subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=30,stderr=subprocess.PIPE)
+        return parse_job(raw)
+    except subprocess.CalledProcessError:
+        raw=subprocess.check_output(['sacct','-j',job,'-X','-n','-P','-o','JobIDRaw,State,Account,ExitCode'],universal_newlines=True,timeout=30)
+        rows=[line.split('|')for line in raw.splitlines()if line.split('|')[0]==job]
+        if len(rows)!=1 or rows[0][1:4]!=['COMPLETED',ACCOUNT,'0:0']:raise ValueError('Exact successful terminal parent accounting required')
+        return dict(JobId=job,JobState='COMPLETED',Account=ACCOUNT,ExitCode='0:0',provider_evidence='sacct terminal accounting')
+
+
 def evaluation_command(work,*,gpu,environment,backup,parent_backup):
     command=container_command(work,gpu=gpu,environment=environment,backup=backup)
     position=command.index('--pwd')
@@ -56,8 +67,7 @@ def main(a):
     preparation=json.loads((a.root/'input-preparation.json').read_text())
     if (preparation['source']!=a.source or preparation['parent_root']!=str(a.parent_root)or preparation['required_outputs']!=192
             or sha(a.root/'dev-cases.json')!=preparation['dev64_sha256']or sha(a.root/'control-cases.json')!=preparation['control32_sha256']):raise ValueError('Pinned complete input preparation required')
-    parent_raw=subprocess.check_output(['scontrol','show','job','-o',a.parent_job],universal_newlines=True,timeout=30)
-    parent_job=parse_job(parent_raw)
+    parent_job=parent_provider(a.parent_job)
     if parent_job.get('JobState')!='COMPLETED':raise ValueError('Never overlap valid parent training')
     job=os.environ['SLURM_JOB_ID'];actual=parse_job(subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=30))
     if actual.get('NodeList')in scope.get('exclude_active_Remora_nodes',[]):raise ValueError('Distinct active Remora node must remain protected')
