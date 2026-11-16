@@ -1,3 +1,25 @@
+# 16Nov — Remora8491715 reservation reported; voice69/196 remains healthy
+
+Remora chat01a17447-3cd3-74f1-b096-068f4bb6b91f reports submitted job8491715,
+last verified PENDING by Remora, brics.u6ada/workq, requested1GPU/up to8h (8GPUh,
+reported2NHR), excludes protected voice nid010879. Native-contract baseline only,
+serial Gemma4-12B/Qwen3.6-27B, zero optimizer updates, owned root
+/projects/u6ada/remora/native-large-20261115-v1. Remora owns actual allocation/
+visible-GPU=1 admission; this chat has not independently refreshed its job state
+or verified its billing interpretation. Do NOT infer the whole account still has
+only8478956 from older queue snapshots. Count8491715 actual used/reserved time
+in fresh account/award admission before any future voice continuation.
+
+Existing voice observer51731 still RUNNING_NATIVE_GUARD, completed69/196,
+no host terminal. Current checkpoint69 savedLustre; latest independently VERIFIED
+voice backup remains64 until a fresh receipt is read. No stop/replay/overlapping
+voice learner or adaptive restore submitted. Adaptive6b32c9d still waits for
+successful cooperative parent and latest checkpoint/backup/native restore gates.
+New Remora job was NOT submitted or modified by this chat; no change to voice
+source, runtime, environment, checkpoint writers, deadlines or196-update ceiling.
+
+---
+
 # 15Nov — Fresh access restored; voice61/196; real full epoch49 evidence reviewed
 
 Renewal independently verified by a new SSH command. Prior publickey blocker is
