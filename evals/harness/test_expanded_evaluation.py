@@ -9,6 +9,16 @@ class Value:
 
 
 class ExpandedEvaluation(unittest.TestCase):
+    def test_parent_backup_is_explicitly_visible_readonly_in_cpu_and_gpu_container(self):
+        from unittest.mock import patch
+        from training.personaplex.expanded_evaluation_host import evaluation_command
+        original=['apptainer','exec','--no-home','--pwd','/work','image','python']
+        for gpu in (False,True):
+            with patch('training.personaplex.expanded_evaluation_host.container_command',return_value=list(original)):
+                cmd=evaluation_command(Path('/work'),gpu=gpu,environment={},backup=Path('/results'),parent_backup=Path('/parent'))
+            self.assertEqual(cmd[3:5],['--bind','/parent:/parent:ro'])
+            self.assertEqual(original,['apptainer','exec','--no-home','--pwd','/work','image','python'])
+
     def test_only_full_declared_expanded_adapter_membership_is_accepted(self):
         value=Value();selection=dict(trainer_source='a'*40)
         state=dict(schema='dl-distributed-native-state-v2',step=196,world_size=4,

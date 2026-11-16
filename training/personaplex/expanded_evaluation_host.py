@@ -10,6 +10,13 @@ from .expanded_guard import AUTH,ACCOUNT,KEY,sha,stamp,parse_job,validate_job
 EVAL_AUTH=Path('docs/NATIVE-EXPANDED1072-EVALUATION-2026-11-16.json')
 
 
+def evaluation_command(work,*,gpu,environment,backup,parent_backup):
+    command=container_command(work,gpu=gpu,environment=environment,backup=backup)
+    position=command.index('--pwd')
+    command[position:position]=['--bind',str(parent_backup)+':'+str(parent_backup)+':ro']
+    return command
+
+
 def prepare(root,data,parent,source):
     from .expanded_evaluation import dev_cases
     from training.venus.foundation_native import cases
@@ -78,12 +85,12 @@ def main(a):
             if watch.poll()is not None or time.time()>deadline:raise ValueError('Actual scheduler guard unavailable')
             time.sleep(2)
         env={k:environment[k]for k in ('DUPLEX_LIVE_GUARD_FILE','DUPLEX_LIVE_LEASE_FILE','SLURM_JOB_ID','SLURM_JOB_ACCOUNT')};env.update(OMP_NUM_THREADS=8,MKL_NUM_THREADS=8,GIT_OPTIONAL_LOCKS='0',HF_HOME='/projects/u6ada/duplex-live/hf-cache')
-        common=container_command(Path.cwd(),gpu=False,environment=env,backup=a.backup)
+        common=evaluation_command(Path.cwd(),gpu=False,environment=env,backup=a.backup,parent_backup=a.parent_backup)
         # Modern CPU process verifies final checkpoint bytes/restore proofs first.
         code="import json; from pathlib import Path; from training.personaplex.expanded_evaluation import completed; from training.personaplex.foundation_context import preflight; rows=preflight(Path.cwd()); selection=completed(Path(%r),%r,json.loads(Path(%r).read_text()),Path(%r)); plan=json.loads(Path(%r).read_text()); assert len(rows)==32; plan.update(selection=selection,parent_root=%r,source=%r,public_assets_and_native_geometry_preflight_passed=True); Path(%r).write_text(json.dumps(plan,indent=2)+'\\n')"%(str(a.parent_root),a.trainer_source,str(folder/'parent-provider.json'),str(a.parent_backup),str(a.root/'input-preparation.json'),str(a.parent_root),a.source,str(folder/'evaluation-plan.json'))
         subprocess.run(common[:-1]+['-c',code],env=environment,check=True)
         (a.root/'evaluation-admission.json').write_text(json.dumps(dict(lease=lease,plan=json.loads((folder/'evaluation-plan.json').read_text()),parent_provider=parent_job,optimizer_updates=0),indent=2)+'\n')
-        command=container_command(Path.cwd(),gpu=True,environment=env,backup=a.backup)
+        command=evaluation_command(Path.cwd(),gpu=True,environment=env,backup=a.backup,parent_backup=a.parent_backup)
         command+=['torch.distributed.run','--standalone','--nproc_per_node=4','--module','training.personaplex.expanded_gpu','training.personaplex.expanded_evaluation','--root',str(a.root),'--plan',str(folder/'evaluation-plan.json'),'--lease',str(lease_path),'--source',a.source]
         subprocess.run(command,env=environment,check=True)
         # Existing inventory copier hashes/copies only this evaluation output.
