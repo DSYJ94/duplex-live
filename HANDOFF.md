@@ -1,3 +1,27 @@
+# 16Nov10:49UTC — Voice171/196 healthy; Remora completed usage reconciled
+
+Fresh actual SSH/guard/log read confirms SAME8478956/source3c6f699 RUNNING,
+provider verified/nonterminal, completed171/196; independent NFS step168 backup
+complete6files; host terminal absent. Original observer51731 ended with SSH
+broken-pipe, NOT a training failure. Read-only replacement observer tool25640,
+log runs/container-startup-20261115/observer-8478956-v3.jsonl, same server lock/
+script. No model restart, stop, replay, overlapping voice job or native handover.
+Native adaptive source6b32c9d remains staged; if the valid parent finishes196,
+verify final backups/restoration and evaluate rather than manufacture extra
+updates or a continuation. Existing immutable deadline16Nov16:54:14UTC unchanged.
+
+Remora independently reports8491715 COMPLETED exit0, elapsed7042seconds,
+actual1GPU/nid010127 =>7042 GPU-seconds =1.956111111111GPUh. Count this actual
+usage ONCE, with ZERO remaining reservation. Former8GPUh maximum is released/
+historical and must NOT be added to actual. Reported quarter-node equivalent
+0.489028NHR is Remora's conversion, not independently re-verified by this chat.
+Both36-case model arms completed, zero optimizer updates, no further Remora job
+reported. Preserve its other historical usage separately. Reconciliation and
+fresh voice status sent to Remora under prior owner coordination authorization.
+No resource/job/model state changed on its behalf.
+
+---
+
 # 16Nov — Remora8491715 actual separate-node allocation reported
 
 Remora independently confirms8491715 RUNNING on nid010127, actual AllocTRES
