@@ -1,0 +1,126 @@
+{
+  "status": "READOUT128_BACKED_NATIVE_RESTORE_PASS_EVALUATION_RUNNING",
+  "job": "8540802",
+  "producer": "c66b72ba02211496285e061178d4e9c3669267f3",
+  "readout": {
+    "readout-fit-backup": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 33,
+      "bytes": 1419906,
+      "inventory_sha256": "5790fe37d9d375837257ef5d44234f0fdcc2cb42c39759549fc7ac6d58a617e6",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/fit",
+      "optimizer_updates": 128
+    },
+    "lease": {
+      "paired_authorization_sha256": "1b5ed1443e11799d957bb1e5acec2f114a5e99f0bbd73b0a606f9993d8ed8a1f",
+      "provider": "Slurm",
+      "resource_key": "duplex-expanded1072-v1",
+      "account": "brics.u6ada",
+      "authorization_sha256": "efdcd5600bad70d1b08cf85941029a5ebd81608f26c3ea42b0ab992e2d4fc3a9",
+      "GPU_count": 1,
+      "job_id": "8540802",
+      "node": "nid011002",
+      "source": "c66b72ba02211496285e061178d4e9c3669267f3",
+      "start_unix": 1794920750.0,
+      "stop_unix": 1794963950.0,
+      "prior_award_GPU_seconds": 893499,
+      "other_reserved_GPU_seconds": 5193,
+      "home_used_bytes": 85007814656,
+      "home_hard_bytes": 107999997952,
+      "action_plan_sha256": "a644c132ee50393bbfc07237427884296eb36d3e8899ef7b657f0e48dcd8c179"
+    },
+    "native-restore": {
+      "saved_readout_updates": 128,
+      "new_optimizer_updates": 0,
+      "Adam_RNG_OPAL_exact": true,
+      "native_free_running_qualified": false,
+      "provenance": {
+        "source": "c66b72ba02211496285e061178d4e9c3669267f3",
+        "job_id": "8540802",
+        "execution": "c7dceced70564983b005105c45f453a2",
+        "process_identity": {
+          "pid": 50,
+          "pid_namespace": "pid:[4026536229]",
+          "start_ticks": 42861796,
+          "node": "nid011002"
+        },
+        "features_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05"
+      },
+      "actual_CUDA": true,
+      "original_fit_sha256": "ac87f43ac423c54e8af444c7224206802723f321dfc893b56ef660d6ff01447d"
+    },
+    "terminal": {
+      "mode": "readout",
+      "input_features": 4096,
+      "trainable_parameters": 4097,
+      "identity": {
+        "base_revision": "fdaf4090a61cb315c138a1faee287ffd6c716309",
+        "inference_family": "context-spanning79df-personaplex16",
+        "checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+        "trainer_source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+        "predecessor_step": 196
+      },
+      "recipe": {
+        "updates": 128,
+        "warmup_updates": 16,
+        "learning_rate": 0.001,
+        "gradient_clip": 1.0,
+        "weight_decay": 0.0,
+        "adam_betas": [
+          0.9,
+          0.999
+        ],
+        "adam_eps": 1e-08
+      },
+      "backbone_updates": 0,
+      "previous_saved_updates_replayed": 0,
+      "OPAL_mode": "KEEP_FIXED_CONTROL_NOT_AUTONOMOUS_REWRITING",
+      "provenance": {
+        "source": "c66b72ba02211496285e061178d4e9c3669267f3",
+        "job_id": "8540802",
+        "execution": "3f268f4fd9134c3396f0d4d5d28a4566",
+        "process_identity": {
+          "pid": 49,
+          "pid_namespace": "pid:[4026536228]",
+          "start_ticks": 42858118,
+          "node": "nid011002"
+        },
+        "features_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05"
+      },
+      "actual_new_readout_updates": 128,
+      "initial": {
+        "positive_count": 89,
+        "negative_count": 75959,
+        "positive_mean_probability": 1.403381520503899e-05,
+        "positive_probability_above_half": 0,
+        "negative_mean_probability": 9.738993611563274e-08,
+        "negative_probability_above_half": 0,
+        "teacher_forced_TRAIN_only": true,
+        "native_free_running_qualified": false
+      },
+      "final": {
+        "positive_count": 89,
+        "negative_count": 75959,
+        "positive_mean_probability": 0.9791969656944275,
+        "positive_probability_above_half": 89,
+        "negative_mean_probability": 0.020924534648656845,
+        "negative_probability_above_half": 868,
+        "teacher_forced_TRAIN_only": true,
+        "native_free_running_qualified": false
+      },
+      "checkpoint": "/projects/u6ada/duplex-live/native-ret-paired-20261117-v1/readout/fit/state/step-0128.pt",
+      "native_acceptance_pending": true,
+      "checkpoint_sha256": "ac87f43ac423c54e8af444c7224206802723f321dfc893b56ef660d6ff01447d"
+    }
+  },
+  "scalar_bias_not_yet_started": true,
+  "whole192_comparison_complete": false,
+  "native_product_accepted": false,
+  "source_receipt_SHA256": {
+    "readout-fit-backup.json": "1e835f41c92a50904f34c0bcf20ce1a147e4b966c74e7b8b8771bc9ec8e90476",
+    "lease.json": "cd27f2b64eef272c29bf3e0ae3036cf34e178918e62c906969f825bd0ae27eb0",
+    "native-restore.json": "16badb4cf2b28f945727e4bca7114acb962db4fed7f2b849b4753b884536c637",
+    "terminal.json": "72d6a47ac01bde34c483f800f8d08f856b1ac00221b778a3de4066d0709e852d"
+  }
+}

@@ -1,3 +1,33 @@
+# 17Nov13:10UTC — Actual readout128 DONE/backed/native restored; evaluation LIVE
+
+Same8540802 actuallyRUNNING nid011002, lease13:05:50UTC17Nov→01:05:50UTC18Nov,
+1GPU. Actualprioraward893499GPUsec +otherreserved5193 +thismax43200 admitted
+withinoriginal20kGPUh. Producer c66b72ba02211496285e061178d4e9c3669267f3 immutable.
+No newsourcehotdeployment, backbone0updates, no savedupdate replay.
+Readout4097 coefficients actual128updates complete. Finalpacket
+ac87f43ac423c54e8af444c7224206802723f321dfc893b56ef660d6ff01447d.
+ALL33fitfiles1419906bytes independently backed BEFORE evaluation, inventory
+5790fe37d9d375837257ef5d44234f0fdcc2cb42c39759549fc7ac6d58a617e6.
+ActualfreshnativeCUDA restore fullhead/Adam/RNG/OPAL/metrics PASS; writer49
+pidnamespace4026536228 start42858118, reader50 namespace4026536229 start42861796,
+executions3f268f4fd9134c3396f0d4d5d28a4566 / c7dceced70564983b005105c45f453a2.
+Nativecontrol32 evaluation actually started; lastdirectlog2/32, entire96perarm
+pending. Biasarm hasnotstarted; do not equate readoutfit withwholephasecomplete.
+
+CachedTRAIN:89/89positivesabove.5 vs0/89before;868/75959negativesabove.5.
+Positive mean.9791969657, negative mean.02092453465. Signalsaccessible inexisting
+features, but falsepositives/free-running/reasoning/speech/backend stilldecisive.
+Not a claimofadequate nativecapacity generally or product/improvedspeech.
+Smallactualreceipts copied+sourceSHA recorded
+ docs/NATIVE-RET-READOUT128-FIRST-BOUNDARY-2026-11-17.json.
+Allfullstates remain onindependentclusterfilesystems; no bulkyMaccheckpointcopy.
+Current read-only observer29998/remote19012 remains LIVE,300s nowactualpositive
+updates recorded. Poll SAMEhandle occasionally. Onterminalfetch rawhost/archive;
+neverrestartbecauseobservationtimeout. Remora notifiedactualnode/deadline;
+allitsjobs untouched. Keepvalid comparisonrunning. GoalACTIVE.
+
+---
+
 # 17Nov13:03UTC — Same8540802 verifiedPENDING; observer29998 LIVE
 
 Actual read-only sacct observation1794920550.851: PENDING,elapsed0,exit0:0.
