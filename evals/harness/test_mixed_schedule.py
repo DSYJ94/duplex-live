@@ -56,5 +56,39 @@ class MixedScheduleTest(unittest.TestCase):
             next_window(self.plan, changed_docs, self.spec, rank=0,
                         restored_step=0, identity=self.identity)
 
+    def test_bridge_consumes_exact_restored_window_in_one_native_update(self):
+        import torch
+        from unittest.mock import Mock, patch
+        from training.personaplex.mixed_schedule import update_next
+        runtime = Mock()
+        runtime.parameters.return_value = [torch.nn.Parameter(torch.ones(1))]
+        expected = self.window(50, rank=2)
+        loaded = []
+        def load(identity):
+            loaded.append(identity)
+            return dict(id=identity)
+        with patch('torch.distributed.is_initialized', return_value=True), \
+             patch('torch.distributed.get_world_size', return_value=4), \
+             patch('torch.distributed.get_rank', return_value=2), \
+             patch('training.personaplex.distributed_train.update') as execute:
+            execute.return_value = {'step': 51}
+            result = update_next(runtime, Mock(), Mock(), plan=self.plan,
+                documents=self.documents, spec=self.spec, step=50,
+                identity=self.identity, retained_groups=self.groups, references={},
+                load_speech=load, admission={'actual_proof': 'caller-owned'},
+                checkpoint_path=None, log_path='unused-test-log')
+        self.assertEqual(result, {'step': 51})
+        execute.assert_called_once()
+        call = execute.call_args.kwargs
+        self.assertEqual(call['step'], 50)
+        self.assertEqual(call['exposures'], expected['retained'])
+        self.assertEqual(loaded, [r['id'] for r in expected['speech_slots']])
+        self.assertEqual([r['valid'] for r in call['expanded_microbatches']],
+                         [r['valid'] for r in expected['speech_slots']])
+        self.assertEqual(call['language_window']['document_ids'],
+                         expected['language_window']['document_ids'])
+        self.assertEqual(call['language_window']['step'], 50)
+        self.assertIs(call['identity'], self.identity)
+
 
 if __name__ == '__main__': unittest.main()

@@ -6,6 +6,10 @@ SHA+language identity+restored integer cursor, rejects exhausted/changed plans,
 and selects matching epoch/rank speech slots and language batches. update_next
 passes allthree objectives to existing distributed_train.update/ONE OPAL owner;
 no second optimizer, old196resume, lineage mutation or running-job hotdeploy.
+Additional direct bridge contract test PASS: restoredstep50/rank2 passes exact
+retained exposures, speech slots/validity and language documents to ONE existing
+native update call, keeping step50 (no reset). Three mixed_schedule tests PASS;
+this test mocks the executor, not a native GPU proof.
 Seven local schedule tests PASS incl both complete epochs/allranks/no DEV/mass
 preservation/resume/rejection. Existing text_rehearsal10 tests also TERMINAL0
 PASS incl real2rankGloo and mixedgradient/oneOPAL-step/cursor save. This time
