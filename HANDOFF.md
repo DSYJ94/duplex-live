@@ -1,3 +1,22 @@
+# Bounded manual work — automatic goal STILL PAUSED; original reasoning family audit
+
+Harbinger requested onebounded useful preparationturn withoutgoalresume. No
+GPU/schedulerpoll, submission orrunningjobchange in thisturn. Exact original1072
+plan SHA b32387796aa99730653566374512d2c11a31df53ca5117d157a8aa8a19f695a6
+revalidated; all1008TRAIN/64DEVfoldspreserved. New reusable reasoning_family_audit
+actualresult:0literalquestion crossfoldduplicates;15number-normalizedtemplate
+families crossfold,476TRAIN/30DEVaffected. FullIDs retained in NATIVE-REASONING-
+ORIGINAL-FOLD-FAMILY-AUDIT-2026-11-17.json. This doesNOTmean DEVanswers trained
+orallsemanticparaphrases audited. Existing64DEV scores need familiar-template
+stratification; freshfamily-disjoint reasoningevaluation required before claiming
+generalization. Do notreassign/delete originalfolds orsilentlydrop476TRAINcases.
+Four focusedtestsPASS incl exact-vs-template overlap, normalization, duplicateIDs,
+emptyquestions and sourcecandidate safeguards. No training/dataadmission inferred.
+Existingreview8558032 continuesindependently; lastfresh491? seepriorchat:4940
+saved/RUNNING1:16:20. This turndoesnotrefreshthatstate. Automaticgoal remainsPAUSED.
+
+---
+
 # Current coordination checkpoint — same running review, existing Remora queue
 
 Harbinger coordination note received in thischat; soleDuplexexecutor unchanged.
