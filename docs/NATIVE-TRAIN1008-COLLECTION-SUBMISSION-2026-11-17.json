@@ -1,0 +1,34 @@
+{
+  "status": "ACTUAL_NATIVE_TRAIN_COLLECTION_RUNNING",
+  "job": "8553179",
+  "source": "f06fabd0fff9729134a52e0238758ba922eb565e",
+  "node": "nid010776",
+  "GPU_count": 4,
+  "start_unix": 1794940904.0,
+  "stop_unix": 1794984104.0,
+  "maximum_seconds": 43200,
+  "prior_award_GPU_seconds": 914423,
+  "other_reserved_GPU_seconds": 0,
+  "award_GPU_hours": 20000,
+  "collection_plan_sha256": "42786da6051006f19d09615b04cc95247c581d0766561b99bea43369a3d9d468",
+  "required_outputs": 1008,
+  "actual_completed_cases_observed_per_rank": [
+    3,
+    3,
+    3,
+    3
+  ],
+  "actual_contained_CPU_tests": 18,
+  "selection": {
+    "checkpoint": "/projects/u6ada/duplex-live/native-expanded1072-phase-v1/checkpoints/step-0196.pt",
+    "checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+    "trainer_source": "3c6f699e85adb26ba764e473ee491c041c62f6db",
+    "step": 196
+  },
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "backups_pending": true,
+  "correctness_labels_created": false,
+  "product_accepted": false,
+  "observer_session": 70879
+}

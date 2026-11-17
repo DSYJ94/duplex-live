@@ -1,3 +1,42 @@
+# 17Nov18:45UTC — ACTUAL native TRAIN1008 collection8553179 RUNNING, first12casescomplete
+
+ImmutableGPUproducer f06fabd0fff9729134a52e0238758ba922eb565e deployedviaGitbundle
+/projects/u6ada/duplex-live/source-TRAIN-failure-f06fabd; oldsourcesUNCHANGED.
+ActualcontainedCPU18testsPASS, bothCLIentrypointsPASS; CPUhostprepare validated
+fullpairedbackups/checkpoint196/inputmanifest and preparedcompletepinnedplan.
+Sourceproof/plan/submission/lease copiedlocally TRAIN-8553179; declarationreceipt
+ docs/NATIVE-TRAIN1008-COLLECTION-SUBMISSION-2026-11-17.json.
+
+SbatchsubmittedONCE returned8553179; actualproviderRUNNING nid010776,4GPUs/320G,
+start17Nov18:41:44UTC(1794940904), stop18Nov06:41:44UTC(1794984104),12hmax,
+Requeue0/Restarts0. Globalprior914423GPUSeconds, otherreserved0 actualadmission;
+newmax172800 plusprior1087223<20kGPUh. Include allactualsharedusage infuture.
+Sameguard/source/45s heartbeat/independentproviderclock bounds retained.
+Newcollector observertool70879 LIVE, scriptobserve-TRAIN-8553179.py,300spolls,
+serveralive. Latestprovider52sRUNNING0cases atfirstemit; laterdirectactualnative
+log confirms rank0/1/2/3 EACH3of252complete (12total), rawPCMframe-replaychecked.
+Do not confuse allocatedstartupwithcasecompletion; this12countISactualevents.
+PollSAME70879 occasionally; neverduplicate/restart onobservationtimeout.
+
+Allinputsoriginal1008TRAIN,64DEVexcluded, teacheranswers/audio/backendabsent;
+no newRET head/scalar, old105M/196 frozen, originalRP/persona/sampling. Every
+nativeframe/token/rawPCM savedcompactly and reloaded perframeSHAEXACT before
+casecomplete; four disjoint252shards. Nooptimizerupdates/nativeRL/MiRLtraining
+ornewdiversedataset yet; thiscreates empiricalnativefailures forlaterindependent
+labels/substantialSFT. Full1008 outputs/full4rankindependentarchive/provider0:0
+REQUIRED beforecomplete. Homequota12GiBheadroomchecked pre-submit+admission.
+ROOT/projects/u6ada/duplex-live/native-TRAIN-failure-20261117-v1;
+log ROOT/slurm-8553179.log; backup/home/u6ada/dsyj94.u6ada/duplex-native-TRAIN-failure-backups-v1.
+DoNOTinterrupt validcollection/copy. AlloldAdam/RNG/OPAL/checkpoints preserved.
+Remoranotified4GPU/node/window; itsjobs/settingsunchanged. Authvalid18Nov00:18:12;
+currentobserverSSHpersists. Broaderdata/retention/selective/fullnativelearning,
+realasyncbackendqualification andadaptiveOPAL remainwiderplan; nohead/LRsweep.
+Old3820/8545478 terminalFULLbacked, neverpoll/restart. OldremoteGitfetchsession72211
+stalledwithoutremoteGitwriter; Gitbundlefallbacksucceeded, newsourceactualf06.
+No GPU/model retry occurred. GoalACTIVE; nohumanblocker/API/GCP/purchases.
+
+---
+
 # 17Nov — Native TRAIN failure collector implemented/tested; NOTyetGPUsubmitted
 
 New training/personaplex/train_failure_rollout.py checks pinned1008 TRAIN-only
