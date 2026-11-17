@@ -1,0 +1,19 @@
+{
+  "status": "GOAL_DIRECTED_PAIRED_AUDIT_RECOVERY",
+  "parent_job": "8540802",
+  "parent_state": "FAILED",
+  "parent_exit": "1:0",
+  "parent_actual_GPU_seconds": 5394,
+  "original_phase_maximum_GPU_seconds": 43200,
+  "maximum_seconds": 37800,
+  "GPU_count": 1,
+  "remaining_bias_updates": 128,
+  "readout_updates_repeated": 0,
+  "readout_generations_repeated": 0,
+  "existing_readout_generations": 96,
+  "original_generation_source": "c66b72ba02211496285e061178d4e9c3669267f3",
+  "readout_checkpoint_sha256": "ac87f43ac423c54e8af444c7224206802723f321dfc893b56ef660d6ff01447d",
+  "external_API_calls": 0,
+  "native_backbone_updates": 0,
+  "reason": "Known omittedHF_HOME fixed and actualofflineCPU RED\u2192GREEN proved. Reuse completedreadout128/all96outputs; first bias128/96remain. No extra phasehours/award/purchase or blind retry."
+}

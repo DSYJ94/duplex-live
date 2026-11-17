@@ -61,6 +61,8 @@ def run(a):
     if (lease.get('paired_authorization_sha256') != sha(PAIR_AUTH)
             or lease['source'] != a.source or torch.cuda.device_count() != 1):
         raise ValueError('New separately admitted paired action allocation required')
+    if 'paired_recovery_sha256'in lease and a.mode!='bias':
+        raise ValueError('Recovery cannot repeat the completed readout arm')
     torch.cuda.set_device(0)
     torch.backends.cuda.matmul.allow_tf32 = False
     if sha(a.plan) != lease['action_plan_sha256']:

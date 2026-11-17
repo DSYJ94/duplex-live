@@ -15,6 +15,7 @@ OFFICIAL_AUTH=Path('docs/NATIVE-OFFICIAL-PERSONAPLEX-BASELINE-2026-11-16.json')
 FEATURE_AUTH=Path('docs/NATIVE-GPU-FEATURE-RESTORE-2026-11-17.json')
 RESTORE_AUTH=Path('docs/NATIVE-GPU-RESTORE-ONLY-2026-11-17.json')
 PAIR_AUTH=Path('docs/NATIVE-RET-PAIRED-EXECUTION-2026-11-17.json')
+PAIR_RECOVERY_AUTH=Path('docs/NATIVE-RET-PAIRED-RECOVERY-2026-11-17.json')
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -38,6 +39,17 @@ def resource(lease):
                 or scope['native_backbone_updates']!=0 or scope['external_API_calls']!=0
                 or scope['arms']!=['readout','bias']):raise ValueError('Separate authorized paired readout scope required')
         count=1;maximum=43200
+    if 'paired_recovery_sha256'in lease:
+        recovery=json.loads(PAIR_RECOVERY_AUTH.read_text())
+        if (not paired or lease['paired_recovery_sha256']!=sha(PAIR_RECOVERY_AUTH)
+                or recovery['status']!='GOAL_DIRECTED_PAIRED_AUDIT_RECOVERY'
+                or recovery['parent_actual_GPU_seconds']!=5394 or recovery['maximum_seconds']!=37800
+                or recovery['parent_actual_GPU_seconds']+recovery['maximum_seconds']>43200
+                or recovery['remaining_bias_updates']!=128 or recovery['readout_updates_repeated']!=0
+                or recovery['readout_generations_repeated']!=0 or recovery['external_API_calls']!=0
+                or recovery['native_backbone_updates']!=0 or lease.get('paired_parent_job')!='8540802'
+                or lease.get('prior_phase_GPU_seconds')!=5394):raise ValueError('Exact remaining paired recovery bound required')
+        maximum=37800
     if grants:
         key,path,status,maximum=grants[0];scope=json.loads(path.read_text())
         if (lease[key]!=sha(path)or scope['status']!=status or scope['GPU_count']!=1 or scope['maximum_seconds']!=maximum

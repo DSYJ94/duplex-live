@@ -37,7 +37,7 @@ def pair_command(work,environment,backup,inputs):
     return command
 
 
-def admission(a, plan_path):
+def admission(a, plan_path,*,recovery=False):
     actual = parse_job(subprocess.check_output(['scontrol','show','job','-o',os.environ['SLURM_JOB_ID']], universal_newlines=True, timeout=30))
     raw = subprocess.check_output(['sacct','-A',ACCOUNT,'-S','2026-10-30','-X','-n','-P','-o','JobIDRaw,JobName%100,State,ElapsedRaw,AllocTRES,ReqTRES,TimelimitRaw'], universal_newlines=True, timeout=30)
     prior = reserved = 0
@@ -66,6 +66,9 @@ def admission(a, plan_path):
                  start_unix=stamp(actual['StartTime']), stop_unix=stamp(actual['EndTime']),
                  prior_award_GPU_seconds=prior, other_reserved_GPU_seconds=reserved,
                  home_used_bytes=used, home_hard_bytes=hard, action_plan_sha256=sha(plan_path))
+    if recovery:
+        from .expanded_guard import PAIR_RECOVERY_AUTH
+        lease.update(paired_recovery_sha256=sha(PAIR_RECOVERY_AUTH),paired_parent_job='8540802',prior_phase_GPU_seconds=5394)
     validate_job(actual, lease, time.time())
     return lease, raw+'\n'+quota
 

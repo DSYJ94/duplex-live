@@ -139,7 +139,19 @@ def collect(a,rows,selection,*,factory=None,persona=None,voice_codes=None,voice_
     complete_collection(json.loads((root/'results.json').read_text()),rows,required=len(rows))
 
 
-def audit(a,rows,*,required=32,guard=None,require_spoken_content=False,recognizer_factory=None):
+def audit_sources(profile,source,trainer_source,generation_source=None):
+    """Keep reused generation identity distinct from the actual audit producer."""
+    origin=source if generation_source is None else generation_source
+    if profile['source']!=origin or profile['trainer_source']!=trainer_source:
+        raise ValueError('Actual evaluation/training sources must stay separate and exact')
+    if generation_source is not None:
+        import re
+        if any(re.fullmatch('[0-9a-f]{40}',v)is None for v in (source,origin)):
+            raise ValueError('Exact committed generation and audit producers required')
+    return dict(source=origin,**({}if generation_source is None else dict(audit_source=source,generation_source=origin)))
+
+
+def audit(a,rows,*,required=32,guard=None,require_spoken_content=False,recognizer_factory=None,generation_source=None):
     ensure=g.check if guard is None else guard
     import numpy as np,soundfile as sf
     from scipy.signal import resample_poly
@@ -151,8 +163,7 @@ def audit(a,rows,*,required=32,guard=None,require_spoken_content=False,recognize
     root=Path(a.root)/(a.base+'-'+a.capacity)
     collected=complete_collection(json.loads((root/'results.json').read_text()),rows,required=required)
     profile=json.loads((root/'profile.json').read_text())
-    if profile['source']!=a.source or profile['trainer_source']!=a.trainer_source:
-        raise ValueError('Actual evaluation/training sources must stay separate and exact')
+    sources=audit_sources(profile,a.source,a.trainer_source,generation_source)
     ensure(a.lease,600);pipe=(recognizer_factory or recognizer)();audits=[]
     for case in collected:
         ensure(a.lease,90);folder=root/case['id'];trace=[json.loads(s) for s in (folder/'trace.jsonl').read_text().splitlines()]
@@ -185,7 +196,7 @@ def audit(a,rows,*,required=32,guard=None,require_spoken_content=False,recognize
         joint_pass=sum(r['word_pass'] and r['raw_peak_pass'] for r in audits),
         necessary_silence_and_resume=sum(r['voiced_frames_before_cue_word']==0 and r['voiced_frames_after_cue_word']>0 for r in quiet),
         silent_while_paused=sum(r['voiced_frames_while_paused']==0 for r in pause))
-    report=dict(complete=len(audits)==required,source=a.source,trainer_source=a.trainer_source,summary=summary,cases=audits,
+    report=dict(complete=len(audits)==required,**sources,trainer_source=a.trainer_source,summary=summary,cases=audits,
         word_limit=.05,peak_limit=.995,asr_revision=REVISION,external_API_calls=0,optimizer_updates=0,
         connected_backend_tested=False,semantics_and_naturalness_require_review=True,adopted=False)
     write(root/'report.json',report);print(json.dumps(dict(condition=a.base+'-'+a.capacity,summary=summary)),flush=True)
