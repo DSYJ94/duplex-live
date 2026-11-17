@@ -2,7 +2,8 @@
 import argparse,gc,json,os,sys,uuid
 from pathlib import Path
 import torch
-from .expanded_guard import FEATURE_AUTH,sha
+from .expanded_guard import FEATURE_AUTH,RESTORE_AUTH,sha
+from .native_process import process_identity,validate_restore
 from .expanded_capture import PP,VENDOR,WEIGHTS,REFERENCE_SHA,INSTRUCTIONS
 from .expanded_runner import OLD_SHA,OLD_REPORT_SHA
 from .action_inference import identity
@@ -85,8 +86,12 @@ def main(a):
     from training.venus.opal_adapter import checkpoint_manifest
     from .distributed_native import cpu_state
     guard=FrameGuard(a.lease);lease=guard(600)
-    if lease['source']!=a.source or lease.get('feature_authorization_sha256')!=sha(FEATURE_AUTH)or torch.cuda.device_count()!=1:raise ValueError('Exact source and separate one-GPU zero-update scope required')
+    recovery=lease.get('restore_authorization_sha256')==sha(RESTORE_AUTH)
+    if lease['source']!=a.source or not(recovery or lease.get('feature_authorization_sha256')==sha(FEATURE_AUTH))or torch.cuda.device_count()!=1:raise ValueError('Exact source and separate one-GPU zero-update scope required')
     torch.cuda.set_device(0);os.environ.update(CS_BASE_DIR=str(PP),CS_WEIGHTS_DIR=str(WEIGHTS),CS_VOICES_DIR=str(WEIGHTS/'voices'));sys.path.insert(0,str(VENDOR));math_attention();torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=True
+    if recovery and(a.stage!='verify'or a.cache_root is None or a.cache_source!=lease['restore_parent']['cache_source']or str(a.cache_root)!=lease['restore_parent']['cache_root']):raise ValueError('Restore-only recovery must reuse its exact backed cache')
+    if a.stage=='cache'and(a.cache_root is not None or a.cache_source is not None):raise ValueError('Collection cannot import an old cache')
+    cached=a.cache_root or a.root/'cache';cache_source=a.cache_source or a.source
     selection=json.loads(a.plan.read_text())['selection'];bound=identity(selection)
     if selection['checkpoint_sha256']!='96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87':raise ValueError('Exact preserved196 required')
     if len(preflight(Path.cwd()))!=32:raise ValueError('Full original public/runtime preflight required')
@@ -99,13 +104,13 @@ def main(a):
     if a.stage=='cache':
         engine=make_engine(a,selection);reference=streaming(engine,probes,voice,folder/'baseline-stream',guard);engine.lm_gen._stop_streaming();del engine;gc.collect();torch.cuda.empty_cache()
     else:
-        reference=json.loads((a.root/'cache/zero-stream/proof.json').read_text())['rows']
+        reference=json.loads((cached/'zero-stream/proof.json').read_text())['rows']
     engine=make_engine(a,selection,zero_readout=True)
     if a.stage=='verify':
-        packet=json.loads((a.root/'cache/snapshot.json').read_text())
-        if sha(a.root/'cache/zero-state.pt')!=packet['snapshot_sha256']or sha(a.root/'cache/features.pt')!=packet['features_sha256']:raise ValueError('Immutable saved state and feature hashes required')
-        saved=torch.load(a.root/'cache/zero-state.pt',map_location='cpu',weights_only=False)
-        if saved.get('schema')!='dl-native-zero-ret-restore-v1'or saved['identity']!=bound or saved['source']!=a.source or saved['step']!=0 or saved['writer_pid']==os.getpid()or saved['execution']==execution:raise ValueError('Distinct actual native process and exact zero-state identity required')
+        packet=json.loads((cached/'snapshot.json').read_text())
+        if sha(cached/'zero-state.pt')!=packet['snapshot_sha256']or sha(cached/'features.pt')!=packet['features_sha256']:raise ValueError('Immutable saved state and feature hashes required')
+        saved=torch.load(cached/'zero-state.pt',map_location='cpu',weights_only=False)
+        validate_restore(saved,bound,cache_source,execution,lease,process_identity())
         engine.lm.text_linear.restore(saved['readout']);opal=new_opal(engine.lm.text_linear,folder/'opal');opal.optimizer.load_state_dict(saved['optimizer']);opal.restore_diagnostics(saved['diagnostics']);restore_rng(saved['rng'])
         if not exact_state(saved['rng'],rng_state()):raise ValueError('All native RNG fields differ')
         assert_optimizer_equal(saved['optimizer'],opal.optimizer.state_dict())
@@ -122,19 +127,19 @@ def main(a):
         features.update(identity=bound,source=a.source,original_TRAIN_sha256=OLD_SHA);torch.save(features,folder/'features.pt')
         opal=new_opal(engine.lm.text_linear,folder/'opal')
         try:
-            state=dict(schema='dl-native-zero-ret-restore-v1',identity=bound,source=a.source,step=0,writer_pid=os.getpid(),execution=execution,readout=engine.lm.text_linear.learned_state(),optimizer=cpu_state(opal.optimizer.state_dict()),diagnostics=opal.diagnostics_state,rng=rng_state(),recipe=RECIPE)
+            state=dict(schema='dl-native-zero-ret-restore-v1',identity=bound,source=a.source,step=0,writer_pid=os.getpid(),execution=execution,process_identity=process_identity(),readout=engine.lm.text_linear.learned_state(),optimizer=cpu_state(opal.optimizer.state_dict()),diagnostics=opal.diagnostics_state,rng=rng_state(),recipe=RECIPE)
             if checkpoint_manifest(opal.optimizer)['update']!=0 or any(torch.count_nonzero(v)for v in state['readout']['state'].values()):raise ValueError('Only true zero-initialized/zero-update state may be saved')
             torch.save(state,folder/'zero-state.pt')
         finally:opal.close()
         write(folder/'snapshot.json',dict(snapshot_sha256=sha(folder/'zero-state.pt'),features_sha256=sha(folder/'features.pt'),source=a.source,step=0,identity=bound))
     else:
-        prior=torch.load(a.root/'cache/features.pt',weights_only=False,map_location='cpu')
+        prior=torch.load(cached/'features.pt',weights_only=False,map_location='cpu')
         if not exact_state(prior['population'],features['population'])or not exact_state(prior['rows'],features['rows']):raise ValueError('Complete actual native restored TRAIN features differ')
-    write(folder/'terminal.json',dict(passed=True,stage=a.stage,source=a.source,actual_CUDA=True,pid=os.getpid(),execution=execution,identity=bound,TRAIN_records=len(features['rows']),positive_positions=features['population']['positive'],negative_positions=features['population']['negative'],zero_insertion=zero,streaming_probes=4,all_streamed_tokens_and_PCM_exact=True,all_features_exact=a.stage=='verify',all_Adam_RNG_OPAL_restored_exact=a.stage=='verify',optimizer_updates=0,old_saved_updates_replayed=0,native_policy_acceptance=False))
+    write(folder/'terminal.json',dict(passed=True,stage=a.stage,source=a.source,actual_CUDA=True,pid=os.getpid(),execution=execution,process_identity=process_identity(),cache_producer=cache_source,identity=bound,TRAIN_records=len(features['rows']),positive_positions=features['population']['positive'],negative_positions=features['population']['negative'],zero_insertion=zero,streaming_probes=4,all_streamed_tokens_and_PCM_exact=True,all_features_exact=a.stage=='verify',all_Adam_RNG_OPAL_restored_exact=a.stage=='verify',optimizer_updates=0,old_saved_updates_replayed=0,native_policy_acceptance=False))
     print(json.dumps(dict(event='native_feature_stage_complete',stage=a.stage,optimizer_updates=0,pid=os.getpid())),flush=True)
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     for key in ('root','lease','plan','data'):p.add_argument('--'+key,type=Path,required=True)
-    p.add_argument('--source',required=True);p.add_argument('stage',choices=('cache','verify'));main(p.parse_args())
+    p.add_argument('--cache-root',type=Path);p.add_argument('--cache-source');p.add_argument('--source',required=True);p.add_argument('stage',choices=('cache','verify'));main(p.parse_args())

@@ -1,0 +1,19 @@
+{
+  "status": "OWNER_DIRECTED_NATIVE_RESTORE_ONLY",
+  "GPU_count": 1,
+  "maximum_seconds": 16200,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "original_task_maximum_GPU_seconds": 21600,
+  "original_used_GPU_seconds": 4974,
+  "parent_job": "8535017",
+  "parent_state": "FAILED",
+  "cache_source": "c62663cd92ac144d21236fc5a6f01ddf2630f69e",
+  "cache_root": "/projects/u6ada/duplex-live/native-feature-restore-20261117-v1/cache",
+  "cache_backup": "/home/u6ada/dsyj94.u6ada/duplex-native-feature-backups-v1/job-8535017/cache",
+  "inventory_sha256": "0188cf63ed991d814b9ebdee70659bad6413aace8339cce64146876851958677",
+  "snapshot_sha256": "c325d2a43c0d142127b7e22e6fb51155a34f6cf9a0b6e1400ccdf47b43fcb53c",
+  "features_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05",
+  "reason": "Container PID50 was reused across distinct namespaces; bare PID comparison wrongly rejected a new process. Restore-only recovery uses actual terminal parent/new Slurm allocation, original immutable cache provenance and OS process identity. No gate, precision, tensor or optimizer change.",
+  "limits": ["No cache regeneration/export or learning", "Original source/checkpoints/cache bytes remain unchanged and read-only", "Original used4974 plus new maximum16200 is21174 within original21600seconds", "No purchases, GCP, API calls, new data or automatic goal resumption", "No model restart on observation timeout"]
+}

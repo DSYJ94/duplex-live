@@ -62,7 +62,7 @@ def main(a):
             if not result['passed']or not result['actual_CUDA']or result['optimizer_updates']!=0 or result['source']!=a.source:raise ValueError('Exact native zero-update stage required')
             terminals[stage]=result;receipts[stage]=archive(a.root/stage,a.backup/('job-'+job)/stage)
             (folder/(stage+'-backup.json')).write_text(json.dumps(receipts[stage],indent=2)+'\n')
-        if terminals['cache']['pid']==terminals['verify']['pid']or not terminals['verify']['all_features_exact']or not terminals['verify']['all_Adam_RNG_OPAL_restored_exact']:raise ValueError('Actual independent full native restoration required')
+        if terminals['cache']['process_identity']==terminals['verify']['process_identity']or not terminals['verify']['all_features_exact']or not terminals['verify']['all_Adam_RNG_OPAL_restored_exact']:raise ValueError('Actual independent full native restoration required')
         (folder/'host-terminal.json').write_text(json.dumps(dict(success=True,source=a.source,native_cache_complete=True,fresh_native_restore_passed=True,backups=receipts,optimizer_updates=0,automatic_goal_resumed=False,native_policy_accepted=False),indent=2)+'\n')
     finally:watch.terminate();watch.wait(timeout=30)
 

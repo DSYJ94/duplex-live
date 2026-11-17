@@ -13,6 +13,7 @@ KEY='duplex-expanded1072-v1'
 REFERENCE_AUTH=Path('docs/NATIVE-LOCAL-REASONER-REFERENCE-2026-11-16.json')
 OFFICIAL_AUTH=Path('docs/NATIVE-OFFICIAL-PERSONAPLEX-BASELINE-2026-11-16.json')
 FEATURE_AUTH=Path('docs/NATIVE-GPU-FEATURE-RESTORE-2026-11-17.json')
+RESTORE_AUTH=Path('docs/NATIVE-GPU-RESTORE-ONLY-2026-11-17.json')
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -22,7 +23,8 @@ def resource(lease):
     grants=[(k,p,status,seconds)for k,p,status,seconds in (
         ('reference_authorization_sha256',REFERENCE_AUTH,'OWNER_DIRECTED_FROZEN_LOCAL_REFERENCE',7200),
         ('official_authorization_sha256',OFFICIAL_AUTH,'OWNER_DIRECTED_OFFICIAL_CONTRACT_BASELINE',18000),
-        ('feature_authorization_sha256',FEATURE_AUTH,'OWNER_DIRECTED_NATIVE_FEATURE_RESTORE',21600))if k in lease]
+        ('feature_authorization_sha256',FEATURE_AUTH,'OWNER_DIRECTED_NATIVE_FEATURE_RESTORE',21600),
+        ('restore_authorization_sha256',RESTORE_AUTH,'OWNER_DIRECTED_NATIVE_RESTORE_ONLY',16200))if k in lease]
     if len(grants)>1:raise ValueError('No mixed inference scopes')
     count=4;maximum=86400
     if grants:

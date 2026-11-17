@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -40,3 +40,9 @@ class ExpandedGuardTest(unittest.TestCase):
         with self.assertRaises(ValueError):resource(dict(feature,GPU_count=4))
         with self.assertRaises(ValueError):resource(dict(feature,stop_unix=21601.))
         with self.assertRaises(ValueError):resource(dict(feature,official_authorization_sha256=sha(OFFICIAL_AUTH)))
+
+    def test_restore_only_recovery_keeps_remaining_clock(self):
+        lease,_,_=self.fixture();restore=dict(lease,GPU_count=1,restore_authorization_sha256=sha(RESTORE_AUTH),stop_unix=16200.)
+        resource(restore)
+        with self.assertRaises(ValueError):resource(dict(restore,stop_unix=16201.))
+        with self.assertRaises(ValueError):resource(dict(restore,feature_authorization_sha256=sha(FEATURE_AUTH)))
