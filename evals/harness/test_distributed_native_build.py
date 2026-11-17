@@ -24,6 +24,40 @@ class ToyNative(nn.Module):
 
 
 class NativeBuild(unittest.TestCase):
+    def test_selective_ownership_and_audio_gradient_preserve_frozen_decoder(self):
+        lm = ToyNative().bfloat16()
+        lm.audio_emb = nn.Linear(4, 4).bfloat16()
+        before = copy.deepcopy(lm.state_dict())
+        report = configure_lm(lm, 'selective-trunk-text')
+        expected = sorted(n for n in before if n.startswith(('transformer.', 'text_linear.')))
+        self.assertEqual(report['trainable_names'], expected)
+        self.assertEqual(report['trainable_parameters'], sum(dict(lm.named_parameters())[n].numel() for n in expected))
+        self.assertEqual(report['total_parameters'], sum(p.numel() for p in lm.parameters()))
+        for name, parameter in lm.named_parameters():
+            torch.testing.assert_close(parameter, before[name].float(), rtol=0, atol=0)
+            self.assertEqual(parameter.requires_grad, name in expected)
+        dispatch = NativeDispatch(lm)
+        audio = dispatch('audio', torch.randn(1, 3, 4))[0]
+        audio.square().sum().backward()
+        self.assertGreater(lm.transformer.layers[0][0].weight.grad.abs().sum(), 0)
+        self.assertTrue(all(p.grad is None for p in lm.depformer.parameters()))
+        optimizer = torch.optim.AdamW([p for p in lm.parameters() if p.requires_grad], lr=.01)
+        optimizer.step()
+        self.assertFalse(torch.equal(lm.transformer.layers[0][0].weight, before['transformer.layers.0.0.weight'].float()))
+        for name in ('depformer.layers.0.weight', 'depformer.layers.0.bias', 'audio_emb.weight', 'audio_emb.bias'):
+            torch.testing.assert_close(lm.state_dict()[name], before[name].float(), rtol=0, atol=0)
+        optimizer.zero_grad(set_to_none=True)
+        dispatch('text', torch.randn(1, 3, 4))[1].square().sum().backward()
+        self.assertGreater(lm.text_linear.weight.grad.abs().sum(), 0)
+
+    def test_selective_rejects_tied_acoustic_ownership_and_saved_adapter(self):
+        lm = ToyNative()
+        lm.depformer.layers[0].weight = lm.transformer.layers[0][0].weight
+        with self.assertRaises(ValueError): configure_lm(lm, 'selective-trunk-text')
+        lm = ToyNative()
+        configure_lm(lm, 'broad-lora64')
+        with self.assertRaises(ValueError): configure_lm(lm, 'selective-trunk-text')
+
     def test_full_ownership_preserves_initial_values_and_has_audio_gradients(self):
         lm = ToyNative().bfloat16(); before = copy.deepcopy(lm.state_dict())
         report = configure_lm(lm, 'full-lm')

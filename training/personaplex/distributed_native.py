@@ -9,6 +9,8 @@ from functools import partial
 import torch
 from torch import nn
 
+SHARDED_METHODS = ('selective-trunk-text', 'full-lm')
+
 
 class NativeDispatch(nn.Module):
     """Both custom native forwards must enter DDP/FSDP's public forward hook."""
@@ -56,8 +58,8 @@ class NativeView:
 def configure_lm(lm, method):
     """Fresh native LM only; Mimi is never accepted as a child to be unfrozen."""
     from evals.personaplex_adapters import AdapterLinear
-    if method not in ('broad-lora64', 'full-lm'):
-        raise ValueError('Explicit broad adapter or full native LM method required')
+    if method not in ('broad-lora64',) + SHARDED_METHODS:
+        raise ValueError('Explicit broad adapter, selective trunk/text or full native LM method required')
     if not hasattr(lm, 'forward_codes') or not hasattr(lm, 'forward_train'):
         raise ValueError('Native text and acoustic LM required')
     if any(isinstance(m, AdapterLinear) for m in lm.modules()):
@@ -74,6 +76,26 @@ def configure_lm(lm, method):
             details = configure(lm, method)
             from .native_adapter_compile import compile_gates
             details["native_compiled_adapter_gates"] = compile_gates(lm)
+    elif method == 'selective-trunk-text':
+        if (not isinstance(getattr(lm, 'transformer', None), nn.Module)
+                or not isinstance(getattr(lm, 'text_linear', None), nn.Linear)
+                or not isinstance(getattr(lm, 'depformer', None), nn.Module)):
+            raise ValueError('Unwrapped native temporal transformer/text head/acoustic depth required')
+        # Uniform master dtype avoids mixed-dtype FSDP flattening. Frozen
+        # acoustic branches still propagate gradients into the shared trunk.
+        lm.float().requires_grad_(False)
+        lm.transformer.requires_grad_(True)
+        lm.text_linear.requires_grad_(True)
+        for name, child in lm.named_children():
+            if name not in ('transformer', 'text_linear') and any(p.requires_grad for p in child.parameters()):
+                raise ValueError('Tied weights cannot silently unfreeze an acoustic/input branch')
+        if any(p.requires_grad and not n.startswith(('transformer.', 'text_linear.')) for n, p in lm.named_parameters()):
+            raise ValueError('Only declared shared temporal trunk and text head may train')
+        details = dict(variant=method, new_model_weights=0,
+                       selected_prefixes=['transformer.', 'text_linear.'],
+                       acoustic_depth_and_embeddings_frozen=True,
+                       shared_trunk_can_still_change_speech=True,
+                       native_GPU_gradient_restore_admission_required=True)
     else:
         # FP32 optimizer/master parameters; FSDP casts computation to BF16.
         lm.float().requires_grad_(True)
@@ -95,7 +117,7 @@ class DistributedNative:
         self.ownership = configure_lm(lm, method)
         if after_configure is not None:after_configure(lm,self.ownership)
         dispatch = NativeDispatch(lm)
-        self.sharded = method == 'full-lm'
+        self.sharded = method in SHARDED_METHODS
         if self.sharded:
             if self.device.type != 'cuda':
                 raise ValueError('Full native sharding requires actual CUDA admission')

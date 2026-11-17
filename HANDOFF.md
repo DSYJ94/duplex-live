@@ -1,3 +1,23 @@
+# 17Nov18:48UTC — Collection8553179 RUNNING34cases; selective futuremode locallyimplemented
+
+SAMEobserver70879 actualproviderRUNNING352s, nativecounts[8,8,9,9]=34/1008;
+no failed/terminal event. DoNOTinterrupt/resubmit orchangef06 source. Keepoccasional
+300s observations. CurrentmodelstillFROZEN105M/196/nohead/nooptimizer.
+
+LocalONLY distributed_native.configure_lm now accepts selective-trunk-text:
+sharedtransformer.*+text_linear.* train; allotherbranchesfrozen. FSDPshardedstate
+path, uniformFP32 masters, rejects tiedweights thatunfreezeacoustic/inputbranch,
+no newparameters. Sharedtrunk canstillchange speech; not claimed speechpreserved.
+SEVEN CPUbuild/integrationtestsPASS including newgradient/updateownership tests,
+existingactualgloo adapter-save/restore. No nativeGPU/selective admission/training
+orCLI/inferenceintegration yet; actualcount/memory/fullnativegradients/AdamRNGOPAL
+restores/acceptance stillrequired. Broaderdata commonseed methodcomparison only;
+no casualBF16LoRAmerge or cross-architectureVenus weighttransplant. Researchdecision
+MD updated to distinguishlocalconfigurationfromadmittedcapability.
+No runningcode/data/checkpoint/OPALstate changed; onlyfuturephase localpreparation.
+
+---
+
 # 17Nov18:45UTC — ACTUAL native TRAIN1008 collection8553179 RUNNING, first12casescomplete
 
 ImmutableGPUproducer f06fabd0fff9729134a52e0238758ba922eb565e deployedviaGitbundle
