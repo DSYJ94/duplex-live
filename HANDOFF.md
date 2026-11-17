@@ -1,3 +1,37 @@
+# 17Nov — Lexicalscreen COMPLETE; nativecollection384/RUNNING; textobjective next
+
+CPU8554147 COMPLETED0:0,4s/noGPU, source094facca68f7b17c65291fe11bf104cf43aaeedc.
+All17276 candidates screened,0declaredliteral/number-template/fivegrammatches.
+Registry3562mode-specificfingerprints/22sourcefiles, SHA d9992debbd6025cafe3f94a07cc7087675e2951a87fee693f4f3664148601156;
+NOplaintextquestions/goldexport. Knownprotectedfixture/reviewinputs only, TRAIN
+fixtures excluded. Generic<4tokencues omitted. Gaps:101unsupportedinputrows,
+100unsupportedfoldrows/50unparsedpaths, manyplans/bindings. No completehistorical
+orsemanticdecontaminationclaim. Allraw/v1/lexicalv1parents preserved, licences
+separate. ElevenlocalcontracttestsPASS. Smallactualreports broad-overlap-8554147;
+committed NATIVE-BROAD-CORPUS-LEXICAL-SCREEN-2026-11-17.json. Fullsemantic/family/
+domain/route/audioqualification stillpending; NOcorpusadmission/newupdates.
+
+Researchagent finished NATIVE-TEXT-REHEARSAL-PATH-2026-11-17.md. Exactpinned LM
+supports audio-absent-1zeroembedding andtemporalforward_codes withNOinternalshift.
+DefaultaudioBOSembeddingsNONzero: all16audio rows mustbe-1 INCLUDINGBOS. Need
+exacttextBOS, one-tokeninput/targetshift, assistantanswerboundary masks, reset/
+contextbounds, separatevalidtexttoken normalization. Existingtext route means
+native multimodal supervision, NOT genuineplainlanguage replay. Officialfinetune
+ispairedstereoaudio/transcript; no readytext-replayrecipeclaimed. NEXTimplement
+explicit NativeDispatchtext_rehearsal/objective+causality/sentinel/mask/gradient
+checks, then actualnativeGPU/FSDP/AdamRNGOPALrestore admission onlynewphase after
+currentcollection. DoNOTrepeatoldprefix/assisted152diagnostics ortrainunqualified
+sourcecandidates. Sharedtextlearning/spoken transfer requiresindependenteval.
+
+SAME70879 latestactual8553179 RUNNING3354s,counts[96,95,97,96]=384/1008,
+0rankterminals. Samef06immutableproducer/checkpoint196/4GPUs/nid010776/deadline
+18Nov06:41:44UTC. Nooptimizer/checkpoint/OPAL/runtimechanges. Keepoccasional
+observations; tellownerifstops, neverrestartontimeout. New1008archivepending;
+old192fullbacked. No newGPUjob/providerinference/GCP/purchase. GoalACTIVE.
+Old1471filecopyhandle isTERMINAL, doNOTpollagain; source/reportsalreadyfetched.
+
+---
+
 # 17Nov — Whole-source firstpass COMPLETE17276textcandidates; nativecollectionRUNNING245
 
 CPU8553738 COMPLETED0:0,30seconds,AllocTRESCPU72/mem4G/noGPU. Actualproducer

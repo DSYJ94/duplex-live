@@ -1,0 +1,99 @@
+{
+  "status": "KNOWN_INPUT_LEXICAL_SCREEN_COMPLETE_NOT_SEMANTIC_ADMISSION",
+  "sources": {
+    "OpenAssistant--oasst1": {
+      "input_candidates": 2281,
+      "retained_lexical_candidates": 2281
+    },
+    "databricks--databricks-dolly-15k": {
+      "input_candidates": 14995,
+      "retained_lexical_candidates": 14995
+    }
+  },
+  "input_files": [
+    {
+      "path": "/projects/u6ada/duplex-live/native-broad-corpus-staging-20261117/candidates-v1/OpenAssistant--oasst1/candidates.jsonl",
+      "sha256": "0f19a2dbcdf4ceca07e40ce592aa0753cf22713ead1337b556eda291290137f0"
+    },
+    {
+      "path": "/projects/u6ada/duplex-live/native-broad-corpus-staging-20261117/candidates-v1/databricks--databricks-dolly-15k/candidates.jsonl",
+      "sha256": "9791cdb7c25aad8aafdd37cfc7fdfa6386bfe1c9c7c271e76b9a07d693e40d10"
+    }
+  ],
+  "fingerprint_registry_sha256": "d9992debbd6025cafe3f94a07cc7087675e2951a87fee693f4f3664148601156",
+  "prior_eligibility_sha256": "f0aed465c61d42cd6c0c3d8b81ef983396635acaa5d8118b99a4742316afdaac",
+  "semantic_near_duplicate_checks_pending": true,
+  "family_split_assignment_pending": true,
+  "factual_qualification_complete": false,
+  "native_audio_created": false,
+  "optimizer_updates": 0,
+  "model_API_calls": 0,
+  "admitted_for_training": false,
+  "job": "8554147",
+  "source": "094facca68f7b17c65291fe11bf104cf43aaeedc",
+  "provider_state": "COMPLETED",
+  "provider_exit_code": "0:0",
+  "provider_elapsed_seconds": 4,
+  "actual_GPU_allocation": 0,
+  "known_registry_patterns": 3562,
+  "known_registry_source_files": 22,
+  "registry_coverage_counts": {
+    "source_evaluation_rows": 1334,
+    "unhandled_reviewed_or_evaluation_rows": 101,
+    "fixture_rows_without_supported_fold": 100
+  },
+  "unparsed_registry_schema_paths": [
+    "evals/fixtures/affordance-short-speech-plan-20261018.json",
+    "evals/fixtures/bound-resume-ablation-20261018.json",
+    "evals/fixtures/bread_background_result.json",
+    "evals/fixtures/cancel-only-contract-plan-20261018.json",
+    "evals/fixtures/cancel-resume-development-20261018.json",
+    "evals/fixtures/capability-context-plan-20261018.json",
+    "evals/fixtures/capability-teacher-plan-20261018.json",
+    "evals/fixtures/context-secondary-asr-20261018.json",
+    "evals/fixtures/decode-normalization-control-plan-20261018.json",
+    "evals/fixtures/decode-normalization-plan-20261018.json",
+    "evals/fixtures/function-name-grammar-plan-20261018.json",
+    "evals/fixtures/function-name-training-plan-20261018.json",
+    "evals/fixtures/lexical-confirmed-pause-plan-20261018.json",
+    "evals/fixtures/long-prefill-warmup-development-20261018.json",
+    "evals/fixtures/native-ancestor12-diagnostic-plan-20261020.json",
+    "evals/fixtures/native-audio49-audit-plan-20261020.json",
+    "evals/fixtures/native-audio49-complete-batch-plan-20261020.json",
+    "evals/fixtures/native-audio49-gradient-probe-plan-20261020.json",
+    "evals/fixtures/native-audio49-parent-adam-plan-20261020.json",
+    "evals/fixtures/native-audio49-pilot-plan-20261020.json",
+    "evals/fixtures/native-audio49-smallstep-plan-20261020.json",
+    "evals/fixtures/native-bounded32-owner-authorization-20261019.json",
+    "evals/fixtures/native-conditioning-probe-plan-20261020.json",
+    "evals/fixtures/native-fresh2-source-reapproval-authorization-20261019.json",
+    "evals/fixtures/native-fresh2-source-reapproval-proposal-20261019.json",
+    "evals/fixtures/native-learning-curve-plan-20261020.json",
+    "evals/fixtures/native-moshi-evaluation-8352856-lease.json",
+    "evals/fixtures/native-ordinary-clock-pilot-plan-20261019.json",
+    "evals/fixtures/native-persona-diagnostic-plan-20261020.json",
+    "evals/fixtures/native-persona-quiet-rule-diagnostic-20261021.json",
+    "evals/fixtures/native-persona-scope-diagnostic-20261021.json",
+    "evals/fixtures/native-precision16-no-tf32-plan-20261020.json",
+    "evals/fixtures/native-precision16-plan-20261020.json",
+    "evals/fixtures/native-seen-retention-plan-20261020.json",
+    "evals/fixtures/native-text-sampling-diagnostic-plan-20261019.json",
+    "evals/fixtures/native-text03-diagnostic-plan-20261019.json",
+    "evals/fixtures/native-v2-development-20261019.json",
+    "evals/fixtures/native-warm-ordinary-pilot-plan-20261019.json",
+    "evals/fixtures/nonempty-contract-plan-20261018.json",
+    "evals/fixtures/paired-context-adapter-plan-20261018.json",
+    "evals/fixtures/paired-context-rehearsal-plan-20261018.json",
+    "evals/fixtures/paired-control-supervision-plan-20261018.json",
+    "evals/fixtures/prefill-profile-development-20261018.json",
+    "evals/fixtures/semantic-resume-development-20261018.json",
+    "evals/fixtures/semantic-resume-holdout-20261018.json",
+    "evals/fixtures/state-context-plan-20261018.json",
+    "evals/fixtures/thread-scheduling-plan-20261018.json",
+    "evals/fixtures/venus-terminal-render-probe-20261029.json",
+    "evals/fixtures/whole-decode-dynamic-cache-plan-20261018.json",
+    "docs/NATIVE-REASONING32-SEMANTIC-REVIEW-2026-10-24.json"
+  ],
+  "all_historical_evaluations_claimed": false,
+  "local_contract_tests": 11
+}
