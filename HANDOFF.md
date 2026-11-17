@@ -1,3 +1,28 @@
+# 17Nov — Paired192 COMPLETE0:0, allbackupSHA PASS; narrowhead branch CLOSED
+
+Observer3820 exited0 after authoritative8545478 COMPLETED0:0, actual7828GPUseconds.
+DO NOTpoll3820 again, restart its job or replay any128/196updates. Finalhostsuccess
+source09874605cbc63fcd755fbf6376b6b3a1bd856fde, all192outputs audited. Finalbias
+archive66410files2062905863bytes ALLSHAverified inventory38303cb204053f9ac0a43da2ae1c5a260a4849952417102f6d9a67a184a4ccd2.
+Readoutaudit66398files2.063GB +biasfit33files608128B allindependentlybacked;
+oldreadoutfit/rawbackups retained. Smallreceipts/providerterminal copiedlocally.
+Combinedphase5394+7828=13222GPUSeconds, globalprior905668+7828=913496,
+no doublecountparent5394, no activevoiceGPUreservation inthisphase. Remoranotified.
+Finaldecision docs/NATIVE-PAIRED192-FINAL-DECISION-2026-11-17.json checks identical
+96inputs perarm andcompletebackups. Readoutgenerated3final/1clean of64 unchanged;
+scalar0nonempty of96/repeatedRET. Speechagreement19/96readoutvs0scalar (old19618).
+Bothfailquiet/pause, neitherpromoted. No worker/backend/liveacceptance established.
+CLOSE narrowhead/LRsweep, no readoutretraining/calibrationrerun. Next substantial
+branch per NATIVE-REASONING-TRAINING-DECISION-2026-11-17.md: broader data/native
+reasoning+interaction learning/functionalretention, actualasyncbackendqualification.
+User-only TRAINextractor locallytested5checks, notyetfull1008/rollout/admission.
+OPALstates preserved butcurrentcomparisonKEEP; nativeRL/MiRL/weight-space remain
+explicitseparatecontrolled interventions. Broadproductgoal ACTIVE/unfulfilled.
+Authvalid18Nov00:18:12UTC; nohumanblocker/newAPI/GCP/purchase. Mainlocalmetadata
+changes doNOTalter actual098GPUproducer. No newGPUjob submitted yet.
+
+---
+
 # 17Nov — Next TRAIN-only user-audio extraction implemented locally; no GPU/data rerun
 
 New training/personaplex/train_failure_audio.py consumes ONLY exact existing

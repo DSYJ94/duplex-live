@@ -1,0 +1,145 @@
+{
+  "status": "COMPLETE192_EVALUATED_INDEPENDENTLY_BACKED_NOT_ACCEPTED",
+  "generation_parent_job": "8540802",
+  "recovery_job": "8545478",
+  "recovery_producer": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+  "original_generation_producer": "c66b72ba02211496285e061178d4e9c3669267f3",
+  "provider": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "actual_GPU_seconds": 7828,
+    "actual_GPUs": 1
+  },
+  "accounting": {
+    "parent_GPU_seconds": 5394,
+    "complete_phase_GPU_seconds": 13222,
+    "original_phase_ceiling_GPU_seconds": 43200,
+    "prior_global_actual_GPU_seconds": 905668,
+    "global_actual_after_recovery_GPU_seconds": 913496,
+    "existing_award_GPU_hours": 20000
+  },
+  "unchanged_native_inputs_verified_across_arms": true,
+  "readout_updates_repeated": 0,
+  "readout_generations_repeated": 0,
+  "new_bias_updates": 128,
+  "native_backbone_updates": 0,
+  "OPAL": "Complete states exactly restored; KEEP for this fixed paired experiment, no autonomous rewriting claimed.",
+  "reports": {
+    "readout": {
+      "control32": {
+        "summary": {
+          "cases": 32,
+          "word_pass": 17,
+          "raw_peak_pass": 30,
+          "joint_pass": 17,
+          "necessary_silence_and_resume": 0,
+          "silent_while_paused": 0
+        },
+        "report_sha256": "99c21231a2e8cd596971b87f5297f3d05679990295e11949b541ef957fd83814"
+      },
+      "dev64": {
+        "summary": {
+          "cases": 64,
+          "word_pass": 2,
+          "raw_peak_pass": 62,
+          "joint_pass": 2,
+          "necessary_silence_and_resume": 0,
+          "silent_while_paused": 0
+        },
+        "report_sha256": "b3d7a050b12d3885dcef04b7f255b1fdc0bdde2ddc6ecf9518df7cb8cd04b909"
+      }
+    },
+    "bias": {
+      "control32": {
+        "summary": {
+          "cases": 32,
+          "word_pass": 0,
+          "raw_peak_pass": 30,
+          "joint_pass": 0,
+          "necessary_silence_and_resume": 0,
+          "silent_while_paused": 0
+        },
+        "report_sha256": "369988595d29e1bb103a322edb55650eafafa3f1bcccc6872297e0b272025761"
+      },
+      "dev64": {
+        "summary": {
+          "cases": 64,
+          "word_pass": 0,
+          "raw_peak_pass": 58,
+          "joint_pass": 0,
+          "necessary_silence_and_resume": 0,
+          "silent_while_paused": 0
+        },
+        "report_sha256": "619ddb375c680bbab0ab1b77031ac63fdc6affec237578bd6479101cc2e69ebb"
+      }
+    }
+  },
+  "generated_reasoning": {
+    "readout": {
+      "final_correct": 3,
+      "supported_correct": 1,
+      "required": 64
+    },
+    "bias": {
+      "nonempty_generated_answers": 0,
+      "final_correct": 0,
+      "required": 64
+    }
+  },
+  "all_independent_backups": {
+    "readout/audit": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 66398,
+      "bytes": 2062966515,
+      "inventory_sha256": "83293995fa182502ea0a62e36270e7dbaf4422665731a50a4f22fe61f1cc29a6",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8545478/readout/evaluate",
+      "optimizer_updates": 0
+    },
+    "bias/fit": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 33,
+      "bytes": 608128,
+      "inventory_sha256": "84428a6a8c87b17d0463ebdc59bc211f63899256956348a365ae3240e7d6ed90",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8545478/bias/fit",
+      "optimizer_updates": 128
+    },
+    "bias/evaluate": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 66410,
+      "bytes": 2062905863,
+      "inventory_sha256": "38303cb204053f9ac0a43da2ae1c5a260a4849952417102f6d9a67a184a4ccd2",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8545478/bias/evaluate",
+      "optimizer_updates": 0
+    }
+  },
+  "parent_preserved_backups": {
+    "fit_backup": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 33,
+      "bytes": 1419906,
+      "inventory_sha256": "5790fe37d9d375837257ef5d44234f0fdcc2cb42c39759549fc7ac6d58a617e6",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/fit",
+      "optimizer_updates": 128
+    },
+    "raw_backup": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 66213,
+      "bytes": 1031556455,
+      "inventory_sha256": "d919ba7fde205df1f775980dafee94c3be5a7d58ce9696a25cd11132b0ccf6de",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/generated-before-audit",
+      "optimizer_updates": 0
+    }
+  },
+  "decision": "Close narrow head/calibration experiment. Scalar bias is unusable; contextual readout is more selective but does not establish competent reasoning, appropriate delegation or reliable silence/pause. Preserve both; promote neither. Continue broader mixed native reasoning/interaction SFT with functional retention and an actual connected async backend test. Do not repeat completed updates or conduct another head/LR sweep.",
+  "limits": [
+    "Semantic readout score is complete generated-text review, not an independent listening score.",
+    "ASR agreement19/96 readout vs0/96 scalar is not semantic or naturalness acceptance; old196 had18/96.",
+    "No actual backend was connected; no cancellation/grounded results/live owner session certified.",
+    "The first phase included a failed cache setup, counted5394seconds; recovery retained all original evidence and reused96 generated outputs."
+  ]
+}
