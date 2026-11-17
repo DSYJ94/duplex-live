@@ -1,3 +1,18 @@
+# 17Nov21:14UTC — corpus reviewer actual model setup finished; records produced
+
+Same8555523/source707414c0 on4GPUs/nid010660 nowactually producing publicreview
+records. Actuallog readshows perrank latest[9,8,8,8] (atleast33/17276), no rank
+terminals. These eventcounts include saved valid/invalid records, NOT correctness
+oradmission totals. Don't confuse event with semanticacceptance. Same8525 remains
+observer; keepoccasional checks and preserve immutable runningproducer. Collection
+8553179 alreadyCOMPLETED0:0/full1008/four hasharchives; no restart. Remora has
+release + actual newnode/window. Code/closure/previewmetadata pushed b34770e.
+Single-play21.8267s preview hashverified in /private/tmp/duplex-current-native-
+preview-8556966/preview.wav; originalsource/completeinteraction remainonIsambard.
+Allgoals stillactive; no newtraining weights/updates/nativeproductqualification.
+
+---
+
 # 17Nov21:12UTC — nativecollection COMPLETE/backed; publicreview actuallyRUNNING
 
 8553179 actualCOMPLETED0:0,elapsed8806s,4GPUs=35224GPUseconds. ALL1008 native
