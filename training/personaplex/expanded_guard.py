@@ -17,6 +17,7 @@ RESTORE_AUTH=Path('docs/NATIVE-GPU-RESTORE-ONLY-2026-11-17.json')
 PAIR_AUTH=Path('docs/NATIVE-RET-PAIRED-EXECUTION-2026-11-17.json')
 PAIR_RECOVERY_AUTH=Path('docs/NATIVE-RET-PAIRED-RECOVERY-2026-11-17.json')
 TRAIN_FAILURE_AUTH=Path('docs/NATIVE-TRAIN1008-FAILURE-COLLECTION-2026-11-17.json')
+CORPUS_REVIEW_AUTH=Path('docs/NATIVE-BROAD-CORPUS-REVIEW-2026-11-17.json')
 
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -32,6 +33,17 @@ def resource(lease):
     paired='paired_authorization_sha256'in lease
     if paired and grants:raise ValueError('No mixing learned and zero-update scopes')
     count=4;maximum=86400
+    if 'corpus_review_authorization_sha256' in lease:
+        scope=json.loads(CORPUS_REVIEW_AUTH.read_text())
+        if (paired or grants or 'train_failure_authorization_sha256' in lease
+                or lease['corpus_review_authorization_sha256']!=sha(CORPUS_REVIEW_AUTH)
+                or scope.get('status')!='GOAL_DIRECTED_FROZEN_PUBLIC_CORPUS_REVIEW'
+                or scope.get('GPU_count')!=4 or scope.get('maximum_seconds')!=43200
+                or scope.get('required_candidates')!=17276 or scope.get('optimizer_updates')!=0
+                or scope.get('external_API_calls')!=0 or scope.get('automatic_retries')!=0
+                or lease.get('corpus_review_parent_job')!='8553179'):
+            raise ValueError('Exact separate frozen whole-corpus review scope required')
+        count=4;maximum=43200
     if 'train_failure_authorization_sha256' in lease:
         scope=json.loads(TRAIN_FAILURE_AUTH.read_text())
         if (paired or grants or lease['train_failure_authorization_sha256']!=sha(TRAIN_FAILURE_AUTH)

@@ -1,0 +1,19 @@
+{
+  "status": "GOAL_DIRECTED_FROZEN_PUBLIC_CORPUS_REVIEW",
+  "basis": "Owner-directed autonomous substantial native reasoning training and independent data qualification within the existing Isambard award.",
+  "GPU_count": 4,
+  "maximum_seconds": 43200,
+  "maximum_actual_jobs": 1,
+  "automatic_retries": 0,
+  "required_candidates": 17276,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "purchases": 0,
+  "GCP_usage": 0,
+  "parent_job": "8553179",
+  "parent_requirement": "Authoritative successful completion and all four independent complete result archives, before loading any reviewer weights. Never overlap or interrupt valid collection.",
+  "model": "Existing read-only pinned Qwen/Qwen3.6-27B shared public reference, four disjoint single-GPU frozen replicas. No Remora settings, jobs or private files changed.",
+  "payload": "Complete original public OASST1/Dolly user and assistant source turns, with source identities/hashes. No owner conversations, credentials, official acceptance data or native model updates.",
+  "output": "Preserve every original review generation, malformed/incomplete reviews and full-cohort identities. Reviews are candidate judgments, not independent factual proof or automatic training admission. Source-grounded claims require exact source quotes; formal and external factual checks remain distinct.",
+  "completion": "All17276 source identities, actual model/process provenance and independent every-file SHA backups; no clean-subset completion claim. Stop without automatic retry after32 consecutive unusable reviews or immutable deadline."
+}

@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,TRAIN_FAILURE_AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,TRAIN_FAILURE_AUTH,CORPUS_REVIEW_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -55,3 +55,14 @@ class ExpandedGuardTest(unittest.TestCase):
                        dict(train_failure_authorization_sha256='changed'),
                        dict(reference_authorization_sha256=sha(REFERENCE_AUTH))):
             with self.assertRaises(ValueError):resource(dict(collect,**change))
+
+    def test_corpus_review_scope_cannot_mix_or_extend_existing_collection(self):
+        lease,_,_=self.fixture()
+        review=dict(lease,corpus_review_authorization_sha256=sha(CORPUS_REVIEW_AUTH),
+                    corpus_review_parent_job='8553179',stop_unix=43200.)
+        resource(review)
+        for change in (dict(GPU_count=1),dict(stop_unix=43201.),dict(corpus_review_parent_job='wrong'),
+                       dict(corpus_review_authorization_sha256='changed'),
+                       dict(train_failure_authorization_sha256=sha(TRAIN_FAILURE_AUTH)),
+                       dict(reference_authorization_sha256=sha(REFERENCE_AUTH))):
+            with self.assertRaises(ValueError):resource(dict(review,**change))
