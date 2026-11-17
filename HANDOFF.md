@@ -1,3 +1,37 @@
+# 17Nov — Broader source originals STAGED; nativecollection8553179 stillRUNNING
+
+Researchbackgroundagent (skill-directed, noteONLY) finished
+ docs/NATIVE-BROAD-CORPUS-INTAKE-2026-11-17.md. Shortlist OASST1/Dolly/RuleTaker,
+proposed20k episodes (NOTacquired/admitted20k), fullcohortfilters ratherthanserial
+GPU micro-pilots. Rootverifiedownerlinks/pinnedrevisions. Current TRAIN1008coverage
+actualsourceaudit:954numerictargets,450top-parentexactrationalrecords, no domain/
+route/familytags. Currentcollection measuresquantitative failures, notbroaddomain
+competence. Preserve retained323 separately; broadenknowledge/context/logic.
+
+ActualCPU source-stagejob8553496 COMPLETED0:0,11seconds, AllocTRESCPU72/mem4G/noGPU.
+Producer37fb5bf6b609bf928533f31f968e17c1a984d21b; scriptSHA dfe3b755b8e0ee2444fcca67401f78c69a45ea6b9c1384cd92fe7861c6d761bc.
+ROOT/projects/u6ada/duplex-live/native-broad-corpus-staging-20261117/raw.
+Sevenpinnedoriginalfiles88856745bytes, originalcards/licence, OASSTreadytrees+
+officialtrain/validationParquet, DollyfullJSONL. AllJSONLparsecomplete:10364ready
+trees/15011Dollyrecords. NOTEnglisheligibleepisodecounts; crowdpreference!=facts.
+Sources/licences separate (OASSTApache2; DollyCC-BY-SA3). Parquetonlyboundarymarkers
+checked; officialTRAINmembership/English/parentbranch/quality/PII/decontamination/
+semantic/audio qualification PENDING. RuleTakerNOTdownloaded/archivedatalicence
+unverified. Actualreceipt docs/NATIVE-BROAD-CORPUS-STAGED-2026-11-17.json; local
+smallinventory/submission broad-source-8553496. TwofocuseddownloadtestsPASS.
+No paidprovider/modelcalls/purchases/newnativeaudio/dataadmission orMacbulkcopy.
+
+SAMEf06GPUcollector8553179 validRUNNING, latest70879at952s counts[26,25,27,27]
+105/1008, no complete-rankterminal. Preserve/monitor SAME70879occasionally;
+neverhotdeploylocalcode/newcorpus into currentjob. DatasetCPUstage wasGPU0 and
+separate; no overlapping voiceGPU/modelwriter. Alloldcheckpoints/OPALunchanged.
+Next actualstagingwork: officialsplit-aware wholecohortfiltering anddecontam;
+currentnativeoutputs requirefull1008/fourarchives/provider0 beforefailurelabels.
+Selectivefuturemode7CPUtestsPASS butnativeGPU/inference/admissionstillpending.
+Broader productgoalACTIVE, no acceptanceclaimed. No newtrainingupdates run.
+
+---
+
 # 17Nov18:48UTC — Collection8553179 RUNNING34cases; selective futuremode locallyimplemented
 
 SAMEobserver70879 actualproviderRUNNING352s, nativecounts[8,8,9,9]=34/1008;
