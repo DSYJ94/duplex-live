@@ -13,7 +13,7 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def extract(source, record, destination):
+def extract(source, record, destination, *, reuse_existing=False):
     """Verify the original stereo source and write only its complete user audio.
 
     The fixed response window is independent of the teacher's answer length.
@@ -45,8 +45,9 @@ def extract(source, record, destination):
         raise ValueError('Finite complete original stereo24k recording required')
     user = np.concatenate((pcm[:length, 1], np.zeros(60 * rate, dtype=np.float32)))
     # Exclusive creation: never overwrite a completed native input or rollout.
-    with destination.open('xb') as stream:
-        sf.write(stream, user, rate, format='WAV', subtype='FLOAT')
+    if not (reuse_existing and destination.exists()):
+        with destination.open('xb') as stream:
+            sf.write(stream, user, rate, format='WAV', subtype='FLOAT')
     saved, saved_rate = sf.read(destination, dtype='float32')
     if saved_rate != rate or not np.array_equal(saved, user):
         raise ValueError('User-only extraction changed PCM')
@@ -59,7 +60,7 @@ def extract(source, record, destination):
                 native_inference_started=False, new_optimizer_updates=0)
 
 
-def prepare(inputs, expected_sha256, out):
+def prepare(inputs, expected_sha256, out, *, resume=False):
     """Prepare the entire pinned1008 cohort; publish no subset as complete."""
     inputs, out = Path(inputs), Path(out)
     if digest(inputs) != expected_sha256:
@@ -78,12 +79,14 @@ def prepare(inputs, expected_sha256, out):
     if any(not isinstance(r['id'], str) or Path(r['id']).name != r['id']
            or r['id'] in ('', '.', '..') for r in value['records']):
         raise ValueError('Contained distinct case IDs required')
-    out.mkdir(exist_ok=False)
+    if resume and (out / 'inputs.json').exists():
+        raise ValueError('Never rerun a published complete input cohort')
+    out.mkdir(exist_ok=resume)
     rows = []
     for record in value['records']:
         folder = out / record['id']
-        folder.mkdir()
-        rows.append(extract(source, record, folder / 'user.wav'))
+        folder.mkdir(exist_ok=resume)
+        rows.append(extract(source, record, folder / 'user.wav', reuse_existing=resume))
     result = dict(schema='dl-native-TRAIN-user-audio-v1', complete=True,
                   required=1008, original_DEV_excluded=64, cases=rows,
                   input_manifest_sha256=expected_sha256,
@@ -102,6 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--inputs-sha256', required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--resume', action='store_true')
     args = parser.parse_args()
-    result = prepare(args.inputs, args.inputs_sha256, args.out)
+    result = prepare(args.inputs, args.inputs_sha256, args.out, resume=args.resume)
     print(json.dumps({k: v for k, v in result.items() if k != 'cases'}))

@@ -39,6 +39,12 @@ class TrainFailureAudioTest(unittest.TestCase):
             self.assertFalse(result['native_inference_started'])
             with self.assertRaises(FileExistsError):
                 extract(root, record, root / 'user.wav')
+            before = (root / 'user.wav').read_bytes()
+            extract(root, record, root / 'user.wav', reuse_existing=True)
+            self.assertEqual((root / 'user.wav').read_bytes(), before)
+            sf.write(root / 'user.wav', np.zeros(12), rate, subtype='FLOAT')
+            with self.assertRaises(ValueError):
+                extract(root, record, root / 'user.wav', reuse_existing=True)
 
     def test_changed_source_or_fold_cannot_enter_inference(self):
         for kind in ('wave', 'sidecar', 'fold', 'channel', 'frames', 'tail', 'gold', 'path'):
