@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "environment": "Mac Python3.14.6 torch2.15.0 temporary venv outside OneDrive",
+  "tests": 14,
+  "coverage": [
+    "complete learned coefficient/Adam/RNG/program/diagnostic restore seam",
+    "wrong parameter owner rejected before model mutation",
+    "corrupt saved OPAL memory rejected",
+    "stale updater manifest rejected",
+    "scalar control hidden weights frozen",
+    "existing native readout and BF16 cached-gradient equality tests"
+  ],
+  "upstream_OPAL_transport_in_new_restore_tests": "structural fake; no actual upstream runtime proof",
+  "actual_native_GPU_loaded": false,
+  "actual_learned_native_restore": false,
+  "new_training_updates": 0,
+  "files": {
+    "training/personaplex/action_restore.py": "4f28d924167c35a6f779ce5501d31acea13898a902138b5f55c3c78fe1ab00af",
+    "training/personaplex/action_inference.py": "f67f3105d3a33e5990ee5474878e288fa38fc5672b3c03813f1be4e5589bc9d7",
+    "evals/harness/test_action_restore.py": "ee58e8d0fe20d2fb7fed22af8208860b9d180a21a21a821271ae65ffde230e03"
+  }
+}

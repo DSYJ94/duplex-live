@@ -1,4 +1,23 @@
-# 17Nov12:40UTC — Active goal: next paired learning phase prepared, NOT launched
+# 17Nov12:38UTC — Learned action restore seam implemented; local14 checks PASS
+
+Shared validate_fit now serves inference and new action_restore.restore_fit.
+Restores exact learneddelta/Adam/RNG/OPALprogram/diagnostics without step;
+checks optimizer owns precisely selectedreadout or bias coefficients.
+Local14testsuite PASS on Mac temporary Py3.14.6/torch2.15.0 venv. Includes original
+BF16cached/native probability+gradient equality and inference tests. Newrestore
+unit tests use explicit structuralfake OPALtransport, NOT real upstream/native
+qualification. No actuallearnedfit/GPUrestore claimed; all0newupdates.
+Proof docs/NATIVE-LEARNED-RESTORE-LOCAL-PROOF-2026-11-17.json pins actualfiles.
+Firsttest run caught extractedwidthNameError; fixed and full14rerunPASS.
+No activeclusterfiles/caches/states changed. Next: actualpinned IsambardCPU
+upstream restorefixture, scopedpaired hostguard, onefixedpairedfit then full
+nativebehavior/retention evaluation. Never reuse completedzero-updatelease.
+Freshauthclient68666 still pending lastpoll; no sign-in assumed. Existingcode
+and tests savedlocally; remoteaccess/retrieval remains genuinehuman dependency.
+
+---
+
+# 17Nov12:34UTC — Active goal: next paired learning phase prepared, NOT launched
 
 Prior goalturn made concrete progress:8537504 fullrestore+independentbackupPASS,
 metadata99b7b4e pushed. New ownerUI goalACTIVE is authoritative; do not revert.

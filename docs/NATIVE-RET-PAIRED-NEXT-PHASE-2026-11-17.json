@@ -51,7 +51,8 @@
     "no_overlap_or_automatic_retry": true
   },
   "not_yet_done": [
-    "new phase launcher/guard and learned-state restore integration",
+    "new phase launcher/guard integration",
+    "actual upstream OPAL and native GPU learned-state restore qualification",
     "actual paired fits",
     "actual learned native behavioral evaluation"
   ],
@@ -60,5 +61,6 @@
     "MiRL TRAIN-only recurrent failure mining; native RL only with meaningful rollout variance, valid logprobs and replayable native/task state",
     "Keep weight-space edits reversible and separate from training with sham/bias/decoding controls",
     "Use functional ordinary/reasoning/speech retention to decide selective LM tuning, full fine-tuning, midtraining or capacity growth; extra coefficients alone are not knowledge"
-  ]
+  ],
+  "local_progress": "Shared package validator and learned-state restore seam implemented;14 local CPU tests PASS. Actual upstream/native proof pending."
 }

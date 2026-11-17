@@ -13,10 +13,11 @@ def identity(selection):
     return dict(base_revision='fdaf4090a61cb315c138a1faee287ffd6c716309',inference_family='context-spanning79df-personaplex16',checkpoint_sha256=selection['checkpoint_sha256'],trainer_source=selection['trainer_source'],predecessor_step=196)
 
 
-def install_fit(lm,state,expected_identity):
+def validate_fit(state,expected_identity,width):
+    """Check a complete final fit package before mutating any live model."""
     required={'metadata','step','delta','optimizer','rng','diagnostics','program','writer_pid'}
     if state.get('schema')!='dl-native-ret-fit-state-v1'or not required<=state.keys():raise ValueError('Complete learned readout/Adam/RNG/OPAL package required')
-    meta=state['metadata'];mode=meta.get('mode');width=lm.text_linear.in_features
+    meta=state['metadata'];mode=meta.get('mode')
     if (meta.get('identity')!=expected_identity or mode not in ('readout','bias')or meta.get('input_features')!=width
         or meta.get('backbone_updates')!=0 or meta.get('previous_saved_updates_replayed')!=0
         or meta.get('trainable_parameters')!=(width+1 if mode=='readout'else 1)
@@ -28,6 +29,12 @@ def install_fit(lm,state,expected_identity):
     learned=state['delta'];expected={'weight':(1,width),'bias':(1,)}
     if set(learned)!=set(expected)or any(not torch.is_tensor(v)or tuple(v.shape)!=expected[k]or v.dtype!=torch.float32 or not torch.isfinite(v).all()for k,v in learned.items()):raise ValueError('Complete finite FP32 learned residual required')
     if mode=='bias'and torch.count_nonzero(learned['weight']):raise ValueError('Scalar bias control cannot acquire hidden weights')
+    return meta
+
+
+def install_fit(lm,state,expected_identity):
+    meta=validate_fit(state,expected_identity,lm.text_linear.in_features)
+    mode=meta['mode'];learned=state['delta'];width=lm.text_linear.in_features
     if isinstance(lm.text_linear,RetReadout):raise ValueError('No stacking action heads')
     digest=hashlib.sha256(json.dumps(expected_identity,sort_keys=True).encode()).hexdigest()
     readout=install(lm,base_identity=digest);readout.restore(dict(schema='dl-native-ret-readout-v1',token=4,input_features=width,base_identity=digest,state=learned));lm.requires_grad_(False)
