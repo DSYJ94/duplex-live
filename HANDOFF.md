@@ -1,3 +1,39 @@
+# 17Nov — Readout64 complete generated-text semantic review recorded; paired arm still live
+
+All64 original questions/complete generated answers manually inspected; receipt
+ docs/NATIVE-READOUT64-GENERATED-SEMANTIC-REVIEW-2026-11-17.json
+binds exact raw-results SHA and c66 generation source. Correct final3/64,
+supported without false explanation1/64; contradictory numeric mention1.
+RET17 across14cases remains separate from correctness/actual backend delivery.
+No reasoning gain established against old196(3final/1clean); no model selection.
+Generated text only, speech correctness/accent/naturalness NOT certified.
+All source ambiguities and missing numeric target retained/resolved explicitly.
+No DEV converted to TRAIN, API calls, optimizer updates or model reruns.
+SAME8545478 observer3820 LIVE; latest authoritative RUNNING1826sec, biascontrol18/32.
+Continue same valid comparison/backup, no interruption or duplicate job.
+
+---
+
+# 17Nov15:39UTC — SAME8545478 bias128 backed; native restore PASS; evaluation RUNNING
+
+Previous turn verified wait; this turn retrieved actual new completed-stage evidence.
+SAME actual producer09874605cbc63fcd755fbf6376b6b3a1bd856fde/job8545478/node nid011140.
+Observer3820 remains live; latest provider RUNNING1525seconds. Direct log then
+showed bias control generations9/32 complete. No terminal/provider completion claimed.
+Readout complete96 audit independently backed66398files2062966515bytes, allSHAverified,
+inventory83293995fa182502ea0a62e36270e7dbaf4422665731a50a4f22fe61f1cc29a6.
+FIRST bias128 updates completed; fit independently backed33files608128bytes, allSHAverified,
+inventory84428a6a8c87b17d0463ebdc59bc211f63899256956348a365ae3240e7d6ed90.
+Fresh actual CUDA bias native restore Adam/RNG/OPAL EXACT; newoptimizer0 in restore.
+Actual execution502869bebcf7401ea9978332f678ab0e, PID49 namespace4026536234/start111586793.
+Small original receipts copied locally runs/container-startup-20261115/recovery8545478-bias/.
+No original128/readout generations/backbone196 updates repeated; no work interrupted.
+Still require complete bias96 generation+ASR+independentbackup+host terminal/provider0:0,
+then full paired semantic/routing/speech comparison. No product acceptance. Same clocks/caps.
+Continue observing SAME3820 occasionally, no duplicate model/job or unchanged diagnostics.
+
+---
+
 # 17Nov15:20UTC — Recovery8545478 RUNNING; ALL96readout ASR complete,0replay
 
 Sameactual recovery8545478 RUNNING nid011140, producer09874605cbc63fcd755fbf6376b6b3a1bd856fde
