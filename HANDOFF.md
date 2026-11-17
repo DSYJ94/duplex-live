@@ -1,3 +1,49 @@
+# 17Nov20:36UTC — complete public-corpus review8555523 QUEUED after nativeparent
+
+ACTUAL newjob8555523 PENDING/Dependency; no reviewerGPU/modelstarted yet.
+Exactproducer707414c0ca7c5ac772a237a9aeaf450461bda579,
+/projects/u6ada/duplex-live/source-corpus-review-707414c (immutable).
+ROOT/projects/u6ada/duplex-live/native-public-corpus-review-20261117-v1;
+backup/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1.
+FourGPU/320G/72CPU/12hmaximum,onejob/no-requeue/noautomaticretry/API0/updates0.
+Slurm afterok:8553179:8555455; actual8555455 CPU preflight COMPLETED0:0,33sec,
+all12actual contained tests PASS and hostPython3.6 prepareplan successful. Plan
+pins whole17276 original public source records and existing read-only Qwen27Bpin.
+Host independently REQUIRES8553179COMPLETED0:0/full1008/nativefourhasharchives
+before any model loading; dependency alone is insufficient. Never interruptoldjob.
+New expanded_guard separateCORPUS_REVIEW_AUTH scope, source707; live f06 staysold.
+
+ONE new observer toolsession8525 (SSHstdin script,300sec polling/serveralive),
+last actual1794947776.6850307 PENDING,0elapsed/noAllocTRES/reviews[0,0,0,0].
+Keep samehandle; observationtimeout != failure, NEVERduplicate/restart. Watch
+scope/guard/lease actual parent and one actual future process. Tellowner promptly
+ifterminalfailed. Remora already notified via explicitlyauthorized chat of planned
+4GPU/frozen public-model review, no settings/jobs/privatefiles touched; actualnode
+must be sent when allocated and release/failure sent atterminal.
+
+Worker writes every raw generation, EOS/budget result, exact sourcehash/evidence
+quotes, strict domain/task/verdict/answerability/support labels or invalid/incomplete
+status. No teacher self-confirmation quote; all17276 source IDs retained,4disjoint
+singleGPU27Breplicas.32consecutiveunusable outputs stop withpreservation/no retry.
+These are candidate judgments, NOT factual certification/nativevoice performance/
+training admission. Formal/external/domain reliability andsemanticfamilyreview still
+needed before new mixeddata admission. Full independent archive aftercomplete.
+
+Current local future host-completion hardening (Counter aggregates, explicit17276
+unique check, repositoryidentity check, raw/parsed review agreement) is AFTER707
+and NOT deployed to8555523. Do NOT hotreplace queued/runningproducer. It can be
+used for independent post-review analysis after raw artifacts/backups exist.
+Otherlanguage/nativeintegration CPU30proof remains23e550b; no nativeGPU/fullstate
+ornewtrainingclaim. Current goalACTIVE. No savedupdates replayed.
+
+Existing native observer70879 latest actual1794947560.8202384:8553179RUNNING6656s,
+[194,193,195,193]=775/1008,0rankterminals,4GPUs/nid010776/f06producer.
+Originalstop18Nov06:41:44UTC unchanged. Complete1008/fourbackups/hostterminal/
+provider0 stillpending; allcheckpoints untouched. Oldcopy99773stillnonterminal,
+no duplicate transfer; reports durableoncluster and smallJSONreceipts savedlocally.
+
+---
+
 # 17Nov20:23UTC — whole-source family grouping COMPLETE; nativecollection704/RUNNING
 
 CPU8555190 COMPLETED0:0,13s,GPU0, source11e7683d(fullSHA in newreceipt).

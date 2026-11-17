@@ -1,5 +1,6 @@
 """One frozen public-corpus review after completed native collection/backups."""
 import argparse
+from collections import Counter
 import fcntl
 import json
 import os
@@ -54,7 +55,9 @@ def complete(root,plan):
         if sha(entry['path'])!=entry['sha256']:raise ValueError('Immutable corpus source changed')
         rows.extend(json.loads(line)for line in Path(entry['path']).open())
     ordered=sorted(row['id']for row in rows);seen=[];processes=[];devices=[]
-    from .corpus_semantic_review import fingerprint
+    if len(rows)!=17276 or len(set(ordered))!=17276:raise ValueError('Whole distinct17276 source cohort required')
+    from .corpus_semantic_review import fingerprint,parse
+    counts={key:Counter()for key in ('review_status','domain','task','verdict','answerability','support')}
     source_rows={row['id']:row for row in rows}
     for rank in range(4):
         folder=root/('rank-%02d'%rank);terminal=json.loads((folder/'terminal.json').read_text())
@@ -66,6 +69,7 @@ def complete(root,plan):
                 or terminal.get('required')!=len(ordered[rank::4])
                 or execution.get('actual_CUDA') is not True or execution.get('visible_device_count')!=1
                 or terminal.get('model_identity',{}).get('revision')!=REVISION
+                or terminal.get('model_identity',{}).get('repository')!='Qwen/Qwen3.6-27B'
                 or terminal.get('optimizer_updates')!=0 or terminal.get('external_API_calls')!=0):
             raise ValueError('Every disjoint actual frozen reviewer must complete its whole shard')
         processes.append((execution['pid_namespace'],execution['pid'],execution['start_ticks']));devices.append(execution['selected_device'])
@@ -76,10 +80,17 @@ def complete(root,plan):
             if (value['id']!=entry['id'] or value['source_sha256']!=fingerprint(source_rows[entry['id']])
                     or value['review_status']!=entry['status'] or value.get('training_admitted') is not False):
                 raise ValueError('No duplicated, substituted or automatically admitted review')
+            counts['review_status'][value['review_status']]+=1
+            if value['review_status']=='structured_review_complete':
+                checked=parse(value['generation']['text'],source_rows[entry['id']])
+                if checked!=value['review']:raise ValueError('Raw review generation and parsed evidence differ')
+                for key in counts:
+                    if key!='review_status':counts[key][checked[key]]+=1
             seen.append(entry['id'])
     if sorted(seen)!=ordered or len(set(processes))!=4 or len(set(devices))!=4:
         raise ValueError('Whole17276 cohort and distinct actual reviewer processes/devices required')
     return dict(complete=True,required=17276,actual_reviews=len(seen),all_review_hashes_verified=True,
+                counts={key:dict(value)for key,value in counts.items()},
                 training_admitted=False,semantic_qualification_performed=False,optimizer_updates=0)
 
 
