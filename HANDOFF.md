@@ -1,3 +1,22 @@
+# 17Nov — ALL96 bias evaluation complete: scalar RET collapse; final archive pending
+
+Actual SAME8545478 produced complete32control+64DEV and actual GPU ASR reports.
+All96 generated_text EMPTY. Scalar RET8537control(range122..437/case),
+56561DEV(range806..1232/case). Strict speechagreement0/32 and0/64;
+peakpass30/32 and58/64, necessaryquiet/resume0,pause0. No connectedbackend.
+Nativebias Adam/RNG/OPAL restore EXACT, evaluationupdates0; firstbias128 backed.
+Terminal worker passed=true means execution/proofs complete, NOT policyaccepted.
+Smallreports/results/terminal copied recovery8545478-bias; committedreview receipt
+ docs/NATIVE-SCALAR96-COMPLETED-OUTPUT-REVIEW-2026-11-17.json.
+Contextualhead avoids scalar collapse but reasoning3final/1clean unchanged and
+quiet/pause stillfail. Reject scalar; no more narrowhead/LRsweep or acceptance.
+SAMEhost/guard/observer3820 still owns final independentbias-evaluate archive.
+Need actual completebackupreceipt+hostterminal+SlurmCOMPLETED0:0/accounting before
+closing phase/releasing allocation or next GPUjob. Do NOTinterrupt validcopy.
+All original clocks/caps/oldstates and no savedupdate replay remain unchanged.
+
+---
+
 # 17Nov — Readout64 complete generated-text semantic review recorded; paired arm still live
 
 All64 original questions/complete generated answers manually inspected; receipt

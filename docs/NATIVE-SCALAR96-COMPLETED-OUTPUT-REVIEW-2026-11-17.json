@@ -1,0 +1,536 @@
+{
+  "status": "ALL96_BIAS_EVALUATED_FINAL_BACKUP_AND_PROVIDER_COMPLETION_PENDING",
+  "job": "8545478",
+  "producer": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+  "native_restore_Adam_RNG_OPAL_exact": true,
+  "first_bias_training_updates": 128,
+  "backbone_updates": 0,
+  "evaluation_optimizer_updates": 0,
+  "cohorts": [
+    {
+      "cohort": "control32",
+      "cases": 32,
+      "nonempty_generated_text": 0,
+      "native_RET_events": 8537,
+      "minimum_RET_per_case": 122,
+      "maximum_RET_per_case": 437,
+      "speech_audit": {
+        "cases": 32,
+        "word_pass": 0,
+        "raw_peak_pass": 30,
+        "joint_pass": 0,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "results_sha256": "526fc753b8b98fa661476a6b0745d408d38e445b3aaef4cca266ed1a237a323d",
+      "all_cases": [
+        {
+          "id": "venus-repair-v2-holdout-pause-0097",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0093",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-quiet-0080",
+          "native_RET_events": 410,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pending-0102",
+          "native_RET_events": 437,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pending-0103",
+          "native_RET_events": 437,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-quiet-0082",
+          "native_RET_events": 411,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-delegate-0089",
+          "native_RET_events": 312,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pending-0100",
+          "native_RET_events": 437,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-delegate-0090",
+          "native_RET_events": 311,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0095",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-delegate-0091",
+          "native_RET_events": 311,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-cancel-0085",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0094",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-quiet-0083",
+          "native_RET_events": 399,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-delegate-0088",
+          "native_RET_events": 312,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pause-0096",
+          "native_RET_events": 311,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pause-0098",
+          "native_RET_events": 312,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-cancel-0084",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-quiet-0081",
+          "native_RET_events": 398,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-cancel-0086",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-cancel-0087",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pause-0099",
+          "native_RET_events": 299,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-pending-0101",
+          "native_RET_events": 437,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-repair-v2-holdout-ordinary-0092",
+          "native_RET_events": 133,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0220",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0219",
+          "native_RET_events": 122,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0223",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0217",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0222",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0221",
+          "native_RET_events": 124,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0216",
+          "native_RET_events": 137,
+          "generated_text": ""
+        },
+        {
+          "id": "venus-control-v1-holdout-ordinary-0218",
+          "native_RET_events": 124,
+          "generated_text": ""
+        }
+      ]
+    },
+    {
+      "cohort": "dev64",
+      "cases": 64,
+      "nonempty_generated_text": 0,
+      "native_RET_events": 56561,
+      "minimum_RET_per_case": 806,
+      "maximum_RET_per_case": 1232,
+      "speech_audit": {
+        "cases": 64,
+        "word_pass": 0,
+        "raw_peak_pass": 58,
+        "joint_pass": 0,
+        "necessary_silence_and_resume": 0,
+        "silent_while_paused": 0
+      },
+      "results_sha256": "1ae41cc5fe08f1802f61390acec7b8e9221d1219a97aeb4fe05a0ea9caca0fa2",
+      "all_cases": [
+        {
+          "id": "reasoning-text-aefafccabcd0342cfe05",
+          "native_RET_events": 835,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-6d585b3ecc845eb6fb5b",
+          "native_RET_events": 827,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-5df54da0bd6ebe850840",
+          "native_RET_events": 819,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-e217bf11f5e026288cb1",
+          "native_RET_events": 821,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-cd58473685e73cb64b16",
+          "native_RET_events": 838,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-84f6b3fb27e0fe4630e7",
+          "native_RET_events": 839,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-bbeff7480eddc91d0f5d",
+          "native_RET_events": 840,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-6a7f45c3b5a3bbd776bd",
+          "native_RET_events": 836,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-03fda72b31e3c2cd9598",
+          "native_RET_events": 811,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-f0cf800ef46ee44bbeb5",
+          "native_RET_events": 815,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-bf7c9eda84756710f8e8",
+          "native_RET_events": 816,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-b7852c785b7e6c0cf395",
+          "native_RET_events": 820,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-55dd259259df770076c4",
+          "native_RET_events": 818,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-20298af81edb5cb960d4",
+          "native_RET_events": 818,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-7be066806a20706bf421",
+          "native_RET_events": 839,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-eab3a499904137e2ac54",
+          "native_RET_events": 861,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-3599d4b234acd863b167",
+          "native_RET_events": 842,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-eba15c44bc4f2d384958",
+          "native_RET_events": 850,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-714c03074a0131bc3bdd",
+          "native_RET_events": 865,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-5a44fa94d6f516c37ae2",
+          "native_RET_events": 861,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-3b36dd6ce0302d9c49d8",
+          "native_RET_events": 880,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-926e0f8539917e7353b6",
+          "native_RET_events": 889,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-21b79b0ed689927f0936",
+          "native_RET_events": 887,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-82db21383afd5a18cef7",
+          "native_RET_events": 847,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-b4d11120fdfd18c5c3f0",
+          "native_RET_events": 861,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-27c9b8f6dbf8ec069f14",
+          "native_RET_events": 851,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-435fcac6963558a77b0c",
+          "native_RET_events": 811,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-0303d9fb8a1d64e1dfca",
+          "native_RET_events": 806,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-c7da3629667cd1e2c2e5",
+          "native_RET_events": 809,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-273b7b334dbc2908619f",
+          "native_RET_events": 814,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-b3e5716f69ab1bfe57f9",
+          "native_RET_events": 859,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-8212ddf2a028643c919f",
+          "native_RET_events": 848,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-41d4dcba337eaddb91e1",
+          "native_RET_events": 889,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-ed480c21de82a3a03d2a",
+          "native_RET_events": 960,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-d1ae04c64e3bc9e1ed2c",
+          "native_RET_events": 942,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-4580413bb7d3bfc0d82a",
+          "native_RET_events": 893,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-d041d1a4118b43712511",
+          "native_RET_events": 875,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-b39055ae902422741acb",
+          "native_RET_events": 925,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-d84abf0c9ca3216ffdec",
+          "native_RET_events": 886,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-ec67b9af6c2f15648a08",
+          "native_RET_events": 823,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-8b9e18824ed3730e38d9",
+          "native_RET_events": 939,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-f85878e0bc6c051e4bdb",
+          "native_RET_events": 851,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-217e748c629f849d0e4c",
+          "native_RET_events": 915,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-0ab321ee3608474a6f03",
+          "native_RET_events": 909,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-2d292690c9c81e34b9dc",
+          "native_RET_events": 845,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-5140f68a58b6b023e14f",
+          "native_RET_events": 911,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-fd54f0f20c1e97048457",
+          "native_RET_events": 982,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-2ace324293650105e958",
+          "native_RET_events": 898,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-4ef8f54642caf2c74f16",
+          "native_RET_events": 957,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-4d2678dfe73a50172d80",
+          "native_RET_events": 913,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-800fd33e454a0cbd54ac",
+          "native_RET_events": 1017,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-fc1d398d740f13d02efd",
+          "native_RET_events": 965,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-2ce26c6ac20122bd229a",
+          "native_RET_events": 920,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-89e3d78b963d1faed9ab",
+          "native_RET_events": 972,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-25c69e4272e2e78fd975",
+          "native_RET_events": 1003,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-ee31096d69ba814784dc",
+          "native_RET_events": 848,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-604f4ad74c93d026c80c",
+          "native_RET_events": 942,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-ae0e116890d3b4bdb5a1",
+          "native_RET_events": 1232,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-e9a7d3d4c69b368dd832",
+          "native_RET_events": 894,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-1a9dc56d6505b4a3e81d",
+          "native_RET_events": 939,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-00f1af12efc39ddd8d41",
+          "native_RET_events": 932,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-8fcc3af6ad26d54d045b",
+          "native_RET_events": 908,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-ed3a48df827e45098372",
+          "native_RET_events": 1008,
+          "generated_text": ""
+        },
+        {
+          "id": "reasoning-text-81581203f1e3f92dabae",
+          "native_RET_events": 835,
+          "generated_text": ""
+        }
+      ]
+    }
+  ],
+  "decision": "Reject scalar bias as a usable routing policy. Every generated text answer is empty; repeated RET dominates. Contextual readout avoids this scalar collapse but has not established reasoning gains or reliable duplex behavior. No more head/LR sweep; finish independent archive then pursue substantial data/retention/native fine-tuning and real async backend qualification.",
+  "limits": [
+    "No backend was connected; repeated RET is not successful delegation.",
+    "ASR text alone does not certify actual acoustic naturalness or accent.",
+    "Native restore/evaluation process completion is not product acceptance.",
+    "Current host must finish valid archive; do not interrupt or resubmit."
+  ]
+}
