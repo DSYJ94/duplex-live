@@ -1,3 +1,24 @@
+# 17Nov20:59UTC — new mixed-state CPU proof COMPLETE21PASS onIsambard
+
+CPU8556673 COMPLETED0:0 in71s, exactproducer c1a16e9 (fullSHA in
+NATIVE-MIXED-STATE-CPU-PROOF-2026-11-17.json), source-native-state-c1a16e9.
+All21 actualcontainedCPU tests PASS incl. one-rank adapter/Adam restore, strict
+optimizer fingerprints+alias corruption detection, file-object/private mmap
+checkpoint bytes, actual2rankGloo checkpointed language forward/backward pooled
+reference and mixedgradient/oneOPAL-step integration. No unchangedMacconnection
+retest. This is CPUproof, NOT nativeCUDA/FSDP/largecheckpoint admission; don't
+relabeltheold30proof orclaimnewtrained model. Next newdense runner must use
+rank-owned Adam exactproof and mmaploader, not oldDDP globalAdam/local equality.
+Allnativegradients, fullstate, backupcapacity, completeusefulschedule andactual
+mixeddata qualification still needed before learning.
+
+Both livejobs retain their original producers: collector8553179/f06, queued
+review8555523/707414c0. New c1 code is not hotdeployed. Same70879/8525 observer
+handles remain authoritative; monitoroccasionally and neverduplicateon timeout.
+Modelcheckpoints/sourceoldstates/KLhidden/OPAL allpreserved, savedupdates0replayed.
+
+---
+
 # 17Nov20:54UTC — dense restore/memory seam corrected; current jobs unchanged
 
 New native_optimizer_state fingerprints every rank-owned Adam field with exact

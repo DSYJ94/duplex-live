@@ -1,0 +1,19 @@
+{
+  "job": "8556673",
+  "source": "c1a16e9d6d8bc1d78e19bce9b110fa6d16371c09",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 71,
+  "GPU_count": 0,
+  "tests_passed": 21,
+  "proof": [
+    "Exact rank-owned Adam fingerprint and independent pre-load capture",
+    "CPU alias corruption/dtype/shape/scalar type/nonfinite rejection",
+    "Hash-bound private mmap using native-style file-object torch.save",
+    "Existing actual one-rank Gloo adapter/Adam restore",
+    "Actual two-rank Gloo token-weighted language gradients and accumulation with whole-layer checkpointing",
+    "Mixed toy retained/acoustic/language gradients before one OPAL call"
+  ],
+  "limitation": "CPU test doubles and Gloo; no full native FSDP/CUDA/model or large-state restore admission",
+  "optimizer_updates_on_native_model": 0
+}
