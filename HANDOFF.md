@@ -12,7 +12,7 @@ stratification; freshfamily-disjoint reasoningevaluation required before claimin
 generalization. Do notreassign/delete originalfolds orsilentlydrop476TRAINcases.
 Four focusedtestsPASS incl exact-vs-template overlap, normalization, duplicateIDs,
 emptyquestions and sourcecandidate safeguards. No training/dataadmission inferred.
-Existingreview8558032 continuesindependently; lastfresh491? seepriorchat:4940
+Existingreview8558032 continuesindependently; lastconfirmed4940
 saved/RUNNING1:16:20. This turndoesnotrefreshthatstate. Automaticgoal remainsPAUSED.
 
 ---
