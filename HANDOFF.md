@@ -1,3 +1,34 @@
+# 17Nov17:37UTC — ALL1008 TRAIN userinputs prepared; CPU8551116 COMPLETE0:0
+
+Actual complete source-checked useronlyPCM extraction succeeded on Isambard;
+job8551116 COMPLETED0:0,31seconds, allocatedTRESCPU72/mem8G/noGPU. Producer
+3ad45d51e5ac8160d15dc33239b95d1a52b4e1d7, exacttwofileSHAs inactualreceipt.
+Root/projects/u6ada/duplex-live/native-TRAIN-user-audio-20261117-v1/inputs.json
+SHA847084d665c2c848d46bd6ddcab0120ec6da2d5b6100730dc58dd6bca0bb1d25.
+Exactly1008TRAIN/64DEVexcluded; whole sourcewave+sidecarSHA/folds/channel1 length
+checked, fixed60s responsewindow independent ofteacheranswer; everywritten WAV
+PCMroundtrip EXACT. No teacherchannel/answers inmodelpayload. No actualnative
+rollouts/correctnesslabels/newdiversedata/training yet. Existing628inputWAVs
+reverified/reused unchanged, remaining380 extracted; doNOTrepeatcompletecohort.
+
+Initiallogin CPUattempts: hostvenvpath nonexistent/containeralias omission/Python3.6
+textkeyword errors occurred BEFORE anydatasetwrite. First validSSHcoupled
+CPUprocess stopped after628files withconnection255; no writerremained. Detached
+loginprocess92059 alsoended beforeprogress/receipt. Preserved partials; tested
+explicitresume validates everyexisting PCM, refusescorruption/completecohortreplay.
+DurableCPU Slurm run completed all1008 in19.4s; noGPU retry/optimizerupdate occurred.
+CPUlog/receipt under train-audio-prep-3ad45d5; smallactualreceipt/submission local
+runs/container-startup-20261115/train-user-audio-8551116. Six focusedtestsPASS.
+
+Prior8545478 observer3820 TERMINAL0, all192 outputs/backups alreadycomplete; never
+poll/restartoldhandle. GPUphase13222seconds/global913496 unchanged byGPU0prep.
+Next: native TRAIN-only failure collection/independent competence labels and
+broader data+retention/selective/full nativelearning per researchdecision; no
+head/LRsweep, no DEV-to-TRAIN, no claimthisextractionis MiRL/RL or productacceptance.
+GoalACTIVE, authvalid18Nov00:18:12, no newGPUjobsubmitted. Fullsource/oldstates intact.
+
+---
+
 # 17Nov — Paired192 COMPLETE0:0, allbackupSHA PASS; narrowhead branch CLOSED
 
 Observer3820 exited0 after authoritative8545478 COMPLETED0:0, actual7828GPUseconds.

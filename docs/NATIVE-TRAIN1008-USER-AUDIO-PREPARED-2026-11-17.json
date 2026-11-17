@@ -1,0 +1,35 @@
+{
+  "schema": "dl-native-TRAIN-user-audio-v1",
+  "complete": true,
+  "required": 1008,
+  "original_DEV_excluded": 64,
+  "input_manifest_sha256": "513c46412ad5dabdb01574f85307a5fb92dd73b63533ca06c22df52cfc5ac34b",
+  "native_inference_started": false,
+  "correctness_labels_created": false,
+  "teacher_audio_in_model_input": false,
+  "new_optimizer_updates": 0,
+  "external_API_calls": 0,
+  "success": true,
+  "actual_CPU": true,
+  "source_commit": "3ad45d51e5ac8160d15dc33239b95d1a52b4e1d7",
+  "source_files": {
+    "train_failure_audio.py": "3ad1f077b844b24d56729c4a40b79e7ffe186cb61819ad3253358e997d052801",
+    "train_failure_inputs.py": "aff0a944b4d5b92301e5ed3ecdff435c90d2922e3937b8b62f86e66b0b049525"
+  },
+  "elapsed_seconds": 19.398208379745483,
+  "existing_files_PCM_reverified": 628,
+  "manifest_sha256": "847084d665c2c848d46bd6ddcab0120ec6da2d5b6100730dc58dd6bca0bb1d25",
+  "status": "ACTUAL_COMPLETE1008_CPU_EXTRACTION_VERIFIED",
+  "job": "8551116",
+  "provider_state": "COMPLETED",
+  "provider_exit_code": "0:0",
+  "provider_elapsed_seconds": 31,
+  "provider_GPU_allocated": 0,
+  "prepared_root": "/projects/u6ada/duplex-live/native-TRAIN-user-audio-20261117-v1",
+  "native_collection_started": false,
+  "limitations": [
+    "Existing qualified recordings reused; this is not new data diversity or new training.",
+    "No correctness labels or native competence probe trained.",
+    "Input manifest contains no teacher answers/audio; future model collector must preserve the declared inference interface."
+  ]
+}
