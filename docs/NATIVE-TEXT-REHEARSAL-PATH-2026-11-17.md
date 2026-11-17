@@ -1,3 +1,10 @@
+Implementation update,17Nov20:18UTC: explicit route/loss, token-weighted distributed
+accumulation, optional native/OPAL update, exact checkpoint cursor and complete
+source compiler now exist. All30 CPU checks pass on Isambard;17276 candidates
+compiled. Native CUDA/FSDP/model restore, corpus semantic admission and spoken
+transfer remain unproved. The source-inspection findings below are preserved as
+historical motivation; "not implemented" describes the time of that inspection.
+
 # Native text rehearsal: a supported primitive, not an admitted training mode
 
 17 November 2026. Source inspection only; no model execution, cluster access, training or provider calls. Current valid four-GPU frozen-native TRAIN1008 collection job8553179 remains untouched.

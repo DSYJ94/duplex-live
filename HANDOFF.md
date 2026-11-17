@@ -1,3 +1,32 @@
+# 17Nov20:18UTC — corrected17276 source compilation COMPLETE;30 actual CPU tests PASS
+
+CPU8555095 COMPLETED0:0,32s,GPU0, exactsource23e550b9 (fullSHA in committed
+NATIVE-LANGUAGE-CANDIDATES-COMPILED-2026-11-17.json). Actual contained full30tests
+PASS including native update/OPAL language cursor integration, schedule fullcoverage/
+fixed-cycle and real2rankGloo gradient accumulation. CPU doubles NOT nativeGPUproof.
+All17276 source records compiled unchanged with pinned nativeSentencePiece,3991580
+inputtokens/2097075 assistanttargets.1587zero-width byteprefix targets correctly
+owned; actualcrossingexclusions0.17257structuralcandidates/19over3000context,
+NOtruncation. NewfileSHA8c5188a5fd35c3f128ddd5ad445196219f0377481cd59b2469a9daa9ea892b9f.
+ROOT/projects/u6ada/duplex-live/native-language-candidate-compile-23e550b/candidates.
+Original3b928fd compilation preserved; no nativeweights/updates touched.
+
+All candidate records remain semanticFalse/leakageFalse/foldNone/admittedFalse.
+This compiler does NOT upgrade earlier lexicalscreen to full semantic/family
+qualification. Next: complete corpus semantic/domain/routing review + familysplit,
+then admitted tokenized corpus/native CUDA fullstate proof and meaningful mixed
+training. Text knowledge transfer to audio is unproved. Fixed49cycle option must
+bind unchanged retained/expanded native cycle, no speechloss rescaling.
+Small earliercopy99773 notyetterminal; do NOT duplicatecopy. This JSON receipt
+comes from actual sacct+terminalreport, fullreport/log remain durable oncluster.
+
+Same70879 nativejob8553179 RUNNING1794946660.340345,5756s,
+[168,166,168,166]=668/1008,0rankterminals. FrozenfailurecollectionNOTtraining.
+SAMEf06 source/step196/4GPU/18Nov06:41:44UTCstop untouched. Occasionalwatch;
+full1008backup/terminal receipts needed before failure-label admission.
+
+---
+
 # 17Nov — whole17276 compiled; Unicode byte-prefix target fix before qualification
 
 CPU8555075 COMPLETED0:0 in26s/source3b928fd, all29 integration tests PASS.
