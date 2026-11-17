@@ -1,0 +1,46 @@
+{
+  "status": "RECOVERY_RUNNING_ALL96_READOUT_ASR_AUDITED_BACKUP_PENDING",
+  "lease": {
+    "paired_authorization_sha256": "1b5ed1443e11799d957bb1e5acec2f114a5e99f0bbd73b0a606f9993d8ed8a1f",
+    "provider": "Slurm",
+    "resource_key": "duplex-expanded1072-v1",
+    "account": "brics.u6ada",
+    "authorization_sha256": "efdcd5600bad70d1b08cf85941029a5ebd81608f26c3ea42b0ab992e2d4fc3a9",
+    "GPU_count": 1,
+    "job_id": "8545478",
+    "node": "nid011140",
+    "source": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+    "start_unix": 1794928313.0,
+    "stop_unix": 1794966113.0,
+    "prior_award_GPU_seconds": 905668,
+    "other_reserved_GPU_seconds": 0,
+    "home_used_bytes": 86079414272,
+    "home_hard_bytes": 107999997952,
+    "action_plan_sha256": "c8dd64477735440dc5d13fc7b37b00010c9e8d410024f0f6b81bd19aac08e40a",
+    "paired_recovery_sha256": "e2f781b78fdb50d03049e21677d5371f591c754cda8f9080292f061cb1a28fa7",
+    "paired_parent_job": "8540802",
+    "prior_phase_GPU_seconds": 5394
+  },
+  "audit_terminal": {
+    "passed": true,
+    "source": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+    "generation_source": "c66b72ba02211496285e061178d4e9c3669267f3",
+    "outputs": 96,
+    "native_generations_repeated": 0,
+    "optimizer_updates": 0,
+    "actual_CUDA": true,
+    "product_accepted": false
+  },
+  "bias_updates_not_yet_observed": true,
+  "ASR_summary": {
+    "control32_word_agreement_pass": 17,
+    "control32_raw_peak_pass": 30,
+    "dev64_word_agreement_pass": 2,
+    "dev64_raw_peak_pass": 62,
+    "control_necessary_silence_and_resume": 0,
+    "control_silent_while_paused": 0
+  },
+  "word_agreement_is_not_semantic_correctness": true,
+  "whole_paired_comparison_complete": false,
+  "product_accepted": false
+}

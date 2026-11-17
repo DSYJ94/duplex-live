@@ -1,3 +1,37 @@
+# 17Nov15:20UTC — Recovery8545478 RUNNING; ALL96readout ASR complete,0replay
+
+Sameactual recovery8545478 RUNNING nid011140, producer09874605cbc63fcd755fbf6376b6b3a1bd856fde
+IMMUTABLE source-pair-0987460. Actuallease15:11:53UTC17Nov→01:41:53UTC18Nov,
+1GPU37800seconds; priorphase5394 gives upper43194<original43200.
+Actualglobalprior905668GPUsec,otherreserved0 atadmission; source/guard/20kaward
+unchanged. Original5394alreadyincluded inactualaccountusage, no budgetreset.
+
+Cachefix actualGPU SUCCESS: all32control +64DEV speech audits COMPLETE.
+Readout/evaluate/terminal.json PASS96, newoptimizer0, nativegenerationsrepeated0;
+generationSOURCEc66 preserved, actualAUDITproducer098 explicitinallreports.
+Nativecomputedrawoutputs andoldhead128 NEVERrepeated. Logs actualspeech
+agreement17/32control,2/64DEV; peaks30/32 and62/64. Necessaryquiet/resume0,
+pause0. These are speechagreement/control evidence, NOT answercorrectness or
+accentacceptance. No candidate/product accepted; biascomparisonstillrequired.
+Smallactuallease/auditterminal copiedlocally, receipt
+ docs/NATIVE-READOUT96-RECOVERED-AUDIT-2026-11-17.json.
+
+Hostnow independentlyarchives recoveredreadout view/reports BEFORE firstbiasfit.
+Do notinterrupt valid CPUcopy/host/guard; waitfor readout-evaluate-backup receipt,
+thenactualbiaslog/state. Biasupdates notyetobserved, do notfabricateprogress.
+Original96rawbytesALREADYindependentlybacked66213files1.031GB (d919ba7f...).
+Oldreadoutfit33files1.419MB backed and nativefullAdamRNGOPAL restore retained.
+Afterarchive, samejob runs FIRSTbias128, freshnative restore, full96 generation
+andASR/backups. Alloldstates/fullpaired192/sourceinventory/provenance retained.
+
+Currentobserver tool3820/remote67245 LIVE,300s. Latest emittedRUNNING325s,
+32controlASRaudited+54DEV, then directterminal confirmedALL96. Pollsame3820;
+no duplicatejob ontimeout. Old29998 andcopy73047 bothterminal, neverpoll/restart.
+Remora notifiedrecoveryID; itsjobs unchanged. Authvalid18Nov00:18:12, existing
+observer serveralive persists. GoalACTIVE, nohumanblocker/newAPI/GCP/purchase.
+
+---
+
 # 17Nov15:13UTC — Raw96FULLbackupPASS; audit-only recovery8545478 SUBMITTED
 
 Originalcopy73047 FINISHED0: all66213files1031556455bytes independentlyverified,
