@@ -42,3 +42,10 @@ def adapter_parameters(lm):
     result={k.replace('text_linear.original.','text_linear.',1)if k.startswith('text_linear.original.')else k:v for k,v in values.items()}
     if len(result)!=len(values):raise ValueError('Old adapter names must remain bijective')
     return result
+
+
+def install_zero(lm,expected_identity):
+    """New zero-equivalent head, distinctly labelled as zero-update verification."""
+    digest=hashlib.sha256(json.dumps(expected_identity,sort_keys=True).encode()).hexdigest()
+    head=install(lm,base_identity=digest);lm.requires_grad_(False)
+    return dict(mode='zero-insertion-proof',new_readout_updates=0,base_identity=digest,native_free_running_qualified=False)

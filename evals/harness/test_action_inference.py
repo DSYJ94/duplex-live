@@ -2,7 +2,7 @@ import hashlib,unittest
 import torch
 from torch import nn
 from evals.personaplex_adapters import AdapterLinear,adapter_parameters as old_adapters
-from training.personaplex.action_inference import identity,install_fit,adapter_parameters
+from training.personaplex.action_inference import identity,install_fit,install_zero,adapter_parameters
 from training.personaplex.native_action_readout import RetReadout
 
 class ActionInferenceTest(unittest.TestCase):
@@ -28,3 +28,7 @@ class ActionInferenceTest(unittest.TestCase):
     def test_scalar_control_cannot_smuggle_hidden_weights(self):
         lm,bound,state=self.fixture('bias');state['delta']['weight'].fill_(.1)
         with self.assertRaises(ValueError):install_fit(lm,state,bound)
+
+    def test_zero_head_is_distinct_from_trained_package(self):
+        lm,bound,_=self.fixture();x=torch.randn(1,7,5);before=lm.text_linear(x).detach();proof=install_zero(lm,bound)
+        self.assertTrue(torch.equal(before,lm.text_linear(x)));self.assertEqual(proof['new_readout_updates'],0);self.assertFalse(any(p.requires_grad for p in lm.parameters()))

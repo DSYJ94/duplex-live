@@ -1,0 +1,13 @@
+{
+  "status": "OWNER_DIRECTED_NATIVE_FEATURE_RESTORE",
+  "owner_request": "Proceed with native GPU feature collection and restore verification. Keep automatic goal paused, preserve checkpoints, do not repeat updates or interrupt running comparison.",
+  "GPU_count": 1,
+  "maximum_seconds": 21600,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "parent_comparison": "8526401 COMPLETED0:0, all128 independently archived",
+  "parent_checkpoint": "expanded105M/196:96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+  "steps": ["strict parent and original323 TRAIN tensor integrity", "baseline versus zero-head native streaming equivalence on four TRAIN user-only probes", "complete native projection features at every original positive and negative TRAIN position", "zero-only head plus materialized zero-step Adam/RNG/OPAL snapshot", "independent cache backup before fresh verification", "different-process native restore, repeat streaming equivalence and exact complete feature comparison", "complete independently hash-verified final receipts"],
+  "limits": ["No learning, sampler override or forcedRET", "No new data synthesis, purchases, GCP, API payloads, IAM or network changes", "No overlapping duplex allocations or retry on observation timeout", "All actual shared usage and reservations count within existing20000GPUh award", "Old196 and all original distributed Adam/RNG/OPAL states remain intact; this verifies the NEW zero head, not an old training resume", "Microprobe equality is not reasoning/speech/product acceptance", "Automatic goal remains paused"],
+  "execution_status": "PREPARED_NOT_SUBMITTED"
+}

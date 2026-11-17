@@ -52,7 +52,7 @@ def named_adapter(state,selection):
     return result
 
 
-def make_engine(a,selection,*,readout_state=None):
+def make_engine(a,selection,*,readout_state=None,zero_readout=False):
     import torch
     from .foundation_context import raw_model
     from .matched_generation import construct_engine
@@ -61,7 +61,8 @@ def make_engine(a,selection,*,readout_state=None):
     from evals.context_spanning_probe import audited_loads
     from contextspan.model import engine as module,weights
     state=None
-    if readout_state is not None and a.capacity!='expanded105M':raise ValueError('Readout requires its exact expanded predecessor, never the raw base')
+    if zero_readout and readout_state is not None:raise ValueError('Zero proof and learned state are separate conditions')
+    if (readout_state is not None or zero_readout)and a.capacity!='expanded105M':raise ValueError('Readout requires its exact expanded predecessor, never the raw base')
     if a.capacity!='baseline':
         if sha(selection['checkpoint'])!=selection['checkpoint_sha256']:raise ValueError('Final adapter identity changed')
         state=named_adapter(torch.load(selection['checkpoint'],map_location='cpu',weights_only=False),selection)
@@ -75,6 +76,9 @@ def make_engine(a,selection,*,readout_state=None):
         if readout_state is not None:
             from .action_inference import identity,install_fit
             install_fit(lm,readout_state,identity(selection))
+        elif zero_readout:
+            from .action_inference import identity,install_zero
+            install_zero(lm,identity(selection))
         return lm.requires_grad_(False).eval(),weights.load_mimi(device),weights.load_tokenizer()
     loads=[]
     with audited_loads(loads):engine=construct_engine(module,loader,checkpoint=str(WEIGHTS/'context_spanning_7b.pt'),device='cuda',temp=.8,temp_text=.7)
@@ -95,6 +99,9 @@ def make_engine(a,selection,*,readout_state=None):
     if readout_state is not None:
         from .action_inference import identity
         engine.expanded_inference_proof['learned_action_readout']=dict(identity=identity(selection),mode=readout_state['metadata']['mode'],new_readout_updates=128,native_free_running_qualified=False)
+    if zero_readout:
+        from .action_inference import identity
+        engine.expanded_inference_proof['learned_action_readout']=dict(identity=identity(selection),mode='zero-insertion-proof',new_readout_updates=0,native_free_running_qualified=False)
     return engine
 
 

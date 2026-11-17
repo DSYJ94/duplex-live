@@ -30,10 +30,10 @@ def balanced_loss(logits,positive,positive_count,negative_count):
     return value
 
 
-def collect(lm,groups,guard):
+def collect(lm,groups,guard,progress=None):
     """All original TRAIN masks, preserving complete recorded prefix/cache calls."""
     from .matched_losses import RET_GROUPS,ret_population
-    population=ret_population(groups);records=[];captured=[]
+    population=ret_population(groups);records=[];captured=[];processed=0
     if any(p.requires_grad for p in lm.parameters()):raise ValueError('Backbone and previous adapter must remain frozen')
     versions={n:p._version for n,p in lm.named_parameters()}
     def remember(module,args):captured.append(args[0].detach())
@@ -58,6 +58,8 @@ def collect(lm,groups,guard):
                         part=forward(x,mask,target)
                         if part is not None:parts.append(part)
                     if parts:records.append(dict(group=group,id=row['id'],fold='TRAIN',**{k:torch.cat([p[k]for p in parts])for k in parts[0]}))
+                    processed+=1
+                    if progress is not None:progress(dict(rows_processed=processed,group=group,records=len(records)))
                     del x,mask,target
         pos=sum(int(r['positive'].sum())for r in records);neg=sum(len(r['positive'])-int(r['positive'].sum())for r in records)
         if (pos,neg)!=(population['positive'],population['negative']):raise ValueError('All original positive AND negative positions required')
