@@ -1,3 +1,18 @@
+# Current observer replacement ONLY — same healthy8558032
+
+Oldobserver42447 TERMINAL255/brokenSSHpipe; this is NOT a GPUjobfailure.
+Fresh authoritative squeue confirms8558032RUNNING56:35/nid010309. No restart.
+Replacementreadonly SSHmonitor toolsession33340 uses SAMEactualjob/root/producer,
+initial60s spacing then300s polls, incrementalJSONcache, sacctonlywhenabsentfrom
+squeue, prints hostterminal onterminal. No model/job/controller submissions or
+artifact mutations. Actual33340 observed1794955467.9962494: RUNNING58:06/nid010309,3788saved
+[952,952,936,948],3577structured/201invalid/8incomplete/2overcontext;
+3514freshstructured/73reused,0rankterminals/nohostterminal. Connection+progress
+confirmed. Neverpoll42447
+again/restartGPU due observerloss. All clocks/stop/source4223 unchanged.
+
+---
+
 # Latest continuation — prepared language artifacts preserved in ignored repo runs
 
 Small originalTRAIN/native-tokenized candidates andoriginaltokenizationreport now
