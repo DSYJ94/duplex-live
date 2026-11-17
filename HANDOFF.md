@@ -1,3 +1,43 @@
+# 17Nov15:13UTC — Raw96FULLbackupPASS; audit-only recovery8545478 SUBMITTED
+
+Originalcopy73047 FINISHED0: all66213files1031556455bytes independentlyverified,
+inventoryd919ba7fde205df1f775980dafee94c3be5a7d58ce9696a25cd11132b0ccf6de.
+No copierremains; doNOTrestartold73047/rsync/Python122672. Originalsourcebytes
+unchanged. Readoutcheckpoint128 fullbacked/nativeGPUrestore alreadyPASS.
+Raw96 savedgenerationcounts: control14RET/12of32cases, DEV17RET/14of64cases,
+maximum2percase. Not scripteddispatch, not appropriate-routing/backendproof.
+
+Knowncachefix1lineHF_HOME reproducedactualIsambardCPU RED→GREEN. Newcontroller
+source09874605cbc63fcd755fbf6376b6b3a1bd856fde immutable
+/projects/u6ada/duplex-live/source-pair-0987460. Actualcontained35testsPASS,
+including32-case realwave audit withfixtureASR preservesrawbytes andseparate
+originalgeneration/auditproducer. Actualoldparent128/nativeproof/full66213raw
+backup+offlinepinnedASRconfig/processor checksPASS. No unchangedfitcalibration.
+Smallproofs copied under paired-recovery0987460; sourceCPUproofandcounts saved
+ docs/NATIVE-PAIRED-AUDIT-RECOVERY-SUBMISSION-2026-11-17.json.
+
+SubmittedONCE sbatchreturned8545478. No actualRUNNING/node/updatesyetclaimed.
+Root/projects/u6ada/duplex-live/native-ret-paired-recovery-20261117-v1;
+log/projects/u6ada/duplex-live/native-ret-recovery-8545478.log;
+backup/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8545478.
+Read-only observertool3820/remotePID67245, scriptobserve-recovery-8545478.py,
+65s initialdelay then300s polls, serveralive. Onlysameactualjob/handle; never
+resubmit/restart onobservationtimeout. Old29998terminal, doNOTpollagain.
+Remora notifiedsubmission; itsjobs untouched.
+
+Recoverycarries5394actualparentseconds, newnative max37800 incl180s internal
+preservationreserve; upper43194<original43200, unchanged20ksharedaward.
+No replayreadout128 orANY96generation. Fresh separatehardlinkaudit view checked
+againstfulloldbackupinventory; writesonlyNEWASRderived/reports, explicitgenSOURCE
+c66 andactualAUDITsource098. OriginalsRO-mounted and preserved. After readoutASR
+andindependentbackup, firstbias128 thenfreshnativeAdam/RNG/OPALrestore/full96.
+Completedreadoutproofs retainedinfinalparentboundary; totalheadupdates256 ifall
+passes,0backbone/old196replay. Allfulloutputs/newstates requirefinalarchive/host
+terminal and providerCOMPLETED0 beforeclaimingcomparisoncomplete.
+Authvalid18Nov00:18:12; nohumanblocker. GoalACTIVE. No productacceptanceclaimed.
+
+---
+
 # 17Nov14:50UTC —8540802 FAILED aftercomplete96; cachefix actualCPU RED→GREEN
 
 Observer29998 authoritative FAILED1:0,elapsed5394GPUsec; observerexited0 after

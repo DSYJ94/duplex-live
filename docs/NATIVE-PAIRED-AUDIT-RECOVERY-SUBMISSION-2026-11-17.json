@@ -1,0 +1,60 @@
+{
+  "status": "RECOVERY_SUBMITTED_NOT_YET_OBSERVED_RUNNING",
+  "job": "8545478",
+  "source": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+  "CPU_proof": {
+    "passed": true,
+    "CPU_only": true,
+    "source": "09874605cbc63fcd755fbf6376b6b3a1bd856fde",
+    "tests": 35,
+    "actual_parent_readout128_and_native_restore_valid": true,
+    "complete96_raw_backup_valid": true,
+    "original_raw_files": 66213,
+    "raw_backup": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 66213,
+      "bytes": 1031556455,
+      "inventory_sha256": "d919ba7fde205df1f775980dafee94c3be5a7d58ce9696a25cd11132b0ccf6de",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/generated-before-audit",
+      "optimizer_updates": 0
+    },
+    "offline_recognizer_assets_load": true,
+    "asr_revision": "41f01f3fe87f28c78e2fbf8b568835947dd65ed9",
+    "no_native_updates": true
+  },
+  "original96_raw_backup": {
+    "passed": true,
+    "every_file_sha256_verified": true,
+    "files": 66213,
+    "bytes": 1031556455,
+    "inventory_sha256": "d919ba7fde205df1f775980dafee94c3be5a7d58ce9696a25cd11132b0ccf6de",
+    "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/generated-before-audit",
+    "optimizer_updates": 0
+  },
+  "readout_native_generation_counts": {
+    "control32": {
+      "cases": 32,
+      "total_native_RET": 14,
+      "cases_with_RET": 12,
+      "maximum_RET_per_case": 2,
+      "actual_backend_requests": 0
+    },
+    "dev64": {
+      "cases": 64,
+      "total_native_RET": 17,
+      "cases_with_RET": 14,
+      "maximum_RET_per_case": 2,
+      "actual_backend_requests": 0
+    }
+  },
+  "counts_do_not_establish_appropriate_delegation_or_grounded_results": true,
+  "parent_actual_GPU_seconds": 5394,
+  "new_maximum_GPU_seconds": 37800,
+  "phase_upper_GPU_seconds": 43194,
+  "original_phase_limit_GPU_seconds": 43200,
+  "new_readout_updates_allowed": 0,
+  "new_readout_generations_allowed": 0,
+  "first_bias_updates_allowed": 128,
+  "final_full_comparison_pending": true
+}
