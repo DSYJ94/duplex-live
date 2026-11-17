@@ -1,3 +1,23 @@
+# 17Nov — Next TRAIN-only user-audio extraction implemented locally; no GPU/data rerun
+
+New training/personaplex/train_failure_audio.py consumes ONLY exact existing
+TRAIN input record, verifies original wave/sidecar SHA and fold/containedpath,
+extracts complete channel1/user_frames, appends fixed60s independent of teacher
+length, FLOAT PCM roundtrip exact, exclusive output. Does not provide teacher
+answers/audio, infer correctness, generate native output or train any model.
+Existing dev_cases extraction remains unchanged; live098 producer untouched.
+Five focused CPUtests PASS with /private/tmp/duplex-causal-venv/bin/python
+(test_train_failure_audio + test_train_failure_inputs). System python lacksnumpy;
+no dependencyinstallation or weaker mock substituted. Different teacher channel,
+longer teacher duration, corruption, DEV/channel/frame/tail/gold/path andoverwrite
+failures checked. Full1008 source extraction/actualmodel collection NOTyetrun;
+local helper is not an admitted corpus, native collector or MiRL/RL activation.
+SAME8545478 observer3820 remains owner; alloutputs/auditsdone, finalarchive pending.
+No duplicatejob/optimizerupdate/API/paidwork or interruption. Next actualnative
+TRAIN failure collection must still bind complete manifest and source provenance.
+
+---
+
 # 17Nov — ALL96 bias evaluation complete: scalar RET collapse; final archive pending
 
 Actual SAME8545478 produced complete32control+64DEV and actual GPU ASR reports.
