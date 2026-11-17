@@ -1,3 +1,19 @@
+# 17Nov13:03UTC — Same8540802 verifiedPENDING; observer29998 LIVE
+
+Actual read-only sacct observation1794920550.851: PENDING,elapsed0,exit0:0.
+No allocatedGPU or newnativeupdates yet; same queued job, no resubmission.
+Current observer tool29998/remotePID19012, fileobserve-pair-8540802-fixed.py,
+serveralive enabled. First observer92534 exited1 beforequery due Python
+conditional-expression typo; corrected/locallycompiled observer only. Modeljob
+was never touched/restarted by this observer error. Do not poll92534 again.
+Observer uses120s until loggedpositivefitupdate then300s, exits onactualterminal
+and includeshostreceipt/logtail. Never duplicatework onobservationtimeout.
+Sourceproducer remains c66b72ba02211496285e061178d4e9c3669267f3; metadata
+commits are not producerchanges. Nextpoll same29998; onRUNNING requireactual
+lease/guard and newfitlog count, not an expected start. Goal remainsACTIVE.
+
+---
+
 # 17Nov13:02UTC — New paired RET job8540802 SUBMITTED; last provider PENDING
 
 Actual sbatch --parsable returned8540802 once. Sourcec66b72ba02211496285e061178d4e9c3669267f3
