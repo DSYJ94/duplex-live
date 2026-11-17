@@ -1,3 +1,17 @@
+# 17Nov — complete language coverage can match retained native cycle
+
+language_schedule now accepts explicit updates_per_epoch: stable longest-first
+complete-document packing into exactly that many updates, token budget enforced,
+reject if whole epoch cannot fit. This lets the next launcher bind exactly the
+existing49 retained/expanded updates per epoch without repeating/rescaling speech
+exposures or changing RET auxiliary mass. Variable-length language-only schedules
+remain available but must NOT be paired blindly with retained native training.
+Ten focused local tests PASS including full coverage/mass and impossible-budget
+rejection for fixed-cycle packing. Exact49 integration still needs actual qualified
+tokenized corpus/launcher admission, not a completed training claim.
+
+---
+
 # 17Nov — deterministic language epochs + native/OPAL update/cursor wiring built
 
 Added language_schedule.build/window: already qualified complete tokenized TRAIN

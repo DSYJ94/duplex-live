@@ -23,7 +23,7 @@ def hash_value(value):
 
 
 def build(documents,spec,*,tokenizer_sha256,qualification_sha256,world_size,epochs,
-          max_global_target_tokens,coefficient,seed):
+          max_global_target_tokens,coefficient,seed,updates_per_epoch=None):
     if (any(type(v) is not int or v<1 for v in (world_size,epochs,max_global_target_tokens))
             or type(seed) is not int or not hash_value(tokenizer_sha256) or not hash_value(qualification_sha256)
             or isinstance(coefficient,bool) or not isinstance(coefficient,(int,float))
@@ -32,6 +32,8 @@ def build(documents,spec,*,tokenizer_sha256,qualification_sha256,world_size,epoc
     documents=sorted(documents,key=lambda row:row['id'])
     if not documents or len({row['id'] for row in documents})!=len(documents):
         raise ValueError('Distinct complete language documents required')
+    if updates_per_epoch is not None and (type(updates_per_epoch) is not int or not 1<=updates_per_epoch<=len(documents)):
+        raise ValueError('Explicit nonempty retained-cycle update count required')
     populations={}
     for row in documents:
         if (not isinstance(row['id'],str) or not row['id'] or row.get('fold')!='TRAIN'
@@ -50,6 +52,18 @@ def build(documents,spec,*,tokenizer_sha256,qualification_sha256,world_size,epoc
     updates=[]
     for epoch in range(epochs):
         order=[row['id'] for row in documents];random.Random(seed+epoch).shuffle(order)
+        if updates_per_epoch is not None:
+            # Match the existing retained/expanded cycle length rather than
+            # rescaling or repeating its speech losses. Stable shuffled ties.
+            buckets=[[] for _ in range(updates_per_epoch)];counts=[0]*updates_per_epoch
+            for identity in sorted(order,key=lambda value:-populations[value]):
+                index=min(range(updates_per_epoch),key=lambda value:counts[value])
+                buckets[index].append(identity);counts[index]+=populations[identity]
+            if any(not bucket for bucket in buckets) or max(counts)>max_global_target_tokens:
+                raise ValueError('Complete language epoch cannot fit declared native cycle/token budget')
+            updates.extend(dict(epoch=epoch,document_ids=bucket,global_target_tokens=count)
+                           for bucket,count in zip(buckets,counts))
+            continue
         current=[];count=0
         for identity in order:
             if current and count+populations[identity]>max_global_target_tokens:
@@ -59,6 +73,7 @@ def build(documents,spec,*,tokenizer_sha256,qualification_sha256,world_size,epoc
         if current:updates.append(dict(epoch=epoch,document_ids=current,global_target_tokens=count))
     schedule=dict(schema='native-language-complete-epochs-v1',world_size=world_size,epochs=epochs,
                   seed=seed,max_global_target_tokens=max_global_target_tokens,updates=updates,
+                  updates_per_epoch=updates_per_epoch,
                   corpus_sha256=corpus_sha,tokenizer_sha256=tokenizer_sha256,
                   qualification_sha256=qualification_sha256,coefficient=coefficient)
     schedule_sha=digest(schedule)

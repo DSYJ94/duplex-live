@@ -50,5 +50,15 @@ class LanguageScheduleTest(unittest.TestCase):
             altered=copy.deepcopy(plan);altered['identity'][field]=.5 if field=='coefficient' else 'f'*64
             with self.assertRaises(ValueError):window(altered,self.rows,self.spec,rank=0,next_update=0)
 
+    def test_language_matches_native_cycle_without_rescaling_speech(self):
+        plan=build(self.rows,self.spec,**dict(self.args,max_global_target_tokens=9),updates_per_epoch=2)
+        self.assertEqual(len(plan['updates']),4)
+        for epoch in range(2):
+            rows=[row for row in plan['updates'] if row['epoch']==epoch]
+            self.assertEqual(len(rows),2)
+            self.assertEqual(sum(row['global_target_tokens'] for row in rows),15)
+            self.assertEqual(Counter(identity for row in rows for identity in row['document_ids']),Counter(row['id'] for row in self.rows))
+        with self.assertRaises(ValueError):build(self.rows,self.spec,**self.args,updates_per_epoch=2)
+
 
 if __name__=='__main__':unittest.main()
