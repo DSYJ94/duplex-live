@@ -19,6 +19,14 @@ class NativeDispatch(nn.Module):
         self.lm = lm
 
     def forward(self, kind, codes):
+        if kind == 'text_rehearsal':
+            if (codes.ndim != 3 or codes.dtype != torch.long or codes.shape[1] != self.lm.n_q + 1
+                    or codes.shape[-1] < 1 or bool((codes[:, 1:] != -1).any())
+                    or bool((codes[:, 0] < 0).any())):
+                raise ValueError('Text rehearsal requires absent audio at every position, including BOS')
+            if any(getattr(module, '_streaming_state', None) is not None for module in self.lm.modules()):
+                raise ValueError('Independent text documents cannot inherit a native streaming cache')
+            return self.lm.forward_codes(codes)
         if kind == 'text':
             return self.lm.forward_codes(codes)
         if kind == 'audio':
@@ -48,6 +56,9 @@ class NativeView:
 
     def forward_train(self, codes):
         return self._wrapped('audio', codes)
+
+    def forward_text_rehearsal(self, codes):
+        return self._wrapped('text_rehearsal', codes)
 
     def __getattr__(self, name):
         if name.startswith('_'):
