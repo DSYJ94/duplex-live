@@ -15,7 +15,7 @@ def feature_command(work,gpu,environment,backup):
     return cmd
 
 
-def archive(source,target):
+def archive(source,target,*,optimizer_updates=0):
     from .evaluation_result_archive import inventory
     from .matched_archive import independent_filesystems
     target.parent.mkdir(parents=True,exist_ok=True)
@@ -24,7 +24,7 @@ def archive(source,target):
     names=b''.join(r['path'].encode()+b'\0'for r in rows)
     subprocess.run(['rsync','-ar','--no-owner','--no-group','--timeout=180','--from0','--files-from=-',str(source)+'/',str(stage)+'/'],input=names,check=True)
     if inventory(stage)!=rows:raise ValueError('Every independent file hash must match before next stage')
-    (stage/'archive-inventory.json').write_text(json.dumps(rows,indent=2)+'\n');receipt=dict(passed=True,every_file_sha256_verified=True,files=len(rows),bytes=sum(r['bytes']for r in rows),inventory_sha256=sha(stage/'archive-inventory.json'),destination=str(target),optimizer_updates=0)
+    (stage/'archive-inventory.json').write_text(json.dumps(rows,indent=2)+'\n');receipt=dict(passed=True,every_file_sha256_verified=True,files=len(rows),bytes=sum(r['bytes']for r in rows),inventory_sha256=sha(stage/'archive-inventory.json'),destination=str(target),optimizer_updates=optimizer_updates)
     (stage/'archive-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');os.rename(stage,target);return receipt
 
 

@@ -1,0 +1,26 @@
+{
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "reason": "New fixed paired RET control phase after completed196 and verified8537504; the prior zero-update feature scope cannot authorize fitting.",
+  "GPU_count": 1,
+  "maximum_seconds": 43200,
+  "maximum_new_readout_updates": 256,
+  "maximum_updates_per_arm": 128,
+  "native_backbone_updates": 0,
+  "external_API_calls": 0,
+  "arms": [
+    "readout",
+    "bias"
+  ],
+  "fit_recipe": "training/personaplex/action_fit.py:RECIPE plus scalar LR0.5",
+  "parent_checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+  "features_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05",
+  "cache_source": "c62663cd92ac144d21236fc5a6f01ddf2630f69e",
+  "restore_source": "3798e5982c3935794cebd5595cb75966eb80cfcd",
+  "restore_job": "8537504",
+  "no_purchase": true,
+  "GCP": false,
+  "all_shared_usage_within_original20000GPUh": true,
+  "required_native_outputs_per_arm": 96,
+  "baseline_outputs_reused": true,
+  "automatic_retry": false
+}
