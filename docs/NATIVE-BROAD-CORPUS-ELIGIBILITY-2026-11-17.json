@@ -1,0 +1,44 @@
+{
+  "status": "FIRST_PASS_TEXT_CANDIDATES_NOT_ADMITTED",
+  "sources": {
+    "OpenAssistant/oasst1": {
+      "original_records": 10364,
+      "eligible_text_candidates": 2281,
+      "requires_length_qualified_rewrite": 1447,
+      "excluded_root_not_eligible": 7502,
+      "excluded_official_validation_tree": 518,
+      "excluded_no_complete_reviewed_path": 63
+    },
+    "databricks/databricks-dolly-15k": {
+      "original_records": 15011,
+      "eligible_text_candidates": 14995,
+      "requires_length_qualified_rewrite": 3247,
+      "excluded_exact_duplicate": 16
+    }
+  },
+  "source_inventory_sha256": "af686ecc88e57741d98aa38c6ee48acacf8448f478811fdfb0d21efb22c2ee16",
+  "official_oasst_train_message_ids": 84437,
+  "official_oasst_validation_message_ids": 4401,
+  "source_licence_partitions_separate": true,
+  "pyarrow": "18.1.0",
+  "domain_and_routing_labels_pending": true,
+  "semantic_family_splits_pending": true,
+  "inspected_regression_decontamination_pending": true,
+  "semantic_qualification_complete": false,
+  "native_audio_created": false,
+  "optimizer_updates": 0,
+  "model_API_calls": 0,
+  "admitted_for_training": false,
+  "job": "8553738",
+  "source": "07e78311b5183aead9bd2829a148229aac954948",
+  "script_sha256": "768ef62fd568a751050e9300b2b9a43de14fac110984ccb6dd5707bc77b6be50",
+  "provider_state": "COMPLETED",
+  "provider_exit_code": "0:0",
+  "provider_elapsed_seconds": 30,
+  "actual_GPU_allocation": 0,
+  "candidate_storage_root": "/projects/u6ada/duplex-live/native-broad-corpus-staging-20261117/candidates-v1",
+  "eligible_text_candidates": 17276,
+  "requires_length_qualified_rewrite": 4694,
+  "local_contract_tests": 7,
+  "training_runtime_dependency_changes": false
+}

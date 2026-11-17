@@ -1,3 +1,36 @@
+# 17Nov — Whole-source firstpass COMPLETE17276textcandidates; nativecollectionRUNNING245
+
+CPU8553738 COMPLETED0:0,30seconds,AllocTRESCPU72/mem4G/noGPU. Actualproducer
+07e78311b5183aead9bd2829a148229aac954948 scriptSHA768ef62fd568a751050e9300b2b9a43de14fac110984ccb6dd5707bc77b6be50.
+FirstpasscandidateROOT/projects/u6ada/duplex-live/native-broad-corpus-staging-20261117/candidates-v1.
+OASSTofficialtrain84437/validation4401 messageIDs joined,518entirevalidationtrees
+excluded,7502rooteligibilityfails,63withoutcompleteeligiblepath; retained2281
+English/reviewed/nondeleted/nonsyntheticpaths,oneperroot. Dolly14995retained,
+16exactduplicatesexcluded. Total17276TEXTCANDIDATES,NOTadmittedaudioepisodes.
+4694length-rewriteflags; fulloriginalcontext preserved, no truncation. Root IDs/
+message IDs/source revisions/licences/content hashes preserved; sourceuserIDs
+notcopied intoderivatives. Licences/datasetpartitions remainseparate.
+Domain/route/answerabilitylabels, semanticfamilyclusters, inspectedregression
+near/template-decontamination andsemantic/audioqualification STILLPENDING.
+Crowdrank/quality!=facts, contenthash!=independentfamily. No modeladoption.
+
+PyArrow18.1.0 installedonlyseparate filter-07e7831/data-only-libs, --no-deps,
+CPUcontainerPYTHONPATHscoped tofilter; runningnativef06runtime/libsunchanged.
+OfficialPyPIPython3.12/ARMwheelverified, packageinstallreportcopiedlocally.
+Sourcefilter7localcontracttestsPASS; actualwhole-sourceCPU execution successful.
+Smallactualreceipts/packageprovenance broad-filter-8553738; committedreport
+ docs/NATIVE-BROAD-CORPUS-ELIGIBILITY-2026-11-17.json. ResearchMDupdatedactualstatus.
+No providerinference/purchase/GCP/newGPU/newnativeaudio/trainingadmission.
+
+SAME70879 observer latestactual8553179 RUNNING2153seconds counts[62,60,62,61]
+245/1008,all4GPUsowned,0rankterminal. PreserveSAMEf06producer/guards/checkpoint196/
+OPAL; no newoptimizerupdates. Keepoccasionalobservations, neverrestartontimeout.
+Complete1008/fourindependentarchives/provider0 required before nativefailurelabels.
+Nextdatasource work decontamination+domain/semanticqualification andBritishaudio;
+selective/fullnativelearning follows reviewed commondata/retention plan.
+
+---
+
 # 17Nov — Broader source originals STAGED; nativecollection8553179 stillRUNNING
 
 Researchbackgroundagent (skill-directed, noteONLY) finished
