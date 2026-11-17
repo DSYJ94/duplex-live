@@ -1,0 +1,25 @@
+{
+  "root": "/Users/daryl/Library/CloudStorage/OneDrive-Personal/Shared GitHub Repos/duplex-live/runs/active-source-20261115/runs/prepared-language-20261117",
+  "files": [
+    {
+      "file": "original-TRAIN-candidates.jsonl",
+      "sha256": "12d69d00943556d3c2ff9cfcced71f861533ca505a8c958663c1ca50c69d71f8",
+      "bytes": 1770737
+    },
+    {
+      "file": "native-tokenized-candidates.jsonl",
+      "sha256": "fb133cd0db24f4def979a7a5a8098f9f9fac2dcf368ccdcec4c5e5999999d8d2",
+      "bytes": 2707639
+    },
+    {
+      "file": "original-tokenization-report.json",
+      "sha256": "1d2d337d2cec2443e293d68b8227a6031280dfcd3f8fef7bf05463fef4a2dae0",
+      "bytes": 806
+    }
+  ],
+  "every_copied_file_sha256_verified": true,
+  "total_bytes": 4479182,
+  "OneDrive_upload_verified": false,
+  "original_Isambard_source_preserved": true,
+  "training_admitted": false
+}

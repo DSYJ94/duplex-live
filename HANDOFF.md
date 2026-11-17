@@ -1,3 +1,15 @@
+# Latest continuation — prepared language artifacts preserved in ignored repo runs
+
+Small originalTRAIN/native-tokenized candidates andoriginaltokenizationreport now
+SHAverified under runs/prepared-language-20261117/ in THISactivecheckout (ignored
+byGit), not dependent on/tmp. Inventory NATIVE-TRAIN-LANGUAGE-LOCAL-ARTIFACTS-
+2026-11-17.json records bytes/hashes/fullpath. OneDrivecloud upload NOTverified;
+original durableIsambardplan/code preserved, files reproducible. No modelweights,
+largecheckpoints orownerdata copied. No nativequalification/learning implied.
+Review8558032/source4223/sameobserver42447 unchanged.
+
+---
+
 # Latest continuation — native-tokenized original1008 TRAIN language candidates
 
 Originalverification chains rechecked recursively:954numeric targets/1008TRAIN;
