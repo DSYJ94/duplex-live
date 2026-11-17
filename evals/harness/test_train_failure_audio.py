@@ -7,7 +7,8 @@ import unittest
 import numpy as np
 import soundfile as sf
 
-from training.personaplex.train_failure_audio import extract
+from training.personaplex.train_failure_audio import extract, prepare
+from training.personaplex.train_failure_inputs import build
 
 
 class TrainFailureAudioTest(unittest.TestCase):
@@ -55,3 +56,27 @@ class TrainFailureAudioTest(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     extract(root, record, root / 'user.wav')
                 self.assertFalse((root / 'user.wav').exists())
+
+    def test_complete_batch_rejects_changed_membership_before_any_extraction(self):
+        from evals.harness.test_train_failure_inputs import TrainFailureInputsTest
+        for change in ('subset', 'duplicate', 'dev', 'hash'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                source = root / 'source'
+                (source / 'qualification').mkdir(parents=True)
+                manifest, semantic = TrainFailureInputsTest().fixture()
+                (source / 'manifest.json').write_text(json.dumps(manifest))
+                (source / 'qualification/plan.json').write_text(json.dumps(semantic))
+                sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+                value = build(manifest, semantic)
+                value.update(source_root=str(source),
+                             source_manifest_sha256=sha(source / 'manifest.json'),
+                             semantic_parent_sha256=sha(source / 'qualification/plan.json'))
+                if change == 'subset': value['records'].pop()
+                if change == 'duplicate': value['records'][1] = value['records'][0]
+                if change == 'dev': value['records'][0]['fold'] = 'DEV'
+                inputs = root / 'input.json'
+                inputs.write_text(json.dumps(value))
+                with self.assertRaises(ValueError):
+                    prepare(inputs, '0' * 64 if change == 'hash' else sha(inputs), root / 'out')
+                self.assertFalse((root / 'out').exists())

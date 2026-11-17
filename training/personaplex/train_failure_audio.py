@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
-from .train_failure_inputs import RECORD_KEYS
+from .train_failure_inputs import RECORD_KEYS, build
 
 
 def digest(path):
@@ -57,3 +57,51 @@ def extract(source, record, destination):
                 original_source_sha256=record['source_wave_sha256'],
                 teacher_audio_in_model_input=False, response_tail_seconds=60,
                 native_inference_started=False, new_optimizer_updates=0)
+
+
+def prepare(inputs, expected_sha256, out):
+    """Prepare the entire pinned1008 cohort; publish no subset as complete."""
+    inputs, out = Path(inputs), Path(out)
+    if digest(inputs) != expected_sha256:
+        raise ValueError('Pinned complete input manifest required')
+    value = json.loads(inputs.read_text())
+    source = Path(value['source_root'])
+    manifest, semantic = source / 'manifest.json', source / 'qualification/plan.json'
+    if (digest(manifest) != value['source_manifest_sha256']
+            or digest(semantic) != value['semantic_parent_sha256']):
+        raise ValueError('Original complete qualified source parents changed')
+    expected = build(json.loads(manifest.read_text()), json.loads(semantic.read_text()))
+    if (value.get('schema') != expected['schema'] or value.get('required') != 1008
+            or value.get('original_DEV_excluded') != 64
+            or value['records'] != expected['records']):
+        raise ValueError('Exact complete original TRAIN membership required')
+    if any(not isinstance(r['id'], str) or Path(r['id']).name != r['id']
+           or r['id'] in ('', '.', '..') for r in value['records']):
+        raise ValueError('Contained distinct case IDs required')
+    out.mkdir(exist_ok=False)
+    rows = []
+    for record in value['records']:
+        folder = out / record['id']
+        folder.mkdir()
+        rows.append(extract(source, record, folder / 'user.wav'))
+    result = dict(schema='dl-native-TRAIN-user-audio-v1', complete=True,
+                  required=1008, original_DEV_excluded=64, cases=rows,
+                  input_manifest_sha256=expected_sha256,
+                  native_inference_started=False, correctness_labels_created=False,
+                  teacher_audio_in_model_input=False, new_optimizer_updates=0,
+                  external_API_calls=0)
+    with (out / 'inputs.json').open('x') as stream:
+        json.dump(result, stream, indent=2, allow_nan=False)
+        stream.write('\n')
+    return result
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--inputs', type=Path, required=True)
+    parser.add_argument('--inputs-sha256', required=True)
+    parser.add_argument('--out', type=Path, required=True)
+    args = parser.parse_args()
+    result = prepare(args.inputs, args.inputs_sha256, args.out)
+    print(json.dumps({k: v for k, v in result.items() if k != 'cases'}))
