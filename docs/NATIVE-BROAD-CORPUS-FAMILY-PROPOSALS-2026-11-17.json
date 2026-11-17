@@ -1,0 +1,40 @@
+{
+  "job": "8555190",
+  "source": "11e7683dd5854bb961af9fef705bdc13cb15932d",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 13,
+  "GPU_count": 0,
+  "tests_passed": 3,
+  "documents": 17276,
+  "families": 16731,
+  "proposed_training_candidates": 16404,
+  "proposed_development_candidates": 872,
+  "family_counts": {
+    "TRAIN": 15885,
+    "DEV": 846
+  },
+  "source_counts": {
+    "OpenAssistant/oasst1": {
+      "TRAIN": 2152,
+      "DEV": 129
+    },
+    "databricks/databricks-dolly-15k": {
+      "TRAIN": 14252,
+      "DEV": 743
+    }
+  },
+  "union_edges": {
+    "literal": 21,
+    "source_group": 521,
+    "numeric_template": 3
+  },
+  "cross_source_families": 5,
+  "assignments_sha256": "5497279bb961cf775b7ce5d3a0961b2b6e8428a6deb23538581940f0304a29e0",
+  "root": "/projects/u6ada/duplex-live/native-broad-partitions-11e7683/partitions",
+  "semantic_paraphrase_clustering_complete": false,
+  "historical_semantic_decontamination_complete": false,
+  "folds_are_proposals_only": true,
+  "training_admitted": false,
+  "optimizer_updates": 0
+}

@@ -1,3 +1,32 @@
+# 17Nov20:23UTC — whole-source family grouping COMPLETE; nativecollection704/RUNNING
+
+CPU8555190 COMPLETED0:0,13s,GPU0, source11e7683d(fullSHA in newreceipt).
+Three actual containedCPU tests PASS; full17276 candidates grouped into16731
+conservative source/input families. Edges521source-parent/21exact-input/3number-
+normalized-input,5cross-source families. Proposed TRAIN16404/DEV872 documents,
+TRAIN15885/DEV846 families. OASST2152/129 andDolly14252/743. Allsourceparents,
+identical andnumber-swapped inputs stay together; assistant answers never used
+for grouping orfold assignment. WholeassignmentSHA5497279bb961cf775b7ce5d3a0961b2b6e8428a6deb23538581940f0304a29e0.
+ROOT/projects/u6ada/duplex-live/native-broad-partitions-11e7683/partitions.
+NATIVE-BROAD-CORPUS-FAMILY-PROPOSALS-2026-11-17.json actualreceipt saved.
+
+These are PROPOSED folds, not qualification. Semantic paraphrase clustering,
+remaining historical contamination gaps and independent domain/answer/routing
+review remain incomplete. Do not upgrade leakage_qualified/semantic_qualified
+ortrain this ledger. Next useful GPU work after the current complete backup is
+whole-cohort independent local semantic review/failure attribution, alongside
+actual native selective/full state admission; no more small RET/head sweeps.
+No new paidAPI/GCP/purchase or GPU overlap authorized by this CPU grouping step.
+Existing27B shared public model/pin may be read as already explicitly agreed;
+its prior numeric accuracy alone does NOT certify a general semantic judge.
+
+Same70879 actual1794946960.4967568:8553179 RUNNING6056s,
+[176,175,178,175]=704/1008,0rankterminals. f06producer/step196/4GPUs/deadline
+18Nov06:41:44UTCunchanged. Preserve all checkpoints, no replay/hotdeployment.
+Full1008/four independenthasharchives/hostterminal/provider0 stillrequired.
+
+---
+
 # 17Nov20:18UTC — corrected17276 source compilation COMPLETE;30 actual CPU tests PASS
 
 CPU8555095 COMPLETED0:0,32s,GPU0, exactsource23e550b9 (fullSHA in committed
