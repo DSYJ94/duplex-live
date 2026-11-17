@@ -1,3 +1,16 @@
+# Current after chat interruption — SAME8558032 live, old tool handles unavailable
+
+Tool33340 nowUnknownprocessid after tool-session interruption; doNOTinferGPUstop.
+Fresh actualSSH/squeue confirms8558032RUNNING1:01:06/nid010309. Readonlyoutput
+snapshot1794955666.5131953:4012saved[1004,1012,996,1000],3789structured,
+213invalid,8incomplete,2overcontext,0rankterminals/nohostterminal. No jobrestart.
+There is NO usable persistenttoolmonitor handle now; use occasional shortreadonly
+SSHchecks (scheduler>=60s apart, preferably300s), or reconnectaREADONLYobserver
+ifneeded. Neverpoll42447/33340 orresubmitmodel onobserverloss. Sameimmutable
+source4223/root/stop18Nov09:36:18UTC/accounting/quality/backupsunchanged.
+
+---
+
 # Current observer replacement ONLY — same healthy8558032
 
 Oldobserver42447 TERMINAL255/brokenSSHpipe; this is NOT a GPUjobfailure.
