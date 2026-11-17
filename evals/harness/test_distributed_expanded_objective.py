@@ -37,5 +37,12 @@ class ExpandedNativeContract(unittest.TestCase):
             with self.assertRaises(ValueError):update(runtime,base,opal,step=0,retained_groups={},references={},exposures=[],expanded_row={},valid=True,expanded_coefficient=1.,identity={},checkpoint_path=None,log_path='unused')
         base.zero_grad.assert_not_called();opal.step.assert_not_called()
 
+    def test_language_cannot_disappear_on_continuation(self):
+        runtime,base,opal=Mock(),Mock(),Mock()
+        identity=dict(native_data_qualified=True,native_fresh_restore_passed=True,language_training={'schedule_sha256':'a'*64})
+        with patch('training.personaplex.distributed_train.checkpoint_manifest',return_value={'update':12}):
+            with self.assertRaises(ValueError):update(runtime,base,opal,step=12,retained_groups={},references={},exposures=[],expanded_row={},valid=True,expanded_coefficient=1.,identity=identity,checkpoint_path=None,log_path='unused')
+        base.zero_grad.assert_not_called();opal.step.assert_not_called()
+
 
 if __name__=='__main__':unittest.main()

@@ -9,7 +9,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from training.personaplex.distributed_native import NativeDispatch, NativeView, configure_lm
-from training.personaplex.text_rehearsal import TextSpec, averaged_gradient_loss, backward_window, loss, pack, validate
+from training.personaplex.text_rehearsal import TextSpec, averaged_gradient_loss, backward_window, loss, pack, validate, validate_window_identity
 
 
 def spec():
@@ -73,6 +73,63 @@ def distributed_worker(rank, rendezvous, output, accumulated=False):
 
 
 class TextRehearsalTest(unittest.TestCase):
+    def test_mixed_update_adds_language_before_single_opal_step_and_saves_cursor(self):
+        from unittest.mock import Mock, patch
+        from training.personaplex.distributed_train import update
+        torch.manual_seed(401)
+        model=TextNative();configure_lm(model,'selective-trunk-text');reference=copy.deepcopy(model)
+        runtime=Mock(view=NativeView(NativeDispatch(model),model))
+        optimizer=torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=.001)
+        opal=Mock();opal.rank_state.return_value={'rng':{},'opal':{}}
+        observed=[]
+        def step(value,index):
+            observed.append((value,index,{n:p.grad.clone() for n,p in model.named_parameters() if p.requires_grad}))
+            optimizer.step()
+            return {'update':index+1}
+        opal.step.side_effect=step
+        def retained(*args):
+            value=model.text_linear.weight.square().mean();value.backward()
+            return {'records':[{'weighted_loss':float(value.detach())}]}
+        def acoustic(*args,**kwargs):
+            value=model.transformer.weight.square().mean();value.backward()
+            return {'weighted_loss':float(value.detach())}
+        binding=dict(corpus_sha256='a'*64,tokenizer_sha256='b'*64,schedule_sha256='c'*64,coefficient=.3)
+        identity=dict(language_training=binding,native_data_qualified=True,native_fresh_restore_passed=True,
+                      language_data_qualified=True,language_native_gradient_restore_passed=True)
+        window=dict(identity=binding,step=0,batches=[pack([5,6],spec())],spec=spec(),document_ids=['source-1'])
+        def gather(out,value):out[:]=[value]
+        with tempfile.TemporaryDirectory() as temp, patch('torch.distributed.get_world_size',return_value=1), patch('torch.distributed.get_rank',return_value=0), patch('torch.distributed.all_gather_object',side_effect=gather), patch('training.personaplex.distributed_train.checkpoint_manifest',return_value={'update':0}), patch('training.personaplex.distributed_train.backward_retained',side_effect=retained), patch('training.personaplex.distributed_train.backward_expanded',side_effect=acoustic), patch('training.personaplex.distributed_train.save') as saved:
+            result=update(runtime,optimizer,opal,step=0,retained_groups={},references={},exposures=[],expanded_row={},valid=True,expanded_coefficient=1.,identity=identity,checkpoint_path=Path(temp)/'next.pt',log_path=Path(temp)/'steps.jsonl',language_window=window)
+        self.assertEqual(len(observed),1)
+        self.assertEqual(result['actual_optimizer_updates'],1)
+        self.assertEqual(saved.call_args.kwargs['rank_state']['language_cursor'],dict(identity=binding,next_update=1))
+        self.assertEqual(result['language_cursor']['next_update'],1)
+        batch=window['batches'][0]
+        _,logits=reference.forward_codes(batch['inputs'])
+        expected=(reference.text_linear.weight.square().mean()+reference.transformer.weight.square().mean()
+                  +.3*F.cross_entropy(logits[:,0][batch['mask']],batch['targets'][batch['mask']]))
+        expected.backward()
+        for name,parameter in reference.named_parameters():
+            if parameter.requires_grad:
+                torch.testing.assert_close(observed[0][2][name],parameter.grad,rtol=1e-5,atol=1e-7)
+
+    def test_language_lineage_requires_native_admission_and_exact_next_cursor(self):
+        from training.personaplex.distributed_state import validate_language_cursor
+        binding=dict(corpus_sha256='a'*64,tokenizer_sha256='b'*64,schedule_sha256='c'*64,coefficient=.3)
+        identity=dict(language_training=binding)
+        proof=dict(language_data_qualified=True,language_native_gradient_restore_passed=True)
+        window=dict(identity=binding,step=12,batches=[pack([5],spec())],spec=spec(),document_ids=['public-source-1'])
+        validate_window_identity(window,identity,proof,12)
+        cursor=dict(language_cursor=dict(identity=binding,next_update=13))
+        validate_language_cursor(identity,cursor,13)
+        for step in (0,12,14):
+            with self.assertRaises(ValueError):validate_language_cursor(identity,cursor,step)
+        with self.assertRaises(ValueError):validate_language_cursor(identity,{},13)
+        with self.assertRaises(ValueError):validate_language_cursor({},cursor,13)
+        for key in proof:
+            with self.assertRaises(ValueError):validate_window_identity(window,identity,dict(proof,**{key:False}),12)
+        with self.assertRaises(ValueError):validate_window_identity(window,identity,proof,11)
+
     def test_exact_shift_absent_audio_and_first_answer_boundary(self):
         batch = pack([5, 6, 7, 8], spec(), supervise=[False, False, True, True])
         self.assertEqual(batch['inputs'][0, 0].tolist(), [0, 5, 6, 7])

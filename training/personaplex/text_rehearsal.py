@@ -8,6 +8,32 @@ import torch
 from torch.nn import functional as F
 
 
+def validate_window_identity(window, identity, admission, step):
+    """Language exposure is a separately qualified, immutable schedule lineage."""
+    import math
+    binding=window.get('identity',{})
+    keys={'corpus_sha256','tokenizer_sha256','schedule_sha256','coefficient'}
+    if (set(binding)!=keys or binding!=identity.get('language_training')
+            or type(window.get('step')) is not int or window['step']!=step
+            or admission.get('language_data_qualified') is not True
+            or admission.get('language_native_gradient_restore_passed') is not True):
+        raise ValueError('Exact qualified language schedule and actual native restore required')
+    for name in keys-{'coefficient'}:
+        value=binding[name]
+        if not isinstance(value,str) or len(value)!=64 or any(c not in '0123456789abcdef' for c in value):
+            raise ValueError('Exact language corpus/tokenizer/schedule hashes required')
+    coefficient=binding['coefficient']
+    if isinstance(coefficient,bool) or not isinstance(coefficient,(int,float)) or not math.isfinite(coefficient) or coefficient<=0:
+        raise ValueError('Explicit finite positive language mixture required')
+    batches=window.get('batches',[])
+    ids=window.get('document_ids',[])
+    if (not batches or len(ids)!=len(batches) or len(ids)!=len(set(ids))
+            or any(not isinstance(value,str) or not value for value in ids)):
+        raise ValueError('Exact distinct local language document identities required')
+    for batch in batches:
+        validate(batch,window['spec'])
+
+
 @dataclass(frozen=True)
 class TextSpec:
     audio_streams: int

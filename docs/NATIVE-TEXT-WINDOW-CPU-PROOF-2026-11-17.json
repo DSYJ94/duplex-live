@@ -1,0 +1,12 @@
+{
+  "job": "8554789",
+  "source_prefix": "94dfecd4",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 35,
+  "GPU_count": 0,
+  "tests_passed": 15,
+  "distributed_proof": "Two-rank unequal-length accumulated gradients including zero-target local microbatch match independent pooled reference",
+  "limitation": "CPU model doubles, not native checkpoint/FSDP/GPU qualification",
+  "training_updates": 0
+}

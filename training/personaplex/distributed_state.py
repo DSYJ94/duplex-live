@@ -5,9 +5,19 @@ import torch
 import torch.distributed as dist
 
 
+def validate_language_cursor(identity, rank_state, step):
+    if 'language_training' in identity:
+        expected=dict(identity=identity['language_training'],next_update=step)
+        if rank_state.get('language_cursor')!=expected:
+            raise ValueError('Exact next language update required; no implicit schedule reset/replay')
+    elif 'language_cursor' in rank_state:
+        raise ValueError('Language cursor cannot enter an unrelated native lineage')
+
+
 def save(path, runtime, optimizer, *, identity, step, rank_state):
     if type(step) is not int or step < 0 or not identity or 'rng' not in rank_state or 'opal' not in rank_state:
         raise ValueError('Exact lineage, step, RNG and OPAL state required')
+    validate_language_cursor(identity,rank_state,step)
     rank, world = dist.get_rank(), dist.get_world_size()
     identities = [None] * world
     dist.all_gather_object(identities, dict(identity=identity, step=step, world=world))
@@ -70,5 +80,7 @@ def restore(state, runtime, optimizer, *, identity, restore_rank_state, checkpoi
         for block in iter(lambda: stream.read(4*1024*1024), b''): digest.update(block)
     if digest.hexdigest() != descriptor['sha256']:
         raise ValueError('Rank state hash mismatch')
-    restore_rank_state(torch.load(path, map_location='cpu', weights_only=False))
+    rank_state=torch.load(path, map_location='cpu', weights_only=False)
+    validate_language_cursor(identity,rank_state,state['step'])
+    restore_rank_state(rank_state)
     return state['step']

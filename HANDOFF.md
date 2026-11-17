@@ -1,3 +1,68 @@
+# 17Nov — deterministic language epochs + native/OPAL update/cursor wiring built
+
+Added language_schedule.build/window: already qualified complete tokenized TRAIN
+records only, immutable source/tokenizer/qualification/spec/corpus/schedule hashes,
+seeded complete epochs, global valid-target-token update budget, no truncation,
+rank-disjoint real documents and target-free padding with equal microstep counts.
+Exact next_update lookup never wraps/reset; edited corpus/spec/recipe rejected.
+Nine focused local tests PASS spanning schedule full coverage/tokenmass/padding,
+unqualified/DEV rejection, tamper/exhaustion checks, prior native no-replay gates,
+and actual combined toy-model retained/acoustic/language gradient reference.
+No existing17276 candidates admitted by this API; no real native/tokenized corpus
+qualification claimed. New source is not deployed to running f06 collection.
+
+Still required before new phase: actual tokenizer/document compiler + semantic
+qualification ledger, synchronize this language update schedule with COMPLETE
+retained native objective cycle mass (do not repeat full old exposures per new
+update or drop coverage), full native CUDA/FSDP gradients/memory/AdamRNGOPAL/cursor
+restore, then meaningful complete mixed training and independent product eval.
+Current optional executor requires expanded native microbatches on each update;
+language-only or skipped-retention paths have NOT been enabled.
+
+---
+
+# 17Nov — optional mixed language/native update integrated, launcher admission pending
+
+Current working changes extend distributed_train.update with an explicit optional
+language_window. Existing callers unchanged; language lineage cannot silently
+appear/disappear. Corpus/tokenizer/schedule SHA256 + coefficient bound in identity,
+step and actual language-data/native-gradient-restore admission required. Ranks
+agree binding before backward. Retained + expanded native gradients accumulated,
+then language-window backward, then ONE existing OPAL step. No extra optimizer or
+implicit accumulation divisor. Checkpoint rank state now includes exact next
+language cursor; distributed_state.save/restore reject absent/reset/mismatched
+cursor for language lineages and reject cursor on unrelated old lineage.
+Eight focused local tests PASS, including independent combined retained/acoustic/
+language gradient reference, one OPAL call, captured saved cursor, no saved-step
+replay, native gate and language omission rejection. Test doubles/mocked collective
+and checkpoint publication only: NOT actual native model/FSDP checkpoint proof.
+15-test Isambard CPU proof8554789 remains bound to94dfecd, NOT current later edits.
+
+Next: deterministic qualified source schedule/cursor construction + actual full
+native sharded restore/state checks. No data admission, new learning or launcher
+execution claimed. Current GPU immutable f06 source remains unchanged.
+Latest same70879 observed1794946059.5197728 job8553179 RUNNING5155seconds,
+[150,148,151,149]=598/1008,0rankterminals; do not restart/interrupt.
+
+---
+
+# 17Nov20:06UTC — complete language accumulation CPU proof PASS
+
+CPU8554789 COMPLETED0:0 in35s, actual source94dfecd4 (full source in submission
+receipt), isolated source-text-window-94dfecd. ALL15 tests PASS actual contained
+Isambard CPU runtime. Added real two-rank accumulated backward with unequal
+supervised-token populations and one empty local mask; gradients match independent
+pooled CE reference. Existing retained gradients preserved in separate local
+regression. This closes CPU accumulation math; do not repeat Mac networking tests.
+Small receipts runs/container-startup-20261115/text-window-8554789.
+No native checkpoint GPU/FSDP proof or new training/admitted corpus claimed.
+Next actual build: wire language-window exposure/cursor and retained native
+objectives to one selective-trunk/text learner, preserve original state lineages,
+qualify broader corpus, then native gradient/full AdamRNGOPAL restore before
+new learning. Current inference producer remains f06, no hot deployment.
+
+---
+
 # 17Nov — language accumulation implementation, not yet native admission
 
 Added text_rehearsal.backward_window: validates complete microbatch window,
