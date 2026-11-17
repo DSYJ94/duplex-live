@@ -183,6 +183,7 @@ class DistributedNative:
 
     def load_full_state(self, state, optimizer):
         """ALL ranks receive the same checkpoint; never use adapter-only restore."""
+        from .native_optimizer_state import load_exact
         if state.get('method') != self.method or state.get('ownership') != self.ownership:
             raise ValueError('Exact distributed method and parameter ownership required')
         if not self.sharded:
@@ -195,13 +196,17 @@ class DistributedNative:
                     raise ValueError('Invalid learned state: ' + name)
             with torch.no_grad():
                 for name, p in selected.items(): p.copy_(state['model'][name].to(p.device))
-            optimizer.load_state_dict(state['optimizer'])
-            return
+            self.last_restore_proof=load_exact(optimizer,state['optimizer'])
+            return self.last_restore_proof
         from torch.distributed.fsdp import FullyShardedDataParallel as FSDP, StateDictType, FullStateDictConfig
         with FSDP.state_dict_type(self.wrapped, StateDictType.FULL_STATE_DICT,
                                   FullStateDictConfig(offload_to_cpu=True, rank0_only=False)):
             self.wrapped.load_state_dict(state['model'], strict=True)
-        optimizer.load_state_dict(FSDP.optim_state_dict_to_load(self.wrapped, optimizer, state['optimizer']))
+        # Full named checkpoint -> exact rank-owned optimizer representation.
+        # Comparing the full tree to this local shard would be invalid.
+        local=FSDP.optim_state_dict_to_load(self.wrapped, optimizer, state['optimizer'])
+        self.last_restore_proof=load_exact(optimizer,local)
+        return self.last_restore_proof
 
 
 def cpu_state(value):

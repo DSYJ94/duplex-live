@@ -16,6 +16,13 @@ def spec():
     return TextSpec(2, 32, 0, 3, 8, frozenset((0, 1, 2, 3, 4)))
 
 
+class TextTemporal(nn.Linear):
+    @property
+    def layers(self):
+        # A one-layer CPU temporal stack; not a production native model.
+        return [self]
+
+
 class TextNative(nn.Module):
     """CPU test double, not a native checkpoint or admission proof."""
     n_q = 2
@@ -25,7 +32,7 @@ class TextNative(nn.Module):
         super().__init__()
         self.text_emb = nn.Embedding(32, 8)
         self.emb = nn.ModuleList([nn.Embedding(16, 8) for _ in range(2)])
-        self.transformer = nn.Linear(8, 8)
+        self.transformer = TextTemporal(8, 8)
         self.depformer = nn.Linear(8, 8)
         self.text_linear = nn.Linear(8, 32)
 

@@ -1,3 +1,34 @@
+# 17Nov20:54UTC — dense restore/memory seam corrected; current jobs unchanged
+
+New native_optimizer_state fingerprints every rank-owned Adam field with exact
+scalar types/tensor dtype/shape/bytes, finite checks and a pre-load snapshot digest
+so CPU aliasing cannot hide loader corruption. DistributedNative.load_full_state
+now converts FSDP full optimizer to its local representation, verifies actual
+loaded Adam exactly and stores last_restore_proof; old global-vs-local comparison
+must NOT be reused by a new sharded runner. Existing DDP route also verifies.
+No native FSDP/GPU proof claimed. Currentoldexpanded_runner onlybroad/DDP remains
+unchanged; futuredense runner must consume this rank proof plus freshnative/
+OPAL/RNG/languagecursor proofs, not compare full optimizer with localshard.
+
+Added hash-bound private CPU mmap checkpoint loader, no eager fallback, to avoid
+four eager copies of dense~100GB states. Native-style file-object torchsave mmap
+test confirms durablebytes unchanged afterprivate mapped edits. SidecarOPALstate
+stillfull/exact, no omittedfields/dedup substitution.
+Language backward_window now uses existing whole temporal-layer checkpointing
+through forward+backward, restoring methods afterwards. No truncation orlossmass
+change; needed before full/shared trunk3000-token admission. CPU testdouble has
+explicit single-layer stack. Thirteen focused local tests PASS, including exact
+optimizer/mutation detection/mmap/real1rankDDPsave restore and mixedgradient/OPAL
+integration. ActualIsambardtwo-rank checkpointed regression next; don'tretestMac
+connectionissue. Fullnative4GPU/memory/state/storage/schedule admission stillpending.
+
+Actualsame70879 at1794948761.576197:8553179RUNNING7857s,
+[229,228,230,228]=915/1008,0rankterminals. Same8525 at1794948677.043809:
+8555523PENDINGdependency/noGPU/0reviews. f06/707producerimmutable; nohotdeployment,
+no newGPU job, no savedupdate replay. Preservecheckpoints andactualbuffers.
+
+---
+
 # 17Nov20:46UTC — both job observers remain live; no execution changes
 
 Same70879 actual1794948161.151816:8553179RUNNING7257s,

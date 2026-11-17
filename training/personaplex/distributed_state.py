@@ -5,6 +5,18 @@ import torch
 import torch.distributed as dist
 
 
+def load_checkpoint(path,expected_sha256):
+    """Hash-bound shared CPU mmap; never eagerly replicate a dense100GB state."""
+    import hashlib
+    path=Path(path);digest=hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda:stream.read(4*1024*1024),b''):digest.update(block)
+    if digest.hexdigest()!=expected_sha256:raise ValueError('Exact immutable checkpoint bytes required')
+    # No silent eager-load fallback. The file must remain immutable throughout
+    # all ranks' restore; the phase owns publication and archive receipts.
+    return torch.load(path,map_location='cpu',weights_only=False,mmap=True)
+
+
 def validate_language_cursor(identity, rank_state, step):
     if 'language_training' in identity:
         expected=dict(identity=identity['language_training'],next_update=step)

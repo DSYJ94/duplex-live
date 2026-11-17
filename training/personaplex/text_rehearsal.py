@@ -101,6 +101,7 @@ def backward_window(native_view, batches, spec, *, coefficient, group=None):
     """
     import math
     import torch.distributed as dist
+    from evals.personaplex_adapters import checkpoint_language_layers
     if isinstance(coefficient, bool) or not isinstance(coefficient, (int, float)) or not math.isfinite(coefficient) or coefficient <= 0:
         raise ValueError('Explicit positive finite language mixture coefficient required')
     batches = list(batches)
@@ -124,9 +125,12 @@ def backward_window(native_view, batches, spec, *, coefficient, group=None):
         raise ValueError('Window has no qualified language targets')
     reports = []
     for batch in batches:
-        value, detail = loss(native_view, batch, spec, group=group)
-        weighted = value * (coefficient * detail['global_valid_text_tokens'] / total)
-        weighted.backward()
+        # Match retained unstreamed native training: checkpoint whole temporal
+        # layers through forward AND backward, then restore their methods.
+        with checkpoint_language_layers(native_view):
+            value, detail = loss(native_view, batch, spec, group=group)
+            weighted = value * (coefficient * detail['global_valid_text_tokens'] / total)
+            weighted.backward()
         reports.append(dict(detail, weighted_loss=float(weighted.detach())))
     return dict(global_window_valid_text_tokens=total, microbatches=len(batches),
                 coefficient=coefficient, optimizer_step_performed=False, batches=reports)
