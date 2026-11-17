@@ -12,7 +12,7 @@ The live user HOME quota reports88,139,904KiB used against105,468,748KiB hard li
 |---|---:|
 | Full published model at FP32 |31.19GiB|
 | Full model plus full Adam moments |93.56GiB|
-| Full model plus selective-prefix Adam moments |81.17GiB|
+| Full model plus selective-prefix Adam moments |81.16GiB|
 
 These forecasts exclude OPAL registry duplication, rank-specific state, diagnostics, serialization overhead and concurrent archives. They are not measured checkpoint sizes. The current HOME destination cannot admit such new dense checkpoints at its observed headroom. This is a **future dense-training storage requirement**, not evidence that current collection/review has failed. Neither running nor queued work is changed.
 

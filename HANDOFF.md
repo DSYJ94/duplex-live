@@ -1,3 +1,13 @@
+# 17Nov20:46UTC — both job observers remain live; no execution changes
+
+Same70879 actual1794948161.151816:8553179RUNNING7257s,
+[212,210,212,211]=845/1008,0rankterminals. Same8525 actual1794948376.9178572:
+8555523PENDING/Dependency,0elapsed/noGPU/reviews[0,0,0,0]. No restart/interrupt/
+hotdeployment; retain producerf06 for collection and707414c0 forqueuedreview.
+Local5f9d7a3 adds futuremixedsetup/storageplan only, NOT nativeadmission proof.
+
+---
+
 # 17Nov20:43UTC — dense-method setup prepared; actual backup capacity measured
 
 New mixed_native_setup.build prepares SAME fresh PersonaPlex foundation for
@@ -12,7 +22,7 @@ Read-only live quota:88139904KiB used/105468748KiB hard,16.53GiB headroom.
 Public475-tensor metadata8371408896elements, selectiveprefix6708002816. No
 weights allocated; loaded actual parameter ownership remains pending. Standard
 FP32 model+Adam forecast100456906752bytes(~93.56GiB), selectivefullmodel+Adam
-87149658112bytes(~81.17GiB), before extraOPAL/rank state. This existing HOME
+87149658112bytes(~81.16GiB), before extraOPAL/rank state. This existing HOME
 backup destination cannot admit future dense states at current headroom.
 Do not deleteoldcheckpoints/dropstate/weakenrecovery/assume filesystemfree=quota.
 Current collection/review unchanged; not a terminal or goal blocker by itself.
