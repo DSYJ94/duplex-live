@@ -1,3 +1,19 @@
+# Latest continuation — native-tokenized original1008 TRAIN language candidates
+
+Actual compiler COMPLETE1008,104919tokens/48597assistanttargets,all1008structurally
+eligible at3000tokens,0crossing exclusions/1bytefallback target. Exactnative
+tokenizerSHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d.
+CandidateSHAfb133cd0db24f4def979a7a5a8098f9f9fac2dcf368ccdcec4c5e5999999d8d2.
+Task-privateMac SentencePiece0.2.1; initial0.2.3 removedimmutable_proto, failed
+beforeanydocumenttokenization. Preservedfailedemptyoutput; installedcompatible
+0.2.1 ONLYprivateMacvenv, successfulnewv2output. RunningIsambardlibraries/source
+unchanged. NativeGPU/memory/restore/semantic/family/licence admission notclaimed.
+Report NATIVE-EXISTING-TRAIN-LANGUAGE-TOKENIZED-2026-11-17.json; reproducible
+fromsource53fcc3f/originalplan. Existing1008audioexamples nowhavecompatibletext
+candidates readyfor finalqualification/mixedschedule, NOTnew independentdata.
+
+---
+
 # Latest continuation — original1008 TRAIN words reused for language stream
 
 New reasoning_language_source.py builds candidates from hash-bound complete1072

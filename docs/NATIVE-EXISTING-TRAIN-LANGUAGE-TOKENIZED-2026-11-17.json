@@ -1,0 +1,31 @@
+{
+  "sources": [
+    {
+      "path": "/private/tmp/duplex-existing-TRAIN-language-candidates-20261117.jsonl",
+      "sha256": "12d69d00943556d3c2ff9cfcced71f861533ca505a8c958663c1ca50c69d71f8"
+    }
+  ],
+  "tokenizer_sha256": "78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d",
+  "counts": {
+    "complete_documents": 1008,
+    "tokens": 104919,
+    "supervised_tokens": 48597,
+    "boundary_crossing_tokens_excluded": 0,
+    "zero_width_byte_fallback_targets": 1,
+    "structurally_eligible_candidates": 1008
+  },
+  "candidates_sha256": "fb133cd0db24f4def979a7a5a8098f9f9fac2dcf368ccdcec4c5e5999999d8d2",
+  "declared_context_limit": 3000,
+  "context_bound_not_loaded_model_proof": true,
+  "optimizer_updates": 0,
+  "semantic_qualification_performed": false,
+  "training_admitted": false,
+  "sentencepiece_version": "0.2.1",
+  "failed_initial_attempt": {
+    "version": "0.2.3",
+    "reason": "immutable_proto API removed; no documents tokenized or updates occurred",
+    "retained_directory": "/private/tmp/duplex-existing-TRAIN-language-tokenized-20261117"
+  },
+  "original_TRAIN_DEV_folds_not_reassigned": true,
+  "native_GPU_gradient_restore_proved": false
+}
