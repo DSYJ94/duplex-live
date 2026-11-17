@@ -43,12 +43,15 @@ def compile_candidate(row,tokenizer,*,tokenizer_sha256,max_tokens):
         raise ValueError('This compiler accepts unadmitted source candidates only')
     text,spans=render(row['turns'])
     encoded=tokenizer.encode(text,out_type='immutable_proto')
-    tokens=[];mask=[];crossing=0
+    tokens=[];mask=[];crossing=0;byte_targets=0
     for piece in encoded.pieces:
         begin,end=offsets(text,piece)
-        inside=any(begin>=start and end<=stop and begin<end for start,stop in spans)
-        overlaps=any(begin<stop and end>start for start,stop in spans)
+        byte_prefix=begin==end and tokenizer.is_byte(int(piece.id))
+        inside=any((begin>=start and end<=stop and begin<end)
+                   or (byte_prefix and start<=begin<stop) for start,stop in spans)
+        overlaps=begin<end and any(begin<stop and end>start for start,stop in spans)
         crossing+=int(overlaps and not inside)
+        byte_targets+=int(byte_prefix and inside)
         tokens.append(int(piece.id));mask.append(inside)
     # The one-shot encoding is authoritative. No separately encoded prefix may
     # change the first answer token or accidentally supervise a delimiter/user.
@@ -66,6 +69,7 @@ def compile_candidate(row,tokenizer,*,tokenizer_sha256,max_tokens):
                 convention='literal-user-assistant-labels-v1-not-released-native-chat-template',
                 text=text,answer_character_spans=spans,tokens=tokens,mask=mask,
                 supervised_tokens=sum(mask),boundary_crossing_tokens_excluded=crossing,
+                zero_width_byte_fallback_targets=byte_targets,
                 declared_context_limit=max_tokens,structural_flags=flags,fold=None,
                 semantic_qualified=False,leakage_qualified=False,native_audio_qualified=False,
                 admitted_for_training=False)
@@ -94,6 +98,7 @@ def run(inputs,output,tokenizer_path,max_tokens):
                 counts['complete_documents']+=1;counts['tokens']+=len(value['tokens'])
                 counts['supervised_tokens']+=value['supervised_tokens']
                 counts['boundary_crossing_tokens_excluded']+=value['boundary_crossing_tokens_excluded']
+                counts['zero_width_byte_fallback_targets']+=value['zero_width_byte_fallback_targets']
                 if not value['structural_flags']:counts['structurally_eligible_candidates']+=1
                 for flag in value['structural_flags']:counts[flag]+=1
     report=dict(sources=inventory,tokenizer_sha256=expected,counts=dict(counts),

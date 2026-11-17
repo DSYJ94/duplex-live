@@ -1,3 +1,26 @@
+# 17Nov — whole17276 compiled; Unicode byte-prefix target fix before qualification
+
+CPU8555075 COMPLETED0:0 in26s/source3b928fd, all29 integration tests PASS.
+Full17276 documents compiled with exact native tokenizer SHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d.
+Initialcandidate root native-language-candidate-compile-3b928fd/candidates:
+3991580tokens/2095488selected targets,17257structural candidates,19over3000context
+(no truncation). 1587 reported crossing exclusions were investigated on real
+SentencePiece surfaces: zero-width UTF8 byte prefixes inside answers, not actual
+boundary crossings. First compiler incorrectly excluded these prefixes. No data
+was admitted/trained. Original file SHA2f3f924823373c34aaf523b8d86282d91d8cc029dac70230fe9c8a76f25fe33d preserved.
+
+Fix now assigns zero-width tokens only when actual tokenizer.is_byte(id) and
+character position belongs to an assistant span; user byte prefixes remain masked.
+New Unicode byte-prefix regression +3other compiler tests PASS locally.
+Corrected full candidate recompilation still REQUIRED; don't admit original masks.
+All candidates remain semantic_qualified=False/foldNone/admittedFalse.19oversize
+need complete reviewed rewrite or exclusion, NOT truncated context. Native
+loaded-model context/transfer/gradient/fullstate still separate pending checks.
+Actual source default context3000 inspected at pinned loader line104, not loaded
+model proof. Small report/submission/log receipts language-compile-8555075 fetched.
+
+---
+
 # 17Nov — complete language coverage can match retained native cycle
 
 language_schedule now accepts explicit updates_per_epoch: stable longest-first
