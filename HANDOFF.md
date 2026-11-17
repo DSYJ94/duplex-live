@@ -1,3 +1,49 @@
+# 17Nov21:50UTC — corrected reviewer8558032 actuallyRUNNING; fresh19 valid
+
+CURRENT ONE GPU review8558032, source4223ba1c5e33f5e8a6442d38ff2b6777dd2ca8ca,
+/projects/u6ada/duplex-live/source-corpus-repair-4223ba1,4GPUs/nid010309.
+ROOT/projects/u6ada/duplex-live/native-public-corpus-review-repair-20261117-v1;
+samebackup/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1.
+Actualstart17Nov21:46:18UTC(1794951978),immutableSTOP18Nov09:36:18UTC
+(1794994578),42600s. Parent600s reservedincl512s actualcleanup; combined<=43200
+originalwallsecondsat4GPUs. Actualnewleaseprior955036GPU sec+reserved11926+
+170400newupper=1137362, EXACTSAME combinedawardupper asoldphase. No reset.
+Original8555523CANCELLED501main/512cleanup; max600conservativelycharged. No new
+API/GCP/purchase/training or changed model/kernel/library; onecorrectedjob/noauto
+retry. Firstsubmissiondependencyerror createdNOjob/GPU; oldcompleted jobs agedout
+ofliveSlurmdependencycache. Safely removedexpired scheduling references onlyafter
+sacctpreconditionsverified/no matchingjob; host stillchecksparents/archivesbefore
+anymodel load. Don'tturnthisintoapproval/retryloop.
+
+ActualCPU8557916 COMPLETED0:0/29s/all18testsPASS. ActualpinnedQwenprocessor
+4rowleftpadding/tokenIDs equality proved(no weights/GPU),pad248044. Full73original
+records+controls independentlyhasharchived beforecontinuation. Samegeneration
+lossless singleton-string normalization recovered63structured,9stillinvalid,1
+incomplete. Originalrawjudgments andallchecks preserved,0oldmodelcallsrepeated.
+Freshbatching4request/GPU emits per-row EOS/padding/actualtokenIDs and allrawbatch
+outputs beforeclassification. Newpromptclarifiesstrings+briefnotes; sourcequote/
+unknownlabel/notes/EOS/factualqualificationbar unchanged. Canonicalstructuralpass
+is NOT factualtruth or trainingadmission. Actualproof+allreceiptSHAs stored in
+NATIVE-CORPUS-REVIEW-REPAIR-LAUNCH-2026-11-17.json.
+
+ONE new observer toolsession42447, SSH/serveralive300sec incrementalread; keep
+SAMEhandle. Latestactual1794952102.841321 RUNNING124s counts[24,24,24,20]=92,
+ALL73reused+19FRESH structured/evidence-valid,9oldinvalid/1oldincomplete;0terminals.
+ActualnewGPUbatch path nowproducesvalidrecords, not just oldcanonicalization.
+Old8525 TERMINAL0, don'tpoll/resubmit. Nativeold70879 mayneedonefinalread but
+8553179 alreadyCOMPLETED0:0/full1008/fourarchives, neverrestart. Remora hasactual
+node/window/reuseprogress, read-onlypublicmodelunchanged. Notify release/failure.
+
+Next: lethealthywhole17276reviewfinish, occasionalchecks; no extra unchangedCPU
+sweeps/researchcatalogues/newinfrastructure just tostaybusy. Preserveall outputs/
+checkpoints/OPAL. Then full review+facts/families/nativefailure scoring andnative
+training/state/storage admission. No new native weightupdate yet; goalACTIVE.
+Futurefullnativefactory/FSDP/mmap code is prepared/CPUproved where documented,
+NOT nativeGPU-qualified and NOT hotdeployed into thisfrozenreview. Densebackup
+capacity remainsfuture requirement; no oldcheckpoint deletion or hugeMacdownload.
+
+---
+
 # 17Nov — STOPPED reviewer8555523; prompt/schema bug repaired, no newGPU started
 
 Operator stopped8555523 after all48 inspectedrecords invalid: prompt displayed

@@ -1,0 +1,121 @@
+{
+  "status": "CORRECTED_REVIEW_RUNNING_FRESH_RECORDS_VALID",
+  "job": "8558032",
+  "producer_source": "4223ba1c5e33f5e8a6442d38ff2b6777dd2ca8ca",
+  "node": "nid010309",
+  "GPU_count": 4,
+  "start_unix": 1794951978,
+  "stop_unix": 1794994578,
+  "maximum_seconds": 42600,
+  "parent_seconds_reserved": 600,
+  "combined_wall_seconds_upper": 43200,
+  "prior_award_GPU_seconds": 955036,
+  "other_reserved_GPU_seconds": 11926,
+  "combined_award_GPU_seconds_upper": 1137362,
+  "CPU_preflight_job": "8557916",
+  "CPU_preflight_state": "COMPLETED",
+  "CPU_preflight_exit_code": "0:0",
+  "CPU_preflight_seconds": 29,
+  "actual_contained_tests_passed": 18,
+  "CPU_batch_tokenizer_readiness": {
+    "passed": true,
+    "source": "4223ba1c5e33f5e8a6442d38ff2b6777dd2ca8ca",
+    "model_pin_sha256": "133b06d15a838a44e77a91392ab043788aea8c51915f67891359a6fd132dfaa8",
+    "actual_left_padding": true,
+    "complete_token_sequences_equal": true,
+    "weights_loaded": false,
+    "GPU_used": false,
+    "batch_rows": 4,
+    "input_tokens": [
+      42,
+      46,
+      42,
+      53
+    ],
+    "padding_token_id": 248044,
+    "processor_class": "Qwen3VLProcessor"
+  },
+  "repair_preservation_and_reparse_proof": {
+    "parent": {
+      "raw": "8555523|CANCELLED by 1483809154|501|billing=72,cpu=72,gres/gpu=4,mem=320G,node=1|0:0|brics.u6ada\n8555523.batch|CANCELLED|512|cpu=72,gres/gpu=4,mem=320G,node=1|0:15|brics.u6ada\n",
+      "parent_main_seconds": 501,
+      "parent_process_seconds_upper": 512,
+      "parent_seconds_reserved": 600,
+      "accounting_padding_GPU_seconds": 396
+    },
+    "original_source": "707414c0ca7c5ac772a237a9aeaf450461bda579",
+    "backups": {
+      "0": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 19,
+        "bytes": 29627,
+        "inventory_sha256": "1db0f3ad53b2259fb2123335be6f9ad570daef5c61833ea0aea948613f88c4f4",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1/failed-8555523/rank-00",
+        "optimizer_updates": 0
+      },
+      "1": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 19,
+        "bytes": 28264,
+        "inventory_sha256": "557f7611d136a2f3599fe94e044b34e27493318d031e20d790b83ce0d6776c8e",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1/failed-8555523/rank-01",
+        "optimizer_updates": 0
+      },
+      "2": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 17,
+        "bytes": 27111,
+        "inventory_sha256": "b2e34fbdaded57c0b52b13633e186de193dcdfc07f2c07afa255d32b53365664",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1/failed-8555523/rank-02",
+        "optimizer_updates": 0
+      },
+      "3": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 18,
+        "bytes": 27506,
+        "inventory_sha256": "659e6757448d62c3d4577db5be1b4859184b96e52a38bd157796eb8f9a22e16f",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1/failed-8555523/rank-03",
+        "optimizer_updates": 0
+      }
+    },
+    "control_backup": {
+      "passed": true,
+      "every_file_sha256_verified": true,
+      "files": 5,
+      "bytes": 29946,
+      "inventory_sha256": "7ed71942cc878f64a2a71438bdf96272ac94af473df801a6c38b562eee17518c",
+      "destination": "/home/u6ada/dsyj94.u6ada/duplex-public-corpus-review-backups-v1/failed-8555523/control",
+      "optimizer_updates": 0
+    },
+    "reusable_records": 73,
+    "reparsed_status_counts": {
+      "structured_review_complete": 63,
+      "invalid_review": 9,
+      "incomplete_generation": 1
+    },
+    "original_malformed_files_preserved": [],
+    "original_generations_repeated": 0,
+    "factual_evidence_or_notes_checks_relaxed": false
+  },
+  "observer_session": 42447,
+  "latest_observed": {
+    "observed_unix": 1794952102.841321,
+    "state": "RUNNING",
+    "elapsed_seconds": 124,
+    "saved_reviews_per_rank": [
+      24,
+      24,
+      24,
+      20
+    ],
+    "reused_records": 73,
+    "fresh_structured_reviews": 19
+  },
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "training_admitted": false
+}
