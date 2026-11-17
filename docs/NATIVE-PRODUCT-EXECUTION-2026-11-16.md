@@ -1,3 +1,5 @@
+17November: [updated reasoning, data, competence-routing and substantial-tuning decision](NATIVE-REASONING-TRAINING-DECISION-2026-11-17.md). Actual paired RET job8540802 is running from immutablec66b72b; readout128 is backed and freshly native-restored, complete comparison pending. The small teacher-RET fit does not establish correctness-calibrated delegation. No running-job change is made by this research update.
+
 # Autonomous native duplex product execution
 
 Owner goal,16November: approach a working GPT-live type product with sufficient reasoning, actual asynchronous delegation, micro turn-taking/duplex and dependable silence/wait/pause behaviour. Research and employ useful OPAL, MiRL and weight-space methods; preserve past work and only stop for required owner input or actual acceptance.

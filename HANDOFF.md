@@ -1,3 +1,25 @@
+# 17Nov13:15UTC — Valid8540802 continues; next-phase research integrated
+
+Same establishedobserver29998 latestproviderRUNNING elapsed341s, readout128,
+8/32control outputs; no terminal or restart observed. Preserve samevalidjob,
+no rerun or hotdeploy. Full96readout +96bias/backups still required.
+Newprimary-source research is saved and linked from activeproductgoal/execution:
+ docs/NATIVE-REASONING-TRAINING-DECISION-2026-11-17.md.
+Researchagent editedONLY thatnote; no remote/code/model/job actions. Root verified
+arXiv2611.01639 primarypage: answer-onset competence-risk readout trained on
+actualanswerfailure labels is DIFFERENT from our per-frame teacherRET labels.
+Do not silentlyforceRET/dispatch or relabel currentclassifier as competencegate.
+Proposed nativeTRAIN correctnessrollouts/disjointfamily-source calibration,
+broad10k–50k qualifiedepisode collection goal (NOT existing/trainingapproveddata),
+matched broad/selective/full-LM nativeSFT withfunctionalretention. Currentcode
+hasNO generaltext-only rehearsalobjective; persona/gold injection is not replay.
+Full-LM states16Pbytesillustrative, actualfit/throughput mustbe measured.
+OPAL executableproposals atbackednativebehaviorboundary, MiRL TRAINfailuremining,
+realRL/replay/reward prerequisites and reversibleWSP remainexplicit, notactive
+claims. No nextlargerlearner submitted and no changed data fed tocurrentjob.
+
+---
+
 # 17Nov13:10UTC — Actual readout128 DONE/backed/native restored; evaluation LIVE
 
 Same8540802 actuallyRUNNING nid011002, lease13:05:50UTC17Nov→01:05:50UTC18Nov,

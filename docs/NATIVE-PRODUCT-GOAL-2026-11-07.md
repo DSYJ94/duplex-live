@@ -1,3 +1,5 @@
+17November: [updated reasoning, data, competence-routing and substantial-tuning decision](NATIVE-REASONING-TRAINING-DECISION-2026-11-17.md). Actual paired RET job8540802 is running from immutablec66b72b; readout128 is backed and freshly native-restored, complete comparison pending. The small teacher-RET fit does not establish correctness-calibrated delegation. No running-job change is made by this research update.
+
 16November active owner goal: [autonomous product execution and cause-separating checks](NATIVE-PRODUCT-EXECUTION-2026-11-16.md). Expanded105M/196 training and full192 **two-condition** evaluation are complete, backed up and NOT accepted; older192/four-trained/six-condition descriptions below are historical. Fresh current source/jobs in HANDOFF.
 
 # Active native voice product goal
