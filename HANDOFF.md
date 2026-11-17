@@ -1,3 +1,40 @@
+# 17Nov13:00UTC — New paired controller qualified on IsambardCPU; official128 reviewed
+
+Authoritative certificate now VALID until18Nov00:18:12UTC (renewed17Nov12:18:12);
+previous authclient68666 ended1; do NOT assume authblocked fromthatclientalone.
+FreshSSHworks. Accountqueue: Remora8539884 RUNNING/nid010602,8540287PENDING;
+no duplex voicejob. Do nottouchtheir source/models/jobs. All sharedusage counted.
+
+Controller actualproducerf8e53b87 staged IMMUTABLE source-pair-f8e53b8.
+Actual contained26testsPASS. RealpinnedOPAL synthetic128readout+128bias complete,
+writer41885/read42663 freshfullAdamRNGOPAL+metrics exact,0nativeupdates.
+CPU admission loaded exact197nativecache/89positive/75959negative, validates
+old8537504 fullrestore+independentbackup; original96evaluationinputhashesPASS.
+Oldcache and bothbackup bytes retained. No GPUallocated/testedthisturnyet.
+Two externalCPU launcher scripts failed beforetests (shellquoting, importpath);
+fixed script+contained tests thenPASS; no model/GPU/training launched by failures.
+Proof docs/NATIVE-PAIRED-CONTROLLER-ISAMBARD-CPU-2026-11-17.json.
+
+Completedofficial128 reports retrieved, source==independentbackupSHA; ALL64
+inputPCM matches original and acrossvoices despite differentWAVcontainerbytes.
+Completegeneratedtextsemanticreview: NATF2 final3/64,clean1/64; RPBen final3/64,
+clean3/64; bothRET0. Originalnullnumeric metadata/ambiguousquestion retained.
+See NATIVE-OFFICIAL128-SEMANTIC-REVIEW-2026-11-17.json and reproducer script.
+This shows adapterisnotsolecause andvoiceconditionnotquantitativefix. Not a
+speech-quality/whole-reasoning-generalization claim, no newinference/API calls.
+
+Newpaired phase is directed by ACTIVE owner productgoal and existing20k award,
+NOT a reused/extended196 or zero-update grant. Executor selected fixed128new
+readout+128bias,0backbone,1GPU<=12h inclfull192native outputs/backups. No new
+award/spend/purchase/API/GCP, no tinyheadLRsweep. Scope/basis explicitly recorded
+NATIVE-RET-PAIRED-EXECUTION-2026-11-17.json; oldgrants remainbyteunchanged.
+Controller backup-before-restore/eval, independentactual guard, read-only prior
+cache/checkpoint/input mounts and no automaticretry. Next immutable newsource
+contains authorizedgoalphase scope and checkedSBATCHtemplate; submitONCE only
+after freshquota/account/provider/source admission. No jobID beforeactualsbatch.
+
+---
+
 # 17Nov12:41UTC — REAL pinned OPAL paired CPU fit→fresh restore PASS
 
 New shared action_fit.new_runtime keeps identical arm-specific recipe, Adam,

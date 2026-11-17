@@ -1,5 +1,5 @@
 {
-  "status": "PREPARED_NOT_SUBMITTED",
+  "status": "READY_FOR_NEW_GOAL_DIRECTED_PHASE_ADMISSION",
   "purpose": "New paired supervised native RET-separability intervention after completed zero-update collection/restore. Not a continuation or replay of step196.",
   "parent_checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
   "verified_feature_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05",
@@ -51,10 +51,9 @@
     "no_overlap_or_automatic_retry": true
   },
   "not_yet_done": [
-    "new phase launcher/guard integration",
-    "actual Isambard native GPU learned-state restore qualification",
-    "actual paired fits on verified native TRAIN cache",
-    "actual learned native behavioral evaluation"
+    "actual native GPU paired fits and learned-state restoration",
+    "complete192 learned-arm native behavioral outputs and independent backups",
+    "semantic/speech/connected-backend product acceptance"
   ],
   "wider_plan": [
     "Diversify concept/context/uncertainty/domain reasoning and action-bearing difficulty-routing examples; do not confuse synthetic audio with duplex timing labels",
@@ -62,5 +61,5 @@
     "Keep weight-space edits reversible and separate from training with sham/bias/decoding controls",
     "Use functional ordinary/reasoning/speech retention to decide selective LM tuning, full fine-tuning, midtraining or capacity growth; extra coefficients alone are not knowledge"
   ],
-  "local_progress": "Shared fit/restore runtime factory implemented. Actual pinned upstream OPAL completed synthetic128updates per arm; different CPU process restored both fullstates and metrics exactly.14local regression tests PASS. Native GPU proof pending."
+  "local_progress": "Controller/guard and native restore/evaluation wiring implemented.26testsPASS locally and in actualIsambardCPU container at immutablef8e53b8. ActualpinnedOPAL synthetic128perarm and fresh-process exactrestoresPASS onIsambard. Full197TRAIN cache/backups and original96input hashes verified onIsambardCPU. No nativefit yet."
 }
