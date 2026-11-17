@@ -1,3 +1,34 @@
+# Latest continuation — observed basic TRAIN reasoning failures
+
+Same8558032/42447 actualRUNNING725s,728saved/696structured,30invalid,
+2incomplete at1794952703.8477347. No interruption/restart. Read-only full1008
+source-bound generated-text diagnostic:954numeric targets,158singleArabic-number
+responses,6numeric matches/152mismatches,796unscored by this narrow parser.
+DO NOT call these accuracy: word numbers/equations unscored; one target-match
+example ultimately says none and is semantically wrong. Actual simple failures
+include3L/min*4min answered4 and157-4*7 answered2. Thus poor basic reasoning
+is present even on TRAIN inputs; speech/ASR quality remains independently pending.
+See NATIVE-TRAIN1008-ARABIC-NUMERIC-DIAGNOSTIC-2026-11-17.json with original
+questions/text/targets/caveats. Next substantive training must address language
+reasoning/retention plus audio transfer, not only voice control or another RET head.
+No learning/generation repeated, no new GPU job or checkpoints changed.
+
+---
+
+# Latest continuation — native1008 read-only inventory
+
+Same live review8558032/observer42447 remains undisturbed. Latest emitted live
+provider observation1794952403.3527205: RUNNING424s,416saved,399structured,
+16invalid,1incomplete;336fresh structured and73reused. No terminal/failure observed.
+Read all1008 saved native result.json files without generating/training: allcomplete,
+1empty generated text,0cases with RET. These are inventory facts, NOT speech
+correctness or delegation failure rates; exact case routing requirements and actual
+waveform scoring remain needed. See NATIVE-TRAIN1008-TEXT-INVENTORY-2026-11-17.json.
+No new machinery/CPU/GPU allocation, no checkpoint changes or update replay.
+Continue occasional SAME observer checks; let healthy whole-cohort review finish.
+
+---
+
 # 17Nov21:50UTC — corrected reviewer8558032 actuallyRUNNING; fresh19 valid
 
 CURRENT ONE GPU review8558032, source4223ba1c5e33f5e8a6442d38ff2b6777dd2ca8ca,

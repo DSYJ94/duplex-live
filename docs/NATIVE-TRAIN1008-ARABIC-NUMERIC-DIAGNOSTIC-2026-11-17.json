@@ -1,0 +1,75 @@
+{
+  "counts": {
+    "total": 1008,
+    "numeric_target_cases": 954,
+    "single_arabic_numeric_response": 158,
+    "single_arabic_exact_target": 6,
+    "single_arabic_wrong_target": 152,
+    "multiple_or_no_arabic_numeric_response": 796
+  },
+  "examples": [
+    {
+      "id": "reasoning-text-033ce12c061be5a2e077",
+      "question": "A kit has 157 screws. Four assemblies each use 7 screws. How many screws are left?",
+      "generated_text": "Okay Right So you have 2 screws left.",
+      "target": "129",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-03410d54ddabc5fad2d1",
+      "question": "Ben's new car cost twice as much as his old car. He sold his old car for one thousand eight hundred dollars and used that to pay off some of the cost of his new car. He still owes another two thousand dollars on his new car. How much did his old car cost, in dollars?",
+      "generated_text": "Yeah, his Got it, he used that to cut his payment, Okay, he\u2019 still left with That\u2019s $2200 left.",
+      "target": "1900",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-0410b72ea128169b4828",
+      "question": "Jack and Jill race up the hill to see who gets there fastest. Jack ran up the first half of the hill in 19 seconds. He finished running up the hill 7 seconds before Jill did. If Jill finished the race in 32 seconds, how long did it take Jack to run up the second half of the hill?",
+      "generated_text": "So Jack finished his climb in That\u2019s about 11 seconds.",
+      "target": "6",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-066955b29a0bce4a3707",
+      "question": "Grace's age is three divided by eight th the age of her grandmother. Her grandmother is twice the age of Grace's mother. If Grace's mother is eighty years old, how old is Grace?",
+      "generated_text": "So Grace's age is I can't give details about her. So her grandmother must be Okay, her mother is 80 years old.",
+      "target": "60",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-06ca673c28859c34a58c",
+      "question": "A pump moves 3 litres each minute for 4 minutes. How many litres does it move?",
+      "generated_text": "It moves 4 liters.",
+      "target": "12",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-0b26353736ba207a657e",
+      "question": "15 tickets cost 3 pounds each. One booking fee adds 5 pounds to the whole purchase. What is the total cost?",
+      "generated_text": "Okay, So the total comes out to 13 pounds.",
+      "target": "50",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-0c4d7747c08eeabbb314",
+      "question": "A delivery was scheduled for project day 23. A delay adds 5 days and a later revision brings it forward 2 days. What is its new project day?",
+      "generated_text": "Okay, so for project Right, the The latest project date is still set for July 15. That\u2019s the current plan.",
+      "target": "26",
+      "exact_numeric_match": false
+    },
+    {
+      "id": "reasoning-text-0d43a7f7f5aa0aefa4fc",
+      "question": "An auto shop buys tires to replace all the tires on every customer\u2019s car. They buy the tires as soon as cars are brought into the shop. There are four cars in the shop already, and another six customers come into the shop throughout the week. Some of the customers decide they don't want any of the tires changing, and two customers decide they only want half the tires changing. They had no tires in stock at the start of the week. If the shop has 20 tires left at the end of the week, how many customers decided they did not want their tires changing?",
+      "generated_text": "So you\u2019 saying Okay, so you need 4 tires then. Right, so you will have enough tires. So they ordered half the tires then. So none of the customers decided not to change their tires.",
+      "target": "4",
+      "exact_numeric_match": true
+    }
+  ],
+  "diagnostic_only": true,
+  "word_numbers_and_equations_unscored": true,
+  "spoken_correctness_not_measured": true,
+  "source_plan_sha256": "b32387796aa99730653566374512d2c11a31df53ca5117d157a8aa8a19f695a6",
+  "numeric_match_is_not_semantic_correctness": true,
+  "known_counterexample": "reasoning-text-0d43a7f7f5aa0aefa4fc contains the target 4 while ultimately answering none; it is NOT a correctness pass.",
+  "decision": "Do not report 6/158 or 6/954 as accuracy. Simple observed failures (3 litres/minute for 4 minutes answered 4; 157 minus four times 7 answered 2) establish basic reasoning failures even on TRAIN inputs. Prioritize native language/reasoning learning with retention and audio transfer checks; do not treat more voice-control rehearsal or a routing head alone as a sufficient remedy."
+}

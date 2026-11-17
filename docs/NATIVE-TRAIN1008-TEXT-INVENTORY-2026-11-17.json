@@ -1,0 +1,15 @@
+{
+  "job": "8553179",
+  "source_root": "/projects/u6ada/duplex-live/native-TRAIN-failure-20261117-v1",
+  "read_only_inventory": true,
+  "required": 1008,
+  "actual": 1008,
+  "all_complete": true,
+  "empty_generated_text": 1,
+  "cases_with_native_RET_events": 0,
+  "generated_text_is_not_independent_audio_transcription": true,
+  "accuracy_scored": false,
+  "delegation_failure_rate_inferred": false,
+  "interpretation": "All original TRAIN cases are present. Zero RET observations do not establish routing failure without per-case routing requirements. Nonempty text does not establish correct or intelligible speech. Next score against exact source premises and independently evaluate the saved waveforms; do not regenerate outputs.",
+  "new_training_updates": 0
+}
