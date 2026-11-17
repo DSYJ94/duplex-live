@@ -1,3 +1,34 @@
+# 17Nov20:43UTC — dense-method setup prepared; actual backup capacity measured
+
+New mixed_native_setup.build prepares SAME fresh PersonaPlex foundation for
+broad105M/selective-trunk-text/full-LM, requires separate mixed phase lease +
+actual4GPUgroup before loading, localdevice selected, rawrepeat and post-wrap
+BF16 native fingerprints exact beforelearning. No unwrappedFP32 fingerprint
+comparison mistaken for originalBF16 compute. NO actual native GPU/fullstate/
+model admission or learning performed; only early missing-scope rejection smoke
+check + diffcheck. Existing CPU30data proof unaffected; newfactory unproved.
+
+Read-only live quota:88139904KiB used/105468748KiB hard,16.53GiB headroom.
+Public475-tensor metadata8371408896elements, selectiveprefix6708002816. No
+weights allocated; loaded actual parameter ownership remains pending. Standard
+FP32 model+Adam forecast100456906752bytes(~93.56GiB), selectivefullmodel+Adam
+87149658112bytes(~81.17GiB), before extraOPAL/rank state. This existing HOME
+backup destination cannot admit future dense states at current headroom.
+Do not deleteoldcheckpoints/dropstate/weakenrecovery/assume filesystemfree=quota.
+Current collection/review unchanged; not a terminal or goal blocker by itself.
+Official storage docs checked; allspaces working/notautomaticallybacked. Source
+and exact measurements in NATIVE-FULL-TUNING-STATE-PLAN/FORECAST-2026-11-17.
+Need a verified sufficiently large independent archive before dense learning;
+continue current corpus/nativeintegration while that is prepared, no storage spiral.
+
+Latest same70879 actual1794947860.9926052:8553179RUNNING6956s,
+[203,201,204,202]=810/1008,0rankterminals. New8525observer for8555523 remains
+connected; queuedreview actualproducer707414c0, no hotdeployment. Preserve both
+samehandles; no duplicate/restart ontimeout. Full nativebackup completion needed
+before review canload. GoalACTIVE, checkpoints/OPAL/states preserved/API0.
+
+---
+
 # 17Nov20:36UTC — complete public-corpus review8555523 QUEUED after nativeparent
 
 ACTUAL newjob8555523 PENDING/Dependency; no reviewerGPU/modelstarted yet.

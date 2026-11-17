@@ -1,0 +1,15 @@
+{
+  "evidence": "Read-only actual quota/df and pinned public safetensors header; no tensor allocation or optimizer updates",
+  "home_used_bytes": 90255261696,
+  "home_hard_bytes": 107999997952,
+  "home_headroom_bytes": 17744736256,
+  "published_tensor_elements": 8371408896,
+  "selective_prefix_tensor_elements": 6708002816,
+  "header_tensors": 475,
+  "estimated_FP32_model_bytes": 33485635584,
+  "estimated_standard_full_Adam_checkpoint_bytes": 100456906752,
+  "estimated_selective_full_model_plus_Adam_bytes": 87149658112,
+  "actual_model_parameter_ownership_pending": true,
+  "OPAL_registry_extra_state_not_included": true,
+  "existing_jobs_unchanged": true
+}
