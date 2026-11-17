@@ -1,3 +1,22 @@
+# Latest continuation — mixed schedule/update bridge prepared
+
+New mixed_schedule.py couples qualified whole-document language epochs to the
+existing49-step retained/expanded speech cycle. next_window binds complete plan
+SHA+language identity+restored integer cursor, rejects exhausted/changed plans,
+and selects matching epoch/rank speech slots and language batches. update_next
+passes allthree objectives to existing distributed_train.update/ONE OPAL owner;
+no second optimizer, old196resume, lineage mutation or running-job hotdeploy.
+Seven local schedule tests PASS incl both complete epochs/allranks/no DEV/mass
+preservation/resume/rejection. Existing text_rehearsal10 tests also TERMINAL0
+PASS incl real2rankGloo and mixedgradient/oneOPAL-step/cursor save. This time
+Mac Gloo actually completed2.774s; no failure/retry needed. These remain CPU
+proofs; complete native GPU admission/restore/durable densebackup/qualified data
+and the final launch/controller orchestration stillpending. No new learning/job.
+Current review8558032 stays source4223/observer42447; latest full observation
+RUNNING1025s/1064saved/1015structured/46invalid/3incomplete. Do not restart.
+
+---
+
 # Latest continuation — observed basic TRAIN reasoning failures
 
 Same8558032/42447 actualRUNNING725s,728saved/696structured,30invalid,
