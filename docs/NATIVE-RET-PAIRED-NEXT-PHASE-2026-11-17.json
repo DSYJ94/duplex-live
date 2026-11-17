@@ -1,0 +1,64 @@
+{
+  "status": "PREPARED_NOT_SUBMITTED",
+  "purpose": "New paired supervised native RET-separability intervention after completed zero-update collection/restore. Not a continuation or replay of step196.",
+  "parent_checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+  "verified_feature_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05",
+  "prerequisite_restore_job": "8537504 COMPLETED0:0",
+  "TRAIN_components": 197,
+  "positive_RET_positions": 89,
+  "negative_positions": 75959,
+  "arms": [
+    {
+      "name": "readout",
+      "new_trainable_coefficients": 4097,
+      "new_updates": 128,
+      "learning_rate": 0.001
+    },
+    {
+      "name": "bias",
+      "new_trainable_coefficients": 1,
+      "new_updates": 128,
+      "learning_rate": 0.5
+    }
+  ],
+  "native_backbone_updates": 0,
+  "OPAL": "KEEP fixed supervised controls; retain all programs/Adam/RNG/diagnostics. Executable adaptive proposals only at backed native behavioral boundaries, against fixed control.",
+  "requirements": [
+    "Retrieve and semantically review already-complete official128 outputs; no rerun",
+    "Pin original cache/source/inventory and require successful8537504 receipt",
+    "Run paired fits once, preserve init/every16/final state and all logs",
+    "Distinct-process restore both actual learned states including complete Adam/RNG/OPAL before native inference",
+    "Load heads before native warmup/graph capture; no forcedRET or dispatcher shortcut",
+    "Evaluate complete96 controls/reasoning per arm; reuse unchanged baseline outputs",
+    "Back up full checkpoints and raw outputs with independent inventory/hashes",
+    "No native product acceptance from cached TRAIN fit; measure correct task context, native requests, uncertainty, false delegation, silence, cancellation, result grounding and speech separately"
+  ],
+  "interpretation": {
+    "bias_matches_head": "Prefer logit calibration/objective explanation over additional capacity. Native false-positive behavior remains decisive.",
+    "head_fits_bias_does_not": "Evidence for accessible context-specific handoff signal in existing backbone, not newly acquired reasoning.",
+    "neither_fits_TRAIN": "Close this branch after fixed controls; inspect objective/shared native LM adaptation rather than repeat tiny-head tuning.",
+    "TRAIN_fit_without_free_running_handoff": "Exposure/history/interface issue remains; do not report delegation solved.",
+    "competence_reduction": "Repair data/functional retention/recipe before model growth."
+  },
+  "resource_plan": {
+    "provider": "existing Isambard award",
+    "GPU_count": 1,
+    "proposed_maximum_GPU_hours": 12,
+    "external_API_calls": 0,
+    "purchases": 0,
+    "GCP": false,
+    "actual_admission_required": true,
+    "no_overlap_or_automatic_retry": true
+  },
+  "not_yet_done": [
+    "new phase launcher/guard and learned-state restore integration",
+    "actual paired fits",
+    "actual learned native behavioral evaluation"
+  ],
+  "wider_plan": [
+    "Diversify concept/context/uncertainty/domain reasoning and action-bearing difficulty-routing examples; do not confuse synthetic audio with duplex timing labels",
+    "MiRL TRAIN-only recurrent failure mining; native RL only with meaningful rollout variance, valid logprobs and replayable native/task state",
+    "Keep weight-space edits reversible and separate from training with sham/bias/decoding controls",
+    "Use functional ordinary/reasoning/speech retention to decide selective LM tuning, full fine-tuning, midtraining or capacity growth; extra coefficients alone are not knowledge"
+  ]
+}

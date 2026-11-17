@@ -1,3 +1,24 @@
+# 17Nov12:40UTC — Active goal: next paired learning phase prepared, NOT launched
+
+Prior goalturn made concrete progress:8537504 fullrestore+independentbackupPASS,
+metadata99b7b4e pushed. New ownerUI goalACTIVE is authoritative; do not revert.
+Nextphase scope/decisioncriteria recorded in
+ docs/NATIVE-RET-PAIRED-NEXT-PHASE-2026-11-17.json.
+Do NOT reuse finished zero-update scope/lease to run learning. New scoped launcher
+must bind exact cachedfeatures/parent/restore receipts and preserve every state.
+Existing fixed128readout +128bias fitter CPU-tested synthetically; actualnative
+fits NOT run, actuallearned-state restore/hostguard still to implement.
+Need retrieve/review completedofficial128 rather than regenerate anyoutputs.
+FreshClifton client tool68666 started, private log
+/private/tmp/duplex-clifton-renew-20261117-next.log; owner prompted officiallink.
+No sign-in completion assumed. No remote model/training job submitted this turn.
+Local plan resource maximum12GPUh is PREPARED, not actualusage/reservation.
+Native learnedbehavior/full192newarm outputs still required after actualfits;
+zerorestore success is not evidence of policy efficacy. Avoid another diagnostic
+loop: fixedpaired intervention then act on measurednative results, not headLRsweep.
+
+---
+
 # 17Nov12:31UTC — Restore8537504 COMPLETED0:0; full independent backup PASS
 
 Established read-only observer43525 returned authoritative Slurm COMPLETED0:0,
