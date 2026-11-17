@@ -80,6 +80,20 @@ def collect_case(engine, row, out, guard):
                     audio_samples=len(pcm), pcm_sha256=hashlib.sha256(pcm.tobytes()).hexdigest())) + '\n')
                 frames += 1
                 sample_offset += len(pcm)
+    saved, saved_rate = sf.read(out / 'agent-raw.wav', dtype='float32')
+    verified_offset = 0
+    lines = (out / 'trace.jsonl').read_text().splitlines()
+    if saved_rate != 24000 or len(saved) != sample_offset or len(lines) != frames:
+        raise ValueError('Complete saved native audio/trace required')
+    for sequence, line in enumerate(lines):
+        frame = json.loads(line)
+        count = frame['audio_samples']
+        if (frame['sequence'] != sequence or frame['raw_sample_offset'] != verified_offset
+                or hashlib.sha256(saved[verified_offset:verified_offset + count].tobytes()).hexdigest() != frame['pcm_sha256']):
+            raise ValueError('Every saved native PCM frame must replay exactly')
+        verified_offset += count
+    if verified_offset != sample_offset:
+        raise ValueError('No missing or extra native audio samples permitted')
     value = dict(id=row['id'], source_fold='TRAIN', complete=True,
                  input_sha256=row['input_sha256'], user_frames=n,
                  response_tail_seconds=60, input_padding_samples=padding,
@@ -87,6 +101,7 @@ def collect_case(engine, row, out, guard):
                  generated_text=engine.decode_text(tokens), native_RET_events=ret_count,
                  raw_wav_sha256=digest(out / 'agent-raw.wav'),
                  trace_sha256=digest(out / 'trace.jsonl'),
+                 every_saved_PCM_frame_replayed_exact=True,
                  teacher_audio_or_answer_provided=False, backend_connected=False,
                  paced_replay=False, live_latency_measured=False,
                  optimizer_updates=0, correctness_labels_created=False)
