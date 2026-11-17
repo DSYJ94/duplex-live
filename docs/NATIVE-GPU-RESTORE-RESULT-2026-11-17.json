@@ -1,0 +1,57 @@
+{
+  "evidence": "Terminal JSON emitted by already-established read-only SSH observer43525; remote receipt files remain on cluster. No new login or raw receipt download performed after certificate expiry.",
+  "job": "8537504",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "actual_GPU_seconds": 5080,
+  "source": "3798e5982c3935794cebd5595cb75966eb80cfcd",
+  "cache_producer": "c62663cd92ac144d21236fc5a6f01ddf2630f69e",
+  "actual_CUDA": true,
+  "fresh_native_restore_passed": true,
+  "TRAIN_records": 197,
+  "positive_positions": 89,
+  "negative_positions": 75959,
+  "all_features_exact": true,
+  "all_Adam_RNG_OPAL_restored_exact": true,
+  "all_streamed_tokens_and_PCM_exact": true,
+  "streaming_probes": 4,
+  "zero_insertion": {
+    "calls": 69754,
+    "positions": 128628,
+    "all_vocabulary_logits_exact": true
+  },
+  "process_identity": {
+    "pid": 49,
+    "pid_namespace": "pid:[4026536228]",
+    "start_ticks": 109962201,
+    "node": "nid010162"
+  },
+  "execution": "915ba4f45a4a459c8ed601d69fc80290",
+  "checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+  "predecessor_step": 196,
+  "cache_backup": {
+    "passed": true,
+    "every_file_sha256_verified": true,
+    "files": 38,
+    "bytes": 651971499,
+    "inventory_sha256": "0188cf63ed991d814b9ebdee70659bad6413aace8339cce64146876851958677",
+    "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-feature-backups-v1/job-8535017/cache"
+  },
+  "verify_backup": {
+    "passed": true,
+    "every_file_sha256_verified": true,
+    "files": 22,
+    "bytes": 14094886,
+    "inventory_sha256": "f6fddfeb5704013fdca32f1ab1c03eb701ceb1235a88a1ab2724e3ece4905183",
+    "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-feature-backups-v1/job-8537504/verify"
+  },
+  "optimizer_updates": 0,
+  "old_saved_updates_replayed": 0,
+  "cache_regenerated": false,
+  "native_policy_accepted": false,
+  "task_total_actual_GPU_seconds": 10054,
+  "original_task_limit_GPU_seconds": 21600,
+  "goal_status_note": "Kept paused by executor; user UI changed goal to active during monitoring, verified by get_goal. No executor goal-status mutation.",
+  "remote_worker_receipt": "/projects/u6ada/duplex-live/native-restore-only-20261117-v1/verify/terminal.json",
+  "remote_host_receipt": "/projects/u6ada/duplex-live/native-restore-only-20261117-v1/job-8537504/host-terminal.json"
+}

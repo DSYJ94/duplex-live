@@ -1,3 +1,49 @@
+# 17Nov12:31UTC — Restore8537504 COMPLETED0:0; full independent backup PASS
+
+Established read-only observer43525 returned authoritative Slurm COMPLETED0:0,
+actual5080GPU-seconds x1 and full worker/host terminal receipts, then exited0.
+ALL197TRAIN features exact;89positive/75959negative; all69754vocabulary-logit
+checks/128628positions exact; four streamed token/PCM probes exact.
+Fresh actualCUDA Adam/RNG/OPAL restoration PASS. Zero optimizer updates,
+zero replay/cache regeneration. Parent196 remains unchanged. No model
+acceptance or original4-rank training-resume claim is implied.
+Originalcache38files651971499bytes plus verify22files14094886bytes independently
+backed, everySHAverified. Verifyinventory
+f6fddfeb5704013fdca32f1ab1c03eb701ceb1235a88a1ab2724e3ece4905183.
+See docs/NATIVE-GPU-RESTORE-RESULT-2026-11-17.json for paths/hashes/provenance.
+Cacheproducer c62663c remains original; verifyproducer3798e59 unchanged.
+Taskactual4974+5080=10054GPUseconds below21600; allocation naturally ended.
+Comparison8526401 outputs/checkpoints were not interrupted or regenerated.
+
+Goal was PAUSED throughout initial monitoring; USER UI sent active status
+while waiting, confirmed get_goal ACTIVE. Executor never resumed/paused goal.
+Do not falsely report goal currentlypaused or overwrite newer ownerUI action.
+Remote receipts remain independently archived. Local result is copied from
+observer-emitted JSON, not a fresh raw-file download. Cert expired11:47:45UTC;
+new remote access needs renewal, but verification and backup alreadycomplete.
+Bounded manual verification task COMPLETE. Next broader work must use preserved
+features/evaluation results; no training/head fitting was launched in this task.
+
+---
+
+# 17Nov11:22UTC — Same restore8537504 advancing; goal PAUSED
+
+Read-only provider observation: RUNNING, elapsed1104s. Same immutable
+3798e5982c3935794cebd5595cb75966eb80cfcd producer/allocation; no restart.
+Actual freshGPU Adam/RNG/OPAL zero-state restoration and all four native
+streamed token/PCM equality probes have passed. Latest native feature log
+has reached44/197 TRAIN components (control40); full feature equality and
+final independent archive remain PENDING. Zero optimizer updates/replays.
+Observer tool43525 remains established, read-only300s provider checks;
+serveralive enabled. Never duplicate model or restart on observer timeout.
+Small original cache JSON receipts copied under
+runs/container-startup-20261115/native-feature8535017-receipts/.
+Goal independently checked PAUSED. Existing196 and comparison outputs untouched.
+Next: observe SAME8537504 through terminal; require verify+host SUCCESS and
+backup inventory before claiming full restore. Do not start head fitting.
+
+---
+
 # 17Nov11:05UTC — Full cache backed; restore-only8537504 RUNNING
 
 8535017 FAILED1:0 after4974GPU-seconds x1, but cache stage fullyPASS:
