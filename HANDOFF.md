@@ -1,3 +1,31 @@
+# 17Nov13:27UTC — Samecomparison LIVE;1008TRAIN failure-input intake prepared
+
+Observer29998 actualRUNNING8540802 elapsed1241s,readout128,control32complete,
+DEV6/64 at1794921991.599353. Samec66immutableproducer; allvalidwork untouched.
+Next poll SAME29998, no duplicatejob/updates. Biasarm notyetstarted.
+
+Prepared nextTRAIN-only input intake, NOT another learner/rollout: module
+training/personaplex/train_failure_inputs.py +3testsPASS. ActualIsambardCPU
+ran against alreadyqualified1072source, emits exactly1008TRAIN inputrecords,
+excludes64DEV and all response/gold/numeric-target/expected-route fields.
+Onlysourcequestion, originalWAV/sidecar hashes, channel1/fulluserframe count,
+fixed60s responsewindow and provenance. Existingaudio is reused, not newdata.
+Output/projects/u6ada/duplex-live/native-TRAIN-failure-inputs-20261117.json,
+SHA513c46412ad5dabdb01574f85307a5fb92dd73b63533ca06c22df52cfc5ac34b.
+ActualtoolsourceSHAaff0a944b4d5b92301e5ed3ecdff435c90d2922e3937b8b62f86e66b0b049525.
+Parent source/semantic hashes and limitations in
+ docs/NATIVE-TRAIN-FAILURE-INPUTS-PREPARATION-2026-11-17.json.
+No bulkywaves copied, no TTS/provider calls/nativeinference/learning launched.
+WAVbytes NOT rehashed bythisJSON intake; futurecollector MUST verify each
+containedsource/sidecar and extract ONLY fulluserchannel, neverteacherchannel.
+Nativecorrectness labels and competenceprobe calibration stillNOTcreated.
+Ambiguous/unscorable source questions need independent scoring, not automatic
+badnative labels. Do not mine inspectedDEV or pretend this is activeMiRL RL.
+This intake supports existing16Novnext-learning plan; do not start it until
+currentcomparison/backup finishes andits complete outcomes choose nextlineage.
+
+---
+
 # 17Nov13:15UTC — Valid8540802 continues; next-phase research integrated
 
 Same establishedobserver29998 latestproviderRUNNING elapsed341s, readout128,

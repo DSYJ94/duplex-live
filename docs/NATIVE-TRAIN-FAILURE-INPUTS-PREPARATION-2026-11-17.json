@@ -1,0 +1,21 @@
+{
+  "status": "ACTUAL_CPU_INPUT_ONLY_PREPARATION_COMPLETE",
+  "source_code_sha256": "aff0a944b4d5b92301e5ed3ecdff435c90d2922e3937b8b62f86e66b0b049525",
+  "local_source_tests": 3,
+  "actual_native_TRAIN_inputs": 1008,
+  "original_DEV_excluded": 64,
+  "source_manifest_sha256": "9a5b6265566b430c7d788f0d756fcdeebd8fee8d02b5b4995c404c54921a015e",
+  "semantic_parent_sha256": "b32387796aa99730653566374512d2c11a31df53ca5117d157a8aa8a19f695a6",
+  "input_manifest": "/projects/u6ada/duplex-live/native-TRAIN-failure-inputs-20261117.json",
+  "input_manifest_sha256": "513c46412ad5dabdb01574f85307a5fb92dd73b63533ca06c22df52cfc5ac34b",
+  "model_input_fields_exclude_answers_targets_routes": true,
+  "source_wave_hashes_rechecked": false,
+  "complete_user_channel_extraction_required_before_rollout": true,
+  "new_audio_generated": false,
+  "native_rollouts_started": false,
+  "correctness_labels_created": false,
+  "training_approved_by_this_artifact": false,
+  "new_optimizer_updates": 0,
+  "external_API_calls": 0,
+  "existing_job_8540802_changed": false
+}
