@@ -1,3 +1,40 @@
+# 17Nov09:31UTC — Manual native GPU feature/restore job8535017 RUNNING
+
+Automatic goal remains PAUSED; owner explicitly authorized THIS manual task.
+No goal status changed, no new training/optimizer updates, no purchases/APIs.
+Parent8526401 finished overnight COMPLETED0:0,9340GPU-seconds x1; all128
+independently backed, inventory15e0599269b850446bf3299ba35e4374b9e3e220d04f7ef68c2b194443a77c52.
+No running comparison was interrupted or its outputs regenerated.
+
+New8535017 actual RUNNING on nid010187,1GPU, started17Nov09:27:32UTC,
+immutable deadline15:27:32UTC. Sourcec62663cd92ac144d21236fc5a6f01ddf2630f69e
+/projects/u6ada/duplex-live/source-feature-c62663c MUST NOT be modified.
+Root /projects/u6ada/duplex-live/native-feature-restore-20261117-v1;
+log /projects/u6ada/duplex-live/native-feature-8535017.log;
+backup /home/u6ada/dsyj94.u6ada/duplex-native-feature-backups-v1/job-8535017.
+Controller uses native_feature_host and existing independent scheduler guard;
+sequential cache then verify child processes, only one model at a time.
+No retry on observation timeout. Actualsource CPU15tests/all323tensors/four
+TRAIN user-only probes passed before submission; CPUreceipt local/remote.
+Account queue was empty; all shared actual/reserved usage includedatadmission.
+Remora notified; no Remora files changed. Goal remainsPAUSED.
+
+Cache stage runs frozen196 baseline→zerohead streaming identity on4TRAIN
+user-only recordings, then collects ALL original positive/negative TRAIN
+projection features with byte-equal zero logits. Saves NEW truezero head and
+materialized0-stepAdam/RNG/OPAL (NOT old196 training resume), independently
+hash-backs up cache BEFORE freshverify. Verify freshPID restores those0states,
+checks allstreamed tokens/PCM and recomputes every feature exactly; fullfinal
+archive required. Existing196/fullfourrankAdamRNGOPAL/backups neverchanged.
+No headfit128 is called here. Sourcehelper install_zero is distinctfrom
+install_fit(final128). All0-update/zero-equivalence claims require actual
+terminal evidence; currentstage loading/compilation, not yetproved.
+
+Freshaccess valid17Nov11:47:45UTC. Onlyfreshmonitoring/newdeployment needs
+renewalafterthat; active Slurmjob/guards/archive independent ofchat.
+
+---
+
 # 16Nov23:51UTC — Owner paused automatic goal; manual continuation only
 
 Goal tool confirmed PAUSED at owner's request to save tokens; do not resume or

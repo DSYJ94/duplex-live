@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "tests": 15,
+  "all_original323_integrity": true,
+  "TRAIN_probes": 4,
+  "probe_samples": [
+    357120,
+    493440,
+    493440,
+    364800
+  ],
+  "source": "c62663cd92ac144d21236fc5a6f01ddf2630f69e",
+  "actual_GPU_model_loaded": false,
+  "optimizer_updates": 0
+}
