@@ -1,3 +1,18 @@
+# Current coordination checkpoint — same running review, existing Remora queue
+
+Harbinger coordination note received in thischat; soleDuplexexecutor unchanged.
+Fresh actual squeue:8558032RUNNING1:04:03/nid010309/11:50limit; Remora8559898
+PENDING(Dependency)/4hlimit and8558460PENDING(Resources)/8hlimit. No jobcancel,
+restart, mutation or submission. GPUcounts notshown by thissqueueformat; doNOT
+infer0GPUs fromN/A. BeforeANYfutureDuplexGPUsubmission, refresh actualReqTRES/
+AllocTRES/accounting forALLexistingu6ada work incl theseRemorajobs, preserve
+currentphase/awardbounds and nooverlap rules. Runningreview stillsource4223;
+no nativelearning. Safe boundary remains complete review/finalidentity+hash
+archives/qualification, then admitted training workflow. Harbinger willread this
+chat; no newchat/executor or unsolicitedcross-chatmessage created.
+
+---
+
 # Current after chat interruption — SAME8558032 live, old tool handles unavailable
 
 Tool33340 nowUnknownprocessid after tool-session interruption; doNOTinferGPUstop.
