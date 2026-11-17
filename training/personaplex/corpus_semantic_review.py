@@ -30,8 +30,12 @@ def prompt(row):
             'Do not infer a voice model should delegate merely from prompt length or difficulty. '
             'Return ONLY a JSON object with exactly these fields and allowed values: '
             +json.dumps({name:sorted(values) for name,values in CHOICES.items()})
-            +'. Also include evidence_quotes (0 to 3 exact short quotations from supplied USER context only, '
-            'never from the assistant answer), and notes (a concise explanation, <=1200 characters). '
+            +'. These lists enumerate choices, NOT the output type. Choose exactly ONE JSON STRING '
+            'for each categorical field; never return a list for domain/task/verdict/answerability/support. '
+            'Also include evidence_quotes (0 to 3 exact short quotations from supplied USER context only, '
+            'never from the assistant answer), and notes (at most60 words and <=1200 characters). '
+            'If there is no supporting USER context, evidence_quotes must be empty. Describe erroneous '
+            'assistant claims in notes rather than copying them into evidence_quotes. '
             'support=supplied_context requires at least one matching quotation. A quote is evidence to '
             'audit, not automatic entailment. External knowledge needs support=external_fact_check; '
             'math/logic without a supplied proof needs formal_proof_needed. Creative/nonfactual work '
@@ -40,7 +44,7 @@ def prompt(row):
             +json.dumps(dict(turns=turns),ensure_ascii=False))
 
 
-def parse(text,row):
+def parse(text,row,*,normalizations=None):
     def unique(pairs):
         value={}
         for key,item in pairs:
@@ -51,6 +55,12 @@ def parse(text,row):
     if not isinstance(value,dict) or set(value)!=FIELDS:
         raise ValueError('Exact review schema required')
     for field,choices in CHOICES.items():
+        if isinstance(value[field],list) and len(value[field])==1 and isinstance(value[field][0],str):
+            # A singleton is an unambiguous representation of the SAME label.
+            # Preserve raw generation and record this lossless shape conversion;
+            # never choose between multiple labels or alter evidence/verdicts.
+            value[field]=value[field][0]
+            if normalizations is not None:normalizations.append(field)
         if not isinstance(value[field],str) or value[field] not in choices:
             raise ValueError('Undeclared review label')
     quotes=value['evidence_quotes'];notes=value['notes']
@@ -69,30 +79,73 @@ def parse(text,row):
 def review(row,actor):
     text=prompt(row)
     generation=actor.answer(text)
-    record=dict(id=row['id'],source_sha256=fingerprint(row),review_prompt_sha256=fingerprint(text),
+    return classify_generation(row,generation,review_prompt_sha256=fingerprint(text))
+
+
+def classify_generation(row,generation,*,review_prompt_sha256):
+    record=dict(id=row['id'],source_sha256=fingerprint(row),review_prompt_sha256=review_prompt_sha256,
                 generation=generation,review=None,review_status='unreviewed',
+                review_protocol='strict-evidence-singleton-compatible-v2',categorical_fields_normalized=[],
                 semantic_qualified=False,training_admitted=False,optimizer_updates=0,external_API_calls=0)
+    if generation.get('input_error')=='complete_input_exceeds_reviewer_context':
+        record.update(review_status='complete_input_exceeds_reviewer_context',error='No silent input truncation')
+        return record
     if generation.get('ended_with_EOS') is not True or generation.get('generation_budget_exhausted') is not False:
         record.update(review_status='incomplete_generation',error='No complete EOS-terminated review')
         return record
     try:
-        record.update(review=parse(generation['text'],row),review_status='structured_review_complete')
+        record.update(review=parse(generation['text'],row,normalizations=record['categorical_fields_normalized']),review_status='structured_review_complete')
     except (ValueError,TypeError,KeyError) as error:
         record.update(review_status='invalid_review',error=str(error))
     return record
 
 
-def collect(rows,output,actor,guard,*,rank,world_size,source,execution=None):
+def reused_review(row,entry):
+    path=Path(entry['path']);raw=path.read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=entry['sha256']:
+        raise ValueError('Immutable archived original review changed')
+    original=json.loads(raw)
+    if original.get('id')!=row['id'] or original.get('source_sha256')!=fingerprint(row):
+        raise ValueError('Original complete public source/review identity required')
+    if 'generation' in original:
+        value=classify_generation(row,original['generation'],review_prompt_sha256=original['review_prompt_sha256'])
+    elif original.get('review_status')=='complete_input_exceeds_reviewer_context':
+        value=dict(original)
+    else:raise ValueError('Only a complete saved generation or explicit complete-input failure can be reused')
+    value['derived_from']=dict(path=str(path),sha256=entry['sha256'],producer_source=entry['producer_source'])
+    value['new_generation_performed']=False
+    return value
+
+
+def collect(rows,output,actor,guard,*,rank,world_size,source,execution=None,reuse=None,batch_size=1):
     if (type(rank) is not int or type(world_size) is not int or not 0<=rank<world_size
-            or not rows or len({row['id'] for row in rows})!=len(rows)):
+            or not rows or len({row['id'] for row in rows})!=len(rows) or batch_size not in (1,4)):
         raise ValueError('Complete distinct source cohort and explicit disjoint shard required')
     output=Path(output);output.mkdir(exist_ok=False)
     selected=sorted(rows,key=lambda row:row['id'])[rank::world_size]
-    results=[];invalid_run=0
-    for row in selected:
+    results=[];invalid_run=0;reused=0;reuse={} if reuse is None else reuse
+    generated={}
+    for position,row in enumerate(selected):
         guard(300)
+        if batch_size>1 and position%batch_size==0:
+            chunk=[value for value in selected[position:position+batch_size]if value['id']not in reuse]
+            if chunk:
+                values=actor.answer_batch([prompt(value)for value in chunk])
+                if not isinstance(values,list)or len(values)!=len(chunk):raise ValueError('Every batched review generation required')
+                raw_directory=output/'raw-batches';raw_directory.mkdir(exist_ok=True)
+                raw_rows=[dict(id=value['id'],source_sha256=fingerprint(value),generation=generation)
+                          for value,generation in zip(chunk,values)]
+                with (raw_directory/('batch-%06d.json'%position)).open('x') as stream:
+                    stream.write(json.dumps(raw_rows,ensure_ascii=False,allow_nan=False)+'\n')
+                generated.update({value['id']:generation for value,generation in zip(chunk,values)})
         try:
-            record=review(row,actor)
+            if row['id'] in reuse:
+                record=reused_review(row,reuse[row['id']]);reused+=1
+            elif batch_size>1:
+                record=classify_generation(row,generated.pop(row['id']),review_prompt_sha256=fingerprint(prompt(row)))
+                record['new_generation_performed']=not bool(record['generation'].get('input_error'))
+            else:
+                record=review(row,actor);record['new_generation_performed']=True
         except ValueError as error:
             if str(error)!='No silent input truncation':raise
             record=dict(id=row['id'],source_sha256=fingerprint(row),review_status='complete_input_exceeds_reviewer_context',
@@ -106,6 +159,7 @@ def collect(rows,output,actor,guard,*,rank,world_size,source,execution=None):
     terminal=dict(complete=True,source=source,rank=rank,world_size=world_size,required=len(selected),
                   whole_cohort_sha256=fingerprint(rows),results=results,model_identity=actor.identity,
                   execution=execution,
+                  reused_records=reused,new_generation_attempts=len(selected)-reused,
                   semantic_qualification_performed=False,training_admitted=False,optimizer_updates=0,external_API_calls=0)
     (output/'terminal.json').write_text(json.dumps(terminal,indent=2)+'\n')
     return terminal
@@ -133,6 +187,15 @@ def main():
         rows.extend(json.loads(line) for line in path.open())
     if len(rows)!=17276 or any(row.get('admitted_for_training') is not False for row in rows):
         raise ValueError('Complete unadmitted public source cohort required')
+    reuse={}
+    if 'reuse_manifest' in plan:
+        path=Path(plan['reuse_manifest'])
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=plan['reuse_manifest_sha256']:
+            raise ValueError('Exact immutable archived-review reuse manifest required')
+        entries=json.loads(path.read_text())['records']
+        reuse={entry['id']:entry for entry in entries}
+        if len(reuse)!=len(entries) or not set(reuse)<={row['id']for row in rows}:
+            raise ValueError('Distinct original source identities only in reuse')
     rank=int(os.environ['LOCAL_RANK']);world=int(os.environ['WORLD_SIZE'])
     selected=os.environ.get('CUDA_VISIBLE_DEVICES','').split(',')
     if world!=4 or len(selected)!=4 or not 0<=rank<4:
@@ -140,15 +203,17 @@ def main():
     # Select before importing torch/transformers; each frozen27B replica owns
     # precisely one of the four actually scheduler-selected devices.
     os.environ['CUDA_VISIBLE_DEVICES']=selected[rank]
+    batch_size=plan.get('batch_size',1)
     from .local_reasoner_reference import LocalReasoner
-    actor=LocalReasoner(guard)
+    from .corpus_review_batch import CorpusBatchReasoner
+    actor=CorpusBatchReasoner(guard)if batch_size==4 else LocalReasoner(guard)
     import torch
     execution=dict(actual_CUDA=torch.cuda.is_available(),visible_device_count=torch.cuda.device_count(),
                    selected_device=selected[rank],device_name=torch.cuda.get_device_name(0),
                    pid=os.getpid(),pid_namespace=os.readlink('/proc/self/ns/pid'),
                    start_ticks=Path('/proc/self/stat').read_text().rsplit(')',1)[1].split()[19],
                    inference_schema=actor.schema)
-    collect(rows,args.output/('rank-%02d'%rank),actor,guard,rank=rank,world_size=world,source=args.source,execution=execution)
+    collect(rows,args.output/('rank-%02d'%rank),actor,guard,rank=rank,world_size=world,source=args.source,execution=execution,reuse=reuse,batch_size=batch_size)
 
 
 if __name__=='__main__':main()

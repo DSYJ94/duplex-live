@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
-from .expanded_guard import AUTH,CORPUS_REVIEW_AUTH,ACCOUNT,KEY,sha,parse_job,stamp,validate_job
+from .expanded_guard import AUTH,CORPUS_REVIEW_AUTH,CORPUS_REPAIR_AUTH,ACCOUNT,KEY,sha,parse_job,stamp,validate_job
 from .expanded_evaluation_host import parent_provider
 from .expanded_launch import container_command
 from .native_feature_host import archive
@@ -97,12 +97,23 @@ def complete(root,plan):
 def main(a):
     if subprocess.check_output(['git','rev-parse','HEAD'],universal_newlines=True).strip()!=a.source:
         raise ValueError('Exact committed immutable source required')
-    if a.prepare:prepare(a.root,a.source);return
+    if a.prepare:
+        if a.repair:
+            from .corpus_review_repair import prepare as repair_prepare
+            if a.batch_readiness is None:raise ValueError('Actual batch-tokenizer readiness path required')
+            repair_prepare(a.root,a.backup,a.source,INPUTS,a.batch_readiness)
+        else:prepare(a.root,a.source)
+        return
     lock=(a.root/'.controller.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     if any(a.root.glob('job-*')):raise ValueError('One actual review job; no automatic retries')
     parent_sha=require_parent();plan=json.loads((a.root/'plan.json').read_text())
     if plan.get('source')!=a.source or plan.get('inputs')!=INPUTS or sha(PIN)!=PIN_SHA:
         raise ValueError('Exact prepared public review plan/pin required')
+    if bool(a.repair)!=('repair_scope_sha256' in plan):raise ValueError('Explicit exact repair phase required')
+    padding=0
+    if a.repair:
+        from .corpus_review_repair import validate as validate_repair
+        padding=validate_repair(plan)
     job=os.environ['SLURM_JOB_ID']
     actual=parse_job(subprocess.check_output(['scontrol','show','job','-o',job],universal_newlines=True,timeout=30))
     raw=subprocess.check_output(['sacct','-A',ACCOUNT,'-S','2026-10-30','-X','-n','-P','-o',
@@ -118,6 +129,7 @@ def main(a):
             if name.startswith('duplex-') and count:raise ValueError('Another voice allocation is active')
             if not limit.isdigit():raise ValueError('Bound every concurrent reservation')
             reserved+=count*max(0,int(limit)*60-used)
+    prior+=padding
     quota=subprocess.check_output(['quota','-w','-v'],universal_newlines=True,timeout=20)
     q=next(row.split()for row in quota.splitlines()if row.strip().startswith('data1.vastp2.isambard.ac.uk:/p2/home '))
     if (int(q[3])-int(q[1]))*1024<2*1024**3:raise ValueError('Independent review backup needs2GiB headroom')
@@ -126,6 +138,7 @@ def main(a):
         corpus_review_plan_sha256=sha(a.root/'plan.json'),GPU_count=4,job_id=job,node=actual['NodeList'],source=a.source,
         start_unix=stamp(actual['StartTime']),stop_unix=stamp(actual['EndTime']),
         prior_award_GPU_seconds=prior,other_reserved_GPU_seconds=reserved,parent_terminal_sha256=parent_sha)
+    if a.repair:lease['corpus_review_repair_sha256']=sha(CORPUS_REPAIR_AUTH)
     validate_job(actual,lease,time.time());folder=a.root/('job-'+job);folder.mkdir(exist_ok=False)
     a.backup.mkdir(parents=True,exist_ok=True);path=folder/'lease.json';path.write_text(json.dumps(lease,indent=2)+'\n')
     (folder/'provider-admission.txt').write_text(raw+'\n'+quota)
@@ -159,4 +172,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser()
     for field in ('root','backup'):p.add_argument('--'+field,type=Path,required=True)
     p.add_argument('--source',required=True);p.add_argument('--prepare',action='store_true')
+    p.add_argument('--repair',action='store_true')
+    p.add_argument('--batch-readiness',type=Path)
     main(p.parse_args())

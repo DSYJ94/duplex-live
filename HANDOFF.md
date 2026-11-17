@@ -1,3 +1,37 @@
+# 17Nov — STOPPED reviewer8555523; prompt/schema bug repaired, no newGPU started
+
+Operator stopped8555523 after all48 inspectedrecords invalid: prompt displayed
+category choices asarrays; model emitted singletonarrays, parser expectedstrings.
+This is OUR formatbug, not evidencebaseknowledge failed. ActualparentCANCELLED:
+main501s, batchcleanup512s, all4GPUsreleased. Same8525 observer TERMINAL0; don't
+poll/restart. Final savedrecords[19,19,17,18]=73. Allraws remainonLustre; source707
+unchanged. Native1008collection+fourverifiedbackups/checkpoints untouched. Remora
+notifiedstop/cause; newnode/release notification stillneededaftercorrectedrun.
+
+Working repair: explicitstring prompt+lossless singletonstring-list normalization
+only; multiple/unknownlabels, noteslimits, unsupported/teacher-only evidencequotes,
+EOS/budget/schema testsstillreject. Originalrawgeneration preserved. Newreuse
+manifest reclassifies completed originals without modelcalls; no semantic approval.
+Parentpartial/control archives to independentVAST BEFORE continuation. Newhost
+--prepare --repair --batch-readiness requires actualCPUreadiness and cancellation
+accounting. Goal-directed scope CORPUS_REPAIR_AUTH reserves600parentseconds for
+512actualinclcleanup, leaves42600newseconds; combined<=original43200at4GPUs.
+Globalaccountingpadsoldmaincharge to600upper; no reset/extraAPI/purchase/GCP/time.
+One correctedjob/noauto retries. None submitted yet.
+
+Added bounded4-request batching on same pinned27B to improve offline throughput,
+actualleftpadding, complete single-vs-batched token IDs/attention masks, no input
+truncation; per-row EOS-tail maycontainonlytruePAD, allrawbatchoutputs savedbefore
+classification. No new kernels/precision/libraries or sharedRemora settings changed.
+HF official leftpadding/batch guidance checked; actualpinnedCPUprocessor test NEXT.
+Eighteen local tests PASS incl normalizedlabels, strict evidence, originalgeneration
+reuse/no newcall, batch shardcoverage/EOS/context, unchangedresourcegates and
+remainingtime42600bound. NativeGPUbatchcompat/performance NOTyetproved. DoNOT
+startuntilactualCPUsuite/readiness+all73reparse+archiveproof pass; then samecomplete
+17276cohort with preserved rawfailedrecords. No clean-subset trainingadmission.
+
+---
+
 # 17Nov21:14UTC — corpus reviewer actual model setup finished; records produced
 
 Same8555523/source707414c0 on4GPUs/nid010660 nowactually producing publicreview

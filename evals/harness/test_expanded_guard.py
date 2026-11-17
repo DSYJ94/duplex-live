@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,TRAIN_FAILURE_AUTH,CORPUS_REVIEW_AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,TRAIN_FAILURE_AUTH,CORPUS_REVIEW_AUTH,CORPUS_REPAIR_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -66,3 +66,11 @@ class ExpandedGuardTest(unittest.TestCase):
                        dict(train_failure_authorization_sha256=sha(TRAIN_FAILURE_AUTH)),
                        dict(reference_authorization_sha256=sha(REFERENCE_AUTH))):
             with self.assertRaises(ValueError):resource(dict(review,**change))
+
+    def test_format_repair_only_uses_remaining_combined_time(self):
+        lease,_,_=self.fixture()
+        review=dict(lease,corpus_review_authorization_sha256=sha(CORPUS_REVIEW_AUTH),
+                    corpus_review_parent_job='8553179',corpus_review_repair_sha256=sha(CORPUS_REPAIR_AUTH),stop_unix=42600.)
+        resource(review)
+        with self.assertRaises(ValueError):resource(dict(review,stop_unix=42601.))
+        with self.assertRaises(ValueError):resource(dict(review,corpus_review_repair_sha256='wrong'))

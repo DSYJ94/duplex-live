@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import Mock
-from training.personaplex.corpus_semantic_review import parse,review,collect
+from training.personaplex.corpus_semantic_review import parse,review,collect,fingerprint
 
 
 def row(identity='record-1'):
@@ -22,6 +22,47 @@ def actor(value=None):
 
 
 class CorpusSemanticReviewTest(unittest.TestCase):
+    def test_singleton_lists_are_lossless_but_ambiguous_or_unknown_labels_still_fail(self):
+        value=verdict()
+        for key in ('domain','task','verdict','answerability','support'):value[key]=[value[key]]
+        normalized=[]
+        self.assertEqual(parse(json.dumps(value),row(),normalizations=normalized),verdict())
+        self.assertEqual(len(normalized),5)
+        for bad in ([],['everyday','science'],['invented'],[1]):
+            with self.assertRaises(ValueError):parse(json.dumps(dict(value,domain=bad)),row())
+        with self.assertRaises(ValueError):parse(json.dumps(dict(value,evidence_quotes=['A key.'])),row())
+
+    def test_saved_generation_reused_without_another_model_call(self):
+        import hashlib
+        original=review(row(),actor())
+        raw=json.loads(original['generation']['text'])
+        for key in ('domain','task','verdict','answerability','support'):raw[key]=[raw[key]]
+        original['generation']['text']=json.dumps(raw)
+        original['review']=None;original['review_status']='invalid_review'
+        with tempfile.TemporaryDirectory() as temp:
+            saved=Path(temp)/'original.json';saved.write_text(json.dumps(original))
+            entry=dict(id=row()['id'],path=str(saved),sha256=hashlib.sha256(saved.read_bytes()).hexdigest(),producer_source='original')
+            model=actor();folder=Path(temp)/'derived'
+            result=collect([row()],folder,model,lambda needed:None,rank=0,world_size=1,source='repaired',reuse={entry['id']:entry})
+            model.answer.assert_not_called()
+            self.assertEqual(result['reused_records'],1)
+            derived=json.loads((folder/result['results'][0]['file']).read_text())
+            self.assertEqual(derived['review'],verdict())
+            self.assertFalse(derived['new_generation_performed'])
+            self.assertEqual(derived['generation'],original['generation'])
+            self.assertEqual(hashlib.sha256(saved.read_bytes()).hexdigest(),entry['sha256'])
+
+    def test_batched_collection_saves_all_raw_generations_and_classifies_each_row(self):
+        rows=[row('record-%d'%i)for i in range(5)];model=actor()
+        def generate(questions):return [dict(model.answer.return_value)for _ in questions]
+        model.answer_batch.side_effect=generate
+        with tempfile.TemporaryDirectory() as temp:
+            result=collect(rows,Path(temp)/'results',model,lambda needed:None,rank=0,world_size=1,source='batch',batch_size=4)
+            self.assertEqual(len(result['results']),5)
+            self.assertEqual(model.answer_batch.call_count,2);model.answer.assert_not_called()
+            batches=list((Path(temp)/'results/raw-batches').glob('*.json'))
+            self.assertEqual(sum(len(json.loads(path.read_text()))for path in batches),5)
+
     def test_host_rejects_running_parent_before_reading_or_loading_models(self):
         from unittest.mock import patch
         from training.personaplex.corpus_review_host import require_parent

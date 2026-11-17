@@ -1,0 +1,22 @@
+{
+  "status": "GOAL_DIRECTED_CORPUS_REVIEW_FORMAT_REPAIR",
+  "basis": "Bounded operator correction within the existing owner-directed autonomous goal and Isambard award; no new purchase, paid API, training or resource type.",
+  "parent_job": "8555523",
+  "parent_source": "707414c0ca7c5ac772a237a9aeaf450461bda579",
+  "parent_elapsed_seconds_upper": 600,
+  "parent_GPU_seconds_upper": 2400,
+  "GPU_count": 4,
+  "maximum_seconds": 42600,
+  "maximum_combined_wall_seconds": 43200,
+  "maximum_actual_jobs_including_parent": 2,
+  "automatic_retries": 0,
+  "required_candidates": 17276,
+  "batch_size": 4,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "purchases": 0,
+  "GCP_usage": 0,
+  "repair": "Clarify categorical fields as strings; losslessly canonicalize only singleton string lists under unchanged label/evidence/notes checks. Preserve and reuse every completed original generation without another model call. Archive all original partial outputs independently first.",
+  "throughput": "Four-request left-padded inference batches per frozen single-GPU reviewer, exact full-input bounds and per-row EOS/padding checks; no new kernels, precision or library installation. Actual throughput and all source/format failures remain reported.",
+  "completion": "Same full17276 identities and independent hash archives. No clean subset, automatic factual approval, source paraphrase clearance or native voice acceptance claim. Stop without automatic retry on repeated unusable output/deadline."
+}
