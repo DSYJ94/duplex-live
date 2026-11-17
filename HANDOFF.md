@@ -1,3 +1,36 @@
+# 17Nov13:02UTC — New paired RET job8540802 SUBMITTED; last provider PENDING
+
+Actual sbatch --parsable returned8540802 once. Sourcec66b72ba02211496285e061178d4e9c3669267f3
+immutable at/projects/u6ada/duplex-live/source-pair-c66b72b. Coretraining/harness
+code byte-identical to actualCPUqualifiedf8e53b8; no repeated fixturefit/calibration.
+Template scripts/isambard-paired-ret-20261117.sh:1GPU/8CPU/12h, no requeue.
+Actual scontrol at12:59:14 showedPENDING/Resources, Restart0, noallocatednode,
+no actualGPU/runtime/updates yet. Do NOT callsubmittedworker runningtraining.
+Do not duplicate/requeue/resubmit on observationtimeout or resourcequeue wait.
+RemoteROOT/projects/u6ada/duplex-live/native-ret-paired-20261117-v1;
+log /projects/u6ada/duplex-live/native-ret-paired-8540802.log;
+backup /home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1.
+Scope newgoal-directed boundedphase, not zero-grantreuse:128readout+128bias,
+0backbone, complete96native outputs perarm, backupfit BEFORE freshnativeeval,
+full finalbackup/hostterminal required. Connectedbackend/product acceptanceNOTclaimed.
+
+Read-only occasional observer tool92534, remoteobserve-pair-8540802.py,120s
+untilactualpositiveupdate then300s; terminaloutputs rawhostreceipt/logtail.
+Serveralive connection preserved throughcert expiry. Neverduplicate modeljob.
+Source/lease/frameguard retainactualoriginalclock/max43200sec/20ksharedaward.
+ActualHOME quota83015152KiB of105468748KiB (~21.4GiBheadroom) beforestart,
+10GiBrequired bycontroller. All accountactual/reserved usage will be rebound
+atactualRUNNING admission; currentPENDING doesnot admitmodel. Remora8539884
+RUNNING nid010602 and8540287PENDING untouched; Remora notifiedpreparation.
+No freshsign-in needed: actualcertificatevalid18Nov00:18:12UTC; oldclient68666
+ended1 but renewedcertificatealreadyexists. Do notrestartauthfromstaleclient.
+
+Native8537504 complete5080sec +old4974=10054GPUsec; actualHEAD196/checkpoints,
+all originalcache/backup/official128 outputs unchanged. All newwork source/code
+and tinyreceipts staylocally; bulkydata/checkpoints remain independentclusterfs.
+
+---
+
 # 17Nov13:00UTC — New paired controller qualified on IsambardCPU; official128 reviewed
 
 Authoritative certificate now VALID until18Nov00:18:12UTC (renewed17Nov12:18:12);
