@@ -1,0 +1,12 @@
+{
+  "job": "8554710",
+  "source": "b402556c8aadb83f4538fb22032ba108b5893030",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 19,
+  "GPU_count": 0,
+  "tests_passed": 13,
+  "distributed_proof": "Real two-rank Gloo gradients match independent pooled-token reference",
+  "limitation": "CPU model doubles; native checkpoint GPU/full state admission remains required",
+  "training_updates": 0
+}

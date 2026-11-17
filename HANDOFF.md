@@ -1,3 +1,50 @@
+# 17Nov — language accumulation implementation, not yet native admission
+
+Added text_rehearsal.backward_window: validates complete microbatch window,
+requires equal rank microbatch counts, sums global supervised-token population,
+weights each wrapped backward by its share of total valid tokens, explicitly
+preserves retained-objective gradients and never steps/zeros optimizer. No extra
+microbatch-count division. Positive finite declared mixture coefficient required.
+New unequal-length/masked-target regression matches independent pooled CE gradient
+with pre-existing gradients; frozen branches remain gradient-free. Two focused
+local tests PASS. New window helper has NOT yet run actual multi-rank/native GPU;
+previous 13-test Isambard proof applies to b402556 only, not these later edits.
+Continue schedule/data-cursor/full native state integration, not a training claim.
+
+Same70879 observer at1794945759.3626707:8553179 RUNNING4855s,
+[141,139,142,140]=562/1008; no terminals. Current immutable source untouched.
+
+---
+
+# 17Nov20:02UTC — native language objective CPU proof PASS; GPU collection unchanged
+
+CPU-only job8554710 COMPLETED0:0 in19s, exact source
+b402556c8aadb83f4538fb22032ba108b5893030 at source-text-proof-b402556.
+ALL13 tests PASS in actual contained Isambard runtime, including real two-rank
+Gloo pooled-token-gradient reference and existing distributed adapter restore.
+The Mac two-rank constructor timeout is NOT an objective failure; no Mac network
+repair, test relaxation or retry needed. Tests use CPU model doubles, NOT actual
+native checkpoint weights: native CUDA/FSDP/AdamRNGOPAL restore still unproved.
+Small submission/log receipts: runs/container-startup-20261115/text-rehearsal-8554710.
+No new GPU allocation, no optimizer updates, current collection untouched.
+
+New explicit audio-absent text_rehearsal route/objective implemented; all audio
+streams including BOS=-1, explicit causal shift and answer mask, public wrapped
+forward, global valid-token-weighted CE. Shared temporal/text selective mode
+exists; acoustic branches frozen but speech transfer NOT certified. NEXT integrate
+qualified source documents/schedule with retained native objectives, define token
+normalization across the full accumulation window and exact data cursor/state;
+then actual native gradients + full state restore before any new training.
+Do NOT blindly insert per-microbatch means or copy old speech-clock weights.
+No broad-source candidates admitted and no training-start claim.
+
+Latest observer70879: GPU8553179 RUNNING at1794945459.0321634,4555elapsedsec,
+counts[132,130,133,131]=526/1008;0rankterminals. Frozen failure collection, NOT
+training. Preserve same f06 producer/step196/4GPUs/deadline18Nov06:41:44UTC.
+No restart on timeout; occasional same-handle checks and full backups required.
+
+---
+
 # 17Nov — Lexicalscreen COMPLETE; nativecollection384/RUNNING; textobjective next
 
 CPU8554147 COMPLETED0:0,4s/noGPU, source094facca68f7b17c65291fe11bf104cf43aaeedc.

@@ -66,6 +66,46 @@ def averaged_gradient_loss(local_sum, global_tokens, world_size):
     return local_sum * (world_size / global_tokens)
 
 
+def backward_window(native_view, batches, spec, *, coefficient, group=None):
+    """Accumulate one pooled-token language objective; caller owns step/zero_grad.
+
+    Each rank must supply the same number of microbatches. Every backward uses
+    the normal wrapped reducer; there is no additional accumulation division.
+    Existing retained-objective gradients are deliberately left intact.
+    """
+    import math
+    import torch.distributed as dist
+    if isinstance(coefficient, bool) or not isinstance(coefficient, (int, float)) or not math.isfinite(coefficient) or coefficient <= 0:
+        raise ValueError('Explicit positive finite language mixture coefficient required')
+    batches = list(batches)
+    if not batches:
+        raise ValueError('Complete nonempty language accumulation window required')
+    validated = [validate(batch, spec) for batch in batches]
+    device = validated[0][0].device
+    if any(x.device != device for x, _, _ in validated):
+        raise ValueError('One device per rank required')
+    steps = torch.tensor(len(batches), device=device, dtype=torch.long)
+    tokens = torch.tensor(sum(int(mask.sum()) for _, _, mask in validated), device=device, dtype=torch.long)
+    if dist.is_initialized():
+        low, high = steps.clone(), steps.clone()
+        dist.all_reduce(low, op=dist.ReduceOp.MIN, group=group)
+        dist.all_reduce(high, op=dist.ReduceOp.MAX, group=group)
+        if int(low) != int(high):
+            raise ValueError('Ranks must execute identical microbatch counts')
+        dist.all_reduce(tokens, op=dist.ReduceOp.SUM, group=group)
+    total = int(tokens)
+    if total < 1:
+        raise ValueError('Window has no qualified language targets')
+    reports = []
+    for batch in batches:
+        value, detail = loss(native_view, batch, spec, group=group)
+        weighted = value * (coefficient * detail['global_valid_text_tokens'] / total)
+        weighted.backward()
+        reports.append(dict(detail, weighted_loss=float(weighted.detach())))
+    return dict(global_window_valid_text_tokens=total, microbatches=len(batches),
+                coefficient=coefficient, optimizer_step_performed=False, batches=reports)
+
+
 def loss(native_view, batch, spec, *, group=None):
     """Return differentiable globally token-weighted CE; no optimizer/backward here."""
     import torch.distributed as dist

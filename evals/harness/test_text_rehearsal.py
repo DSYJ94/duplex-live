@@ -9,7 +9,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from training.personaplex.distributed_native import NativeDispatch, NativeView, configure_lm
-from training.personaplex.text_rehearsal import TextSpec, averaged_gradient_loss, loss, pack, validate
+from training.personaplex.text_rehearsal import TextSpec, averaged_gradient_loss, backward_window, loss, pack, validate
 
 
 def spec():
@@ -41,7 +41,15 @@ class TextNative(nn.Module):
         raise AssertionError('Audio/depth training must never run for text rehearsal')
 
 
-def distributed_worker(rank, rendezvous, output):
+def window_batches(rank):
+    first = pack([5, 6], spec()) if rank == 0 else pack([7, 8, 9, 10], spec(), supervise=[False, True, True, True])
+    second = pack([11], spec()) if rank == 0 else pack([12, 13], spec())
+    if rank == 1:
+        second['mask'].zero_()  # Valid rank padding; the global microbatch is nonempty.
+    return [first, second]
+
+
+def distributed_worker(rank, rendezvous, output, accumulated=False):
     import torch.distributed as dist
     from torch.nn.parallel import DistributedDataParallel
     dist.init_process_group('gloo', init_method='file://' + rendezvous, rank=rank, world_size=2,
@@ -52,9 +60,12 @@ def distributed_worker(rank, rendezvous, output):
         configure_lm(model, 'selective-trunk-text')
         wrapper = DistributedDataParallel(NativeDispatch(model), find_unused_parameters=True)
         view = NativeView(wrapper, model)
-        batch = pack([5, 6], spec()) if rank == 0 else pack([7, 8, 9, 10], spec(), supervise=[False, True, True, True])
-        value, metrics = loss(view, batch, spec())
-        value.backward()
+        if accumulated:
+            metrics = backward_window(view, window_batches(rank), spec(), coefficient=.3)
+        else:
+            batch = window_batches(rank)[0]
+            value, metrics = loss(view, batch, spec())
+            value.backward()
         torch.save(dict(gradients={n: p.grad for n, p in model.named_parameters() if p.requires_grad},
                         metrics=metrics), Path(output) / ('rank-%d.pt' % rank))
     finally:
@@ -122,6 +133,34 @@ class TextRehearsalTest(unittest.TestCase):
         right = averaged_gradient_loss(torch.tensor(12.), 5, 2)
         self.assertEqual(float((left + right) / 2), 3.)
 
+    def test_accumulation_matches_pooled_tokens_and_preserves_existing_gradients(self):
+        torch.manual_seed(203)
+        model = TextNative()
+        configure_lm(model, 'selective-trunk-text')
+        reference = copy.deepcopy(model)
+        batches = [pack([5], spec()), pack([6, 7, 8, 9], spec(), supervise=[False, True, True, True])]
+        for current in (model, reference):
+            for parameter in current.parameters():
+                if parameter.requires_grad:
+                    parameter.grad = torch.full_like(parameter, .125)
+        view = NativeView(NativeDispatch(model), model)
+        report = backward_window(view, batches, spec(), coefficient=.3)
+        summed = 0.
+        for batch in batches:
+            _, logits = reference.forward_codes(batch['inputs'])
+            summed = summed + F.cross_entropy(logits[:, 0][batch['mask']], batch['targets'][batch['mask']], reduction='sum')
+        (.3 * summed / 4).backward()
+        self.assertEqual(report['global_window_valid_text_tokens'], 4)
+        self.assertFalse(report['optimizer_step_performed'])
+        for (name, actual), (_, expected) in zip(model.named_parameters(), reference.named_parameters()):
+            if actual.requires_grad:
+                torch.testing.assert_close(actual.grad, expected.grad, rtol=1e-5, atol=1e-7)
+            else:
+                self.assertIsNone(actual.grad)
+        for invalid in (0, -1, float('nan'), True):
+            with self.assertRaises(ValueError):
+                backward_window(view, batches, spec(), coefficient=invalid)
+
     def test_real_two_rank_ddp_gradients_match_pooled_reference(self):
         import torch.multiprocessing as mp
         with tempfile.TemporaryDirectory() as temp:
@@ -138,6 +177,28 @@ class TextRehearsalTest(unittest.TestCase):
             for rank in range(2):
                 state = torch.load(root / ('rank-%d.pt' % rank), weights_only=True)
                 self.assertEqual(state['metrics']['global_valid_text_tokens'], 5)
+                for name, parameter in model.named_parameters():
+                    if parameter.requires_grad:
+                        torch.testing.assert_close(state['gradients'][name], parameter.grad, rtol=1e-5, atol=1e-7)
+
+    def test_real_two_rank_accumulation_matches_pooled_reference_with_empty_local_mask(self):
+        import torch.multiprocessing as mp
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            mp.spawn(distributed_worker, args=(str(root / 'rendezvous'), temp, True), nprocs=2, join=True)
+            torch.manual_seed(101)
+            model = TextNative()
+            configure_lm(model, 'selective-trunk-text')
+            total = 0.
+            for rank in range(2):
+                for batch in window_batches(rank):
+                    _, logits = model.forward_codes(batch['inputs'])
+                    if batch['mask'].any():
+                        total = total + F.cross_entropy(logits[:, 0][batch['mask']], batch['targets'][batch['mask']], reduction='sum')
+            (.3 * total / 6).backward()
+            for rank in range(2):
+                state = torch.load(root / ('rank-%d.pt' % rank), weights_only=True)
+                self.assertEqual(state['metrics']['global_window_valid_text_tokens'], 6)
                 for name, parameter in model.named_parameters():
                     if parameter.requires_grad:
                         torch.testing.assert_close(state['gradients'][name], parameter.grad, rtol=1e-5, atol=1e-7)
