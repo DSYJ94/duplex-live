@@ -1,3 +1,33 @@
+# Current live checkpoint — review8558032 healthy at2228s
+
+Observer42447 actual1794954206.6285093: RUNNING2228s,4GPUs,2392saved
+[588,608,616,580];2273structured,111invalid,7incomplete,1overcontext;
+2210freshstructured/73reused;0rankterminals. Sameimmutable4223producer,
+stop18Nov09:36:18UTC, no restart/hotdeploy/trainingupdates. Use SAMEobserver
+occasional300s checks; no extra scheduler queries/tests whilehealthy.
+Next onterminal: actual provider+host success, complete17276 identity/inventory
+verification and allindependent archives; preserve failures, then full domain/
+task/support/correctness/family qualification and final capability-balanced
+training mixture. Do not auto-admit reviewer-supported claims. New mixedbridge
+4fb0810 is pushed/CPUproved, not currentproducer/nativeGPUadmitted. Independent
+densebackup capacity/finalnative runner remain futureadmission requirements.
+
+---
+
+# Latest continuation — partial corpus mixture observation
+
+Read-only1832 savedreview scan,1744structured. Reviewer task labels1204explanation,
+73reasoning; support1414external_fact_check,145supplied_context,184nonfactual,
+1formalproof. Ordered partialcohort, NOT population estimate/factualproof. Current
+review unchanged. This warns against treating bulk broad factual/explanatory
+examples as sufficient reasoning/routing curriculum. Full final labels, support
+consistency/fact qualification and family-safe capability mixture stillrequired.
+See NATIVE-CORPUS-PARTIAL-MIXTURE-OBSERVATION-2026-11-17.json; no new training,
+externalcalls or regeneration. Preserve existing verified arithmetic/retention
+streams and score actual learning/voice transfer before adoption.
+
+---
+
 # Latest continuation — mixed schedule/update bridge prepared
 
 New mixed_schedule.py couples qualified whole-document language epochs to the

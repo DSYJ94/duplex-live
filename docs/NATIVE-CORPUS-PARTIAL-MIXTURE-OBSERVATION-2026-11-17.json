@@ -1,0 +1,35 @@
+{
+  "job": "8558032",
+  "partial": true,
+  "records": 1832,
+  "structured": 1744,
+  "reviewer_labels": {
+    "task": {
+      "explanation": 1204,
+      "extraction": 92,
+      "other": 23,
+      "creative": 337,
+      "reasoning": 73,
+      "classification": 5,
+      "summarization": 10
+    },
+    "support": {
+      "external_fact_check": 1414,
+      "nonfactual": 184,
+      "supplied_context": 145,
+      "formal_proof_needed": 1
+    },
+    "verdict": {
+      "supported": 1341,
+      "incorrect": 346,
+      "uncertain": 57
+    }
+  },
+  "training_admitted": false,
+  "limitations": [
+    "Ordered incomplete corpus; not a random sample or final prevalence estimate.",
+    "Reviewer labels are not independent factual proof.",
+    "Math support labels may require category consistency audit."
+  ],
+  "decision": "Use full completed review to construct capability-balanced data. Preserve a verified basic-reasoning/task-routing stream and retained speech/control objectives; do not treat a large explanatory corpus as sufficient arithmetic/routing training. Externally supported factual claims need qualification before admission, and all original failures remain recorded."
+}
