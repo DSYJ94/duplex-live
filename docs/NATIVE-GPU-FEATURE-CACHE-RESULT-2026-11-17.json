@@ -1,0 +1,28 @@
+{
+  "job": "8535017",
+  "provider_state": "FAILED_AFTER_SUCCESSFUL_CACHE",
+  "elapsed_GPU_seconds": 4974,
+  "producer": "c62663cd92ac144d21236fc5a6f01ddf2630f69e",
+  "native_collection_passed": true,
+  "TRAIN_components": 197,
+  "positive_RET_positions": 89,
+  "negative_positions": 75959,
+  "total_target_positions": 76048,
+  "all_vocabulary_zero_insertion_calls": 69754,
+  "all_vocabulary_zero_insertion_positions": 128628,
+  "streaming_equivalence_cases": 4,
+  "streaming_equivalence_frames": 890,
+  "optimizer_updates": 0,
+  "independent_backup": {
+    "files": 38,
+    "bytes": 651971499,
+    "inventory_sha256": "0188cf63ed991d814b9ebdee70659bad6413aace8339cce64146876851958677",
+    "snapshot_sha256": "c325d2a43c0d142127b7e22e6fb51155a34f6cf9a0b6e1400ccdf47b43fcb53c",
+    "features_sha256": "7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05"
+  },
+  "failure": "Bare container PID comparison rejected a different process; no restore or learning was reported as passed by that failed stage.",
+  "recovery_job": "8537504",
+  "recovery_producer": "3798e5982c3935794cebd5595cb75966eb80cfcd",
+  "automatic_goal": "paused",
+  "native_policy_accepted": false
+}

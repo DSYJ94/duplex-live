@@ -1,3 +1,41 @@
+# 17Nov11:05UTC — Full cache backed; restore-only8537504 RUNNING
+
+8535017 FAILED1:0 after4974GPU-seconds x1, but cache stage fullyPASS:
+197TRAIN components,89RETpositive +75959negative =76048targetpositions.
+69754nativeforward calls/128628positions have byte-exact all-vocabulary
+zero-insertion; four native streamedprobes/890frames tokens+PCM exact.
+38files651971499bytes independently hash-backed BEFORE failedverify.
+Cacheproducer c62663cd92ac144d21236fc5a6f01ddf2630f69e, all oldstatebytes
+retained. Inventory0188cf63ed991d814b9ebdee70659bad6413aace8339cce64146876851958677;
+snapshot c325d2a43c0d142127b7e22e6fb51155a34f6cf9a0b6e1400ccdf47b43fcb53c;
+features7587395d762c7db0f7a673b26f1abef07157470fb847b113a83b97eb51f50e05.
+BarePIDcheck was wrong across container namespaces (PID50 repeats); parent
+cache/source/steps valid. Sourcefailedoutputs remain; no cache re-export.
+
+Fix RED→GREEN local pureprocess tests; actualARM CPU21tests +actualsavedcache
+header/PIDcollisioncase PASS. Newvalidation uses terminalold/newSlurm allocation
+and pinned independently verifiedcache; records kernel namespace/startticks and
+actualhostlauncherPID. Oldproducer/bytes not relabelled. Source
+3798e5982c3935794cebd5595cb75966eb80cfcd at source-restore-3798e59 IMMUTABLE.
+
+New8537504 actuallyRUNNING1GPU nid010162,17Nov11:02:27→15:32:27UTC.
+Max16200sec, original4974+new16200=21174 within original21600sec taskallowance.
+All actualsharedusage/reservations counted;0updates/APIs/purchases.
+Root /projects/u6ada/duplex-live/native-restore-only-20261117-v1;
+log /projects/u6ada/duplex-live/native-restore-only-8537504.log;
+oldcache and independentoldbackup explicitly RO-mounted.
+Source originalcache/zero-state.pt remains c626 source. Only freshVERIFY runs,
+not collection/export/fit. Latest11:03:39 log actualOPALload completed/doneupdate0
+after exactAdam/RNG/OPAL assertions; complete streamed/feature/finalarchive
+verification stillPENDING. Do not claim fullrestore finished from thatlogalone.
+
+Automaticgoal remainsPAUSED, manualtask only. No comparison/training interrupted.
+Usernotifiedpromptlyofstop/cause/recovery. Remora notifiednewID/scope only.
+Cert17Nov11:47:45; existingjob/guard/archive independent. Observe SAMEjob;
+never resubmitonobservationtimeout. No newhead training authorized bythis task.
+
+---
+
 # 17Nov09:31UTC — Manual native GPU feature/restore job8535017 RUNNING
 
 Automatic goal remains PAUSED; owner explicitly authorized THIS manual task.
