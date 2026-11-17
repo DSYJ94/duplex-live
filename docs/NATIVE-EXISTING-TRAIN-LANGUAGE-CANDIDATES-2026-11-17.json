@@ -1,0 +1,12 @@
+{
+  "parent_plan_sha256": "b32387796aa99730653566374512d2c11a31df53ca5117d157a8aa8a19f695a6",
+  "candidate_sha256": "12d69d00943556d3c2ff9cfcced71f861533ca505a8c958663c1ca50c69d71f8",
+  "candidate_file": "/private/tmp/duplex-existing-TRAIN-language-candidates-20261117.jsonl",
+  "TRAIN": 1008,
+  "DEV_excluded": 64,
+  "original_words_and_ids_preserved": true,
+  "new_audio_or_answers_generated": false,
+  "training_admitted": false,
+  "licence_family_and_native_tokenization_pending": true,
+  "new_optimizer_updates": 0
+}

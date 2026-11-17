@@ -1,3 +1,22 @@
+# Latest continuation — original1008 TRAIN words reused for language stream
+
+New reasoning_language_source.py builds candidates from hash-bound complete1072
+original semanticplan b32387796aa99730653566374512d2c11a31df53ca5117d157a8aa8a19f695a6.
+Actual originalplan retrieved fromIsambard and SHAverified;1008TRAIN rows emitted
+with exactoriginal question/answer/ID/semanticrecord and64DEV excluded. No new
+teacher answers, audio, provider calls orupdates. Local2testsPASS. CandidateSHA
+12d69d00943556d3c2ff9cfcced71f861533ca505a8c958663c1ca50c69d71f8;
+transientMac /private/tmp/duplex-existing-TRAIN-language-candidates-20261117.jsonl.
+Reproducible from durableoriginalplan/code; receipt NATIVE-EXISTING-TRAIN-LANGUAGE-
+CANDIDATES-2026-11-17.json. This reuses actual existingmath/basic/routing teaching
+words as native-language rehearsal instead of relying exclusively on newpublic
+explanatorydata. Allcandidate admission/provenance/family flags remainFALSE;
+original licenceparents/family-overlap andnative32k fulltokenization stillrequired.
+Do not mark these as1008new independentconversations or newqualification.
+Review8558032/source4223/sameobserver42447 remainsunchanged/healthy.
+
+---
+
 # Current live checkpoint — review8558032 healthy at2228s
 
 Observer42447 actual1794954206.6285093: RUNNING2228s,4GPUs,2392saved
