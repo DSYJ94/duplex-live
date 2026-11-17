@@ -1,0 +1,94 @@
+{
+  "status": "COMPLETE1008_INDEPENDENTLY_BACKED_NOT_SCORED",
+  "job": "8553179",
+  "producer_source": "f06fabd0fff9729134a52e0238758ba922eb565e",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 8806,
+  "GPU_count": 4,
+  "actual_GPU_seconds": 35224,
+  "host_terminal_sha256": "bf243a06f359976c5d8f61c8161ab876101c451fda211b38d21052883ca703cb",
+  "host_terminal": {
+    "success": true,
+    "source": "f06fabd0fff9729134a52e0238758ba922eb565e",
+    "results": {
+      "complete": true,
+      "required": 1008,
+      "actual_outputs": 1008,
+      "all_result_hashes_verified": true,
+      "process_identities": [
+        {
+          "pid": 118,
+          "pid_namespace": "pid:[4026536223]",
+          "start_ticks": 112722930,
+          "node": "nid010776"
+        },
+        {
+          "pid": 119,
+          "pid_namespace": "pid:[4026536223]",
+          "start_ticks": 112722930,
+          "node": "nid010776"
+        },
+        {
+          "pid": 120,
+          "pid_namespace": "pid:[4026536223]",
+          "start_ticks": 112722930,
+          "node": "nid010776"
+        },
+        {
+          "pid": 121,
+          "pid_namespace": "pid:[4026536223]",
+          "start_ticks": 112722930,
+          "node": "nid010776"
+        }
+      ],
+      "optimizer_updates": 0,
+      "correctness_labels_created": false,
+      "backend_connected": false,
+      "product_accepted": false
+    },
+    "backups": {
+      "0": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 757,
+        "bytes": 1780683518,
+        "inventory_sha256": "e02cbedb454bcf87874ece95dd93aa96c133b553764b345653df83466f985f46",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-TRAIN-failure-backups-v1/job-8553179/rank-00",
+        "optimizer_updates": 0
+      },
+      "1": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 757,
+        "bytes": 1791536985,
+        "inventory_sha256": "78065d6886e02aba71448def7353424305c76939064aa2792d544e55c6726c6a",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-TRAIN-failure-backups-v1/job-8553179/rank-01",
+        "optimizer_updates": 0
+      },
+      "2": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 757,
+        "bytes": 1788852543,
+        "inventory_sha256": "3fbaa644870dcebc14aa15b9ef9dc7efaeefa819b8c42c2ffec92889d76e1903",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-TRAIN-failure-backups-v1/job-8553179/rank-02",
+        "optimizer_updates": 0
+      },
+      "3": {
+        "passed": true,
+        "every_file_sha256_verified": true,
+        "files": 757,
+        "bytes": 1779599479,
+        "inventory_sha256": "8c8582a71523117af9777b8ee0c95ad7adcc4cef184ddd94d1a251e469ae5808",
+        "destination": "/home/u6ada/dsyj94.u6ada/duplex-native-TRAIN-failure-backups-v1/job-8553179/rank-03",
+        "optimizer_updates": 0
+      }
+    },
+    "product_accepted": false
+  },
+  "all_four_archive_inventory_hashes_independently_checked": true,
+  "backup_bytes": 7140672525,
+  "new_optimizer_updates": 0,
+  "product_accepted": false
+}

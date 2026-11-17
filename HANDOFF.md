@@ -1,3 +1,42 @@
+# 17Nov21:12UTC — nativecollection COMPLETE/backed; publicreview actuallyRUNNING
+
+8553179 actualCOMPLETED0:0,elapsed8806s,4GPUs=35224GPUseconds. ALL1008 native
+cases/hash checks passed, all4independent archives757files each;7140672525bytes
+(total~7.14GB) backed withper-fileSHA. Independently readall4archive-inventory
+files andmatchedreceiptSHAs. ExacthostterminalSHA bf243a06f359976c5d8f61c8161ab876101c451fda211b38d21052883ca703cb;
+completeoriginalhostreceipt preserved in NATIVE-TRAIN1008-COLLECTION-RESULT-
+2026-11-17.json. No correctnesslabels/backend/optimizerupdates/adoptionclaim.
+Node010776 GPUsreleased; Remora notified. Oldobserver70879maynotexityetuntil
+next300sec poll; authoritativeprovider+hostreceiptsalreadyterminal. Don'trestart.
+Next1008 scoring/failure-family review must reuse theseoutputs, nevercallcollection
+completion modelquality orRLproof. No savedupdatesreplayed.
+
+New8555523 actualRUNNING on nid010660 since17Nov21:09:50UTC; immutableSTOP
+18Nov09:09:50UTC. SOURCE707414c0ca7c5ac772a237a9aeaf450461bda579 remainsfrozen.
+Actuallease atROOT/job-8555523/lease.json:prior950449GPU sec, otherreserved14113,
+GPU4,stop1794992990,start1794949790; allaward20k bounds unchanged. PlanSHA
+c7a6e8b64eddc1c33d6ad6917d409cf3cc5eb19d097588cf0be1bfa2738ad1ed.
+Parent/CPUdependencyfulfilled andparentbackupcheckedbeforemodel startup.
+Same8525observer actual1794949877.515009 RUNNING87s/reviews[0,0,0,0],0terminals;
+leaseexists; doNOTcallmodelinitialization completedreviews. Remora notifiedactual
+node/window (public27Bread-only, no privatefiles/settings/jobchanges). Continue
+SAMEhandleoccasionally, no restart/duplicateonobservationtimeout. Promptlyreport
+terminalfailure or meaningfulreviewprogress; full17276/hashbackupsrequired.
+
+CPU8556966 COMPLETED0:0,60s,2actualtestsPASS; originalfirstsortedTRAINcase
+reasoning-text-002be9ccec5998da69d5 renderedfromimmutablecompletecase, source35e78b5.
+Single-playstereo: agentleft/userright, exactnativeframeclock,gapframesreinserted,
+originalPCM/amplitude preserved. Fullinteraction retainedonIsambard; preview
+21.826708s =whole6.826708s question+first15sresponse, explicitlyprefixexcerpt,
+NOTlivemiclatency/quality/generalizationproof. Mac transientpreview
+/private/tmp/duplex-current-native-preview-8556966/preview.wav, SHA
+6a434f61272fd890d42d59e5ee8c6bfc291d84e7aac1fa2a8171e4e3aaacfb78 verifiedaftercopy.
+No largecheckpointdownload. Oldsmallcopy99773unrelated/nonterminal: doNOTduplicate.
+Handoff/sourceproofs pushedthroughf1d5ed9 previously; newpreview/closuremetadata
+commit follows. GoalACTIVE; dataqualification/nativefullstate/storage remain.
+
+---
+
 # 17Nov20:59UTC — new mixed-state CPU proof COMPLETE21PASS onIsambard
 
 CPU8556673 COMPLETED0:0 in71s, exactproducer c1a16e9 (fullSHA in

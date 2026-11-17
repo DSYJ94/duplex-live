@@ -1,0 +1,37 @@
+{
+  "job": "8556966",
+  "source": "35e78b5885ea31c486f31eeab28f35c0630483b3",
+  "provider_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 60,
+  "GPU_count": 0,
+  "tests_passed": 2,
+  "selection": "First sorted TRAIN source, not selected for answer quality",
+  "checkpoint": "Preserved105M expanded step196, not new training",
+  "local_preview": "/private/tmp/duplex-current-native-preview-8556966/preview.wav",
+  "preview": {
+    "id": "reasoning-text-002be9ccec5998da69d5",
+    "source_result_sha256": "b47e13e0c9423b015282e7d9b32a29410c0291cfea0f6a1693afc84a72136105",
+    "user_sha256": "2f0e7b49e0d8dd9e8937ad3acc77c07797e11fd3e2ae5eb257d329ff8f7bb31d",
+    "raw_output_sha256": "287e6e613c07ed9e21873f4926077173bd54b51decf1d007fe24d1c533b52b40",
+    "trace_sha256": "4a0502cce4de8cd684ba5092b054508adce55460aafed9829de020aa211160eb",
+    "channels": [
+      "native_assistant",
+      "synthetic_user"
+    ],
+    "sample_rate": 24000,
+    "complete_samples": 1605120,
+    "preview_samples": 523841,
+    "response_excerpt_seconds": 15,
+    "preview_is_prefix_excerpt": true,
+    "zero_output_gaps_restored_from_trace": true,
+    "original_PCM_amplitude_preserved": true,
+    "offline_native_frame_clock": true,
+    "live_latency_measured": false,
+    "correctness_or_quality_qualified": false,
+    "checkpoint_changed": false,
+    "optimizer_updates": 0,
+    "generated_text": "That\u2019s right, You\u2019 left with 39 centimeters, that\u2019s 39 centimeters.",
+    "preview_sha256": "6a434f61272fd890d42d59e5ee8c6bfc291d84e7aac1fa2a8171e4e3aaacfb78"
+  }
+}
