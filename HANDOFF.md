@@ -1,3 +1,44 @@
+# 17Nov14:50UTC —8540802 FAILED aftercomplete96; cachefix actualCPU RED→GREEN
+
+Observer29998 authoritative FAILED1:0,elapsed5394GPUsec; observerexited0 after
+terminal log. DO NOTpoll/restart29998/model8540802. Paid voiceallocationended.
+Actualreadout128/checkpoint/fullnativeAdamRNGOPALrestore PASS andbacked; ALL32
+controls +64DEV generationcomplete beforeASR. BiasNOTstarted,0biasupdates.
+Failureat speech recognizer init: missing HF_HOME inpair_command meant
+HF_HUB_OFFLINE looked inemptycontainedHOMEcache, despiteexisting pinnedassets.
+No kernel/precision/backprop failure. User+Remora promptlynotifiedterminal.
+
+Fix1line action_pair_host.pair_command passes HF_HOME=/projects/u6ada/duplex-live/hf-cache.
+Regression test firstRED(Nonevsrequiredpath), then27testsPASS. ActualIsambard
+containedCPU AutoConfig/AutoProcessor RED(OSError)withoutenv, GREENwithenv;
+pinnedWhisper41f01f3fe87f28c78e2fbf8b568835947dd65ed9 weights1617824864Bpresent.
+No download/API/GPU/retraining in thisfix. Full actualASR inference stillpending.
+Proof docs/NATIVE-PAIRED-ASR-CACHE-FAILURE-2026-11-17.json.
+
+ONE independentraw backup CURRENTLYACTIVE tool73047: Python122672 andsame rsync
+children5288/5293/19469 observedlive. Target
+/home/u6ada/dsyj94.u6ada/duplex-native-ret-paired-backups-v1/job-8540802/readout/generated-before-audit
+currently.partialstage; doNOTstartsecondwriter or rerun onobservationtimeout.
+Source /projects/u6ada/duplex-live/native-ret-paired-20261117-v1/readout/evaluate
+muststayUNCHANGED until archive fullSHAequality/publish. Do notstartauditinginplace
+while thiscopier reads it. Checkpointalreadyindependentlybacked33files1419906B.
+Small raw32/64results copiedlocally under paired8540802-readout-results;
+allfullrawchunks remainLustre, no bulkMacdownload.
+
+NEXT: finish samecopy; implement/review newaudit-only recovery within SAME43200
+aggregateGPU-seconds.5394actualused→37806remaining (SBATCH<=37800 inclreserve).
+DO NOT repeatreadout128, any96generation, zero-cacheexport or old196updates.
+Recoveryfirst audits saved96 (preserve generatedsourcec66, declare distinct
+actualauditproducer; existing matched_evaluation.audit currently enforces single
+source andneeds explicit provenance-aware recovery seam). Then firstbias128
+fit/freshnative restore/full96/backups innewnamespace; alloldstates retained.
+Newrecoverycontroller/scope NOTyetimplemented/submitted. No newGPUjob exists.
+Oldscopeonejob max43200 mustnotbe reset; carry actualallsharedusage/phaseclocks.
+HFcache/source/read-only checks actualCPU beforeGPU. Keep no automaticblindretry.
+Currentcertvalid18Nov00:18:12; freshaccessworks. GoalACTIVE; nohumanblocker.
+
+---
+
 # 17Nov13:27UTC — Samecomparison LIVE;1008TRAIN failure-input intake prepared
 
 Observer29998 actualRUNNING8540802 elapsed1241s,readout128,control32complete,

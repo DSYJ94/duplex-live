@@ -47,6 +47,11 @@ class ActionPairHostTest(unittest.TestCase):
         for required in ('duplex-native-feature-backups-v1','native-feature-restore-20261117-v1/cache','native-restore-only-20261117-v1','native-expanded1072-phase-v1','/inputs'):
             self.assertTrue(any(required in v for v in mounts))
 
+    def test_paired_container_binds_the_existing_offline_asr_cache(self):
+        with patch('training.personaplex.action_pair_host.feature_command',return_value=['apptainer','--pwd','/work']) as command:
+            pair_command(Path('/work'),{},Path('/backup'),Path('/inputs'))
+        self.assertEqual(command.call_args.args[2].get('HF_HOME'),'/projects/u6ada/duplex-live/hf-cache')
+
     def test_prepared_scope_cannot_admit_and_zero_update_scope_cannot_mix(self):
         lease = dict(provider='Slurm',resource_key=g.KEY,account=g.ACCOUNT,authorization_sha256=g.sha(g.AUTH),GPU_count=1,job_id='123',node='node',source='source',start_unix=0.,stop_unix=43200.,prior_award_GPU_seconds=0,other_reserved_GPU_seconds=0,paired_authorization_sha256=g.sha(g.PAIR_AUTH))
         scope = json.loads(g.PAIR_AUTH.read_text())

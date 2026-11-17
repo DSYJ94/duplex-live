@@ -1,0 +1,62 @@
+{
+  "status": "FAILED_AFTER_READOUT128_AND_COMPLETE96_GENERATION",
+  "job": "8540802",
+  "provider_state": "FAILED",
+  "exit_code": "1:0",
+  "actual_GPU_seconds": 5394,
+  "producer": "c66b72ba02211496285e061178d4e9c3669267f3",
+  "readout_updates_complete": 128,
+  "scalar_updates_complete": 0,
+  "generated_outputs": {
+    "control32": 32,
+    "dev64": 64
+  },
+  "ASR_reports_complete": false,
+  "readout_checkpoint_previously_independently_backed": true,
+  "raw_output_backup": "ACTIVE_TOOL73047_NOT_YET_VERIFIED",
+  "raw_backup_processes": {
+    "python": 122672,
+    "rsync": [
+      5288,
+      5293,
+      19469
+    ]
+  },
+  "new_GPU_jobs_launched": false,
+  "failure": "Paired container omitted HF_HOME; recognizer offline cache lookup failed after all96 outputs generated. No numerical/backprop/model generation failure.",
+  "CPU_red": {
+    "passed": true,
+    "mode": "red",
+    "actual_missing_offline_cache_reproduced": true,
+    "error_type": "OSError",
+    "GPU_loaded": false,
+    "external_calls": 0
+  },
+  "CPU_green": {
+    "passed": true,
+    "mode": "green",
+    "revision": "41f01f3fe87f28c78e2fbf8b568835947dd65ed9",
+    "actual_offline_config_and_processor_loaded": true,
+    "weight_files": [
+      "model.safetensors"
+    ],
+    "weight_bytes": 1617824864,
+    "GPU_loaded": false,
+    "external_calls": 0
+  },
+  "local_regression_tests_passed": 27,
+  "original_phase_max_GPU_seconds": 43200,
+  "remaining_GPU_seconds": 37806,
+  "recovery_proposed_max_seconds": 37800,
+  "required_next_actions": [
+    "Finish existing independent raw backup; never duplicate valid copier",
+    "Keep readout fit/generation/oldsource/failedreceipts unchanged",
+    "Audit original96 with distinct audit producer provenance, no oldgeneration-source relabel",
+    "Fit first bias128 and complete its native restore+96 outputs",
+    "Use new scope/lease carrying5394actual priorphase usage within same43200 aggregate bound"
+  ],
+  "automatic_retry": false,
+  "new_model_inference_by_this_fix": false,
+  "new_optimizer_updates_by_this_fix": 0,
+  "external_API_calls": 0
+}

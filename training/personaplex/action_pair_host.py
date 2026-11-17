@@ -23,7 +23,7 @@ def execute_pairs(run, preserve):
 
 
 def pair_command(work,environment,backup,inputs):
-    command = feature_command(work,True,environment,backup)
+    command = feature_command(work,True,dict(environment,HF_HOME='/projects/u6ada/duplex-live/hf-cache'),backup)
     protected = [Path('/home/u6ada/dsyj94.u6ada/duplex-native-feature-backups-v1'),
                  Path('/projects/u6ada/duplex-live/native-feature-restore-20261117-v1/cache'),
                  Path('/projects/u6ada/duplex-live/native-restore-only-20261117-v1'),
