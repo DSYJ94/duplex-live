@@ -1,5 +1,5 @@
 import unittest
-from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,KEY,ACCOUNT,sha,ensure,resource
+from training.personaplex.expanded_guard import AUTH,REFERENCE_AUTH,OFFICIAL_AUTH,FEATURE_AUTH,RESTORE_AUTH,TRAIN_FAILURE_AUTH,KEY,ACCOUNT,sha,ensure,resource
 
 class ExpandedGuardTest(unittest.TestCase):
     def fixture(self):
@@ -46,3 +46,12 @@ class ExpandedGuardTest(unittest.TestCase):
         resource(restore)
         with self.assertRaises(ValueError):resource(dict(restore,stop_unix=16201.))
         with self.assertRaises(ValueError):resource(dict(restore,feature_authorization_sha256=sha(FEATURE_AUTH)))
+
+    def test_train_failure_scope_is_separate_complete_four_gpu_and_bounded(self):
+        lease,_,_=self.fixture()
+        collect=dict(lease,train_failure_authorization_sha256=sha(TRAIN_FAILURE_AUTH),stop_unix=43200.)
+        resource(collect)
+        for change in (dict(GPU_count=1),dict(stop_unix=43201.),
+                       dict(train_failure_authorization_sha256='changed'),
+                       dict(reference_authorization_sha256=sha(REFERENCE_AUTH))):
+            with self.assertRaises(ValueError):resource(dict(collect,**change))

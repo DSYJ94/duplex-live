@@ -1,3 +1,34 @@
+# 17Nov — Native TRAIN failure collector implemented/tested; NOTyetGPUsubmitted
+
+New training/personaplex/train_failure_rollout.py checks pinned1008 TRAIN-only
+inputs andpartitions fourdisjoint252case ranks. Actualnativeworker usespreserved
+expanded105M/196 withNOnewRET head, sameRP/persona/seed42/nativegeometry; no
+teacheranswers/audio orbackendresults supplied. Everyframe/token/PCM retained
+with offsets/chunkhashes incompactoneWAV+tracepercase (avoids~milliontinyfiles).
+Unpacedexplicitlylabelled, NOT live-latency/acceptance. Nooptimizer/correctnesslabels.
+Worker/source/lease/plan/case hashes andfouractualGPUownership required; original
+45s localguard/providerbounds retained. Perframeguardfreshnesschecked; immutable
+sourcecheckedoncepercase ratherthan spawningGit on every80ms frame.
+
+Separate goal-directed collectiondeclaration
+ docs/NATIVE-TRAIN1008-FAILURE-COLLECTION-2026-11-17.json
+ONE4GPUjobmax12h within20kaward, all1008outputs/fullindependentbackup,0updates/
+API/purchases/GCP/autoretries, noDEVinputs. Newresourceguardscope implemented;
+notanoldphaseclockreset. Sixteen focusedCPUtestsPASS for sourcePCM/extraction,
+allframe/token/PCMreplay, nooverwrite, contamination, exactshards, originalguard
+andnewscopebounds. These are CPUcontractchecks, not actualGPUadmission/results.
+
+NEXT implementhostadmission/finalfull1008inventory+independentarchive andlaunch
+one completecollection after actualcontainedCPUentrypoint checks. Reuse existing
+host/guard/container/bootstrap, doNOTrebuildinfrastructure orcalibrateheads.
+No newGPUjobsubmitted/active currently; CPU8551116 COMPLETE0:0 inputsalreadyfull.
+Oldobserver3820 andcomparison8545478 TERMINAL, allbackupsverified; neverrerun.
+Checkpoint/Adam/RNG/OPAL unchanged, currentcollectionnotMiRL/RLtraining/acceptance.
+Nativefailures mustbe independentlylabelledAFTERgeneration; broadcorpus/retention/
+selective/fullnativelearning remains nextsubstantiallearningplan, not anotherprobe.
+
+---
+
 # 17Nov17:37UTC — ALL1008 TRAIN userinputs prepared; CPU8551116 COMPLETE0:0
 
 Actual complete source-checked useronlyPCM extraction succeeded on Isambard;

@@ -1,0 +1,22 @@
+{
+  "status": "GOAL_DIRECTED_TRAIN_FAILURE_COLLECTION",
+  "basis": "Active owner-directed autonomous product goal, native-failure attribution and MiRL-style TRAIN failure mining within the existing Isambard award.",
+  "GPU_count": 4,
+  "maximum_seconds": 43200,
+  "maximum_actual_jobs": 1,
+  "automatic_retries": 0,
+  "required_TRAIN_outputs": 1008,
+  "DEV_inputs": 0,
+  "optimizer_updates": 0,
+  "external_API_calls": 0,
+  "purchases": 0,
+  "GCP_usage": 0,
+  "checkpoint_step": 196,
+  "checkpoint_sha256": "96cff747f42fff1c36572800debcee2d435f20efaebf2c8ccfe9720e9bec3c87",
+  "prepared_inputs_sha256": "847084d665c2c848d46bd6ddcab0120ec6da2d5b6100730dc58dd6bca0bb1d25",
+  "backbone": "Preserved expanded105M PersonaPlex checkpoint196, frozen, no learned RET head or scalar bias.",
+  "payload": "Complete original TRAIN user audio plus fixed60s silent response window; original RP voice/persona. No teacher answers, scoring labels or backend results.",
+  "collection": "Four disjoint252-case workers in one job. Preserve every frame/token and original PCM in compact replayable files. No paced/live-latency claims.",
+  "completion": "Every1008 input identity and output file hash checked; independent complete result backup and authoritative provider0:0 required. No correct subset, model adoption or RL claim.",
+  "decision": "Label actual native failures independently after collection and use recurring failure families to guide substantial mixed native reasoning/interaction training. This does not expand data diversity by itself. No further RET-head/LR sweep."
+}
