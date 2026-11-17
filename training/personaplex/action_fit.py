@@ -47,20 +47,28 @@ def evaluate(delta,rows):
     return dict(positive_count=len(a),negative_count=len(b),positive_mean_probability=float(a.mean()),positive_probability_above_half=int((a>.5).sum()),negative_mean_probability=float(b.mean()),negative_probability_above_half=int((b>.5).sum()),teacher_forced_TRAIN_only=True,native_free_running_qualified=False)
 
 
-def fit(cache,out,*,mode,device,opal_source,guard=lambda needed=0:None,identity):
+def new_runtime(delta,mode,*,opal_source,out):
     from training.venus.native_optimizer import NativeOpal
+    from .matched_state import materialize_adam
+    if mode not in ('readout','bias'):raise ValueError('Explicit paired action mode required')
+    delta.weight.requires_grad_(mode=='readout');delta.bias.requires_grad_(True)
+    recipe=dict(RECIPE,learning_rate=.5 if mode=='bias' else RECIPE['learning_rate'])
+    base=torch.optim.AdamW([p for p in delta.parameters()if p.requires_grad],lr=recipe['learning_rate'],betas=RECIPE['adam_betas'],eps=RECIPE['adam_eps'],weight_decay=0.,foreach=False,fused=False,amsgrad=False)
+    materialize_adam(base)
+    runtime=NativeOpal(base,delta,source=opal_source,run_dir=out,recipe=recipe,backend='keep',goal='Fixed supervised RET separability control; functional native gates determine usefulness')
+    return runtime,recipe
+
+
+def fit(cache,out,*,mode,device,opal_source,guard=lambda needed=0:None,identity,provenance=None):
     from training.venus.opal_adapter import checkpoint_manifest
     from training.venus.state import rng_state
     from .distributed_native import cpu_state
-    from .matched_state import materialize_adam
     features=validate(cache);out=Path(out);out.mkdir(exist_ok=False);delta=model(features,mode,device)
     # A scalar offset needs an order-one shift, unlike a4096-coordinate head.
     # An artificially tiny bias LR would be an underpowered capacity control.
-    recipe=dict(RECIPE,learning_rate=.5 if mode=='bias' else RECIPE['learning_rate'])
     rows=[dict(r,**{k:r[k].to(device)for k in ('features','RET','other_logsumexp','positive')})for r in cache['rows']]
-    base=torch.optim.AdamW([p for p in delta.parameters()if p.requires_grad],lr=recipe['learning_rate'],betas=RECIPE['adam_betas'],eps=RECIPE['adam_eps'],weight_decay=0.,foreach=False,fused=False,amsgrad=False)
-    materialize_adam(base);opal=NativeOpal(base,delta,source=opal_source,run_dir=out/'opal',recipe=recipe,backend='keep',goal='Fixed supervised RET separability control; functional native gates determine usefulness')
-    metadata=dict(mode=mode,input_features=features,trainable_parameters=sum(p.numel()for p in delta.parameters()if p.requires_grad),identity=identity,recipe=recipe,backbone_updates=0,previous_saved_updates_replayed=0,OPAL_mode='KEEP_FIXED_CONTROL_NOT_AUTONOMOUS_REWRITING')
+    opal,recipe=new_runtime(delta,mode,opal_source=opal_source,out=out/'opal');base=opal.base
+    metadata=dict(mode=mode,input_features=features,trainable_parameters=sum(p.numel()for p in delta.parameters()if p.requires_grad),identity=identity,recipe=recipe,backbone_updates=0,previous_saved_updates_replayed=0,OPAL_mode='KEEP_FIXED_CONTROL_NOT_AUTONOMOUS_REWRITING',provenance=provenance or {})
     def save(step):
         manifest=checkpoint_manifest(opal.optimizer)
         if manifest['update']!=step:raise ValueError('Exactly the actual new readout update required')

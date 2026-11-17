@@ -52,8 +52,8 @@
   },
   "not_yet_done": [
     "new phase launcher/guard integration",
-    "actual upstream OPAL and native GPU learned-state restore qualification",
-    "actual paired fits",
+    "actual Isambard native GPU learned-state restore qualification",
+    "actual paired fits on verified native TRAIN cache",
     "actual learned native behavioral evaluation"
   ],
   "wider_plan": [
@@ -62,5 +62,5 @@
     "Keep weight-space edits reversible and separate from training with sham/bias/decoding controls",
     "Use functional ordinary/reasoning/speech retention to decide selective LM tuning, full fine-tuning, midtraining or capacity growth; extra coefficients alone are not knowledge"
   ],
-  "local_progress": "Shared package validator and learned-state restore seam implemented;14 local CPU tests PASS. Actual upstream/native proof pending."
+  "local_progress": "Shared fit/restore runtime factory implemented. Actual pinned upstream OPAL completed synthetic128updates per arm; different CPU process restored both fullstates and metrics exactly.14local regression tests PASS. Native GPU proof pending."
 }

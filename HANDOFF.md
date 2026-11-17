@@ -1,3 +1,23 @@
+# 17Nov12:41UTC — REAL pinned OPAL paired CPU fit→fresh restore PASS
+
+New shared action_fit.new_runtime keeps identical arm-specific recipe, Adam,
+OPALKEEP ownership for cachedfit and freshnative restore. Optional fitprovenance
+retained in metadata. No nativeweights/currentclusterstates changed.
+Actual pinnedupstream8b16759 cloned clean to/tmp; temporaryMacPy3.14.6/torch2.15.0
+ran syntheticfit128readout+128bias (writerPID47870), then SEPARATEprocess
+restoredboth full learnedcoefficients/Adam/RNG/programs/diagnostics and metrics
+exactly, zeroadditionalupdates. This supersedes fake-transport-only proof for
+CPU, NOT Isambard/CUDA/nativepolicy qualification. Full14regressionsPASSagain.
+Proof docs/NATIVE-LEARNED-RESTORE-UPSTREAM-CPU-2026-11-17.json has filehashes,
+actualwriter/readerIDs and fixturepaths. Nativecache remains untouched;
+no actualnativefit/headweights exist yet. Nextscope/launcher/guard integration
+must bind verified197cache and8537504 before anynativeupdates. All96perarm
+nativebehavior/retention still required; no fit-score acceptance shortcut.
+Cliftonclient68666 remains outstanding; ownerhasnotrepliedsignindone. Do not
+assume renewedremoteaccess or submitduplicateauth/modeljobs.
+
+---
+
 # 17Nov12:38UTC — Learned action restore seam implemented; local14 checks PASS
 
 Shared validate_fit now serves inference and new action_restore.restore_fit.

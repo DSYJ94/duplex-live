@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "pinned_OPAL": "8b16759a3e9930916ed582e28068267859f935f8",
+  "environment": "Mac Python3.14.6 torch2.15.0",
+  "fit": {
+    "stage": "fit",
+    "passed": true,
+    "synthetic_updates_per_arm": 128,
+    "native_training_updates": 0,
+    "writer_pid": 47870
+  },
+  "restore": {
+    "stage": "restore",
+    "passed": true,
+    "actual_pinned_OPAL": true,
+    "arms": {
+      "readout": {
+        "saved_readout_updates": 128,
+        "new_optimizer_updates": 0,
+        "Adam_RNG_OPAL_exact": true,
+        "native_free_running_qualified": false
+      },
+      "bias": {
+        "saved_readout_updates": 128,
+        "new_optimizer_updates": 0,
+        "Adam_RNG_OPAL_exact": true,
+        "native_free_running_qualified": false
+      }
+    },
+    "native_model_loaded": false,
+    "CUDA_tested": false,
+    "new_updates": 0,
+    "reader_pid": 47989
+  },
+  "fixture_root": "/private/tmp/duplex-paired-cpu-fixture-20261117",
+  "source_SHA256": {
+    "training/personaplex/action_fit.py": "26154b52fa8275a2720a953d29ee593b54bfe64a4c0d2c3d5b05de5e85d5ebdd",
+    "training/personaplex/action_restore.py": "4f28d924167c35a6f779ce5501d31acea13898a902138b5f55c3c78fe1ab00af",
+    "training/personaplex/action_inference.py": "f67f3105d3a33e5990ee5474878e288fa38fc5672b3c03813f1be4e5589bc9d7",
+    "evals/harness/action_fit_restore_fixture.py": "463ee742cce7a1af08c868124768f42d415cb2e211703e61a2eec3d06007c8c1"
+  },
+  "actual_native_model_loaded": false,
+  "Isambard_runtime_tested": false,
+  "actual_native_TRAIN_updates": 0
+}
