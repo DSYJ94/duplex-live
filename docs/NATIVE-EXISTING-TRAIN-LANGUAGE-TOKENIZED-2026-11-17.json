@@ -27,5 +27,13 @@
     "retained_directory": "/private/tmp/duplex-existing-TRAIN-language-tokenized-20261117"
   },
   "original_TRAIN_DEV_folds_not_reassigned": true,
-  "native_GPU_gradient_restore_proved": false
+  "native_GPU_gradient_restore_proved": false,
+  "original_verification_chain_audit": {
+    "TRAIN_cases": 1008,
+    "numeric_target_cases": 954,
+    "with_original_exact_rational_program": 512,
+    "exact_rational_target_mismatches": 0,
+    "recursive_original_parent_chains_included": true,
+    "scope": "Only original expression-to-target arithmetic recomputed; not question semantics, spoken correctness, licence/family qualification or automatic training admission."
+  }
 }

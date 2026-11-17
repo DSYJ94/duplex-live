@@ -1,5 +1,13 @@
 # Latest continuation — native-tokenized original1008 TRAIN language candidates
 
+Originalverification chains rechecked recursively:954numeric targets/1008TRAIN;
+512cases contain original exact-rational programs; ALL512 recompute to current
+recordedtarget,0mismatches. This is expression-to-target proofONLY, not semantic
+or speech correctness; laternotationrepairchains preserved, not skipped. Other
+496cases retain originalpublicgold/annotation/repair/nonnumericverification.
+No automaticqualification/subsetadmission/no newtraining.
+
+
 Actual compiler COMPLETE1008,104919tokens/48597assistanttargets,all1008structurally
 eligible at3000tokens,0crossing exclusions/1bytefallback target. Exactnative
 tokenizerSHA78d4336533ddc26f9acf7250d7fb83492152196c6ea4212c841df76933f18d2d.
